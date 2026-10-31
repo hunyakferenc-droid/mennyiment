@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -63,11 +64,19 @@ class MentiXpStore {
 
   // Serialize every read/mutation in this isolate, including legacy migration.
   // A failed write must not block later retries.
-  static Future<void> _pending = Future<void>.value();
-  static Future<T> _serial<T>(Future<T> Function() action) {
-    final result = _pending.then((_) => action());
-    _pending = result.then<void>((_) {}, onError: (Object _, StackTrace __) {});
-    return result;
+  static Future<void>? _pending;
+  static Future<T> _serial<T>(Future<T> Function() action) async {
+    final previous = _pending;
+    final gate = Completer<void>();
+    _pending = gate.future;
+    try {
+      if (previous != null) await previous;
+      return await action();
+    } finally {
+      // Do not retain a completed future from another caller's async zone.
+      if (identical(_pending, gate.future)) _pending = null;
+      gate.complete();
+    }
   }
 
   static Future<MentiXpState> load() => _serial(_load);
@@ -100,9 +109,9 @@ class MentiXpStore {
     late final bool result;
     try {
       result = await prefs.setString(_key, jsonEncode({
-      'xp': state.xp,
-      'days': state.days.toList()..sort(),
-      'completed': state.completed.toList()..sort(),
+        'xp': state.xp,
+        'days': state.days.toList()..sort(),
+        'completed': state.completed.toList()..sort(),
       }));
     } catch (_) {
       await prefs.reload();
