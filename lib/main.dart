@@ -958,12 +958,6 @@ void updateMentiMessage(MentiMood mood) {
               Text(strings.homeEyebrow,
                   style: TextStyle(color: _mint, fontSize: 11,
                       fontWeight: FontWeight.w700, letterSpacing: 1.1)),
-              const SizedBox(height: 6),
-              Text(strings.homeGreeting, style: const TextStyle(
-                  fontSize: 26, fontWeight: FontWeight.w800)),
-              const SizedBox(height: 5),
-              Text(strings.homeIntro,
-                  style: TextStyle(color: _muted, fontSize: 13)),
               const SizedBox(height: 12),
               FilledButton.icon(
                 onPressed: _canWriteJournal ? _openDrinkPicker : null,
@@ -975,6 +969,13 @@ void updateMentiMessage(MentiMood mood) {
                     foregroundColor: const Color(0xFF150D1C),
                     minimumSize: const Size(double.infinity, 54)),
               ),
+              const SizedBox(height: 12),
+              const SizedBox(height: 6),
+              Text(strings.homeGreeting, style: const TextStyle(
+                  fontSize: 26, fontWeight: FontWeight.w800)),
+              const SizedBox(height: 5),
+              Text(strings.homeIntro,
+                  style: TextStyle(color: _muted, fontSize: 13)),
               const SizedBox(height: 12),
               if (_progressReady) HomeMentiCard(
                 character: Stack(alignment: Alignment.topRight, children: [

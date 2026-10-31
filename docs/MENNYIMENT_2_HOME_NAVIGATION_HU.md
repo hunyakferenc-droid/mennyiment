@@ -6,7 +6,7 @@ Az előző, sikeres CI-vel ellenőrzött #17-es draft csomagra épülő, külön
 
 - A főképernyő Menti-kártyája, adatlapkái és funkciókártyái külön, újrahasznosítható widgetekbe kerültek (`home_widgets.dart`).
 - A rács keskeny kijelzőn vagy nagy betűméretnél egy oszlopra vált. Nincs betűméretet visszacsökkentő FittedBox és két sorra vágott funkcióleírás. A Menti karakter a szöveg fölé kerül, ha kevés a hely.
-- Az italrögzítés gombja közvetlenül a köszöntés alatt érhető el. A meglévő italkatalógust és mentési útvonalat használja.
+- Az italrögzítés gombja közvetlenül a fejléc alatt, a hosszabb köszöntés előtt érhető el. A meglévő italkatalógust és mentési útvonalat használja.
 - A köszöntés, összegzések, XP-magyarázat, üres/hibaállapot és bejegyzésmenü szövege HU/EN ARB-be került. A pénzösszegek locale szerinti HUF/Ft formátumúak. A felhasználói italneveket és profilnevet nem fordítjuk át.
 - A „Napló” gomb immár teljes, időrendbe rendezett, görgethető bejegyzéslistát nyit (`drink_journal_page.dart`), nem a célok/naptár oldalt. Az „Összes bejegyzés” ugyanide vezet. A célok/naptár változatlanul megnyitható a Célok kártyáról.
 - A napló új oldala csak olvasható pillanatképet kap. Nem ír SharedPreferences-adatot, nem migrál, és nem módosítja a forráslista sorrendjét. Az ismeretlen ár külön jelzés, a valódi 0 Ft nem adathiány.
@@ -30,3 +30,5 @@ Helyben az öt kötelező Flutter-parancs az SDK hiányában nem indítható. Az
 ## Korlátok és következő feladatok
 
 Ez a főképernyő/navigáció szakasz, nem a teljes 2.0 csomag. Az italkatalógus, beviteli dialógusok, régi dashboard és több más aloldal lokalizációja külön feladat. A naplóbejegyzések teljes szerkesztése külön fejlesztés. A személyes áttekintő összekapcsolása és a külön kihívástároló reakciói továbbra is hátravannak. Fizikai készülék, TalkBack/VoiceOver és mért kontrasztvizsgálat még szükséges; a widgetteszt ezeket nem helyettesíti.
+
+Az első CI nyomán két lint javítva, a régi statisztikai teszt a tényleges Statisztika kártyát használja (az Összes immár napló), a lusta lista tesztje görgetve keresi az elemeket, a magyar visszanavigáció pedig a BackButton widgetet használja angol tooltip helyett. A nagy betűméretes angol változatban a hozzáadás gomb a hosszú köszöntés elé került; a láthatósági teszt követelménye megmaradt.

@@ -32,7 +32,8 @@ class DrinkJournalPage extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 112),
           itemCount: drinks.length + 1,
           itemBuilder: (context, index) {
-            if (index == 0) return Padding(
+            if (index == 0) {
+              return Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(drinks.isEmpty ? s.homeEmptyJournal : s.drinkCount(drinks.length),
@@ -41,6 +42,7 @@ class DrinkJournalPage extends StatelessWidget {
                 Text(s.statisticsCaution),
               ]),
             );
+            }
             final drink = drinks[index - 1];
             return Card(child: Padding(
               padding: const EdgeInsets.all(16),

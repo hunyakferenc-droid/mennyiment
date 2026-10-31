@@ -173,9 +173,10 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       final before = {for (final key in prefs.getKeys()) key: prefs.get(key)};
-      await tester.ensureVisible(find.text('Összes'));
+      await tester.scrollUntilVisible(find.text('Statisztika'), 300,
+        scrollable: find.byType(Scrollable).first, maxScrolls: 40);
       await tester.pump(const Duration(milliseconds: 500));
-      await tester.tap(find.text('Összes'));
+      await tester.tap(find.text('Statisztika'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       expect(
