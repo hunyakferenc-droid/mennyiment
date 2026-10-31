@@ -125,7 +125,7 @@ void main() {
       await tester.pumpAndSettle();
       final strings = appStrings(tester.element(find.byType(WeeklyChallengesPage)));
       expect(find.text(strings.challengeTitle), findsOneWidget);
-      await tester.ensureVisible(find.text(strings.challengeCaution));
+      await tester.scrollUntilVisible(find.text(strings.challengeCaution), 400);
       await tester.pumpAndSettle();
       expect(find.text('${strings.challengeJournalDays}: 0 / 7'), findsOneWidget);
       expect((await SharedPreferences.getInstance()).getString(ChallengeStore.key), isNull);

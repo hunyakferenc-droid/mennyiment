@@ -100,5 +100,3 @@ jobs:
           if [ "$JOB_STATUS" = "failure" ]; then
             echo "::error title=Flutter CI sikertelen::Egy vagy több CI-lépés hibás. A részletek a piros lépés naplójában és a futás összefoglalójában láthatók."
           fi
-
-
