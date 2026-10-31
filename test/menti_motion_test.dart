@@ -176,7 +176,7 @@ void main() {
         true,
       );
       expect(tester.hasRunningAnimations, isFalse);
-      await tester.pageBack();
+      await tester.tap(find.byType(BackButton));
       await tester.pumpAndSettle();
       expect(tester.hasRunningAnimations, isFalse);
       expect(

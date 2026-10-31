@@ -44,7 +44,7 @@ void main() {
     await tester.ensureVisible(toggle);
     await tester.tap(toggle);
     await tester.pumpAndSettle();
-    await tester.pageBack();
+    await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
   }
 
