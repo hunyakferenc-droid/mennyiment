@@ -52,14 +52,20 @@ void main() {
           await tester.pumpWidget(const MennyiMentApp());
           await frames(tester);
           expect(find.text('Teszt Menti • 4. szint'), findsOneWidget);
-          // Home intentionally retains its original artwork in this catalog task.
+          // All animated views retain the saved family and outfit.
           expect(
             tester
                 .widget<MentiEvolution>(find.byType(MentiEvolution))
                 .assetPath,
-            'assets/images/menti_open.png',
+            family.assetFor(outfit),
           );
           expect(find.byType(MentiCharacterSetupPage), findsNothing);
+          expect(
+            tester
+                .widget<MentiEvolution>(find.byType(MentiEvolution))
+                .assetPath,
+            family.assetFor(outfit),
+          );
           expect(tester.takeException(), isNull);
           await tester.pumpWidget(const SizedBox.shrink());
           await tester.pump();
@@ -74,6 +80,12 @@ void main() {
             find.descendant(of: mint, matching: find.text('Kiválasztva')),
             findsOneWidget,
           );
+          expect(
+            tester
+                .widget<MentiEvolution>(find.byType(MentiEvolution))
+                .assetPath,
+            family.assetFor(outfit),
+          );
           expect(tester.takeException(), isNull);
           await tester.pumpWidget(const SizedBox.shrink());
           await tester.pump();
@@ -81,6 +93,12 @@ void main() {
           await tester.pumpWidget(const MaterialApp(home: MentiProgressPage()));
           await frames(tester);
           expect(find.text('Menti • 4. szint'), findsOneWidget);
+          expect(
+            tester
+                .widget<MentiEvolution>(find.byType(MentiEvolution))
+                .assetPath,
+            family.assetFor(outfit),
+          );
           expect(tester.takeException(), isNull);
           await tester.pumpWidget(const SizedBox.shrink());
           await tester.pump();

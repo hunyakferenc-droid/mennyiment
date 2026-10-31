@@ -134,6 +134,8 @@ class _MentiEvolutionState extends State<MentiEvolution>
             },
             child: Image.asset(
               widget.assetPath,
+              cacheWidth: (widget.size * MediaQuery.devicePixelRatioOf(context))
+                  .ceil().clamp(1, 1024),
               width: widget.size,
               height: widget.size,
               fit: BoxFit.contain,

@@ -123,8 +123,13 @@ void main() {
         final selectedImage = find.byWidgetPredicate(
           (w) =>
               w is Image &&
-              w.image is AssetImage &&
-              (w.image as AssetImage).assetName == family.assetFor(outfit),
+              (w.image is AssetImage || w.image is ResizeImage) &&
+              ((w.image is ResizeImage
+                              ? (w.image as ResizeImage).imageProvider
+                              : w.image)
+                          as AssetImage)
+                      .assetName ==
+                  family.assetFor(outfit),
         );
         expect(selectedImage, findsNWidgets(2));
         // Loading does not rewrite legacy preferences.

@@ -7,6 +7,7 @@ import 'menti_character_catalog.dart';
 class MentiProfileStorage {
   static const legacyStyleKey = 'mennyiment_menti_style_v1';
   static const characterStyleKey = 'mennyiment_character_style_v2';
+  static const outfitKey = 'mennyiment_outfit_v2';
   static const studioBackgroundKey = 'mennyiment_studio_background_v2';
 
   static final characterStyles = List<String>.unmodifiable(
@@ -37,6 +38,16 @@ class MentiProfileStorage {
     final value = prefs.get(studioBackgroundKey);
     return _validBackground(value) ? value as int : 0;
   }
+
+  static MentiCharacterFamily family(SharedPreferences prefs) =>
+      MentiCharacterFamily.resolve(prefs.get(characterStyleKey)) ??
+      MentiCharacterFamily.boy;
+
+  static MentiOutfit outfit(SharedPreferences prefs) =>
+      MentiOutfit.resolve(prefs.get(outfitKey)) ?? MentiOutfit.basic;
+
+  static String assetPath(SharedPreferences prefs) =>
+      family(prefs).assetFor(outfit(prefs));
 
   static String characterStyle(SharedPreferences prefs) {
     final value = prefs.get(characterStyleKey);
