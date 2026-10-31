@@ -41,9 +41,11 @@ jobs:
           flutter --version
           dart --version
 
-      - name: flutter pub get
+      - name: flutter pub get and gen-l10n
         id: dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          flutter gen-l10n
 
       - name: flutter analyze
         id: analyze
