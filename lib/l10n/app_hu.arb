@@ -104,6 +104,44 @@
   "allEntries": "Összes",
   "statisticsNav": "Statisztikák",
   "recentEntries": "Legutóbbi bejegyzések",
+  "dailyOpen": "Mai tudatos pillanat  •  +10 XP",
+  "dailyOpenSaved": "Mai önellenőrzés és esti összegzés ✓",
+  "dailyTitle": "Egy pillanat magadra",
+  "dailyMorning": "Jó reggelt!",
+  "dailyAfternoon": "Szép napot!",
+  "dailyEveningGreeting": "Szép estét!",
+  "dailyGreeting": "{greeting} {name} veled van.",
+  "dailyOptional": "Minden válasz opcionális. Italnapló nélkül is menthetsz. A kihagyott napokért nincs büntetés.",
+  "dailyWelcome": "Örülök, hogy itt vagy. Ma is a saját tempódban haladhatsz.",
+  "dailySupportLow": "Ma nehezebbnek érzed? Egy kis pihenő vagy beszélgetés is segíthet. Nem kell mindent ma megoldanod.",
+  "dailySupportMid": "Köszönöm, hogy figyelsz magadra. Egy apró, kényelmes lépés is számít.",
+  "dailySupportHigh": "Jó hallani, hogy jól érzed magad! Mi lenne egy kedves apróság ma magadért?",
+  "dailyMood": "Milyen most a hangulatod?",
+  "dailyEnergy": "Mennyi energiád van most?",
+  "dailyScale": "1 = nagyon alacsony, 5 = nagyon magas",
+  "dailySkip": "Kihagyom",
+  "dailyGoal": "Mai személyes cél (opcionális)",
+  "dailyGoalHint": "Például: egy rövid séta vagy pihenő",
+  "dailyEvening": "Esti összegzés (opcionális)",
+  "dailyEveningHint": "Mi esett ma jól? Mit vinnél tovább holnapra?",
+  "dailyReward": "Az önellenőrzésért naponta egyszer +10 XP jár. A válaszok kihagyhatók.",
+  "dailyRewardDone": "A mai önellenőrzés XP-jét már megkaptad. Szabadon frissítheted a válaszokat.",
+  "dailySave": "Önellenőrzés mentése",
+  "dailySaved": "Önellenőrzés mentve. A napi jutalmat csak egyszer számoljuk el.",
+  "dailyLater": "Most kihagyom",
+  "dailyLoadError": "Nem sikerült biztonságosan betölteni a napi adatokat. Nem írtuk felül őket.",
+  "dailySaveError": "A mentés nem fejeződött be. Próbáld újra; a napi XP nem duplázódik.",
+  "dailyRetry": "Újrapróbálás",
+  "@dailyGreeting": {
+    "placeholders": {
+      "greeting": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "evolutionTitle": "Menti fejlődése",
   "evolutionLevel": "{level}. szint",
   "evolutionRemaining": "Még {xp} XP a következő szintig",

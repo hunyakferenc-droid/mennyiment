@@ -104,6 +104,44 @@
   "allEntries": "All entries",
   "statisticsNav": "Statistics",
   "recentEntries": "Recent entries",
+  "dailyOpen": "A mindful moment today  •  +10 XP",
+  "dailyOpenSaved": "Today’s check-in and evening reflection ✓",
+  "dailyTitle": "A moment for yourself",
+  "dailyMorning": "Good morning!",
+  "dailyAfternoon": "Have a lovely day!",
+  "dailyEveningGreeting": "Good evening!",
+  "dailyGreeting": "{greeting} {name} is here with you.",
+  "dailyOptional": "Every answer is optional. No drink logging is needed. There is no penalty for missed days.",
+  "dailyWelcome": "Glad you are here. Take today at your own pace.",
+  "dailySupportLow": "Does today feel difficult? A short rest or a chat may help. You do not have to solve everything today.",
+  "dailySupportMid": "Thank you for checking in with yourself. A small, comfortable step counts.",
+  "dailySupportHigh": "Lovely to hear you feel good! What small kindness could you do for yourself today?",
+  "dailyMood": "How is your mood right now?",
+  "dailyEnergy": "How much energy do you have right now?",
+  "dailyScale": "1 = very low, 5 = very high",
+  "dailySkip": "Skip",
+  "dailyGoal": "Today’s personal goal (optional)",
+  "dailyGoalHint": "For example: a short walk or a rest",
+  "dailyEvening": "Evening reflection (optional)",
+  "dailyEveningHint": "What felt good today? What would you take into tomorrow?",
+  "dailyReward": "Checking in earns +10 XP once a day. You can skip every answer.",
+  "dailyRewardDone": "You already received today’s check-in XP. You can freely update your answers.",
+  "dailySave": "Save check-in",
+  "dailySaved": "Check-in saved. The daily reward is counted only once.",
+  "dailyLater": "Skip for now",
+  "dailyLoadError": "Could not safely load today’s data. Your data have not been overwritten.",
+  "dailySaveError": "Saving did not finish. Please retry; your daily XP will not be duplicated.",
+  "dailyRetry": "Retry",
+  "@dailyGreeting": {
+    "placeholders": {
+      "greeting": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "evolutionTitle": "Menti progress",
   "evolutionLevel": "Level {level}",
   "evolutionRemaining": "{xp} XP to the next level",

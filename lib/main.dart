@@ -5,6 +5,7 @@ export 'drink_journal.dart';
 
 import 'menti_progress.dart';
 import 'menti_xp_store.dart';
+import 'daily_menti.dart';
 import 'finance_center.dart';
 import 'wellbeing_journal.dart';
 import 'lifestyle_insights.dart';
@@ -142,29 +143,16 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> _saveDailyReflection() async {
-    final key = _dateKey(DateTime.now());
-    if (_reflectionBusy || _reflectionDays.contains(key)) return;
+    if (_reflectionBusy) return;
     setState(() => _reflectionBusy = true);
     try {
-      final state = await MentiXpStore.checkInToday();
-      if (!mounted) return;
-      setState(() {
-        _totalMentiXp = state.xp;
-        _reflectionDays
-          ..clear()
-          ..addAll(state.days);
-        mentiReaction++;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Mai önellenőrzés rögzítve! +10 XP Mentinek.')),
-      );
-    } catch (error) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('A mentés nem sikerült. Próbáld újra!')),
-        );
-      }
-      debugPrint('Menti XP mentési hiba: $error');
+      await Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (_) => DailyMentiPage(
+          characterName: _characterName,
+          assetPath: _characterAsset,
+        ),
+      ));
+      await _loadReflections();
     } finally {
       if (mounted) setState(() => _reflectionBusy = false);
     }
@@ -632,7 +620,10 @@ void updateMentiMessage(MentiMood mood) {
     await Navigator.push(context, MaterialPageRoute(
       builder: (_) => const MentiProgressPage(),
     ));
-    if (mounted) await _loadReflections();
+    if (mounted) {
+      await _loadReflections();
+      await _loadCharacterProfile();
+    }
   }
 
   String _characterAsset = 'assets/images/menti_outfits/alap.png';
@@ -1037,14 +1028,12 @@ void updateMentiMessage(MentiMood mood) {
                   const SizedBox(height: 12),
                   SizedBox(width: double.infinity,
                     child: OutlinedButton.icon(
-                      onPressed: _reflectionBusy ||
-                          _reflectionDays.contains(_dateKey(DateTime.now()))
-                          ? null : _saveDailyReflection,
+                      onPressed: _reflectionBusy ? null : _saveDailyReflection,
                       icon: Icon(_reflectionDays.contains(_dateKey(DateTime.now()))
                         ? Icons.check_circle_outline : Icons.favorite_border_rounded),
                       label: Text(_reflectionDays.contains(_dateKey(DateTime.now()))
-                        ? 'Mai önellenőrzés kész ✓'
-                        : 'Mai tudatos pillanat  •  +10 XP'),
+                        ? appStrings(context).dailyOpenSaved
+                        : appStrings(context).dailyOpen),
                     ),
                   ),
                   const Text('Az XP önellenőrzésért és tudatos heti kihívásokért jár, nem az elfogyasztott italokért.',
