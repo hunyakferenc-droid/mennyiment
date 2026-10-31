@@ -1,45 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'app_language.dart';
 import 'menti_xp_store.dart';
 import 'menti_evolution.dart';
 import 'menti_profile_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'menti_character_catalog.dart';
+import 'menti_character_setup.dart';
+import 'menti_rewards.dart';
+import 'menti_reward_widgets.dart';
 
-/// Az XP a tudatos önreflexiót jutalmazza, nem az alkoholfogyasztást.
+/// All actions reuse the existing XP events. Badges never grant extra XP.
 class MentiProgressPage extends StatefulWidget {
   const MentiProgressPage({super.key});
-
   @override
   State<MentiProgressPage> createState() => _MentiProgressPageState();
 }
 
 class _MentiProgressPageState extends State<MentiProgressPage> {
-  static const _mint = Color(0xFF76E4B8);
-  static const _background = Color(0xFF0B1715);
-  static const _card = Color(0xFF172923);
-  static const _tasks = <(String, String, IconData, int)>[
-    ('review', 'Átnéztem a naplómat', Icons.menu_book_outlined, 15),
-    ('cost', 'Átgondoltam a költéseimet', Icons.account_balance_wallet_outlined, 15),
-    ('goal', 'Kijelöltem egy személyes célt', Icons.flag_outlined, 20),
-  ];
-
-  bool _loading = true;
-  int _xp = 0;
-  String _characterAsset = 'assets/images/menti_outfits/alap.png';
+  MentiXpState? _state;
+  MentiCharacterFamily _family = MentiCharacterFamily.boy;
+  String _asset = 'assets/images/menti_outfits/alap.png';
+  Set<String> _assets = {};
+  Set<String> _unlocked = {};
+  bool _busy = true;
+  bool _error = false;
   int _reaction = 0;
-  final Set<String> _days = {};
-  final Set<String> _completed = {};
-
-  String _dayKey(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
-  String _weekKey(DateTime date) {
-    final monday = DateTime(date.year, date.month, date.day)
-        .subtract(Duration(days: date.weekday - 1));
-    return _dayKey(monday);
-  }
-
-  int get _level => 1 + (_xp ~/ 50);
-  int get _levelXp => _xp % 50;
-  bool get _checkedToday => _days.contains(_dayKey(DateTime.now()));
-  bool _done(String id) => _completed.contains('${_weekKey(DateTime.now())}:$id');
 
   @override
   void initState() {
@@ -48,173 +33,144 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
   }
 
   Future<void> _load() async {
+    setState(() { _busy = true; _error = false; });
     try {
       final state = await MentiXpStore.load();
       final prefs = await SharedPreferences.getInstance();
       await MentiProfileStorage.migrate(prefs);
+      final assets = await MentiRewards.bundledAssets();
+      final unlocked = await MentiRewards.load(level: state.level, assets: assets);
       if (!mounted) return;
       setState(() {
-        _xp = state.xp;
-        _characterAsset = MentiProfileStorage.assetPath(prefs);
-        _days..clear()..addAll(state.days);
-        _completed..clear()..addAll(state.completed);
+        _state = state;
+        _family = MentiProfileStorage.family(prefs);
+        _asset = MentiProfileStorage.assetPath(prefs);
+        _assets = assets;
+        _unlocked = unlocked;
       });
-    } catch (error) {
-      debugPrint('Menti fejlődés betöltési hiba: $error');
+    } catch (_) {
+      if (mounted) setState(() => _error = true);
     } finally {
-      if (mounted) setState(() => _loading = false);
+      if (mounted) setState(() => _busy = false);
     }
   }
 
-  Future<void> _dailyCheckin() async {
-    if (_loading || _checkedToday) return;
-    setState(() => _loading = true);
+  Future<void> _complete([String? task]) async {
+    if (_busy || _error || _state == null) return;
+    setState(() => _busy = true);
+    final before = _state!.xp;
     try {
-      final wasChecked = _checkedToday;
-      final state = await MentiXpStore.checkInToday();
+      final state = task == null
+        ? await MentiXpStore.checkInToday()
+        : await MentiXpStore.completeWeekly(task);
+      final unlocked = await MentiRewards.load(level: state.level, assets: _assets);
       if (!mounted) return;
-      setState(() {
-        _xp = state.xp;
-        _days..clear()..addAll(state.days);
-        _completed..clear()..addAll(state.completed);
-        if (!wasChecked) _reaction++;
-      });
+      setState(() { _state = state; _unlocked = unlocked; _reaction++; });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Mai bejelentkezés kész! +10 XP')),
-      );
-    } catch (error) {
-      debugPrint('Menti XP mentési hiba: $error');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('A mentés nem sikerült.')),
-        );
-      }
+        SnackBar(content: Text(appStrings(context).evolutionSaved(state.xp - before))));
+    } catch (_) {
+      if (mounted) setState(() => _error = true);
     } finally {
-      if (mounted) setState(() => _loading = false);
+      if (mounted) setState(() => _busy = false);
     }
   }
 
-  Future<void> _completeTask(String id, int points) async {
-    if (_loading || _done(id)) return;
-    setState(() => _loading = true);
-    try {
-      final state = await MentiXpStore.completeWeekly(id);
-      if (!mounted) return;
-      setState(() {
-        _xp = state.xp;
-        _days..clear()..addAll(state.days);
-        _completed..clear()..addAll(state.completed);
-        _reaction++;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Kihívás teljesítve! +$points XP')),
-      );
-    } catch (error) {
-      debugPrint('Menti heti kihívás mentési hiba: $error');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('A mentés nem sikerült.')),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => _loading = false);
-    }
-  }
-
-  Widget _panel(Widget child) => Container(
-    width: double.infinity,
+  Widget _panel(Widget child) => Card(
     margin: const EdgeInsets.only(bottom: 16),
-    padding: const EdgeInsets.all(18),
-    decoration: BoxDecoration(
-      color: _card,
-      borderRadius: BorderRadius.circular(22),
-      border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
-    ),
-    child: child,
+    child: Padding(padding: const EdgeInsets.all(18), child: child),
   );
 
   @override
   Widget build(BuildContext context) {
+    final s = appStrings(context);
+    final state = _state;
+    final now = DateTime.now();
+    final checked = state?.checkedOn(now) ?? false;
+    final week = MentiXpStore.weekKey(now);
+    final days = state?.days.where((day) {
+      final date = DateTime.tryParse(day);
+      return date != null && MentiXpStore.weekKey(date) == week;
+    }).length ?? 0;
+    final tasks = state?.completed.where((event) => event.startsWith('$week:')).length ?? 0;
+    final badges = <(String, bool)>[
+      (s.evolutionReflectionBadge, state != null && state.days.isNotEmpty),
+      (s.evolutionGoalBadge, state?.completed.any((event) => event.endsWith(':goal')) ?? false),
+      (s.evolutionConsistencyBadge, (state?.days.length ?? 0) >= 7),
+    ];
+    final weekly = [
+      ('review', s.evolutionReview, Icons.menu_book_outlined),
+      ('cost', s.evolutionCost, Icons.account_balance_wallet_outlined),
+      ('goal', s.evolutionGoal, Icons.flag_outlined),
+    ];
     return Scaffold(
-      backgroundColor: _background,
-      appBar: AppBar(title: const Text('Menti fejlődése')),
-      body: _loading
+      appBar: AppBar(title: Text(s.evolutionTitle)),
+      body: Center(child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 680),
+        child: _busy && state == null
           ? const Center(child: CircularProgressIndicator())
-          : Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 680),
-                child: ListView(
-                  padding: const EdgeInsets.all(18),
-                  children: [
-                    _panel(Column(children: [
-                      MentiEvolution(size: 170, reaction: _reaction, level: _level, assetPath: _characterAsset),
-                      Text('Menti • $_level. szint',
-                        style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 8),
-                      Text('$_xp XP összesen', style: const TextStyle(color: _mint)),
-                      const SizedBox(height: 14),
-                      LinearProgressIndicator(
-                        value: _levelXp / 50,
-                        minHeight: 10,
-                        borderRadius: BorderRadius.circular(12),
-                        backgroundColor: Colors.white12,
-                        color: _mint,
-                      ),
-                      const SizedBox(height: 7),
-                      Text('$_levelXp / 50 XP a következő szintig',
-                        style: const TextStyle(color: Colors.white70)),
-                    ])),
-                    _panel(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      const Text('Napi bejelentkezés',
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 8),
-                      const Text('Szánj egy pillanatot arra, hogy átgondold a napodat. +10 XP'),
-                      const SizedBox(height: 14),
-                      SizedBox(width: double.infinity, child: FilledButton.icon(
-                        onPressed: _checkedToday ? null : _dailyCheckin,
-                        icon: Icon(_checkedToday ? Icons.check_circle : Icons.favorite_outline),
-                        label: Text(_checkedToday ? 'Ma már bejelentkeztél' : 'Mai bejelentkezés'),
-                      )),
-                    ])),
-                    _panel(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      const Text('Heti kihívások',
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 4),
-                      const Text('Az XP-rendszer közös a kezdőlappal. Hétfőn új kihívások indulnak.',
-                        style: TextStyle(color: Colors.white70)),
-                      const SizedBox(height: 10),
-                      for (final task in _tasks) ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        leading: Icon(task.$3, color: _mint),
-                        title: Text(task.$2),
-                        subtitle: Text('+${task.$4} XP • hetente egyszer'),
-                        trailing: _done(task.$1)
-                            ? const Icon(Icons.check_circle, color: _mint)
-                            : OutlinedButton(
-                                onPressed: () => _completeTask(task.$1, task.$4),
-                                child: const Text('Kész'),
-                              ),
-                      ),
-                    ])),
-                    _panel(const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text('Mérföldkövek',
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10),
-                      Text('🌱 Kezdő felfedező • 1. szint'),
-                      SizedBox(height: 8),
-                      Text('⭐ Tudatos útitárs • 3. szint'),
-                      SizedBox(height: 8),
-                      Text('🏆 Kitartó felfedező • 5. szint'),
-                    ])),
-                    const Text(
-                      'Az XP a bejelentkezéseket és a saját magad által jelölt tevékenységeket követi. '
-                      'Nem méri az alkoholmentességet vagy az egészségi állapotot.',
-                      style: TextStyle(color: Colors.white60, fontSize: 12),
-                    ),
-                  ],
-                ),
+          : ListView(padding: const EdgeInsets.all(18), children: [
+            if (_error) _panel(Column(children: [
+              Text(s.evolutionError),
+              TextButton(onPressed: _busy ? null : _load, child: Text(s.evolutionRetry)),
+            ])),
+            if (state != null) ...[
+              _panel(Column(children: [
+                MentiEvolution(size: 170, reaction: _reaction,
+                  level: state.level, assetPath: _asset),
+                Text('Menti • ${s.evolutionLevel(state.level)}'),
+                MentiLevelIndicator(xp: state.xp),
+              ])),
+              _panel(MentiNextReward(xp: state.xp, family: _family,
+                unlocked: _unlocked, assets: _assets)),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.checkroom_outlined),
+                label: Text(s.evolutionWardrobe),
+                onPressed: _busy ? null : () async {
+                  await Navigator.of(context).push(MaterialPageRoute<void>(
+                    builder: (_) => const MentiCharacterSetupPage()));
+                  if (mounted) await _load();
+                },
               ),
-            ),
+              _panel(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(s.evolutionDaily, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Text(s.evolutionDailyHint),
+                const SizedBox(height: 12),
+                FilledButton.icon(
+                  onPressed: _busy || _error || checked ? null : () => _complete(),
+                  icon: Icon(checked ? Icons.check_circle : Icons.favorite_outline),
+                  label: Text(checked ? s.evolutionChecked : s.evolutionCheck),
+                ),
+              ])),
+              _panel(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(s.evolutionWeekly, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                Text(s.evolutionWeeklyHint),
+                const SizedBox(height: 8),
+                Text(s.evolutionWeek(days, tasks)),
+                for (final task in weekly) ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(task.$3),
+                  title: Text(task.$2),
+                  subtitle: Text(s.evolutionPoints(MentiXpStore.weeklyPoints[task.$1]!)),
+                  trailing: state.completedThisWeek(task.$1, now)
+                    ? const Icon(Icons.check_circle)
+                    : OutlinedButton(
+                      onPressed: _busy || _error ? null : () => _complete(task.$1),
+                      child: Text(s.evolutionDone)),
+                ),
+              ])),
+              _panel(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(s.evolutionBadges, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                for (final badge in badges) ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(badge.$2 ? Icons.verified : Icons.radio_button_unchecked),
+                  title: Text(badge.$1),
+                  subtitle: Text(badge.$2 ? s.evolutionEarned : s.evolutionLocked),
+                ),
+              ])),
+              Text(s.evolutionPolicy),
+            ],
+          ]),
+      )),
     );
   }
 }

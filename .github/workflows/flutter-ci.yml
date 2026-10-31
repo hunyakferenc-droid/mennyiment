@@ -45,6 +45,9 @@ jobs:
         id: dependencies
         run: flutter pub get
 
+      - name: flutter gen-l10n
+        run: flutter gen-l10n
+
       - name: flutter analyze
         id: analyze
         run: flutter analyze

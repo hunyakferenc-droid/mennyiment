@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,8 +17,12 @@ class MentiXpState {
   final Set<String> days;
   final Set<String> completed;
 
-  int get level => 1 + xp ~/ 50;
-  int get levelXp => xp % 50;
+  static int levelFor(int xp) => 1 + xp ~/ 50;
+  static int levelXpFor(int xp) => xp % 50;
+  static int remainingFor(int xp) => 50 - levelXpFor(xp);
+  int get level => levelFor(xp);
+  int get levelXp => levelXpFor(xp);
+  int get remainingXp => remainingFor(xp);
   double get progress => levelXp / 50;
   bool checkedOn(DateTime date) => days.contains(MentiXpStore.dayKey(date));
   bool completedThisWeek(String id, DateTime date) =>
@@ -56,7 +61,7 @@ class MentiXpStore {
       : <String>{};
 
   static MentiXpState _fromData(Map<String, dynamic> data) => MentiXpState(
-        xp: ((data['xp'] as num?)?.toInt() ?? 0).clamp(0, 10000000),
+        xp: math.max(0, (data['xp'] as num?)?.toInt() ?? 0),
         days: _strings(data['days']),
         completed: _strings(data['completed']),
       );
@@ -72,7 +77,7 @@ class MentiXpStore {
     if (oldLastCheckin is String && oldLastCheckin.isNotEmpty) {
       reflectionDays.add(oldLastCheckin);
     }
-    final legacyXp = ((old['xp'] as num?)?.toInt() ?? 0).clamp(0, 10000000);
+    final legacyXp = math.max(0, (old['xp'] as num?)?.toInt() ?? 0);
     final state = MentiXpState(
       xp: legacyXp > reflectionDays.length * 10
           ? legacyXp

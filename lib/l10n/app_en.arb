@@ -103,5 +103,98 @@
   "weeklyReport": "Weekly Menti report • wellbeing and spending",
   "allEntries": "All entries",
   "statisticsNav": "Statistics",
-  "recentEntries": "Recent entries"
+  "recentEntries": "Recent entries",
+  "evolutionTitle": "Menti progress",
+  "evolutionLevel": "Level {level}",
+  "evolutionRemaining": "{xp} XP to the next level",
+  "evolutionTotal": "{xp} XP in total",
+  "evolutionNext": "Next reward",
+  "evolutionAll": "All current outfit rewards earned. Go at your own pace!",
+  "evolutionUnlock": "Level {level} • {xp} XP to go",
+  "evolutionDaily": "Daily mindful self-check",
+  "evolutionDailyHint": "Reflect on your day. +10 XP once a day, shared with Home.",
+  "evolutionChecked": "Today's self-check is complete",
+  "evolutionCheck": "I reflected on my day",
+  "evolutionWeekly": "Weekly mindful steps",
+  "evolutionWeeklyHint": "Self-reported, once per week. Opportunities renew on Monday.",
+  "evolutionReview": "I reviewed my journal",
+  "evolutionCost": "I reflected on my spending",
+  "evolutionGoal": "I set a personal goal",
+  "evolutionDone": "Done",
+  "evolutionPoints": "+{xp} XP • once per week",
+  "evolutionBadges": "Achievement badges",
+  "evolutionReflectionBadge": "Mindful self-check • 1 distinct day",
+  "evolutionGoalBadge": "Personal goal • set 1 weekly goal",
+  "evolutionConsistencyBadge": "Consistency • 7 distinct days, breaks are welcome",
+  "evolutionEarned": "Earned",
+  "evolutionLocked": "Still available",
+  "evolutionWeek": "This week: {days} self-checks • {tasks} mindful steps",
+  "evolutionPolicy": "Alcohol quantity and money spent do not earn XP. There is no negative XP or penalty for missed days. Badges award no extra XP and do not measure health or alcohol-free days.",
+  "evolutionError": "Progress could not be loaded or saved. Please try again.",
+  "evolutionRetry": "Retry",
+  "evolutionSaved": "Saved • +{xp} XP",
+  "evolutionWardrobe": "Open wardrobe",
+  "evolutionBasic": "Basic outfit",
+  "evolutionParty": "Party outfit",
+  "evolutionSport": "Sport outfit",
+  "evolutionBusiness": "Business outfit",
+  "evolutionFestival": "Festival outfit",
+  "evolutionLegendary": "Legendary outfit",
+  "evolutionImage": "Preview is currently unavailable",
+  "evolutionRules": "Unlocks: Basic, Party and Sport at level 1, Business at 2, Festival at 3, Legendary at 5. Earned outfits stay yours.",
+  "@evolutionLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionRemaining": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionTotal": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionUnlock": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionPoints": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionWeek": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "tasks": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionSaved": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  }
 }
