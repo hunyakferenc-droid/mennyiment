@@ -1,15 +1,14 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'menti_evolution.dart';
 import 'menti_profile_storage.dart';
+import 'menti_xp_store.dart';
 
 /// MennyiMent? 3.3 – Menti Studio.
 /// Megőrzi az eredeti avatar-, becenév- és fejfedőbeállításokat.
-/// Menti eredeti PNG-jét használja. A külön cserélhető ruhákhoz
-/// később külön grafikai rétegek szükségesek.
+/// A mentett karaktercsalád és ruhaszett teljes PNG-jét használja.
+/// A külön cserélhető ruharétegekhez később új grafika szükséges.
 class AvatarPage extends StatefulWidget {
   const AvatarPage({super.key});
 
@@ -22,7 +21,6 @@ class _AvatarPageState extends State<AvatarPage> {
   static const _nicknameKey = 'mennyiment_nickname_v1';
   static const _hatKey = 'mennyiment_hat_v1';
   static const _styleKey = MentiProfileStorage.studioBackgroundKey;
-  static const _progressKey = 'mennyiment_menti_progress_v1';
   static const _accessoryKey = 'mennyiment_accessory_v1';
 
   static const _mint = Color(0xFF76E4B8);
@@ -54,13 +52,14 @@ class _AvatarPageState extends State<AvatarPage> {
   int _hat = 0;
   int _style = 0;
   int _xp = 0;
+  String _characterAsset = 'assets/images/menti_outfits/alap.png';
   int _reaction = 0;
   int _accessory = 0;
   static const _accessoryNames = <String>['Eredeti', 'Napszemüveg', 'Csillagjelvény', 'Fejhallgató'];
   static const _accessoryIcons = <String>['✨', '🕶️', '⭐', '🎧'];
   static const _accessoryLevels = <int>[1, 1, 2, 3];
 
-  int get _level => 1 + _xp ~/ 100;
+  int get _level => 1 + _xp ~/ 50;
 
   @override
   void initState() {
@@ -72,16 +71,9 @@ class _AvatarPageState extends State<AvatarPage> {
     try {
       final prefs = await SharedPreferences.getInstance();
       await MentiProfileStorage.migrate(prefs);
-      var xp = 0;
-      final raw = prefs.getString(_progressKey);
-      if (raw != null) {
-        final decoded = jsonDecode(raw);
-        if (decoded is Map) {
-          final value = decoded['xp'];
-          if (value is num) xp = value.toInt().clamp(0, 1000000).toInt();
-        }
-      }
-      final level = 1 + xp ~/ 100;
+      final xpState = await MentiXpStore.load();
+      final xp = xpState.xp;
+      final level = xpState.level;
       var style = MentiProfileStorage.studioBackground(prefs);
       if (_styleLevels[style] > level) style = 0;
       if (!mounted) return;
@@ -91,6 +83,7 @@ class _AvatarPageState extends State<AvatarPage> {
         _hat = (prefs.getInt(_hatKey) ?? 0).clamp(0, _hatNames.length - 1).toInt();
         _style = style;
         _xp = xp;
+        _characterAsset = MentiProfileStorage.assetPath(prefs);
         final savedAccessory = (prefs.getInt(_accessoryKey) ?? 0).clamp(0, _accessoryNames.length - 1).toInt();
         _accessory = _accessoryLevels[savedAccessory] <= level ? savedAccessory : 0;
         _loading = false;
@@ -149,6 +142,7 @@ class _AvatarPageState extends State<AvatarPage> {
         children: [
           MentiEvolution(
             key: const ValueKey('menti-studio-character'),
+            assetPath: _characterAsset,
             size: size,
             level: _level,
             reaction: _reaction,
@@ -292,14 +286,14 @@ class _AvatarPageState extends State<AvatarPage> {
                       ]),
                       const SizedBox(height: 13),
                       LinearProgressIndicator(
-                        value: (_xp % 100) / 100,
+                        value: (_xp % 50) / 50,
                         minHeight: 10,
                         borderRadius: BorderRadius.circular(12),
                         color: _mint,
                         backgroundColor: Colors.white12,
                       ),
                       const SizedBox(height: 7),
-                      Text('$_level. szint • ${100 - _xp % 100} XP a következő szintig',
+                      Text('$_level. szint • ${50 - _xp % 50} XP a következő szintig',
                         style: const TextStyle(color: Colors.white70)),
                       const SizedBox(height: 7),
                       const Text('XP a tudatos naplózáshoz kapcsolódó kihívásokból jár, nem az ivásért.',

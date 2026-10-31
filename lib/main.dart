@@ -15,6 +15,7 @@ import 'menti_reactions.dart';
 import 'drink_catalog.dart';
 import 'avatar.dart';
 import 'menti_character_setup.dart';
+import 'menti_profile_storage.dart';
 import 'statistics.dart';
 import 'dashboard_v2.dart';
 import 'menti_evolution.dart';
@@ -571,6 +572,7 @@ void addCatalogDrink(CatalogDrink drink) {
     if (mounted) await _loadReflections();
   }
 
+  String _characterAsset = 'assets/images/menti_outfits/alap.png';
   String _characterName = 'Menti';
   String _characterAccessory = 'Nincs';
   String _characterAura = 'Narancs';
@@ -578,8 +580,10 @@ void addCatalogDrink(CatalogDrink drink) {
   Future<void> _loadCharacterProfile() async {
     try {
       final prefs = await SharedPreferences.getInstance();
+      await MentiProfileStorage.migrate(prefs);
       if (!mounted) return;
       setState(() {
+        _characterAsset = MentiProfileStorage.assetPath(prefs);
         _characterName = prefs.getString(MentiCharacterProfile.nameKey) ?? 'Menti';
         _characterAccessory = prefs.getString(MentiCharacterProfile.accessoryKey) ?? 'Nincs';
         _characterAura = prefs.getString(MentiCharacterProfile.auraKey) ?? 'Narancs';
@@ -598,9 +602,12 @@ void addCatalogDrink(CatalogDrink drink) {
     final saved = await Navigator.push<bool>(context,
       MaterialPageRoute(builder: (_) => const MentiCharacterSetupPage()));
     if (saved == true && mounted) {
+      await _loadReflections();
       final prefs = await SharedPreferences.getInstance();
+      await MentiProfileStorage.migrate(prefs);
       if (!mounted) return;
       setState(() {
+        _characterAsset = MentiProfileStorage.assetPath(prefs);
         _characterName = prefs.getString(MentiCharacterProfile.nameKey) ?? 'Menti';
         _characterAccessory = prefs.getString(MentiCharacterProfile.accessoryKey) ?? 'Nincs';
         _characterAura = prefs.getString(MentiCharacterProfile.auraKey) ?? 'Narancs';
@@ -883,6 +890,7 @@ void addCatalogDrink(CatalogDrink drink) {
                           )],
                         ),
                         child: MentiEvolution(
+                          assetPath: _characterAsset,
                           reaction: mentiReaction,
                           level: _mentiLevel,
                           size: width < 380 ? 100 : 126,
@@ -923,7 +931,8 @@ void addCatalogDrink(CatalogDrink drink) {
                     )),
                   ]),
                   const SizedBox(height: 13),
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Wrap(alignment: WrapAlignment.spaceBetween,
+                    spacing: 8, runSpacing: 4,
                     children: [
                       Text('$_reflectionXp XP összesen',
                         style: const TextStyle(fontWeight: FontWeight.w700)),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'menti_xp_store.dart';
-import 'menti_animation.dart';
+import 'menti_evolution.dart';
+import 'menti_profile_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Az XP a tudatos önreflexiót jutalmazza, nem az alkoholfogyasztást.
 class MentiProgressPage extends StatefulWidget {
@@ -22,6 +24,7 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
 
   bool _loading = true;
   int _xp = 0;
+  String _characterAsset = 'assets/images/menti_outfits/alap.png';
   int _reaction = 0;
   final Set<String> _days = {};
   final Set<String> _completed = {};
@@ -47,9 +50,12 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
   Future<void> _load() async {
     try {
       final state = await MentiXpStore.load();
+      final prefs = await SharedPreferences.getInstance();
+      await MentiProfileStorage.migrate(prefs);
       if (!mounted) return;
       setState(() {
         _xp = state.xp;
+        _characterAsset = MentiProfileStorage.assetPath(prefs);
         _days..clear()..addAll(state.days);
         _completed..clear()..addAll(state.completed);
       });
@@ -141,7 +147,7 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
                   padding: const EdgeInsets.all(18),
                   children: [
                     _panel(Column(children: [
-                      MentiAnimation(size: 170, reaction: _reaction),
+                      MentiEvolution(size: 170, reaction: _reaction, level: _level, assetPath: _characterAsset),
                       Text('Menti • $_level. szint',
                         style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 8),

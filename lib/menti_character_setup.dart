@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_profile_storage.dart';
 import 'menti_character_catalog.dart';
+import 'menti_xp_store.dart';
 
 /// Existing profile keys are preserved; the colliding style key is migrated.
 class MentiCharacterProfile {
@@ -12,7 +13,7 @@ class MentiCharacterProfile {
   static const completedKey = 'mennyiment_character_setup_complete_v1';
   static const accessoryKey = 'mennyiment_menti_accessory_v1';
   static const auraKey = 'mennyiment_menti_aura_v1';
-  static const outfitKey = 'mennyiment_outfit_v2';
+  static const outfitKey = MentiProfileStorage.outfitKey;
   static const moodKey = 'mennyiment_mood_v2';
   static const tintKey = 'mennyiment_character_color_v2';
 }
@@ -41,8 +42,6 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
   bool _saving = false;
   int _reflectionXp = 0;
   int get _level => 1 + _reflectionXp ~/ 50;
-  // Same storage as the existing daily self-check XP system.
-  static const _reflectionDaysKey = 'mennyiment_reflection_days_v1';
   final _name = TextEditingController(text: 'Menti');
 
   @override
@@ -54,11 +53,12 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
   Future<void> _load() async {
     final p = await SharedPreferences.getInstance();
     await MentiProfileStorage.migrate(p);
+    final xpState = await MentiXpStore.load();
     if (!mounted) return;
     final savedStyle = p.get(MentiCharacterProfile.styleKey);
     final savedOutfit = p.get(MentiCharacterProfile.outfitKey);
     setState(() {
-      _reflectionXp = (p.getStringList(_reflectionDaysKey) ?? const <String>[]).toSet().length * 10;
+      _reflectionXp = xpState.xp;
       _style = MentiCharacterFamily.resolve(savedStyle) ?? MentiCharacterFamily.boy;
       _preserveUnknownStyle = savedStyle != null && MentiCharacterFamily.resolve(savedStyle) == null;
       _age = p.getString(MentiCharacterProfile.ageKey) ?? _age;
@@ -170,6 +170,7 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
       width: double.infinity,
       child: Image.asset(
         image,
+        cacheWidth: (400 * MediaQuery.devicePixelRatioOf(context)).ceil().clamp(1, 1086),
         fit: BoxFit.contain,
         alignment: Alignment.center,
         errorBuilder: (context, error, stackTrace) => _missingAsset(image),
@@ -206,6 +207,7 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
                 child: Column(children: [
                   Expanded(child: Image.asset(
                     option.selectorAsset,
+                    cacheWidth: (180 * MediaQuery.devicePixelRatioOf(context)).ceil().clamp(1, 512),
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stack) =>
                       _missingAsset(option.selectorAsset, compact: true),
@@ -363,6 +365,7 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
               child: Column(children: [
                 Expanded(child: Image.asset(
                   _style.assetFor(outfit),
+                  cacheWidth: (185 * MediaQuery.devicePixelRatioOf(context)).ceil().clamp(1, 1086),
                   fit: BoxFit.contain,
                   errorBuilder: (context, error, stackTrace) =>
                     _missingAsset(_style.assetFor(outfit), compact: true),
