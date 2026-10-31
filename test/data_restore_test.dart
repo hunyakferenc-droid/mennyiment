@@ -15,10 +15,12 @@ class FaultStore extends InMemorySharedPreferencesStore {
   int writes = 0;
   Set<int> failAt = {};
   bool throwing = false;
+  bool persistThenFail = false;
   @override
   Future<bool> setValue(String type, String key, Object value) async {
     writes++;
     if (failAt.contains(writes)) {
+      if (persistThenFail) { await super.setValue(type, key, value); }
       if (throwing) throw StateError('disk failure');
       return false;
     }
@@ -176,6 +178,24 @@ void main() {
     await expectLater(service.restore(await service.prepare(text), confirmed: true), throwsStateError);
     expect(await snapshot(), {'mennyiment_a': 'old'});
     expect(store.writes, 1);
+  });
+  test('ambiguous pre-image persistence plus failed cleanup blocks editing until recovery', () async {
+    final text = await backup({'mennyiment_a': 'new'});
+    SharedPreferences.setMockInitialValues({'mennyiment_a': 'old'});
+    await SharedPreferences.getInstance();
+    final original = SharedPreferencesStorePlatform.instance;
+    addTearDown(() => SharedPreferencesStorePlatform.instance = original);
+    final store = FaultStore({'flutter.mennyiment_a': 'old'})
+      ..persistThenFail = true ..failAt = {1, 2};
+    SharedPreferencesStorePlatform.instance = store;
+    final service = BackupRestorer();
+    await expectLater(service.restore(await service.prepare(text), confirmed: true),
+      throwsA(isA<RestoreFailure>().having((e) => e.recoveryRequired, 'blocked', true)));
+    expect((await snapshot())['mennyiment_a'], 'old');
+    expect((await snapshot()).containsKey(BackupRestorer.recoveryKey), true);
+    store.failAt = {};
+    await service.recover();
+    expect(await snapshot(), {'mennyiment_a': 'old'});
   });
   test('interrupted process recovery removes added keys and preserves foreign preferences', () async {
     final text = await backup({'mennyiment_a': 5});

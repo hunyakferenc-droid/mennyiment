@@ -1,12 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 import 'package:mennyiment/data_backup.dart';
+import 'package:mennyiment/data_restore.dart';
+import 'package:mennyiment/main.dart';
 import 'package:mennyiment/data_backup_page.dart';
 import 'package:mennyiment/l10n/generated/app_localizations.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  testWidgets('startup recovers an interrupted restore before mounting stores and home', (tester) async {
+    const xp = '{"xp":90,"days":[],"completed":[]}';
+    SharedPreferences.setMockInitialValues({'mennyiment_menti_xp_v2': xp,
+      'mennyiment_character_setup_complete_v1': true, 'mennyiment_reduce_motion_v1': true});
+    final previous = (await BackupExporter().capture()).json;
+    SharedPreferences.setMockInitialValues({'mennyiment_menti_xp_v2': 'partial',
+      'mennyiment_character_setup_complete_v1': true, 'mennyiment_reduce_motion_v1': true,
+      BackupRestorer.recoveryKey: jsonEncode({'backup': previous,
+        'keys': ['mennyiment_menti_xp_v2']})});
+    await tester.pumpWidget(const MennyiMentApp());
+    await tester.pumpAndSettle();
+    final p = await SharedPreferences.getInstance();
+    expect(find.byType(HomePage), findsOneWidget);
+    expect(p.getString('mennyiment_menti_xp_v2'), xp);
+    expect(p.containsKey(BackupRestorer.recoveryKey), false);
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+  });
+  testWidgets('unreadable recovery journal blocks all app screens and migrations', (tester) async {
+    SharedPreferences.setMockInitialValues({BackupRestorer.recoveryKey: 'broken',
+      'mennyiment_menti_progress_v1': '{"xp":70}'});
+    await tester.pumpWidget(const MennyiMentApp());
+    await tester.pumpAndSettle();
+    final p = await SharedPreferences.getInstance();
+    expect(find.byType(HomePage), findsNothing);
+    expect(p.containsKey('mennyiment_menti_xp_v2'), false);
+    expect(p.getString(BackupRestorer.recoveryKey), 'broken');
+    expect(find.byType(FilledButton), findsOneWidget);
+    await tester.tap(find.byType(FilledButton));
+    await tester.pumpAndSettle();
+    expect(find.byType(HomePage), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
   for (final locale in ['hu', 'en']) {
     testWidgets('$locale validated preview, cancel, confirm and one restore in a narrow viewport', (tester) async {
       SharedPreferences.setMockInitialValues({'mennyiment_locale_v1': 'en',

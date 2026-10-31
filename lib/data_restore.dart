@@ -95,9 +95,23 @@ class BackupRestorer {
       final previous = await BackupExporter(openPreferences: () async => p).capture();
       if (!_same(_snapshot(p), plan.before)) { throw StateError('Preview is stale'); }
       final journal = jsonEncode({'backup': previous.json, 'keys': plan.keys});
-      await _write(p, recoveryKey, journal);
-      await p.reload();
-      if (p.getString(recoveryKey) != journal) { throw StateError('Recovery image not durable'); }
+      try {
+        await _write(p, recoveryKey, journal);
+        await p.reload();
+        if (p.getString(recoveryKey) != journal) { throw StateError('Recovery image not durable'); }
+      } catch (_) {
+        // A backend may persist a write and still report failure. No user key
+        // has been touched yet; remove only our own journal or block editing.
+        try {
+          await p.reload();
+          if (p.get(recoveryKey) == journal) {
+            await _write(p, recoveryKey, null);
+            await p.reload();
+          }
+          if (p.containsKey(recoveryKey)) { throw StateError('Recovery pending'); }
+        } catch (_) { throw const RestoreFailure(recoveryRequired: true); }
+        rethrow;
+      }
       try {
         for (final k in plan.keys) { await _write(p, k, plan.after[k]); }
         await p.reload();
