@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'menti_motion.dart';
 
 /// Megjelenítési adatmodell: a meglévő megtakarítási célokból készül.
 /// Nem módosít és nem ment felhasználói adatokat.
@@ -34,7 +35,17 @@ class _MentiGoalWorldPageState extends State<MentiGoalWorldPage>
   void initState() {
     super.initState();
     _float = AnimationController(vsync: this,
-      duration: const Duration(milliseconds: 2400))..repeat(reverse: true);
+      duration: const Duration(milliseconds: 2400));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (MentiMotionScope.animateOf(context)) {
+      if (!_float.isAnimating) _float.repeat(reverse: true);
+    } else {
+      _float.reset();
+    }
   }
 
   @override

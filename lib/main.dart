@@ -19,6 +19,7 @@ import 'menti_profile_storage.dart';
 import 'statistics.dart';
 import 'dashboard_v2.dart';
 import 'menti_evolution.dart';
+import 'menti_motion.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MennyiMentApp());
@@ -30,6 +31,7 @@ class MennyiMentApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      builder: (context, child) => MentiMotionScope(child: child!),
       debugShowCheckedModeBanner: false,
       title: 'MennyiMent?',
       theme: ThemeData(
@@ -1079,14 +1081,14 @@ void addCatalogDrink(CatalogDrink drink) {
 }
 
 /// Menti folyamatosan lebeg és négy másodpercenként pislog.
-class FloatingMenti extends StatefulWidget {
-  const FloatingMenti({super.key});
+class _FloatingMentiAnimated extends StatefulWidget {
+  const _FloatingMentiAnimated();
 
   @override
-  State<FloatingMenti> createState() => _FloatingMentiState();
+  State<_FloatingMentiAnimated> createState() => __FloatingMentiAnimatedState();
 }
 
-class _FloatingMentiState extends State<FloatingMenti>
+class __FloatingMentiAnimatedState extends State<_FloatingMentiAnimated>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _movement;
@@ -1151,6 +1153,16 @@ class _FloatingMentiState extends State<FloatingMenti>
   }
 }
 
+
+/// Legacy animation kept API-compatible, with timers disposed when motion stops.
+class FloatingMenti extends StatelessWidget {
+  const FloatingMenti({super.key});
+  @override
+  Widget build(BuildContext context) => MentiMotionScope.animateOf(context)
+      ? const _FloatingMentiAnimated()
+      : Image.asset('assets/images/menti.png', width: 230, height: 230,
+          fit: BoxFit.contain);
+}
 
 /// 4.3: mennyiség, alkoholfok és ár egy lépésben.
 /// Az ár opcionális; a hiányzó ár nem jelent 0 Ft-os vásárlást.
