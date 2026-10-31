@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_profile_storage.dart';
+import 'menti_character_catalog.dart';
 
 /// Existing profile keys are preserved; the colliding style key is migrated.
 class MentiCharacterProfile {
@@ -16,28 +17,6 @@ class MentiCharacterProfile {
   static const tintKey = 'mennyiment_character_color_v2';
 }
 
-class _MentiOutfit {
-  const _MentiOutfit(this.label, this.subtitle, this.file, this.icon);
-  final String label, subtitle, file;
-  final IconData icon;
-
-  int get requiredLevel => switch (file) {
-    'uzleti.png' => 2,
-    'fesztival.png' => 3,
-    'legendas.png' => 5,
-    _ => 1,
-  };
-}
-
-const _outfits = <_MentiOutfit>[
-  _MentiOutfit('Alap szett', 'Kezdő stílus', 'alap.png', Icons.stars_outlined),
-  _MentiOutfit('Buli szett', 'Vidám hangulat', 'buli.png', Icons.celebration_outlined),
-  _MentiOutfit('Sport szett', 'Aktív napok', 'sport.png', Icons.fitness_center_outlined),
-  _MentiOutfit('Üzleti szett', 'Elegáns', 'uzleti.png', Icons.work_outline),
-  _MentiOutfit('Fesztivál szett', 'Színes stílus', 'fesztival.png', Icons.music_note_outlined),
-  _MentiOutfit('Legendás szett', 'Prémium stílus', 'legendas.png', Icons.auto_awesome_outlined),
-];
-
 class MentiCharacterSetupPage extends StatefulWidget {
   const MentiCharacterSetupPage({super.key});
   @override
@@ -49,12 +28,14 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
   static const _panel = Color(0xFF131F36);
   static const _blue = Color(0xFF258BFF);
   static const _muted = Color(0xFFA7B8D2);
-  String _style = 'Fiú Menti';
+  MentiCharacterFamily _style = MentiCharacterFamily.boy;
   String _age = '25–34';
   String _appearance = 'Fiatalos';
   String _accessory = 'Nincs';
   String _aura = 'Narancs';
-  String _outfit = 'Alap szett';
+  MentiOutfit _outfit = MentiOutfit.basic;
+  bool _preserveUnknownStyle = false;
+  bool _preserveUnknownOutfit = false;
   String _mood = 'Vidám';
   String _tint = 'Narancs';
   bool _saving = false;
@@ -74,14 +55,18 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
     final p = await SharedPreferences.getInstance();
     await MentiProfileStorage.migrate(p);
     if (!mounted) return;
+    final savedStyle = p.get(MentiCharacterProfile.styleKey);
+    final savedOutfit = p.get(MentiCharacterProfile.outfitKey);
     setState(() {
       _reflectionXp = (p.getStringList(_reflectionDaysKey) ?? const <String>[]).toSet().length * 10;
-      _style = MentiProfileStorage.characterStyle(p);
+      _style = MentiCharacterFamily.resolve(savedStyle) ?? MentiCharacterFamily.boy;
+      _preserveUnknownStyle = savedStyle != null && MentiCharacterFamily.resolve(savedStyle) == null;
       _age = p.getString(MentiCharacterProfile.ageKey) ?? _age;
       _appearance = p.getString(MentiCharacterProfile.appearanceKey) ?? _appearance;
       _accessory = p.getString(MentiCharacterProfile.accessoryKey) ?? _accessory;
       _aura = p.getString(MentiCharacterProfile.auraKey) ?? _aura;
-      _outfit = p.getString(MentiCharacterProfile.outfitKey) ?? _outfit;
+      _outfit = MentiOutfit.resolve(savedOutfit) ?? MentiOutfit.basic;
+      _preserveUnknownOutfit = savedOutfit != null && MentiOutfit.resolve(savedOutfit) == null;
       _mood = p.getString(MentiCharacterProfile.moodKey) ?? _mood;
       _tint = p.getString(MentiCharacterProfile.tintKey) ?? _tint;
       _name.text = p.getString(MentiCharacterProfile.nameKey) ?? 'Menti';
@@ -107,13 +92,18 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
     setState(() => _saving = true);
     try {
       final p = await SharedPreferences.getInstance();
-      await p.setString(MentiCharacterProfile.styleKey, _style);
+      // An unrelated profile edit must not replace an unknown saved choice.
+      if (!_preserveUnknownStyle) {
+        await p.setString(MentiCharacterProfile.styleKey, _style.id);
+      }
       await p.setString(MentiCharacterProfile.ageKey, _age);
       await p.setString(MentiCharacterProfile.appearanceKey, _appearance);
       await p.setString(MentiCharacterProfile.nameKey, n);
       await p.setString(MentiCharacterProfile.accessoryKey, _accessory);
       await p.setString(MentiCharacterProfile.auraKey, _aura);
-      await p.setString(MentiCharacterProfile.outfitKey, _outfit);
+      if (!_preserveUnknownOutfit) {
+        await p.setString(MentiCharacterProfile.outfitKey, _outfit.id);
+      }
       await p.setString(MentiCharacterProfile.moodKey, _mood);
       await p.setString(MentiCharacterProfile.tintKey, _tint);
       await p.setBool(MentiCharacterProfile.completedKey, true);
@@ -170,22 +160,7 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
     ]);
   }
 
-  String get _styleFolder => switch (_style) {
-    'Lány Menti' => 'lany',
-    'Semleges Menti' => 'semleges',
-    _ => 'fiu',
-  };
-
-  String _outfitAssetFor(String file) {
-    if (_style == 'Fiú Menti') {
-      return 'assets/images/menti_outfits/$file';
-    }
-    return 'assets/images/menti_outfits_642/$_styleFolder/$file';
-  }
-
-  // Minden Menti ugyanazt a kiválasztott ruhaszettet mutatja
-  // a nagyméretű előnézetben. A meglévő asset-útvonalakat használjuk.
-  String get _previewAsset => _outfitAssetFor(_outfitFile);
+  String get _previewAsset => _style.assetFor(_outfit);
 
   Widget _previewImage(String image) {
     // Teljes karakterkép, nagyítás és levágás nélkül.
@@ -203,11 +178,6 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
   }
 
   Widget _characterSelector() {
-    const options = <(String, String)>[
-      ('Fiú Menti', 'fiu.png'),
-      ('Lány Menti', 'lany.png'),
-      ('Semleges Menti', 'semleges.png'),
-    ];
     return LayoutBuilder(builder: (context, layout) {
       final columns = layout.maxWidth < 320 ? 2 : 3;
       return GridView.count(
@@ -218,27 +188,30 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          for (final option in options)
+          for (final option in MentiCharacterFamily.values)
             InkWell(
-              onTap: () => setState(() => _style = option.$1),
+              onTap: () => setState(() {
+                _style = option;
+                _preserveUnknownStyle = false;
+              }),
               borderRadius: BorderRadius.circular(16),
               child: Container(
                 decoration: BoxDecoration(
-                  color: _style == option.$1 ? const Color(0xFF164679) : _bg,
+                  color: _style == option ? const Color(0xFF164679) : _bg,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: _style == option.$1 ? _blue : const Color(0xFF33445E),
-                      width: _style == option.$1 ? 2 : 1),
+                  border: Border.all(color: _style == option ? _blue : const Color(0xFF33445E),
+                      width: _style == option ? 2 : 1),
                 ),
                 padding: const EdgeInsets.all(5),
                 child: Column(children: [
                   Expanded(child: Image.asset(
-                    'assets/images/menti_characters/${option.$2}',
+                    option.selectorAsset,
                     fit: BoxFit.contain,
                     errorBuilder: (context, error, stack) =>
-                      _missingAsset('assets/images/menti_characters/${option.$2}', compact: true),
+                      _missingAsset(option.selectorAsset, compact: true),
                   )),
                   const SizedBox(height: 4),
-                  Text(option.$1, textAlign: TextAlign.center, maxLines: 2,
+                  Text(option.label, textAlign: TextAlign.center, maxLines: 2,
                     style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                 ]),
               ),
@@ -247,9 +220,6 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
       );
     });
   }
-
-  String get _outfitFile => _outfits.firstWhere(
-      (x) => x.label == _outfit, orElse: () => _outfits.first).file;
 
   Widget _missingAsset(String assetPath, {bool compact = false}) {
     // A korábbi ikon-visszaesés elrejtette a hiányzó képeket.
@@ -296,7 +266,7 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
           const SizedBox(height: 8),
           Text(_name.text.trim().isEmpty ? 'Menti' : _name.text.trim(),
               style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w900)),
-          Text('$_style  •  $_outfit',
+          Text('${_style.label}  •  ${_outfit.label}',
               textAlign: TextAlign.center, style: const TextStyle(color: _muted)),
           const SizedBox(height: 7),
           Text('Hangulat: $_mood  ·  Aura: $_aura',
@@ -364,19 +334,22 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
       _section('Ruha szettek', GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: _outfits.length,
+        itemCount: MentiOutfit.values.length,
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 185, mainAxisSpacing: 9,
           crossAxisSpacing: 9, childAspectRatio: .74,
         ),
         itemBuilder: (context, i) {
-          final outfit = _outfits[i];
-          final selected = outfit.label == _outfit;
+          final outfit = MentiOutfit.values[i];
+          final selected = outfit == _outfit;
           final unlocked = _level >= outfit.requiredLevel || selected;
           final selectable = unlocked;
           return InkWell(
             borderRadius: BorderRadius.circular(16),
-            onTap: selectable ? () => setState(() => _outfit = outfit.label)
+            onTap: selectable ? () => setState(() {
+              _outfit = outfit;
+              _preserveUnknownOutfit = false;
+            })
               : () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text('A ${outfit.label} a(z) ${outfit.requiredLevel}. szinten nyílik meg.'))),
             child: Container(
@@ -389,10 +362,10 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
               ),
               child: Column(children: [
                 Expanded(child: Image.asset(
-                  _outfitAssetFor(outfit.file),
+                  _style.assetFor(outfit),
                   fit: BoxFit.contain,
                   errorBuilder: (context, error, stackTrace) =>
-                    _missingAsset(_outfitAssetFor(outfit.file), compact: true),
+                    _missingAsset(_style.assetFor(outfit), compact: true),
                 )),
                 const SizedBox(height: 5),
                 Text(outfit.label, maxLines: 1, overflow: TextOverflow.ellipsis,
@@ -404,7 +377,7 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
             ),
           );
         },
-      ), subtitle: _style == 'Semleges Menti'
+      ), subtitle: _style == MentiCharacterFamily.neutral
           ? 'A szettkártyák prototípusok; nagyban a teljes alapkarakter látszik.'
           : 'Alap, Buli és Sport: 1. szint • Üzleti: 2. • Fesztivál: 3. • Legendás: 5.'),
       const SizedBox(height: 12),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/avatar.dart';
+import 'package:mennyiment/menti_character_catalog.dart';
 import 'package:mennyiment/menti_character_setup.dart';
 import 'package:mennyiment/menti_profile_storage.dart';
 
@@ -180,7 +181,9 @@ void main() {
       for (final family in MentiProfileStorage.characterStyles) {
         await open();
         expect(
-          find.text('${prefs.getString(character)}  •  Legendás szett'),
+          find.text(
+            '${MentiProfileStorage.characterStyle(prefs)}  •  Legendás szett',
+          ),
           findsOneWidget,
         );
         await tester.ensureVisible(find.text(family).last);
@@ -190,10 +193,10 @@ void main() {
         await tester.ensureVisible(find.text('Saját Menti mentése'));
         await tester.tap(find.text('Saját Menti mentése'));
         await tester.pumpAndSettle();
-        expect(prefs.get(character), family);
+        expect(prefs.get(character), MentiCharacterFamily.resolve(family)!.id);
         expect(prefs.get(background), 1);
         expect(prefs.get(legacy), 1);
-        expect(prefs.get(outfit), 'Legendás szett');
+        expect(prefs.get(outfit), MentiOutfit.legendary.id);
         expect(tester.takeException(), isNull);
         await tester.pumpWidget(const SizedBox.shrink());
         await tester.pump();
