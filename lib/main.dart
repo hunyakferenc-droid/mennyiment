@@ -220,7 +220,7 @@ void updateMentiMessage(MentiMood mood) {
 
   Future<void> _openDataBackup() async {
     if (_journalSaving || _customSaving || _reflectionBusy || _recording ||
-        _editingEntry || _deletingEntry || _pickerOpen) return;
+        _editingEntry || _deletingEntry || _pickerOpen) { return; }
     await _initialLoad;
     if (!mounted) return;
     await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => DataBackupPage(

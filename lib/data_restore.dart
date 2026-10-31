@@ -53,7 +53,7 @@ class BackupRestorer {
     for (final e in values.entries) { validateRestoreValue(e.key, e.value); }
     final p = await _open();
     await p.reload();
-    if (p.containsKey(recoveryKey)) throw const RestoreFailure(recoveryRequired: true);
+    if (p.containsKey(recoveryKey)) { throw const RestoreFailure(recoveryRequired: true); }
     final before = _snapshot(p);
     // Permanent unlocks survive restoring an older, lower-XP backup.
     const rewards = 'mennyiment_menti_rewards_v1';
@@ -78,26 +78,26 @@ class BackupRestorer {
       List<String>() => await p.setStringList(k, v),
       _ => throw const FormatException('Invalid stored value'),
     };
-    if (!ok) throw StateError('Persistence failed');
+    if (!ok) { throw StateError('Persistence failed'); }
   }
 
   Future<void> restore(RestorePlan plan, {required bool confirmed}) async {
-    if (!confirmed) throw StateError('Explicit confirmation required');
-    if (_busy) throw StateError('Restore already running');
+    if (!confirmed) { throw StateError('Explicit confirmation required'); }
+    if (_busy) { throw StateError('Restore already running'); }
     _busy = true;
     try {
       final p = await _open();
       await p.reload();
-      if (p.containsKey(recoveryKey)) throw const RestoreFailure(recoveryRequired: true);
-      if (!_same(_snapshot(p), plan.before)) throw StateError('Preview is stale');
+      if (p.containsKey(recoveryKey)) { throw const RestoreFailure(recoveryRequired: true); }
+      if (!_same(_snapshot(p), plan.before)) { throw StateError('Preview is stale'); }
       // Save the entire pre-write image as a validated typed backup. Null keys
       // identify newly introduced values that rollback must remove.
       final previous = await BackupExporter(openPreferences: () async => p).capture();
-      if (!_same(_snapshot(p), plan.before)) throw StateError('Preview is stale');
+      if (!_same(_snapshot(p), plan.before)) { throw StateError('Preview is stale'); }
       final journal = jsonEncode({'backup': previous.json, 'keys': plan.keys});
       await _write(p, recoveryKey, journal);
       await p.reload();
-      if (p.getString(recoveryKey) != journal) throw StateError('Recovery image not durable');
+      if (p.getString(recoveryKey) != journal) { throw StateError('Recovery image not durable'); }
       try {
         for (final k in plan.keys) { await _write(p, k, plan.after[k]); }
         await p.reload();
@@ -108,7 +108,7 @@ class BackupRestorer {
         }
         await _write(p, recoveryKey, null);
         await p.reload();
-        if (p.containsKey(recoveryKey)) throw StateError('Transaction not committed');
+        if (p.containsKey(recoveryKey)) { throw StateError('Transaction not committed'); }
       } catch (_) {
         try { await _recover(p, image: journal); } catch (_) {
           throw const RestoreFailure(recoveryRequired: true);
@@ -123,7 +123,7 @@ class BackupRestorer {
   Future<void> recover() async {
     final p = await _open();
     await p.reload();
-    if (p.containsKey(recoveryKey)) await _recover(p);
+    if (p.containsKey(recoveryKey)) { await _recover(p); }
   }
 
   static Future<void> _recover(SharedPreferences p, {String? image}) async {
@@ -132,10 +132,10 @@ class BackupRestorer {
     if (image != null && p.get(recoveryKey) != image) {
       await _write(p, recoveryKey, image);
       await p.reload();
-      if (p.get(recoveryKey) != image) throw StateError('Recovery not durable');
+      if (p.get(recoveryKey) != image) { throw StateError('Recovery not durable'); }
     }
     final raw = image ?? p.get(recoveryKey);
-    if (raw is! String) throw StateError('Invalid recovery journal');
+    if (raw is! String) { throw StateError('Invalid recovery journal'); }
     final journal = jsonDecode(raw);
     if (journal is! Map || journal['backup'] is! String || journal['keys'] is! List) {
       throw StateError('Invalid recovery journal');
@@ -156,7 +156,7 @@ class BackupRestorer {
     }
     await _write(p, recoveryKey, null);
     await p.reload();
-    if (p.containsKey(recoveryKey)) throw StateError('Recovery incomplete');
+    if (p.containsKey(recoveryKey)) { throw StateError('Recovery incomplete'); }
   }
 }
 
@@ -164,7 +164,7 @@ class BackupRestorer {
 /// unknown fields. Export remains lossless even for unreadable historical data.
 void validateRestoreValue(String key, Object value) {
   void require(bool condition) {
-    if (!condition) throw FormatException('Invalid restore value: $key');
+    if (!condition) { throw FormatException('Invalid restore value: $key'); }
   }
   const lists = {'mennyiment_favorites_v1', 'mennyiment_reflection_days_v1',
     'mennyiment_menti_rewards_v1'};
@@ -194,25 +194,34 @@ void validateRestoreValue(String key, Object value) {
     return;
   }
   require(value is String);
-  final data = jsonDecode(value as String);
+  final dynamic data = decodeBackupJson(value as String);
   require(listJson.contains(key) ? data is List : data is Map<String, dynamic>);
   if (listJson.contains(key)) {
     for (final item in data as List) {
       require(item is Map<String, dynamic>);
       final m = item as Map<String, dynamic>;
-      if (key == 'mennyiment_drinks_v1') Drink.fromJson(m);
+      if (key == 'mennyiment_drinks_v1') { Drink.fromJson(m); }
       if (key == 'mennyiment_custom_drinks_v1') {
         Drink.fromJson({...m, 'time': '2000-01-01T00:00:00.000'});
         require(m['emoji'] is String && (m['category'] == null || m['category'] is String));
       }
       if (key == 'mennyiment_wellbeing_v1') {
         require(m['day'] is String && DateTime.tryParse(m['day'] as String) != null);
-        require(m['mood'] is num && m['sleep'] is num && m['hangover'] is num);
+        for (final f in ['mood', 'sleep', 'hangover']) {
+          final rating = m[f];
+          require(rating is int && rating >= (f == 'hangover' ? 0 : 1) &&
+              rating <= (f == 'hangover' ? 4 : 5));
+        }
+        require(RegExp(r'^\d{4}-\d{2}-\d{2}').hasMatch(m['day'] as String));
+        final date = (m['day'] as String).substring(0, 10);
+        require(DateTime.tryParse(date)?.toIso8601String().startsWith(date) == true);
         require(m['note'] == null || m['note'] is String);
       }
       if (key == 'mennyiment_savings_goals_v1') {
         require(m['id'] is String && m['title'] is String && m['targetFt'] is num && m['savedFt'] is num);
         require(m['emoji'] == null || m['emoji'] is String);
+        require((m['title'] as String).isNotEmpty && (m['targetFt'] as num) > 0 &&
+            (m['savedFt'] as num) >= 0);
       }
     }
   }
@@ -226,7 +235,11 @@ void validateRestoreValue(String key, Object value) {
     for (final f in ['goal', 'evening']) { require(data[f] == null || data[f] is String); }
   }
   if (key == 'mennyiment_menti_xp_v2' || key == 'mennyiment_menti_progress_v1') {
-    require(data['xp'] is int && (data['xp'] as int) >= 0);
+    require((key == 'mennyiment_menti_progress_v1' && data['xp'] == null) ||
+        (data['xp'] is int && (data['xp'] as int) >= 0));
+    if (key == 'mennyiment_menti_progress_v1') {
+      require(data['lastCheckin'] == null || data['lastCheckin'] is String);
+    }
     for (final f in ['days', 'completed']) {
       require(data[f] == null || (data[f] is List && (data[f] as List).every((v) => v is String)));
     }

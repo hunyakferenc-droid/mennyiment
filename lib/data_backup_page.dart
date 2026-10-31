@@ -81,8 +81,8 @@ class _DataBackupPageState extends State<DataBackupPage> {
       final plan = await _restorer.prepare(text);
       if (mounted) setState(() => _plan = plan);
     } on RestoreFailure catch (error) {
-      if (mounted) setState(() { _recovery = error.recoveryRequired;
-        _message = appStrings(context).restoreRecovery; });
+      if (mounted) { setState(() { _recovery = error.recoveryRequired;
+        _message = appStrings(context).restoreRecovery; }); }
     } catch (_) {
       if (mounted) setState(() => _message = appStrings(context).restoreInvalid);
     } finally { if (mounted) setState(() => _busy = false); }
@@ -111,8 +111,8 @@ class _DataBackupPageState extends State<DataBackupPage> {
       setState(() { _message = strings.restoreSuccess; _plan = null; _document = null; });
       widget.onRestored?.call();
     } on RestoreFailure catch (error) {
-      if (mounted) setState(() { _recovery = error.recoveryRequired;
-        _plan = null; _message = _recovery ? strings.restoreRecovery : strings.restoreFailed; });
+      if (mounted) { setState(() { _recovery = error.recoveryRequired;
+        _plan = null; _message = _recovery ? strings.restoreRecovery : strings.restoreFailed; }); }
     } catch (_) {
       if (mounted) setState(() { _plan = null; _message = strings.restoreStale; });
     } finally { if (mounted) setState(() => _busy = false); }

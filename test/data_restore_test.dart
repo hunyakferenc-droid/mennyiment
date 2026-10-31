@@ -11,7 +11,7 @@ import 'package:mennyiment/menti_xp_store.dart';
 import 'package:mennyiment/weekly_challenges.dart';
 
 class FaultStore extends InMemorySharedPreferencesStore {
-  FaultStore(Map<String, Object> data) : super.withData(data);
+  FaultStore(super.data) : super.withData();
   int writes = 0;
   Set<int> failAt = {};
   bool throwing = false;
@@ -85,6 +85,16 @@ void main() {
     expect(result['mennyiment_menti_xp_v2'], source['mennyiment_menti_xp_v2']);
     expect(result['mennyiment_weekly_challenges_v1'], source['mennyiment_weekly_challenges_v1']);
     expect(result['mennyiment_menti_rewards_v1'], ['future:hat', 'outfit:basic', 'outfit:sport']);
+  });
+  test('duplicate, escaped duplicate and over-nested JSON are rejected', () async {
+    for (final text in ['{"a":1,"a":2}', r'{"a":1,"\u0061":2}',
+      '${'[' * 129}0${']' * 129}']) {
+      expect(() => decodeBackupJson(text), throwsFormatException);
+    }
+    final text = await backup({'mennyiment_menti_xp_v2': '{"xp":20,"xp":30}'});
+    SharedPreferences.setMockInitialValues(source);
+    await expectLater(BackupRestorer().prepare(text), throwsFormatException);
+    expect(await snapshot(), source);
   });
   test('confirmation is required by the service', () async {
     final text = await backup(source);

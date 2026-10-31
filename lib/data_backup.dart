@@ -21,7 +21,7 @@ class BackupDocument {
     if (text.length > maxBytes || utf8.encode(text).length > maxBytes) {
       throw const FormatException('Backup too large');
     }
-    final root = jsonDecode(text);
+    final root = decodeBackupJson(text);
     if (root is! Map ||
         root.length != 4 ||
         root['format'] != format ||
@@ -38,7 +38,7 @@ class BackupDocument {
       throw const FormatException('Invalid backup timestamp');
     }
     final entries = root['entries'] as Map;
-    if (entries.length > 10000) throw const FormatException('Too many entries');
+    if (entries.length > 10000) { throw const FormatException('Too many entries'); }
     for (final entry in entries.entries) {
       if (entry.key is! String ||
           !ownedKey(entry.key as String) ||
@@ -62,7 +62,7 @@ class BackupDocument {
               double.parse(value).toString() == value,
         _ => false,
       };
-      if (!valid) throw const FormatException('Invalid typed value');
+      if (!valid) { throw const FormatException('Invalid typed value'); }
     }
     return BackupDocument._(text, createdAt, entries.length);
   }
@@ -118,7 +118,7 @@ class BackupExporter {
     final first = jsonEncode(_snapshot(prefs));
     await prefs.reload();
     final second = jsonEncode(_snapshot(prefs));
-    if (first != second) throw StateError('Local data changed while exporting');
+    if (first != second) { throw StateError('Local data changed while exporting'); }
     final result = jsonEncode({
       'format': BackupDocument.format,
       'version': BackupDocument.version,
@@ -128,4 +128,36 @@ class BackupExporter {
     // Validate our own output before it can reach the file picker.
     return BackupDocument.decode(result);
   }
+}
+
+/// Reject ambiguous duplicate keys (including escaped equivalents) and excessive
+/// nesting before decoding. Used for both the envelope and embedded documents.
+Object? decodeBackupJson(String text) {
+  final containers = <Set<String>?>[];
+  for (var i = 0; i < text.length; i++) {
+    final char = text[i];
+    if (char == '{' || char == '[') {
+      containers.add(char == '{' ? <String>{} : null);
+      if (containers.length > 128) { throw const FormatException('JSON too deep'); }
+    } else if (char == '}' || char == ']') {
+      if (containers.isNotEmpty) { containers.removeLast(); }
+    } else if (char == '"') {
+      final start = i;
+      i++;
+      while (i < text.length) {
+        if (text.codeUnitAt(i) == 92) { i += 2; continue; }
+        if (text[i] == '"') { break; }
+        i++;
+      }
+      if (i >= text.length) { throw const FormatException('Unterminated string'); }
+      var next = i + 1;
+      while (next < text.length && text.codeUnitAt(next) <= 32) { next++; }
+      if (next < text.length && text[next] == ':' && containers.isNotEmpty &&
+          containers.last != null) {
+        final key = jsonDecode(text.substring(start, i + 1)) as String;
+        if (!containers.last!.add(key)) { throw const FormatException('Duplicate JSON key'); }
+      }
+    }
+  }
+  return jsonDecode(text);
 }
