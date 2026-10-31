@@ -218,7 +218,10 @@ void main() {
     )));
     await tester.tap(find.text('Open'));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.text('Most kihagyom'));
+    // The small default viewport lazily builds the bottom of the ListView.
+    await tester.scrollUntilVisible(find.text('Most kihagyom'), 300,
+      scrollable: find.descendant(of: find.byType(ListView),
+        matching: find.byType(Scrollable)).first);
     await tester.tap(find.text('Most kihagyom'));
     await tester.pumpAndSettle();
     expect(find.text('Open'), findsOneWidget);
