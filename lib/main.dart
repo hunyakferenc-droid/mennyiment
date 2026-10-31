@@ -124,8 +124,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String mentiMessage =
-    MentiReactions.message(MentiMood.welcome);
+  MentiMood _mentiMood = MentiMood.welcome;
 
 int mentiMessageIndex = 0;
 int mentiReaction = 0;
@@ -141,10 +140,7 @@ void updateMentiMessage(MentiMood mood) {
   mentiReaction++;
 }
     mentiMessageIndex++;
-    mentiMessage = MentiReactions.message(
-      mood,
-      index: mentiMessageIndex,
-    );
+    _mentiMood = mood;
   });
 }
   static const storageKey = 'mennyiment_drinks_v1';
@@ -490,7 +486,8 @@ void updateMentiMessage(MentiMood mood) {
   Future<void> addCatalogDrink(CatalogDrink drink) async {
     if (!_canWriteJournal) return;
     if (await _persistDrinks([Drink(drink.name, drink.ml, drink.percent), ...drinks]) && mounted) {
-      updateMentiMessage(MentiMood.drinkAdded);
+      updateMentiMessage(drink.percent == 0
+          ? MentiMood.alcoholFreeEntry : MentiMood.drinkAdded);
     }
   }
 
@@ -766,7 +763,8 @@ void updateMentiMessage(MentiMood mood) {
     if (!mounted || result == null) return;
     if (!await _persistDrinks([result, ...drinks])) return;
     if (!mounted) return;
-    updateMentiMessage(MentiMood.drinkAdded);
+    updateMentiMessage(result.percent == 0
+        ? MentiMood.alcoholFreeEntry : MentiMood.drinkAdded);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('${result.name} mentve a naplóba')),
     );
@@ -934,9 +932,8 @@ void updateMentiMessage(MentiMood mood) {
     final monthlyUnknown = monthly.where((d) => d.priceFt == null).length;
     final todayCost = today.fold<double>(0, (sum, d) => sum + (d.priceFt ?? 0));
     final recent = drinks.toList()..sort((a, b) => b.time.compareTo(a.time));
-    final weekStart = DateTime(now.year, now.month, now.day)
-        .subtract(Duration(days: now.weekday - 1));
-    final weekEnd = weekStart.add(const Duration(days: 7));
+    final weekStart = MentiXpStore.weekStart(now);
+    final weekEnd = MentiXpStore.weekEnd(now);
     final loggedWeekDays = drinks
         .where((d) => !d.time.isBefore(weekStart) && d.time.isBefore(weekEnd))
         .map((d) => DateTime(d.time.year, d.time.month, d.time.day))
@@ -1030,8 +1027,9 @@ void updateMentiMessage(MentiMood mood) {
                         const Text('Apró, tudatos lépésekből épül a fejlődés.',
                           style: TextStyle(color: _muted, fontSize: 12)),
                         const SizedBox(height: 8),
-                        Text(mentiMessage, maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                        Text(MentiReactions.message(_mentiMood,
+                          index: mentiMessageIndex,
+                          locale: Localizations.localeOf(context).languageCode),
                           style: const TextStyle(color: _mint, fontSize: 12)),
                         TextButton.icon(
                           onPressed: _openCharacterSetup,

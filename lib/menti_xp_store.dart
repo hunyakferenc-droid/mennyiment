@@ -43,8 +43,16 @@ class MentiXpStore {
   static String dayKey(DateTime d) =>
       '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
-  static String weekKey(DateTime d) => dayKey(
-      DateTime(d.year, d.month, d.day).subtract(Duration(days: d.weekday - 1)));
+  // Calendar arithmetic: a local week may have 167 or 169 elapsed hours.
+  static DateTime weekStart(DateTime d) =>
+      DateTime(d.year, d.month, d.day + 1 - d.weekday);
+
+  static DateTime weekEnd(DateTime d) {
+    final start = weekStart(d);
+    return DateTime(start.year, start.month, start.day + 7);
+  }
+
+  static String weekKey(DateTime d) => dayKey(weekStart(d));
 
   static Map<String, dynamic> _decode(String? raw) {
     if (raw == null) return {};

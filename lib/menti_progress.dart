@@ -8,6 +8,8 @@ import 'menti_character_catalog.dart';
 import 'menti_character_setup.dart';
 import 'menti_rewards.dart';
 import 'menti_reward_widgets.dart';
+import 'menti_reactions.dart';
+import 'menti_ui.dart';
 
 /// All actions reuse the existing XP events. Badges never grant extra XP.
 class MentiProgressPage extends StatefulWidget {
@@ -25,6 +27,7 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
   bool _busy = true;
   bool _error = false;
   int _reaction = 0;
+  MentiMood? _message;
 
   @override
   void initState() {
@@ -48,7 +51,9 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
         _assets = assets;
         _unlocked = unlocked;
       });
-    } catch (_) {
+    } catch (error, stack) {
+      // Keep journal/profile values out of diagnostic output.
+      debugPrint('Menti progress failure: ${error.runtimeType}\n$stack');
       if (mounted) setState(() => _error = true);
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -65,20 +70,29 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
         : await MentiXpStore.completeWeekly(task);
       final unlocked = await MentiRewards.load(level: state.level, assets: _assets);
       if (!mounted) return;
-      setState(() { _state = state; _unlocked = unlocked; _reaction++; });
+      setState(() {
+        _state = state;
+        _unlocked = unlocked;
+        // No reaction for duplicate events: the persisted XP must have changed.
+        if (state.xp > before) {
+          _reaction++;
+          _message = state.level > MentiXpState.levelFor(before)
+              ? MentiMood.levelUp
+              : task == null
+                  ? MentiMood.dailyCheckIn
+                  : MentiMood.weeklyCompleted;
+        }
+      });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(appStrings(context).evolutionSaved(state.xp - before))));
-    } catch (_) {
+    } catch (error, stack) {
+      // Keep journal/profile values out of diagnostic output.
+      debugPrint('Menti progress failure: ${error.runtimeType}\n$stack');
       if (mounted) setState(() => _error = true);
     } finally {
       if (mounted) setState(() => _busy = false);
     }
   }
-
-  Widget _panel(Widget child) => Card(
-    margin: const EdgeInsets.only(bottom: 16),
-    child: Padding(padding: const EdgeInsets.all(18), child: child),
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -104,23 +118,27 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
     ];
     return Scaffold(
       appBar: AppBar(title: Text(s.evolutionTitle)),
-      body: Center(child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 680),
-        child: _busy && state == null
+      body: _busy && state == null
           ? const Center(child: CircularProgressIndicator())
-          : ListView(padding: const EdgeInsets.all(18), children: [
-            if (_error) _panel(Column(children: [
+          : MentiPageBody(children: [
+            if (_error) MentiPanel(child: Column(children: [
               Text(s.evolutionError),
               TextButton(onPressed: _busy ? null : _load, child: Text(s.evolutionRetry)),
             ])),
             if (state != null) ...[
-              _panel(Column(children: [
+              MentiPanel(child: Column(children: [
                 MentiEvolution(size: 170, reaction: _reaction,
                   level: state.level, assetPath: _asset),
                 Text('Menti • ${s.evolutionLevel(state.level)}'),
                 MentiLevelIndicator(xp: state.xp),
+                if (_message != null) ...[
+                  const SizedBox(height: 12),
+                  MentiSpeechBubble(message: MentiReactions.message(_message!,
+                    index: _reaction,
+                    locale: Localizations.localeOf(context).languageCode)),
+                ],
               ])),
-              _panel(MentiNextReward(xp: state.xp, family: _family,
+              MentiPanel(child: MentiNextReward(xp: state.xp, family: _family,
                 unlocked: _unlocked, assets: _assets)),
               OutlinedButton.icon(
                 icon: const Icon(Icons.checkroom_outlined),
@@ -131,7 +149,7 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
                   if (mounted) await _load();
                 },
               ),
-              _panel(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(s.evolutionDaily, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 Text(s.evolutionDailyHint),
                 const SizedBox(height: 12),
@@ -141,7 +159,7 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
                   label: Text(checked ? s.evolutionChecked : s.evolutionCheck),
                 ),
               ])),
-              _panel(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(s.evolutionWeekly, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 Text(s.evolutionWeeklyHint),
                 const SizedBox(height: 8),
@@ -158,7 +176,7 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
                       child: Text(s.evolutionDone)),
                 ),
               ])),
-              _panel(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(s.evolutionBadges, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 for (final badge in badges) ListTile(
                   contentPadding: EdgeInsets.zero,
@@ -170,7 +188,6 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
               Text(s.evolutionPolicy),
             ],
           ]),
-      )),
     );
   }
 }
