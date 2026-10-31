@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:async';
+import 'app_language.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,10 +19,27 @@ class ChallengeStore {
   Map<String, dynamic> data = {'version': 1, 'weeks': <String, dynamic>{}};
   bool writable = false;
   bool busy = false;
+  String? _raw;
+  static Future<void>? _pending;
+  static Future<T> _serial<T>(Future<T> Function() action) async {
+    final previous = _pending;
+    final gate = Completer<void>();
+    _pending = gate.future;
+    try {
+      if (previous != null) await previous;
+      return await action();
+    } finally {
+      if (identical(_pending, gate.future)) _pending = null;
+      gate.complete();
+    }
+  }
 
-  Future<void> load() async {
+
+  Future<void> load() => _serial(() async {
     writable = false;
-    final raw = (await open()).getString(key);
+    final prefs = await open();
+    await prefs.reload();
+    final raw = prefs.getString(key);
     if (raw != null) {
       final decoded = jsonDecode(raw) as Map<String, dynamic>;
       if (decoded['version'] != 1 || decoded['weeks'] is! Map) {
@@ -40,9 +59,12 @@ class ChallengeStore {
         }
       }
       data = decoded;
+    } else {
+      data = {'version': 1, 'weeks': <String, dynamic>{}};
     }
+    _raw = raw;
     writable = true;
-  }
+  });
 
   Map<String, dynamic> week(DateTime day) => Map<String, dynamic>.from(
       (data['weeks'] as Map)[challengeDate(challengeMonday(day))] as Map? ?? {});
@@ -51,21 +73,37 @@ class ChallengeStore {
   Future<bool> put(DateTime day, String id, Map<String, dynamic> item) async {
     if (!writable || busy) return false;
     busy = true;
+    return _serial(() async {
+    SharedPreferences? prefs;
     try {
+      prefs = await open();
+      await prefs.reload();
+      // Another screen changed the document: require a refresh, never erase it.
+      if (prefs.getString(key) != _raw) {
+        writable = false;
+        return false;
+      }
       final next = jsonDecode(jsonEncode(data)) as Map<String, dynamic>;
       final weeks = next['weeks'] as Map<String, dynamic>;
       final weekKey = challengeDate(challengeMonday(day));
       final week = Map<String, dynamic>.from(weeks[weekKey] as Map? ?? {});
       week[id] = item;
       weeks[weekKey] = week;
-      if (!await (await open()).setString(key, jsonEncode(next))) return false;
+      final encoded = jsonEncode(next);
+      if (!await prefs.setString(key, encoded)) {
+        await prefs.reload();
+        return false;
+      }
+      _raw = encoded;
       data = next;
       return true;
     } catch (_) {
+      try { await prefs?.reload(); } catch (_) { /* Leave confirmed state intact. */ }
       return false;
     } finally {
       busy = false;
     }
+    });
   }
 }
 
@@ -80,24 +118,34 @@ class WeeklyChallengesPage extends StatefulWidget {
 class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
     with WidgetsBindingObserver {
   late final ChallengeStore store = widget.store ?? ChallengeStore();
-  DateTime get now => (widget.clock ?? DateTime.now)();
+  DateTime get now => (widget.clock ?? DateTime.now)().toLocal();
   int back = 0;
   bool loading = true;
   bool saving = false;
   String? error;
   Set<String> journalDays = {};
-  String t(String hu, String en) =>
-      Localizations.localeOf(context).languageCode == 'en' ? en : hu;
+  Timer? _timer;
+  late String _shownDay;
   DateTime get monday => challengeDay(challengeMonday(now), -7 * back);
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _shownDay = challengeDate(now);
+    _timer = Timer.periodic(const Duration(minutes: 1), (_) {
+      if (!mounted || saving || loading) return;
+      final day = challengeDate(now);
+      if (_shownDay != day) {
+        _shownDay = day;
+        load();
+      }
+    });
     load();
   }
   @override
   void dispose() {
+    _timer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -106,6 +154,8 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
     if (state == AppLifecycleState.resumed && !saving) load();
   }
   Future<void> load() async {
+    if (saving || !mounted) return;
+    setState(() => loading = true);
     try {
       await store.load();
       final prefs = await store.open();
@@ -131,15 +181,14 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
       setState(() {});
       return;
     }
-    if (saving || back != 0) return;
+    if (saving || loading || error != null || back != 0) return;
     final week = monday;
     setState(() => saving = true);
     final ok = await store.put(week, id, item);
     if (!mounted) return;
     setState(() => saving = false);
     if (!ok) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(t(
-          'A mentés nem sikerült. Próbáld újra.', 'Could not save. Please retry.'))));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(appStrings(context).challengeSaveError)));
     }
   }
   Future<void> edit(String id, String title, Map<String, dynamic>? old) async {
@@ -152,20 +201,20 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
         title: Text(title),
         content: SingleChildScrollView(child: Column(mainAxisSize: MainAxisSize.min, children: [
           if (id == 'custom') TextField(controller: name, maxLength: 120,
-              decoration: InputDecoration(labelText: t('Saját heti cél', 'Your weekly goal'))),
-          Text(t('Heti napok száma', 'Days per week')),
+              decoration: InputDecoration(labelText: appStrings(context).challengeCustom)),
+          Text(appStrings(context).challengeDaysPerWeek),
           DropdownButton<int>(value: goal, items: [for (var n = 1; n <= 7; n++)
             DropdownMenuItem(value: n, child: Text('$n'))],
             onChanged: (v) => update(() => goal = v!)),
         ])),
-        actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: Text(t('Mégse', 'Cancel'))),
+        actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: Text(appStrings(context).challengeCancel)),
           FilledButton(onPressed: () {
             if (id == 'custom' && name.text.trim().isEmpty) return;
             Navigator.pop(ctx, <String, dynamic>{...?(old),
               'title': id == 'custom' ? name.text.trim() : '',
               'goal': goal, 'status': old?['status'] ?? 'active',
               'days': old?['days'] ?? <String>[]});
-          }, child: Text(t('Mentés', 'Save')))],
+          }, child: Text(appStrings(context).challengeSave))],
       )),
     );
     // The dialog route may still be animating with the controller attached.
@@ -182,30 +231,29 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
     final dates = {for (var i = 0; i < 7; i++)
       if (!challengeDay(week, i).isAfter(challengeDay(now)))
         challengeDate(challengeDay(week, i))};
-    int count(String id, Map item) => (id == 'journal' ? journalDays :
+    int count(String id, Map item) => (id == 'journal' && item['status'] == 'active' ? journalDays :
         (item['days'] as List).whereType<String>().toSet()).intersection(dates).length;
     final titles = {
-      'reflection': t('Tudatos önellenőrzés', 'Mindful self-check'),
-      'journal': t('Következetes közérzetnapló', 'Consistent wellbeing journal'),
-      'habit': t('Tudatos szokás: rövid napi szünet', 'Mindful habit: a short daily pause'),
-      'custom': t('Saját heti cél', 'Your weekly goal'),
+      'reflection': appStrings(context).challengeReflection,
+      'journal': appStrings(context).challengeJournal,
+      'habit': appStrings(context).challengeHabit,
+      'custom': appStrings(context).challengeCustom,
     };
     final enabled = back == 0 && !saving && store.writable && error == null;
     return Scaffold(
-      appBar: AppBar(title: Text(t('Heti személyes kihívások', 'Personal weekly challenges'))),
+      appBar: AppBar(title: Text(appStrings(context).challengeTitle)),
       body: loading ? const Center(child: CircularProgressIndicator()) :
       Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 700),
         child: ListView(padding: const EdgeInsets.all(16), children: [
-          Text(t('A saját tempódban. Minden kihívás választható, kihagyható vagy megszakítható büntetés nélkül. Nincs XP-jutalom vagy levonás.',
-            'At your own pace. Every challenge is optional and can be skipped or stopped without penalty. No XP rewards or deductions.')),
+          Text(appStrings(context).challengeOptional),
           Row(children: [IconButton(onPressed: saving ? null : () => setState(() => back++),
-            tooltip: t('Előző hét', 'Previous week'), icon: const Icon(Icons.chevron_left)),
+            tooltip: appStrings(context).challengePrevious, icon: const Icon(Icons.chevron_left)),
             Expanded(child: Text('${challengeDate(week)} – ${challengeDate(challengeDay(week, 6))}', textAlign: TextAlign.center)),
             IconButton(onPressed: back == 0 || saving ? null : () => setState(() => back--),
-              tooltip: t('Következő hét', 'Next week'), icon: const Icon(Icons.chevron_right))]),
+              tooltip: appStrings(context).challengeNext, icon: const Icon(Icons.chevron_right))]),
           if (error != null) ...[
-            Text(t('Az adatok nem olvashatók. Nem írjuk felül őket.', 'Data could not be read. It will not be overwritten.')),
-            TextButton(onPressed: saving ? null : load, child: Text(t('Újrapróbálás', 'Retry')))],
+            Text(appStrings(context).challengeLoadError),
+            TextButton(onPressed: saving ? null : load, child: Text(appStrings(context).challengeRetry))],
           for (final entry in titles.entries) Card(child: Padding(
             padding: const EdgeInsets.all(16), child: Builder(builder: (_) {
               final item = items[entry.key] as Map<String, dynamic>?;
@@ -213,36 +261,35 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
               return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(entry.key == 'custom' && item != null ? item['title'] as String : entry.value,
                   style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
-                if (item != null) Text('${count(entry.key, item)} / ${item['goal']} ${t('nap', 'days')}'),
+                if (item != null) Text('${count(entry.key, item)} / ${item['goal']} ${appStrings(context).challengeDays}'),
                 if (item != null && !active) Text(item['status'] == 'skipped'
-                    ? t('Kihagyva – nincs büntetés.', 'Skipped – no penalty.')
-                    : t('Megszakítva – nincs büntetés.', 'Stopped – no penalty.')),
-                if (entry.key == 'journal') Text(t('A mentett közérzetnapló napjai számítanak. Ital rögzítése nem szükséges.',
-                    'Counts days with a saved wellbeing entry. No drink entry is needed.')),
+                    ? appStrings(context).challengeSkipped
+                    : appStrings(context).challengeStopped),
+                if (entry.key == 'journal') Text(appStrings(context).challengeJournalHint),
                 Wrap(spacing: 8, children: [
                   if (item == null || active) TextButton(onPressed: enabled
                       ? () => edit(entry.key, entry.value, item) : null,
-                    child: Text(item == null ? t('Kiválasztás', 'Choose') : t('Cél módosítása', 'Edit goal'))),
+                    child: Text(item == null ? appStrings(context).challengeChoose : appStrings(context).challengeEdit)),
                   if (active && entry.key != 'journal') TextButton(onPressed: enabled &&
                       !(item!['days'] as List).contains(today) ? () => save(entry.key,
-                      {...item!, 'days': [...item['days'] as List, today]}, week) : null,
-                    child: Text(t('Ma megtettem', 'I did this today'))),
+                      {...item, 'days': [...item['days'] as List, today]}, week) : null,
+                    child: Text(appStrings(context).challengeDoneToday)),
                   if (item == null || active) TextButton(onPressed: enabled ? () => save(entry.key,
                     {...?item, 'title': item?['title'] ?? '', 'goal': item?['goal'] ?? 4,
-                      'days': item?['days'] ?? <String>[], 'status': item == null ? 'skipped' : 'stopped'}, week) : null,
-                    child: Text(item == null ? t('Ezen a héten kihagyom', 'Skip this week') : t('Megszakítás', 'Stop'))),
+                      'days': entry.key == 'journal' && item != null
+                        ? journalDays.intersection(dates).toList() : item?['days'] ?? <String>[], 'status': item == null ? 'skipped' : 'stopped'}, week) : null,
+                    child: Text(item == null ? appStrings(context).challengeSkip : appStrings(context).challengeStop)),
                 ]),
               ]);
             }))),
           const SizedBox(height: 16),
-          Text(t('Heti fejlődési összefoglaló', 'Weekly progress summary'),
+          Text(appStrings(context).challengeSummary,
             style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
           for (final entry in titles.entries)
             if (items[entry.key] != null) Text('${entry.value}: ${count(entry.key, items[entry.key] as Map)} / ${(items[entry.key] as Map)['goal']}'),
-          Text('${t('Közérzetnaplóval kitöltött napok', 'Days with wellbeing entries')}: ${journalDays.intersection(dates).length} / ${dates.length}'),
-          Text(t('A hiányzó bejegyzés ismeretlen adat, nem alkoholmentes nap. Ezek a kihívások nem jelölnek alkoholmentességet. A cél módosítása csak a kiválasztott hetet érinti; a korábbi napok megmaradnak.',
-            'A missing entry is unknown, not an alcohol-free day. These challenges do not label alcohol-free days. Editing a goal affects only the selected week; previous check-ins are retained.')),
-          OutlinedButton(onPressed: saving ? null : load, child: Text(t('Összefoglaló frissítése', 'Refresh summary'))),
+          Text('${appStrings(context).challengeJournalDays}: ${journalDays.intersection(dates).length} / ${dates.length}'),
+          Text(appStrings(context).challengeCaution),
+          OutlinedButton(onPressed: saving ? null : load, child: Text(appStrings(context).challengeRefresh)),
         ]))),
     );
   }

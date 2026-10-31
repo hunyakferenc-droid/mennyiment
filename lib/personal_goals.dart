@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'weekly_challenges.dart';
+import 'app_language.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -179,8 +180,7 @@ class _PersonalGoalsPageState extends State<PersonalGoalsPage> {
             onPressed: () => Navigator.push<void>(context, MaterialPageRoute(
               builder: (_) => const WeeklyChallengesPage())),
             icon: const Icon(Icons.flag_outlined),
-            label: Text(Localizations.localeOf(context).languageCode == 'en'
-              ? 'Personal weekly challenges' : 'Heti személyes kihívások'),
+            label: Text(appStrings(context).challengeTitle),
           ),
           _card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const Text('A saját tempódban', style: TextStyle(
