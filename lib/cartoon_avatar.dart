@@ -1,14 +1,14 @@
 
 import 'package:flutter/material.dart';
+import 'menti_motion.dart';
 
-class CartoonAvatar extends StatefulWidget {
+class _BlinkingCartoonAvatar extends StatefulWidget {
   final Color color;
   final double size;
   final int expression;
   final int hat;
 
-  const CartoonAvatar({
-    super.key,
+  const _BlinkingCartoonAvatar({
     this.color = Colors.orange,
     this.size = 150,
     this.expression = 0,
@@ -16,10 +16,10 @@ class CartoonAvatar extends StatefulWidget {
   });
 
   @override
-  State<CartoonAvatar> createState() => _CartoonAvatarState();
+  State<_BlinkingCartoonAvatar> createState() => __BlinkingCartoonAvatarState();
 }
 
-class _CartoonAvatarState extends State<CartoonAvatar>
+class __BlinkingCartoonAvatarState extends State<_BlinkingCartoonAvatar>
     with SingleTickerProviderStateMixin {
   late final AnimationController blinkController;
 
@@ -285,4 +285,19 @@ class AvatarPainter extends CustomPainter {
         oldDelegate.expression != expression ||
         oldDelegate.hat != hat;
   }
+}
+
+class CartoonAvatar extends StatelessWidget {
+  const CartoonAvatar({super.key, this.color = Colors.orange, this.size = 150,
+      this.expression = 0, this.hat = 0});
+  final Color color;
+  final double size;
+  final int expression;
+  final int hat;
+  @override
+  Widget build(BuildContext context) => MentiMotionScope.animateOf(context)
+      ? _BlinkingCartoonAvatar(color: color, size: size, expression: expression, hat: hat)
+      : SizedBox(width: size, height: size * 1.4, child: CustomPaint(
+          painter: AvatarPainter(color: color, blinking: false,
+              expression: expression, hat: hat)));
 }

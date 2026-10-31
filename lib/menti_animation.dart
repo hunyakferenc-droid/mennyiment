@@ -1,11 +1,11 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'menti_motion.dart';
 
 
-class MentiAnimation extends StatefulWidget {
-  const MentiAnimation({
-    super.key,
+class _AnimatedMentiFrames extends StatefulWidget {
+  const _AnimatedMentiFrames({
     this.size = 230,
     this.reaction = 0,
   });
@@ -14,10 +14,10 @@ class MentiAnimation extends StatefulWidget {
   final int reaction;
 
   @override
-  State<MentiAnimation> createState() => _MentiAnimationState();
+  State<_AnimatedMentiFrames> createState() => __AnimatedMentiFramesState();
 }
 
-class _MentiAnimationState extends State<MentiAnimation>
+class __AnimatedMentiFramesState extends State<_AnimatedMentiFrames>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _floating;
@@ -51,7 +51,7 @@ class _MentiAnimationState extends State<MentiAnimation>
   }
 
 @override
-void didUpdateWidget(covariant MentiAnimation oldWidget) {
+void didUpdateWidget(covariant _AnimatedMentiFrames oldWidget) {
   super.didUpdateWidget(oldWidget);
 
   if (widget.reaction != oldWidget.reaction) {
@@ -149,4 +149,16 @@ void didUpdateWidget(covariant MentiAnimation oldWidget) {
       ),
     );
   }
+}
+
+/// Legacy frame animation; inactive in the current character/profile routes.
+class MentiAnimation extends StatelessWidget {
+  const MentiAnimation({super.key, this.size = 230, this.reaction = 0});
+  final double size;
+  final int reaction;
+  @override
+  Widget build(BuildContext context) => MentiMotionScope.animateOf(context)
+      ? _AnimatedMentiFrames(size: size, reaction: reaction)
+      : Image.asset('assets/images/menti_open.png', width: size, height: size,
+          fit: BoxFit.contain);
 }

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_evolution.dart';
 import 'menti_profile_storage.dart';
 import 'menti_xp_store.dart';
+import 'menti_motion.dart';
 
 /// MennyiMent? 3.3 – Menti Studio.
 /// Megőrzi az eredeti avatar-, becenév- és fejfedőbeállításokat.
@@ -277,6 +278,8 @@ class _AvatarPageState extends State<AvatarPage> {
                         const Text('Koppints Mentire!', style: TextStyle(color: Colors.white70, fontSize: 12)),
                       ]),
                     ),
+                    const SizedBox(height: 16),
+                    const MentiMotionPreference(),
                     const SizedBox(height: 16),
                     _card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
