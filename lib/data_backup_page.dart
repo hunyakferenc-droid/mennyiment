@@ -128,6 +128,27 @@ class _DataBackupPageState extends State<DataBackupPage> {
     finally { if (mounted) setState(() => _busy = false); }
   }
 
+  String _dataLabel(String key) {
+    final s = appStrings(context);
+    if (key.startsWith('mennyiment_daily_menti_v1_')) { return s.dailyTitle; }
+    if (key.contains('menti_xp') || key.contains('reflection_days') ||
+        key.contains('menti_progress')) { return s.mentiProgress; }
+    if (key.contains('menti_rewards') || key.contains('outfit')) { return s.evolutionTitle; }
+    if (key.contains('character') || key.contains('menti_style') ||
+        key.contains('menti_aura') || key.contains('menti_accessory')) { return s.profile; }
+    return switch (key) {
+      'mennyiment_drinks_v1' => s.journal,
+      'mennyiment_custom_drinks_v1' || 'mennyiment_favorites_v1' => s.drinks,
+      'mennyiment_wellbeing_v1' => s.wellbeing,
+      'mennyiment_weekly_challenges_v1' => s.challengeTitle,
+      'mennyiment_personal_goals_v1' => s.goals,
+      'mennyiment_savings_goals_v1' || 'mennyiment_savings_baseline_v1' => s.savings,
+      'mennyiment_budget_v2' || 'mennyiment_finance_baseline_v1' => s.financeCenter,
+      'mennyiment_locale_v1' => s.language,
+      _ => s.backupTitle,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final strings = appStrings(context);
@@ -193,7 +214,12 @@ class _DataBackupPageState extends State<DataBackupPage> {
             Text(strings.restorePreview, style: Theme.of(context).textTheme.titleLarge),
             Text(strings.backupCreated(DateFormat.yMd(strings.localeName).add_Hm().format(plan.document.createdAt.toLocal()))),
             Text(strings.restoreCounts(plan.added, plan.replaced, plan.unchanged)),
-            for (final key in plan.keys) SelectableText(key),
+            for (final key in plan.keys) Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(_dataLabel(key)), SelectableText(key),
+              ]),
+            ),
             FilledButton(key: const ValueKey('restore-apply'),
               onPressed: _busy ? null : _restore, child: Text(strings.restoreConfirm)),
           ],

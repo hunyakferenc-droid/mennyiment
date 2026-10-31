@@ -11,6 +11,10 @@ import 'package:mennyiment/l10n/generated/app_localizations.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   testWidgets('startup recovers an interrupted restore before mounting stores and home', (tester) async {
+    tester.view.physicalSize = const Size(1100, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
     const xp = '{"xp":90,"days":[],"completed":[]}';
     SharedPreferences.setMockInitialValues({'mennyiment_menti_xp_v2': xp,
       'mennyiment_character_setup_complete_v1': true, 'mennyiment_reduce_motion_v1': true});
