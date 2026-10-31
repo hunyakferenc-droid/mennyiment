@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'menti_profile_storage.dart';
 
-/// Existing keys stay unchanged so that all prior character profiles survive.
+/// Existing profile keys are preserved; the colliding style key is migrated.
 class MentiCharacterProfile {
-  static const styleKey = 'mennyiment_menti_style_v1';
+  static const styleKey = MentiProfileStorage.characterStyleKey;
   static const ageKey = 'mennyiment_age_group_v1';
   static const nameKey = 'mennyiment_character_name_v1';
   static const appearanceKey = 'mennyiment_menti_age_style_v1';
@@ -71,10 +72,11 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
 
   Future<void> _load() async {
     final p = await SharedPreferences.getInstance();
+    await MentiProfileStorage.migrate(p);
     if (!mounted) return;
     setState(() {
       _reflectionXp = (p.getStringList(_reflectionDaysKey) ?? const <String>[]).toSet().length * 10;
-      _style = p.getString(MentiCharacterProfile.styleKey) ?? _style;
+      _style = MentiProfileStorage.characterStyle(p);
       _age = p.getString(MentiCharacterProfile.ageKey) ?? _age;
       _appearance = p.getString(MentiCharacterProfile.appearanceKey) ?? _appearance;
       _accessory = p.getString(MentiCharacterProfile.accessoryKey) ?? _accessory;
