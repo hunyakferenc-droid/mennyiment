@@ -3,6 +3,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import 'statistics_summary.dart';
+import 'app_language.dart';
+
+import 'package:intl/intl.dart';
+
 export 'statistics_summary.dart';
 
 class StatisticsPage extends StatefulWidget {
@@ -48,11 +52,13 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   String _date(DateTime d) =>
-      '${d.year}.${d.month.toString().padLeft(2, '0')}.${d.day.toString().padLeft(2, '0')}';
-  String _number(num n) => n.toStringAsFixed(1).replaceAll('.', ',');
+      DateFormat.yMd(appStrings(context).localeName).format(d);
+  String _number(num n) =>
+      NumberFormat('0.0', appStrings(context).localeName).format(n);
 
   @override
   Widget build(BuildContext context) {
+    final strings = appStrings(context);
     final summary = StatisticsSummary(widget.drinks, _range, widget.clock());
     final items = summary.items;
     final totalGrams = items.fold<double>(0, (s, d) => s + d.grams);
@@ -98,25 +104,31 @@ class _StatisticsPageState extends State<StatisticsPage> {
         bars.add((days[day] ?? []).fold<double>(0, (s, d) => s + d.grams));
         labels.add(
           period == StatisticsPeriod.week
-              ? const ['H', 'K', 'Sze', 'Cs', 'P', 'Szo', 'V'][i]
+              ? DateFormat.E(strings.localeName).format(day)
               : '${i + 1}',
         );
       }
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('📊 Statisztikák')),
+      appBar: AppBar(title: Text(strings.statistics)),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           SegmentedButton<StatisticsPeriod>(
-            segments: const [
-              ButtonSegment(value: StatisticsPeriod.week, label: Text('Hét')),
+            segments: [
+              ButtonSegment(
+                value: StatisticsPeriod.week,
+                label: Text(strings.week),
+              ),
               ButtonSegment(
                 value: StatisticsPeriod.month,
-                label: Text('Hónap'),
+                label: Text(strings.month),
               ),
-              ButtonSegment(value: StatisticsPeriod.year, label: Text('Év')),
+              ButtonSegment(
+                value: StatisticsPeriod.year,
+                label: Text(strings.year),
+              ),
             ],
             selected: {period},
             onSelectionChanged: (v) => setState(() {
@@ -129,6 +141,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
             children: [
               IconButton(
                 onPressed: () => _move(-1),
+                tooltip: strings.previousPeriod,
                 icon: const Icon(Icons.chevron_left),
               ),
               Expanded(
@@ -140,6 +153,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
               ),
               IconButton(
                 onPressed: () => _move(1),
+                tooltip: strings.nextPeriod,
                 icon: const Icon(Icons.chevron_right),
               ),
             ],
@@ -149,25 +163,29 @@ class _StatisticsPageState extends State<StatisticsPage> {
             spacing: 10,
             runSpacing: 10,
             children: [
-              _stat('Italok', '${items.length} db', Icons.local_drink),
               _stat(
-                'Tiszta alkohol',
-                '${_number(totalGrams)} g',
+                strings.drinks,
+                strings.drinkCount(items.length),
+                Icons.local_drink,
+              ),
+              _stat(
+                strings.pureAlcohol,
+                strings.grams(_number(totalGrams)),
                 Icons.analytics_outlined,
               ),
               _stat(
-                'Italmennyiség',
-                '${_number(totalMl / 1000)} l',
+                strings.drinkVolume,
+                strings.litres(_number(totalMl / 1000)),
                 Icons.water_drop_outlined,
               ),
               _stat(
-                'Rögzítés nélküli napok',
-                '$zeroDays nap',
+                strings.unloggedDays,
+                strings.dayCount(zeroDays),
                 Icons.event_available_outlined,
               ),
               _stat(
-                'Ismert költés',
-                '${summary.knownCostFt.round()} Ft',
+                strings.knownSpending,
+                localeCurrency(summary.knownCostFt, strings.localeName),
                 Icons.payments_outlined,
               ),
             ],
@@ -175,15 +193,15 @@ class _StatisticsPageState extends State<StatisticsPage> {
           const SizedBox(height: 10),
           Text(
             items.isEmpty
-                ? 'Nincs rögzített ital: költésadat még nem áll rendelkezésre.'
+                ? strings.noSpendingData
                 : summary.missingPriceCount > 0
-                ? 'Részösszeg: ${summary.missingPriceCount} ital ára hiányzik vagy érvénytelen. A hiányzó ár nem 0 Ft.'
-                : 'Minden rögzített italhoz tartozik ár az időszakban.',
+                ? strings.partialPrices(summary.missingPriceCount)
+                : strings.completePrices,
             key: const ValueKey('statistics-price-coverage'),
           ),
           const SizedBox(height: 24),
-          const Text(
-            'Alkoholmennyiség időszakonként (g)',
+          Text(
+            strings.alcoholByPeriod,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
@@ -192,37 +210,41 @@ class _StatisticsPageState extends State<StatisticsPage> {
             child: _Bars(values: bars, labels: labels),
           ),
           const SizedBox(height: 22),
-          const Text(
-            'Leggyakoribb italok',
+          Text(
+            strings.frequentDrinks,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           if (ranked.isEmpty)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 12),
-              child: Text('Ebben az időszakban nincs rögzített ital.'),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Text(strings.noDrinks),
             ),
           for (final entry in ranked.take(8))
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: Text(entry.key),
-              trailing: Text('${entry.value} db'),
+              trailing: Text(strings.drinkCount(entry.value)),
             ),
           const SizedBox(height: 12),
-          const Text(
-            'Fogyasztási időpontok',
+          Text(
+            strings.drinkingTimes,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           Text(
             peakHour == null
-                ? 'Nincs adat az időszakban.'
-                : 'Legtöbb rögzítés: $peakHour:00–${(peakHour + 1) % 24}:00 között ($peak db).',
+                ? strings.noPeriodData
+                : strings.peakTime(
+                    DateFormat.Hm(strings.localeName)
+                        .format(DateTime(2026, 1, 1, peakHour)),
+                    DateFormat.Hm(strings.localeName)
+                        .format(DateTime(2026, 1, 1, (peakHour + 1) % 24)),
+                    peak,
+                  ),
           ),
           const SizedBox(height: 24),
-          const Text(
-            'Az összesítések kizárólag a rögzített italokból készülnek. '
-            'A „rögzítés nélküli nap” nem bizonyítottan alkoholmentes nap. '
-            'Az adatok nem használhatók józanság vagy vezetési alkalmasság megállapítására.',
+          Text(
+            strings.statisticsCaution,
             style: TextStyle(fontSize: 12, color: Colors.white60),
           ),
         ],
@@ -275,7 +297,12 @@ class _Bars extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Tooltip(
-                    message: '${values[i].toStringAsFixed(1)} g',
+                    message: appStrings(context).grams(
+                      NumberFormat(
+                        '0.0',
+                        appStrings(context).localeName,
+                      ).format(values[i]),
+                    ),
                     child: Container(
                       height: maxValue == 0
                           ? 2

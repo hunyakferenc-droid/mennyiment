@@ -21,19 +21,35 @@ import 'menti_profile_storage.dart';
 import 'statistics.dart';
 import 'dashboard_v2.dart';
 import 'menti_evolution.dart';
+import 'app_language.dart';
+import 'l10n/generated/app_localizations.dart';
 import 'menti_motion.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MennyiMentApp());
 }
 
-class MennyiMentApp extends StatelessWidget {
+class MennyiMentApp extends StatefulWidget {
   const MennyiMentApp({super.key});
 
   @override
+  State<MennyiMentApp> createState() => _MennyiMentAppState();
+}
+
+class _MennyiMentAppState extends State<MennyiMentApp> {
+  late final AppLanguage language;
+  @override
+  void initState() { super.initState(); language = AppLanguage()..load(); }
+  @override
+  void dispose() { language.dispose(); super.dispose(); }
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ListenableBuilder(listenable: language, builder: (context, _) => AppLanguageScope(language: language, child: MaterialApp(
       builder: (context, child) => MentiMotionScope(child: child!),
+      locale: language.locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localeResolutionCallback: (locale, supported) => locale?.languageCode == 'en' ? const Locale('en') : const Locale('hu'),
       debugShowCheckedModeBanner: false,
       title: 'MennyiMent?',
       theme: ThemeData(
@@ -60,7 +76,7 @@ class MennyiMentApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const HomePage(),
-    );
+    )));
   }
 }
 
@@ -898,7 +914,8 @@ void updateMentiMessage(MentiMood mood) {
         title: const Text('MennyiMent?',
             style: TextStyle(fontWeight: FontWeight.w800)),
         actions: [
-          IconButton(tooltip: 'Menti és profil', onPressed: _openAvatar,
+          const LanguageMenu(),
+          IconButton(tooltip: appStrings(context).profile, onPressed: _openAvatar,
               icon: const Icon(Icons.account_circle_outlined)),
           const SizedBox(width: 8),
         ],
@@ -912,11 +929,11 @@ void updateMentiMessage(MentiMood mood) {
             case 3: _openAvatar(); break;
           }
         },
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_rounded), label: 'Kezdőlap'),
-          NavigationDestination(icon: Icon(Icons.calendar_month_outlined), label: 'Napló'),
-          NavigationDestination(icon: Icon(Icons.insights_rounded), label: 'Elemzés'),
-          NavigationDestination(icon: Icon(Icons.face_rounded), label: 'Menti'),
+        destinations: [
+          NavigationDestination(icon: Icon(Icons.home_rounded), label: appStrings(context).home),
+          NavigationDestination(icon: Icon(Icons.calendar_month_outlined), label: appStrings(context).journal),
+          NavigationDestination(icon: Icon(Icons.insights_rounded), label: appStrings(context).insights),
+          NavigationDestination(icon: Icon(Icons.face_rounded), label: appStrings(context).menti),
         ],
       ),
       body: Center(
@@ -982,13 +999,13 @@ void updateMentiMessage(MentiMood mood) {
                         TextButton.icon(
                           onPressed: _openCharacterSetup,
                           icon: const Icon(Icons.palette_outlined, size: 17),
-                          label: const Text('Saját Menti kiválasztása'),
+                          label: Text(appStrings(context).chooseMenti),
                           style: TextButton.styleFrom(padding: EdgeInsets.zero,
                             visualDensity: VisualDensity.compact)),
                         TextButton.icon(
                           onPressed: _openMentiProgress,
                           icon: const Icon(Icons.auto_awesome, size: 17),
-                          label: const Text('Menti fejlődése'),
+                          label: Text(appStrings(context).mentiProgress),
                           style: TextButton.styleFrom(padding: EdgeInsets.zero,
                             visualDensity: VisualDensity.compact)),
                       ],
@@ -1063,7 +1080,7 @@ void updateMentiMessage(MentiMood mood) {
               FilledButton.icon(
                 onPressed: _canWriteJournal ? _openDrinkPicker : null,
                 icon: const Icon(Icons.add_circle_outline),
-                label: const Text('ITAL NAPLÓZÁSA',
+                label: Text(appStrings(context).addDrink,
                     style: TextStyle(fontWeight: FontWeight.w800)),
                 style: FilledButton.styleFrom(
                     backgroundColor: _mint,
@@ -1071,34 +1088,34 @@ void updateMentiMessage(MentiMood mood) {
                     minimumSize: const Size(double.infinity, 54)),
               ),
               const SizedBox(height: 23),
-              const Text('Felfedezés', style: TextStyle(
+              Text(appStrings(context).explore, style: TextStyle(
                   fontSize: 20, fontWeight: FontWeight.w800)),
               const SizedBox(height: 12),
               OutlinedButton.icon(onPressed: _openFinanceCenter,
                 icon: const Icon(Icons.account_balance_wallet_outlined),
-                label: const Text('Pénzügyi központ – részletes kimutatás')),
+                label: Text(appStrings(context).financeCenter)),
               const SizedBox(height: 10),
               Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                _shortcut('Közérzet', 'Hangulat, alvás és másnap',
+                _shortcut(appStrings(context).wellbeing, appStrings(context).wellbeingHint,
                     Icons.favorite_border_rounded, _openWellbeingJournal),
                 const SizedBox(width: 10),
-                _shortcut('Megtakarítás', 'Autó, nyaralás, saját cél',
+                _shortcut(appStrings(context).savings, appStrings(context).savingsHint,
                     Icons.savings_outlined, _openSavingsGoals),
               ]),
               const SizedBox(height: 10),
               Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                _shortcut('Heti elemzés', 'Összefüggések és trendek',
+                _shortcut(appStrings(context).weeklyInsights, appStrings(context).weeklyInsightsHint,
                     Icons.insights_outlined, _openLifestyleInsights),
                 const SizedBox(width: 10),
-                _shortcut('Menti fejlődése', 'Szintek és kihívások',
+                _shortcut(appStrings(context).mentiProgress, appStrings(context).mentiProgressHint,
                     Icons.auto_awesome_outlined, _openMentiProgress),
               ]),
               const SizedBox(height: 10),
               Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                _shortcut('Célok', 'Keret és naptár',
+                _shortcut(appStrings(context).goals, appStrings(context).goalsHint,
                     Icons.flag_outlined, _openDashboard),
                 const SizedBox(width: 10),
-                _shortcut('Statisztikák', 'Naplózott fogyasztás',
+                _shortcut(appStrings(context).statisticsNav, appStrings(context).statisticsHint,
                     Icons.bar_chart_rounded, _openStatistics),
               ]),
               const SizedBox(height: 14),
@@ -1106,21 +1123,21 @@ void updateMentiMessage(MentiMood mood) {
                 child: FilledButton.tonalIcon(
                   onPressed: isLoading ? null : _openPersonalGoals,
                   icon: const Icon(Icons.track_changes_rounded),
-                  label: const Text('Személyes heti céljaim • önellenőrzés'),
+                  label: Text(appStrings(context).personalGoals),
                 )),
               const SizedBox(height: 10),
               SizedBox(width: double.infinity,
                 child: OutlinedButton.icon(
                   onPressed: isLoading ? null : _openMentiWeekReport,
                   icon: const Icon(Icons.auto_graph_rounded),
-                  label: const Text('Heti Menti-jelentés • közérzet és költés'),
+                  label: Text(appStrings(context).weeklyReport),
                 )),
               const SizedBox(height: 24),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                const Text('Legutóbbi bejegyzések', style: TextStyle(
+              Wrap(alignment: WrapAlignment.spaceBetween, spacing: 8, runSpacing: 4, children: [
+                Text(appStrings(context).recentEntries, style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.w800)),
                 TextButton(onPressed: isLoading ? null : _openStatistics,
-                    child: const Text('Összes')),
+                    child: Text(appStrings(context).allEntries)),
               ]),
               const SizedBox(height: 8),
               _panelCard(child: isLoading

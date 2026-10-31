@@ -1,0 +1,107 @@
+{
+  "@@locale": "hu",
+  "appTitle": "MennyiMent?",
+  "home": "Kezdőlap",
+  "journal": "Napló",
+  "insights": "Elemzés",
+  "menti": "Menti",
+  "profile": "Menti és profil",
+  "language": "Nyelv / Language",
+  "automatic": "Automatikus",
+  "hungarian": "Magyar",
+  "english": "English",
+  "languageError": "A nyelvbeállítás mentése nem sikerült.",
+  "statistics": "📊 Statisztikák",
+  "week": "Hét",
+  "month": "Hónap",
+  "year": "Év",
+  "previousPeriod": "Előző időszak",
+  "nextPeriod": "Következő időszak",
+  "drinks": "Italok",
+  "pureAlcohol": "Tiszta alkohol",
+  "drinkVolume": "Italmennyiség",
+  "unloggedDays": "Rögzítés nélküli napok",
+  "knownSpending": "Ismert költés",
+  "noSpendingData": "Nincs rögzített ital: költésadat még nem áll rendelkezésre.",
+  "completePrices": "Minden rögzített italhoz tartozik ár az időszakban.",
+  "partialPrices": "Részösszeg: {count} ital ára hiányzik vagy érvénytelen. A hiányzó ár nem 0 Ft.",
+  "alcoholByPeriod": "Alkoholmennyiség időszakonként (g)",
+  "frequentDrinks": "Leggyakoribb italok",
+  "noDrinks": "Ebben az időszakban nincs rögzített ital.",
+  "drinkingTimes": "Fogyasztási időpontok",
+  "noPeriodData": "Nincs adat az időszakban.",
+  "peakTime": "Legtöbb rögzítés: {start}–{end} között ({count} db).",
+  "statisticsCaution": "Az összesítések kizárólag a rögzített italokból készülnek. A „rögzítés nélküli nap” nem bizonyítottan alkoholmentes nap. Az adatok nem használhatók józanság vagy vezetési alkalmasság megállapítására.",
+  "drinkCount": "{count} db",
+  "dayCount": "{count} nap",
+  "grams": "{value} g",
+  "litres": "{value} l",
+  "@partialPrices": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@peakTime": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@drinkCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@dayCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@grams": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@litres": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "chooseMenti": "Saját Menti kiválasztása",
+  "mentiProgress": "Menti fejlődése",
+  "addDrink": "ITAL NAPLÓZÁSA",
+  "explore": "Felfedezés",
+  "financeCenter": "Pénzügyi központ – részletes kimutatás",
+  "wellbeing": "Közérzet",
+  "wellbeingHint": "Hangulat, alvás és másnap",
+  "savings": "Megtakarítás",
+  "savingsHint": "Autó, nyaralás, saját cél",
+  "weeklyInsights": "Heti elemzés",
+  "weeklyInsightsHint": "Összefüggések és trendek",
+  "mentiProgressHint": "Szintek és kihívások",
+  "goals": "Célok",
+  "goalsHint": "Keret és naptár",
+  "statisticsHint": "Naplózott fogyasztás",
+  "personalGoals": "Személyes heti céljaim • önellenőrzés",
+  "weeklyReport": "Heti Menti-jelentés • közérzet és költés",
+  "allEntries": "Összes",
+  "statisticsNav": "Statisztikák",
+  "recentEntries": "Legutóbbi bejegyzések"
+}
