@@ -41,9 +41,11 @@ jobs:
           flutter --version
           dart --version
 
-      - name: flutter pub get
+      - name: flutter pub get and gen-l10n
         id: dependencies
-        run: flutter pub get
+        run: |
+          flutter pub get
+          flutter gen-l10n
 
       - name: flutter analyze
         id: analyze
@@ -53,6 +55,12 @@ jobs:
         id: test
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: flutter test --concurrency=2
+
+      - name: Daily Menti in Europe/Budapest (including DST)
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        env:
+          TZ: Europe/Budapest
+        run: flutter test test/daily_menti_test.dart
 
       - name: flutter build web
         id: web
@@ -85,3 +93,4 @@ jobs:
           if [ "$JOB_STATUS" = "failure" ]; then
             echo "::error title=Flutter CI sikertelen::Egy vagy több CI-lépés hibás. A részletek a piros lépés naplójában és a futás összefoglalójában láthatók."
           fi
+
