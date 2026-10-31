@@ -60,7 +60,7 @@ class _AvatarPageState extends State<AvatarPage> {
   static const _accessoryIcons = <String>['✨', '🕶️', '⭐', '🎧'];
   static const _accessoryLevels = <int>[1, 1, 2, 3];
 
-  int get _level => 1 + _xp ~/ 50;
+  int get _level => MentiXpState.levelFor(_xp);
 
   @override
   void initState() {
@@ -289,7 +289,7 @@ class _AvatarPageState extends State<AvatarPage> {
                       ]),
                       const SizedBox(height: 13),
                       LinearProgressIndicator(
-                        value: (_xp % 50) / 50,
+                        value: MentiXpState.levelXpFor(_xp) / 50,
                         minHeight: 10,
                         borderRadius: BorderRadius.circular(12),
                         color: _mint,

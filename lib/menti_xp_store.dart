@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,8 +18,12 @@ class MentiXpState {
   final Set<String> days;
   final Set<String> completed;
 
-  int get level => 1 + xp ~/ 50;
-  int get levelXp => xp % 50;
+  static int levelFor(int xp) => 1 + xp ~/ 50;
+  static int levelXpFor(int xp) => xp % 50;
+  static int remainingFor(int xp) => 50 - levelXpFor(xp);
+  int get level => levelFor(xp);
+  int get levelXp => levelXpFor(xp);
+  int get remainingXp => remainingFor(xp);
   double get progress => levelXp / 50;
   bool checkedOn(DateTime date) => days.contains(MentiXpStore.dayKey(date));
   bool completedThisWeek(String id, DateTime date) =>
@@ -56,14 +62,37 @@ class MentiXpStore {
       : <String>{};
 
   static MentiXpState _fromData(Map<String, dynamic> data) => MentiXpState(
-        xp: ((data['xp'] as num?)?.toInt() ?? 0).clamp(0, 10000000),
+        xp: math.max(0, (data['xp'] as num?)?.toInt() ?? 0),
         days: _strings(data['days']),
         completed: _strings(data['completed']),
       );
 
-  static Future<MentiXpState> load() async {
+  // Serialize every read/mutation in this isolate, including legacy migration.
+  // A failed write must not block later retries.
+  static Future<void>? _pending;
+  static Future<T> _serial<T>(Future<T> Function() action) async {
+    final previous = _pending;
+    final gate = Completer<void>();
+    _pending = gate.future;
+    try {
+      if (previous != null) await previous;
+      return await action();
+    } finally {
+      // Do not retain a completed future from another caller's async zone.
+      if (identical(_pending, gate.future)) _pending = null;
+      gate.complete();
+    }
+  }
+
+  static Future<MentiXpState> load() => _serial(_load);
+
+  static Future<MentiXpState> _load() async {
     final prefs = await SharedPreferences.getInstance();
-    final current = _decode(prefs.getString(_key));
+    final raw = prefs.get(_key);
+    if (raw != null && (raw is! String || !_decode(raw).containsKey('xp'))) {
+      throw const FormatException('Unreadable Menti XP');
+    }
+    final current = _decode(raw as String?);
     if (current.containsKey('xp')) return _fromData(current);
 
     final reflectionDays = (prefs.getStringList(_reflectionKey) ?? <String>[]).toSet();
@@ -72,7 +101,7 @@ class MentiXpStore {
     if (oldLastCheckin is String && oldLastCheckin.isNotEmpty) {
       reflectionDays.add(oldLastCheckin);
     }
-    final legacyXp = ((old['xp'] as num?)?.toInt() ?? 0).clamp(0, 10000000);
+    final legacyXp = math.max(0, (old['xp'] as num?)?.toInt() ?? 0);
     final state = MentiXpState(
       xp: legacyXp > reflectionDays.length * 10
           ? legacyXp
@@ -86,34 +115,48 @@ class MentiXpStore {
 
   static Future<void> _save(MentiXpState state) async {
     final prefs = await SharedPreferences.getInstance();
-    final result = await prefs.setString(_key, jsonEncode({
-      'xp': state.xp,
-      'days': state.days.toList()..sort(),
-      'completed': state.completed.toList()..sort(),
-    }));
-    if (!result) throw StateError('A Menti XP mentése sikertelen.');
+    late final bool result;
+    try {
+      result = await prefs.setString(_key, jsonEncode({
+        ..._decode(prefs.getString(_key)),
+        'xp': state.xp,
+        'days': state.days.toList()..sort(),
+        'completed': state.completed.toList()..sort(),
+      }));
+    } catch (_) {
+      await prefs.reload();
+      rethrow;
+    }
+    if (!result) {
+      // SharedPreferences updates its cache even when persistence returns false.
+      await prefs.reload();
+      throw StateError('A Menti XP mentése sikertelen.');
+    }
     // Megtartjuk a korábbi napi önellenőrzés kulcsát is az átmenethez.
     await prefs.setStringList(_reflectionKey, state.days.toList()..sort());
   }
 
   /// Mindkét képernyő ugyanazt a napi eseményt használja.
-  static Future<MentiXpState> checkInToday() async {
-    final current = await load();
-    final today = dayKey(DateTime.now());
-    if (current.days.contains(today)) return current;
-    final updated = MentiXpState(
-      xp: current.xp + 10,
-      days: {...current.days, today},
-      completed: current.completed,
-    );
-    await _save(updated);
-    return updated;
+  static Future<MentiXpState> checkInToday({DateTime? now}) {
+    // Capture the local calendar day before waiting for another storage operation.
+    final today = dayKey((now ?? DateTime.now()).toLocal());
+    return _serial(() async {
+      final current = await _load();
+      if (current.days.contains(today)) return current;
+      final updated = MentiXpState(
+        xp: current.xp + 10,
+        days: {...current.days, today},
+        completed: current.completed,
+      );
+      await _save(updated);
+      return updated;
+    });
   }
 
-  static Future<MentiXpState> completeWeekly(String id) async {
+  static Future<MentiXpState> completeWeekly(String id) => _serial(() async {
     final points = weeklyPoints[id];
     if (points == null) throw ArgumentError.value(id, 'id', 'Ismeretlen kihívás');
-    final current = await load();
+    final current = await _load();
     final event = '${weekKey(DateTime.now())}:$id';
     if (current.completed.contains(event)) return current;
     final updated = MentiXpState(
@@ -123,5 +166,6 @@ class MentiXpStore {
     );
     await _save(updated);
     return updated;
-  }
+  });
 }
+

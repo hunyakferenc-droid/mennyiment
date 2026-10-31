@@ -104,10 +104,168 @@
   "allEntries": "All entries",
   "statisticsNav": "Statistics",
   "recentEntries": "Recent entries",
-  "backupTitle": "Data backup",
-  "backupContents": "The backup includes the app’s local journals, character profile, outfit, XP, goals and settings.",
+  "dailyOpen": "A mindful moment today  •  +10 XP",
+  "dailyOpenSaved": "Today’s check-in and evening reflection ✓",
+  "dailyTitle": "A moment for yourself",
+  "dailyMorning": "Good morning!",
+  "dailyAfternoon": "Have a lovely day!",
+  "dailyEveningGreeting": "Good evening!",
+  "dailyGreeting": "{greeting} {name} is here with you.",
+  "dailyOptional": "Every answer is optional. No drink logging is needed. There is no penalty for missed days.",
+  "dailyWelcome": "Glad you are here. Take today at your own pace.",
+  "dailySupportLow": "Does today feel difficult? A short rest or a chat may help. You do not have to solve everything today.",
+  "dailySupportMid": "Thank you for checking in with yourself. A small, comfortable step counts.",
+  "dailySupportHigh": "Lovely to hear you feel good! What small kindness could you do for yourself today?",
+  "dailyMood": "How is your mood right now?",
+  "dailyEnergy": "How much energy do you have right now?",
+  "dailyScale": "1 = very low, 5 = very high",
+  "dailySkip": "Skip",
+  "dailyGoal": "Today’s personal goal (optional)",
+  "dailyGoalHint": "For example: a short walk or a rest",
+  "dailyEvening": "Evening reflection (optional)",
+  "dailyEveningHint": "What felt good today? What would you take into tomorrow?",
+  "dailyReward": "Checking in earns +10 XP once a day. You can skip every answer.",
+  "dailyRewardDone": "You already received today’s check-in XP. You can freely update your answers.",
+  "dailySave": "Save check-in",
+  "dailySaved": "Check-in saved. The daily reward is counted only once.",
+  "dailyLater": "Skip for now",
+  "dailyLoadError": "Could not safely load today’s data. Your data have not been overwritten.",
+  "dailySaveError": "Saving did not finish. Please retry; your daily XP will not be duplicated.",
+  "dailyRetry": "Retry",
+  "@dailyGreeting": {
+    "placeholders": {
+      "greeting": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "evolutionTitle": "Menti progress",
+  "evolutionLevel": "Level {level}",
+  "evolutionRemaining": "{xp} XP to the next level",
+  "evolutionTotal": "{xp} XP in total",
+  "evolutionNext": "Next reward",
+  "evolutionAll": "All current outfit rewards earned. Go at your own pace!",
+  "evolutionUnlock": "Level {level} • {xp} XP to go",
+  "evolutionDaily": "Daily mindful self-check",
+  "evolutionDailyHint": "Reflect on your day. +10 XP once a day, shared with Home.",
+  "evolutionChecked": "Today's self-check is complete",
+  "evolutionCheck": "I reflected on my day",
+  "evolutionWeekly": "Weekly mindful steps",
+  "evolutionWeeklyHint": "Self-reported, once per week. Opportunities renew on Monday.",
+  "evolutionReview": "I reviewed my journal",
+  "evolutionCost": "I reflected on my spending",
+  "evolutionGoal": "I set a personal goal",
+  "evolutionDone": "Done",
+  "evolutionPoints": "+{xp} XP • once per week",
+  "evolutionBadges": "Achievement badges",
+  "evolutionReflectionBadge": "Mindful self-check • 1 distinct day",
+  "evolutionGoalBadge": "Personal goal • set 1 weekly goal",
+  "evolutionConsistencyBadge": "Consistency • 7 distinct days, breaks are welcome",
+  "evolutionEarned": "Earned",
+  "evolutionLocked": "Still available",
+  "evolutionWeek": "This week: {days} self-checks • {tasks} mindful steps",
+  "evolutionPolicy": "Alcohol quantity and money spent do not earn XP. There is no negative XP or penalty for missed days. Badges award no extra XP and do not measure health or alcohol-free days.",
+  "evolutionError": "Progress could not be loaded or saved. Please try again.",
+  "evolutionRetry": "Retry",
+  "evolutionSaved": "Saved • +{xp} XP",
+  "evolutionWardrobe": "Open wardrobe",
+  "evolutionBasic": "Basic outfit",
+  "evolutionParty": "Party outfit",
+  "evolutionSport": "Sport outfit",
+  "evolutionBusiness": "Business outfit",
+  "evolutionFestival": "Festival outfit",
+  "evolutionLegendary": "Legendary outfit",
+  "evolutionImage": "Preview is currently unavailable",
+  "evolutionRules": "Unlocks: Basic, Party and Sport at level 1, Business at 2, Festival at 3, Legendary at 5. Earned outfits stay yours.",
+  "@evolutionLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionRemaining": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionTotal": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionUnlock": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionPoints": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionWeek": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "tasks": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionSaved": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "challengeSaveError": "Could not save. Please retry.",
+  "challengeCustom": "Your weekly goal",
+  "challengeDaysPerWeek": "Days per week",
+  "challengeCancel": "Cancel",
+  "challengeSave": "Save",
+  "challengeReflection": "Mindful self-check",
+  "challengeJournal": "Consistent wellbeing journal",
+  "challengeHabit": "Mindful habit: a short daily pause",
+  "challengeTitle": "Personal weekly challenges",
+  "challengeOptional": "At your own pace. Every challenge is optional and can be skipped or stopped without penalty. No XP rewards or deductions.",
+  "challengePrevious": "Previous week",
+  "challengeNext": "Next week",
+  "challengeLoadError": "Data could not be read. It will not be overwritten.",
+  "challengeRetry": "Retry",
+  "challengeDays": "days",
+  "challengeSkipped": "Skipped – no penalty.",
+  "challengeStopped": "Stopped – no penalty.",
+  "challengeJournalHint": "Counts days with a saved wellbeing entry. No drink entry is needed.",
+  "challengeChoose": "Choose",
+  "challengeEdit": "Edit goal",
+  "challengeDoneToday": "I did this today",
+  "challengeSkip": "Skip this week",
+  "challengeStop": "Stop",
+  "challengeSummary": "Weekly progress summary",
+  "challengeJournalDays": "Days with wellbeing entries",
+  "challengeCaution": "A missing entry is unknown, not an alcohol-free day. These challenges do not label alcohol-free days. Editing a goal affects only the selected week; previous check-ins are retained.",
+  "challengeRefresh": "Refresh summary",
+  "backupTitle": "Data backup and restore",
+  "backupContents": "Back up all local journals, Daily Menti answers, XP and history, permanent outfit unlocks, weekly challenges, characters, goals and settings, including future app keys.",
   "backupPrivacy": "The file is not encrypted and contains personal data. Save it somewhere safe. The app does not upload it automatically; you choose where to save or share it.",
-  "backupRestoreDeferred": "This version supports export. Restore is not available yet; existing data will not be overwritten.",
+  "backupRestoreDeferred": "Choose a backup for a validated preview before restoring. No changes are made until you explicitly confirm.",
   "backupPrepare": "Prepare backup",
   "backupWorking": "Working…",
   "backupPreview": "Prepared backup",
@@ -131,6 +289,33 @@
     "placeholders": {
       "size": {
         "type": "String"
+      }
+    }
+  },
+  "restorePick": "Choose backup to restore",
+  "restoreHint": "Restore adds or replaces only keys present in the file. Other local data is kept. Permanent outfit unlocks are combined. Review the keys below before confirming.",
+  "restorePreview": "Restore preview",
+  "restoreCounts": "{added} new, {replaced} replaced, {unchanged} unchanged keys",
+  "restoreConfirm": "Restore these data",
+  "restoreQuestion": "Restore the reviewed backup?",
+  "restoreWarning": "The listed data will be written to this device. Existing values for these keys will be replaced. Do you want to continue?",
+  "restoreCancel": "Cancel",
+  "restoreInvalid": "The backup is invalid, unsupported, too large or unreadable. No user data was written.",
+  "restoreFailed": "Restore failed. The original data was recovered. Prepare a new preview before retrying.",
+  "restoreRecovery": "Recovery is incomplete. Editing is blocked until the original data can be recovered. Keep this app’s local data and retry.",
+  "restoreRetry": "Retry recovery",
+  "restoreSuccess": "Data restored.",
+  "restoreStale": "Local data changed or storage is unavailable. No restore was completed. Choose the file again.",
+  "@restoreCounts": {
+    "placeholders": {
+      "added": {
+        "type": "int"
+      },
+      "replaced": {
+        "type": "int"
+      },
+      "unchanged": {
+        "type": "int"
       }
     }
   }

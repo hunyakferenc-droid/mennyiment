@@ -5,6 +5,7 @@ export 'drink_journal.dart';
 
 import 'menti_progress.dart';
 import 'menti_xp_store.dart';
+import 'daily_menti.dart';
 import 'finance_center.dart';
 import 'wellbeing_journal.dart';
 import 'lifestyle_insights.dart';
@@ -25,6 +26,7 @@ import 'app_language.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'menti_motion.dart';
 import 'data_backup_page.dart';
+import 'data_restore.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MennyiMentApp());
@@ -39,13 +41,34 @@ class MennyiMentApp extends StatefulWidget {
 
 class _MennyiMentAppState extends State<MennyiMentApp> {
   late final AppLanguage language;
+  late Future<void> _recovery;
+  int _epoch = 0;
+  void restored() {
+    setState(() { _epoch++; });
+    language.load();
+  }
   @override
-  void initState() { super.initState(); language = AppLanguage()..load(); }
+  void initState() { super.initState(); language = AppLanguage(); _recovery = BackupRestorer().recover().then((_) => language.load()); }
   @override
   void dispose() { language.dispose(); super.dispose(); }
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<void>(future: _recovery, builder: (context, snapshot) {
+      if (snapshot.connectionState != ConnectionState.done || snapshot.hasError) {
+        return MaterialApp(
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          home: Builder(builder: (context) => Scaffold(body: SafeArea(child: Center(
+            child: snapshot.hasError ? Column(mainAxisSize: MainAxisSize.min, children: [
+              Padding(padding: const EdgeInsets.all(24), child: Text(appStrings(context).restoreRecovery)),
+              FilledButton(onPressed: () => setState(() { _recovery = BackupRestorer().recover().then((_) => language.load()); }),
+                child: Text(appStrings(context).restoreRetry)),
+            ]) : const CircularProgressIndicator(),
+          )))),
+        );
+      }
     return ListenableBuilder(listenable: language, builder: (context, _) => AppLanguageScope(language: language, child: MaterialApp(
+      key: ValueKey(_epoch),
       builder: (context, child) => MentiMotionScope(child: child!),
       locale: language.locale,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -78,6 +101,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
       ),
       home: const HomePage(),
     )));
+    });
   }
 }
 
@@ -124,8 +148,8 @@ void updateMentiMessage(MentiMood mood) {
       '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 
   int get _reflectionXp => _totalMentiXp;
-  int get _mentiLevel => 1 + _reflectionXp ~/ 50;
-  double get _mentiLevelProgress => (_reflectionXp % 50) / 50;
+  int get _mentiLevel => MentiXpState.levelFor(_reflectionXp);
+  double get _mentiLevelProgress => MentiXpState.levelXpFor(_reflectionXp) / 50;
 
   Future<void> _loadReflections() async {
     try {
@@ -143,29 +167,16 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> _saveDailyReflection() async {
-    final key = _dateKey(DateTime.now());
-    if (_reflectionBusy || _reflectionDays.contains(key)) return;
+    if (_reflectionBusy) return;
     setState(() => _reflectionBusy = true);
     try {
-      final state = await MentiXpStore.checkInToday();
-      if (!mounted) return;
-      setState(() {
-        _totalMentiXp = state.xp;
-        _reflectionDays
-          ..clear()
-          ..addAll(state.days);
-        mentiReaction++;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Mai önellenőrzés rögzítve! +10 XP Mentinek.')),
-      );
-    } catch (error) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('A mentés nem sikerült. Próbáld újra!')),
-        );
-      }
-      debugPrint('Menti XP mentési hiba: $error');
+      await Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (_) => DailyMentiPage(
+          characterName: _characterName,
+          assetPath: _characterAsset,
+        ),
+      ));
+      await _loadReflections();
     } finally {
       if (mounted) setState(() => _reflectionBusy = false);
     }
@@ -199,14 +210,22 @@ void updateMentiMessage(MentiMood mood) {
     (name: 'Unicum', emoji: '🥃', ml: 40, percent: 40),
   ];
 
+  late final Future<void> _initialLoad;
   @override
   void initState() {
     super.initState();
-    loadDrinks();
-    loadCustomDrinks();
-    loadFavorites();
-    _loadReflections();
-    _loadCharacterProfile();
+    _initialLoad = Future.wait([loadDrinks(), loadCustomDrinks(), loadFavorites(),
+      _loadReflections(), _loadCharacterProfile()]).then((_) {});
+  }
+
+  Future<void> _openDataBackup() async {
+    if (_journalSaving || _customSaving || _reflectionBusy || _recording ||
+        _editingEntry || _deletingEntry || _pickerOpen) return;
+    await _initialLoad;
+    if (!mounted) return;
+    await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => DataBackupPage(
+      onRestored: () => context.findAncestorStateOfType<_MennyiMentAppState>()?.restored(),
+    )));
   }
 
   Future<void> loadDrinks() async {
@@ -633,7 +652,10 @@ void updateMentiMessage(MentiMood mood) {
     await Navigator.push(context, MaterialPageRoute(
       builder: (_) => const MentiProgressPage(),
     ));
-    if (mounted) await _loadReflections();
+    if (mounted) {
+      await _loadReflections();
+      await _loadCharacterProfile();
+    }
   }
 
   String _characterAsset = 'assets/images/menti_outfits/alap.png';
@@ -915,12 +937,10 @@ void updateMentiMessage(MentiMood mood) {
         title: const Text('MennyiMent?',
             style: TextStyle(fontWeight: FontWeight.w800)),
         actions: [
-          const LanguageMenu(),
           IconButton(key: const ValueKey('open-data-backup'),
-              tooltip: appStrings(context).backupTitle,
-              onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
-                  builder: (_) => const DataBackupPage())),
-              icon: const Icon(Icons.save_alt_rounded)),
+            tooltip: appStrings(context).backupTitle, onPressed: _openDataBackup,
+            icon: const Icon(Icons.backup_outlined)),
+          const LanguageMenu(),
           IconButton(tooltip: appStrings(context).profile, onPressed: _openAvatar,
               icon: const Icon(Icons.account_circle_outlined)),
           const SizedBox(width: 8),
@@ -1023,13 +1043,14 @@ void updateMentiMessage(MentiMood mood) {
                     children: [
                       Text('$_reflectionXp XP összesen',
                         style: const TextStyle(fontWeight: FontWeight.w700)),
-                      Text('${_reflectionXp % 50} / 50 XP a következő szintig',
+                      Text(appStrings(context).evolutionRemaining(MentiXpState.remainingFor(_reflectionXp)),
                         style: const TextStyle(color: _muted, fontSize: 11)),
                     ]),
                   const SizedBox(height: 8),
                   TweenAnimationBuilder<double>(
                     tween: Tween<double>(begin: 0, end: _mentiLevelProgress),
-                    duration: const Duration(milliseconds: 650),
+                    duration: MentiMotionScope.reducedOf(context)
+                        ? Duration.zero : const Duration(milliseconds: 650),
                     curve: Curves.easeOutCubic,
                     builder: (context, value, child) => ClipRRect(
                       borderRadius: BorderRadius.circular(8),
@@ -1042,14 +1063,12 @@ void updateMentiMessage(MentiMood mood) {
                   const SizedBox(height: 12),
                   SizedBox(width: double.infinity,
                     child: OutlinedButton.icon(
-                      onPressed: _reflectionBusy ||
-                          _reflectionDays.contains(_dateKey(DateTime.now()))
-                          ? null : _saveDailyReflection,
+                      onPressed: _reflectionBusy ? null : _saveDailyReflection,
                       icon: Icon(_reflectionDays.contains(_dateKey(DateTime.now()))
                         ? Icons.check_circle_outline : Icons.favorite_border_rounded),
                       label: Text(_reflectionDays.contains(_dateKey(DateTime.now()))
-                        ? 'Mai önellenőrzés kész ✓'
-                        : 'Mai tudatos pillanat  •  +10 XP'),
+                        ? appStrings(context).dailyOpenSaved
+                        : appStrings(context).dailyOpen),
                     ),
                   ),
                   const Text('Az XP önellenőrzésért és tudatos heti kihívásokért jár, nem az elfogyasztott italokért.',

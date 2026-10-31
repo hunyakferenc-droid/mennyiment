@@ -1,7 +1,5 @@
 # MennyiMent? – állapotfelmérés és 6.6–7.1 fejlesztési terv
 
-> A 6.7 csomagok új, felhasználó által kért sorrendje és pontos feladatkiírásai a [6.7-development-plan.md](6.7-development-plan.md) fájlban találhatók: A export/visszaállítási alap, B szerkesztő, C visszavonás, D költségkezelés. Ez a 6.7-es számozás felülírja az alábbi eredeti terv korábbi 6.7-es betűjelöléseit.
-
 Felmérés: 2026. október 31. A terv a tényleges forráskód alapján készült, nem piackutatás vagy már megvalósított képességek ígérete. A verziószámok fejlesztési mérföldkövek; nem vállalt kiadási dátumok.
 
 Kiindulópont: `main` commit `9457314c4d19bfd755b6ecf40c4652827bc1ee90`. A `v6.5-stable` annotált címke ugyanerre a commitra mutat. A címkét nem változtatjuk meg. Az alkalmazás `pubspec.yaml` verziója ettől függetlenül `1.0.0+1`, több képernyő szövegében régebbi fejlesztési verziószám látható; ezek nem jelentenek külön funkciókészletet.

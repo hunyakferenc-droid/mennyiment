@@ -1,9 +1,29 @@
+import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 
 import 'data_backup.dart';
 
 enum BackupSaveResult { saved, cancelled, downloadRequested }
+
+Future<String?> readBackupFile() async {
+  final file = await FilePicker.pickFile(
+    type: FileType.custom, allowedExtensions: ['json'],
+  );
+  if (file == null) return null;
+  final size = await file.length();
+  if (size != null && size > BackupDocument.maxBytes) {
+    throw const FormatException('Backup too large');
+  }
+  final bytes = <int>[];
+  await for (final chunk in file.readAsByteStream()) {
+    if (bytes.length + chunk.length > BackupDocument.maxBytes) {
+      throw const FormatException('Backup too large');
+    }
+    bytes.addAll(chunk);
+  }
+  return utf8.decode(bytes, allowMalformed: false);
+}
 
 Future<BackupSaveResult> saveBackupFile(BackupDocument document) async {
   final result = await FilePicker.saveFile(
