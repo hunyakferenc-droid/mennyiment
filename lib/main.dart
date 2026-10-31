@@ -124,8 +124,8 @@ void updateMentiMessage(MentiMood mood) {
       '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 
   int get _reflectionXp => _totalMentiXp;
-  int get _mentiLevel => 1 + _reflectionXp ~/ 50;
-  double get _mentiLevelProgress => (_reflectionXp % 50) / 50;
+  int get _mentiLevel => MentiXpState.levelFor(_reflectionXp);
+  double get _mentiLevelProgress => MentiXpState.levelXpFor(_reflectionXp) / 50;
 
   Future<void> _loadReflections() async {
     try {
@@ -620,7 +620,10 @@ void updateMentiMessage(MentiMood mood) {
     await Navigator.push(context, MaterialPageRoute(
       builder: (_) => const MentiProgressPage(),
     ));
-    if (mounted) await _loadReflections();
+    if (mounted) {
+      await _loadReflections();
+      await _loadCharacterProfile();
+    }
   }
 
   String _characterAsset = 'assets/images/menti_outfits/alap.png';
@@ -1005,13 +1008,14 @@ void updateMentiMessage(MentiMood mood) {
                     children: [
                       Text('$_reflectionXp XP összesen',
                         style: const TextStyle(fontWeight: FontWeight.w700)),
-                      Text('${_reflectionXp % 50} / 50 XP a következő szintig',
+                      Text(appStrings(context).evolutionRemaining(MentiXpState.remainingFor(_reflectionXp)),
                         style: const TextStyle(color: _muted, fontSize: 11)),
                     ]),
                   const SizedBox(height: 8),
                   TweenAnimationBuilder<double>(
                     tween: Tween<double>(begin: 0, end: _mentiLevelProgress),
-                    duration: const Duration(milliseconds: 650),
+                    duration: MentiMotionScope.reducedOf(context)
+                        ? Duration.zero : const Duration(milliseconds: 650),
                     curve: Curves.easeOutCubic,
                     builder: (context, value, child) => ClipRRect(
                       borderRadius: BorderRadius.circular(8),
@@ -1352,4 +1356,3 @@ class _DrinkDetailsSheetState extends State<_DrinkDetailsSheet> {
     );
   }
 }
-

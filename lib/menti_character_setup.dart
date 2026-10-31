@@ -3,6 +3,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_profile_storage.dart';
 import 'menti_character_catalog.dart';
 import 'menti_xp_store.dart';
+import 'menti_rewards.dart';
+import 'menti_reward_widgets.dart';
+import 'app_language.dart';
 
 /// Existing profile keys are preserved; the colliding style key is migrated.
 class MentiCharacterProfile {
@@ -40,8 +43,12 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
   String _mood = 'Vidám';
   String _tint = 'Narancs';
   bool _saving = false;
+  bool _loading = true;
+  bool _loadError = false;
+  Set<String> _unlocked = {};
+  Set<String> _assets = {};
   int _reflectionXp = 0;
-  int get _level => 1 + _reflectionXp ~/ 50;
+  int get _level => MentiXpState.levelFor(_reflectionXp);
   final _name = TextEditingController(text: 'Menti');
 
   @override
@@ -51,14 +58,20 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
   }
 
   Future<void> _load() async {
+    setState(() { _loading = true; _loadError = false; });
+    try {
     final p = await SharedPreferences.getInstance();
     await MentiProfileStorage.migrate(p);
     final xpState = await MentiXpStore.load();
+    final assets = await MentiRewards.bundledAssets();
+    final unlocked = await MentiRewards.load(level: xpState.level, assets: assets);
     if (!mounted) return;
     final savedStyle = p.get(MentiCharacterProfile.styleKey);
     final savedOutfit = p.get(MentiCharacterProfile.outfitKey);
     setState(() {
       _reflectionXp = xpState.xp;
+      _unlocked = unlocked;
+      _assets = assets;
       _style = MentiCharacterFamily.resolve(savedStyle) ?? MentiCharacterFamily.boy;
       _preserveUnknownStyle = savedStyle != null && MentiCharacterFamily.resolve(savedStyle) == null;
       _age = p.getString(MentiCharacterProfile.ageKey) ?? _age;
@@ -71,6 +84,11 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
       _tint = p.getString(MentiCharacterProfile.tintKey) ?? _tint;
       _name.text = p.getString(MentiCharacterProfile.nameKey) ?? 'Menti';
     });
+    } catch (_) {
+      if (mounted) setState(() => _loadError = true);
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
   }
 
   @override
@@ -81,7 +99,7 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
 
   Future<void> _save() async {
     final n = _name.text.trim();
-    if (_saving || n.isEmpty || n.length > 24) {
+    if (_loading || _loadError || _saving || n.isEmpty || n.length > 24) {
       if (n.isEmpty || n.length > 24) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('A karakter neve 1–24 karakter lehet.'),
@@ -224,27 +242,11 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
   }
 
   Widget _missingAsset(String assetPath, {bool compact = false}) {
-    // A korábbi ikon-visszaesés elrejtette a hiányzó képeket.
-    // Az asset elérési útját megmutatjuk, így könnyebb javítani a pubspec.yaml-t.
-    return Container(
-      padding: const EdgeInsets.all(6),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: const Color(0xFF5A1B2D),
-        borderRadius: BorderRadius.circular(9),
-      ),
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Icon(Icons.broken_image_outlined, color: Colors.white,
-            size: compact ? 23 : 46),
-        const SizedBox(height: 5),
-        Text('Hiányzó kép:', style: TextStyle(
-            color: Colors.white, fontSize: compact ? 9 : 13)),
-        Text(assetPath, maxLines: compact ? 3 : 5,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white70, fontSize: compact ? 8 : 11)),
-      ]),
-    );
+    return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+      Icon(Icons.image_outlined, size: compact ? 23 : 46),
+      Text(appStrings(context).evolutionImage, textAlign: TextAlign.center,
+        style: TextStyle(fontSize: compact ? 10 : 13)),
+    ]));
   }
 
   Widget _preview() {
@@ -323,15 +325,17 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
         Text('$_level. szint  •  $_reflectionXp XP',
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
         const SizedBox(height: 9),
-        LinearProgressIndicator(value: (_reflectionXp % 50) / 50, minHeight: 9,
+        LinearProgressIndicator(value: MentiXpState.levelXpFor(_reflectionXp) / 50, minHeight: 9,
           color: _blue, backgroundColor: _bg, borderRadius: BorderRadius.circular(10)),
         const SizedBox(height: 7),
-        Text('${_reflectionXp % 50}/50 XP a következő szintig',
+        Text(appStrings(context).evolutionRemaining(MentiXpState.remainingFor(_reflectionXp)),
           style: const TextStyle(color: _muted, fontSize: 12)),
         const SizedBox(height: 8),
         const Text('XP a napi önellenőrzésért jár, nem az alkoholfogyasztásért.',
           style: TextStyle(color: _muted, fontSize: 12)),
       ])),
+      const SizedBox(height: 12),
+      MentiNextReward(xp: _reflectionXp, family: _style, unlocked: _unlocked, assets: _assets),
       const SizedBox(height: 12),
       _section('Ruha szettek', GridView.builder(
         shrinkWrap: true,
@@ -344,8 +348,8 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
         itemBuilder: (context, i) {
           final outfit = MentiOutfit.values[i];
           final selected = outfit == _outfit;
-          final unlocked = _level >= outfit.requiredLevel || selected;
-          final selectable = unlocked;
+          final unlocked = _unlocked.contains('outfit:${outfit.id}');
+          final selectable = unlocked && _assets.contains(_style.assetFor(outfit));
           return InkWell(
             borderRadius: BorderRadius.circular(16),
             onTap: selectable ? () => setState(() {
@@ -413,7 +417,7 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
       ])),
       const SizedBox(height: 15),
       FilledButton.icon(
-        onPressed: _saving ? null : _save,
+        onPressed: _loading || _loadError || _saving ? null : _save,
         style: FilledButton.styleFrom(backgroundColor: _blue,
             minimumSize: const Size.fromHeight(56)),
         icon: const Icon(Icons.check_circle_outline),
@@ -433,7 +437,12 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
       appBar: AppBar(backgroundColor: _bg,
         title: const Text('MennyiMent?  ·  Saját Mentim',
             style: TextStyle(fontWeight: FontWeight.w800))),
-      body: LayoutBuilder(builder: (context, constraints) {
+      body: _loading ? const Center(child: CircularProgressIndicator()) : _loadError
+        ? Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Text(appStrings(context).evolutionError),
+            TextButton(onPressed: _load, child: Text(appStrings(context).evolutionRetry)),
+          ]))
+        : LayoutBuilder(builder: (context, constraints) {
         final wide = constraints.maxWidth > 800;
         return ListView(padding: const EdgeInsets.all(15), children: [
           Center(child: ConstrainedBox(

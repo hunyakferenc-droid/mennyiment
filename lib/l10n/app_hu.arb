@@ -141,5 +141,98 @@
         "type": "String"
       }
     }
+  },
+  "evolutionTitle": "Menti fejlődése",
+  "evolutionLevel": "{level}. szint",
+  "evolutionRemaining": "Még {xp} XP a következő szintig",
+  "evolutionTotal": "Összesen {xp} XP",
+  "evolutionNext": "Következő jutalom",
+  "evolutionAll": "Minden jelenlegi ruhajutalom megszerezve. Haladj a saját tempódban!",
+  "evolutionUnlock": "{level}. szint • még {xp} XP",
+  "evolutionDaily": "Napi tudatos önellenőrzés",
+  "evolutionDailyHint": "Gondold át a napodat. Naponta egyszer +10 XP, a kezdőlappal közösen.",
+  "evolutionChecked": "Mai önellenőrzés kész",
+  "evolutionCheck": "Átgondoltam a napomat",
+  "evolutionWeekly": "Heti tudatos lépések",
+  "evolutionWeeklyHint": "Önjelölés alapján, hetente egyszer. A lehetőségek hétfőn újulnak meg.",
+  "evolutionReview": "Átnéztem a naplómat",
+  "evolutionCost": "Átgondoltam a költéseimet",
+  "evolutionGoal": "Kijelöltem egy személyes célt",
+  "evolutionDone": "Kész",
+  "evolutionPoints": "+{xp} XP • hetente egyszer",
+  "evolutionBadges": "Teljesítményjelvények",
+  "evolutionReflectionBadge": "Tudatos önellenőrzés • 1 külön nap",
+  "evolutionGoalBadge": "Személyes cél • 1 heti cél kijelölése",
+  "evolutionConsistencyBadge": "Következetesség • 7 külön nap, megszakítás megengedett",
+  "evolutionEarned": "Megszerzett",
+  "evolutionLocked": "Még elérhető",
+  "evolutionWeek": "Ezen a héten: {days} önellenőrzés • {tasks} tudatos lépés",
+  "evolutionPolicy": "Az alkoholmennyiség és a költés összege nem ad XP-t. Nincs negatív XP vagy büntetés kihagyott napért. A jelvényekért nem jár külön XP; nem mérnek egészségi állapotot vagy alkoholmentességet.",
+  "evolutionError": "A fejlődés nem tölthető be vagy menthető. Próbáld újra.",
+  "evolutionRetry": "Újrapróbálás",
+  "evolutionSaved": "Mentve • +{xp} XP",
+  "evolutionWardrobe": "Gardrób megnyitása",
+  "evolutionBasic": "Alap szett",
+  "evolutionParty": "Buli szett",
+  "evolutionSport": "Sport szett",
+  "evolutionBusiness": "Üzleti szett",
+  "evolutionFestival": "Fesztivál szett",
+  "evolutionLegendary": "Legendás szett",
+  "evolutionImage": "Az előnézet jelenleg nem érhető el",
+  "evolutionRules": "Feloldás: Alap, Buli és Sport az 1., Üzleti a 2., Fesztivál a 3., Legendás az 5. szinten. A megszerzett ruhák megmaradnak.",
+  "@evolutionLevel": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionRemaining": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionTotal": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionUnlock": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      },
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionPoints": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionWeek": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "tasks": {
+        "type": "int"
+      }
+    }
+  },
+  "@evolutionSaved": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
   }
 }
