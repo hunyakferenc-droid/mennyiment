@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
+import 'drink_journal.dart';
+export 'drink_journal.dart';
 
 import 'menti_progress.dart';
 import 'menti_xp_store.dart';
@@ -58,37 +60,6 @@ class MennyiMentApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const HomePage(),
-    );
-  }
-}
-
-class Drink {
-  final String name;
-  final int ml;
-  final double percent;
-  final DateTime time;
-  double? priceFt;
-
-  Drink(this.name, this.ml, this.percent, {DateTime? time, this.priceFt})
-      : time = time ?? DateTime.now();
-
-  double get alcoholGrams => ml * percent / 100 * 0.789;
-
-  Map<String, dynamic> toJson() => {
-        'name': name,
-        'ml': ml,
-        'percent': percent,
-        'time': time.toIso8601String(),
-        if (priceFt != null) 'priceFt': priceFt,
-      };
-
-  factory Drink.fromJson(Map<String, dynamic> json) {
-    return Drink(
-      json['name'] as String,
-      (json['ml'] as num).toInt(),
-      (json['percent'] as num).toDouble(),
-      time: DateTime.parse(json['time'] as String),
-      priceFt: (json['priceFt'] as num?)?.toDouble(),
     );
   }
 }
@@ -187,6 +158,21 @@ void updateMentiMessage(MentiMood mood) {
   final List<CatalogDrink> customDrinks = [];
   final Set<String> favoriteDrinks = {};
   bool isLoading = true;
+  bool _journalReady = false;
+  bool _journalSaving = false;
+  bool _recording = false;
+  bool _pickerOpen = false;
+  bool _customReady = false;
+  bool _customSaving = false;
+  String? _customSnapshot;
+  final Map<CatalogDrink, Map<String, dynamic>> _customSources = {};
+  bool _editingEntry = false;
+  bool _deletingEntry = false;
+  String? _journalSnapshot;
+  String? _journalError;
+
+  bool get _canWriteJournal => !isLoading && _journalReady && !_journalSaving;
+
 
   final options = <({String name, String emoji, int ml, double percent})>[
     (name: 'Sör', emoji: '🍺', ml: 500, percent: 5),
@@ -207,23 +193,31 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> loadDrinks() async {
+    if (_journalSaving) return;
+    setState(() { isLoading = true; _journalReady = false; });
     try {
       final prefs = await SharedPreferences.getInstance();
-      final saved = prefs.getString(storageKey);
-      if (saved != null) {
-        final decoded = jsonDecode(saved) as List<dynamic>;
-        final loaded = decoded
-            .map((item) => Drink.fromJson(Map<String, dynamic>.from(item as Map)))
-            .toList();
-        if (!mounted) return;
-        setState(() {
-          drinks
-            ..clear()
-            ..addAll(loaded);
-        });
-      }
-    } catch (error) {
-      debugPrint('Betöltési hiba: $error');
+      await prefs.reload();
+      final raw = prefs.get(storageKey);
+      if (raw != null && raw is! String) throw const FormatException('Invalid journal type');
+      final saved = raw as String?;
+      final decoded = saved == null ? <dynamic>[] : jsonDecode(saved);
+      if (decoded is! List) throw const FormatException('Invalid journal document');
+      final loaded = decoded.map((item) {
+        if (item is! Map) throw const FormatException('Invalid journal record');
+        return Drink.fromJson(Map<String, dynamic>.from(item));
+      }).toList();
+      if (!mounted) return;
+      setState(() {
+        drinks..clear()..addAll(loaded);
+        _journalSnapshot = saved;
+        _journalReady = true;
+        _journalError = null;
+      });
+    } catch (_) {
+      if (mounted) { setState(() {
+        _journalError = 'A napló nem tölthető be biztonságosan. Az eredeti adatokat megőriztük; a módosításokat letiltottuk.';
+      }); }
     } finally {
       if (mounted) setState(() => isLoading = false);
     }
@@ -232,27 +226,33 @@ void updateMentiMessage(MentiMood mood) {
   Future<void> loadCustomDrinks() async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      final saved = prefs.getString(customDrinksKey);
-      if (saved == null) return;
-      final decoded = jsonDecode(saved) as List<dynamic>;
+      final saved = prefs.get(customDrinksKey);
+      if (saved != null && saved is! String) throw const FormatException('Invalid custom drinks');
+      final decoded = saved == null ? <dynamic>[] : jsonDecode(saved as String);
+      if (decoded is! List) throw const FormatException('Invalid custom drinks');
+      final sources = <CatalogDrink, Map<String, dynamic>>{};
       final loaded = decoded.map((item) {
         final data = Map<String, dynamic>.from(item as Map);
-        return CatalogDrink(
-          name: data['name'] as String,
+        final verified = Drink.fromJson({...data, 'time': '2000-01-01T00:00:00.000'});
+        final drink = CatalogDrink(
+          name: verified.name,
           category: data['category'] as String? ?? 'Saját italok',
           emoji: data['emoji'] as String,
-          ml: (data['ml'] as num).toInt(),
-          percent: (data['percent'] as num).toDouble(),
+          ml: verified.ml,
+          percent: verified.percent,
         );
+        sources[drink] = data;
+        return drink;
       }).toList();
       if (!mounted) return;
       setState(() {
-        customDrinks
-          ..clear()
-          ..addAll(loaded);
+        customDrinks..clear()..addAll(loaded);
+        _customSources..clear()..addAll(sources);
+        _customSnapshot = saved as String?;
+        _customReady = true;
       });
-    } catch (error) {
-      debugPrint('Saját italok betöltési hibája: $error');
+    } catch (_) {
+      if (mounted) setState(() { _customReady = false; });
     }
   }
 
@@ -280,34 +280,70 @@ void updateMentiMessage(MentiMood mood) {
     }
   }
 
-  Future<void> saveCustomDrinks() async {
+  Future<bool> saveCustomDrinks(List<CatalogDrink> next) async {
+    if (!_customReady || _customSaving) return false;
+    _customSaving = true;
     try {
       final prefs = await SharedPreferences.getInstance();
-      final data = customDrinks.map((drink) => {
-            'name': drink.name,
-            'category': drink.category,
-            'emoji': drink.emoji,
-            'ml': drink.ml,
-            'percent': drink.percent,
-          }).toList();
-      await prefs.setString(customDrinksKey, jsonEncode(data));
-    } catch (error) {
-      debugPrint('Saját italok mentési hibája: $error');
-    }
+      await prefs.reload();
+      if (prefs.get(customDrinksKey) != _customSnapshot) {
+        _customReady = false;
+        throw StateError('Custom drinks changed');
+      }
+      final data = next.map((drink) => _customSources[drink] ?? {
+        'name': drink.name, 'category': drink.category, 'emoji': drink.emoji,
+        'ml': drink.ml, 'percent': drink.percent,
+      }).toList();
+      final encoded = jsonEncode(data);
+      if (!await prefs.setString(customDrinksKey, encoded)) throw StateError('Custom drink write failed');
+      if (mounted) { setState(() {
+        customDrinks..clear()..addAll(next);
+        _customSnapshot = encoded;
+      }); }
+      return true;
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('A saját italok módosítása nem sikerült; az eredeti adatokat megőriztük.')),
+        );
+      }
+      return false;
+    } finally { _customSaving = false; }
   }
 
-  Future<void> saveDrinks() async {
+  Future<bool> _persistDrinks(List<Drink> next) async {
+    if (!_canWriteJournal) return false;
+    setState(() => _journalSaving = true);
     try {
       final prefs = await SharedPreferences.getInstance();
-      final encoded = jsonEncode(drinks.map((d) => d.toJson()).toList());
-      final saved = await prefs.setString(storageKey, encoded);
-      if (!saved) debugPrint('Nem sikerült menteni az italnaplót.');
-    } catch (error) {
-      debugPrint('Mentési hiba: $error');
+      await prefs.reload();
+      if (prefs.get(storageKey) != _journalSnapshot) {
+        _journalReady = false;
+        throw StateError('Journal changed outside this screen');
+      }
+      final encoded = jsonEncode(next.map((d) => d.toJson()).toList());
+      if (!await prefs.setString(storageKey, encoded)) {
+        throw StateError('Journal write failed');
+      }
+      if (mounted) { setState(() {
+        drinks..clear()..addAll(next);
+        _journalSnapshot = encoded;
+        _journalError = null;
+      }); }
+      return true;
+    } catch (_) {
+      if (mounted) { setState(() {
+        _journalError = 'A napló mentése nem sikerült. A módosítást nem alkalmaztuk. Próbáld újra vagy töltsd be újra a naplót.';
+      }); }
+      return false;
+    } finally {
+      if (mounted) setState(() => _journalSaving = false);
     }
   }
 
   Future<void> showAddDrinkDialog() async {
+    if (!_customReady || _customSaving) return;
+    var submitted = false;
     final nameController = TextEditingController();
     final mlController = TextEditingController();
     final percentController = TextEditingController();
@@ -353,6 +389,7 @@ void updateMentiMessage(MentiMood mood) {
           ),
           FilledButton(
             onPressed: () {
+              if (submitted) return;
               final name = nameController.text.trim();
               final ml = int.tryParse(mlController.text.trim());
               final percent = double.tryParse(
@@ -371,6 +408,7 @@ void updateMentiMessage(MentiMood mood) {
                 );
                 return;
               }
+              submitted = true;
               Navigator.pop(
                 dialogContext,
                 CatalogDrink(
@@ -391,40 +429,29 @@ void updateMentiMessage(MentiMood mood) {
     // The dialog route may still animate out; don't dispose controllers
     // before the transition has completed.
     if (newDrink == null || !mounted) return;
-    setState(() => customDrinks.add(newDrink));
-    await saveCustomDrinks();
+    await saveCustomDrinks([...customDrinks, newDrink]);
   }
 
-  void addDrink(int index) {
-    if (isLoading) return;
-    
+  Future<void> addDrink(int index) async {
+    if (!_canWriteJournal) return;
     final d = options[index];
-    setState(() => drinks.insert(0, Drink(d.name, d.ml, d.percent)));
-    saveDrinks();
-    updateMentiMessage(MentiMood.drinkAdded);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${d.name} hozzáadva!')),
-    );
+    if (await _persistDrinks([Drink(d.name, d.ml, d.percent), ...drinks]) && mounted) {
+      updateMentiMessage(MentiMood.drinkAdded);
+    }
   }
 
-  
-void addCatalogDrink(CatalogDrink drink) {
-  if (isLoading) return;
-
-  setState(() {
-    drinks.insert(
-      0,
-      Drink(drink.name, drink.ml, drink.percent),
-    );
-  });
-
-  saveDrinks();
-  updateMentiMessage(MentiMood.drinkAdded);
-}
-
-  
+  Future<void> addCatalogDrink(CatalogDrink drink) async {
+    if (!_canWriteJournal) return;
+    if (await _persistDrinks([Drink(drink.name, drink.ml, drink.percent), ...drinks]) && mounted) {
+      updateMentiMessage(MentiMood.drinkAdded);
+    }
+  }
 
   Future<void> editDrinkPrice(Drink drink) async {
+    if (!_canWriteJournal || _editingEntry) return;
+    _editingEntry = true;
+    var submitted = false;
+    try {
     final controller = TextEditingController(
       text: drink.priceFt?.toStringAsFixed(0) ?? '',
     );
@@ -446,11 +473,21 @@ void addCatalogDrink(CatalogDrink drink) {
             child: const Text('Mégse'),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(dialogContext, -1.0),
+            onPressed: () {
+              if (submitted) return;
+              submitted = true;
+              Navigator.pop(dialogContext, -1.0);
+            },
             child: const Text('Ár törlése'),
           ),
           FilledButton(
             onPressed: () {
+              if (submitted) return;
+              if (controller.text.trim().isEmpty) {
+                submitted = true;
+                Navigator.pop(dialogContext, -1.0);
+                return;
+              }
               final value = double.tryParse(
                 controller.text.trim().replaceAll(',', '.'),
               );
@@ -460,6 +497,7 @@ void addCatalogDrink(CatalogDrink drink) {
                 );
                 return;
               }
+              submitted = true;
               Navigator.pop(dialogContext, value);
             },
             child: const Text('Mentés'),
@@ -468,8 +506,14 @@ void addCatalogDrink(CatalogDrink drink) {
       ),
     );
     if (!mounted || result == null) return;
-    setState(() => drink.priceFt = result < 0 ? null : result);
-    await saveDrinks();
+    final index = drinks.indexOf(drink);
+    if (index < 0) return;
+    final next = List<Drink>.of(drinks);
+    next[index] = drink.withPrice(result < 0 ? null : result);
+    await _persistDrinks(next);
+    } finally {
+      _editingEntry = false;
+    }
   }
 
   List<V2Drink> get dashboardDrinks => drinks.map((d) => V2Drink(
@@ -659,7 +703,9 @@ void addCatalogDrink(CatalogDrink drink) {
 
   // A meglévő Drink JSON-formátum változatlan marad.
   Future<void> _recordCatalogDrink(CatalogDrink catalog) async {
-    if (isLoading) return;
+    if (!_canWriteJournal || _recording) return;
+    _recording = true;
+    try {
     final result = await showModalBottomSheet<Drink>(
       context: context,
       isScrollControlled: true,
@@ -668,17 +714,20 @@ void addCatalogDrink(CatalogDrink drink) {
       builder: (_) => _DrinkDetailsSheet(drink: catalog),
     );
     if (!mounted || result == null) return;
-    setState(() => drinks.insert(0, result));
-    await saveDrinks();
+    if (!await _persistDrinks([result, ...drinks])) return;
     if (!mounted) return;
     updateMentiMessage(MentiMood.drinkAdded);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('${result.name} mentve a naplóba')),
     );
+    } finally { _recording = false; }
   }
 
-  void _openDrinkPicker() {
-    showModalBottomSheet<void>(
+  Future<void> _openDrinkPicker() async {
+    if (!_canWriteJournal || _pickerOpen || _recording) return;
+    _pickerOpen = true;
+    try {
+    await showModalBottomSheet<void>(
       context: context, isScrollControlled: true, showDragHandle: true,
       backgroundColor: _panel,
       builder: (sheetContext) => SafeArea(child: FractionallySizedBox(
@@ -708,7 +757,8 @@ void addCatalogDrink(CatalogDrink drink) {
                     refresh(() {});
                   },
                 ),
-                onTap: isLoading ? null : () {
+                onTap: !_canWriteJournal ? null : () {
+                  if (_recording) return;
                   Navigator.pop(sheetContext);
                   _recordCatalogDrink(drink);
                 },
@@ -721,18 +771,20 @@ void addCatalogDrink(CatalogDrink drink) {
                 title: Text(drink.name),
                 subtitle: Text('${drink.ml} ml  •  ${drink.percent}%'),
                 trailing: IconButton(tooltip: 'Saját ital törlése', icon: const Icon(Icons.delete_outline),
-                  onPressed: () {
-                    setState(() => customDrinks.remove(drink));
-                    saveCustomDrinks();
-                    refresh(() {});
+                  onPressed: !_customReady || _customSaving ? null : () async {
+                    await saveCustomDrinks(List<CatalogDrink>.of(customDrinks)..remove(drink));
+                    if (context.mounted) refresh(() {});
                   }),
-                onTap: isLoading ? null : () {
+                onTap: !_canWriteJournal ? null : () {
+                  if (_recording) return;
                   Navigator.pop(sheetContext);
                   _recordCatalogDrink(drink);
                 },
               )),
+              if (!_customReady) const Padding(padding: EdgeInsets.all(16),
+                child: Text('A saját italok nem tölthetők be biztonságosan; módosításuk letiltva.')),
               Padding(padding: const EdgeInsets.all(16), child: OutlinedButton.icon(
-                onPressed: () async {
+                onPressed: !_customReady || _customSaving ? null : () async {
                   Navigator.pop(sheetContext);
                   await showAddDrinkDialog();
                   if (mounted) _openDrinkPicker();
@@ -742,20 +794,29 @@ void addCatalogDrink(CatalogDrink drink) {
         }),
       )),
     );
+    } finally { _pickerOpen = false; }
   }
 
   Future<void> _deleteEntry(Drink drink) async {
+    if (!_canWriteJournal || _deletingEntry) return;
+    _deletingEntry = true;
+    try {
+    var submitted = false;
     final confirmed = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
       title: const Text('Bejegyzés törlése?'),
       content: Text('A(z) ${drink.name} bejegyzést eltávolítjuk a naplóból.'),
       actions: [
         TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Mégse')),
-        FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Törlés')),
+        FilledButton(onPressed: () {
+          if (submitted) return;
+          submitted = true;
+          Navigator.pop(ctx, true);
+        }, child: const Text('Törlés')),
       ],
     ));
     if (confirmed != true || !mounted) return;
-    setState(() => drinks.remove(drink));
-    await saveDrinks();
+    await _persistDrinks(List<Drink>.of(drinks)..remove(drink));
+    } finally { _deletingEntry = false; }
   }
 
   Widget _recentEntry(Drink drink) => ListTile(
@@ -995,8 +1056,12 @@ void addCatalogDrink(CatalogDrink drink) {
                     style: const TextStyle(color: _muted, fontSize: 12)),
                 ),
               const SizedBox(height: 12),
+              if (_journalError != null) ...[
+                Text(_journalError!, key: const ValueKey('journal-error')),
+                TextButton(onPressed: _journalSaving || isLoading ? null : loadDrinks, child: const Text('Napló újratöltése')),
+              ],
               FilledButton.icon(
-                onPressed: isLoading ? null : _openDrinkPicker,
+                onPressed: _canWriteJournal ? _openDrinkPicker : null,
                 icon: const Icon(Icons.add_circle_outline),
                 label: const Text('ITAL NAPLÓZÁSA',
                     style: TextStyle(fontWeight: FontWeight.w800)),
@@ -1179,6 +1244,7 @@ class _DrinkDetailsSheetState extends State<_DrinkDetailsSheet> {
   late final TextEditingController _percent;
   late final TextEditingController _price;
   final _formKey = GlobalKey<FormState>();
+  bool _submitted = false;
 
   @override
   void initState() {
@@ -1263,7 +1329,8 @@ class _DrinkDetailsSheetState extends State<_DrinkDetailsSheet> {
                     icon: const Icon(Icons.check_circle_outline),
                     label: const Text('Mentés a naplóba'),
                     onPressed: () {
-                      if (!_formKey.currentState!.validate()) return;
+                      if (_submitted || !_formKey.currentState!.validate()) return;
+                      _submitted = true;
                       final priceText = _price.text.trim();
                       Navigator.of(context).pop(Drink(
                         widget.drink.name,
