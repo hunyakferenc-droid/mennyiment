@@ -54,6 +54,12 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: flutter test --concurrency=2
 
+      - name: Daily Menti in Europe/Budapest (including DST)
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        env:
+          TZ: Europe/Budapest
+        run: flutter test test/daily_menti_test.dart
+
       - name: flutter build web
         id: web
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
@@ -85,3 +91,4 @@ jobs:
           if [ "$JOB_STATUS" = "failure" ]; then
             echo "::error title=Flutter CI sikertelen::Egy vagy több CI-lépés hibás. A részletek a piros lépés naplójában és a futás összefoglalójában láthatók."
           fi
+
