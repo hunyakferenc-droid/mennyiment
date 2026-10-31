@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'menti_evolution.dart';
+import 'menti_profile_storage.dart';
 
 /// MennyiMent? 3.3 – Menti Studio.
 /// Megőrzi az eredeti avatar-, becenév- és fejfedőbeállításokat.
@@ -20,7 +21,7 @@ class _AvatarPageState extends State<AvatarPage> {
   static const _avatarKey = 'mennyiment_avatar_v1';
   static const _nicknameKey = 'mennyiment_nickname_v1';
   static const _hatKey = 'mennyiment_hat_v1';
-  static const _styleKey = 'mennyiment_menti_style_v1';
+  static const _styleKey = MentiProfileStorage.studioBackgroundKey;
   static const _progressKey = 'mennyiment_menti_progress_v1';
   static const _accessoryKey = 'mennyiment_accessory_v1';
 
@@ -70,6 +71,7 @@ class _AvatarPageState extends State<AvatarPage> {
   Future<void> _load() async {
     try {
       final prefs = await SharedPreferences.getInstance();
+      await MentiProfileStorage.migrate(prefs);
       var xp = 0;
       final raw = prefs.getString(_progressKey);
       if (raw != null) {
@@ -80,7 +82,7 @@ class _AvatarPageState extends State<AvatarPage> {
         }
       }
       final level = 1 + xp ~/ 100;
-      var style = (prefs.getInt(_styleKey) ?? 0).clamp(0, _styleNames.length - 1).toInt();
+      var style = MentiProfileStorage.studioBackground(prefs);
       if (_styleLevels[style] > level) style = 0;
       if (!mounted) return;
       setState(() {
