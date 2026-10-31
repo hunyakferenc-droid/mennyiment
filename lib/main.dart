@@ -41,27 +41,38 @@ class MennyiMentApp extends StatefulWidget {
 
 class _MennyiMentAppState extends State<MennyiMentApp> {
   late final AppLanguage language;
-  late Future<void> _recovery;
+  late Future<bool> _recovery;
   int _epoch = 0;
+  Future<bool> _recoverBeforeApp() async {
+    try {
+      await BackupRestorer().recover();
+      await language.load();
+      return true;
+    } catch (_) {
+      // Convert failure into explicit state immediately, including on retry:
+      // FutureBuilder subscribes on the next frame, after async IO may finish.
+      return false;
+    }
+  }
   void restored() {
     setState(() { _epoch++; });
     language.load();
   }
   @override
-  void initState() { super.initState(); language = AppLanguage(); _recovery = BackupRestorer().recover().then((_) => language.load()); }
+  void initState() { super.initState(); language = AppLanguage(); _recovery = _recoverBeforeApp(); }
   @override
   void dispose() { language.dispose(); super.dispose(); }
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<void>(future: _recovery, builder: (context, snapshot) {
-      if (snapshot.connectionState != ConnectionState.done || snapshot.hasError) {
+    return FutureBuilder<bool>(future: _recovery, builder: (context, snapshot) {
+      if (snapshot.connectionState != ConnectionState.done || snapshot.data != true) {
         return MaterialApp(
           supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           home: Builder(builder: (context) => Scaffold(body: SafeArea(child: Center(
-            child: snapshot.hasError ? Column(mainAxisSize: MainAxisSize.min, children: [
+            child: snapshot.connectionState == ConnectionState.done ? Column(mainAxisSize: MainAxisSize.min, children: [
               Padding(padding: const EdgeInsets.all(24), child: Text(appStrings(context).restoreRecovery)),
-              FilledButton(onPressed: () => setState(() { _recovery = BackupRestorer().recover().then((_) => language.load()); }),
+              FilledButton(onPressed: () => setState(() { _recovery = _recoverBeforeApp(); }),
                 child: Text(appStrings(context).restoreRetry)),
             ]) : const CircularProgressIndicator(),
           )))),

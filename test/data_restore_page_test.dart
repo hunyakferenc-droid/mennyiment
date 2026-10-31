@@ -70,7 +70,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('mennyiment_locale_v1'), findsOneWidget);
       expect(p.getString('mennyiment_locale_v1'), 'hu');
-      await tester.ensureVisible(apply);
+      await tester.scrollUntilVisible(apply, 200, scrollable: find.byType(Scrollable).first);
       await tester.tap(apply);
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('restore-cancel')));
