@@ -1,0 +1,107 @@
+{
+  "@@locale": "en",
+  "appTitle": "MennyiMent?",
+  "home": "Home",
+  "journal": "Journal",
+  "insights": "Insights",
+  "menti": "Menti",
+  "profile": "Menti and profile",
+  "language": "Language / Nyelv",
+  "automatic": "Automatic",
+  "hungarian": "Magyar",
+  "english": "English",
+  "languageError": "Could not save your language preference.",
+  "statistics": "📊 Statistics",
+  "week": "Week",
+  "month": "Month",
+  "year": "Year",
+  "previousPeriod": "Previous period",
+  "nextPeriod": "Next period",
+  "drinks": "Drinks",
+  "pureAlcohol": "Pure alcohol",
+  "drinkVolume": "Drink volume",
+  "unloggedDays": "Days without entries",
+  "knownSpending": "Known spending",
+  "noSpendingData": "No drinks recorded: spending data is not available yet.",
+  "completePrices": "All recorded drinks have a price in this period.",
+  "partialPrices": "Partial total: {count} drink prices are missing or invalid. A missing price is not HUF 0.",
+  "alcoholByPeriod": "Alcohol by period (g)",
+  "frequentDrinks": "Most frequent drinks",
+  "noDrinks": "No drinks recorded in this period.",
+  "drinkingTimes": "Times of recorded drinks",
+  "noPeriodData": "No data for this period.",
+  "peakTime": "Most entries: {start}–{end} ({count} entries).",
+  "statisticsCaution": "Summaries use recorded drinks only. A day without entries is not a confirmed alcohol-free day. These data cannot establish sobriety or fitness to drive.",
+  "drinkCount": "{count} drinks",
+  "dayCount": "{count} days",
+  "grams": "{value} g",
+  "litres": "{value} l",
+  "@partialPrices": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@peakTime": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@drinkCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@dayCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@grams": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "@litres": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "chooseMenti": "Choose your Menti",
+  "mentiProgress": "Menti progress",
+  "addDrink": "LOG A DRINK",
+  "explore": "Explore",
+  "financeCenter": "Finance centre – detailed overview",
+  "wellbeing": "Wellbeing",
+  "wellbeingHint": "Mood, sleep and next day",
+  "savings": "Savings",
+  "savingsHint": "Car, holiday, your own goal",
+  "weeklyInsights": "Weekly insights",
+  "weeklyInsightsHint": "Patterns and trends",
+  "mentiProgressHint": "Levels and challenges",
+  "goals": "Goals",
+  "goalsHint": "Budget and calendar",
+  "statisticsHint": "Recorded consumption",
+  "personalGoals": "My personal weekly goals • self-check",
+  "weeklyReport": "Weekly Menti report • wellbeing and spending",
+  "allEntries": "All entries",
+  "statisticsNav": "Statistics",
+  "recentEntries": "Recent entries"
+}
