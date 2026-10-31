@@ -261,5 +261,62 @@
   "challengeSummary": "Heti fejlődési összefoglaló",
   "challengeJournalDays": "Közérzetnaplóval kitöltött napok",
   "challengeCaution": "A hiányzó bejegyzés ismeretlen adat, nem alkoholmentes nap. Ezek a kihívások nem jelölnek alkoholmentességet. A cél módosítása csak a kiválasztott hetet érinti; a korábbi napok megmaradnak.",
-  "challengeRefresh": "Összefoglaló frissítése"
+  "challengeRefresh": "Összefoglaló frissítése",
+  "backupTitle": "Adatmentés és visszaállítás",
+  "backupContents": "A mentés tartalmazza az összes helyi naplót, a Reggeli Menti válaszait, az XP-t és előzményeit, a tartós ruhafeloldásokat, heti kihívásokat, karaktereket, célokat és beállításokat, az újabb alkalmazáskulcsokkal együtt.",
+  "backupPrivacy": "A fájl nincs titkosítva, személyes adatokat tartalmaz. Csak biztonságos helyre mentsd. Az alkalmazás nem küldi automatikusan hálózatra; a fájl helyéről és megosztásáról te döntesz.",
+  "backupRestoreDeferred": "Visszaállítás előtt válassz mentést az ellenőrzött előnézethez. Csak kifejezett megerősítésed után módosítunk adatokat.",
+  "backupPrepare": "Mentés előkészítése",
+  "backupWorking": "Folyamatban…",
+  "backupPreview": "Előkészített mentés",
+  "backupCreated": "Készült: {date}",
+  "backupSize": "Méret: {size} bájt",
+  "backupValidated": "A fájl szerkezete ellenőrizve. Ez nem igazolja minden régi bejegyzés érvényességét.",
+  "backupSave": "Mentés fájlba",
+  "backupSaved": "A fájl mentése befejeződött.",
+  "backupCancelled": "A fájlmentést megszakítottad. Az alkalmazás adatai változatlanok.",
+  "backupDownloadRequested": "A letöltési kérést átadtuk a böngészőnek. Ellenőrizd a letöltéseket és a fájl meglétét.",
+  "backupPrepareError": "Nem készült mentés. Az adatok változhattak, nem olvashatók, vagy túllépik a támogatott méretet. Próbáld újra; a helyi adatok változatlanok.",
+  "backupSaveError": "A fájlmentés nem sikerült. Ellenőrizd a célhelyet, és próbáld újra. A helyi adatok változatlanok.",
+  "@backupCreated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@backupSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "restorePick": "Mentés kiválasztása visszaállításhoz",
+  "restoreHint": "A visszaállítás csak a fájlban szereplő kulcsokat adja hozzá vagy írja felül. A többi helyi adat megmarad. A tartós ruhafeloldásokat egyesítjük. Megerősítés előtt nézd át az alábbi kulcsokat.",
+  "restorePreview": "Visszaállítási előnézet",
+  "restoreCounts": "{added} új, {replaced} felülírt, {unchanged} változatlan kulcs",
+  "restoreConfirm": "Ezeknek az adatoknak a visszaállítása",
+  "restoreQuestion": "Visszaállítod az átnézett mentést?",
+  "restoreWarning": "A felsorolt adatokat erre az eszközre írjuk. Az érintett kulcsok meglévő értékeit felülírjuk. Folytatod?",
+  "restoreCancel": "Mégse",
+  "restoreInvalid": "A mentés hibás, nem támogatott, túl nagy vagy nem olvasható. Nem írtunk felhasználói adatot.",
+  "restoreFailed": "A visszaállítás nem sikerült. Az eredeti adatokat helyreállítottuk. Újrapróbálás előtt készíts új előnézetet.",
+  "restoreRecovery": "A helyreállítás még nem teljes. Az eredeti adatok helyreállításáig a szerkesztést letiltottuk. Őrizd meg az alkalmazás helyi adatait, és próbáld újra.",
+  "restoreRetry": "Helyreállítás újrapróbálása",
+  "restoreSuccess": "Az adatokat visszaállítottuk.",
+  "restoreStale": "A helyi adatok megváltoztak vagy a tároló nem elérhető. Nem történt sikeres visszaállítás. Válaszd ki újra a fájlt.",
+  "@restoreCounts": {
+    "placeholders": {
+      "added": {
+        "type": "int"
+      },
+      "replaced": {
+        "type": "int"
+      },
+      "unchanged": {
+        "type": "int"
+      }
+    }
+  }
 }

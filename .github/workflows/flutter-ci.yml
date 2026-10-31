@@ -60,12 +60,12 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: flutter test --concurrency=2
 
-      - name: Daily Menti, evolution and challenges in Europe/Budapest (including DST)
+      - name: Backup, restore and 6.8 regressions in Europe/Budapest (including DST)
         id: budapest
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         env:
           TZ: Europe/Budapest
-        run: flutter test test/daily_menti_test.dart test/daily_menti_evolution_integration_test.dart test/weekly_challenges_test.dart test/weekly_challenges_integration_test.dart --concurrency=2
+        run: flutter test test/daily_menti_test.dart test/data_backup_test.dart test/data_restore_test.dart test/weekly_challenges_test.dart test/weekly_challenges_integration_test.dart test/daily_menti_evolution_integration_test.dart test/menti_evolution_rewards_test.dart --concurrency=2
 
       - name: flutter build web
         id: web
@@ -92,7 +92,7 @@ jobs:
             echo "| flutter pub get + gen-l10n | $DEPENDENCIES |"
             echo "| flutter analyze | $ANALYZE |"
             echo "| flutter test --concurrency=2 | $TEST |"
-            echo "| Europe/Budapest daily + evolution + challenges | $BUDAPEST |"
+            echo "| Europe/Budapest DST regressziók | $BUDAPEST |"
             echo "| flutter build web | $WEB |"
             echo
             echo "Hibánál nyisd meg a piros lépés naplóját. A skipped lépés nem sikeres ellenőrzés."

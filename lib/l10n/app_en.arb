@@ -261,5 +261,62 @@
   "challengeSummary": "Weekly progress summary",
   "challengeJournalDays": "Days with wellbeing entries",
   "challengeCaution": "A missing entry is unknown, not an alcohol-free day. These challenges do not label alcohol-free days. Editing a goal affects only the selected week; previous check-ins are retained.",
-  "challengeRefresh": "Refresh summary"
+  "challengeRefresh": "Refresh summary",
+  "backupTitle": "Data backup and restore",
+  "backupContents": "Back up all local journals, Daily Menti answers, XP and history, permanent outfit unlocks, weekly challenges, characters, goals and settings, including future app keys.",
+  "backupPrivacy": "The file is not encrypted and contains personal data. Save it somewhere safe. The app does not upload it automatically; you choose where to save or share it.",
+  "backupRestoreDeferred": "Choose a backup for a validated preview before restoring. No changes are made until you explicitly confirm.",
+  "backupPrepare": "Prepare backup",
+  "backupWorking": "Working…",
+  "backupPreview": "Prepared backup",
+  "backupCreated": "Created: {date}",
+  "backupSize": "Size: {size} bytes",
+  "backupValidated": "The file structure has been checked. This does not establish that every historic entry is valid.",
+  "backupSave": "Save to file",
+  "backupSaved": "The file has been saved.",
+  "backupCancelled": "File saving was cancelled. App data is unchanged.",
+  "backupDownloadRequested": "The download was requested from your browser. Check your downloads and confirm the file is present.",
+  "backupPrepareError": "No backup was prepared. Data may have changed, be unreadable or exceed the supported size. Try again; local data is unchanged.",
+  "backupSaveError": "File saving failed. Check the destination and try again. Local data is unchanged.",
+  "@backupCreated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@backupSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "restorePick": "Choose backup to restore",
+  "restoreHint": "Restore adds or replaces only keys present in the file. Other local data is kept. Permanent outfit unlocks are combined. Review the keys below before confirming.",
+  "restorePreview": "Restore preview",
+  "restoreCounts": "{added} new, {replaced} replaced, {unchanged} unchanged keys",
+  "restoreConfirm": "Restore these data",
+  "restoreQuestion": "Restore the reviewed backup?",
+  "restoreWarning": "The listed data will be written to this device. Existing values for these keys will be replaced. Do you want to continue?",
+  "restoreCancel": "Cancel",
+  "restoreInvalid": "The backup is invalid, unsupported, too large or unreadable. No user data was written.",
+  "restoreFailed": "Restore failed. The original data was recovered. Prepare a new preview before retrying.",
+  "restoreRecovery": "Recovery is incomplete. Editing is blocked until the original data can be recovered. Keep this app’s local data and retry.",
+  "restoreRetry": "Retry recovery",
+  "restoreSuccess": "Data restored.",
+  "restoreStale": "Local data changed or storage is unavailable. No restore was completed. Choose the file again.",
+  "@restoreCounts": {
+    "placeholders": {
+      "added": {
+        "type": "int"
+      },
+      "replaced": {
+        "type": "int"
+      },
+      "unchanged": {
+        "type": "int"
+      }
+    }
+  }
 }

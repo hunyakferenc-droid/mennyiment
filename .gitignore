@@ -85,3 +85,12 @@ pubspec.yaml.bak
 # Additional source backups
 **/*backup*
 **/*.bak
+
+# Intentional data-export implementation; exported personal files stay ignored.
+!lib/data_backup.dart
+!lib/backup_file.dart
+!lib/data_backup_page.dart
+!test/data_backup_test.dart
+!test/backup_file_test.dart
+!test/data_backup_page_test.dart
+!docs/6.7-data-backup.md

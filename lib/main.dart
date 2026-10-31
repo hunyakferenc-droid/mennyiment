@@ -25,6 +25,8 @@ import 'menti_evolution.dart';
 import 'app_language.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'menti_motion.dart';
+import 'data_backup_page.dart';
+import 'data_restore.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MennyiMentApp());
@@ -39,13 +41,45 @@ class MennyiMentApp extends StatefulWidget {
 
 class _MennyiMentAppState extends State<MennyiMentApp> {
   late final AppLanguage language;
+  late Future<bool> _recovery;
+  int _epoch = 0;
+  Future<bool> _recoverBeforeApp() async {
+    try {
+      await BackupRestorer().recover();
+      await language.load();
+      return true;
+    } catch (_) {
+      // Convert failure into explicit state immediately, including on retry:
+      // FutureBuilder subscribes on the next frame, after async IO may finish.
+      return false;
+    }
+  }
+  void restored() {
+    setState(() { _epoch++; });
+    language.load();
+  }
   @override
-  void initState() { super.initState(); language = AppLanguage()..load(); }
+  void initState() { super.initState(); language = AppLanguage(); _recovery = _recoverBeforeApp(); }
   @override
   void dispose() { language.dispose(); super.dispose(); }
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder<bool>(future: _recovery, builder: (context, snapshot) {
+      if (snapshot.connectionState != ConnectionState.done || snapshot.data != true) {
+        return MaterialApp(
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          home: Builder(builder: (context) => Scaffold(body: SafeArea(child: Center(
+            child: snapshot.connectionState == ConnectionState.done ? Column(mainAxisSize: MainAxisSize.min, children: [
+              Padding(padding: const EdgeInsets.all(24), child: Text(appStrings(context).restoreRecovery)),
+              FilledButton(onPressed: () => setState(() { _recovery = _recoverBeforeApp(); }),
+                child: Text(appStrings(context).restoreRetry)),
+            ]) : const CircularProgressIndicator(),
+          )))),
+        );
+      }
     return ListenableBuilder(listenable: language, builder: (context, _) => AppLanguageScope(language: language, child: MaterialApp(
+      key: ValueKey(_epoch),
       builder: (context, child) => MentiMotionScope(child: child!),
       locale: language.locale,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -78,6 +112,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
       ),
       home: const HomePage(),
     )));
+    });
   }
 }
 
@@ -186,14 +221,22 @@ void updateMentiMessage(MentiMood mood) {
     (name: 'Unicum', emoji: '🥃', ml: 40, percent: 40),
   ];
 
+  late final Future<void> _initialLoad;
   @override
   void initState() {
     super.initState();
-    loadDrinks();
-    loadCustomDrinks();
-    loadFavorites();
-    _loadReflections();
-    _loadCharacterProfile();
+    _initialLoad = Future.wait([loadDrinks(), loadCustomDrinks(), loadFavorites(),
+      _loadReflections(), _loadCharacterProfile()]).then((_) {});
+  }
+
+  Future<void> _openDataBackup() async {
+    if (_journalSaving || _customSaving || _reflectionBusy || _recording ||
+        _editingEntry || _deletingEntry || _pickerOpen) { return; }
+    await _initialLoad;
+    if (!mounted) return;
+    await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => DataBackupPage(
+      onRestored: () => context.findAncestorStateOfType<_MennyiMentAppState>()?.restored(),
+    )));
   }
 
   Future<void> loadDrinks() async {
@@ -905,6 +948,9 @@ void updateMentiMessage(MentiMood mood) {
         title: const Text('MennyiMent?',
             style: TextStyle(fontWeight: FontWeight.w800)),
         actions: [
+          IconButton(key: const ValueKey('open-data-backup'),
+            tooltip: appStrings(context).backupTitle, onPressed: _openDataBackup,
+            icon: const Icon(Icons.backup_outlined)),
           const LanguageMenu(),
           IconButton(tooltip: appStrings(context).profile, onPressed: _openAvatar,
               icon: const Icon(Icons.account_circle_outlined)),
