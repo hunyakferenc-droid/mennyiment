@@ -68,7 +68,11 @@ class MentiXpStore {
 
   static Future<MentiXpState> load() async {
     final prefs = await SharedPreferences.getInstance();
-    final current = _decode(prefs.getString(_key));
+    final raw = prefs.get(_key);
+    if (raw != null && (raw is! String || !_decode(raw).containsKey('xp'))) {
+      throw const FormatException('Unreadable Menti XP');
+    }
+    final current = _decode(raw as String?);
     if (current.containsKey('xp')) return _fromData(current);
 
     final reflectionDays = (prefs.getStringList(_reflectionKey) ?? <String>[]).toSet();
@@ -92,6 +96,7 @@ class MentiXpStore {
   static Future<void> _save(MentiXpState state) async {
     final prefs = await SharedPreferences.getInstance();
     final result = await prefs.setString(_key, jsonEncode({
+      ..._decode(prefs.getString(_key)),
       'xp': state.xp,
       'days': state.days.toList()..sort(),
       'completed': state.completed.toList()..sort(),

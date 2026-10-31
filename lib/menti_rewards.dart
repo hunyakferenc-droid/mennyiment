@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_character_catalog.dart';
@@ -47,7 +48,25 @@ class MentiRewards {
 
   /// Union only: preserve unknown future IDs and the legacy equipped outfit.
   /// No XP is awarded here. A missing image cannot create a new reward.
+  static Future<void>? _pending;
+
   static Future<Set<String>> load({
+    required int level,
+    required Set<String> assets,
+  }) async {
+    final previous = _pending;
+    final gate = Completer<void>();
+    _pending = gate.future;
+    try {
+      if (previous != null) await previous;
+      return await _load(level: level, assets: assets);
+    } finally {
+      if (identical(_pending, gate.future)) _pending = null;
+      gate.complete();
+    }
+  }
+
+  static Future<Set<String>> _load({
     required int level,
     required Set<String> assets,
   }) async {

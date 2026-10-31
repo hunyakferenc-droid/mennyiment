@@ -28,7 +28,6 @@ class MentiLevelIndicator extends StatelessWidget {
         value: MentiXpState.levelXpFor(xp) / 50,
         minHeight: 10,
         semanticsLabel: s.evolutionRemaining(MentiXpState.remainingFor(xp)),
-        semanticsValue: '${MentiXpState.levelXpFor(xp)} / 50 XP',
         borderRadius: BorderRadius.circular(10),
       ),
       const SizedBox(height: 8),

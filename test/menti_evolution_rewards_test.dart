@@ -124,6 +124,43 @@ void main() {
     expect((await SharedPreferences.getInstance()).get(MentiRewards.preferenceKey), 'future-format');
   });
 
+
+  test('A daily level-up unlocks business and persists on fresh preferences', () async {
+    SharedPreferences.setMockInitialValues({
+      xpKey: jsonEncode({'xp': 40, 'days': [], 'completed': [], 'future': {'keep': true}}),
+    });
+    final before = await MentiXpStore.load();
+    expect(await MentiRewards.load(level: before.level, assets: allAssets()),
+      isNot(contains('outfit:business')));
+    final after = await MentiXpStore.checkInToday();
+    expect(after.xp, 50);
+    expect(after.level, 2);
+    expect(await MentiRewards.load(level: after.level, assets: allAssets()),
+      contains('outfit:business'));
+    final prefs = await SharedPreferences.getInstance();
+    expect(jsonDecode(prefs.getString(xpKey)!)['future'], {'keep': true});
+    SharedPreferences.setMockInitialValues({
+      for (final key in prefs.getKeys()) key: prefs.get(key)!,
+    });
+    expect((await MentiXpStore.load()).xp, 50);
+    expect(await MentiRewards.load(level: 2, assets: allAssets()), contains('outfit:business'));
+  });
+
+  test('Malformed existing XP is never overwritten by migration or check-in', () async {
+    SharedPreferences.setMockInitialValues({xpKey: '{broken'});
+    await expectLater(MentiXpStore.load(), throwsFormatException);
+    await expectLater(MentiXpStore.checkInToday(), throwsFormatException);
+    expect((await SharedPreferences.getInstance()).getString(xpKey), '{broken');
+  });
+
+  test('Concurrent reward refreshes cannot remove acquired reward IDs', () async {
+    await Future.wait([
+      MentiRewards.load(level: 5, assets: allAssets()),
+      MentiRewards.load(level: 1, assets: allAssets()),
+    ]);
+    expect(await MentiRewards.load(level: 1, assets: allAssets()), contains('outfit:legendary'));
+  });
+
   for (final locale in ['hu', 'en']) {
     testWidgets('$locale progress, badge rules and reduced motion survive reopening', (tester) async {
       tester.view.physicalSize = const Size(400, 3000);
