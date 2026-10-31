@@ -492,6 +492,7 @@ void addCatalogDrink(CatalogDrink drink) {
             ml: d.ml,
             percent: d.percent,
             time: d.time,
+            priceFt: d.priceFt,
           )).toList(),
         ),
       ),
