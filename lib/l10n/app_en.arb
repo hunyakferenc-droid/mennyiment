@@ -103,5 +103,35 @@
   "weeklyReport": "Weekly Menti report • wellbeing and spending",
   "allEntries": "All entries",
   "statisticsNav": "Statistics",
-  "recentEntries": "Recent entries"
+  "recentEntries": "Recent entries",
+  "backupTitle": "Data backup",
+  "backupContents": "The backup includes the app’s local journals, character profile, outfit, XP, goals and settings.",
+  "backupPrivacy": "The file is not encrypted and contains personal data. Save it somewhere safe. The app does not upload it automatically; you choose where to save or share it.",
+  "backupRestoreDeferred": "This version supports export. Restore is not available yet; existing data will not be overwritten.",
+  "backupPrepare": "Prepare backup",
+  "backupWorking": "Working…",
+  "backupPreview": "Prepared backup",
+  "backupCreated": "Created: {date}",
+  "backupSize": "Size: {size} bytes",
+  "backupValidated": "The file structure has been checked. This does not establish that every historic entry is valid.",
+  "backupSave": "Save to file",
+  "backupSaved": "The file has been saved.",
+  "backupCancelled": "File saving was cancelled. App data is unchanged.",
+  "backupDownloadRequested": "The download was requested from your browser. Check your downloads and confirm the file is present.",
+  "backupPrepareError": "No backup was prepared. Data may have changed, be unreadable or exceed the supported size. Try again; local data is unchanged.",
+  "backupSaveError": "File saving failed. Check the destination and try again. Local data is unchanged.",
+  "@backupCreated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@backupSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  }
 }

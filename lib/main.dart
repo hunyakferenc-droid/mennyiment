@@ -24,6 +24,7 @@ import 'menti_evolution.dart';
 import 'app_language.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'menti_motion.dart';
+import 'data_backup_page.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MennyiMentApp());
@@ -915,6 +916,11 @@ void updateMentiMessage(MentiMood mood) {
             style: TextStyle(fontWeight: FontWeight.w800)),
         actions: [
           const LanguageMenu(),
+          IconButton(key: const ValueKey('open-data-backup'),
+              tooltip: appStrings(context).backupTitle,
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                  builder: (_) => const DataBackupPage())),
+              icon: const Icon(Icons.save_alt_rounded)),
           IconButton(tooltip: appStrings(context).profile, onPressed: _openAvatar,
               icon: const Icon(Icons.account_circle_outlined)),
           const SizedBox(width: 8),

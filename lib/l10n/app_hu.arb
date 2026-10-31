@@ -103,5 +103,35 @@
   "weeklyReport": "Heti Menti-jelentés • közérzet és költés",
   "allEntries": "Összes",
   "statisticsNav": "Statisztikák",
-  "recentEntries": "Legutóbbi bejegyzések"
+  "recentEntries": "Legutóbbi bejegyzések",
+  "backupTitle": "Biztonsági mentés",
+  "backupContents": "A mentés az alkalmazás helyi naplóit, karakterprofilját, ruhaválasztását, XP-adatait, céljait és beállításait tartalmazza.",
+  "backupPrivacy": "A fájl nincs titkosítva, személyes adatokat tartalmaz. Csak biztonságos helyre mentsd. Az alkalmazás nem küldi automatikusan hálózatra; a fájl helyéről és megosztásáról te döntesz.",
+  "backupRestoreDeferred": "Ez a verzió exportálást támogat. A visszaállítás még nem érhető el; meglévő adatot nem ír felül.",
+  "backupPrepare": "Mentés előkészítése",
+  "backupWorking": "Folyamatban…",
+  "backupPreview": "Előkészített mentés",
+  "backupCreated": "Készült: {date}",
+  "backupSize": "Méret: {size} bájt",
+  "backupValidated": "A fájl szerkezete ellenőrizve. Ez nem igazolja minden régi bejegyzés érvényességét.",
+  "backupSave": "Mentés fájlba",
+  "backupSaved": "A fájl mentése befejeződött.",
+  "backupCancelled": "A fájlmentést megszakítottad. Az alkalmazás adatai változatlanok.",
+  "backupDownloadRequested": "A letöltési kérést átadtuk a böngészőnek. Ellenőrizd a letöltéseket és a fájl meglétét.",
+  "backupPrepareError": "Nem készült mentés. Az adatok változhattak, nem olvashatók, vagy túllépik a támogatott méretet. Próbáld újra; a helyi adatok változatlanok.",
+  "backupSaveError": "A fájlmentés nem sikerült. Ellenőrizd a célhelyet, és próbáld újra. A helyi adatok változatlanok.",
+  "@backupCreated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@backupSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  }
 }
