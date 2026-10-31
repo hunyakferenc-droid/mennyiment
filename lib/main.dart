@@ -125,7 +125,6 @@ void updateMentiMessage(MentiMood mood) {
   static const customDrinksKey = 'mennyiment_custom_drinks_v1';
   static const favoritesKey = 'mennyiment_favorites_v1';
   // 5.4: pontok kizárólag önellenőrzésre, soha nem alkoholfogyasztásra.
-  static const reflectionDaysKey = 'mennyiment_reflection_days_v1';
   final Set<String> _reflectionDays = {};
   bool _reflectionBusy = false;
   int _totalMentiXp = 0;

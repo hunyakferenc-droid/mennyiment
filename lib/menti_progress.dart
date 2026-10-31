@@ -78,9 +78,11 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
       );
     } catch (error) {
       debugPrint('Menti XP mentési hiba: $error');
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('A mentés nem sikerült.')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('A mentés nem sikerült.')),
+        );
+      }
     } finally {
       if (mounted) setState(() => _loading = false);
     }
@@ -103,9 +105,11 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
       );
     } catch (error) {
       debugPrint('Menti heti kihívás mentési hiba: $error');
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('A mentés nem sikerült.')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('A mentés nem sikerült.')),
+        );
+      }
     } finally {
       if (mounted) setState(() => _loading = false);
     }
