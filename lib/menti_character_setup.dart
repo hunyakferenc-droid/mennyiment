@@ -34,6 +34,8 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
   String _accessory = 'Nincs';
   String _aura = 'Narancs';
   MentiOutfit _outfit = MentiOutfit.basic;
+  bool _preserveUnknownStyle = false;
+  bool _preserveUnknownOutfit = false;
   String _mood = 'Vidám';
   String _tint = 'Narancs';
   bool _saving = false;
@@ -53,14 +55,18 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
     final p = await SharedPreferences.getInstance();
     await MentiProfileStorage.migrate(p);
     if (!mounted) return;
+    final savedStyle = p.get(MentiCharacterProfile.styleKey);
+    final savedOutfit = p.get(MentiCharacterProfile.outfitKey);
     setState(() {
       _reflectionXp = (p.getStringList(_reflectionDaysKey) ?? const <String>[]).toSet().length * 10;
-      _style = MentiCharacterFamily.resolve(p.get(MentiCharacterProfile.styleKey)) ?? MentiCharacterFamily.boy;
+      _style = MentiCharacterFamily.resolve(savedStyle) ?? MentiCharacterFamily.boy;
+      _preserveUnknownStyle = savedStyle != null && MentiCharacterFamily.resolve(savedStyle) == null;
       _age = p.getString(MentiCharacterProfile.ageKey) ?? _age;
       _appearance = p.getString(MentiCharacterProfile.appearanceKey) ?? _appearance;
       _accessory = p.getString(MentiCharacterProfile.accessoryKey) ?? _accessory;
       _aura = p.getString(MentiCharacterProfile.auraKey) ?? _aura;
-      _outfit = MentiOutfit.resolve(p.get(MentiCharacterProfile.outfitKey)) ?? MentiOutfit.basic;
+      _outfit = MentiOutfit.resolve(savedOutfit) ?? MentiOutfit.basic;
+      _preserveUnknownOutfit = savedOutfit != null && MentiOutfit.resolve(savedOutfit) == null;
       _mood = p.getString(MentiCharacterProfile.moodKey) ?? _mood;
       _tint = p.getString(MentiCharacterProfile.tintKey) ?? _tint;
       _name.text = p.getString(MentiCharacterProfile.nameKey) ?? 'Menti';
@@ -86,13 +92,18 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
     setState(() => _saving = true);
     try {
       final p = await SharedPreferences.getInstance();
-      await p.setString(MentiCharacterProfile.styleKey, _style.id);
+      // An unrelated profile edit must not replace an unknown saved choice.
+      if (!_preserveUnknownStyle) {
+        await p.setString(MentiCharacterProfile.styleKey, _style.id);
+      }
       await p.setString(MentiCharacterProfile.ageKey, _age);
       await p.setString(MentiCharacterProfile.appearanceKey, _appearance);
       await p.setString(MentiCharacterProfile.nameKey, n);
       await p.setString(MentiCharacterProfile.accessoryKey, _accessory);
       await p.setString(MentiCharacterProfile.auraKey, _aura);
-      await p.setString(MentiCharacterProfile.outfitKey, _outfit.id);
+      if (!_preserveUnknownOutfit) {
+        await p.setString(MentiCharacterProfile.outfitKey, _outfit.id);
+      }
       await p.setString(MentiCharacterProfile.moodKey, _mood);
       await p.setString(MentiCharacterProfile.tintKey, _tint);
       await p.setBool(MentiCharacterProfile.completedKey, true);
@@ -179,7 +190,10 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
         children: [
           for (final option in MentiCharacterFamily.values)
             InkWell(
-              onTap: () => setState(() => _style = option),
+              onTap: () => setState(() {
+                _style = option;
+                _preserveUnknownStyle = false;
+              }),
               borderRadius: BorderRadius.circular(16),
               child: Container(
                 decoration: BoxDecoration(
@@ -332,7 +346,10 @@ class _MentiCharacterSetupPageState extends State<MentiCharacterSetupPage> {
           final selectable = unlocked;
           return InkWell(
             borderRadius: BorderRadius.circular(16),
-            onTap: selectable ? () => setState(() => _outfit = outfit)
+            onTap: selectable ? () => setState(() {
+              _outfit = outfit;
+              _preserveUnknownOutfit = false;
+            })
               : () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text('A ${outfit.label} a(z) ${outfit.requiredLevel}. szinten nyílik meg.'))),
             child: Container(
