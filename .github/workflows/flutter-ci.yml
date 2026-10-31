@@ -1,0 +1,87 @@
+name: Flutter CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  flutter:
+    name: Flutter analyze, test, web
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CI: "true"
+      FLUTTER_SUPPRESS_ANALYTICS: "true"
+      DART_SUPPRESS_ANALYTICS: "true"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Flutter 3.47.7 (Dart 3.13.5)
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          channel: stable
+          flutter-version: "3.47.7"
+          cache: true
+          pub-cache: true
+
+      - name: SDK versions
+        run: |
+          flutter --version
+          dart --version
+
+      - name: flutter pub get
+        id: dependencies
+        run: flutter pub get
+
+      - name: flutter analyze
+        id: analyze
+        run: flutter analyze
+
+      - name: flutter test --concurrency=2
+        id: test
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: flutter test --concurrency=2
+
+      - name: flutter build web
+        id: web
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: flutter build web
+
+      - name: CI summary
+        if: ${{ always() }}
+        env:
+          JOB_STATUS: ${{ job.status }}
+          DEPENDENCIES: ${{ steps.dependencies.outcome }}
+          ANALYZE: ${{ steps.analyze.outcome }}
+          TEST: ${{ steps.test.outcome }}
+          WEB: ${{ steps.web.outcome }}
+        run: |
+          {
+            echo "## MennyiMent? Flutter CI"
+            echo
+            echo "Eredmény: $JOB_STATUS"
+            echo
+            echo "| Ellenőrzés | Állapot |"
+            echo "| --- | --- |"
+            echo "| flutter pub get | $DEPENDENCIES |"
+            echo "| flutter analyze | $ANALYZE |"
+            echo "| flutter test --concurrency=2 | $TEST |"
+            echo "| flutter build web | $WEB |"
+            echo
+            echo "Hibánál nyisd meg a piros lépés naplóját. A skipped lépés nem sikeres ellenőrzés."
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$JOB_STATUS" = "failure" ]; then
+            echo "::error title=Flutter CI sikertelen::Egy vagy több CI-lépés hibás. A részletek a piros lépés naplójában és a futás összefoglalójában láthatók."
+          fi
