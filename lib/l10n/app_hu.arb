@@ -234,5 +234,32 @@
         "type": "int"
       }
     }
-  }
+  },
+  "challengeSaveError": "A mentés nem sikerült. Próbáld újra.",
+  "challengeCustom": "Saját heti cél",
+  "challengeDaysPerWeek": "Heti napok száma",
+  "challengeCancel": "Mégse",
+  "challengeSave": "Mentés",
+  "challengeReflection": "Tudatos önellenőrzés",
+  "challengeJournal": "Következetes közérzetnapló",
+  "challengeHabit": "Tudatos szokás: rövid napi szünet",
+  "challengeTitle": "Heti személyes kihívások",
+  "challengeOptional": "A saját tempódban. Minden kihívás választható, kihagyható vagy megszakítható büntetés nélkül. Nincs XP-jutalom vagy levonás.",
+  "challengePrevious": "Előző hét",
+  "challengeNext": "Következő hét",
+  "challengeLoadError": "Az adatok nem olvashatók. Nem írjuk felül őket.",
+  "challengeRetry": "Újrapróbálás",
+  "challengeDays": "nap",
+  "challengeSkipped": "Kihagyva – nincs büntetés.",
+  "challengeStopped": "Megszakítva – nincs büntetés.",
+  "challengeJournalHint": "A mentett közérzetnapló napjai számítanak. Ital rögzítése nem szükséges.",
+  "challengeChoose": "Kiválasztás",
+  "challengeEdit": "Cél módosítása",
+  "challengeDoneToday": "Ma megtettem",
+  "challengeSkip": "Ezen a héten kihagyom",
+  "challengeStop": "Megszakítás",
+  "challengeSummary": "Heti fejlődési összefoglaló",
+  "challengeJournalDays": "Közérzetnaplóval kitöltött napok",
+  "challengeCaution": "A hiányzó bejegyzés ismeretlen adat, nem alkoholmentes nap. Ezek a kihívások nem jelölnek alkoholmentességet. A cél módosítása csak a kiválasztott hetet érinti; a korábbi napok megmaradnak.",
+  "challengeRefresh": "Összefoglaló frissítése"
 }

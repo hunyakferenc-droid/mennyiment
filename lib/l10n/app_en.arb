@@ -234,5 +234,32 @@
         "type": "int"
       }
     }
-  }
+  },
+  "challengeSaveError": "Could not save. Please retry.",
+  "challengeCustom": "Your weekly goal",
+  "challengeDaysPerWeek": "Days per week",
+  "challengeCancel": "Cancel",
+  "challengeSave": "Save",
+  "challengeReflection": "Mindful self-check",
+  "challengeJournal": "Consistent wellbeing journal",
+  "challengeHabit": "Mindful habit: a short daily pause",
+  "challengeTitle": "Personal weekly challenges",
+  "challengeOptional": "At your own pace. Every challenge is optional and can be skipped or stopped without penalty. No XP rewards or deductions.",
+  "challengePrevious": "Previous week",
+  "challengeNext": "Next week",
+  "challengeLoadError": "Data could not be read. It will not be overwritten.",
+  "challengeRetry": "Retry",
+  "challengeDays": "days",
+  "challengeSkipped": "Skipped – no penalty.",
+  "challengeStopped": "Stopped – no penalty.",
+  "challengeJournalHint": "Counts days with a saved wellbeing entry. No drink entry is needed.",
+  "challengeChoose": "Choose",
+  "challengeEdit": "Edit goal",
+  "challengeDoneToday": "I did this today",
+  "challengeSkip": "Skip this week",
+  "challengeStop": "Stop",
+  "challengeSummary": "Weekly progress summary",
+  "challengeJournalDays": "Days with wellbeing entries",
+  "challengeCaution": "A missing entry is unknown, not an alcohol-free day. These challenges do not label alcohol-free days. Editing a goal affects only the selected week; previous check-ins are retained.",
+  "challengeRefresh": "Refresh summary"
 }
