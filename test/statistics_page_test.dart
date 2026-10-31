@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
+import 'package:mennyiment/app_language.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +18,7 @@ void largeView(WidgetTester tester) {
 }
 
 void main() {
+  setUpAll(() => initializeDateFormatting());
   testWidgets(
     'Period selection updates costs, incomplete data and calendar bars',
     (tester) async {
@@ -54,7 +59,7 @@ void main() {
           ),
         ),
       );
-      expect(find.text('100 Ft'), findsOneWidget);
+      expect(find.text(localeCurrency(100, 'hu')), findsOneWidget);
       expect(find.textContaining('Részösszeg: 1 ital'), findsOneWidget);
       Finder bars() => find.byWidgetPredicate(
         (w) => w is Tooltip && (w.message?.endsWith(' g') ?? false),
@@ -62,11 +67,11 @@ void main() {
       expect(bars(), findsNWidgets(7));
       await tester.tap(find.text('Hónap'));
       await tester.pumpAndSettle();
-      expect(find.text('800 Ft'), findsOneWidget);
+      expect(find.text(localeCurrency(800, 'hu')), findsOneWidget);
       expect(bars(), findsNWidgets(31));
       await tester.tap(find.byIcon(Icons.chevron_left));
       await tester.pumpAndSettle();
-      expect(find.text('0 Ft'), findsOneWidget);
+      expect(find.text(localeCurrency(0, 'hu')), findsOneWidget);
       expect(
         find.text(
           'Nincs rögzített ital: költésadat még nem áll rendelkezésre.',
@@ -76,7 +81,7 @@ void main() {
       expect(bars(), findsNWidgets(28));
       await tester.tap(find.text('Év'));
       await tester.pumpAndSettle();
-      expect(find.text('1700 Ft'), findsOneWidget);
+      expect(find.text(localeCurrency(1700, 'hu')), findsOneWidget);
       expect(bars(), findsNWidgets(12));
       expect(tester.takeException(), isNull);
     },
@@ -99,8 +104,7 @@ void main() {
     await tester.pumpAndSettle();
     final start = DateTime(local.year, local.month - 1);
     final end = DateTime(local.year, local.month, 0);
-    String date(DateTime d) =>
-        '${d.year}.${d.month.toString().padLeft(2, '0')}.${d.day.toString().padLeft(2, '0')}';
+    String date(DateTime d) => DateFormat.yMd('hu').format(d);
     expect(find.text('${date(start)} – ${date(end)}'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
@@ -128,7 +132,7 @@ void main() {
           ),
         ),
       );
-      expect(find.text('0 Ft'), findsOneWidget);
+      expect(find.text(localeCurrency(0, 'hu')), findsOneWidget);
       expect(
         find.text('Minden rögzített italhoz tartozik ár az időszakban.'),
         findsOneWidget,
@@ -182,7 +186,7 @@ void main() {
             .priceFt,
         1234,
       );
-      expect(find.text('1234 Ft'), findsOneWidget);
+      expect(find.text(localeCurrency(1234, 'hu')), findsOneWidget);
       expect({for (final key in prefs.getKeys()) key: prefs.get(key)}, before);
       expect(prefs.getString('mennyiment_drinks_v1'), saved);
       expect(prefs.getString('mennyiment_menti_xp_v2'), xp);
