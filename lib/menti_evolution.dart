@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'menti_motion.dart';
 
 /// Menti Evolution: drop-in character widget for the existing PNG asset.
 /// No additional packages required.
@@ -27,6 +28,7 @@ class _MentiEvolutionState extends State<MentiEvolution>
     with TickerProviderStateMixin {
   late final AnimationController _idle;
   late final AnimationController _celebrate;
+  bool _animate = false;
 
   @override
   void initState() {
@@ -34,7 +36,7 @@ class _MentiEvolutionState extends State<MentiEvolution>
     _idle = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2600),
-    )..repeat(reverse: true);
+    );
     _celebrate = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
@@ -42,10 +44,24 @@ class _MentiEvolutionState extends State<MentiEvolution>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final animate = MentiMotionScope.animateOf(context);
+    if (animate == _animate) return;
+    _animate = animate;
+    if (animate) {
+      _idle.repeat(reverse: true);
+    } else {
+      _idle.reset();
+      _celebrate.reset();
+    }
+  }
+
+  @override
   void didUpdateWidget(covariant MentiEvolution oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.reaction != widget.reaction ||
-        oldWidget.level != widget.level) {
+    if (_animate && (oldWidget.reaction != widget.reaction ||
+        oldWidget.level != widget.level)) {
       _celebrate.forward(from: 0);
     }
   }
@@ -60,11 +76,13 @@ class _MentiEvolutionState extends State<MentiEvolution>
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: 'Menti, ${widget.level}. szintű karakter. Koppints az animációhoz.',
-      button: true,
+      label: _animate
+          ? 'Menti, ${widget.level}. szintű karakter. Koppints az animációhoz.'
+          : 'Menti, ${widget.level}. szintű karakter.',
+      button: _animate || widget.onTap != null,
       child: GestureDetector(
         onTap: () {
-          _celebrate.forward(from: 0);
+          if (_animate) _celebrate.forward(from: 0);
           widget.onTap?.call();
         },
         child: SizedBox(

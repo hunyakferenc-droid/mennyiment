@@ -1,15 +1,15 @@
 
 import 'package:flutter/material.dart';
 import 'cartoon_avatar.dart';
+import 'menti_motion.dart';
 
-class AnimatedCartoonAvatar extends StatefulWidget {
+class _MovingCartoonAvatar extends StatefulWidget {
   final Color color;
   final double size;
   final int expression;
   final int hat;
 
-  const AnimatedCartoonAvatar({
-    super.key,
+  const _MovingCartoonAvatar({
     required this.color,
     this.size = 150,
     this.expression = 0,
@@ -17,12 +17,12 @@ class AnimatedCartoonAvatar extends StatefulWidget {
   });
 
   @override
-  State<AnimatedCartoonAvatar> createState() =>
-      _AnimatedCartoonAvatarState();
+  State<_MovingCartoonAvatar> createState() =>
+      __MovingCartoonAvatarState();
 }
 
-class _AnimatedCartoonAvatarState
-    extends State<AnimatedCartoonAvatar>
+class __MovingCartoonAvatarState
+    extends State<_MovingCartoonAvatar>
     with SingleTickerProviderStateMixin {
   late final AnimationController controller;
   late final Animation<double> rotation;
@@ -66,4 +66,17 @@ class _AnimatedCartoonAvatarState
       },
     );
   }
+}
+
+class AnimatedCartoonAvatar extends StatelessWidget {
+  const AnimatedCartoonAvatar({super.key, required this.color, this.size = 150,
+      this.expression = 0, this.hat = 0});
+  final Color color;
+  final double size;
+  final int expression;
+  final int hat;
+  @override
+  Widget build(BuildContext context) => MentiMotionScope.animateOf(context)
+      ? _MovingCartoonAvatar(color: color, size: size, expression: expression, hat: hat)
+      : CartoonAvatar(color: color, size: size, expression: expression, hat: hat);
 }
