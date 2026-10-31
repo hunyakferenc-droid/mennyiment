@@ -173,10 +173,11 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       final before = {for (final key in prefs.getKeys()) key: prefs.get(key)};
-      await tester.scrollUntilVisible(find.text('Statisztika'), 300,
+      final statisticsLabel = appStrings(tester.element(find.byType(HomePage))).statisticsNav;
+      await tester.scrollUntilVisible(find.text(statisticsLabel), 300,
         scrollable: find.byType(Scrollable).first, maxScrolls: 40);
       await tester.pump(const Duration(milliseconds: 500));
-      await tester.tap(find.text('Statisztika'));
+      await tester.tap(find.text(statisticsLabel));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       expect(
