@@ -318,5 +318,54 @@
         "type": "int"
       }
     }
-  }
+  },
+  "homeEyebrow": "MENNYIMENT? • A TE MENTID",
+  "homeGreeting": "Szia! Hogy vagy ma?",
+  "homeIntro": "A mai tudatos döntéseid számítanak.",
+  "homeMentiHint": "Apró, tudatos lépésekből épül a fejlődés.",
+  "homeTotalXp": "{xp} XP összesen",
+  "homeLevelProgress": "Haladás a következő Menti-szintig",
+  "homeXpHint": "Az XP önellenőrzésért és tudatos heti kihívásokért jár, nem az elfogyasztott italokért.",
+  "homeTodayDrinks": "Mai ital",
+  "homeTodaySpending": "Mai ismert költés",
+  "homeMonthSpending": "Havi ismert költés",
+  "homeWeekDays": "Heti naplózott nap",
+  "homeMissingPrices": "Hiányzó italárak: ma {today}, ebben a hónapban {month}. A költések részösszegek.",
+  "homeEmptyJournal": "Még nincs bejegyzés. Az első italodat a hozzáadás gombbal rögzítheted.",
+  "homeUnknownPrice": "Ismeretlen ár",
+  "homeJournalUnavailable": "A napló adatai most nem érhetők el. Az eredeti adatokat megőriztük.",
+  "homeJournalRetry": "Napló újratöltése",
+  "homeLoading": "Napló betöltése…",
+  "homeRecordActions": "Bejegyzés műveletei",
+  "homeEnterPrice": "Ár megadása",
+  "homeEditPrice": "Ár: {price} – szerkesztés",
+  "homeDeleteEntry": "Bejegyzés törlése",
+  "homeCheckInUnavailable": "A Menti-előrehaladás most nem tölthető be. Próbáld újra.",
+  "homeRetryProgress": "Menti újratöltése",
+  "@homeTotalXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@homeMissingPrices": {
+    "placeholders": {
+      "today": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      }
+    }
+  },
+  "@homeEditPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "homeJournalSaveError": "A napló mentése nem sikerült. A módosítást nem alkalmaztuk. Próbáld újra vagy töltsd be újra a naplót.",
+  "homeJournalLoadError": "A napló nem tölthető be biztonságosan. Az eredeti adatokat megőriztük; a módosításokat letiltottuk."
 }

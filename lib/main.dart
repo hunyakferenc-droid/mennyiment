@@ -21,6 +21,8 @@ import 'menti_character_setup.dart';
 import 'menti_profile_storage.dart';
 import 'statistics.dart';
 import 'dashboard_v2.dart';
+import 'home_widgets.dart';
+import 'drink_journal_page.dart';
 import 'menti_evolution.dart';
 import 'app_language.dart';
 import 'l10n/generated/app_localizations.dart';
@@ -150,26 +152,32 @@ void updateMentiMessage(MentiMood mood) {
   final Set<String> _reflectionDays = {};
   bool _reflectionBusy = false;
   int _totalMentiXp = 0;
+  bool _progressLoading = true;
+  bool _progressReady = false;
 
   String _dateKey(DateTime date) =>
       '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 
   int get _reflectionXp => _totalMentiXp;
   int get _mentiLevel => MentiXpState.levelFor(_reflectionXp);
-  double get _mentiLevelProgress => MentiXpState.levelXpFor(_reflectionXp) / 50;
 
   Future<void> _loadReflections() async {
+    if (!mounted) return;
+    setState(() { _progressLoading = true; _progressReady = false; });
     try {
       final state = await MentiXpStore.load();
       if (!mounted) return;
       setState(() {
+        _progressReady = true;
         _totalMentiXp = state.xp;
         _reflectionDays
           ..clear()
           ..addAll(state.days);
       });
-    } catch (error) {
-      debugPrint('Menti XP betöltési hiba: $error');
+    } catch (error, stack) {
+      debugPrint('Menti XP load failure: ${error.runtimeType}\n$stack');
+    } finally {
+      if (mounted) setState(() => _progressLoading = false);
     }
   }
 
@@ -259,7 +267,7 @@ void updateMentiMessage(MentiMood mood) {
       });
     } catch (_) {
       if (mounted) { setState(() {
-        _journalError = 'A napló nem tölthető be biztonságosan. Az eredeti adatokat megőriztük; a módosításokat letiltottuk.';
+        _journalError = 'load';
       }); }
     } finally {
       if (mounted) setState(() => isLoading = false);
@@ -376,7 +384,7 @@ void updateMentiMessage(MentiMood mood) {
       return true;
     } catch (_) {
       if (mounted) { setState(() {
-        _journalError = 'A napló mentése nem sikerült. A módosítást nem alkalmaztuk. Próbáld újra vagy töltsd be újra a naplót.';
+        _journalError = 'save';
       }); }
       return false;
     } finally {
@@ -571,7 +579,7 @@ void updateMentiMessage(MentiMood mood) {
       '${drink.name}|${drink.ml}|${drink.percent}';
 
   Future<void> _openStatistics() async {
-    if (isLoading) return;
+    if (isLoading || !_journalReady) return;
 
     await Navigator.push(
       context,
@@ -592,8 +600,32 @@ void updateMentiMessage(MentiMood mood) {
     updateMentiMessage(MentiMood.statistics);
   }
 
+  bool _navigationBusy = false;
+
+  Future<void> _navigateHome(int index) async {
+    if (_navigationBusy || index == 0) return;
+    _navigationBusy = true;
+    try {
+      switch (index) {
+        case 1: await _openJournal(); break;
+        case 2: await _openLifestyleInsights(); break;
+        case 3: await _openMentiProgress(); break;
+      }
+    } finally {
+      _navigationBusy = false;
+    }
+  }
+
+  Future<void> _openJournal() async {
+    if (isLoading || !_journalReady) return;
+    final add = await Navigator.of(context).push<bool>(MaterialPageRoute(
+      builder: (_) => DrinkJournalPage(drinks: drinks),
+    ));
+    if (mounted && add == true) await _openDrinkPicker();
+  }
+
   Future<void> _openDashboard() async {
-    if (isLoading) return;
+    if (isLoading || !_journalReady) return;
 
     await Navigator.push(
       context,
@@ -612,9 +644,9 @@ void updateMentiMessage(MentiMood mood) {
     ));
   }
 
-  void _openLifestyleInsights() {
-    if (isLoading) return;
-    Navigator.push(context, MaterialPageRoute(
+  Future<void> _openLifestyleInsights() async {
+    if (isLoading || !_journalReady) return;
+    await Navigator.push(context, MaterialPageRoute(
       builder: (_) => LifestyleInsightsPage(drinks: drinks.map((d) => InsightDrink(
         time: d.time, grams: d.alcoholGrams, priceFt: d.priceFt,
       )).toList()),
@@ -622,7 +654,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   void _openMentiWeekReport() {
-    if (isLoading) return;
+    if (isLoading || !_journalReady) return;
     Navigator.push(context, MaterialPageRoute(
       builder: (_) => MentiWeekReportPage(drinks: drinks.map((d) => MentiWeekDrink(
         time: d.time, grams: d.alcoholGrams, priceFt: d.priceFt,
@@ -631,7 +663,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   void _openPersonalGoals() {
-    if (isLoading) return;
+    if (isLoading || !_journalReady) return;
     Navigator.push(context, MaterialPageRoute(
       builder: (_) => PersonalGoalsPage(
         drinks: drinks.map((d) => PersonalGoalDrink(
@@ -642,7 +674,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   void _openSavingsGoals() {
-    if (isLoading) return;
+    if (isLoading || !_journalReady) return;
     Navigator.push(context, MaterialPageRoute(
       builder: (_) => SavingsGoalsPage(drinks: drinks.map((d) =>
         SavingsDrink(time: d.time, priceFt: d.priceFt)).toList()),
@@ -650,7 +682,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   void _openFinanceCenter() {
-    if (isLoading) return;
+    if (isLoading || !_journalReady) return;
     Navigator.push(context, MaterialPageRoute(
       builder: (_) => FinanceCenterPage(drinks: dashboardDrinks),
     ));
@@ -717,11 +749,6 @@ void updateMentiMessage(MentiMood mood) {
   static const Color _panel = Color(0xFF21182B);
   static const Color _muted = Color(0xFFD0C1D2);
 
-  String _money(double amount) {
-    final value = amount.round().toString();
-    return value.replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (m) => ' ');
-  }
-
   Widget _panelCard({required Widget child}) => Container(
     width: double.infinity,
     padding: const EdgeInsets.all(18),
@@ -731,21 +758,6 @@ void updateMentiMessage(MentiMood mood) {
       border: Border.all(color: Colors.white.withValues(alpha: 0.07)),
     ),
     child: child,
-  );
-
-  Widget _statTile(String label, String value, IconData icon) => Expanded(
-    child: Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.055), borderRadius: BorderRadius.circular(18)),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Icon(icon, color: _mint, size: 20),
-        const SizedBox(height: 12),
-        FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerLeft,
-          child: Text(value, style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w800))),
-        const SizedBox(height: 4),
-        Text(label, style: const TextStyle(color: _muted, fontSize: 12)),
-      ]),
-    ),
   );
 
   // A meglévő Drink JSON-formátum változatlan marad.
@@ -876,53 +888,22 @@ void updateMentiMessage(MentiMood mood) {
       '${drink.time.hour.toString().padLeft(2,'0')}:${drink.time.minute.toString().padLeft(2,'0')}  •  '
       '${drink.ml} ml  •  ${drink.alcoholGrams.toStringAsFixed(1)} g'),
     trailing: PopupMenuButton<String>(
-      tooltip: 'Bejegyzés műveletei',
+      tooltip: appStrings(context).homeRecordActions,
       onSelected: (value) {
         if (value == 'price') { editDrinkPrice(drink); }
         if (value == 'delete') { _deleteEntry(drink); }
       },
       itemBuilder: (ctx) => [
-        PopupMenuItem(value: 'price', child: Text(drink.priceFt == null ? 'Ár megadása' : 'Ár: ${_money(drink.priceFt!)} Ft – szerkesztés')),
-        const PopupMenuItem(value: 'delete', child: Text('Bejegyzés törlése')),
+        PopupMenuItem(value: 'price', child: Text(drink.priceFt == null ? appStrings(context).homeEnterPrice : appStrings(context).homeEditPrice(localeCurrency(drink.priceFt!, Localizations.localeOf(context).languageCode)))),
+        PopupMenuItem(value: 'delete', child: Text(appStrings(context).homeDeleteEntry)),
       ],
     ),
   );
 
-  Widget _shortcut(String title, String subtitle, IconData icon,
-      VoidCallback onTap) {
-    return Expanded(
-      child: Material(
-        color: const Color(0xFF21182B),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: const BorderSide(color: Color(0xFF493552), width: 0.8),
-        ),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(20),
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(icon, color: _mint, size: 26),
-                const SizedBox(height: 13),
-                Text(title, style: const TextStyle(fontSize: 15,
-                    fontWeight: FontWeight.w700)),
-                const SizedBox(height: 4),
-                Text(subtitle, style: const TextStyle(
-                    fontSize: 12, color: _muted),
-                    maxLines: 2, overflow: TextOverflow.ellipsis),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final strings = appStrings(context);
+    final locale = Localizations.localeOf(context).languageCode;
     final now = DateTime.now();
     final today = drinks.where((d) => d.time.year == now.year &&
         d.time.month == now.month && d.time.day == now.day).toList();
@@ -942,7 +923,7 @@ void updateMentiMessage(MentiMood mood) {
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MennyiMent?',
+        title: const Text('MennyiMent?', maxLines: 1, overflow: TextOverflow.ellipsis,
             style: TextStyle(fontWeight: FontWeight.w800)),
         actions: [
           IconButton(key: const ValueKey('open-data-backup'),
@@ -956,42 +937,47 @@ void updateMentiMessage(MentiMood mood) {
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: 0,
-        onDestinationSelected: (index) {
-          switch (index) {
-            case 1: _openDashboard(); break;
-            case 2: _openLifestyleInsights(); break;
-            case 3: _openAvatar(); break;
-          }
-        },
+        labelBehavior: MediaQuery.textScalerOf(context).scale(16) > 20
+            ? NavigationDestinationLabelBehavior.alwaysHide
+            : NavigationDestinationLabelBehavior.alwaysShow,
+        onDestinationSelected: _navigateHome,
         destinations: [
-          NavigationDestination(icon: Icon(Icons.home_rounded), label: appStrings(context).home),
-          NavigationDestination(icon: Icon(Icons.calendar_month_outlined), label: appStrings(context).journal),
-          NavigationDestination(icon: Icon(Icons.insights_rounded), label: appStrings(context).insights),
-          NavigationDestination(icon: Icon(Icons.face_rounded), label: appStrings(context).menti),
+          NavigationDestination(key: const ValueKey('nav-home'), icon: Icon(Icons.home_rounded), label: appStrings(context).home),
+          NavigationDestination(key: const ValueKey('nav-journal'), enabled: _journalReady, icon: Icon(Icons.calendar_month_outlined), label: appStrings(context).journal),
+          NavigationDestination(key: const ValueKey('nav-insights'), enabled: _journalReady, icon: Icon(Icons.insights_rounded), label: appStrings(context).insights),
+          NavigationDestination(key: const ValueKey('nav-menti'), icon: Icon(Icons.face_rounded), label: appStrings(context).menti),
         ],
       ),
-      body: Center(
+      body: SafeArea(top: false, child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 740),
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: width < 380 ? 14 : 20,
                 vertical: 16),
             children: [
-              const Text('MENNYIMENT? 7.2 • A TE MENTID',
+              Text(strings.homeEyebrow,
                   style: TextStyle(color: _mint, fontSize: 11,
                       fontWeight: FontWeight.w700, letterSpacing: 1.1)),
               const SizedBox(height: 6),
-              const Text('Szia! Hogy vagy ma?', style: TextStyle(
+              Text(strings.homeGreeting, style: const TextStyle(
                   fontSize: 26, fontWeight: FontWeight.w800)),
               const SizedBox(height: 5),
-              const Text('A mai tudatos döntéseid számítanak.',
+              Text(strings.homeIntro,
                   style: TextStyle(color: _muted, fontSize: 13)),
               const SizedBox(height: 12),
-              _panelCard(child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                    Stack(alignment: Alignment.topRight, children: [
+              FilledButton.icon(
+                onPressed: _canWriteJournal ? _openDrinkPicker : null,
+                icon: const Icon(Icons.add_circle_outline),
+                label: Text(appStrings(context).addDrink,
+                    style: TextStyle(fontWeight: FontWeight.w800)),
+                style: FilledButton.styleFrom(
+                    backgroundColor: _mint,
+                    foregroundColor: const Color(0xFF150D1C),
+                    minimumSize: const Size(double.infinity, 54)),
+              ),
+              const SizedBox(height: 12),
+              if (_progressReady) HomeMentiCard(
+                character: Stack(alignment: Alignment.topRight, children: [
                       Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -1017,152 +1003,80 @@ void updateMentiMessage(MentiMood mood) {
                           'Bulikalap' => '🎉', 'Csillag' => '⭐', _ => '',
                         }, style: const TextStyle(fontSize: 25)),
                     ]),
-                    const SizedBox(width: 12),
-                    Expanded(child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('$_characterName • $_mentiLevel. szint',
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
-                        const SizedBox(height: 6),
-                        const Text('Apró, tudatos lépésekből épül a fejlődés.',
-                          style: TextStyle(color: _muted, fontSize: 12)),
-                        const SizedBox(height: 8),
-                        Text(MentiReactions.message(_mentiMood,
-                          index: mentiMessageIndex,
-                          locale: Localizations.localeOf(context).languageCode),
-                          style: const TextStyle(color: _mint, fontSize: 12)),
-                        TextButton.icon(
-                          onPressed: _openCharacterSetup,
-                          icon: const Icon(Icons.palette_outlined, size: 17),
-                          label: Text(appStrings(context).chooseMenti),
-                          style: TextButton.styleFrom(padding: EdgeInsets.zero,
-                            visualDensity: VisualDensity.compact)),
-                        TextButton.icon(
-                          onPressed: _openMentiProgress,
-                          icon: const Icon(Icons.auto_awesome, size: 17),
-                          label: Text(appStrings(context).mentiProgress),
-                          style: TextButton.styleFrom(padding: EdgeInsets.zero,
-                            visualDensity: VisualDensity.compact)),
-                      ],
-                    )),
-                  ]),
-                  const SizedBox(height: 13),
-                  Wrap(alignment: WrapAlignment.spaceBetween,
-                    spacing: 8, runSpacing: 4,
-                    children: [
-                      Text('$_reflectionXp XP összesen',
-                        style: const TextStyle(fontWeight: FontWeight.w700)),
-                      Text(appStrings(context).evolutionRemaining(MentiXpState.remainingFor(_reflectionXp)),
-                        style: const TextStyle(color: _muted, fontSize: 11)),
-                    ]),
-                  const SizedBox(height: 8),
-                  TweenAnimationBuilder<double>(
-                    tween: Tween<double>(begin: 0, end: _mentiLevelProgress),
-                    duration: MentiMotionScope.reducedOf(context)
-                        ? Duration.zero : const Duration(milliseconds: 650),
-                    curve: Curves.easeOutCubic,
-                    builder: (context, value, child) => ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: LinearProgressIndicator(
-                        value: value, minHeight: 9,
-                        backgroundColor: const Color(0xFF493552),
-                        valueColor: const AlwaysStoppedAnimation<Color>(_mint)),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  SizedBox(width: double.infinity,
-                    child: OutlinedButton.icon(
-                      onPressed: _reflectionBusy ? null : _saveDailyReflection,
-                      icon: Icon(_reflectionDays.contains(_dateKey(DateTime.now()))
-                        ? Icons.check_circle_outline : Icons.favorite_border_rounded),
-                      label: Text(_reflectionDays.contains(_dateKey(DateTime.now()))
-                        ? appStrings(context).dailyOpenSaved
-                        : appStrings(context).dailyOpen),
-                    ),
-                  ),
-                  const Text('Az XP önellenőrzésért és tudatos heti kihívásokért jár, nem az elfogyasztott italokért.',
-                    style: TextStyle(color: _muted, fontSize: 11)),
-                ],
-              )),
+                name: _characterName,
+                xp: _reflectionXp,
+                message: MentiReactions.message(_mentiMood,
+                  index: mentiMessageIndex, locale: locale),
+                checkedToday: _reflectionDays.contains(_dateKey(now)),
+                busy: _reflectionBusy,
+                onChoose: _openCharacterSetup,
+                onProgress: _openMentiProgress,
+                onCheckIn: _saveDailyReflection,
+              ) else if (_progressLoading)
+                const Center(child: CircularProgressIndicator())
+              else Card(child: Padding(padding: const EdgeInsets.all(18),
+                child: Column(children: [
+                  Text(strings.homeCheckInUnavailable),
+                  TextButton(onPressed: _loadReflections,
+                    child: Text(strings.homeRetryProgress)),
+                ]))),
               const SizedBox(height: 12),
-              Row(children: [
-                _statTile('Mai ital', '${today.length}', Icons.local_bar_outlined),
-                const SizedBox(width: 10),
-                _statTile('Mai ismert költés', '${_money(todayCost)} Ft',
-                    Icons.payments_outlined),
-              ]),
-              const SizedBox(height: 10),
-              Row(children: [
-                _statTile('Havi ismert költés', '${_money(monthlyCost)} Ft',
-                    Icons.account_balance_wallet_outlined),
-                const SizedBox(width: 10),
-                _statTile('Heti naplózott nap', '$loggedWeekDays / 7',
-                    Icons.calendar_today_outlined),
-              ]),
-              if (todayUnknown > 0 || monthlyUnknown > 0)
-                Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Text('Hiányzó italárak: ma $todayUnknown, ebben a hónapban '
-                      '$monthlyUnknown. A költések részösszegek.',
-                    style: const TextStyle(color: _muted, fontSize: 12)),
-                ),
+              if (_journalReady) HomeAdaptiveGrid(children: [
+                HomeStatTile(label: strings.homeTodayDrinks, value: '${today.length}',
+                  icon: Icons.local_bar_outlined),
+                HomeStatTile(label: strings.homeTodaySpending,
+                  value: localeCurrency(todayCost, locale), icon: Icons.payments_outlined),
+                HomeStatTile(label: strings.homeMonthSpending,
+                  value: localeCurrency(monthlyCost, locale), icon: Icons.account_balance_wallet_outlined),
+                HomeStatTile(label: strings.homeWeekDays, value: '$loggedWeekDays / 7',
+                  icon: Icons.calendar_today_outlined),
+              ]) else if (isLoading)
+                Semantics(label: strings.homeLoading,
+                  child: const Center(child: CircularProgressIndicator()))
+              else Text(strings.homeJournalUnavailable),
+              if (_journalReady && (todayUnknown > 0 || monthlyUnknown > 0))
+                Padding(padding: const EdgeInsets.only(top: 8),
+                  child: Text(strings.homeMissingPrices(todayUnknown, monthlyUnknown))),
               const SizedBox(height: 12),
               if (_journalError != null) ...[
-                Text(_journalError!, key: const ValueKey('journal-error')),
-                TextButton(onPressed: _journalSaving || isLoading ? null : loadDrinks, child: const Text('Napló újratöltése')),
+                Semantics(liveRegion: true, child: Text(
+                  _journalError == 'load' ? strings.homeJournalLoadError : strings.homeJournalSaveError,
+                  key: const ValueKey('journal-error'))),
+                TextButton(onPressed: _journalSaving || isLoading ? null : loadDrinks, child: Text(strings.homeJournalRetry)),
               ],
-              FilledButton.icon(
-                onPressed: _canWriteJournal ? _openDrinkPicker : null,
-                icon: const Icon(Icons.add_circle_outline),
-                label: Text(appStrings(context).addDrink,
-                    style: TextStyle(fontWeight: FontWeight.w800)),
-                style: FilledButton.styleFrom(
-                    backgroundColor: _mint,
-                    foregroundColor: const Color(0xFF150D1C),
-                    minimumSize: const Size(double.infinity, 54)),
-              ),
               const SizedBox(height: 23),
               Text(appStrings(context).explore, style: TextStyle(
                   fontSize: 20, fontWeight: FontWeight.w800)),
               const SizedBox(height: 12),
-              OutlinedButton.icon(onPressed: _openFinanceCenter,
+              OutlinedButton.icon(onPressed: _journalReady ? _openFinanceCenter : null,
                 icon: const Icon(Icons.account_balance_wallet_outlined),
                 label: Text(appStrings(context).financeCenter)),
               const SizedBox(height: 10),
-              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                _shortcut(appStrings(context).wellbeing, appStrings(context).wellbeingHint,
-                    Icons.favorite_border_rounded, _openWellbeingJournal),
-                const SizedBox(width: 10),
-                _shortcut(appStrings(context).savings, appStrings(context).savingsHint,
-                    Icons.savings_outlined, _openSavingsGoals),
-              ]),
-              const SizedBox(height: 10),
-              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                _shortcut(appStrings(context).weeklyInsights, appStrings(context).weeklyInsightsHint,
-                    Icons.insights_outlined, _openLifestyleInsights),
-                const SizedBox(width: 10),
-                _shortcut(appStrings(context).mentiProgress, appStrings(context).mentiProgressHint,
-                    Icons.auto_awesome_outlined, _openMentiProgress),
-              ]),
-              const SizedBox(height: 10),
-              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                _shortcut(appStrings(context).goals, appStrings(context).goalsHint,
-                    Icons.flag_outlined, _openDashboard),
-                const SizedBox(width: 10),
-                _shortcut(appStrings(context).statisticsNav, appStrings(context).statisticsHint,
-                    Icons.bar_chart_rounded, _openStatistics),
+              HomeAdaptiveGrid(children: [
+                HomeActionCard(title: strings.wellbeing, subtitle: strings.wellbeingHint,
+                  icon: Icons.favorite_border_rounded, onTap: _openWellbeingJournal),
+                HomeActionCard(title: strings.savings, subtitle: strings.savingsHint,
+                  icon: Icons.savings_outlined, onTap: _journalReady ? _openSavingsGoals : null),
+                HomeActionCard(title: strings.weeklyInsights, subtitle: strings.weeklyInsightsHint,
+                  icon: Icons.insights_outlined, onTap: _journalReady ? _openLifestyleInsights : null),
+                HomeActionCard(title: strings.mentiProgress, subtitle: strings.mentiProgressHint,
+                  icon: Icons.auto_awesome_outlined, onTap: _openMentiProgress),
+                HomeActionCard(title: strings.goals, subtitle: strings.goalsHint,
+                  icon: Icons.flag_outlined, onTap: _journalReady ? _openDashboard : null),
+                HomeActionCard(title: strings.statisticsNav, subtitle: strings.statisticsHint,
+                  icon: Icons.bar_chart_rounded, onTap: _journalReady ? _openStatistics : null),
               ]),
               const SizedBox(height: 14),
               SizedBox(width: double.infinity,
                 child: FilledButton.tonalIcon(
-                  onPressed: isLoading ? null : _openPersonalGoals,
+                  onPressed: !_journalReady ? null : _openPersonalGoals,
                   icon: const Icon(Icons.track_changes_rounded),
                   label: Text(appStrings(context).personalGoals),
                 )),
               const SizedBox(height: 10),
               SizedBox(width: double.infinity,
                 child: OutlinedButton.icon(
-                  onPressed: isLoading ? null : _openMentiWeekReport,
+                  onPressed: !_journalReady ? null : _openMentiWeekReport,
                   icon: const Icon(Icons.auto_graph_rounded),
                   label: Text(appStrings(context).weeklyReport),
                 )),
@@ -1170,27 +1084,25 @@ void updateMentiMessage(MentiMood mood) {
               Wrap(alignment: WrapAlignment.spaceBetween, spacing: 8, runSpacing: 4, children: [
                 Text(appStrings(context).recentEntries, style: TextStyle(
                     fontSize: 20, fontWeight: FontWeight.w800)),
-                TextButton(onPressed: isLoading ? null : _openStatistics,
+                TextButton(onPressed: !_journalReady ? null : _openJournal,
                     child: Text(appStrings(context).allEntries)),
               ]),
               const SizedBox(height: 8),
               _panelCard(child: isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : recent.isEmpty
-                      ? const Text('Még nincs bejegyzés. Az első italodat '
-                          'a fenti gombbal rögzítheted.',
-                          style: TextStyle(color: _muted))
+                      ? Text(_journalReady ? strings.homeEmptyJournal : strings.homeJournalUnavailable,
+                          style: const TextStyle(color: _muted))
                       : Column(children: recent.take(4)
                           .map(_recentEntry).toList())),
               const SizedBox(height: 18),
-              const Text('A napló önbevalláson alapul. Nem alkalmas '
-                  'a józanság vagy a vezetési képesség megállapítására.',
+              Text(strings.statisticsCaution,
                   style: TextStyle(color: _muted, fontSize: 12)),
               const SizedBox(height: 20),
             ],
           ),
         ),
-      ),
+      )),
     );
   }
 
