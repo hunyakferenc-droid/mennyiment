@@ -185,17 +185,19 @@ class MentiIdentityDocument {
       },
     };
     final aura = switch (values['mennyiment_menti_aura_v1']) {
-      'Lila' => 'violet', 'Kék' => 'ocean', 'Zöld' => 'forest',
+      'Lila' => 'violet', 'Kék' => 'ocean', 'Zöld' || 'Menta' => 'forest',
       'Arany' => 'starlight', 'Rózsaszín' => 'rose', _ => 'sunrise',
     };
     final bg = values[MentiProfileStorage.studioBackgroundKey] ?? values[MentiProfileStorage.legacyStyleKey];
-    final background = switch (bg) { 1 => 'violet', 2 => 'ocean', 3 => 'forest', _ => 'amber' };
+    final background = switch (bg) { 0 => 'violet', 1 => 'forest', 2 => 'amber', 3 => 'midnight', _ => 'amber' };
     final tint = switch (values['mennyiment_character_color_v2']) {
       'Lila' => 'violet', 'Kék' => 'blue', 'Zöld' => 'mint',
       'Rózsaszín' => 'rose', 'Narancs' => 'orange', _ => 'gold',
     };
     final accessory = values['mennyiment_menti_accessory_v1'];
-    final rawName = values['mennyiment_character_name_v1'];
+    final studioAccessory = values['mennyiment_accessory_v1'];
+    final studioHat = values['mennyiment_hat_v1'];
+    final rawName = values['mennyiment_character_name_v1'] ?? values['mennyiment_nickname_v1'];
     final name = rawName is String && rawName.trim().isNotEmpty && rawName.length <= 80 ? rawName : 'Menti';
     final savedRewards = values['mennyiment_menti_rewards_v1'];
     final rewards = savedRewards is List && savedRewards.every((v) => v is String)
@@ -207,6 +209,12 @@ class MentiIdentityDocument {
           MentiOutfit.sport => 'sporty', MentiOutfit.basic => 'classic', _ => outfit.id,
         },
         'aura': aura, 'background': background, 'accent': tint,
+        if (studioHat == 1) 'headwear': 'sport-cap',
+        if (studioHat == 2) 'headwear': 'party-hat',
+        if (studioHat == 3) 'headwear': 'cowboy',
+        if (studioAccessory == 1) 'glasses': 'sunglasses',
+        if (studioAccessory == 2) 'detail': 'star',
+        if (studioAccessory == 3) 'headwear': 'headphones',
         if (accessory == 'Napszemüveg') 'glasses': 'sunglasses',
         if (accessory == 'Korona') 'headwear': 'party-crown',
         if (accessory == 'Bulikalap') 'headwear': 'party-hat',

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/avatar.dart';
+import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
+import 'package:mennyiment/menti_identity/menti_identity.dart';
+import 'package:mennyiment/menti_identity/menti_identity_store.dart';
 import 'package:mennyiment/menti_character_catalog.dart';
 import 'package:mennyiment/menti_character_setup.dart';
 import 'package:mennyiment/menti_profile_storage.dart';
@@ -115,31 +118,28 @@ void main() {
     }
   });
 
-  testWidgets('Studio reads migrated background and writes only its own key', (
-    tester,
-  ) async {
+  testWidgets('Studio imports legacy background, saves atomically and leaves legacy keys untouched', (tester) async {
     tester.view.physicalSize = const Size(1100, 4000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
     final prefs = await load({legacy: 'Lány Menti', background: 1});
     await tester.pumpWidget(const MaterialApp(home: AvatarPage()));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 100));
-    final mint = find.ancestor(
-      of: find.text('Mentazöld'),
-      matching: find.byType(InkWell),
-    );
-    await tester.ensureVisible(mint);
-    expect(
-      find.descendant(of: mint, matching: find.text('Kiválasztva')),
-      findsOneWidget,
-    );
-    await tester.ensureVisible(find.text('Éjszakai klub'));
-    await tester.tap(find.text('Éjszakai klub'));
-    await tester.pump();
-    expect(prefs.get(background), 0);
-    expect(prefs.get(character), 'Lány Menti');
+    await tester.pumpAndSettle();
+    final renderer = tester.widget<MentiAvatarRenderer>(find.byKey(const ValueKey('studio-live-preview')));
+    expect(renderer.profile.visual.value('background'), 'forest');
+    expect(renderer.profile.visual.value('family'), 'girl');
+    expect(prefs.containsKey(MentiIdentityStore.key), isFalse);
+    final tab = find.byKey(const ValueKey('studio-tab-4'));
+    await tester.ensureVisible(tab); await tester.tap(tab); await tester.pumpAndSettle();
+    final option = find.byKey(const ValueKey('option-background-violet'));
+    await tester.ensureVisible(option); await tester.tap(option); await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('studio-save'))); await tester.pumpAndSettle();
+    final saved = MentiIdentityDocument.decode(prefs.get(MentiIdentityStore.key));
+    expect(saved.profile.visual.value('background'), 'violet');
+    expect(saved.profile.visual.value('family'), 'girl');
+    expect(prefs.get(background), 1);
+    expect(prefs.get(character), isNull); // migration is read-only until the new document save
     expect(prefs.get(legacy), 'Lány Menti');
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox.shrink());

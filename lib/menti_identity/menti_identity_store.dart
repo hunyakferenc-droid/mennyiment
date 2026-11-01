@@ -43,7 +43,9 @@ class MentiIdentityStore {
         if (k.startsWith('mennyiment_') && k != key &&
             (k.contains('menti_') || k.contains('character_') ||
              k == 'mennyiment_outfit_v2' || k == 'mennyiment_age_group_v1' ||
-             k == 'mennyiment_mood_v2')) k: prefs.get(k),
+             k == 'mennyiment_mood_v2' || k == 'mennyiment_nickname_v1' ||
+             k == 'mennyiment_hat_v1' || k == 'mennyiment_accessory_v1' ||
+             k == 'mennyiment_avatar_v1')) k: prefs.get(k),
     };
     migrated = _raw == null;
     try {
@@ -67,7 +69,11 @@ class MentiIdentityStore {
       try {
         prefs = await open();
         await prefs.reload();
-        if (prefs.get(key) != _raw) {
+        final original = document.toJson()['migration'];
+        final legacy = original is Map ? original['original'] : null;
+        final legacyChanged = _raw == null && legacy is Map && legacy.entries.any((e) =>
+          prefs.get(e.key as String).toString() != e.value.toString());
+        if (prefs.get(key) != _raw || legacyChanged) {
           writable = false;
           error = 'conflict';
           return false;

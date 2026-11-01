@@ -40,7 +40,7 @@ void main() {
       expect(data.profile.visual.value('age'), item.value);
     });
   }
-  for (final item in {0: 'amber', 1: 'violet', 2: 'ocean', 3: 'forest'}.entries) {
+  for (final item in {0: 'violet', 1: 'forest', 2: 'amber', 3: 'midnight'}.entries) {
     test('legacy integer Studio background ${item.key}', () {
       final data = MentiIdentityDocument.fromLegacy({MentiProfileStorage.legacyStyleKey: item.key});
       expect(data.profile.visual.value('background'), item.value);

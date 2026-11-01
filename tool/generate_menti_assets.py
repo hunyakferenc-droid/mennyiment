@@ -106,8 +106,9 @@ hats={
 'hood':path('M72 162 Q44 41 106 22 Q160 0 214 22 Q273 47 249 162 L228 169 L224 65 Q158 35 95 65 L94 168 Z','url(#dark)')+path('M89 158 Q68 66 102 41 M230 158 Q252 62 213 39','none','#a66bdf',6),
 'none':path('M143 29 Q160 21 179 29','none','#ffcf77',3),
 'party-hat':path('M102 74 L159 3 L217 76 Z','#ae71de')+path('M122 49 L192 49 M139 27 L175 27','none','#ffd66d',6)+ellipse(159,9,8,8,'url(#gold)'),
+'cowboy':path('M75 76 Q88 90 102 72 L110 26 Q135 39 160 26 Q192 40 213 25 L224 73 Q239 91 251 72 Q254 108 218 99 Q159 77 102 100 Q65 112 75 76 Z','#9f704e')+path('M105 64 Q161 77 220 63','none','#5e4050',9)+crown(149,62,.6),
 'beret':path('M83 66 Q51 33 102 21 Q182 -8 231 31 Q261 56 224 75 L91 84 Z','#587b66')+path('M99 75 Q157 58 220 70','none','#294d42',8)+path('M156 20 L161 9','none','#294d42',6)}
-for id,hu,en in [('crown-cap','Koronás sapka','Crown cap'),('sport-cap','Sportsapka','Sport cap'),('beanie','Kötött sapka','Beanie'),('headphones','Fejhallgató','Headphones'),('party-crown','Ünnepi korona','Party crown'),('hood','Kapucni','Hood'),('none','Fejfedő nélkül','No headwear'),('party-hat','Csúcsos kalap','Party hat'),('beret','Barett','Beret')]:
+for id,hu,en in [('crown-cap','Koronás sapka','Crown cap'),('sport-cap','Sportsapka','Sport cap'),('beanie','Kötött sapka','Beanie'),('headphones','Fejhallgató','Headphones'),('party-crown','Ünnepi korona','Party crown'),('hood','Kapucni','Hood'),('none','Fejfedő nélkül','No headwear'),('party-hat','Csúcsos kalap','Party hat'),('beret','Barett','Beret'),('cowboy','Cowboykalap','Cowboy hat')]:
     add('headwear',id,hu,en,'headwear',hats[id],3 if id=='beret' else 1)
 
 outfits=[('basic','Alap szett','Classic set','#252634'),('party','Buli','Party','#673887'),('sport','Sport','Sport','#267b69'),('business','Üzleti','Business','#29435d'),('festival','Fesztivál','Festival','#b55b67'),('legendary','Legendás','Legendary','#37215e'),('street','Utcai','Street','#66517d'),('cozy','Kuckózós','Cozy','#c78e64'),('explorer','Felfedező','Explorer','#677649'),('creative','Alkotó','Creative','#548e9b')]
@@ -136,7 +137,7 @@ for oi,(id,hu,en,color) in enumerate(outfits):
 styles=[('classic','Klasszikus','Classic'),('street','Utcai','Street'),('sporty','Sportos','Sporty'),('business','Elegáns','Business'),('party','Bulis','Party'),('festival','Fesztivál','Festival'),('cozy','Meghitt','Cozy'),('legendary','Legendás','Legendary')]
 for i,(id,hu,en) in enumerate(styles):
     motifs=[crown(150,266,.65),path('M130 273 L160 252 L190 273 L160 286 Z','#a27ad3'),path('M145 267 L157 274 L178 250','none','#a9e1b4',5),path('M147 270 L160 253 L173 270 L160 283 Z','url(#gold)'),star(160,270,1.5,'#e5bbf7'),path('M139 270 Q149 246 159 270 Q170 291 182 266','none','#efba7b',4),path('M145 268 Q150 255 160 267 Q171 253 177 267 Q177 276 160 287 Q145 278 145 268','#f1c9bf'),crown(143,260,1.0)]
-    add('style',id,hu,en,'styles',motifs[i])
+    add('style',id,hu,en,'styles',motifs[i],{'business':2,'festival':3,'legendary':5}.get(id,1))
 
 accessories={
 'glasses': [('none','Szemüveg nélkül','No glasses',''),('round-glasses','Kerek szemüveg','Round glasses',ellipse(125,125,30,33,'none','#774bb4',4)+ellipse(194,125,30,33,'none','#774bb4',4)+path('M154 122 L164 122 M94 121 L83 116 M224 121 L235 116','none','#774bb4',4)),('sunglasses','Napszemüveg','Sunglasses',path('M90 105 L154 108 L150 137 Q124 154 99 134 Z M166 108 L229 105 L220 135 Q193 151 170 137 Z','#242339','#b38ccf',3)+path('M154 115 L166 115 M107 112 L132 139 M183 111 L208 137','none','#7d679b',3))],
