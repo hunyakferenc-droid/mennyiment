@@ -106,7 +106,8 @@ void main() {
       await tester.tap(find.text(s.goalReload));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('personal-goal-reaction')), findsNothing);
-      await scroll(tester, button);
+      // Reload can retain the bottom scroll offset; the check-in is above it.
+      await scroll(tester, button, up: true);
       expect(tester.widget<FilledButton>(button).onPressed, isNull);
       expect(tester.takeException(), isNull);
       await close(tester);
