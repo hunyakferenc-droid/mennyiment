@@ -1,0 +1,407 @@
+[
+  {
+    "name": "boy-young-none",
+    "visual": {
+      "family": "boy",
+      "age": "young",
+      "outfit": "basic",
+      "hair": "boy-crop",
+      "headwear": "none"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/boy-young.png",
+      "assets/images/menti_2_2/bases/boy-young.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/boy-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg"
+    ]
+  },
+  {
+    "name": "boy-adult-none",
+    "visual": {
+      "family": "boy",
+      "age": "adult",
+      "outfit": "basic",
+      "hair": "boy-crop",
+      "headwear": "none"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/boy-adult.png",
+      "assets/images/menti_2_2/bases/boy-adult.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/boy-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg"
+    ]
+  },
+  {
+    "name": "boy-veteran-none",
+    "visual": {
+      "family": "boy",
+      "age": "veteran",
+      "outfit": "basic",
+      "hair": "boy-crop",
+      "headwear": "none"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/boy-veteran.png",
+      "assets/images/menti_2_2/bases/boy-veteran.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/boy-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg"
+    ]
+  },
+  {
+    "name": "girl-young-none",
+    "visual": {
+      "family": "girl",
+      "age": "young",
+      "outfit": "basic",
+      "hair": "girl-crop",
+      "headwear": "none"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/girl-young.png",
+      "assets/images/menti_2_2/bases/girl-young.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/girl-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg"
+    ]
+  },
+  {
+    "name": "girl-adult-none",
+    "visual": {
+      "family": "girl",
+      "age": "adult",
+      "outfit": "basic",
+      "hair": "girl-crop",
+      "headwear": "none"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/girl-adult.png",
+      "assets/images/menti_2_2/bases/girl-adult.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/girl-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg"
+    ]
+  },
+  {
+    "name": "girl-veteran-none",
+    "visual": {
+      "family": "girl",
+      "age": "veteran",
+      "outfit": "basic",
+      "hair": "girl-crop",
+      "headwear": "none"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/girl-veteran.png",
+      "assets/images/menti_2_2/bases/girl-veteran.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/girl-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg"
+    ]
+  },
+  {
+    "name": "neutral-young-none",
+    "visual": {
+      "family": "neutral",
+      "age": "young",
+      "outfit": "basic",
+      "hair": "neutral-crop",
+      "headwear": "none"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/neutral-young.png",
+      "assets/images/menti_2_2/bases/neutral-young.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/neutral-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg"
+    ]
+  },
+  {
+    "name": "neutral-adult-none",
+    "visual": {
+      "family": "neutral",
+      "age": "adult",
+      "outfit": "basic",
+      "hair": "neutral-crop",
+      "headwear": "none"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/neutral-adult.png",
+      "assets/images/menti_2_2/bases/neutral-adult.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/neutral-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg"
+    ]
+  },
+  {
+    "name": "neutral-veteran-none",
+    "visual": {
+      "family": "neutral",
+      "age": "veteran",
+      "outfit": "basic",
+      "hair": "neutral-crop",
+      "headwear": "none"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/neutral-veteran.png",
+      "assets/images/menti_2_2/bases/neutral-veteran.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/neutral-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg"
+    ]
+  },
+  {
+    "name": "boy-young-crown-cap",
+    "visual": {
+      "family": "boy",
+      "age": "young",
+      "outfit": "basic",
+      "hair": "boy-crop",
+      "headwear": "crown-cap"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/boy-young.png",
+      "assets/images/menti_2_2/bases/boy-young.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/boy-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg",
+      "assets/images/menti_2_2/core/crown-cap.png"
+    ]
+  },
+  {
+    "name": "boy-adult-crown-cap",
+    "visual": {
+      "family": "boy",
+      "age": "adult",
+      "outfit": "basic",
+      "hair": "boy-crop",
+      "headwear": "crown-cap"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/boy-adult.png",
+      "assets/images/menti_2_2/bases/boy-adult.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/boy-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg",
+      "assets/images/menti_2_2/core/crown-cap.png"
+    ]
+  },
+  {
+    "name": "boy-veteran-crown-cap",
+    "visual": {
+      "family": "boy",
+      "age": "veteran",
+      "outfit": "basic",
+      "hair": "boy-crop",
+      "headwear": "crown-cap"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/boy-veteran.png",
+      "assets/images/menti_2_2/bases/boy-veteran.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/boy-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg",
+      "assets/images/menti_2_2/core/crown-cap.png"
+    ]
+  },
+  {
+    "name": "girl-young-crown-cap",
+    "visual": {
+      "family": "girl",
+      "age": "young",
+      "outfit": "basic",
+      "hair": "girl-crop",
+      "headwear": "crown-cap"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/girl-young.png",
+      "assets/images/menti_2_2/bases/girl-young.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/girl-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg",
+      "assets/images/menti_2_2/core/crown-cap.png"
+    ]
+  },
+  {
+    "name": "girl-adult-crown-cap",
+    "visual": {
+      "family": "girl",
+      "age": "adult",
+      "outfit": "basic",
+      "hair": "girl-crop",
+      "headwear": "crown-cap"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/girl-adult.png",
+      "assets/images/menti_2_2/bases/girl-adult.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/girl-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg",
+      "assets/images/menti_2_2/core/crown-cap.png"
+    ]
+  },
+  {
+    "name": "girl-veteran-crown-cap",
+    "visual": {
+      "family": "girl",
+      "age": "veteran",
+      "outfit": "basic",
+      "hair": "girl-crop",
+      "headwear": "crown-cap"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/girl-veteran.png",
+      "assets/images/menti_2_2/bases/girl-veteran.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/girl-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg",
+      "assets/images/menti_2_2/core/crown-cap.png"
+    ]
+  },
+  {
+    "name": "neutral-young-crown-cap",
+    "visual": {
+      "family": "neutral",
+      "age": "young",
+      "outfit": "basic",
+      "hair": "neutral-crop",
+      "headwear": "crown-cap"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/neutral-young.png",
+      "assets/images/menti_2_2/bases/neutral-young.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/neutral-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg",
+      "assets/images/menti_2_2/core/crown-cap.png"
+    ]
+  },
+  {
+    "name": "neutral-adult-crown-cap",
+    "visual": {
+      "family": "neutral",
+      "age": "adult",
+      "outfit": "basic",
+      "hair": "neutral-crop",
+      "headwear": "crown-cap"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/neutral-adult.png",
+      "assets/images/menti_2_2/bases/neutral-adult.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/neutral-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg",
+      "assets/images/menti_2_2/core/crown-cap.png"
+    ]
+  },
+  {
+    "name": "neutral-veteran-crown-cap",
+    "visual": {
+      "family": "neutral",
+      "age": "veteran",
+      "outfit": "basic",
+      "hair": "neutral-crop",
+      "headwear": "crown-cap"
+    },
+    "layers": [
+      "assets/images/menti_2_2/backgrounds/amber.svg",
+      "assets/images/menti_2_2/auras/sunrise.svg",
+      "assets/images/menti_2_2/identities/neutral-veteran.png",
+      "assets/images/menti_2_2/bases/neutral-veteran.svg",
+      "assets/images/menti_2_2/outfits/basic.svg",
+      "assets/images/menti_2_2/styles/classic.svg",
+      "assets/images/menti_2_2/accents/gold.svg",
+      "assets/images/menti_2_2/hair/neutral-crop.svg",
+      "assets/images/menti_2_2/faces/cheerful.svg",
+      "assets/images/menti_2_2/eyes/round.svg",
+      "assets/images/menti_2_2/core/crown-cap.png"
+    ]
+  }
+]

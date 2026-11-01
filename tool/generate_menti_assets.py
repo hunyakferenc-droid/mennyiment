@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Reproducible original Menti 2.2 vector layers, thumbnails and typed catalog.
-Brand revision E: one immutable raster material core + registered vector layers.
+Family revision: nine independent immutable raster cores + registered vector layers.
 No legacy bitmap is edited; all layers use the same 320 × 400 artboard.
 Run from the repository root. SVGs are Flutter SVG compatible (no filters/fonts).
 """
@@ -33,10 +33,11 @@ def crown(x,y,s=1):
 def star(x,y,s=1,color='#ffe09b'):
     return f'<g transform="translate({x} {y}) scale({s})">'+path('M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z',color,'none')+'</g>'
 # Fixed, generated source retained in Git. Reproduction never calls an image API.
-CORE = ROOT / 'core/menti-body.png'
-# Main and thumbnails reference one shared raster core; SVG previews remain
-# transparent vector foregrounds, avoiding 115 embedded bitmap copies.
-CORE_IMAGE = '<image xlink:href="../../assets/images/menti_2_2/core/menti-body.png" x="0" y="0" width="320" height="400"/>'
+FAMILY_MATERIALS = json.loads(Path('tool/menti_family_fits.json').read_text())
+for material in FAMILY_MATERIALS.values():
+    if not (ROOT/material['asset']).exists():
+        raise SystemExit('Missing immutable family material: '+material['asset'])
+# Thumbnails use the actual context-aware renderer; vector files retain stable paths.
 # All assets share a lighting direction. These gradients use explicit SVG units.
 DEFS += '''<defs>
 <radialGradient id="eyeWhite" cx=".3" cy=".23" r=".85"><stop stop-color="#fffef8"/><stop offset=".55" stop-color="#fff6e2"/><stop offset=".85" stop-color="#e0c5a1"/><stop offset="1" stop-color="#9b603d"/></radialGradient>
@@ -100,21 +101,11 @@ def premium_outfit(id):
 
 def _registered(folder, id, body):
     if folder == 'bases':
-        family, age = id.split('-')
-        # Same species/core at every age; fine markings cannot change anatomy.
-        marks = ''
-        if family == 'girl':
-            marks += ellipse(61,165,7,10,'url(#gold)','#a76625',1)+ellipse(258,165,7,10,'url(#gold)','#a76625',1)
-            marks += path('M73 115 L64 109 M76 109 L70 102 M244 110 L250 102 M247 116 L255 110','none','#432319',2)
-        if family == 'neutral':
-            marks += ellipse(71,177,11,5,'#f6ad57')+ellipse(250,177,11,5,'#f6ad57')
-            marks += path('M69 177 L75 177 M245 177 L251 177','none','#df8b40',1)
-        if age in ['adult','veteran']:
-            marks += path('M55 152 Q60 158 69 159 M251 159 Q261 157 265 150','none','#b3662d',1.5)
-        if age == 'veteran':
-            marks += path('M53 145 L64 148 M53 152 L64 154 M256 147 L266 144 M257 154 L267 151 M90 194 Q95 203 104 202 M215 202 Q224 201 229 194','none','#a76636',1.5)
-            marks += path('M55 118 Q49 148 60 170 M265 118 Q271 148 260 170','none','#d9c9ac',4)
-        return marks
+        # Actual anatomy lives in nine independent raster checkpoints, not tiny marks.
+        patch = ''
+        if id == 'girl-young':
+            patch = path('M121 231 Q160 240 200 231 L205 265 Q160 276 116 265 Z','url(#charcoal)','#29212e',1)
+        return f'<metadata>independent-material:{id}</metadata>'+patch
     if folder in ['families','ages']:
         source = ('bases/'+id+'-young.svg') if folder == 'families' else ('bases/neutral-'+id+'.svg')
         return SVG[source]
@@ -128,7 +119,8 @@ def _registered(folder, id, body):
         if folder in ['outfits','styles','accents'] or (folder == 'accessories' and id in ['chain','scarf','bow','notebook','flower','spark-wand','backpack','cape']):
             transform='translate(-80 90) scale(1.5 .6)'
         elif folder == 'headwear':
-            transform='translate(-48 -10) scale(1.3 .95)'
+            top=1 if id in ['party-hat','party-crown','beret'] else -2 if id=='headphones' else -5 if id=='hood' else -10
+            transform=f'translate(-48 {top}) scale(1.3 .95)'
         else:
             transform='translate(-48 7) scale(1.3 1.05)'
         body=body.replace('url(#purple)','url(#cap)').replace('url(#dark)','url(#charcoal)')
@@ -141,6 +133,10 @@ def _registered(folder, id, body):
             key=folder+'-'+id+'-mat'+str(n)
             gradients+=f'<linearGradient id="{key}" x1=".1" y1="0" x2=".8" y2="1"><stop stop-color="{shade(1.42)}"/><stop offset=".35" stop-color="{color}"/><stop offset="1" stop-color="{shade(.5)}"/></linearGradient>'
             body=body.replace(f'fill="{color}"',f'fill="url(#{key})"')
+        if folder=='hair' and id=='girl-crop':
+            body=path('M77 159 L77 76 Q76 22 159 24 Q240 23 243 79 L241 174 L219 182 L219 78 Q176 104 106 77 L105 180 L81 173 Z','url(#hairShine)')+path('M108 53 Q159 31 213 54','none','#dca77a',2)
+        if folder=='hair' and id=='neutral-crop':
+            body=path('M82 104 Q68 56 98 38 Q137 13 169 34 Q202 15 234 47 L237 99 L215 78 Q197 95 173 75 Q144 109 108 84 Z','url(#hairShine)')+path('M104 60 Q129 37 156 45 M173 49 Q198 35 218 59','none','#cfa172',3)
         if folder=='hair':
             body=re.sub(r'fill="url\(#[a-z0-9-]+-mat[0-9]+\)"','fill="url(#hairShine)"',body)
             body+=path('M115 50 Q135 37 153 43 M178 41 Q201 37 215 55','none','#d3986f',1.3)
@@ -350,6 +346,12 @@ for i,(id,hu,en) in enumerate(reactions):
 def standard():
     return [SVG['backgrounds/amber.svg'],SVG['auras/sunrise.svg'], SVG['bases/boy-young.svg'], SVG['outfits/basic.svg'],SVG['styles/classic.svg'],SVG['hair/boy-crop.svg'],SVG['faces/cheerful.svg'],SVG['eyes/round.svg'],SVG['headwear/crown-cap.svg']]
 for o in OPTIONS:
+    if o['field']=='family':
+        o['asset']='identities/'+o['id']+'-young.png'
+        SVG[o['asset']]='<metadata>'+o['asset']+'</metadata>'
+    if o['field']=='age':
+        o['asset']='identities/boy-'+o['id']+'.png'
+        SVG[o['asset']]='<metadata>'+o['asset']+'</metadata>'
     if o['field']=='headwear' and o['id']=='crown-cap':o['asset']='core/crown-cap.png'
 SVG['core/crown-cap.png']=''
 for opt in OPTIONS:
@@ -394,7 +396,7 @@ for locale in ['hu','en']:
     for o in OPTIONS:data[f"avatar{key(o['field'])}{key(o['id'])}"]=o[locale]
     p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
 Path('docs/2.2-menti-asset-catalog-hu.md').write_text('# Menti 2.2 – vektorréteg-katalógus\n\n'
-  '2.2-E: egy verziókezelt, generált raster anyagmag és regisztrált SVG-rétegek, változatlan legacy PNG-k. Közös 320×400 koordinátarendszer; '
+  'Kilenc önálló család/kor raster anyagalap, közös sapka és regisztrált SVG-rétegek; változatlan legacy PNG-k. Közös 320×400 koordinátarendszer; '
   'tömzsi, gömbölyded Menti-arányok; 2D raster + vektor, nem valódi 3D modell. '
   'Narancs test, barna szem, lila koronás sapka és fekete/arany alapruha. '
   'A családok sziluettje, hajai és életkorrajzolata eltér. '
@@ -407,4 +409,4 @@ Path('docs/2.2-menti-asset-catalog-hu.md').write_text('# Menti 2.2 – vektorré
   '\nKézi grafikai ellenőrzés: mindhárom család, minden kor, fejfedő nélküli hajak, '
   'szemüveg/sál/ruha takarások, 64/160/320 px, sötét/világos környezet. '
   'További kézzel finomított illusztrációk és művészeti review később bővíthetik a készletet.\n')
-print(f'{len(OPTIONS)} options, {len(SVG)} SVGs')
+print(f'{len(OPTIONS)} stable options; {len(list(ROOT.rglob("*.svg")))} SVG layers; {len(list(ROOT.rglob("*.png")))} PNG checkpoints')

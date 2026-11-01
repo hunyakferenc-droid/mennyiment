@@ -1,6 +1,6 @@
 [
   {
-    "name": "Fiú · fiatal · classic",
+    "name": "Fiú · Fiatalos · basic",
     "visual": {
       "family": "boy",
       "age": "young",
@@ -11,7 +11,7 @@
     "layers": [
       "assets/images/menti_2_2/backgrounds/amber.svg",
       "assets/images/menti_2_2/auras/sunrise.svg",
-      "assets/images/menti_2_2/core/menti-body.png",
+      "assets/images/menti_2_2/identities/boy-young.png",
       "assets/images/menti_2_2/bases/boy-young.svg",
       "assets/images/menti_2_2/outfits/basic.svg",
       "assets/images/menti_2_2/styles/classic.svg",
@@ -23,7 +23,7 @@
     ]
   },
   {
-    "name": "Fiú · veterán · sport",
+    "name": "Fiú · Veterán · sport",
     "visual": {
       "family": "boy",
       "age": "veteran",
@@ -36,7 +36,7 @@
     "layers": [
       "assets/images/menti_2_2/backgrounds/amber.svg",
       "assets/images/menti_2_2/auras/sunrise.svg",
-      "assets/images/menti_2_2/core/menti-body.png",
+      "assets/images/menti_2_2/identities/boy-veteran.png",
       "assets/images/menti_2_2/bases/boy-veteran.svg",
       "assets/images/menti_2_2/outfits/sport.svg",
       "assets/images/menti_2_2/styles/sporty.svg",
@@ -48,7 +48,7 @@
     ]
   },
   {
-    "name": "Lány · fiatal · utcai",
+    "name": "Lány · Fiatalos · street",
     "visual": {
       "family": "girl",
       "age": "young",
@@ -62,7 +62,7 @@
     "layers": [
       "assets/images/menti_2_2/backgrounds/rose.svg",
       "assets/images/menti_2_2/auras/sunrise.svg",
-      "assets/images/menti_2_2/core/menti-body.png",
+      "assets/images/menti_2_2/identities/girl-young.png",
       "assets/images/menti_2_2/bases/girl-young.svg",
       "assets/images/menti_2_2/outfits/street.svg",
       "assets/images/menti_2_2/styles/street.svg",
@@ -75,7 +75,7 @@
     ]
   },
   {
-    "name": "Lány · veterán · kuckózós",
+    "name": "Lány · Veterán · cozy",
     "visual": {
       "family": "girl",
       "age": "veteran",
@@ -89,7 +89,7 @@
     "layers": [
       "assets/images/menti_2_2/backgrounds/rose.svg",
       "assets/images/menti_2_2/auras/sunrise.svg",
-      "assets/images/menti_2_2/core/menti-body.png",
+      "assets/images/menti_2_2/identities/girl-veteran.png",
       "assets/images/menti_2_2/bases/girl-veteran.svg",
       "assets/images/menti_2_2/outfits/cozy.svg",
       "assets/images/menti_2_2/styles/cozy.svg",
@@ -102,7 +102,7 @@
     ]
   },
   {
-    "name": "Semleges · fiatal · fesztivál",
+    "name": "Semleges · Fiatalos · festival",
     "visual": {
       "family": "neutral",
       "age": "young",
@@ -110,12 +110,13 @@
       "hair": "neutral-curls",
       "headwear": "headphones",
       "style": "festival",
+      "held": "notebook",
       "background": "ocean"
     },
     "layers": [
       "assets/images/menti_2_2/backgrounds/ocean.svg",
       "assets/images/menti_2_2/auras/sunrise.svg",
-      "assets/images/menti_2_2/core/menti-body.png",
+      "assets/images/menti_2_2/identities/neutral-young.png",
       "assets/images/menti_2_2/bases/neutral-young.svg",
       "assets/images/menti_2_2/outfits/festival.svg",
       "assets/images/menti_2_2/styles/festival.svg",
@@ -123,11 +124,12 @@
       "assets/images/menti_2_2/hair/neutral-curls.svg",
       "assets/images/menti_2_2/faces/cheerful.svg",
       "assets/images/menti_2_2/eyes/round.svg",
-      "assets/images/menti_2_2/headwear/headphones.svg"
+      "assets/images/menti_2_2/headwear/headphones.svg",
+      "assets/images/menti_2_2/accessories/notebook.svg"
     ]
   },
   {
-    "name": "Semleges · veterán · legendás",
+    "name": "Semleges · Veterán · legendary",
     "visual": {
       "family": "neutral",
       "age": "veteran",
@@ -135,12 +137,15 @@
       "hair": "neutral-waves",
       "headwear": "party-crown",
       "style": "legendary",
+      "back": "cape",
+      "held": "flower",
       "background": "violet"
     },
     "layers": [
       "assets/images/menti_2_2/backgrounds/violet.svg",
       "assets/images/menti_2_2/auras/sunrise.svg",
-      "assets/images/menti_2_2/core/menti-body.png",
+      "assets/images/menti_2_2/accessories/cape.svg",
+      "assets/images/menti_2_2/identities/neutral-veteran.png",
       "assets/images/menti_2_2/bases/neutral-veteran.svg",
       "assets/images/menti_2_2/outfits/legendary.svg",
       "assets/images/menti_2_2/styles/legendary.svg",
@@ -148,7 +153,8 @@
       "assets/images/menti_2_2/hair/neutral-waves.svg",
       "assets/images/menti_2_2/faces/cheerful.svg",
       "assets/images/menti_2_2/eyes/round.svg",
-      "assets/images/menti_2_2/headwear/party-crown.svg"
+      "assets/images/menti_2_2/headwear/party-crown.svg",
+      "assets/images/menti_2_2/accessories/flower.svg"
     ]
   }
 ]

@@ -1,0 +1,294 @@
+{
+  "identities": {
+    "boy-young": {
+      "asset": "identities/boy-young.png",
+      "bytes": 772449,
+      "crc32": 209521230,
+      "sha256": "ba98d8951ef0258d9afcd2a240206a46bca24f8e018d09babada3120161a5776",
+      "alphaBounds": [
+        0,
+        37,
+        726,
+        947
+      ]
+    },
+    "boy-adult": {
+      "asset": "identities/boy-adult.png",
+      "bytes": 809480,
+      "crc32": 4201023680,
+      "sha256": "6d88e3cdc3e6222ab67496cd09fd24e0052ca4440ee0c8e12385bb138abdaacf",
+      "alphaBounds": [
+        16,
+        33,
+        755,
+        941
+      ]
+    },
+    "boy-veteran": {
+      "asset": "identities/boy-veteran.png",
+      "bytes": 839423,
+      "crc32": 3923060944,
+      "sha256": "8eff52b83d1eb01b6eeebe4d38d49a62aa4f484c6bd6fde6b9759de2ed79b5a8",
+      "alphaBounds": [
+        23,
+        43,
+        744,
+        950
+      ]
+    },
+    "girl-young": {
+      "asset": "identities/girl-young.png",
+      "bytes": 613426,
+      "crc32": 3331945015,
+      "sha256": "6ed4ac0301d4d49de3bb3aba7fbab6b7d2dbe22695b6ae5666ced738e8d81e0b",
+      "alphaBounds": [
+        98,
+        40,
+        669,
+        937
+      ]
+    },
+    "girl-adult": {
+      "asset": "identities/girl-adult.png",
+      "bytes": 721236,
+      "crc32": 1842882533,
+      "sha256": "cb0623b129deb42d103e305c0728e2de330956968deb1134767fa99a7029537d",
+      "alphaBounds": [
+        73,
+        15,
+        733,
+        960
+      ]
+    },
+    "girl-veteran": {
+      "asset": "identities/girl-veteran.png",
+      "bytes": 744759,
+      "crc32": 3882176055,
+      "sha256": "258a1ab1fe1f0c6597af7851d0121e076cb3743e23116055538665f4859f817e",
+      "alphaBounds": [
+        75,
+        29,
+        694,
+        948
+      ]
+    },
+    "neutral-young": {
+      "asset": "identities/neutral-young.png",
+      "bytes": 794627,
+      "crc32": 2020873784,
+      "sha256": "e3e3668d5c3189fa4fa090a1d9614344867796e1fe158579a425aa5a54586fde",
+      "alphaBounds": [
+        32,
+        28,
+        736,
+        941
+      ]
+    },
+    "neutral-adult": {
+      "asset": "identities/neutral-adult.png",
+      "bytes": 861103,
+      "crc32": 1706100565,
+      "sha256": "3d25910a113c3a6a06fb367969a294f7e4b9b4c0a8fdc4ab194992d4719f398c",
+      "alphaBounds": [
+        28,
+        0,
+        740,
+        948
+      ]
+    },
+    "neutral-veteran": {
+      "asset": "identities/neutral-veteran.png",
+      "bytes": 868864,
+      "crc32": 3934864977,
+      "sha256": "13f88baacb40032acc6a83ef993fa4415a24969dbc71f5c84ff2bfbf404f1a15",
+      "alphaBounds": [
+        18,
+        65,
+        748,
+        949
+      ]
+    }
+  },
+  "silhouettePairs": [
+    {
+      "a": "boy-young",
+      "b": "boy-adult",
+      "normalizedSilhouetteIoU": 0.8588621444201313
+    },
+    {
+      "a": "boy-young",
+      "b": "boy-veteran",
+      "normalizedSilhouetteIoU": 0.8582010582010582
+    },
+    {
+      "a": "boy-young",
+      "b": "girl-young",
+      "normalizedSilhouetteIoU": 0.7317813765182186
+    },
+    {
+      "a": "boy-young",
+      "b": "girl-adult",
+      "normalizedSilhouetteIoU": 0.7657266811279827
+    },
+    {
+      "a": "boy-young",
+      "b": "girl-veteran",
+      "normalizedSilhouetteIoU": 0.847872340425532
+    },
+    {
+      "a": "boy-young",
+      "b": "neutral-young",
+      "normalizedSilhouetteIoU": 0.7634517766497462
+    },
+    {
+      "a": "boy-young",
+      "b": "neutral-adult",
+      "normalizedSilhouetteIoU": 0.8560767590618337
+    },
+    {
+      "a": "boy-young",
+      "b": "neutral-veteran",
+      "normalizedSilhouetteIoU": 0.8290946083418108
+    },
+    {
+      "a": "boy-adult",
+      "b": "boy-veteran",
+      "normalizedSilhouetteIoU": 0.9037037037037037
+    },
+    {
+      "a": "boy-adult",
+      "b": "girl-young",
+      "normalizedSilhouetteIoU": 0.7179236043095005
+    },
+    {
+      "a": "boy-adult",
+      "b": "girl-adult",
+      "normalizedSilhouetteIoU": 0.8202614379084967
+    },
+    {
+      "a": "boy-adult",
+      "b": "girl-veteran",
+      "normalizedSilhouetteIoU": 0.8736842105263158
+    },
+    {
+      "a": "boy-adult",
+      "b": "neutral-young",
+      "normalizedSilhouetteIoU": 0.7729083665338645
+    },
+    {
+      "a": "boy-adult",
+      "b": "neutral-adult",
+      "normalizedSilhouetteIoU": 0.8858350951374208
+    },
+    {
+      "a": "boy-adult",
+      "b": "neutral-veteran",
+      "normalizedSilhouetteIoU": 0.8709349593495935
+    },
+    {
+      "a": "boy-veteran",
+      "b": "girl-young",
+      "normalizedSilhouetteIoU": 0.7396733909702209
+    },
+    {
+      "a": "boy-veteran",
+      "b": "girl-adult",
+      "normalizedSilhouetteIoU": 0.8227848101265823
+    },
+    {
+      "a": "boy-veteran",
+      "b": "girl-veteran",
+      "normalizedSilhouetteIoU": 0.9215481171548117
+    },
+    {
+      "a": "boy-veteran",
+      "b": "neutral-young",
+      "normalizedSilhouetteIoU": 0.8188118811881188
+    },
+    {
+      "a": "boy-veteran",
+      "b": "neutral-adult",
+      "normalizedSilhouetteIoU": 0.9502118644067796
+    },
+    {
+      "a": "boy-veteran",
+      "b": "neutral-veteran",
+      "normalizedSilhouetteIoU": 0.9347604485219164
+    },
+    {
+      "a": "girl-young",
+      "b": "girl-adult",
+      "normalizedSilhouetteIoU": 0.7279260780287474
+    },
+    {
+      "a": "girl-young",
+      "b": "girl-veteran",
+      "normalizedSilhouetteIoU": 0.7414965986394558
+    },
+    {
+      "a": "girl-young",
+      "b": "neutral-young",
+      "normalizedSilhouetteIoU": 0.7690029615004936
+    },
+    {
+      "a": "girl-young",
+      "b": "neutral-adult",
+      "normalizedSilhouetteIoU": 0.7573385518590998
+    },
+    {
+      "a": "girl-young",
+      "b": "neutral-veteran",
+      "normalizedSilhouetteIoU": 0.7448210922787194
+    },
+    {
+      "a": "girl-adult",
+      "b": "girl-veteran",
+      "normalizedSilhouetteIoU": 0.8123011664899258
+    },
+    {
+      "a": "girl-adult",
+      "b": "neutral-young",
+      "normalizedSilhouetteIoU": 0.7564234326824255
+    },
+    {
+      "a": "girl-adult",
+      "b": "neutral-adult",
+      "normalizedSilhouetteIoU": 0.8242811501597445
+    },
+    {
+      "a": "girl-adult",
+      "b": "neutral-veteran",
+      "normalizedSilhouetteIoU": 0.7987804878048781
+    },
+    {
+      "a": "girl-veteran",
+      "b": "neutral-young",
+      "normalizedSilhouetteIoU": 0.840080971659919
+    },
+    {
+      "a": "girl-veteran",
+      "b": "neutral-adult",
+      "normalizedSilhouetteIoU": 0.9158780231335436
+    },
+    {
+      "a": "girl-veteran",
+      "b": "neutral-veteran",
+      "normalizedSilhouetteIoU": 0.9076142131979695
+    },
+    {
+      "a": "neutral-young",
+      "b": "neutral-adult",
+      "normalizedSilhouetteIoU": 0.8366935483870968
+    },
+    {
+      "a": "neutral-young",
+      "b": "neutral-veteran",
+      "normalizedSilhouetteIoU": 0.8457760314341847
+    },
+    {
+      "a": "neutral-adult",
+      "b": "neutral-veteran",
+      "normalizedSilhouetteIoU": 0.9175152749490835
+    }
+  ]
+}

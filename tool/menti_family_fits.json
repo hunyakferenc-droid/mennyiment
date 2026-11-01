@@ -1,0 +1,362 @@
+{
+  "boy-young": {
+    "asset": "identities/boy-young.png",
+    "fits": {
+      "head": [
+        1,
+        0.96,
+        0,
+        0,
+        160,
+        60
+      ],
+      "eyes": [
+        1.02,
+        1.04,
+        0,
+        0,
+        160,
+        134
+      ],
+      "mouth": [
+        1,
+        1,
+        0,
+        -6,
+        160,
+        190
+      ],
+      "body": [
+        1,
+        1,
+        0,
+        3,
+        160,
+        250
+      ]
+    },
+    "sha256": "ba98d8951ef0258d9afcd2a240206a46bca24f8e018d09babada3120161a5776",
+    "bytes": 772449,
+    "source": "exec-0a5aaca5-9894-496c-8c99-f72be807fb05.png"
+  },
+  "boy-adult": {
+    "asset": "identities/boy-adult.png",
+    "fits": {
+      "head": [
+        1.02,
+        0.96,
+        0,
+        -2,
+        160,
+        60
+      ],
+      "eyes": [
+        1.04,
+        0.96,
+        0,
+        -7,
+        160,
+        134
+      ],
+      "mouth": [
+        1,
+        0.82,
+        0,
+        -14,
+        160,
+        190
+      ],
+      "body": [
+        1.07,
+        0.97,
+        0,
+        -10,
+        160,
+        250
+      ]
+    },
+    "sha256": "6d88e3cdc3e6222ab67496cd09fd24e0052ca4440ee0c8e12385bb138abdaacf",
+    "bytes": 809480,
+    "source": "exec-4ba849d2-f90a-465d-9013-ee4e7dfb3027.png"
+  },
+  "boy-veteran": {
+    "asset": "identities/boy-veteran.png",
+    "fits": {
+      "head": [
+        1.06,
+        1,
+        0,
+        3,
+        160,
+        60
+      ],
+      "eyes": [
+        1.03,
+        0.9,
+        0,
+        2,
+        160,
+        134
+      ],
+      "mouth": [
+        1.08,
+        0.8,
+        0,
+        0,
+        160,
+        190
+      ],
+      "body": [
+        1.1,
+        1.03,
+        0,
+        8,
+        160,
+        250
+      ]
+    },
+    "sha256": "8eff52b83d1eb01b6eeebe4d38d49a62aa4f484c6bd6fde6b9759de2ed79b5a8",
+    "bytes": 839423,
+    "source": "exec-0a4feac7-2320-43cf-8dfc-d8d18c7ac67f.png"
+  },
+  "girl-young": {
+    "asset": "identities/girl-young.png",
+    "fits": {
+      "head": [
+        1,
+        0.9,
+        0,
+        -2,
+        160,
+        60
+      ],
+      "eyes": [
+        0.94,
+        1.08,
+        0,
+        -9,
+        160,
+        134
+      ],
+      "mouth": [
+        0.9,
+        0.7,
+        0,
+        -16,
+        160,
+        190
+      ],
+      "body": [
+        0.82,
+        1.12,
+        0,
+        0,
+        160,
+        250
+      ]
+    },
+    "sha256": "6ed4ac0301d4d49de3bb3aba7fbab6b7d2dbe22695b6ae5666ced738e8d81e0b",
+    "bytes": 613426,
+    "source": "exec-9ec03453-215c-4cd0-8de5-ba7e28fbde30.png"
+  },
+  "girl-adult": {
+    "asset": "identities/girl-adult.png",
+    "fits": {
+      "head": [
+        0.95,
+        0.9,
+        0,
+        -3,
+        160,
+        60
+      ],
+      "eyes": [
+        0.96,
+        0.96,
+        0,
+        -11,
+        160,
+        134
+      ],
+      "mouth": [
+        0.9,
+        0.64,
+        0,
+        -20,
+        160,
+        190
+      ],
+      "body": [
+        0.95,
+        1.18,
+        0,
+        -3,
+        160,
+        250
+      ]
+    },
+    "sha256": "cb0623b129deb42d103e305c0728e2de330956968deb1134767fa99a7029537d",
+    "bytes": 721236,
+    "source": "exec-0c9216da-0b9a-4e0b-a7e3-acc176edc815.png"
+  },
+  "girl-veteran": {
+    "asset": "identities/girl-veteran.png",
+    "fits": {
+      "head": [
+        1,
+        0.96,
+        0,
+        1,
+        160,
+        60
+      ],
+      "eyes": [
+        0.99,
+        0.88,
+        0,
+        0,
+        160,
+        134
+      ],
+      "mouth": [
+        0.95,
+        0.8,
+        0,
+        -3,
+        160,
+        190
+      ],
+      "body": [
+        1,
+        1.04,
+        0,
+        6,
+        160,
+        250
+      ]
+    },
+    "sha256": "258a1ab1fe1f0c6597af7851d0121e076cb3743e23116055538665f4859f817e",
+    "bytes": 744759,
+    "source": "exec-a89de981-45ef-4279-ab88-22c116ce2218.png"
+  },
+  "neutral-young": {
+    "asset": "identities/neutral-young.png",
+    "fits": {
+      "head": [
+        1.08,
+        0.88,
+        0,
+        16,
+        160,
+        60
+      ],
+      "eyes": [
+        1.14,
+        0.86,
+        0,
+        2,
+        160,
+        134
+      ],
+      "mouth": [
+        1.1,
+        0.75,
+        0,
+        -5,
+        160,
+        190
+      ],
+      "body": [
+        1.01,
+        1,
+        0,
+        0,
+        160,
+        250
+      ]
+    },
+    "sha256": "e3e3668d5c3189fa4fa090a1d9614344867796e1fe158579a425aa5a54586fde",
+    "bytes": 794627,
+    "source": "exec-9eb36db8-f33b-4ab0-ad35-1058b798c899.png"
+  },
+  "neutral-adult": {
+    "asset": "identities/neutral-adult.png",
+    "fits": {
+      "head": [
+        1.04,
+        0.94,
+        0,
+        0,
+        160,
+        60
+      ],
+      "eyes": [
+        1.1,
+        0.93,
+        0,
+        -3,
+        160,
+        134
+      ],
+      "mouth": [
+        1.06,
+        0.82,
+        0,
+        -12,
+        160,
+        190
+      ],
+      "body": [
+        1.06,
+        1.04,
+        0,
+        -2,
+        160,
+        250
+      ]
+    },
+    "sha256": "3d25910a113c3a6a06fb367969a294f7e4b9b4c0a8fdc4ab194992d4719f398c",
+    "bytes": 861103,
+    "source": "exec-2de4beda-1a7b-440c-9912-605198fc41d4.png"
+  },
+  "neutral-veteran": {
+    "asset": "identities/neutral-veteran.png",
+    "fits": {
+      "head": [
+        1.1,
+        0.9,
+        0,
+        14,
+        160,
+        60
+      ],
+      "eyes": [
+        1.16,
+        0.82,
+        0,
+        6,
+        160,
+        134
+      ],
+      "mouth": [
+        1.16,
+        0.72,
+        0,
+        0,
+        160,
+        190
+      ],
+      "body": [
+        1.1,
+        1.04,
+        0,
+        7,
+        160,
+        250
+      ]
+    },
+    "sha256": "13f88baacb40032acc6a83ef993fa4415a24969dbc71f5c84ff2bfbf404f1a15",
+    "bytes": 868864,
+    "source": "exec-c0119030-04b4-4ad6-aef6-3895971c705c.png"
+  }
+}

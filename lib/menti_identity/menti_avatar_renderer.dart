@@ -6,6 +6,7 @@ import '../menti_experience_settings.dart';
 import 'menti_identity.dart';
 import 'menti_identity_controller.dart';
 import 'menti_visual_catalog.dart';
+import 'menti_family_layout.dart';
 
 /// Pure, deterministic composition. Unknown IDs render a known safe layer without
 /// mutating the saved identity. No timers, rewards or preference writes.
@@ -28,7 +29,7 @@ class MentiAvatarRenderer extends StatelessWidget {
     return [
       if (showBackground) asset('background'), asset('aura'),
       if (v.value('back') != 'none') asset('back'),
-      '${MentiVisualCatalog.root}core/menti-body.png',
+      MentiFamilyLayout.of(profile).core,
       '${MentiVisualCatalog.root}bases/$family-$age.svg',
       asset('outfit'), asset('style'), asset('accent'), asset('hair'),
       asset('face'), asset('eyes'),
@@ -51,7 +52,7 @@ class MentiAvatarRenderer extends StatelessWidget {
         width: size, height: size * 1.25,
         child: MentiMaterialGate(paths: paths.where((p) => p.endsWith('.png')).toList(),
           child: Stack(fit: StackFit.expand, children: [
-            for (final path in paths) MentiAssetLayer(path: path),
+            for (final path in paths) MentiFittedLayer(path: path, layout: MentiFamilyLayout.of(profile)),
           ])),
       ))));
   }
@@ -62,6 +63,7 @@ class MentiAssetLayer extends StatelessWidget {
   const MentiAssetLayer({super.key, required this.path});
   final String path;
   static const core = '${MentiVisualCatalog.root}core/menti-body.png';
+  static bool isCore(String path) => path == core || path.contains('/identities/');
   static const crownCap = '${MentiVisualCatalog.root}core/crown-cap.png';
   @override
   Widget build(BuildContext context) {
@@ -98,8 +100,8 @@ class _MentiMaterialGateState extends State<MentiMaterialGate> {
   Future<void> _prepare() async {
     var failed = false;
     await Future.wait(widget.paths.map((path) => precacheImage(
-      path == MentiAssetLayer.core
-        ? const ResizeImage(AssetImage(MentiAssetLayer.core), width: 960)
+      MentiAssetLayer.isCore(path)
+        ? ResizeImage(AssetImage(path), width: 960)
         : AssetImage(path), context,
       onError: (_, _) { failed = true; },
     )));
@@ -123,42 +125,56 @@ class _MentiMaterialGateState extends State<MentiMaterialGate> {
     });
 }
 
+class MentiFittedLayer extends StatelessWidget {
+  const MentiFittedLayer({super.key, required this.path, required this.layout});
+  final String path;
+  final MentiFamilyLayout layout;
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(builder: (context, constraints) =>
+    Transform(transform: layout.forPath(path).matrix(constraints.maxWidth, constraints.maxHeight),
+      child: MentiAssetLayer(path: path)));
+}
+
 class MentiPreviewRenderer extends StatelessWidget {
-  const MentiPreviewRenderer({super.key, required this.option, this.size = 120});
+  const MentiPreviewRenderer({super.key, required this.option, this.size = 120, this.profile});
   final MentiVisualOption option;
   final double size;
-  static Rect cropFor(MentiVisualOption option) {
+  final MentiIdentityProfile? profile;
+  static MentiIdentityProfile previewProfile(MentiIdentityProfile base, MentiVisualOption option) {
+    if (option.field == 'reaction') { return base.copyWith(reaction:
+      MentiReactionProfile({...base.reaction.toJson(), 'style': option.id})); }
+    final values = {option.field: option.id};
+    if (option.field == 'family') values['hair'] = '${option.id}-crop';
+    if (option.field == 'style') { values['outfit'] =
+      {'classic':'basic','sporty':'sport'}[option.id] ?? option.id; }
+    return base.copyWith(visual: base.visual.withValues(values));
+  }
+  static Rect cropFor(MentiVisualOption option, {MentiIdentityProfile? profile}) {
+    Rect crop;
+    if (option.field == 'family' || option.field == 'age') return const Rect.fromLTWH(0,0,320,400);
     if (option.field == 'held' && option.id == 'notebook') {
-      return const Rect.fromLTWH(0, 215, 100, 105);
+      crop = const Rect.fromLTWH(0, 215, 100, 105);
+    } else if (option.field == 'held' && option.id != 'none') {
+      crop = const Rect.fromLTWH(230, 210, 90, 110);
+    } else {
+      final box = MentiVisualCatalog.previewCrops[option.field]!;
+      crop = Rect.fromLTWH(box[0],box[1],box[2],box[3]);
     }
-    if (option.field == 'held' && option.id != 'none') {
-      return const Rect.fromLTWH(230, 210, 90, 110);
-    }
-    final crop = MentiVisualCatalog.previewCrops[option.field]!;
-    return Rect.fromLTWH(crop[0], crop[1], crop[2], crop[3]);
+    if (profile == null) return crop;
+    final fitted = MentiFamilyLayout.of(profile).forField(option.field).mapRect(crop);
+    return fitted.intersect(const Rect.fromLTWH(0,0,320,400));
   }
   @override
   Widget build(BuildContext context) {
-    final crop = cropFor(option);
-    final background = option.field == 'background' ? option.id : 'amber';
-    final aura = option.field == 'aura' ? option.id : 'sunrise';
-    final crownCap = option.field != 'hair' &&
-      (option.field != 'headwear' || option.id == 'crown-cap');
+    final candidate = previewProfile(profile ?? MentiIdentityProfile(), option);
+    final crop = cropFor(option, profile: candidate);
     return ExcludeSemantics(child: SizedBox(width: size, height: size,
-      child: FittedBox(fit: BoxFit.contain, child: SizedBox(width: crop.width, height: crop.height,
+      child: FittedBox(fit: BoxFit.contain, child: SizedBox(width: crop.width,height: crop.height,
         child: ClipRect(child: OverflowBox(alignment: Alignment.topLeft,
-          minWidth: 320, maxWidth: 320, minHeight: 400, maxHeight: 400,
-          child: Transform.translate(offset: Offset(-crop.left, -crop.top),
-            child: SizedBox(width: 320, height: 400, child: MentiMaterialGate(
-              paths: [MentiAssetLayer.core, if (crownCap) MentiAssetLayer.crownCap],
-              child: Stack(fit: StackFit.expand, children: [
-              MentiAssetLayer(path: '${MentiVisualCatalog.root}backgrounds/$background.svg'),
-              MentiAssetLayer(path: '${MentiVisualCatalog.root}auras/$aura.svg'),
-              const MentiAssetLayer(path: MentiAssetLayer.core),
-              MentiAssetLayer(path: MentiVisualCatalog.root + option.preview),
-              if (crownCap) const MentiAssetLayer(path: MentiAssetLayer.crownCap),
-            ]))),
-          ),
+          minWidth: 320,maxWidth: 320,minHeight: 400,maxHeight: 400,
+          child: Transform.translate(offset: Offset(-crop.left,-crop.top),
+            child: MentiAvatarRenderer(profile: candidate,size: 320,
+              reaction: option.field == 'reaction' ? candidate.reaction.style : null)),
         )),
       )),
     ));

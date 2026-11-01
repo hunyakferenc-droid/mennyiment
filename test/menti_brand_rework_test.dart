@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/l10n/generated/app_localizations.dart';
 import 'package:mennyiment/data_backup_page.dart';
 import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
+import 'package:mennyiment/menti_identity/menti_family_layout.dart';
 import 'package:mennyiment/menti_identity/menti_identity.dart';
 import 'package:mennyiment/menti_identity/menti_identity_controller.dart';
 import 'package:mennyiment/menti_identity/menti_studio_page.dart';
@@ -52,14 +53,15 @@ void main() {
       expect(MentiAvatarRenderer.layers(profile), item['layers'], reason: item['name'] as String);
     }
   });
-  test('same species material core is used once by all nine family/age combinations', () {
+  test('independent species-family material core is used once by each family/age combination', () {
     for (final family in ['boy', 'girl', 'neutral']) {
       for (final age in ['young', 'adult', 'veteran']) {
         final p = MentiIdentityProfile(visual: MentiVisualProfile({'family': family, 'age': age}));
         final paths = MentiAvatarRenderer.layers(p);
-        expect(paths.where((p) => p == MentiAssetLayer.core).length, 1);
+        expect(paths.where(MentiAssetLayer.isCore).length, 1);
+        expect(paths, contains(MentiFamilyLayout.of(p).core));
         expect(paths, contains('${MentiVisualCatalog.root}bases/$family-$age.svg'));
-        expect(paths.indexOf(MentiAssetLayer.core), lessThan(paths.indexWhere((p) => p.contains('/outfits/'))));
+        expect(paths.indexOf(MentiFamilyLayout.of(p).core), lessThan(paths.indexWhere((p) => p.contains('/outfits/'))));
       }
     }
   });
