@@ -23,7 +23,7 @@ void main() {
         ])))));
     final ctx = tester.element(find.byType(Row));
     await tester.runAsync(() async {
-      await precacheImage(const AssetImage(MentiAssetLayer.core), ctx);
+      await precacheImage(const ResizeImage(AssetImage(MentiAssetLayer.core), width: 960), ctx);
       await precacheImage(const AssetImage(MentiAssetLayer.crownCap), ctx);
     });
     await tester.pumpAndSettle();

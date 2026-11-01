@@ -45,13 +45,14 @@ class MentiAvatarRenderer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final activeReaction = MentiExperienceScope.reactionsOf(context) ? reaction : null;
+    final paths = layers(profile, reaction: activeReaction, showBackground: showBackground);
     return Semantics(label: appStrings(context).avatarPreview(profile.name), image: true,
       child: ExcludeSemantics(child: RepaintBoundary(child: SizedBox(
         width: size, height: size * 1.25,
-        child: Stack(fit: StackFit.expand, children: [
-          for (final path in layers(profile, reaction: activeReaction, showBackground: showBackground))
-            MentiAssetLayer(path: path),
-        ]),
+        child: MentiMaterialGate(paths: paths.where((p) => p.endsWith('.png')).toList(),
+          child: Stack(fit: StackFit.expand, children: [
+            for (final path in paths) MentiAssetLayer(path: path),
+          ])),
       ))));
   }
 }
@@ -83,6 +84,45 @@ class MentiAssetLayer extends StatelessWidget {
   }
 }
 
+/// Never flashes eyes/clothes without the material body while bitmaps decode.
+/// Shares the exact resized image cache key used by the rendered core.
+class MentiMaterialGate extends StatefulWidget {
+  const MentiMaterialGate({super.key, required this.paths, required this.child});
+  final List<String> paths;
+  final Widget child;
+  @override
+  State<MentiMaterialGate> createState() => _MentiMaterialGateState();
+}
+class _MentiMaterialGateState extends State<MentiMaterialGate> {
+  Future<void>? _ready;
+  Future<void> _prepare() async {
+    var failed = false;
+    await Future.wait(widget.paths.map((path) => precacheImage(
+      path == MentiAssetLayer.core
+        ? const ResizeImage(AssetImage(MentiAssetLayer.core), width: 960)
+        : AssetImage(path), context,
+      onError: (_, _) { failed = true; },
+    )));
+    if (failed) throw const FormatException('Menti material asset unavailable');
+  }
+  @override
+  void didChangeDependencies() { super.didChangeDependencies(); _ready ??= _prepare(); }
+  @override
+  void didUpdateWidget(covariant MentiMaterialGate oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.paths.join('|') != widget.paths.join('|')) _ready = _prepare();
+  }
+  @override
+  Widget build(BuildContext context) => FutureBuilder<void>(future: _ready,
+    builder: (context, snapshot) {
+      if (snapshot.hasError) return const Center(child: Icon(Icons.broken_image_outlined));
+      if (snapshot.connectionState != ConnectionState.done) {
+        return const Center(child: Icon(Icons.face_retouching_natural, color: Color(0xFFC48A43)));
+      }
+      return widget.child;
+    });
+}
+
 class MentiPreviewRenderer extends StatelessWidget {
   const MentiPreviewRenderer({super.key, required this.option, this.size = 120});
   final MentiVisualOption option;
@@ -109,13 +149,15 @@ class MentiPreviewRenderer extends StatelessWidget {
         child: ClipRect(child: OverflowBox(alignment: Alignment.topLeft,
           minWidth: 320, maxWidth: 320, minHeight: 400, maxHeight: 400,
           child: Transform.translate(offset: Offset(-crop.left, -crop.top),
-            child: SizedBox(width: 320, height: 400, child: Stack(fit: StackFit.expand, children: [
+            child: SizedBox(width: 320, height: 400, child: MentiMaterialGate(
+              paths: [MentiAssetLayer.core, if (crownCap) MentiAssetLayer.crownCap],
+              child: Stack(fit: StackFit.expand, children: [
               MentiAssetLayer(path: '${MentiVisualCatalog.root}backgrounds/$background.svg'),
               MentiAssetLayer(path: '${MentiVisualCatalog.root}auras/$aura.svg'),
               const MentiAssetLayer(path: MentiAssetLayer.core),
               MentiAssetLayer(path: MentiVisualCatalog.root + option.preview),
               if (crownCap) const MentiAssetLayer(path: MentiAssetLayer.crownCap),
-            ])),
+            ]))),
           ),
         )),
       )),
