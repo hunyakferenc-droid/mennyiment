@@ -21,6 +21,7 @@ import 'package:mennyiment/menti_reactions.dart';
 import 'package:mennyiment/menti_settings_page.dart';
 import 'package:mennyiment/menti_xp_store.dart';
 import 'package:mennyiment/personal_goal_store.dart';
+import 'package:mennyiment/personal_goals.dart';
 import 'package:mennyiment/personal_hub_data.dart';
 
 import 'experience_preferences_test.dart' show experienceSnapshot;
@@ -232,6 +233,25 @@ void main() {
     expect(find.text(s.experienceEmptyJournal), findsOneWidget);
     expect(tester.takeException(), isNull);
     await close(tester, null);
+  });
+
+  testWidgets('Disabled Menti messages hide personal goal commentary but retain facts and caution', (tester) async {
+    viewport(tester, 390);
+    final initial = {...hubValues(now), MentiExperienceSettings.reactionsKey: false,
+      PersonalGoalStore.key: '{"reflectionGoal":2,"reflectionDays":["2026-10-24","2026-10-25"]}'};
+    SharedPreferences.setMockInitialValues(initial);
+    final settings = MentiExperienceSettings();
+    await tester.pumpWidget(app('en', PersonalGoalsPage(drinks: const [], clock: () => now), settings));
+    await tester.pumpAndSettle();
+    final s = appStrings(tester.element(find.byType(PersonalGoalsPage)));
+    await tester.scrollUntilVisible(find.text(s.goalCaution), 250,
+      scrollable: find.byType(Scrollable).first, maxScrolls: 50);
+    expect(find.text(s.goalMentiThought), findsNothing);
+    expect(find.text(s.goalThoughtComplete), findsNothing);
+    expect(find.text(s.goalCaution), findsOneWidget);
+    expect(experienceSnapshot(await SharedPreferences.getInstance()), initial);
+    expect(tester.takeException(), isNull);
+    await close(tester, settings);
   });
 
   testWidgets('Disabling reactions hides an event without replay; new events and motion are finite', (tester) async {

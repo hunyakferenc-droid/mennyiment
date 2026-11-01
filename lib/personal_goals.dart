@@ -234,10 +234,12 @@ class _PersonalGoalsPageState extends State<PersonalGoalsPage>
                   icon: const Icon(Icons.tune), label: Text(s.goalEditTarget)),
               ])),
               MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(s.goalMentiThought, style: Theme.of(context).textTheme.titleLarge),
-                Text(checks >= target ? s.goalThoughtComplete
-                    : checks == 0 ? s.goalThoughtStart : s.goalThoughtProgress(checks)),
-                const SizedBox(height: 8),
+                if (MentiExperienceScope.reactionsOf(context)) ...[
+                  Text(s.goalMentiThought, style: Theme.of(context).textTheme.titleLarge),
+                  Text(checks >= target ? s.goalThoughtComplete
+                      : checks == 0 ? s.goalThoughtStart : s.goalThoughtProgress(checks)),
+                  const SizedBox(height: 8),
+                ],
                 Text(s.goalCaution),
               ])),
               OutlinedButton(onPressed: _saving ? null : _load, child: Text(s.goalReload)),
