@@ -1,0 +1,68 @@
+{
+  "assets": [
+    {
+      "path": "docs/images/menti-concept-redesign/references/01-classic-approved.png",
+      "width": 1086,
+      "height": 1448,
+      "mode": "RGBA",
+      "bytes": 3149388,
+      "crc32": 1834766168
+    },
+    {
+      "path": "docs/images/menti-concept-redesign/concepts/boy-concept-v1.png",
+      "width": 1122,
+      "height": 1402,
+      "mode": "RGBA",
+      "bytes": 1267307,
+      "crc32": 2126774863
+    },
+    {
+      "path": "docs/images/menti-concept-redesign/references/02-girl-approved.png",
+      "width": 1086,
+      "height": 1448,
+      "mode": "RGBA",
+      "bytes": 2066479,
+      "crc32": 2470347403
+    },
+    {
+      "path": "docs/images/menti-concept-redesign/concepts/girl-concept-v1.png",
+      "width": 1122,
+      "height": 1402,
+      "mode": "RGBA",
+      "bytes": 1539194,
+      "crc32": 1330597072
+    },
+    {
+      "path": "docs/images/menti-concept-redesign/references/03-street-approved.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB",
+      "bytes": 343286,
+      "crc32": 2610502682
+    },
+    {
+      "path": "docs/images/menti-concept-redesign/concepts/neutral-concept-v1.png",
+      "width": 1122,
+      "height": 1402,
+      "mode": "RGBA",
+      "bytes": 1292936,
+      "crc32": 144183900
+    },
+    {
+      "path": "docs/images/menti-concept-redesign/reference-vs-concept.png",
+      "width": 1500,
+      "height": 1460,
+      "mode": "RGB",
+      "bytes": 1464879,
+      "crc32": 3311079003
+    },
+    {
+      "path": "docs/images/menti-concept-redesign/concept-lineup.png",
+      "width": 1500,
+      "height": 780,
+      "mode": "RGB",
+      "bytes": 587017,
+      "crc32": 2811398017
+    }
+  ]
+}
