@@ -72,7 +72,7 @@ class MentiIdentityStore {
         final original = document.toJson()['migration'];
         final legacy = original is Map ? original['original'] : null;
         final legacyChanged = _raw == null && legacy is Map && legacy.entries.any((e) =>
-          prefs.get(e.key as String).toString() != e.value.toString());
+          prefs!.get(e.key as String).toString() != e.value.toString());
         if (prefs.get(key) != _raw || legacyChanged) {
           writable = false;
           error = 'conflict';
