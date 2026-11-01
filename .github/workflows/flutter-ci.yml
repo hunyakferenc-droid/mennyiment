@@ -49,21 +49,6 @@ jobs:
           flutter gen-l10n
           git diff --exit-code -- pubspec.lock
 
-      # One-time baseline creation for this new, reviewable visual regression.
-      # Removed once the resulting renderer PNG has been committed.
-      - name: Bootstrap brand golden baseline
-        run: |
-          flutter test test/menti_brand_golden_test.dart --update-goldens
-          python3 - <<'PYCODE'
-          import base64
-          from pathlib import Path
-          value = base64.b64encode(Path('test/goldens/menti_brand_pair.png').read_bytes()).decode()
-          print('MENTI_GOLDEN_BEGIN')
-          for i in range(0, len(value), 1000):
-              print(value[i:i+1000])
-          print('MENTI_GOLDEN_END')
-          PYCODE
-
       - name: Whitespace check
         run: git diff --check HEAD^ HEAD
 
