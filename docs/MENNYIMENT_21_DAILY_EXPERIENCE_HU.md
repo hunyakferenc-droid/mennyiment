@@ -2,7 +2,7 @@
 
 Specifikáció: https://github.com/hunyakferenc-droid/mennyiment/issues/22
 Alap: #21 ellenőrzött HEAD, `81877d32001d70069cc55eabea9f9178a1abfa06`.
-Új ág: `feature/mennyiment-2-daily-experience`. A külön draft PR a #21 `feature/mennyiment-2-personal-hub` ágára céloz. A main és #21 ága nem módosul; merge és kiadás nincs.
+Új ág: `feature/mennyiment-2-daily-experience`. A külön draft PR a #21 `feature/mennyiment-2-personal-hub` ágára céloz. Ez a fejlesztés nem ír a main és #21 ágára; automatikus merge és kiadás nincs.
 
 ## F1 – opcionális bemutatkozás
 
@@ -84,4 +84,8 @@ A kezdeti tesztfeltételezések javítva; a végső implementáció minden köte
 
 A köztes, új commit miatt automatikusan cancelled futások nem tesztbizonyítékok. A fenti eredmény a megnevezett implementációs SHA-hoz tartozik. E dokumentációs eredményrögzítés külön commit; az aktuális HEAD végső CI-jét a PR Checks és a PR-leírás mutatja.
 
-A #21 és a main változatlan, nincs merge vagy publikálás. A kézi Android/Chrome, valódi képernyőolvasó és mért kontraszt vizsgálat nem történt meg; a fenti terv nyitott kézi feladat marad. A SharedPreferences pillanatképvédelem nem többfolyamatos ACID-garancia, és a widgetteszt nem helyettesíti a fizikai készülék vizsgálatát.
+A #21 forráság HEAD-je változatlan. Ez a fejlesztés nem módosította a maint, és nem végzett merge-et vagy publikálást. A kézi Android/Chrome, valódi képernyőolvasó és mért kontraszt vizsgálat nem történt meg; a fenti terv nyitott kézi feladat marad. A SharedPreferences pillanatképvédelem nem többfolyamatos ACID-garancia, és a widgetteszt nem helyettesíti a fizikai készülék vizsgálatát.
+
+## Közben megfigyelt külső integráció
+
+A végső ellenőrzéskor a távoli main `c3be7e47f957e6b54df439a29a601d86b7d354df` commiton állt: „Merge pull request #21”, GitHub-időbélyeg 2026-11-01 08:19:27 UTC. Ez a folyamat nem hívott merge műveletet, és nem írt main-refet. A #21 forráság továbbra is `81877d32001d70069cc55eabea9f9178a1abfa06`; a #23 alapja és célága a felhasználói kérés szerint ezen az ágon marad. A későbbi integrációhoz a PR célágát csak külön döntés alapján kell módosítani.
