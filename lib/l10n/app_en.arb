@@ -729,5 +729,17 @@
       }
     }
   },
-  "avatarHeadwearCowboy": "Cowboy hat"
+  "avatarHeadwearCowboy": "Cowboy hat",
+  "startLanguage": "Hey! Which language shall we use?",
+  "startWelcome": "I’m Menti. Small steps, your own pace — and a mascot by your side.",
+  "startAgeTitle": "First, one important question",
+  "startAgeBody": "Are you 18 or older? Your Menti’s appearance is independent of your age. Under 18, only lifestyle and character features are available.",
+  "startAdult": "I am 18 or older",
+  "startMinor": "I am under 18",
+  "startLocalOnly": "This is a local age declaration, not identity verification. Your profile stays on this device; no account registration is required.",
+  "startCharacter": "Meet your own Menti!",
+  "startName": "Nickname",
+  "startNameBody": "What should I call you? You can restyle your Menti in the Studio anytime.",
+  "startFinish": "Save and let’s go",
+  "startSaveError": "We couldn’t finish safely. Your data is preserved; please retry. If the profile is damaged, restore a backup."
 }

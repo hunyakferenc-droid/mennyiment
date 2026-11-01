@@ -729,5 +729,17 @@
       }
     }
   },
-  "avatarHeadwearCowboy": "Cowboykalap"
+  "avatarHeadwearCowboy": "Cowboykalap",
+  "startLanguage": "Szia! Milyen nyelven mentizzünk?",
+  "startWelcome": "Én vagyok Menti. Kis lépések, saját tempó – és egy kabala, aki veled tart.",
+  "startAgeTitle": "Előbb egy fontos kérdés",
+  "startAgeBody": "Elmúltál 18 éves? A Menti megjelenésének korosztálya ettől független. 18 év alatt csak az életmód- és karakterfunkciók érhetők el.",
+  "startAdult": "Betöltöttem a 18. életévemet",
+  "startMinor": "Még nem vagyok 18 éves",
+  "startLocalOnly": "Ez helyi életkori nyilatkozat, nem személyazonosítás. A profil ezen az eszközön tárolódik; nincs fiókregisztráció.",
+  "startCharacter": "Jöhet a saját Mentid!",
+  "startName": "Becenév",
+  "startNameBody": "Hogy szólíthatlak? A Mentidet később is átöltöztetheted a Studióban.",
+  "startFinish": "Mentés és indulás",
+  "startSaveError": "Nem sikerült biztonságosan befejezni. Az adataid megmaradtak; próbáld újra. Sérült profil esetén állítsd helyre a mentést."
 }

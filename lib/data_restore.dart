@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'menti_access.dart';
 import 'data_backup.dart';
 import 'drink_journal.dart';
 
@@ -180,6 +181,7 @@ void validateRestoreValue(String key, Object value) {
   void require(bool condition) {
     if (!condition) { throw FormatException('Invalid restore value: $key'); }
   }
+  if (key == MentiAccessSettings.key) { MentiAccessSettings.decode(value); return; }
   const lists = {'mennyiment_favorites_v1', 'mennyiment_reflection_days_v1',
     'mennyiment_menti_rewards_v1'};
   const bools = {'mennyiment_reduce_motion_v1', 'mennyiment_character_setup_complete_v1'};

@@ -2,9 +2,9 @@ name: Flutter CI
 
 on:
   pull_request:
-    branches: [main, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families]
+    branches: [main, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families, feature/mennyiment-2-2-concept-redesign]
   push:
-    branches: [main]
+    branches: [main, feature/mennyiment-2-2-final-playable]
 
 permissions:
   contents: read
@@ -17,7 +17,7 @@ jobs:
   flutter:
     name: Flutter analyze, test, web
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       CI: "true"
       FLUTTER_SUPPRESS_ANALYTICS: "true"
@@ -36,6 +36,12 @@ jobs:
           flutter-version: "3.47.7"
           cache: true
           pub-cache: true
+
+      - name: Set up Java for debug Android builds
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
 
       - name: SDK versions
         run: |
@@ -73,6 +79,29 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: flutter build web
 
+      - name: Upload Chrome web build
+        if: ${{ !cancelled() && steps.web.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.2-web-${{ github.sha }}
+          path: build/web/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: flutter build apk --debug
+        id: apk
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: flutter build apk --debug
+
+      - name: Upload installable debug APK
+        if: ${{ !cancelled() && steps.apk.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.2-debug-apk-${{ github.sha }}
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14
+
       - name: CI summary
         if: ${{ always() }}
         env:
@@ -82,6 +111,7 @@ jobs:
           TEST: ${{ steps.test.outcome }}
           BUDAPEST: ${{ steps.budapest.outcome }}
           WEB: ${{ steps.web.outcome }}
+          APK: ${{ steps.apk.outcome }}
         run: |
           {
             echo "## MennyiMent? Flutter CI"
@@ -95,6 +125,7 @@ jobs:
             echo "| flutter test --concurrency=2 | $TEST |"
             echo "| Europe/Budapest DST regressziók | $BUDAPEST |"
             echo "| flutter build web | $WEB |"
+            echo "| flutter build apk --debug | $APK |"
             echo
             echo "Hibánál nyisd meg a piros lépés naplóját. A skipped lépés nem sikeres ellenőrzés."
           } >> "$GITHUB_STEP_SUMMARY"

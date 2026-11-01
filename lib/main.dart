@@ -27,6 +27,8 @@ import 'home_widgets.dart';
 import 'personal_hub.dart';
 import 'menti_experience_settings.dart';
 import 'menti_intro.dart';
+import 'menti_access.dart';
+import 'menti_onboarding.dart';
 import 'menti_settings_page.dart';
 import 'daily_menti_message.dart';
 import 'menti_ui.dart';
@@ -51,6 +53,7 @@ class MennyiMentApp extends StatefulWidget {
 
 class _MennyiMentAppState extends State<MennyiMentApp> {
   late final AppLanguage language;
+  final access = MentiAccessSettings();
   late Future<bool> _recovery;
   int _epoch = 0;
   bool _offerIntro = false;
@@ -64,6 +67,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
         _offerIntro = false;
       }
       await language.load();
+      await access.load();
       return true;
     } catch (_) {
       // Convert failure into explicit state immediately, including on retry:
@@ -74,11 +78,12 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
   void restored() {
     setState(() { _offerIntro = false; _epoch++; });
     language.load();
+    access.load();
   }
   @override
   void initState() { super.initState(); language = AppLanguage(); _recovery = _recoverBeforeApp(); }
   @override
-  void dispose() { language.dispose(); super.dispose(); }
+  void dispose() { language.dispose(); access.dispose(); super.dispose(); }
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(future: _recovery, builder: (context, snapshot) {
@@ -97,7 +102,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
       }
     return ListenableBuilder(listenable: language, builder: (context, _) => AppLanguageScope(language: language, child: MaterialApp(
       key: ValueKey(_epoch),
-      builder: (context, child) => MentiIdentityScope(child: MentiExperienceScope(child: MentiMotionScope(child: child!))),
+      builder: (context, child) => MentiAccessScope(settings: access, child: MentiIdentityScope(child: MentiExperienceScope(child: MentiMotionScope(child: child!)))),
       locale: language.locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -127,7 +132,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
         ),
         useMaterial3: true,
       ),
-      home: HomePage(offerIntro: _offerIntro),
+      home: MentiStartGate(child: HomePage(offerIntro: _offerIntro)),
     )));
     });
   }
@@ -233,7 +238,7 @@ void updateMentiMessage(MentiMood mood) {
   String? _journalSnapshot;
   String? _journalError;
 
-  bool get _canWriteJournal => !isLoading && _journalReady && !_journalSaving;
+  bool get _canWriteJournal => MentiAccessScope.adultOf(context) && !isLoading && _journalReady && !_journalSaving;
 
 
   final options = <({String name, String emoji, int ml, double percent})>[
@@ -503,6 +508,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> addDrink(int index) async {
+    if (!MentiAccessScope.adultOf(context)) return;
     if (!_canWriteJournal) return;
     final d = options[index];
     if (await _persistDrinks([Drink(d.name, d.ml, d.percent), ...drinks]) && mounted) {
@@ -511,6 +517,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> addCatalogDrink(CatalogDrink drink) async {
+    if (!MentiAccessScope.adultOf(context)) return;
     if (!_canWriteJournal) return;
     if (await _persistDrinks([Drink(drink.name, drink.ml, drink.percent), ...drinks]) && mounted) {
       updateMentiMessage(drink.percent == 0
@@ -519,6 +526,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> editDrinkPrice(Drink drink) async {
+    if (!MentiAccessScope.adultOf(context)) return;
     if (!_canWriteJournal || _editingEntry) return;
     _editingEntry = true;
     var submitted = false;
@@ -598,6 +606,7 @@ void updateMentiMessage(MentiMood mood) {
       '${drink.name}|${drink.ml}|${drink.percent}';
 
   Future<void> _openStatistics() async {
+    if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
 
     await Navigator.push(
@@ -648,6 +657,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> _openJournal() async {
+    if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
     final add = await Navigator.of(context).push<bool>(MaterialPageRoute(
       builder: (_) => DrinkJournalPage(drinks: drinks, hasSavedJournal: _journalSnapshot != null),
@@ -656,6 +666,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> _openDashboard() async {
+    if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
 
     await Navigator.push(
@@ -677,6 +688,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> _openLifestyleInsights() async {
+    if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
     await Navigator.push(context, MaterialPageRoute(
       builder: (_) => LifestyleInsightsPage(drinks: drinks.map((d) => InsightDrink(
@@ -686,6 +698,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   void _openMentiWeekReport() {
+    if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
     Navigator.push(context, MaterialPageRoute(
       builder: (_) => MentiWeekReportPage(drinks: drinks.map((d) => MentiWeekDrink(
@@ -695,6 +708,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> _openPersonalGoals() async {
+    if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
     await Navigator.push(context, MaterialPageRoute(
       builder: (_) => PersonalGoalsPage(
@@ -707,6 +721,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   void _openSavingsGoals() {
+    if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
     Navigator.push(context, MaterialPageRoute(
       builder: (_) => SavingsGoalsPage(drinks: drinks.map((d) =>
@@ -715,6 +730,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   void _openFinanceCenter() {
+    if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
     Navigator.push(context, MaterialPageRoute(
       builder: (_) => FinanceCenterPage(drinks: dashboardDrinks),
@@ -801,6 +817,7 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> _openDrinkPicker() async {
+    if (!MentiAccessScope.adultOf(context)) return;
     if (!_canWriteJournal || _pickerOpen || _recording) return;
     _pickerOpen = true;
     try {
@@ -921,6 +938,7 @@ void updateMentiMessage(MentiMood mood) {
   Widget build(BuildContext context) {
     final strings = appStrings(context);
     final experience = MentiExperienceScope.of(context);
+    final adult = MentiAccessScope.adultOf(context);
     final locale = Localizations.localeOf(context).languageCode;
     final now = DateTime.now();
     final today = drinks.where((d) => d.time.year == now.year &&
@@ -966,8 +984,8 @@ void updateMentiMessage(MentiMood mood) {
         onDestinationSelected: _navigateHome,
         destinations: [
           NavigationDestination(key: const ValueKey('nav-home'), icon: Icon(Icons.home_rounded), label: appStrings(context).home),
-          NavigationDestination(key: const ValueKey('nav-journal'), enabled: _journalReady, icon: Icon(Icons.calendar_month_outlined), label: appStrings(context).journal),
-          NavigationDestination(key: const ValueKey('nav-insights'), enabled: _journalReady, icon: Icon(Icons.insights_rounded), label: appStrings(context).insights),
+          NavigationDestination(key: const ValueKey('nav-journal'), enabled: adult && _journalReady, icon: Icon(Icons.calendar_month_outlined), label: appStrings(context).journal),
+          NavigationDestination(key: const ValueKey('nav-insights'), enabled: adult && _journalReady, icon: Icon(Icons.insights_rounded), label: appStrings(context).insights),
           NavigationDestination(key: const ValueKey('nav-menti'), icon: Icon(Icons.face_rounded), label: appStrings(context).menti),
         ],
       ),
@@ -982,7 +1000,7 @@ void updateMentiMessage(MentiMood mood) {
                   style: TextStyle(color: _mint, fontSize: 11,
                       fontWeight: FontWeight.w700, letterSpacing: 1.1)),
               const SizedBox(height: 12),
-              FilledButton.icon(
+              if (adult) FilledButton.icon(
                 onPressed: _canWriteJournal ? _openDrinkPicker : null,
                 icon: const Icon(Icons.add_circle_outline),
                 label: Text(appStrings(context).addDrink,
@@ -1065,6 +1083,7 @@ void updateMentiMessage(MentiMood mood) {
               DailyMentiMiniCard(
                 key: const ValueKey('daily-menti-mini-card'), refreshToken: _dailyRevision,
                 onOpenDaily: _saveDailyReflection, onOpenHub: _openPersonalHub),
+              if (adult) ...[
               if (_journalReady && _journalSnapshot != null) HomeAdaptiveGrid(children: [
                 HomeStatTile(label: strings.homeTodayDrinks, value: '${today.length}',
                   icon: Icons.local_bar_outlined),
@@ -1090,42 +1109,44 @@ void updateMentiMessage(MentiMood mood) {
                   key: const ValueKey('journal-error'))),
                 TextButton(onPressed: _journalSaving || isLoading ? null : loadDrinks, child: Text(strings.homeJournalRetry)),
               ],
+              ],
               const SizedBox(height: 23),
               Text(appStrings(context).explore, style: TextStyle(
                   fontSize: 20, fontWeight: FontWeight.w800)),
               const SizedBox(height: 12),
-              OutlinedButton.icon(onPressed: _journalReady ? _openFinanceCenter : null,
+              if (adult) OutlinedButton.icon(onPressed: _journalReady ? _openFinanceCenter : null,
                 icon: const Icon(Icons.account_balance_wallet_outlined),
                 label: Text(appStrings(context).financeCenter)),
               const SizedBox(height: 10),
               HomeAdaptiveGrid(children: [
                 HomeActionCard(title: strings.wellbeing, subtitle: strings.wellbeingHint,
                   icon: Icons.favorite_border_rounded, onTap: _openWellbeingJournal),
-                HomeActionCard(title: strings.savings, subtitle: strings.savingsHint,
+                if (adult) HomeActionCard(title: strings.savings, subtitle: strings.savingsHint,
                   icon: Icons.savings_outlined, onTap: _journalReady ? _openSavingsGoals : null),
-                HomeActionCard(title: strings.weeklyInsights, subtitle: strings.weeklyInsightsHint,
+                if (adult) HomeActionCard(title: strings.weeklyInsights, subtitle: strings.weeklyInsightsHint,
                   icon: Icons.insights_outlined, onTap: _journalReady ? _openLifestyleInsights : null),
                 HomeActionCard(title: strings.mentiProgress, subtitle: strings.mentiProgressHint,
                   icon: Icons.auto_awesome_outlined, onTap: _openMentiProgress),
-                HomeActionCard(title: strings.goals, subtitle: strings.goalsHint,
+                if (adult) HomeActionCard(title: strings.goals, subtitle: strings.goalsHint,
                   icon: Icons.flag_outlined, onTap: _journalReady ? _openDashboard : null),
-                HomeActionCard(title: strings.statisticsNav, subtitle: strings.statisticsHint,
+                if (adult) HomeActionCard(title: strings.statisticsNav, subtitle: strings.statisticsHint,
                   icon: Icons.bar_chart_rounded, onTap: _journalReady ? _openStatistics : null),
               ]),
               const SizedBox(height: 14),
-              SizedBox(width: double.infinity,
+              if (adult) SizedBox(width: double.infinity,
                 child: FilledButton.tonalIcon(
                   onPressed: !_journalReady ? null : _openPersonalGoals,
                   icon: const Icon(Icons.track_changes_rounded),
                   label: Text(appStrings(context).personalGoals),
                 )),
               const SizedBox(height: 10),
-              SizedBox(width: double.infinity,
+              if (adult) SizedBox(width: double.infinity,
                 child: OutlinedButton.icon(
                   onPressed: !_journalReady ? null : _openMentiWeekReport,
                   icon: const Icon(Icons.auto_graph_rounded),
                   label: Text(appStrings(context).weeklyReport),
                 )),
+              if (adult) ...[
               const SizedBox(height: 24),
               Wrap(alignment: WrapAlignment.spaceBetween, spacing: 8, runSpacing: 4, children: [
                 Text(appStrings(context).recentEntries, style: TextStyle(
@@ -1149,6 +1170,7 @@ void updateMentiMessage(MentiMood mood) {
               Text(strings.statisticsCaution,
                   style: TextStyle(color: _muted, fontSize: 12)),
               const SizedBox(height: 20),
+              ],
             ],
           ),
         ),
