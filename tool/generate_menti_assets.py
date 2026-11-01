@@ -184,6 +184,7 @@ for opt in OPTIONS:
     if idx is not None: layers[idx]=SVG[a]
     elif f=='back':layers.insert(2,SVG[a])
     else:layers.append(SVG[a])
+    if f=='style':layers[3]=SVG['outfits/'+{'classic':'basic','sporty':'sport'}.get(opt['id'],opt['id'])+'.svg']
     if f=='hair':layers.pop(8) # previews must actually show the whole hairstyle
     # Duplicate defs inside one SVG are unnecessary: each layer body references common defs.
     preview=f"{f}-{opt['id']}"

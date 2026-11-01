@@ -69,6 +69,11 @@ class MentiIdentityController extends ChangeNotifier {
     } else {
       final changes = {option.field: option.id};
       if (option.field == 'family') changes['hair'] = '${option.id}-crop';
+      if (option.field == 'style') {
+        final outfit = {'classic': 'basic', 'sporty': 'sport'}[option.id] ?? option.id;
+        final coordinated = MentiVisualCatalog.resolve('outfit', outfit);
+        if (unlocked(coordinated)) changes['outfit'] = coordinated.id;
+      }
       draft = draft.copyWith(profile: draft.profile.copyWith(
         visual: draft.profile.visual.withValues(changes)));
     }
