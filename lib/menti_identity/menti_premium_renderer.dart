@@ -110,10 +110,11 @@ class MentiPremiumComposition extends StatelessWidget {
     this.showBackground = true,
     this.blink = false,
     this.wink = false,
+    this.smile = false,
   });
   final MentiIdentityProfile profile;
   final String? reaction;
-  final bool showBackground, blink, wink;
+  final bool showBackground, blink, wink, smile;
 
   static const previewCrops = <String, List<double>>{
     'style': [85, 200, 150, 65],
@@ -392,7 +393,7 @@ class MentiPremiumComposition extends StatelessWidget {
             ),
             vector('style', target: const Rect.fromLTWH(.37, .53, .26, .10)),
             sprite(
-              'features/face:${id('face')}',
+              'features/face:${smile ? 'cheerful' : id('face')}',
               Rect.fromLTWH(
                 .5 - .14 * mouthScale,
                 mouthTop,

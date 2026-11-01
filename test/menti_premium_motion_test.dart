@@ -8,7 +8,7 @@ import 'package:mennyiment/menti_identity/menti_premium_renderer.dart';
 
 void main() {
   testWidgets(
-    'blink and wink are finite, preserve identity and stop with accessibility or background',
+    'blink, wink and positive smiles are finite, preserve identity and stop with accessibility or background',
     (tester) async {
       final profile = MentiIdentityProfile(
         name: 'Stable',
@@ -44,6 +44,17 @@ void main() {
       expect(current().wink, true);
       await tester.pump(const Duration(milliseconds: 300));
       expect(current().wink, false);
+      reaction = 'celebrating';
+      await tester.pumpWidget(host());
+      expect(current().smile, true);
+      await tester.pump(const Duration(milliseconds: 950));
+      expect(current().smile, false);
+      reaction = 'proud';
+      await tester.pumpWidget(host());
+      expect(current().smile, true);
+      reaction = 'focused';
+      await tester.pumpWidget(host());
+      expect(current().smile, false);
       reduced = true;
       await tester.pumpWidget(host());
       await tester.pump(const Duration(seconds: 20));
