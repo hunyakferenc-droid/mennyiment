@@ -2,7 +2,7 @@ name: Flutter CI
 
 on:
   pull_request:
-    branches: [main, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub]
+    branches: [main, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system]
   push:
     branches: [main]
 
@@ -47,6 +47,7 @@ jobs:
         run: |
           flutter pub get
           flutter gen-l10n
+          git diff --exit-code -- pubspec.lock
 
       - name: Whitespace check
         run: git diff --check HEAD^ HEAD

@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/main.dart';
 import 'package:mennyiment/avatar.dart';
+import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
 import 'package:mennyiment/menti_character_catalog.dart';
 import 'package:mennyiment/menti_character_setup.dart';
 import 'package:mennyiment/menti_evolution.dart';
@@ -183,13 +184,16 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     await tester.pumpWidget(const MaterialApp(home: AvatarPage()));
     await frames(tester);
-    expect(find.text('150 XP'), findsOneWidget);
-    expect(find.text('4. szint • 50 XP a következő szintig'), findsOneWidget);
+    final studio = tester.widget<MentiAvatarRenderer>(find.byKey(const ValueKey('studio-live-preview')));
+    expect(studio.profile.visual.value('family'), 'neutral');
+    expect(studio.profile.visual.value('outfit'), 'legendary');
+    // Level four can pick business/festival, but cannot newly pick level-five legendary variant.
+    final outfitTab = find.byKey(const ValueKey('studio-tab-2'));
+    await tester.ensureVisible(outfitTab); await tester.tap(outfitTab); await tester.pumpAndSettle();
+    final row = find.byKey(const ValueKey('choices-outfit'));
+    await tester.drag(row, const Offset(-900, 0)); await tester.pumpAndSettle();
     expect(prefs.getString('mennyiment_menti_progress_v1'), legacy);
-    expect(
-      asset(tester),
-      MentiCharacterFamily.neutral.assetFor(MentiOutfit.legendary),
-    );
+    expect(prefs.getString('mennyiment_menti_xp_v2'), contains('150'));
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump();
   });

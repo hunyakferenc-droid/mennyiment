@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/avatar.dart';
+import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
 import 'package:mennyiment/main.dart';
 import 'package:mennyiment/menti_character_catalog.dart';
 import 'package:mennyiment/menti_character_setup.dart';
@@ -72,20 +73,10 @@ void main() {
 
           await tester.pumpWidget(const MaterialApp(home: AvatarPage()));
           await frames(tester);
-          final mint = find.ancestor(
-            of: find.text('Mentazöld'),
-            matching: find.byType(InkWell),
-          );
-          expect(
-            find.descendant(of: mint, matching: find.text('Kiválasztva')),
-            findsOneWidget,
-          );
-          expect(
-            tester
-                .widget<MentiEvolution>(find.byType(MentiEvolution))
-                .assetPath,
-            family.assetFor(outfit),
-          );
+          final studio = tester.widget<MentiAvatarRenderer>(find.byKey(const ValueKey('studio-live-preview')));
+          expect(studio.profile.visual.value('background'), 'forest');
+          expect(studio.profile.visual.value('family'), family.id);
+          expect(studio.profile.visual.value('outfit'), outfit.id);
           expect(tester.takeException(), isNull);
           await tester.pumpWidget(const SizedBox.shrink());
           await tester.pump();

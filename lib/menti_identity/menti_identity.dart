@@ -16,7 +16,15 @@ class MentiVisualProfile {
     'neck': 'none', 'held': 'none', 'detail': 'none', 'back': 'none',
     'aura': 'sunrise', 'accent': 'gold', 'background': 'amber',
   };
-  String value(String field) => _json[field] as String? ?? defaults[field]!;
+  String value(String field) {
+    final stored = _json[field] as String?;
+    if (stored != null) return stored;
+    if (field == 'hair') {
+      final family = _json['family'];
+      return '${['boy', 'girl', 'neutral'].contains(family) ? family : 'boy'}-crop';
+    }
+    return defaults[field]!;
+  }
   Map<String, dynamic> toJson() => _copy(_json);
   MentiVisualProfile withValues(Map<String, String> values) {
     if (!values.keys.every(defaults.containsKey)) {
@@ -185,33 +193,55 @@ class MentiIdentityDocument {
       },
     };
     final aura = switch (values['mennyiment_menti_aura_v1']) {
-      'Lila' => 'violet', 'Kék' => 'ocean', 'Zöld' => 'forest',
+      'Lila' => 'violet', 'Kék' => 'ocean', 'Zöld' || 'Menta' => 'forest',
       'Arany' => 'starlight', 'Rózsaszín' => 'rose', _ => 'sunrise',
     };
     final bg = values[MentiProfileStorage.studioBackgroundKey] ?? values[MentiProfileStorage.legacyStyleKey];
-    final background = switch (bg) { 1 => 'violet', 2 => 'ocean', 3 => 'forest', _ => 'amber' };
+    final background = switch (bg) { 0 => 'violet', 1 => 'forest', 2 => 'amber', 3 => 'midnight', _ => 'amber' };
     final tint = switch (values['mennyiment_character_color_v2']) {
       'Lila' => 'violet', 'Kék' => 'blue', 'Zöld' => 'mint',
       'Rózsaszín' => 'rose', 'Narancs' => 'orange', _ => 'gold',
     };
     final accessory = values['mennyiment_menti_accessory_v1'];
-    final rawName = values['mennyiment_character_name_v1'];
+    final studioAccessory = values['mennyiment_accessory_v1'];
+    final studioHat = values['mennyiment_hat_v1'];
+    final legacyMood = values['mennyiment_mood_v2'];
+    final studioMood = values['mennyiment_avatar_v1'];
+    final face = switch (legacyMood) {
+      'Vidám' || 'Ünnepel' => 'cheerful', 'Kacsint' => 'playful', 'Nyugodt' => 'calm',
+      _ => switch (studioMood) {
+        0 || 3 => 'confident', 1 => 'playful', 4 || 5 => 'determined', _ => 'cheerful',
+      },
+    };
+    final reaction = switch (legacyMood) {
+      'Ünnepel' => 'celebrating', 'Nyugodt' => 'calming', 'Kacsint' => 'funny',
+      'Vidám' => 'motivating', _ => switch (studioMood) {
+        1 => 'funny', 2 => 'celebrating', 5 => 'proud', _ => 'motivating',
+      },
+    };
+    final rawName = values['mennyiment_character_name_v1'] ?? values['mennyiment_nickname_v1'];
     final name = rawName is String && rawName.trim().isNotEmpty && rawName.length <= 80 ? rawName : 'Menti';
     final savedRewards = values['mennyiment_menti_rewards_v1'];
     final rewards = savedRewards is List && savedRewards.every((v) => v is String)
       ? savedRewards.cast<String>() : <String>[];
     return MentiIdentityDocument(profile: MentiIdentityProfile(name: name,
       visual: MentiVisualProfile({
-        'family': family.id, 'age': age, 'hair': '${family.id}-crop',
+        'family': family.id, 'age': age, 'hair': '${family.id}-crop', 'face': face,
         'outfit': outfit.id, 'style': switch (outfit) {
           MentiOutfit.sport => 'sporty', MentiOutfit.basic => 'classic', _ => outfit.id,
         },
         'aura': aura, 'background': background, 'accent': tint,
+        if (studioHat == 1) 'headwear': 'sport-cap',
+        if (studioHat == 2) 'headwear': 'party-hat',
+        if (studioHat == 3) 'headwear': 'cowboy',
+        if (studioAccessory == 1) 'glasses': 'sunglasses',
+        if (studioAccessory == 2) 'detail': 'star',
+        if (studioAccessory == 3) 'headwear': 'headphones',
         if (accessory == 'Napszemüveg') 'glasses': 'sunglasses',
         if (accessory == 'Korona') 'headwear': 'party-crown',
         if (accessory == 'Bulikalap') 'headwear': 'party-hat',
         if (accessory == 'Csillag') 'detail': 'star',
-      })), unlocks: MentiUnlockState(unlocked: {...rewards, 'outfit:${outfit.id}'}),
+      }), reaction: MentiReactionProfile({'style': reaction})), unlocks: MentiUnlockState(unlocked: {...rewards, 'outfit:${outfit.id}'}),
       extras: {'migration': {'source': 'legacy', 'original': values}});
   }
 }

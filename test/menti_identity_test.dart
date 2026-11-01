@@ -40,7 +40,7 @@ void main() {
       expect(data.profile.visual.value('age'), item.value);
     });
   }
-  for (final item in {0: 'amber', 1: 'violet', 2: 'ocean', 3: 'forest'}.entries) {
+  for (final item in {0: 'violet', 1: 'forest', 2: 'amber', 3: 'midnight'}.entries) {
     test('legacy integer Studio background ${item.key}', () {
       final data = MentiIdentityDocument.fromLegacy({MentiProfileStorage.legacyStyleKey: item.key});
       expect(data.profile.visual.value('background'), item.value);
@@ -180,4 +180,57 @@ void main() {
     expect(entries[MentiIdentityStore.key], {'type': 'string', 'value': data});
     expect(MentiIdentityDocument.decode((entries[MentiIdentityStore.key] as Map)['value']).presets.single.favorite, isTrue);
   });
+  test('XP and reward changes after migration read do not block appearance save', () async {
+    SharedPreferences.setMockInitialValues({MentiProfileStorage.legacyStyleKey: 'Lány Menti'});
+    final store = MentiIdentityStore(); await store.load();
+    final prefs = await SharedPreferences.getInstance();
+    await MentiProfileStorage.migrate(prefs);
+    await prefs.setString('mennyiment_menti_xp_v2', '{"xp":50}');
+    await prefs.setStringList('mennyiment_menti_rewards_v1', ['future:new']);
+    expect(await store.save(store.document), isTrue);
+    expect(store.document.unlocks.unlocked, contains('future:new'));
+    expect(prefs.getString('mennyiment_menti_xp_v2'), '{"xp":50}');
+  });
+  test('actual legacy appearance edit after load blocks first migration save', () async {
+    final store = MentiIdentityStore(); await store.load();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(MentiProfileStorage.characterStyleKey, 'girl');
+    expect(await store.save(store.document), isFalse);
+    expect(store.error, 'conflict');
+    expect(prefs.containsKey(MentiIdentityStore.key), isFalse);
+  });
+
+  test('partial preset applies its effective defaults without reviving previous visual values', () async {
+    final old = MentiIdentityDocument(profile: MentiIdentityProfile(name: 'Previous',
+      visual: MentiVisualProfile({'family': 'girl', 'outfit': 'legendary', 'future': 7})));
+    SharedPreferences.setMockInitialValues({MentiIdentityStore.key: old.encode()});
+    final store = MentiIdentityStore(); await store.load();
+    final partialPreset = MentiIdentityProfile.fromJson(<String, dynamic>{});
+    expect(await store.save(store.document.copyWith(profile: partialPreset)), isTrue);
+    expect(store.document.profile.name, 'Menti');
+    expect(store.document.profile.visual.value('family'), 'boy');
+    expect(store.document.profile.visual.value('outfit'), 'basic');
+    expect(store.document.profile.visual.toJson()['future'], 7);
+  });
+  test('missing hair defaults to the selected family without writing a value', () {
+    final p = MentiVisualProfile({'family': 'girl'});
+    expect(p.value('hair'), 'girl-crop');
+    expect(p.toJson().containsKey('hair'), isFalse);
+  });
+
+  for (final item in {'Vidám': ('cheerful','motivating'), 'Kacsint': ('playful','funny'),
+      'Nyugodt': ('calm','calming'), 'Ünnepel': ('cheerful','celebrating')}.entries) {
+    test('legacy mood ${item.key} keeps expression and personality', () {
+      final p = MentiIdentityDocument.fromLegacy({'mennyiment_mood_v2': item.key}).profile;
+      expect(p.visual.value('face'), item.value.$1);
+      expect(p.reaction.style, item.value.$2);
+    });
+  }
+  test('old Studio nickname hat and accessory remain visible after migration', () {
+    final p = MentiIdentityDocument.fromLegacy({'mennyiment_nickname_v1': 'Becenév',
+      'mennyiment_hat_v1': 3, 'mennyiment_accessory_v1': 1, 'mennyiment_avatar_v1': 1}).profile;
+    expect(p.name, 'Becenév'); expect(p.visual.value('headwear'), 'cowboy');
+    expect(p.visual.value('glasses'), 'sunglasses'); expect(p.reaction.style, 'funny');
+  });
+
 }
