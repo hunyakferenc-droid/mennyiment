@@ -114,6 +114,9 @@ void main() {
       await tester.pumpWidget(const MennyiMentApp());
       await tester.pumpAndSettle();
       final s = appStrings(tester.element(find.byType(HomePage)));
+      await tester.scrollUntilVisible(find.byKey(const ValueKey('home-more-features')),300,scrollable:find.byType(Scrollable).first,maxScrolls:40);
+      await tester.tap(find.byKey(const ValueKey('home-more-features')));
+      await tester.pumpAndSettle();
       await tester.ensureVisible(find.text(s.personalGoals));
       await tester.tap(find.text(s.personalGoals));
       await tester.pumpAndSettle();

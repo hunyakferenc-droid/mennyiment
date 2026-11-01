@@ -170,7 +170,9 @@ void main() {
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 600));
         final before = {for (final k in prefs.getKeys()) k: prefs.get(k)};
-        await tester.tap(find.byKey(const ValueKey('open-data-backup')));
+        await tester.tap(find.byKey(const ValueKey('home-menu')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('open-data-backup')));
         await tester.pumpAndSettle();
         expect(find.byType(DataBackupPage), findsOneWidget);
         await tester.tap(prepare());
