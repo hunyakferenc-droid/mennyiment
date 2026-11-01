@@ -1,10 +1,15 @@
-import 'dart:convert';
-import 'weekly_challenges.dart';
-import 'app_language.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 
-/// Csak olvasási adatmodell: a meglévő italnapló tárolását nem módosítjuk.
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import 'app_language.dart';
+import 'menti_completion.dart';
+import 'menti_reactions.dart';
+import 'menti_ui.dart';
+import 'personal_goal_store.dart';
+import 'weekly_challenges.dart';
+
 class PersonalGoalDrink {
   const PersonalGoalDrink({required this.time, this.priceFt});
   final DateTime time;
@@ -12,258 +17,231 @@ class PersonalGoalDrink {
 }
 
 class PersonalGoalsPage extends StatefulWidget {
-  const PersonalGoalsPage({super.key, required this.drinks});
+  const PersonalGoalsPage({super.key, required this.drinks, this.store, this.clock});
   final List<PersonalGoalDrink> drinks;
+  final PersonalGoalStore? store;
+  final DateTime Function()? clock;
 
   @override
   State<PersonalGoalsPage> createState() => _PersonalGoalsPageState();
 }
 
-class _PersonalGoalsPageState extends State<PersonalGoalsPage> {
-  static const _key = 'mennyiment_personal_goals_v1';
-  static const _mint = Color(0xFF76E4B8);
-  static const _panel = Color(0xFF172923);
-  int? _weeklyBudget;
-  int _reflectionGoal = 4;
-  final Set<String> _reflectionDays = {};
+class _PersonalGoalsPageState extends State<PersonalGoalsPage>
+    with WidgetsBindingObserver {
+  late final PersonalGoalStore _store = widget.store ?? PersonalGoalStore();
+  DateTime get _now => (widget.clock ?? DateTime.now)().toLocal();
+  int _back = 0;
+  DateTime get _week => mentiCalendarDay(mentiMonday(_now), -7 * _back);
   bool _loading = true;
-  DateTime _week = _monday(DateTime.now());
-
-  static DateTime _monday(DateTime day) {
-    final midnight = DateTime(day.year, day.month, day.day);
-    return midnight.subtract(Duration(days: midnight.weekday - 1));
-  }
-
-  static String _dateKey(DateTime d) =>
-      '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
-
-  static String _money(num n) => n.round().toString().replaceAllMapped(
-      RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ' ');
+  bool _saving = false;
+  bool _error = false;
+  MentiMood? _reaction;
+  Timer? _timer;
+  late String _shownDay;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _shownDay = mentiDateKey(_now);
+    _timer = Timer.periodic(const Duration(minutes: 1), (_) {
+      if (_loading || _saving || !mounted) return;
+      final day = mentiDateKey(_now);
+      if (day != _shownDay) {
+        _shownDay = day;
+        _load();
+      }
+    });
     _load();
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && !_saving) _load();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
   Future<void> _load() async {
+    if (_saving || !mounted) return;
+    setState(() { _loading = true; _error = false; _reaction = null; });
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final raw = prefs.getString(_key);
-      if (raw != null) {
-        final data = jsonDecode(raw) as Map<String, dynamic>;
-        if (!mounted) return;
-        setState(() {
-          final n = (data['weeklyBudget'] as num?)?.toInt();
-          _weeklyBudget = n == null || n < 0 ? null : n;
-          _reflectionGoal = ((data['reflectionGoal'] as num?)?.toInt() ?? 4)
-              .clamp(1, 7);
-          _reflectionDays.addAll(
-              (data['reflectionDays'] as List<dynamic>? ?? [])
-                  .whereType<String>());
-        });
-      }
-    } catch (e) {
-      debugPrint('Személyes célok betöltése sikertelen: $e');
+      await _store.load();
+    } catch (error, stack) {
+      debugPrint('Personal goals load failure: ${error.runtimeType}\n$stack');
+      if (mounted) _error = true;
     } finally {
       if (mounted) setState(() => _loading = false);
     }
   }
 
-  Future<void> _save() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_key, jsonEncode({
-        'weeklyBudget': _weeklyBudget,
-        'reflectionGoal': _reflectionGoal,
-        'reflectionDays': _reflectionDays.toList(),
-      }));
-    } catch (e) {
-      debugPrint('Személyes célok mentése sikertelen: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Nem sikerült menteni a célokat.'),
-        ));
-      }
+  Future<bool> _commit(Map<String, dynamic> changes) async {
+    if (_loading || _saving || _error || !_store.writable) return false;
+    setState(() { _saving = true; _reaction = null; });
+    final saved = await _store.update(changes);
+    if (!mounted) return false;
+    setState(() => _saving = false);
+    if (!saved) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(appStrings(context).goalSaveError)));
+    }
+    return saved;
+  }
+
+  Future<void> _checkIn() async {
+    if (_back != 0 || _loading || _saving || _error) return;
+    final now = _now;
+    final today = mentiDateKey(now);
+    if (_store.reflectionDays.contains(today)) return;
+    final week = mentiMonday(now);
+    final before = recordedGoalDays(_store.reflectionDays, week, now);
+    final target = _store.reflectionGoal;
+    final saved = await _commit({'reflectionDays': [..._store.reflectionDays, today]});
+    if (!saved || !mounted || mentiMonday(_now) != week) return;
+    final after = recordedGoalDays(_store.reflectionDays, week, _now);
+    if (crossedRecordedGoal(before: before, after: after,
+        previousTarget: target, target: _store.reflectionGoal)) {
+      setState(() => _reaction = MentiMood.personalGoalCompleted);
     }
   }
 
   Future<void> _editNumber({required bool budget}) async {
+    if (_saving || _loading || _error || !_store.writable) return;
     final controller = TextEditingController(
-      text: budget ? (_weeklyBudget?.toString() ?? '') : '$_reflectionGoal',
-    );
-    final value = await showDialog<int>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(budget ? 'Heti ital-költségkeret (Ft)' : 'Heti önellenőrzések célja'),
-        content: TextField(
+      text: budget ? _store.weeklyBudget?.toString() ?? '' : '${_store.reflectionGoal}');
+    final value = await showDialog<int>(context: context, builder: (dialogContext) {
+      final s = appStrings(dialogContext);
+      return AlertDialog(
+        title: Text(budget ? s.goalBudgetDialog : s.goalTargetDialog),
+        content: SingleChildScrollView(child: TextField(
           controller: controller,
           autofocus: true,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-            hintText: budget ? 'Például 10000' : '1–7 nap',
-            helperText: budget
-                ? 'A nullás keret is megengedett.'
-                : 'Naponta legfeljebb egy önellenőrzés.',
-          ),
-        ),
+            hintText: budget ? s.goalBudgetHint : s.goalTargetHint,
+            helperMaxLines: 3,
+            helperText: budget ? s.goalBudgetHelp : s.goalTargetHelp),
+        )),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(dialogContext),
-              child: const Text('Mégse')),
+          TextButton(onPressed: () => Navigator.pop(dialogContext), child: Text(s.challengeCancel)),
           FilledButton(onPressed: () {
             final parsed = int.tryParse(controller.text.trim());
             if (parsed == null || (budget && (parsed < 0 || parsed > 100000000)) ||
                 (!budget && (parsed < 1 || parsed > 7))) {
-              ScaffoldMessenger.of(dialogContext).showSnackBar(const SnackBar(
-                content: Text('Érvénytelen célérték.'),
-              ));
+              ScaffoldMessenger.of(dialogContext).showSnackBar(SnackBar(content: Text(s.goalInvalidValue)));
               return;
             }
             Navigator.pop(dialogContext, parsed);
-          }, child: const Text('Mentés')),
+          }, child: Text(s.challengeSave)),
         ],
-      ),
-    );
-    controller.dispose();
-    if (value == null || !mounted) return;
-    setState(() {
-      if (budget) {
-        _weeklyBudget = value;
-      } else {
-        _reflectionGoal = value;
-      }
+      );
     });
-    await _save();
+    // Keep the controller alive while the dialog's exit animation uses it.
+    await Future<void>.delayed(const Duration(milliseconds: 300));
+    controller.dispose();
+    if (value != null && mounted) {
+      await _commit({budget ? 'weeklyBudget' : 'reflectionGoal': value});
+    }
   }
-
-  Future<void> _checkIn() async {
-    final today = _dateKey(DateTime.now());
-    if (_reflectionDays.contains(today)) return;
-    setState(() => _reflectionDays.add(today));
-    await _save();
-  }
-
-  Widget _card(Widget child) => Container(
-    width: double.infinity,
-    padding: const EdgeInsets.all(18),
-    margin: const EdgeInsets.only(bottom: 14),
-    decoration: BoxDecoration(
-      color: _panel,
-      borderRadius: BorderRadius.circular(20),
-      border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
-    ),
-    child: child,
-  );
 
   @override
   Widget build(BuildContext context) {
-    final end = _week.add(const Duration(days: 7));
-    final entries = widget.drinks.where((d) =>
-        !d.time.isBefore(_week) && d.time.isBefore(end)).toList();
+    final s = appStrings(context);
+    final locale = Localizations.localeOf(context).languageCode;
+    final now = _now;
+    final week = _week;
+    final end = mentiCalendarDay(week, 7);
+    final entries = widget.drinks.where((d) => !d.time.isBefore(week) &&
+        d.time.isBefore(end) && !d.time.isAfter(now)).toList();
     final spent = entries.fold<double>(0, (sum, d) => sum + (d.priceFt ?? 0));
     final unknown = entries.where((d) => d.priceFt == null).length;
-    final checks = List.generate(7, (i) => _dateKey(_week.add(Duration(days: i))))
-        .where(_reflectionDays.contains).length;
-    final today = DateTime.now();
-    final current = _monday(today) == _week;
-    final checkToday = _reflectionDays.contains(_dateKey(today));
-    final overBudget = _weeklyBudget != null && spent > _weeklyBudget!;
-    final clearlyUnderBudget = _weeklyBudget != null && !overBudget && unknown == 0;
-
+    final checks = recordedGoalDays(_store.reflectionDays, week, now);
+    final target = _store.reflectionGoal;
+    final budget = _store.weeklyBudget;
+    final enabled = !_loading && !_saving && !_error && _store.writable;
+    final dateFormat = DateFormat.MMMd(locale);
+    final weekdays = DateFormat.E(locale);
+    final checkedToday = _store.reflectionDays.contains(mentiDateKey(now));
     return Scaffold(
-      appBar: AppBar(title: const Text('Személyes céljaim')),
-      body: _loading ? const Center(child: CircularProgressIndicator()) :
-      Center(child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 700),
-        child: ListView(padding: const EdgeInsets.all(16), children: [
-          FilledButton.icon(
-            onPressed: () => Navigator.push<void>(context, MaterialPageRoute(
-              builder: (_) => const WeeklyChallengesPage())),
-            icon: const Icon(Icons.flag_outlined),
-            label: Text(appStrings(context).challengeTitle),
-          ),
-          _card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('A saját tempódban', style: TextStyle(
-                fontSize: 23, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            const Text('Itt te döntöd el, mit szeretnél követni. A naplózásért és a tudatos átgondolásért dolgozunk, nem az elfogyasztott italokért.'),
-            const SizedBox(height: 12),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              IconButton(onPressed: () => setState(() =>
-                  _week = _week.subtract(const Duration(days: 7))),
-                  icon: const Icon(Icons.chevron_left), tooltip: 'Előző hét'),
-              Text('${_week.month}.${_week.day.toString().padLeft(2, '0')}. – '
-                  '${end.subtract(const Duration(days: 1)).month}.'
-                  '${end.subtract(const Duration(days: 1)).day.toString().padLeft(2, '0')}.',
-                  style: const TextStyle(fontWeight: FontWeight.bold)),
-              IconButton(onPressed: current ? null : () => setState(() =>
-                  _week = _week.add(const Duration(days: 7))),
-                  icon: const Icon(Icons.chevron_right), tooltip: 'Következő hét'),
+      appBar: AppBar(title: Text(s.goalPageTitle)),
+      body: _loading ? const Center(child: CircularProgressIndicator())
+          : _error ? MentiPageBody(children: [
+              Text(s.goalLoadError, key: const ValueKey('personal-goals-error')),
+              TextButton(onPressed: _load, child: Text(s.goalReload)),
+            ])
+          : MentiPageBody(children: [
+              FilledButton.icon(
+                onPressed: _saving ? null : () => Navigator.push<void>(context,
+                  MaterialPageRoute(builder: (_) => const WeeklyChallengesPage())),
+                icon: const Icon(Icons.flag_outlined), label: Text(s.challengeTitle)),
+              const SizedBox(height: 16),
+              MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(s.goalOwnPace, style: Theme.of(context).textTheme.headlineSmall),
+                const SizedBox(height: 8),
+                Text(s.goalIntro),
+                Row(children: [
+                  IconButton(onPressed: _saving ? null : () => setState(() { _back++; _reaction = null; }),
+                    tooltip: s.challengePrevious, icon: const Icon(Icons.chevron_left)),
+                  Expanded(child: Text('${dateFormat.format(week)} – ${dateFormat.format(mentiCalendarDay(end, -1))}',
+                    textAlign: TextAlign.center)),
+                  IconButton(onPressed: _back == 0 || _saving ? null
+                      : () => setState(() { _back--; _reaction = null; }),
+                    tooltip: s.challengeNext, icon: const Icon(Icons.chevron_right)),
+                ]),
+              ])),
+              if (_reaction != null) Padding(padding: const EdgeInsets.only(bottom: 16),
+                child: Semantics(liveRegion: true, child: MentiSpeechBubble(
+                  key: const ValueKey('personal-goal-reaction'),
+                  message: MentiReactions.message(_reaction!, locale: locale)))),
+              MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(s.goalBudgetTitle, style: Theme.of(context).textTheme.titleLarge),
+                const SizedBox(height: 8),
+                Text(s.goalRecordedSpending(localeCurrency(spent, locale))),
+                Text(budget == null ? s.goalNoBudget : s.goalBudgetValue(localeCurrency(budget, locale))),
+                if (budget != null && budget > 0)
+                  LinearProgressIndicator(value: (spent / budget).clamp(0.0, 1.0)),
+                const SizedBox(height: 8),
+                Text(unknown > 0 ? s.goalMissingPrices(unknown)
+                    : budget == null ? s.goalNoBudget
+                    : spent > budget ? s.goalOverBudget : s.goalWithinBudget),
+                TextButton.icon(onPressed: enabled ? () => _editNumber(budget: true) : null,
+                  icon: const Icon(Icons.edit_outlined), label: Text(s.goalEditBudget)),
+              ])),
+              MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(s.goalReflectionTitle, style: Theme.of(context).textTheme.titleLarge),
+                const SizedBox(height: 8),
+                Text(s.goalProgress(checks, target), key: const ValueKey('personal-goal-count')),
+                LinearProgressIndicator(value: (checks / target).clamp(0.0, 1.0)),
+                Wrap(spacing: 7, children: List.generate(7, (i) {
+                  final day = mentiCalendarDay(week, i);
+                  final checked = !day.isAfter(mentiCalendarDay(now)) &&
+                      _store.reflectionDays.contains(mentiDateKey(day));
+                  return Chip(label: Text(weekdays.format(day)), avatar: Icon(
+                    checked ? Icons.check_circle : Icons.circle_outlined, size: 17));
+                })),
+                FilledButton.icon(
+                  key: const ValueKey('personal-goal-check-in'),
+                  onPressed: enabled && _back == 0 && !checkedToday ? _checkIn : null,
+                  icon: const Icon(Icons.task_alt),
+                  label: Text(_back != 0 ? s.goalCurrentWeekOnly
+                      : checkedToday ? s.goalCheckDone : s.goalCheckAction)),
+                TextButton.icon(onPressed: enabled ? () => _editNumber(budget: false) : null,
+                  icon: const Icon(Icons.tune), label: Text(s.goalEditTarget)),
+              ])),
+              MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(s.goalMentiThought, style: Theme.of(context).textTheme.titleLarge),
+                Text(checks >= target ? s.goalThoughtComplete
+                    : checks == 0 ? s.goalThoughtStart : s.goalThoughtProgress(checks)),
+                const SizedBox(height: 8),
+                Text(s.goalCaution),
+              ])),
+              OutlinedButton(onPressed: _saving ? null : _load, child: Text(s.goalReload)),
             ]),
-          ])),
-          _card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Heti ital-költségkeret', style: TextStyle(
-                fontSize: 19, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            Text('Rögzített költés: ${_money(spent)} Ft',
-                style: const TextStyle(fontSize: 22, color: _mint, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 6),
-            Text(_weeklyBudget == null ? 'Még nincs keret beállítva.' :
-                'Saját heti keret: ${_money(_weeklyBudget!)} Ft'),
-            if (_weeklyBudget != null && _weeklyBudget! > 0) ...[
-              const SizedBox(height: 10),
-              LinearProgressIndicator(value: (spent / _weeklyBudget!).clamp(0.0, 1.0)),
-            ],
-            const SizedBox(height: 8),
-            Text(unknown > 0
-                ? '$unknown ital ára hiányzik. A költés csak részösszeg, így a keret teljesítése nem igazolható.'
-                : overBudget ? 'A rögzített költés meghaladja a keretet.'
-                : clearlyUnderBudget ? 'A rögzített költés a kereten belül van.'
-                : 'A kerethez állíts be egy személyes célt.',
-                style: const TextStyle(fontSize: 12, color: Colors.white70)),
-            TextButton.icon(onPressed: () => _editNumber(budget: true),
-                icon: const Icon(Icons.edit_outlined), label: const Text('Keret szerkesztése')),
-          ])),
-          _card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Heti tudatos önellenőrzés', style: TextStyle(
-                fontSize: 19, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Text('$checks / $_reflectionGoal alkalom',
-                style: const TextStyle(fontSize: 22, color: _mint, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
-            LinearProgressIndicator(value: (checks / _reflectionGoal).clamp(0.0, 1.0)),
-            const SizedBox(height: 12),
-            Wrap(spacing: 7, children: List.generate(7, (i) {
-              final day = _week.add(Duration(days: i));
-              return Chip(label: Text(['H','K','Sz','Cs','P','Sz','V'][i]),
-                avatar: Icon(_reflectionDays.contains(_dateKey(day))
-                    ? Icons.check_circle : Icons.circle_outlined,
-                    size: 17, color: _reflectionDays.contains(_dateKey(day))
-                    ? _mint : Colors.white54));
-            })),
-            const SizedBox(height: 8),
-            FilledButton.icon(onPressed: current && !checkToday ? _checkIn : null,
-                icon: const Icon(Icons.task_alt),
-                label: Text(checkToday && current ? 'Mai önellenőrzés kész' :
-                    current ? 'Ma átgondoltam a napomat' : 'Csak az aktuális héten rögzíthető')),
-            TextButton.icon(onPressed: () => _editNumber(budget: false),
-                icon: const Icon(Icons.tune), label: const Text('Heti cél módosítása')),
-          ])),
-          _card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Menti gondolata', style: TextStyle(fontSize: 19,
-                fontWeight: FontWeight.bold)),
-            const SizedBox(height: 8),
-            Text(checks >= _reflectionGoal
-                ? 'Szép munka, teljesítetted a heti önellenőrzési célodat!'
-                : checks == 0
-                    ? 'Nem kell tökéletes nap. Egy rövid átgondolás is jó kezdet.'
-                    : 'Már $checks alkalommal megálltál átgondolni a napodat. Csak így tovább!'),
-            const SizedBox(height: 10),
-            const Text('A hiányzó naplóbejegyzés nem bizonyít alkoholmentes napot. Az itt látható költések önbevalláson alapulnak.',
-                style: TextStyle(fontSize: 12, color: Colors.white70)),
-          ])),
-        ]),
-      )),
     );
   }
 }
