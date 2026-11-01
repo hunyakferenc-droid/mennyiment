@@ -318,5 +318,54 @@
         "type": "int"
       }
     }
-  }
+  },
+  "homeEyebrow": "MENNYIMENT? • YOUR MENTI",
+  "homeGreeting": "Hi! How are you today?",
+  "homeIntro": "Your mindful choices today matter.",
+  "homeMentiHint": "Progress grows from small, mindful steps.",
+  "homeTotalXp": "{xp} XP in total",
+  "homeLevelProgress": "Progress towards the next Menti level",
+  "homeXpHint": "XP rewards check-ins and mindful weekly tasks, never the number of drinks.",
+  "homeTodayDrinks": "Drinks recorded today",
+  "homeTodaySpending": "Known spending today",
+  "homeMonthSpending": "Known spending this month",
+  "homeWeekDays": "Days with entries this week",
+  "homeMissingPrices": "Missing drink prices: {today} today, {month} this month. Spending totals are partial.",
+  "homeEmptyJournal": "No entries yet. Use the add button to record a drink.",
+  "homeUnknownPrice": "Unknown price",
+  "homeJournalUnavailable": "Journal data is currently unavailable. Your original data has been preserved.",
+  "homeJournalRetry": "Reload journal",
+  "homeLoading": "Loading journal…",
+  "homeRecordActions": "Entry actions",
+  "homeEnterPrice": "Add price",
+  "homeEditPrice": "Price: {price} – edit",
+  "homeDeleteEntry": "Delete entry",
+  "homeCheckInUnavailable": "Menti progress could not be loaded. Please retry.",
+  "homeRetryProgress": "Reload Menti",
+  "@homeTotalXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int"
+      }
+    }
+  },
+  "@homeMissingPrices": {
+    "placeholders": {
+      "today": {
+        "type": "int"
+      },
+      "month": {
+        "type": "int"
+      }
+    }
+  },
+  "@homeEditPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "homeJournalSaveError": "The journal could not be saved. Your change was not applied. Retry or reload the journal.",
+  "homeJournalLoadError": "The journal could not be loaded safely. Your original data is preserved and editing is disabled."
 }

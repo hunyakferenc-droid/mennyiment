@@ -214,7 +214,8 @@ void main() {
     await tester.pumpWidget(const MennyiMentApp());
     await frames(tester);
     expect(find.text('Home'), findsOneWidget);
-    await tester.ensureVisible(find.text('Finance centre – detailed overview'));
+    await tester.scrollUntilVisible(find.text('Finance centre – detailed overview'), 300,
+      scrollable: find.byType(Scrollable).first, maxScrolls: 40);
     await frames(tester);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox.shrink());
