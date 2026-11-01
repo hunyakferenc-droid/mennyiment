@@ -2,7 +2,7 @@ name: Flutter CI
 
 on:
   pull_request:
-    branches: [main, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio]
+    branches: [main, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration]
   push:
     branches: [main]
 
@@ -49,6 +49,21 @@ jobs:
           flutter gen-l10n
           git diff --exit-code -- pubspec.lock
 
+      # One-time baseline creation for this new, reviewable visual regression.
+      # Removed once the resulting renderer PNG has been committed.
+      - name: Bootstrap brand golden baseline
+        run: |
+          flutter test test/menti_brand_golden_test.dart --update-goldens
+          python3 - <<'PYCODE'
+          import base64
+          from pathlib import Path
+          value = base64.b64encode(Path('test/goldens/menti_brand_pair.png').read_bytes()).decode()
+          print('MENTI_GOLDEN_BEGIN')
+          for i in range(0, len(value), 1000):
+              print(value[i:i+1000])
+          print('MENTI_GOLDEN_END')
+          PYCODE
+
       - name: Whitespace check
         run: git diff --check HEAD^ HEAD
 
@@ -66,7 +81,7 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         env:
           TZ: Europe/Budapest
-        run: flutter test test/menti_identity_test.dart test/menti_visual_system_test.dart test/menti_identity_integration_test.dart test/daily_experience_test.dart test/experience_preferences_test.dart test/personal_hub_data_test.dart test/personal_hub_test.dart test/menti_completion_test.dart test/goal_reactions_test.dart test/personal_goal_store_test.dart test/menti_2_foundations_test.dart test/daily_menti_test.dart test/data_backup_test.dart test/data_restore_test.dart test/weekly_challenges_test.dart test/weekly_challenges_integration_test.dart test/daily_menti_evolution_integration_test.dart test/menti_evolution_rewards_test.dart --concurrency=2
+        run: flutter test test/menti_brand_rework_test.dart test/menti_identity_test.dart test/menti_visual_system_test.dart test/menti_identity_integration_test.dart test/daily_experience_test.dart test/experience_preferences_test.dart test/personal_hub_data_test.dart test/personal_hub_test.dart test/menti_completion_test.dart test/goal_reactions_test.dart test/personal_goal_store_test.dart test/menti_2_foundations_test.dart test/daily_menti_test.dart test/data_backup_test.dart test/data_restore_test.dart test/weekly_challenges_test.dart test/weekly_challenges_integration_test.dart test/daily_menti_evolution_integration_test.dart test/menti_evolution_rewards_test.dart --concurrency=2
 
       - name: flutter build web
         id: web

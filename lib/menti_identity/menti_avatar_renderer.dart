@@ -28,6 +28,7 @@ class MentiAvatarRenderer extends StatelessWidget {
     return [
       if (showBackground) asset('background'), asset('aura'),
       if (v.value('back') != 'none') asset('back'),
+      '${MentiVisualCatalog.root}core/menti-body.png',
       '${MentiVisualCatalog.root}bases/$family-$age.svg',
       asset('outfit'), asset('style'), asset('accent'), asset('hair'),
       asset('face'), asset('eyes'),
@@ -49,24 +50,77 @@ class MentiAvatarRenderer extends StatelessWidget {
         width: size, height: size * 1.25,
         child: Stack(fit: StackFit.expand, children: [
           for (final path in layers(profile, reaction: activeReaction, showBackground: showBackground))
-            SvgPicture.asset(path, key: ValueKey(path), fit: BoxFit.contain,
-              excludeFromSemantics: true,
-              errorBuilder: (_, _, _) => Center(child: Icon(Icons.broken_image_outlined,
-                semanticLabel: appStrings(context).evolutionImage))),
+            MentiAssetLayer(path: path),
         ]),
       ))));
   }
 }
 
+/// One registration contract for full avatars and cropped option thumbnails.
+class MentiAssetLayer extends StatelessWidget {
+  const MentiAssetLayer({super.key, required this.path});
+  final String path;
+  static const core = '${MentiVisualCatalog.root}core/menti-body.png';
+  static const crownCap = '${MentiVisualCatalog.root}core/crown-cap.png';
+  @override
+  Widget build(BuildContext context) {
+    if (path == crownCap) {
+      return LayoutBuilder(builder: (context, constraints) => Stack(children: [
+        Positioned(left: constraints.maxWidth * .10625, top: 0,
+          width: constraints.maxWidth * .8375, height: constraints.maxHeight * .28,
+          child: Image.asset(path, key: ValueKey(path), fit: BoxFit.fill,
+            excludeFromSemantics: true, gaplessPlayback: true)),
+      ]));
+    }
+    if (path.endsWith('.png')) {
+      return Image.asset(path, key: ValueKey(path), fit: BoxFit.fill,
+        cacheWidth: 960, excludeFromSemantics: true, gaplessPlayback: true);
+    }
+    return SvgPicture.asset(path, key: ValueKey(path), fit: BoxFit.fill,
+      excludeFromSemantics: true,
+      errorBuilder: (_, _, _) => Center(child: Icon(Icons.broken_image_outlined,
+        semanticLabel: appStrings(context).evolutionImage)));
+  }
+}
+
 class MentiPreviewRenderer extends StatelessWidget {
-  const MentiPreviewRenderer({super.key, required this.option, this.size = 76});
+  const MentiPreviewRenderer({super.key, required this.option, this.size = 120});
   final MentiVisualOption option;
   final double size;
+  static Rect cropFor(MentiVisualOption option) {
+    if (option.field == 'held' && option.id == 'notebook') {
+      return const Rect.fromLTWH(0, 215, 100, 105);
+    }
+    if (option.field == 'held' && option.id != 'none') {
+      return const Rect.fromLTWH(230, 210, 90, 110);
+    }
+    final crop = MentiVisualCatalog.previewCrops[option.field]!;
+    return Rect.fromLTWH(crop[0], crop[1], crop[2], crop[3]);
+  }
   @override
-  Widget build(BuildContext context) => SvgPicture.asset(
-    MentiVisualCatalog.root + option.preview, width: size, height: size * 1.25,
-    fit: BoxFit.contain, excludeFromSemantics: true,
-    errorBuilder: (_, _, _) => const Icon(Icons.broken_image_outlined));
+  Widget build(BuildContext context) {
+    final crop = cropFor(option);
+    final background = option.field == 'background' ? option.id : 'amber';
+    final aura = option.field == 'aura' ? option.id : 'sunrise';
+    final crownCap = option.field != 'hair' &&
+      (option.field != 'headwear' || option.id == 'crown-cap');
+    return ExcludeSemantics(child: SizedBox(width: size, height: size,
+      child: FittedBox(fit: BoxFit.contain, child: SizedBox(width: crop.width, height: crop.height,
+        child: ClipRect(child: OverflowBox(alignment: Alignment.topLeft,
+          minWidth: 320, maxWidth: 320, minHeight: 400, maxHeight: 400,
+          child: Transform.translate(offset: Offset(-crop.left, -crop.top),
+            child: SizedBox(width: 320, height: 400, child: Stack(fit: StackFit.expand, children: [
+              MentiAssetLayer(path: '${MentiVisualCatalog.root}backgrounds/$background.svg'),
+              MentiAssetLayer(path: '${MentiVisualCatalog.root}auras/$aura.svg'),
+              const MentiAssetLayer(path: MentiAssetLayer.core),
+              MentiAssetLayer(path: MentiVisualCatalog.root + option.preview),
+              if (crownCap) const MentiAssetLayer(path: MentiAssetLayer.crownCap),
+            ])),
+          ),
+        )),
+      )),
+    ));
+  }
 }
 
 class MentiReactionRenderer extends StatelessWidget {

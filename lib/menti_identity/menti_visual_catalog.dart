@@ -131,6 +131,7 @@ class MentiVisualOption {
 
 class MentiVisualCatalog {
   static const root = 'assets/images/menti_2_2/';
+  static const previewCrops = <String, List<double>>{'family': [15,5,290,380],'age': [42,74,238,158],'style': [28,202,264,104],'face': [58,151,204,78],'eyes': [52,92,216,81],'hair': [5,0,310,209],'headwear': [0,0,320,126],'outfit': [22,198,276,110],'glasses': [47,96,226,84],'neck': [86,196,150,66],'held': [4,217,312,92],'detail': [57,132,210,75],'back': [21,193,280,126],'accent': [28,221,264,92],'background': [0,0,320,400],'aura': [0,0,320,400],'reaction': [0,0,320,400]};
   static const options = <MentiVisualOption>[
     MentiVisualOption('family', 'boy', 'families/boy.svg', 'previews/family-boy.svg', 1),
     MentiVisualOption('family', 'girl', 'families/girl.svg', 'previews/family-girl.svg', 1),
@@ -166,7 +167,7 @@ class MentiVisualCatalog {
     MentiVisualOption('hair', 'neutral-braid', 'hair/neutral-braid.svg', 'previews/hair-neutral-braid.svg', 1),
     MentiVisualOption('hair', 'neutral-bob', 'hair/neutral-bob.svg', 'previews/hair-neutral-bob.svg', 1),
     MentiVisualOption('hair', 'neutral-crest', 'hair/neutral-crest.svg', 'previews/hair-neutral-crest.svg', 1),
-    MentiVisualOption('headwear', 'crown-cap', 'headwear/crown-cap.svg', 'previews/headwear-crown-cap.svg', 1),
+    MentiVisualOption('headwear', 'crown-cap', 'core/crown-cap.png', 'previews/headwear-crown-cap.svg', 1),
     MentiVisualOption('headwear', 'sport-cap', 'headwear/sport-cap.svg', 'previews/headwear-sport-cap.svg', 1),
     MentiVisualOption('headwear', 'beanie', 'headwear/beanie.svg', 'previews/headwear-beanie.svg', 1),
     MentiVisualOption('headwear', 'headphones', 'headwear/headphones.svg', 'previews/headwear-headphones.svg', 1),

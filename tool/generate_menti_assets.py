@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """Reproducible original Menti 2.2 vector layers, thumbnails and typed catalog.
+Brand revision E: one immutable raster material core + registered vector layers.
 No legacy bitmap is edited; all layers use the same 320 × 400 artboard.
 Run from the repository root. SVGs are Flutter SVG compatible (no filters/fonts).
 """
 import json
+import base64
+import math
+import re
+import subprocess
 from pathlib import Path
 
 ROOT = Path('assets/images/menti_2_2')
@@ -27,10 +32,176 @@ def crown(x,y,s=1):
     return f'<g transform="translate({x} {y}) scale({s})">'+path('M0 0 L8 10 L16 -5 L24 10 L32 0 L28 22 L4 22 Z','url(#gold)','#9b5d16',1.5)+''.join(ellipse(a,b,2.5,2.5,'#ffef9b') for a,b in [(0,0),(16,-5),(32,0)])+'</g>'
 def star(x,y,s=1,color='#ffe09b'):
     return f'<g transform="translate({x} {y}) scale({s})">'+path('M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z',color,'none')+'</g>'
+# Fixed, generated source retained in Git. Reproduction never calls an image API.
+CORE = ROOT / 'core/menti-body.png'
+# Main and thumbnails reference one shared raster core; SVG previews remain
+# transparent vector foregrounds, avoiding 115 embedded bitmap copies.
+CORE_IMAGE = '<image xlink:href="../../assets/images/menti_2_2/core/menti-body.png" x="0" y="0" width="320" height="400"/>'
+# All assets share a lighting direction. These gradients use explicit SVG units.
+DEFS += '''<defs>
+<radialGradient id="eyeWhite" cx=".3" cy=".23" r=".85"><stop stop-color="#fffef8"/><stop offset=".55" stop-color="#fff6e2"/><stop offset=".85" stop-color="#e0c5a1"/><stop offset="1" stop-color="#9b603d"/></radialGradient>
+<radialGradient id="brownEye" cx=".38" cy=".34" r=".66"><stop stop-color="#29140b"/><stop offset=".55" stop-color="#47200c"/><stop offset=".78" stop-color="#b76a24"/><stop offset=".9" stop-color="#6b3518"/><stop offset="1" stop-color="#25130f"/></radialGradient>
+<linearGradient id="mouth" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#190e0d"/><stop offset="1" stop-color="#6c251b"/></linearGradient>
+<linearGradient id="teeth" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fffdf3"/><stop offset="1" stop-color="#d8b6a1"/></linearGradient>
+<radialGradient id="lip" cx=".3" cy=".2" r=".9"><stop stop-color="#ffa7a0"/><stop offset=".6" stop-color="#eb675f"/><stop offset="1" stop-color="#9b3032"/></radialGradient>
+<linearGradient id="hairShine" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="#e1a575"/><stop offset=".22" stop-color="#934e2d"/><stop offset=".6" stop-color="#4a2218"/><stop offset="1" stop-color="#21131c"/></linearGradient>
+<linearGradient id="cap" x1=".1" y1="0" x2=".9" y2="1"><stop stop-color="#c084f1"/><stop offset=".28" stop-color="#8e33d1"/><stop offset=".65" stop-color="#57108b"/><stop offset="1" stop-color="#280a49"/></linearGradient>
+<linearGradient id="charcoal" x1=".15" y1="0" x2=".9" y2="1"><stop stop-color="#5b535b"/><stop offset=".22" stop-color="#302c37"/><stop offset=".6" stop-color="#1d1a23"/><stop offset="1" stop-color="#0d0b12"/></linearGradient>
+</defs>'''
+
+CROPS = {
+ 'family': (15, 5, 290, 380), 'age': (42, 74, 238, 158),
+ 'style': (28, 202, 264, 104), 'face': (58, 151, 204, 78),
+ 'eyes': (52, 92, 216, 81), 'hair': (5, 0, 310, 209),
+ 'headwear': (0, 0, 320, 126), 'outfit': (22, 198, 276, 110),
+ 'glasses': (47, 96, 226, 84), 'neck': (86, 196, 150, 66),
+ 'held': (4, 217, 312, 92), 'detail': (57, 132, 210, 75),
+ 'back': (21, 193, 280, 126), 'accent': (28, 221, 264, 92),
+ 'background': (0,0,320,400), 'aura': (0,0,320,400), 'reaction': (0,0,320,400),
+}
+
+def premium_outfit(id):
+    category=id.removesuffix('-alt');alt=id.endswith('-alt')
+    colors={'basic':'#27232e','party':'#713c89','sport':'#287361','business':'#334860','festival':'#a3596e','legendary':'#44216e','street':'#505e77','cozy':'#a87957','explorer':'#566a4b','creative':'#487985'}
+    c=colors[category]
+    if alt:
+        c={'basic':'#352b49','party':'#9a4774','sport':'#35648c','business':'#63506b','festival':'#b17a3f','legendary':'#202940','street':'#6c4c5c','cozy':'#9d627a','explorer':'#6d603d','creative':'#b27e49'}[category]
+    defs=f'<defs><linearGradient id="outfit-{id}" x1=".1" y1="0" x2="1" y2="1"><stop stop-color="{c}"/><stop offset=".45" stop-color="{c}"/><stop offset="1" stop-color="#16131f"/></linearGradient></defs>'
+    fabric=f'url(#outfit-{id})';b=defs
+    # Padded, squat wraparound silhouette follows the immutable Menti material core.
+    if category!='basic':
+        b+=path('M87 218 Q106 205 126 213 Q160 226 195 212 Q217 209 234 222 L244 263 Q239 284 221 287 L99 287 Q81 280 77 260 Z',fabric,'#201b26',1)
+        b+=path('M90 272 Q159 289 231 273 L226 298 Q187 309 167 294 L159 285 L148 300 Q123 310 87 297 Z','url(#charcoal)','#2e2630',1)
+    if category in ['basic','street','explorer']:
+        b+=path('M87 217 L124 208 Q134 212 148 225 L135 285 Q104 290 80 276 Q72 246 87 217 Z M194 208 Q214 209 235 223 Q248 254 237 278 L185 285 L173 225 Z',fabric,'#17121f',1)
+        b+=path('M125 213 L142 229 L132 281 M193 212 L179 229 L187 281','none','url(#gold)',3)
+        b+=path('M91 250 L120 244 L118 256 L89 263 M201 247 L231 253','none','#807079',1.5)
+        b+=path('M91 222 Q78 235 80 249 M231 224 Q242 237 240 250','none','#83747d',1)
+        b+=path('M103 270 L119 266 M203 266 L222 270','none','#080710',2)
+    if category=='business':
+        b+=path('M129 216 Q159 230 193 216 L175 270 L150 270 Z','url(#teeth)','#938080',1)
+        b+=path('M156 226 L166 226 L175 253 L163 264 L151 252 Z','url(#cap)','#44204d',1)
+        b+=path('M126 214 L111 237 L137 238 L124 250 L145 279 M195 214 L210 238 L185 238 L201 252 L181 279','none','#758090',1.5)
+    if category=='sport':
+        b+=path('M95 225 L111 219 L113 275 M222 226 L206 220 L206 276','none','#e2dfbb',4)
+        b+=rect(136,239,48,29,6,'url(#teeth)')+path('M153 246 L167 246 L158 260','none','#2c5b54',4)
+    if category=='party':b+=''.join(star(x,y,s,'#f4d5a5') for x,y,s in [(113,240,.6),(205,250,.7),(149,275,.4),(184,229,.45)])+path('M104 222 Q159 253 218 222','none','#be99d7',2)
+    if category=='festival':b+=path('M100 224 L119 279 M125 222 L141 283 M155 225 L161 285 M189 222 L186 284 M216 225 L205 280','none','#e6b363',4)+path('M92 266 Q160 282 232 265','none','#693867',5)
+    if category=='legendary':b+=path('M93 224 L124 215 L145 274 L163 286 L180 274 L197 215 L228 225','none','url(#gold)',5)+crown(145,240,.95)+path('M99 266 L129 275 M196 275 L225 266','none','#d3abeb',2)
+    if category=='cozy':
+        b+=path('M124 216 Q158 239 196 216 M87 246 Q158 263 236 246 M87 273 Q159 286 231 272','none','#e4c0a5',5)
+        b+=''.join(path(f'M{x} 250 L{x+7} 260 L{x} 269','none','#725649',1.5) for x in range(102,219,14))
+    if category=='creative':b+=path('M125 227 L117 279 Q158 294 203 280 L193 227 Z','#d9bd91','#aa8c69',1)+rect(142,251,41,23,4,'#a98768')+path('M148 246 L142 230 M159 246 L160 224 M170 246 L181 230','none','#684e82',3)
+    # Fine cloth seams and specular edge detail; no long human legs or narrow wrists.
+    b+=path('M90 296 L139 300 M179 300 L224 295','none','#c9b3ad',3)
+    if alt:b+=path('M85 238 L94 242 M229 240 L239 236','none','#c5a2dd',5)+rect(155,273,13,8,2,'url(#gold)')
+    else:b+=crown(204,228,.48)
+    return b
+
+def _registered(folder, id, body):
+    if folder == 'bases':
+        family, age = id.split('-')
+        # Same species/core at every age; fine markings cannot change anatomy.
+        marks = ''
+        if family == 'girl':
+            marks += ellipse(61,165,7,10,'url(#gold)','#a76625',1)+ellipse(258,165,7,10,'url(#gold)','#a76625',1)
+            marks += path('M73 115 L64 109 M76 109 L70 102 M244 110 L250 102 M247 116 L255 110','none','#432319',2)
+        if family == 'neutral':
+            marks += ellipse(71,177,11,5,'#f6ad57')+ellipse(250,177,11,5,'#f6ad57')
+            marks += path('M69 177 L75 177 M245 177 L251 177','none','#df8b40',1)
+        if age in ['adult','veteran']:
+            marks += path('M55 152 Q60 158 69 159 M251 159 Q261 157 265 150','none','#b3662d',1.5)
+        if age == 'veteran':
+            marks += path('M53 145 L64 148 M53 152 L64 154 M256 147 L266 144 M257 154 L267 151 M90 194 Q95 203 104 202 M215 202 Q224 201 229 194','none','#a76636',1.5)
+            marks += path('M55 118 Q49 148 60 170 M265 118 Q271 148 260 170','none','#d9c9ac',4)
+        return marks
+    if folder in ['families','ages']:
+        source = ('bases/'+id+'-young.svg') if folder == 'families' else ('bases/neutral-'+id+'.svg')
+        return SVG[source]
+    if folder == 'headwear' and id == 'crown-cap':return ''
+    if folder == 'outfits':return premium_outfit(id)
+    if folder in ['faces','eyes','hair','headwear','outfits','styles','accessories','accents']:
+        if folder == 'eyes':
+            return premium_eyes(id)
+        if folder == 'faces':
+            return premium_face(id)
+        if folder in ['outfits','styles','accents'] or (folder == 'accessories' and id in ['chain','scarf','bow','notebook','flower','spark-wand','backpack','cape']):
+            transform='translate(-80 90) scale(1.5 .6)'
+        elif folder == 'headwear':
+            transform='translate(-48 -10) scale(1.3 .95)'
+        else:
+            transform='translate(-48 7) scale(1.3 1.05)'
+        body=body.replace('url(#purple)','url(#cap)').replace('url(#dark)','url(#charcoal)')
+        # Replace flat material swatches with directional, individual gradients.
+        colors=sorted(set(re.findall(r'fill="(#[0-9a-fA-F]{6})"',body)))
+        gradients=''
+        for n,color in enumerate(colors):
+            r,g,b=(int(color[i:i+2],16) for i in (1,3,5))
+            def shade(f):return '#'+''.join(f'{min(255,int(v*f)):02x}' for v in (r,g,b))
+            key=folder+'-'+id+'-mat'+str(n)
+            gradients+=f'<linearGradient id="{key}" x1=".1" y1="0" x2=".8" y2="1"><stop stop-color="{shade(1.42)}"/><stop offset=".35" stop-color="{color}"/><stop offset="1" stop-color="{shade(.5)}"/></linearGradient>'
+            body=body.replace(f'fill="{color}"',f'fill="url(#{key})"')
+        if folder=='hair':
+            body=re.sub(r'fill="url\(#[a-z0-9-]+-mat[0-9]+\)"','fill="url(#hairShine)"',body)
+            body+=path('M115 50 Q135 37 153 43 M178 41 Q201 37 215 55','none','#d3986f',1.3)
+        if folder=='headwear' and id=='crown-cap':
+            body+=path('M114 29 Q97 43 96 67 M204 29 Q223 44 225 66','none','#bc75e8',1.2)
+            body+=path('M105 83 Q166 68 229 85','none','#da9df5',1.3)
+        if folder=='accessories' and id in ['chain','scarf','bow']:transform='translate(-80 108) scale(1.5 .6)'
+        return f'<defs>{gradients}</defs><g transform="{transform}">{body}</g>'
+    if folder=='backgrounds':
+        colors={'amber':'#7c4027','violet':'#51316c','ocean':'#284f66','forest':'#2b5149','rose':'#6b3b52','midnight':'#252a4d'}
+        c=colors[id]
+        return f'<defs><radialGradient id="room" cx=".45" cy=".35" r=".8"><stop stop-color="{c}"/><stop offset="1" stop-color="#11101d"/></radialGradient><radialGradient id="floor"><stop stop-color="{c}" stop-opacity=".75"/><stop offset="1" stop-color="{c}" stop-opacity="0"/></radialGradient></defs>'+rect(0,0,320,400,28,'url(#room)')+ellipse(160,374,154,26,'url(#floor)')
+    if folder=='auras':
+        colors={'sunrise':'#ffbd5e','violet':'#b68ee7','ocean':'#70c4e0','forest':'#8bc29d','starlight':'#ffe7a1','rose':'#e99fbe'}
+        c=colors[id]
+        glow=''.join(ellipse(160,179,143+n*2,164+n*2,'none',c,1) for n in range(3))
+        return '<g opacity=".22">'+glow+'</g>'+''.join(star(x,y,sz,c) for x,y,sz in [(25,84,.35),(294,123,.25),(284,299,.35)])
+    return body
+
+def premium_eyes(id):
+    widths={'round':(31,35),'wide':(35,38),'relaxed':(32,27),'sharp':(32,29)}
+    rx,ry=widths[id];b=''
+    for x in [113,207]:
+        y=134
+        b+=ellipse(x,y+3,rx+4,ry+4,'#c37632')+ellipse(x,y,rx+2,ry+2,'#8d4c27')
+        b+=ellipse(x,y,rx,ry,'url(#eyeWhite)')
+        b+=ellipse(x+4,y+3,20,26 if id in ['round','wide'] else 21,'url(#brownEye)','#3a1c10',1.2)
+        for n in range(30):
+            a=n*math.pi/15
+            b+=path(f'M{x+4+16*math.cos(a):.2f} {y+3+20*math.sin(a):.2f} L{x+4+19*math.cos(a):.2f} {y+3+23*math.sin(a):.2f}','none','#d48a40',.45)
+        b+=ellipse(x+4,y+3,12,18 if id in ['round','wide'] else 14,'#110c0d')
+        b+=ellipse(x-4,y-9,8,9,'#fffef5')+ellipse(x+14,y+14,3.5,4,'#fff1d3')
+        b+=path(f'M{x-rx+3} {y-ry+7} Q{x} {y-ry-7} {x+rx-4} {y-ry+8}','none','#f9d9a2',1.4)
+        browY=86 if id!='sharp' else 88
+        b+=path(f'M{x-27} {browY} Q{x} {browY-14} {x+25} {browY+3}','none','url(#hairShine)',8)
+        b+=path(f'M{x-24} {browY-2} Q{x} {browY-12} {x+18} {browY}','none','#ab713f',1)
+        if id=='relaxed':b+=path(f'M{x-rx} {y-12} Q{x} {y-22} {x+rx} {y-12}','none','#b66e30',6)
+        if id=='sharp':b+=path(f'M{x-rx+2} {y-ry+1} L{x+rx} {y-ry+12}','none','#a45c29',5)
+    return b
+
+def premium_face(id):
+    b=ellipse(160,162,9,5,'#e68b31')+path('M152 162 Q160 168 168 161','none','#bd6a26',1.2)
+    if id=='cheerful':
+        b+=path('M101 174 Q159 208 220 173 Q207 225 160 223 Q119 222 101 174 Z','url(#mouth)','#ad5520',2)
+        b+=path('M110 181 Q160 204 210 180 L202 192 Q161 212 118 192 Z','url(#teeth)','none')
+        b+=path('M136 217 Q152 201 176 213 Q187 219 175 221 L148 222 Z','url(#lip)','none')
+        b+=path('M101 173 Q96 173 94 179 M220 172 Q226 172 228 177','none','#d48632',3)
+    elif id=='calm':b+=path('M114 189 Q160 214 205 189','none','#a04e23',4)+path('M119 191 Q161 212 201 191','none','#ffe4a1',1)
+    elif id=='playful':
+        b+=path('M111 185 Q160 214 212 178 Q205 221 171 219 Z','url(#mouth)','#b16629',1)
+        b+=path('M163 204 Q194 196 188 217 Q176 234 163 220 Z','url(#lip)','#c8645d',1)
+    elif id=='confident':b+=path('M112 197 Q165 205 213 180','none','#9c4b21',4)+path('M211 179 L222 182','none','#c6752b',2)
+    elif id=='sleepy':b+=ellipse(160,199,15,18,'url(#mouth)','#c67930')+ellipse(160,207,9,5,'url(#lip)')
+    else:b+=path('M122 200 Q162 183 201 198','none','#93451d',4)+path('M118 186 L125 181 M197 182 L204 187','none','#c67730',2)
+    return b
+
 def save(folder,id,body):
+    if folder!='previews':body=_registered(folder,id,body)
     p=f'{folder}/{id}.svg'; SVG[p]=body
     target=ROOT/p;target.parent.mkdir(parents=True,exist_ok=True)
-    target.write_text(f'<svg xmlns="http://www.w3.org/2000/svg" width="320" height="400" viewBox="0 0 320 400">{DEFS}{body}</svg>\n')
+    target.write_text(f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="320" height="400" viewBox="0 0 320 400">{DEFS}{body}</svg>\n')
     return p
 
 def add(field,id,hu,en,folder,body,level=1):
@@ -178,6 +349,9 @@ for i,(id,hu,en) in enumerate(reactions):
 # Each option has a composed, dedicated image preview, not a stock icon.
 def standard():
     return [SVG['backgrounds/amber.svg'],SVG['auras/sunrise.svg'], SVG['bases/boy-young.svg'], SVG['outfits/basic.svg'],SVG['styles/classic.svg'],SVG['hair/boy-crop.svg'],SVG['faces/cheerful.svg'],SVG['eyes/round.svg'],SVG['headwear/crown-cap.svg']]
+for o in OPTIONS:
+    if o['field']=='headwear' and o['id']=='crown-cap':o['asset']='core/crown-cap.png'
+SVG['core/crown-cap.png']=''
 for opt in OPTIONS:
     layers=standard();f=opt['field'];a=opt['asset']
     idx={'background':0,'aura':1,'family':2,'age':2,'outfit':3,'style':4,'hair':5,'face':6,'eyes':7,'headwear':8}.get(f)
@@ -188,7 +362,7 @@ for opt in OPTIONS:
     if f=='hair':layers.pop(8) # previews must actually show the whole hairstyle
     # Duplicate defs inside one SVG are unnecessary: each layer body references common defs.
     preview=f"{f}-{opt['id']}"
-    save('previews',preview,''.join(layers))
+    save('previews',preview,''.join(layers[2:]))
     opt['preview']=f'previews/{preview}.svg'
 
 # Typed Dart catalog and generated ARB labels share one source of truth.
@@ -204,7 +378,7 @@ dart=["// Generated by tool/generate_menti_assets.py. Do not edit by hand.","imp
   String get rewardId => '$field:$id';
   String label(AppLocalizations s) => switch ('$field:$id') {''']
 for o in OPTIONS:dart.append(f"    '{o['field']}:{o['id']}' => s.avatar{key(o['field'])}{key(o['id'])},")
-dart += ["    _ => id,",'  };','}', '', 'class MentiVisualCatalog {',"  static const root = 'assets/images/menti_2_2/';",'  static const options = <MentiVisualOption>[']
+dart += ["    _ => id,",'  };','}', '', 'class MentiVisualCatalog {',"  static const root = 'assets/images/menti_2_2/';",'  static const previewCrops = <String, List<double>>{'+','.join("'"+k+"': ["+','.join(map(str,v))+']' for k,v in CROPS.items())+'};', '  static const options = <MentiVisualOption>[']
 for o in OPTIONS:dart.append(f"    MentiVisualOption('{o['field']}', '{o['id']}', '{o['asset']}', '{o['preview']}', {o['level']}),")
 dart+=['  ];', '''  static List<MentiVisualOption> forField(String field, {String? family}) =>
       options.where((o) => o.field == field && (field != 'hair' || family == null ||
@@ -220,8 +394,8 @@ for locale in ['hu','en']:
     for o in OPTIONS:data[f"avatar{key(o['field'])}{key(o['id'])}"]=o[locale]
     p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
 Path('docs/2.2-menti-asset-catalog-hu.md').write_text('# Menti 2.2 – vektorréteg-katalógus\n\n'
-  'Saját, új SVG-rétegek, változatlan legacy PNG-k. Közös 320×400 koordinátarendszer; '
-  'színes, árnyalt vektoros illusztráció, nem fotórealisztikus 3D. '
+  '2.2-E: egy verziókezelt, generált raster anyagmag és regisztrált SVG-rétegek, változatlan legacy PNG-k. Közös 320×400 koordinátarendszer; '
+  'tömzsi, gömbölyded Menti-arányok; 2D raster + vektor, nem valódi 3D modell. '
   'Narancs test, barna szem, lila koronás sapka és fekete/arany alapruha. '
   'A családok sziluettje, hajai és életkorrajzolata eltér. '
   'A haj teljes megjelenéséhez fejfedő nélkül érdemes előnézni.\n\n'
