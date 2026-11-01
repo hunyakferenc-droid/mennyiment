@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../app_language.dart';
+import '../menti_motion.dart';
 import '../l10n/generated/app_localizations.dart';
 import 'menti_avatar_renderer.dart';
 import 'menti_identity_controller.dart';
@@ -143,6 +144,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
     ]));
   }
   Widget _editor(AppLocalizations s) => ListView(key: ValueKey('studio-tab-$_tab'), children: [
+    if (_tab == 0) const Padding(padding: EdgeInsets.all(18), child: MentiMotionPreference()),
     if (_tab == 5) _presets(s) else ...[for (final f in _sections[_tab]) _choices(f, s)],
     const SizedBox(height: 24),
   ]);
