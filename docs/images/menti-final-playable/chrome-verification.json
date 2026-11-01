@@ -1,0 +1,27 @@
+{
+  "browser": "154.0.8037.57",
+  "sourceCommit": "4f0ff9ecfe49eaa910f5a082ac09290f9d8edcff",
+  "version": {
+    "app_name": "mennyiment",
+    "version": "2.2.0",
+    "build_number": "22",
+    "package_name": "mennyiment"
+  },
+  "checks": [
+    "HU to EN selection and complete adult onboarding",
+    "Studio outfit editing and confirmed save",
+    "Reload preserves the full saved identity and skips completed onboarding",
+    "1280px desktop Studio loads the saved profile",
+    "320px minor onboarding keeps alcohol logging unavailable"
+  ],
+  "runtimeErrors": [],
+  "viewports": [
+    "390x844",
+    "1280x900",
+    "320x740"
+  ],
+  "reducedMotion": true,
+  "navigationCancellations": [
+    "https://fonts.gstatic.com/s/notocoloremoji/v32/Yq6P-KqIXTD0t4D9z1ESnKM3-HpFabsE4tq3luCC7p-aXxcn.6.woff2: net::ERR_ABORTED"
+  ]
+}
