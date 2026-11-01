@@ -180,4 +180,24 @@ void main() {
     expect(entries[MentiIdentityStore.key], {'type': 'string', 'value': data});
     expect(MentiIdentityDocument.decode((entries[MentiIdentityStore.key] as Map)['value']).presets.single.favorite, isTrue);
   });
+  test('XP and reward changes after migration read do not block appearance save', () async {
+    SharedPreferences.setMockInitialValues({MentiProfileStorage.legacyStyleKey: 'Lány Menti'});
+    final store = MentiIdentityStore(); await store.load();
+    final prefs = await SharedPreferences.getInstance();
+    await MentiProfileStorage.migrate(prefs);
+    await prefs.setString('mennyiment_menti_xp_v2', '{"xp":50}');
+    await prefs.setStringList('mennyiment_menti_rewards_v1', ['future:new']);
+    expect(await store.save(store.document), isTrue);
+    expect(store.document.unlocks.unlocked, contains('future:new'));
+    expect(prefs.getString('mennyiment_menti_xp_v2'), '{"xp":50}');
+  });
+  test('actual legacy appearance edit after load blocks first migration save', () async {
+    final store = MentiIdentityStore(); await store.load();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(MentiProfileStorage.characterStyleKey, 'girl');
+    expect(await store.save(store.document), isFalse);
+    expect(store.error, 'conflict');
+    expect(prefs.containsKey(MentiIdentityStore.key), isFalse);
+  });
+
 }

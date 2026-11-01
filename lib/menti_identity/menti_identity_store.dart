@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -32,21 +33,28 @@ class MentiIdentityStore {
     }
   }
 
+  static Map<String, Object?> _legacyValues(SharedPreferences prefs) {
+    const keys = {
+      'mennyiment_menti_style_v1', 'mennyiment_character_style_v2',
+      'mennyiment_outfit_v2', 'mennyiment_studio_background_v2',
+      'mennyiment_age_group_v1', 'mennyiment_character_name_v1',
+      'mennyiment_menti_age_style_v1', 'mennyiment_menti_accessory_v1',
+      'mennyiment_menti_aura_v1', 'mennyiment_mood_v2',
+      'mennyiment_character_color_v2', 'mennyiment_nickname_v1',
+      'mennyiment_hat_v1', 'mennyiment_accessory_v1', 'mennyiment_avatar_v1',
+      'mennyiment_menti_rewards_v1',
+    };
+    return {for (final k in prefs.getKeys())
+      if (keys.contains(k) || k.startsWith('mennyiment_character_')) k: prefs.get(k)};
+  }
+
   Future<void> load() => _serial(() async {
     writable = false;
     error = null;
     final prefs = await open();
     await prefs.reload();
     _raw = prefs.get(key);
-    final legacy = <String, Object?>{
-      for (final k in prefs.getKeys())
-        if (k.startsWith('mennyiment_') && k != key &&
-            (k.contains('menti_') || k.contains('character_') ||
-             k == 'mennyiment_outfit_v2' || k == 'mennyiment_age_group_v1' ||
-             k == 'mennyiment_mood_v2' || k == 'mennyiment_nickname_v1' ||
-             k == 'mennyiment_hat_v1' || k == 'mennyiment_accessory_v1' ||
-             k == 'mennyiment_avatar_v1')) k: prefs.get(k),
-    };
+    final legacy = _legacyValues(prefs);
     migrated = _raw == null;
     try {
       document = _raw == null ? MentiIdentityDocument.fromLegacy(legacy)
@@ -69,17 +77,18 @@ class MentiIdentityStore {
       try {
         prefs = await open();
         await prefs.reload();
-        final original = document.toJson()['migration'];
-        final legacy = original is Map ? original['original'] : null;
-        final legacyChanged = _raw == null && legacy is Map && legacy.entries.any((e) =>
-          prefs!.get(e.key as String).toString() != e.value.toString());
+        final latestLegacy = _legacyValues(prefs);
+        final legacyChanged = _raw == null &&
+          jsonEncode(MentiIdentityDocument.fromLegacy(latestLegacy).profile.toJson()) !=
+          jsonEncode(document.profile.toJson());
         if (prefs.get(key) != _raw || legacyChanged) {
           writable = false;
           error = 'conflict';
           return false;
         }
         final preservedUnlocks = MentiUnlockState(
-          unlocked: {...document.unlocks.unlocked, ...next.unlocks.unlocked},
+          unlocked: {...document.unlocks.unlocked, ...next.unlocks.unlocked,
+            ...MentiIdentityDocument.fromLegacy(latestLegacy).unlocks.unlocked},
           seen: {...document.unlocks.seen, ...next.unlocks.seen},
           extras: {...document.unlocks.toJson(), ...next.unlocks.toJson()});
         // Merge top-level extension fields from the loaded document as well.
