@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../app_language.dart';
 import '../menti_experience_settings.dart';
 import 'menti_identity.dart';
+import 'menti_identity_controller.dart';
 import 'menti_visual_catalog.dart';
 
 /// Pure, deterministic composition. Unknown IDs render a known safe layer without
@@ -76,4 +77,28 @@ class MentiReactionRenderer extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MentiAvatarRenderer(profile: profile,
     reaction: mood ?? profile.reaction.style, size: size);
+}
+
+/// Runtime screens share the saved identity. Legacy rendering is only available
+/// to standalone consumers that have not mounted the application identity scope.
+class MentiCurrentAvatar extends StatelessWidget {
+  const MentiCurrentAvatar({super.key, required this.legacyChild,
+    this.size = 160, this.reaction, this.outfit});
+  final Widget legacyChild;
+  final double size;
+  final String? reaction;
+  final String? outfit;
+  @override
+  Widget build(BuildContext context) {
+    final identity = MentiIdentityScope.of(context);
+    if (identity == null) return legacyChild;
+    if (!identity.ready) { return SizedBox(width: size, height: size * 1.25,
+      child: Center(child: identity.error == null ? const CircularProgressIndicator()
+        : Text(appStrings(context).avatarReadError))); }
+    var profile = identity.profile;
+    if (outfit != null) { profile = profile.copyWith(
+      visual: profile.visual.withValues({'outfit': outfit!})); }
+    return MentiAvatarRenderer(profile: profile, size: size,
+      reaction: reaction == 'personality' ? profile.reaction.style : reaction);
+  }
 }

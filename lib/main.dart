@@ -17,6 +17,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_reactions.dart';
 import 'drink_catalog.dart';
 import 'avatar.dart';
+import 'menti_identity/menti_identity_controller.dart';
+import 'menti_identity/menti_studio_page.dart';
 import 'menti_character_setup.dart';
 import 'menti_profile_storage.dart';
 import 'statistics.dart';
@@ -95,7 +97,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
       }
     return ListenableBuilder(listenable: language, builder: (context, _) => AppLanguageScope(language: language, child: MaterialApp(
       key: ValueKey(_epoch),
-      builder: (context, child) => MentiExperienceScope(child: MentiMotionScope(child: child!)),
+      builder: (context, child) => MentiIdentityScope(child: MentiExperienceScope(child: MentiMotionScope(child: child!))),
       locale: language.locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -204,7 +206,7 @@ void updateMentiMessage(MentiMood mood) {
     try {
       await Navigator.of(context).push(MaterialPageRoute<void>(
         builder: (_) => DailyMentiPage(
-          characterName: _characterName,
+          characterName: MentiIdentityScope.of(context)?.profile.name ?? _characterName,
           assetPath: _characterAsset,
         ),
       ));
@@ -751,20 +753,9 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> _openCharacterSetup() async {
-    final saved = await Navigator.push<bool>(context,
-      MaterialPageRoute(builder: (_) => const MentiCharacterSetupPage()));
-    if (saved == true && mounted) {
-      await _loadReflections();
-      final prefs = await SharedPreferences.getInstance();
-      await MentiProfileStorage.migrate(prefs);
-      if (!mounted) return;
-      setState(() {
-        _characterAsset = MentiProfileStorage.assetPath(prefs);
-        _characterName = prefs.getString(MentiCharacterProfile.nameKey) ?? 'Menti';
-        _characterAccessory = prefs.getString(MentiCharacterProfile.accessoryKey) ?? 'Nincs';
-        _characterAura = prefs.getString(MentiCharacterProfile.auraKey) ?? 'Narancs';
-      });
-    }
+    await Navigator.of(context).push(MaterialPageRoute<void>(
+      builder: (_) => const MentiStudioPage()));
+    if (mounted) await _loadReflections();
   }
 
   void _openAvatar() {
@@ -1040,18 +1031,20 @@ void updateMentiMessage(MentiMood mood) {
                         child: MentiEvolution(
                           assetPath: _characterAsset,
                           reaction: mentiReaction,
+                          visualReaction: mentiReaction == 0 ? null :
+                            _mentiMood == MentiMood.drinkAdded ? 'focused' : 'personality',
                           level: _mentiLevel,
                           size: width < 380 ? 100 : 126,
                         ),
                       ),
-                      if (_characterAccessory != 'Nincs')
+                      if (MentiIdentityScope.of(context) == null && _characterAccessory != 'Nincs')
                         Text(switch (_characterAccessory) {
                           'Korona' => '👑', 'Napszemüveg' => '🕶️',
                           'Bulikalap' => '🎉', 'Csillag' => '⭐', _ => '',
                         }, style: const TextStyle(fontSize: 25)),
                     ]),
                 reactionToken: mentiReaction,
-                name: _characterName,
+                name: MentiIdentityScope.of(context)?.profile.name ?? _characterName,
                 xp: _reflectionXp,
                 message: MentiReactions.message(_mentiMood,
                   index: mentiMessageIndex, locale: locale),

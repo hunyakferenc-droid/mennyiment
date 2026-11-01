@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'daily_menti_store.dart';
 import 'drink_journal.dart';
 import 'menti_character_catalog.dart';
+import 'menti_identity/menti_identity.dart';
+import 'menti_identity/menti_identity_store.dart';
 import 'menti_character_setup.dart';
 import 'menti_completion.dart';
 import 'menti_profile_storage.dart';
@@ -37,7 +39,8 @@ class HubRead<T> {
 }
 
 class HubProfile {
-  const HubProfile(this.name, this.family, this.outfit);
+  const HubProfile(this.name, this.family, this.outfit, {this.identity});
+  final MentiIdentityProfile? identity;
   final String name;
   final MentiCharacterFamily family;
   final MentiOutfit outfit;
@@ -87,7 +90,13 @@ class PersonalHubSnapshot {
             ? values[MentiProfileStorage.legacyStyleKey] : null);
     final outfit = values[MentiProfileStorage.outfitKey];
     final hasProfile = family != null || outfit != null;
-    final profile = HubRead.decode<HubProfile>(hasProfile ? true : null, (_) {
+    final newIdentity = values[MentiIdentityStore.key];
+    final profile = newIdentity != null ? HubRead.decode<HubProfile>(newIdentity, (raw) {
+      final identity = MentiIdentityDocument.decode(raw).profile;
+      return HubProfile(identity.name,
+        MentiCharacterFamily.resolve(identity.visual.value('family')) ?? MentiCharacterFamily.boy,
+        MentiOutfit.resolve(identity.visual.value('outfit')) ?? MentiOutfit.basic, identity: identity);
+    }) : HubRead.decode<HubProfile>(hasProfile ? true : null, (_) {
       final resolvedFamily = MentiCharacterFamily.resolve(family);
       final resolvedOutfit = MentiOutfit.resolve(outfit);
       final name = values[MentiCharacterProfile.nameKey];

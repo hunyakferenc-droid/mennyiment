@@ -6,7 +6,8 @@ import 'menti_xp_store.dart';
 import 'menti_evolution.dart';
 import 'menti_profile_storage.dart';
 import 'menti_character_catalog.dart';
-import 'menti_character_setup.dart';
+import 'menti_identity/menti_studio_page.dart';
+import 'menti_identity/menti_identity_controller.dart';
 import 'menti_rewards.dart';
 import 'menti_reward_widgets.dart';
 import 'menti_reactions.dart';
@@ -86,6 +87,8 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
           _message = null;
         }
       });
+      await MentiIdentityScope.of(context)?.refreshXp();
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(appStrings(context).evolutionSaved(state.xp - before))));
     } catch (error, stack) {
@@ -132,7 +135,7 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
               MentiPanel(child: Column(children: [
                 MentiEvolution(size: 170, reaction: _reaction,
                   level: state.level, assetPath: _asset),
-                Text('Menti • ${s.evolutionLevel(state.level)}'),
+                Text('${MentiIdentityScope.of(context)?.profile.name ?? 'Menti'} • ${s.evolutionLevel(state.level)}'),
                 MentiLevelIndicator(xp: state.xp),
                 if (_message != null) ...[
                   const SizedBox(height: 12),
@@ -148,7 +151,7 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
                 label: Text(s.evolutionWardrobe),
                 onPressed: _busy ? null : () async {
                   await Navigator.of(context).push(MaterialPageRoute<void>(
-                    builder: (_) => const MentiCharacterSetupPage()));
+                    builder: (_) => const MentiStudioPage()));
                   if (mounted) await _load();
                 },
               ),

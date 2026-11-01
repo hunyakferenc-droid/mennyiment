@@ -4,6 +4,9 @@ import 'l10n/generated/app_localizations.dart';
 import 'menti_character_catalog.dart';
 import 'menti_rewards.dart';
 import 'menti_xp_store.dart';
+import 'menti_identity/menti_avatar_renderer.dart';
+import 'menti_identity/menti_identity_controller.dart';
+import 'menti_identity/menti_visual_catalog.dart';
 
 String outfitName(AppLocalizations s, MentiOutfit outfit) => switch (outfit) {
   MentiOutfit.basic => s.evolutionBasic,
@@ -47,6 +50,23 @@ class MentiNextReward extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = appStrings(context);
     final next = MentiRewards.next(unlocked, assets);
+    final identity = MentiIdentityScope.of(context);
+    if (identity != null && identity.ready) {
+      final remaining = MentiVisualCatalog.options.where((o) => o.level > MentiXpState.levelFor(xp) &&
+        !identity.draft.unlocks.unlocked.contains(o.rewardId)).toList()
+        ..sort((a, b) => a.level.compareTo(b.level));
+      final reward = remaining.isEmpty ? null : remaining.first;
+      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(s.evolutionNext, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        if (reward == null) Text(s.evolutionAll) else ...[
+          Center(child: MentiAvatarRenderer(size: 140, profile: identity.profile.copyWith(
+            visual: identity.profile.visual.withValues({reward.field: reward.id})))),
+          Text(reward.label(s)), Text(s.evolutionUnlock(reward.level,
+            ((reward.level - 1) * 50 - xp).clamp(0, 9007199254740991))),
+        ],
+        Text(s.evolutionPolicy),
+      ]);
+    }
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(s.evolutionNext, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       const SizedBox(height: 10),

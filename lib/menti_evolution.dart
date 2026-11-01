@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'menti_motion.dart';
 import 'menti_experience_settings.dart';
+import 'menti_identity/menti_avatar_renderer.dart';
 
 /// Menti Evolution: drop-in character widget for the existing PNG asset.
 /// No additional packages required.
@@ -13,8 +14,10 @@ class MentiEvolution extends StatefulWidget {
     this.level = 1,
     this.assetPath = 'assets/images/menti_open.png',
     this.onTap,
+    this.visualReaction,
   });
 
+  final String? visualReaction;
   final double size;
   final int reaction;
   final int level;
@@ -152,7 +155,9 @@ class _MentiEvolutionState extends State<MentiEvolution>
                 ],
               );
             },
-            child: Image.asset(
+            child: MentiCurrentAvatar(size: widget.size,
+              reaction: widget.visualReaction ?? (widget.reaction == 0 ? null : 'personality'),
+              legacyChild: Image.asset(
               widget.assetPath,
               cacheWidth: (widget.size * MediaQuery.devicePixelRatioOf(context))
                   .ceil().clamp(1, 1024),
@@ -163,7 +168,7 @@ class _MentiEvolutionState extends State<MentiEvolution>
               errorBuilder: (_, _, _) => const Center(
                 child: Text('Menti képe nem található'),
               ),
-            ),
+            )),
           ),
         ),
       ),
