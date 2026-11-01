@@ -1,0 +1,20 @@
+{
+  "boy": {
+    "source": "docs/images/menti-final-playable/boy-ages.png",
+    "derivedAsset": "assets/images/menti_2_2/reference/boy-hairless.png",
+    "sha256": "5cef5254b001ae16238c332634790ba1ede8637fc5bf8c5b63d691818c9412cd",
+    "purpose": "New source-derived hairless master for replaceable hair; original reference unchanged."
+  },
+  "girl": {
+    "source": "docs/images/menti-final-playable/girl-ages.png",
+    "derivedAsset": "assets/images/menti_2_2/reference/girl-hairless.png",
+    "sha256": "4aac28e21037a2c2e8c82497e6cee0e320b3dfacf7e28cdb7ae038618f306524",
+    "purpose": "New source-derived hairless master for replaceable hair; original reference unchanged."
+  },
+  "neutral": {
+    "source": "docs/images/menti-final-playable/neutral-ages.png",
+    "derivedAsset": "assets/images/menti_2_2/reference/neutral-hairless.png",
+    "sha256": "c4ed3b9d28f8166ecf6f83ce242e33f3c7dfcfd291798260c8f2c4f02e4710a4",
+    "purpose": "New source-derived hairless master for replaceable hair; original reference unchanged."
+  }
+}

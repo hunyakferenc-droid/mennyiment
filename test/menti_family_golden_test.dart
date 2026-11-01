@@ -29,7 +29,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(tester.takeException(),isNull);
       await expectLater(find.byKey(const ValueKey('family-grid')),
-        matchesGoldenFile('goldens/menti_final_families_${cap ? 'classic' : 'uncovered'}.png'));
+        matchesGoldenFile('goldens/menti_221_families_${cap ? 'classic' : 'uncovered'}.png'));
       await tester.pumpWidget(const SizedBox.shrink());
     });
   }

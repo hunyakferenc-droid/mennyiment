@@ -6,6 +6,8 @@ import 'app_language.dart';
 import 'data_backup_page.dart';
 import 'menti_access.dart';
 import 'menti_identity/menti_avatar_renderer.dart';
+import 'menti_identity/menti_reference_rig.dart';
+import 'menti_identity/menti_visual_catalog.dart';
 import 'menti_identity/menti_identity_controller.dart';
 
 /// Explicit age declaration for all installs; existing profiles bypass creation.
@@ -91,7 +93,21 @@ class _MentiStartGateState extends State<MentiStartGate> {
             key: ValueKey('start-$field-${option.id}'),
             label: Text(option.label(s)),
             selected: identity.draft.profile.visual.value(field) == option.id,
-            onSelected: _busy ? null : (_) => identity.choose(option),
+            onSelected: _busy
+                ? null
+                : (_) {
+                    identity.choose(option);
+                    if (field == 'family' || field == 'age') {
+                      final v = identity.draft.profile.visual;
+                      final rig = MentiReferenceRig.of(
+                        v.value('family'),
+                        v.value('age'),
+                      );
+                      identity.choose(
+                        MentiVisualCatalog.resolve('hair', rig.hairId),
+                      );
+                    }
+                  },
           ),
       ],
     );

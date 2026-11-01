@@ -528,7 +528,7 @@ class MentiPremiumComposition extends StatelessWidget {
     'eyes': [80, 40, 170, 100],
     'hair': [35, 0, 250, 190],
     'headwear': [35, 0, 250, 145],
-    'outfit': [40, 135, 240, 265],
+    'outfit': [40, 145, 240, 255],
     'glasses': [80, 45, 170, 100],
     'neck': [95, 120, 140, 80],
     'held': [0, 210, 320, 125],
@@ -564,7 +564,9 @@ class MentiPremiumComposition extends StatelessWidget {
       MentiVisualCatalog.root + resolve(p, 'aura').asset,
       if (resolve(p, 'back').id != 'none')
         MentiVisualCatalog.root + resolve(p, 'back').asset,
-      rig.asset,
+      resolve(p, 'hair').id == rig.hairId
+          ? rig.asset
+          : rig.asset.replaceFirst('.png', '-hairless.png'),
       if (resolve(p, 'outfit').id != 'basic')
         '${MentiPremiumAtlas.root}outfits.png',
       if (resolve(p, 'hair').id != rig.hairId)
@@ -596,13 +598,18 @@ class MentiPremiumComposition extends StatelessWidget {
       'orange': const Color(0xFFFFC57E),
     }[id('accent')];
     final full = Path()..addRect(const Rect.fromLTWH(0, 0, 320, 400));
-    final head = Path()..addRect(Rect.fromLTWH(0, 0, 320, neckY + 4));
-    final body = Path()..addRect(Rect.fromLTWH(0, neckY, 320, 400 - neckY));
-    final faceMask = Path()..addOval(face);
+    final head = nativeHair
+        ? Path.combine(
+            PathOperation.union,
+            Path()..addRect(Rect.fromLTWH(0, 0, 320, neckY - 12)),
+            rig.mask('headSkin'),
+          )
+        : rig.mask('cleanHeadSkin');
     Widget plate({Path? part, Color? tint, bool expression = false}) =>
         Positioned.fill(
           child: MentiReferencePlate(
             rig: rig,
+            hairless: !nativeHair,
             part: part,
             tint: tint,
             eyeStyle: expression ? id('eyes') : 'round',
@@ -666,13 +673,14 @@ class MentiPremiumComposition extends StatelessWidget {
       face.center.dx + (id('family') == 'girl' ? 91 : 100),
       397,
     );
-    final hairTarget = Rect.fromLTRB(
-      face.left - 16,
-      0,
-      face.right + 16,
-      ['braid', 'waves', 'curls', 'crest'].any((h) => id('hair') == 'girl-$h')
-          ? neckY + 48
-          : face.bottom + 3,
+    final hairSource = MentiPremiumAtlas.rects['hair/${id('hair')}']!;
+    final hairWidth = face.width + 32;
+    final hairHeight = hairWidth * hairSource.height / hairSource.width;
+    final hairTarget = Rect.fromLTWH(
+      face.center.dx - hairWidth / 2,
+      face.top - hairHeight * .30,
+      hairWidth,
+      hairHeight,
     );
     // Hair and head equipment leave the original, family-specific face visible.
     Path faceWindow(Rect target) => Path()
@@ -714,44 +722,57 @@ class MentiPremiumComposition extends StatelessWidget {
             vector('aura'),
             if (id('back') != 'none')
               vector('back', target: const Rect.fromLTWH(45, 145, 230, 205)),
-            if (nativeHair && nativeOutfit)
-              plate(part: full, expression: true)
-            else ...[
-              // Native head and face are never replaced with a generic doll head.
-              if (nativeOutfit && nativeHair) plate(part: body),
-              sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
-              // Separate natural source hands, fitted to the sleeve opening.
+            if (nativeOutfit) ...[
+              plate(part: full, expression: true),
+              if (accent != null)
+                plate(part: rig.mask('garments'), tint: accent),
+            ] else ...[
+              // Real source hands stay behind the sleeve edge, never generic
+              // hand shapes or a body-sized rectangle sampled from an atlas.
               for (final right in [false, true])
-                sprite(
-                  'bodies/${id('family')}-${id('age')}-${right ? 'right' : 'left'}-hand',
-                  Rect.fromLTWH(
-                    right ? outfitTarget.right - 40 : outfitTarget.left + 6,
-                    neckY + (397 - neckY) * .39,
-                    34,
-                    48,
-                  ),
-                  mask: _normalizedHand(
-                    MentiPremiumAtlas
-                        .handOutlines['bodies/${id('family')}-${id('age')}-${right ? 'right' : 'left'}-hand']!,
+                Positioned.fill(
+                  child: LayoutBuilder(
+                    builder: (context, c) {
+                      final path = rig.mask(right ? 'rightHand' : 'leftHand');
+                      final bounds = path.getBounds();
+                      final target = Rect.fromLTWH(
+                        right ? outfitTarget.right - 40 : outfitTarget.left + 6,
+                        neckY + (397 - neckY) * .39,
+                        34,
+                        48,
+                      );
+                      return Transform(
+                        transform: Matrix4.identity()
+                          ..translateByDouble(
+                            target.left -
+                                bounds.left * target.width / bounds.width,
+                            target.top -
+                                bounds.top * target.height / bounds.height,
+                            0,
+                            1,
+                          )
+                          ..scaleByDouble(
+                            target.width / bounds.width,
+                            target.height / bounds.height,
+                            1,
+                            1,
+                          ),
+                        child: MentiReferencePlate(rig: rig, part: path),
+                      );
+                    },
                   ),
                 ),
-              if (nativeHair)
-                plate(part: head, expression: true)
-              else ...[
-                // A detailed source face keeps its own contours, lashes and nose.
-                plate(part: faceMask, expression: true),
-                sprite(
-                  'hair/${id('hair')}',
-                  hairTarget,
-                  color: id('age') == 'veteran'
-                      ? const Color(0xFFE3DFE8)
-                      : null,
-                  mask: faceWindow(hairTarget),
-                ),
-              ],
+              plate(part: head, expression: true),
+              sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
+              if (nativeHair) plate(part: rig.mask('hair')),
             ],
-            if (nativeOutfit && nativeHair && accent != null)
-              plate(part: body, tint: accent),
+            if (!nativeHair)
+              sprite(
+                'hair/${id('hair')}',
+                hairTarget,
+                color: id('age') == 'veteran' ? const Color(0xFFE3DFE8) : null,
+                mask: faceWindow(hairTarget),
+              ),
             if (id('style') != 'classic')
               vector(
                 'style',
@@ -801,9 +822,6 @@ class MentiPremiumComposition extends StatelessWidget {
       ),
     );
   }
-
-  static Path _normalizedHand(List<Offset> points) =>
-      Path()..addPolygon(points, true);
 }
 
 class _RegisteredClipper extends CustomClipper<Path> {

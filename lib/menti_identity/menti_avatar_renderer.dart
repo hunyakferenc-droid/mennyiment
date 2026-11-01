@@ -8,6 +8,7 @@ import 'menti_identity_controller.dart';
 import 'menti_visual_catalog.dart';
 import 'menti_family_layout.dart';
 import 'menti_premium_renderer.dart';
+import 'menti_reference_rig.dart';
 import 'menti_premium_motion.dart';
 
 /// Pure, deterministic composition. Unknown IDs render a known safe layer without
@@ -55,7 +56,7 @@ class MentiAvatarRenderer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final activeReaction = MentiExperienceScope.reactionsOf(context) ? reaction : null;
-    final paths = MentiPremiumComposition.assets;
+    final paths = MentiPremiumComposition.layers(profile,reaction:activeReaction,showBackground:showBackground);
     return Semantics(label: appStrings(context).avatarPreview(profile.name), image: true,
       child: ExcludeSemantics(child: RepaintBoundary(child: SizedBox(
         width: size, height: size * 1.25,
@@ -152,7 +153,10 @@ class MentiPreviewRenderer extends StatelessWidget {
     if (option.field == 'reaction') { return base.copyWith(reaction:
       MentiReactionProfile({...base.reaction.toJson(), 'style': option.id})); }
     final values = {option.field: option.id};
-    if (option.field == 'family') values['hair'] = '${option.id}-crop';
+    if (option.field == 'family') {
+      values['hair'] = MentiReferenceRig.of(option.id,
+      MentiVisualCatalog.resolve('age', base.visual.value('age')).id).hairId;
+    }
     if (option.field == 'style') { values['outfit'] =
       {'classic':'basic','sporty':'sport'}[option.id] ?? option.id; }
     return base.copyWith(visual: base.visual.withValues(values));

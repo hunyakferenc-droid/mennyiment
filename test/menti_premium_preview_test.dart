@@ -85,7 +85,7 @@ void main() {
                 as RenderRepaintBoundary;
         final image = await boundary.toImage();
         final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-        File('docs/images/menti-final-playable/runtime-nine.png')
+        File('docs/images/menti-2.2.1/runtime-mixed-options.png')
             .writeAsBytesSync(bytes!.buffer.asUint8List());
         image.dispose();
       });
@@ -179,7 +179,7 @@ void main() {
                 as RenderRepaintBoundary;
         final image = await boundary.toImage();
         final data = await image.toByteData(format: ui.ImageByteFormat.png);
-        File('docs/images/menti-final-playable/runtime-115-options.png')
+        File('docs/images/menti-2.2.1/runtime-115-options.png')
             .writeAsBytesSync(data!.buffer.asUint8List());
         image.dispose();
       });

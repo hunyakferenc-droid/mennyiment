@@ -1,6 +1,10 @@
 import 'dart:ui' as ui;
+import 'dart:math' as math;
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+
+import 'menti_reference_masks.dart';
 
 /// A registered, uniformly scaled view of an unchanged reference PNG. All source
 /// coordinates refer to the original 1942 × 809 artboards, never a redrawn body.
@@ -27,6 +31,9 @@ class MentiReferenceRig {
     'assets/images/menti_2_2/reference/boy.png',
     'assets/images/menti_2_2/reference/girl.png',
     'assets/images/menti_2_2/reference/neutral.png',
+    'assets/images/menti_2_2/reference/boy-hairless.png',
+    'assets/images/menti_2_2/reference/girl-hairless.png',
+    'assets/images/menti_2_2/reference/neutral-hairless.png',
   ];
   static const all = [
     MentiReferenceRig(
@@ -131,6 +138,21 @@ class MentiReferenceRig {
   ];
   static MentiReferenceRig of(String family, String age) =>
       all.firstWhere((r) => r.family == family && r.age == age);
+  static final _maskCache = <String, Path>{};
+  Path mask(String kind) => _maskCache.putIfAbsent('$family-$age/$kind', () {
+    final result = Path()..fillType = PathFillType.evenOdd;
+    for (final contour
+        in MentiReferenceMasks.contours['$family-$age']![kind]!) {
+      result.addPolygon([
+        for (final p in contour)
+          Offset(
+            target.left + (p.dx - originX) * target.width / 520,
+            p.dy * 400 / 820,
+          ),
+      ], true);
+    }
+    return result;
+  });
   Rect register(Rect original) => Rect.fromLTWH(
     target.left + (original.left - originX) * target.width / 520,
     original.top * 400 / 820,
@@ -152,12 +174,15 @@ class MentiReferencePlate extends StatefulWidget {
     this.faceStyle = 'cheerful',
     this.blink = false,
     this.wink = false,
+    this.hairless = false,
   });
   final MentiReferenceRig rig;
   final Path? part, exclude;
   final Color? tint;
   final String eyeStyle, faceStyle;
-  final bool blink, wink;
+  final bool blink, wink, hairless;
+  String get asset =>
+      hairless ? rig.asset.replaceFirst('.png', '-hairless.png') : rig.asset;
   @override
   State<MentiReferencePlate> createState() => _MentiReferencePlateState();
 }
@@ -183,11 +208,11 @@ class _MentiReferencePlateState extends State<MentiReferencePlate> {
   @override
   void didUpdateWidget(MentiReferencePlate oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.rig.asset != widget.rig.asset) _resolve();
+    if (oldWidget.asset != widget.asset) _resolve();
   }
 
   void _resolve() {
-    final stream = AssetImage(widget.rig.asset)
+    final stream = AssetImage(widget.asset)
         .resolve(createLocalImageConfiguration(context));
     if (_stream?.key == stream.key) return;
     _stream?.removeListener(_listener);
@@ -233,9 +258,8 @@ class _PlatePainter extends CustomPainter {
       ),
       paint,
     );
-    // Changes preserve each family's own source eye/mouth, including lashes,
-    // asymmetric smiles, skin texture and age-specific wrinkles. They do not
-    // replace a girl or veteran's face with the common atlas expression.
+    // Native feature meshes keep their boundary fixed. Source skin fills the
+    // space without repainting rectangles or swapping a family's face.
     if (spec.eyeStyle != 'round' || spec.blink || spec.wink) {
       for (var side = 0; side < 2; side++) {
         final eye = Rect.fromLTWH(
@@ -244,73 +268,116 @@ class _PlatePainter extends CustomPainter {
           rig.eyes.width / 2,
           rig.eyes.height,
         );
-        final dest = rig.register(eye);
-        canvas.save();
-        canvas.clipRRect(
-          RRect.fromRectAndRadius(dest, const Radius.circular(9)),
-        );
-        canvas.drawImageRect(
-          image!,
-          rig.skin,
-          dest,
-          Paint()..filterQuality = FilterQuality.high,
-        );
         final sy = spec.blink || (spec.wink && side == 1)
             ? .10
             : switch (spec.eyeStyle) {
-                'wide' => 1.13,
-                'relaxed' => .64,
-                'sharp' => .82,
+                'wide' => 1.12,
+                'relaxed' => .62,
+                'sharp' => .80,
                 _ => 1.0,
               };
-        canvas.translate(dest.center.dx, dest.center.dy);
-        if (spec.eyeStyle == 'sharp') canvas.rotate(side == 0 ? -.12 : .12);
-        final eyeTarget = Rect.fromCenter(
-          center: Offset.zero,
-          width: dest.width * (spec.eyeStyle == 'wide' ? 1.08 : 1),
-          height: dest.height * sy,
+        _warp(
+          canvas,
+          rig,
+          eye.inflate(6),
+          sx: spec.eyeStyle == 'wide' ? 1.06 : 1,
+          sy: sy,
+          angle: spec.eyeStyle == 'sharp' ? (side == 0 ? -.11 : .11) : 0,
         );
-        canvas.drawImageRect(
-          image!,
-          eye,
-          eyeTarget,
-          Paint()..filterQuality = FilterQuality.high,
-        );
-        canvas.restore();
       }
     }
     if (spec.faceStyle != 'cheerful') {
-      final dest = rig.register(rig.mouth);
-      canvas.save();
-      canvas.clipRRect(RRect.fromRectAndRadius(dest, const Radius.circular(9)));
-      canvas.drawImageRect(
-        image!,
-        rig.skin,
-        dest,
-        Paint()..filterQuality = FilterQuality.high,
-      );
-      canvas.translate(dest.center.dx, dest.center.dy);
       final (sx, sy, angle) = switch (spec.faceStyle) {
-        'calm' => (.8, .40, 0.0),
-        'playful' => (1.0, .88, -.12),
-        'confident' => (.93, .65, 0.0),
-        'sleepy' => (.53, 1.0, 0.0),
-        _ => (.87, .28, .05),
+        'calm' => (.86, .44, 0.0),
+        'playful' => (1.0, .91, -.10),
+        'confident' => (.96, .70, 0.0),
+        'sleepy' => (.58, 1.0, 0.0),
+        _ => (.91, .32, .04),
       };
-      canvas.rotate(angle);
-      canvas.drawImageRect(
-        image!,
-        rig.mouth,
-        Rect.fromCenter(
-          center: Offset.zero,
-          width: dest.width * sx,
-          height: dest.height * sy,
-        ),
-        Paint()..filterQuality = FilterQuality.high,
-      );
-      canvas.restore();
+      _warp(canvas, rig, rig.mouth.inflate(8), sx: sx, sy: sy, angle: angle);
     }
     canvas.restore();
+  }
+
+  void _warp(
+    Canvas canvas,
+    MentiReferenceRig rig,
+    Rect region, {
+    required double sx,
+    required double sy,
+    required double angle,
+  }) {
+    const steps = 24;
+    final positions = <Offset>[], texture = <Offset>[], indices = <int>[];
+    final dest = rig.register(region);
+    for (var y = 0; y <= steps; y++) {
+      for (var x = 0; x <= steps; x++) {
+        final u = 2 * x / steps - 1, v = 2 * y / steps - 1;
+        final weight = (1 - math.pow(u.abs(), 4)) * (1 - math.pow(v.abs(), 4));
+        final px = u * (1 + (sx - 1) * weight),
+            py = v * (1 + (sy - 1) * weight);
+        final r = angle * weight;
+        positions.add(
+          Offset(
+            dest.center.dx +
+                (px * math.cos(r) - py * math.sin(r)) * dest.width / 2,
+            dest.center.dy +
+                (px * math.sin(r) + py * math.cos(r)) * dest.height / 2,
+          ),
+        );
+        texture.add(
+          Offset(
+            region.left + x * region.width / steps,
+            region.top + y * region.height / steps,
+          ),
+        );
+        if (x < steps && y < steps) {
+          final n = y * (steps + 1) + x;
+          indices.addAll([
+            n,
+            n + 1,
+            n + steps + 1,
+            n + 1,
+            n + steps + 2,
+            n + steps + 1,
+          ]);
+        }
+      }
+    }
+    canvas.drawVertices(
+      ui.Vertices(
+        ui.VertexMode.triangles,
+        positions,
+        textureCoordinates: texture,
+        indices: indices,
+      ),
+      BlendMode.srcOver,
+      Paint()
+        ..filterQuality = FilterQuality.high
+        ..shader = ui.ImageShader(
+          image!,
+          TileMode.clamp,
+          TileMode.clamp,
+          Float64List.fromList([
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+          ]),
+        ),
+    );
   }
 
   @override

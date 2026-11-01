@@ -10,6 +10,7 @@ import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
 import 'package:mennyiment/menti_identity/menti_premium_renderer.dart';
 import 'package:mennyiment/menti_identity/menti_premium_atlas.dart';
 import 'package:mennyiment/menti_identity/menti_visual_catalog.dart';
+import 'package:mennyiment/menti_identity/menti_reference_rig.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -240,8 +241,11 @@ void main() {
       for (final equipment in ['headphones', 'hood']) {
         update(() => headwear = equipment);
         final equipped = await pixels();
-        for (final xCenter in [81, 119]) {
-          for (var y = 61; y < 69; y++) {
+        final eyeRect=MentiReferenceRig.of('boy','young').register(
+          MentiReferenceRig.of('boy','young').eyes);
+        for (final xCenter in [eyeRect.left+eyeRect.width*.25,eyeRect.left+eyeRect.width*.75].map((x)=>(x*200/320).round())) {
+          final cy=(eyeRect.center.dy*200/320).round();
+          for (var y = cy-3; y < cy+3; y++) {
             for (var x = xCenter - 3; x < xCenter + 3; x++) {
               final offset = (y * 200 + x) * 4;
               expect(

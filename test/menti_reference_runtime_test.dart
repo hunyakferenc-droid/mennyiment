@@ -178,6 +178,44 @@ void main() {
         ),
       );
       await show(
+        'runtime-common-outfit',
+        Column(
+          children: [
+            label(
+              'Flutter runtime · same sport outfit / no headwear / short hair',
+            ),
+            for (final age in ['young', 'adult', 'veteran'])
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (final family in ['boy', 'girl', 'neutral'])
+                    Column(
+                      children: [
+                        label('$family · $age'),
+                        SizedBox(
+                          width: 390,
+                          height: 487.5,
+                          child: MentiPremiumComposition(
+                            profile: MentiIdentityProfile(
+                              visual: MentiVisualProfile({
+                                'family': family,
+                                'age': age,
+                                'hair': '$family-crop',
+                                'headwear': 'none',
+                                'outfit': 'sport',
+                              }),
+                            ),
+                            showBackground: false,
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
+              ),
+          ],
+        ),
+      );
+      await show(
         'runtime-face-comparison',
         Column(
           children: [
@@ -227,4 +265,76 @@ void main() {
       await tester.pump();
     },
   );
+  testWidgets('all nine native faces keep original opaque reference pixels', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(320, 400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final key = GlobalKey();
+    Future<List<int>> render(Widget child) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: RepaintBoundary(
+              key: key,
+              child: SizedBox(width: 320, height: 400, child: child),
+            ),
+          ),
+        ),
+      );
+      await tester.runAsync(() async {
+        final ctx = tester.element(find.byType(Scaffold));
+        for (final p in MentiPremiumComposition.assets) {
+          await precacheImage(AssetImage(p), ctx);
+        }
+      });
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      return (await tester.runAsync(() async {
+        final im =
+            await (key.currentContext!.findRenderObject()!
+                    as RenderRepaintBoundary)
+                .toImage();
+        final data = await im.toByteData(format: ui.ImageByteFormat.rawRgba);
+        im.dispose();
+        return data!.buffer.asUint8List().toList();
+      }))!;
+    }
+
+    for (final r in MentiReferenceRig.all) {
+      final original = await render(MentiReferencePlate(rig: r));
+      final actual = await render(
+        MentiPremiumComposition(
+          profile: MentiIdentityProfile(
+            visual: MentiVisualProfile({
+              'family': r.family,
+              'age': r.age,
+              'hair': r.hairId,
+              'headwear': 'none',
+              'outfit': 'basic',
+            }),
+          ),
+          showBackground: false,
+        ),
+      );
+      final box = r.register(r.face).deflate(12);
+      var compared = 0;
+      for (var y = box.top.ceil(); y < box.bottom.floor(); y++) {
+        for (var x = box.left.ceil(); x < box.right.floor(); x++) {
+          final i = (y * 320 + x) * 4;
+          expect(
+            actual.sublist(i, i + 4),
+            original.sublist(i, i + 4),
+            reason: '${r.family}/${r.age} native face $x,$y',
+          );
+          compared++;
+        }
+      }
+      expect(compared, greaterThan(3000));
+    }
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump();
+  });
 }
