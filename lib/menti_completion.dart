@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 /// Read-only evidence for reactions. Missing days are never inferred.
 DateTime mentiCalendarDay(DateTime date, [int offset = 0]) =>
     DateTime(date.year, date.month, date.day + offset);
@@ -25,3 +27,20 @@ bool crossedRecordedGoal({required int before, required int after,
     required int previousTarget, required int target}) =>
     target >= 1 && target <= 7 && target == previousTarget &&
     before < target && after >= target && after > before;
+
+/// Same recorded wellbeing-day evidence used by challenges and the read-only hub.
+Set<String> recordedWellbeingDays(Object raw, DateTime asOf, {bool includeFuture = false}) {
+  if (raw is! String) throw const FormatException('Invalid wellbeing document type');
+  final result = <String>{};
+  for (final entry in jsonDecode(raw) as List) {
+    final text = (entry as Map)['day'] as String;
+    final date = DateTime.parse(text);
+    if (!text.startsWith(mentiDateKey(date))) {
+      throw const FormatException('Invalid wellbeing date');
+    }
+    if (includeFuture || !mentiCalendarDay(date).isAfter(mentiCalendarDay(asOf))) {
+      result.add(mentiDateKey(date));
+    }
+  }
+  return Set.unmodifiable(result);
+}

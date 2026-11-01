@@ -32,6 +32,24 @@ class MentiXpState {
 
 class MentiXpStore {
   static const _key = 'mennyiment_menti_xp_v2';
+  static const currentKey = _key;
+
+  /// Current-document read adapter only. Does not perform legacy migration.
+  static MentiXpState readCurrent(Object raw) {
+    if (raw is! String) throw const FormatException('Invalid XP document type');
+    final decoded = jsonDecode(raw);
+    if (decoded is! Map<String, dynamic> || decoded['xp'] is! int || decoded['xp'] < 0) {
+      throw const FormatException('Invalid XP document');
+    }
+    for (final field in ['days', 'completed']) {
+      final value = decoded[field];
+      if (value != null && (value is! List || !value.every((v) => v is String))) {
+        throw const FormatException('Invalid XP events');
+      }
+    }
+    return _fromData(decoded);
+  }
+
   static const _reflectionKey = 'mennyiment_reflection_days_v1';
   static const _legacyProgressKey = 'mennyiment_menti_progress_v1';
   static const Map<String, int> weeklyPoints = {

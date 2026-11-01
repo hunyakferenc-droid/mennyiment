@@ -38,6 +38,19 @@ class PersonalGoalStore {
     }
   }
 
+  /// Pure read adapter shared by the hub and the existing store; no writes.
+  static Map<String, dynamic> decodeDocument(Object? value) {
+    if (value != null && value is! String) {
+      throw const FormatException('Invalid personal goals document type');
+    }
+    final decoded = value == null ? <String, dynamic>{} : jsonDecode(value as String);
+    if (decoded is! Map<String, dynamic>) {
+      throw const FormatException('Invalid personal goals document');
+    }
+    _validate(decoded);
+    return decoded;
+  }
+
   static Future<void>? _pending;
   static Future<T> _serial<T>(Future<T> Function() action) async {
     final previous = _pending;
@@ -57,14 +70,7 @@ class PersonalGoalStore {
     final prefs = await open();
     await prefs.reload();
     final value = prefs.get(key);
-    if (value != null && value is! String) {
-      throw const FormatException('Invalid personal goals document type');
-    }
-    final decoded = value == null ? <String, dynamic>{} : jsonDecode(value as String);
-    if (decoded is! Map<String, dynamic>) {
-      throw const FormatException('Invalid personal goals document');
-    }
-    _validate(decoded);
+    final decoded = decodeDocument(value);
     _data = decoded;
     _raw = value as String?;
     writable = true;
