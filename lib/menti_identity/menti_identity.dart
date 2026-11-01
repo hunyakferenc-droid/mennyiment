@@ -205,6 +205,20 @@ class MentiIdentityDocument {
     final accessory = values['mennyiment_menti_accessory_v1'];
     final studioAccessory = values['mennyiment_accessory_v1'];
     final studioHat = values['mennyiment_hat_v1'];
+    final legacyMood = values['mennyiment_mood_v2'];
+    final studioMood = values['mennyiment_avatar_v1'];
+    final face = switch (legacyMood) {
+      'Vidám' || 'Ünnepel' => 'cheerful', 'Kacsint' => 'playful', 'Nyugodt' => 'calm',
+      _ => switch (studioMood) {
+        0 || 3 => 'confident', 1 => 'playful', 4 || 5 => 'determined', _ => 'cheerful',
+      },
+    };
+    final reaction = switch (legacyMood) {
+      'Ünnepel' => 'celebrating', 'Nyugodt' => 'calming', 'Kacsint' => 'funny',
+      'Vidám' => 'motivating', _ => switch (studioMood) {
+        1 => 'funny', 2 => 'celebrating', 5 => 'proud', _ => 'motivating',
+      },
+    };
     final rawName = values['mennyiment_character_name_v1'] ?? values['mennyiment_nickname_v1'];
     final name = rawName is String && rawName.trim().isNotEmpty && rawName.length <= 80 ? rawName : 'Menti';
     final savedRewards = values['mennyiment_menti_rewards_v1'];
@@ -212,7 +226,7 @@ class MentiIdentityDocument {
       ? savedRewards.cast<String>() : <String>[];
     return MentiIdentityDocument(profile: MentiIdentityProfile(name: name,
       visual: MentiVisualProfile({
-        'family': family.id, 'age': age, 'hair': '${family.id}-crop',
+        'family': family.id, 'age': age, 'hair': '${family.id}-crop', 'face': face,
         'outfit': outfit.id, 'style': switch (outfit) {
           MentiOutfit.sport => 'sporty', MentiOutfit.basic => 'classic', _ => outfit.id,
         },
@@ -227,7 +241,7 @@ class MentiIdentityDocument {
         if (accessory == 'Korona') 'headwear': 'party-crown',
         if (accessory == 'Bulikalap') 'headwear': 'party-hat',
         if (accessory == 'Csillag') 'detail': 'star',
-      })), unlocks: MentiUnlockState(unlocked: {...rewards, 'outfit:${outfit.id}'}),
+      }), reaction: MentiReactionProfile({'style': reaction})), unlocks: MentiUnlockState(unlocked: {...rewards, 'outfit:${outfit.id}'}),
       extras: {'migration': {'source': 'legacy', 'original': values}});
   }
 }

@@ -218,4 +218,19 @@ void main() {
     expect(p.toJson().containsKey('hair'), isFalse);
   });
 
+  for (final item in {'Vidám': ('cheerful','motivating'), 'Kacsint': ('playful','funny'),
+      'Nyugodt': ('calm','calming'), 'Ünnepel': ('cheerful','celebrating')}.entries) {
+    test('legacy mood ${item.key} keeps expression and personality', () {
+      final p = MentiIdentityDocument.fromLegacy({'mennyiment_mood_v2': item.key}).profile;
+      expect(p.visual.value('face'), item.value.$1);
+      expect(p.reaction.style, item.value.$2);
+    });
+  }
+  test('old Studio nickname hat and accessory remain visible after migration', () {
+    final p = MentiIdentityDocument.fromLegacy({'mennyiment_nickname_v1': 'Becenév',
+      'mennyiment_hat_v1': 3, 'mennyiment_accessory_v1': 1, 'mennyiment_avatar_v1': 1}).profile;
+    expect(p.name, 'Becenév'); expect(p.visual.value('headwear'), 'cowboy');
+    expect(p.visual.value('glasses'), 'sunglasses'); expect(p.reaction.style, 'funny');
+  });
+
 }
