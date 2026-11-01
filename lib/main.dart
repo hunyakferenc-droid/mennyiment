@@ -11,6 +11,7 @@ import 'wellbeing_journal.dart';
 import 'lifestyle_insights.dart';
 import 'menti_week_report.dart';
 import 'personal_goals.dart';
+import 'weekly_challenges.dart';
 import 'savings_goals.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -132,7 +133,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
         ),
         useMaterial3: true,
       ),
-      home: MentiStartGate(child: HomePage(offerIntro: _offerIntro)),
+      home: MentiStartGate(onRestored: restored, child: HomePage(offerIntro: _offerIntro)),
     )));
     });
   }
@@ -154,9 +155,9 @@ int mentiReaction = 0;
 void updateMentiMessage(MentiMood mood) {
   if (!MentiExperienceScope.reactionsOf(context)) return;
   setState(() {
-    if (mood == MentiMood.drinkAdded) {
-  mentiReaction = (mentiReaction ~/ 3 + 1) * 3;
-} else if (mood == MentiMood.statistics) {
+    _mentiMood = mood;
+    if (mood == MentiMood.drinkAdded) return;
+    if (mood == MentiMood.statistics) {
   mentiReaction = (mentiReaction ~/ 3) * 3 + 1;
 } else if (mood == MentiMood.goals) {
   mentiReaction = (mentiReaction ~/ 3) * 3 + 2;
@@ -379,7 +380,7 @@ void updateMentiMessage(MentiMood mood) {
     } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('A saját italok módosítása nem sikerült; az eredeti adatokat megőriztük.')),
+          SnackBar(content: Text(appStrings(context).journalCustomWriteError)),
         );
       }
       return false;
@@ -426,31 +427,31 @@ void updateMentiMessage(MentiMood mood) {
     final newDrink = await showDialog<CatalogDrink>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('Új saját ital'),
+        title: Text(appStrings(context).journalNewCustom),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Ital neve',
-                  hintText: 'Pl. Házi barackpálinka',
+                decoration: InputDecoration(
+                  labelText: appStrings(context).journalDrinkName,
+                  hintText: appStrings(context).journalDrinkHint,
                 ),
               ),
               TextField(
                 controller: mlController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Mennyiség (ml)',
+                decoration: InputDecoration(
+                  labelText: appStrings(context).journalMl,
                   hintText: '50',
                 ),
               ),
               TextField(
                 controller: percentController,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                decoration: const InputDecoration(
-                  labelText: 'Alkoholfok (%)',
+                decoration: InputDecoration(
+                  labelText: appStrings(context).journalPercent,
                   hintText: '50',
                 ),
               ),
@@ -460,7 +461,7 @@ void updateMentiMessage(MentiMood mood) {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Mégse'),
+            child: Text(appStrings(context).avatarCancel),
           ),
           FilledButton(
             onPressed: () {
@@ -479,7 +480,7 @@ void updateMentiMessage(MentiMood mood) {
                   percent < 0 ||
                   percent > 100) {
                 ScaffoldMessenger.of(dialogContext).showSnackBar(
-                  const SnackBar(content: Text('Adj meg érvényes adatokat!')),
+                  SnackBar(content: Text(appStrings(context).journalInvalid)),
                 );
                 return;
               }
@@ -495,7 +496,7 @@ void updateMentiMessage(MentiMood mood) {
                 ),
               );
             },
-            child: const Text('Mentés'),
+            child: Text(appStrings(context).avatarSave),
           ),
         ],
       ),
@@ -537,19 +538,19 @@ void updateMentiMessage(MentiMood mood) {
     final result = await showDialog<double?>(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text('Ár megadása: ${drink.name}'),
+        title: Text(appStrings(context).journalSetPrice(drink.name)),
         content: TextField(
           controller: controller,
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            labelText: 'Fizetett ár (Ft)',
+          decoration: InputDecoration(
+            labelText: appStrings(context).journalPrice,
             helperText: 'Üresen hagyva ismeretlen ár',
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('Mégse'),
+            child: Text(appStrings(context).avatarCancel),
           ),
           TextButton(
             onPressed: () {
@@ -557,7 +558,7 @@ void updateMentiMessage(MentiMood mood) {
               submitted = true;
               Navigator.pop(dialogContext, -1.0);
             },
-            child: const Text('Ár törlése'),
+            child: Text(appStrings(context).journalRemovePrice),
           ),
           FilledButton(
             onPressed: () {
@@ -572,14 +573,14 @@ void updateMentiMessage(MentiMood mood) {
               );
               if (value == null || !value.isFinite || value < 0 || value > 10000000) {
                 ScaffoldMessenger.of(dialogContext).showSnackBar(
-                  const SnackBar(content: Text('Adj meg érvényes összeget!')),
+                  SnackBar(content: Text(appStrings(context).journalInvalidAmount)),
                 );
                 return;
               }
               submitted = true;
               Navigator.pop(dialogContext, value);
             },
-            child: const Text('Mentés'),
+            child: Text(appStrings(context).avatarSave),
           ),
         ],
       ),
@@ -811,7 +812,7 @@ void updateMentiMessage(MentiMood mood) {
     updateMentiMessage(result.percent == 0
         ? MentiMood.alcoholFreeEntry : MentiMood.drinkAdded);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${result.name} mentve a naplóba')),
+      SnackBar(content: Text(appStrings(context).journalSaved(result.name))),
     );
     } finally { _recording = false; }
   }
@@ -830,18 +831,18 @@ void updateMentiMessage(MentiMood mood) {
           final favorites = drinkCatalog.where((d) => favoriteDrinks.contains(favoriteId(d))).toList();
           final catalog = [...favorites, ...drinkCatalog.where((d) => !favoriteDrinks.contains(favoriteId(d)))];
           return Column(children: [
-            const Padding(padding: EdgeInsets.fromLTRB(20, 4, 20, 14),
+            Padding(padding: const EdgeInsets.fromLTRB(20, 4, 20, 14),
               child: Align(alignment: Alignment.centerLeft,
-                child: Text('Ital hozzáadása', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)))),
+                child: Text(appStrings(context).journalAddTitle, style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)))),
             Expanded(child: ListView(children: [
-              if (favorites.isNotEmpty) const Padding(padding: EdgeInsets.fromLTRB(20, 6, 20, 8),
-                child: Text('⭐ Kedvenceid', style: TextStyle(color: _mint, fontWeight: FontWeight.bold))),
+              if (favorites.isNotEmpty) Padding(padding: const EdgeInsets.fromLTRB(20, 6, 20, 8),
+                child: Text(appStrings(context).journalFavorites, style: TextStyle(color: _mint, fontWeight: FontWeight.bold))),
               ...catalog.map((drink) => ListTile(
                 leading: Text(drink.emoji, style: const TextStyle(fontSize: 26)),
-                title: Text(drink.name),
+                title: Text(catalogDrinkLabel(drink.name,appStrings(context))),
                 subtitle: Text('${drink.ml} ml  •  ${drink.percent}%'),
                 trailing: IconButton(
-                  tooltip: 'Kedvenc',
+                  tooltip: appStrings(context).journalFavorite,
                   icon: Icon(favoriteDrinks.contains(favoriteId(drink)) ? Icons.star : Icons.star_border,
                     color: Colors.amber),
                   onPressed: () {
@@ -858,13 +859,13 @@ void updateMentiMessage(MentiMood mood) {
                 },
               )),
               const Divider(),
-              const Padding(padding: EdgeInsets.fromLTRB(20, 12, 20, 8),
-                child: Text('Saját italok', style: TextStyle(color: _mint, fontWeight: FontWeight.bold))),
+              Padding(padding: const EdgeInsets.fromLTRB(20, 12, 20, 8),
+                child: Text(appStrings(context).journalCustoms, style: TextStyle(color: _mint, fontWeight: FontWeight.bold))),
               ...customDrinks.map((drink) => ListTile(
                 leading: Text(drink.emoji, style: const TextStyle(fontSize: 26)),
                 title: Text(drink.name),
                 subtitle: Text('${drink.ml} ml  •  ${drink.percent}%'),
-                trailing: IconButton(tooltip: 'Saját ital törlése', icon: const Icon(Icons.delete_outline),
+                trailing: IconButton(tooltip: appStrings(context).journalDeleteCustom, icon: const Icon(Icons.delete_outline),
                   onPressed: !_customReady || _customSaving ? null : () async {
                     await saveCustomDrinks(List<CatalogDrink>.of(customDrinks)..remove(drink));
                     if (context.mounted) refresh(() {});
@@ -875,14 +876,14 @@ void updateMentiMessage(MentiMood mood) {
                   _recordCatalogDrink(drink);
                 },
               )),
-              if (!_customReady) const Padding(padding: EdgeInsets.all(16),
-                child: Text('A saját italok nem tölthetők be biztonságosan; módosításuk letiltva.')),
+              if (!_customReady) Padding(padding: const EdgeInsets.all(16),
+                child: Text(appStrings(context).journalCustomReadError)),
               Padding(padding: const EdgeInsets.all(16), child: OutlinedButton.icon(
                 onPressed: !_customReady || _customSaving ? null : () async {
                   Navigator.pop(sheetContext);
                   await showAddDrinkDialog();
                   if (mounted) _openDrinkPicker();
-                }, icon: const Icon(Icons.add), label: const Text('Új saját ital létrehozása'))),
+                }, icon: const Icon(Icons.add), label: Text(appStrings(context).journalCreateCustom))),
             ])),
           ]);
         }),
@@ -897,15 +898,15 @@ void updateMentiMessage(MentiMood mood) {
     try {
     var submitted = false;
     final confirmed = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
-      title: const Text('Bejegyzés törlése?'),
-      content: Text('A(z) ${drink.name} bejegyzést eltávolítjuk a naplóból.'),
+      title: Text(appStrings(context).journalDeleteTitle),
+      content: Text(appStrings(context).journalDeleteBody(drink.name)),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Mégse')),
+        TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(appStrings(context).avatarCancel)),
         FilledButton(onPressed: () {
           if (submitted) return;
           submitted = true;
           Navigator.pop(ctx, true);
-        }, child: const Text('Törlés')),
+        }, child: Text(appStrings(context).journalDelete)),
       ],
     ));
     if (confirmed != true || !mounted) return;
@@ -1052,7 +1053,7 @@ void updateMentiMessage(MentiMood mood) {
                           visualReaction: mentiReaction == 0 ? null :
                             _mentiMood == MentiMood.drinkAdded ? 'focused' : 'personality',
                           level: _mentiLevel,
-                          size: width < 380 ? 100 : 126,
+                          size: width < 380 ? 170 : 190,
                         ),
                       ),
                       if (MentiIdentityScope.of(context) == null && _characterAccessory != 'Nincs')
@@ -1119,12 +1120,15 @@ void updateMentiMessage(MentiMood mood) {
                 label: Text(appStrings(context).financeCenter)),
               const SizedBox(height: 10),
               HomeAdaptiveGrid(children: [
-                HomeActionCard(title: strings.wellbeing, subtitle: strings.wellbeingHint,
+                HomeActionCard(title: strings.wellbeing, subtitle: adult ? strings.wellbeingHint : strings.wellbeingSafeHint,
                   icon: Icons.favorite_border_rounded, onTap: _openWellbeingJournal),
                 if (adult) HomeActionCard(title: strings.savings, subtitle: strings.savingsHint,
                   icon: Icons.savings_outlined, onTap: _journalReady ? _openSavingsGoals : null),
                 if (adult) HomeActionCard(title: strings.weeklyInsights, subtitle: strings.weeklyInsightsHint,
                   icon: Icons.insights_outlined, onTap: _journalReady ? _openLifestyleInsights : null),
+                HomeActionCard(title: strings.challengeTitle,subtitle:strings.challengeOptional,
+                  icon:Icons.emoji_events_outlined,onTap:()=>Navigator.of(context).push(
+                    MaterialPageRoute<void>(builder:(_)=>const WeeklyChallengesPage()))),
                 HomeActionCard(title: strings.mentiProgress, subtitle: strings.mentiProgressHint,
                   icon: Icons.auto_awesome_outlined, onTap: _openMentiProgress),
                 if (adult) HomeActionCard(title: strings.goals, subtitle: strings.goalsHint,
@@ -1313,48 +1317,48 @@ class _DrinkDetailsSheetState extends State<_DrinkDetailsSheet> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${widget.drink.emoji} ${widget.drink.name}',
+                Text('${widget.drink.emoji} ${catalogDrinkLabel(widget.drink.name,appStrings(context))}',
                     style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 8),
-                const Text('Rögzítsd, amit ténylegesen fogyasztottál.',
+                Text(appStrings(context).journalDetailsHint,
                     style: TextStyle(color: Colors.white70)),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: _ml,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: 'Mennyiség (ml)', prefixIcon: Icon(Icons.local_drink_outlined)),
+                  decoration: InputDecoration(
+                    labelText: appStrings(context).journalMl, prefixIcon: Icon(Icons.local_drink_outlined)),
                   validator: (value) {
                     final n = int.tryParse((value ?? '').trim());
                     return n == null || n <= 0 || n > 10000
-                        ? 'Adj meg 1 és 10 000 ml közötti mennyiséget.' : null;
+                        ? appStrings(context).journalMlError : null;
                   },
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _percent,
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  decoration: const InputDecoration(
-                    labelText: 'Alkoholfok (%)', prefixIcon: Icon(Icons.percent)),
+                  decoration: InputDecoration(
+                    labelText: appStrings(context).journalPercent, prefixIcon: Icon(Icons.percent)),
                   validator: (value) {
                     final n = _number(value ?? '');
                     return n == null || !n.isFinite || n < 0 || n > 100
-                        ? 'Adj meg 0 és 100 közötti alkoholfokot.' : null;
+                        ? appStrings(context).journalPercentError : null;
                   },
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _price,
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  decoration: const InputDecoration(
-                    labelText: 'Fizetett ár (Ft) – opcionális',
-                    helperText: 'Üresen hagyva ismeretlen árként mentjük.',
+                  decoration: InputDecoration(
+                    labelText: appStrings(context).journalOptionalPrice,
+                    helperText: appStrings(context).journalPriceHint,
                     prefixIcon: Icon(Icons.payments_outlined)),
                   validator: (value) {
                     if ((value ?? '').trim().isEmpty) return null;
                     final n = _number(value!);
                     return n == null || !n.isFinite || n < 0 || n > 10000000
-                        ? 'Adj meg érvényes árat (0–10 000 000 Ft).' : null;
+                        ? appStrings(context).journalPriceError : null;
                   },
                 ),
                 const SizedBox(height: 20),
@@ -1362,7 +1366,7 @@ class _DrinkDetailsSheetState extends State<_DrinkDetailsSheet> {
                   width: double.infinity,
                   child: FilledButton.icon(
                     icon: const Icon(Icons.check_circle_outline),
-                    label: const Text('Mentés a naplóba'),
+                    label: Text(appStrings(context).journalSave),
                     onPressed: () {
                       if (_submitted || !_formKey.currentState!.validate()) return;
                       _submitted = true;

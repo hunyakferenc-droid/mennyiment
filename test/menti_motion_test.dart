@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,7 +38,7 @@ void main() {
       testWidgets(
         '${family.id}/${outfit.id}: manual, system, reaction and route ticker policy',
         (tester) async {
-          SharedPreferences.setMockInitialValues({
+          SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
             'mennyiment_character_style_v2': family.id,
             'mennyiment_outfit_v2': outfit.id,
             'mennyiment_menti_xp_v2': 'keep-xp',
@@ -119,7 +120,7 @@ void main() {
   testWidgets(
     'Saved manual preference survives a fresh scope and preference instance',
     (tester) async {
-      SharedPreferences.setMockInitialValues({});
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,});
       Future<void> show() => tester.pumpWidget(
         const MaterialApp(home: MentiMotionScope(child: MentiEvolution())),
       );
@@ -133,7 +134,8 @@ void main() {
       };
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump();
-      SharedPreferences.setMockInitialValues(persisted);
+      persisted[adultAccessKey] = adultAccessValue;
+    SharedPreferences.setMockInitialValues(persisted);
       await show();
       await tester.pumpAndSettle();
       expect(settings(tester).manual, true);
@@ -154,7 +156,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
-      SharedPreferences.setMockInitialValues({
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
         'mennyiment_character_setup_complete_v1': true,
         'mennyiment_character_style_v2': 'girl',
         'mennyiment_outfit_v2': 'legendary',
@@ -192,7 +194,7 @@ void main() {
   testWidgets(
     'Live platform accessibility flags automatically stop and resume the app',
     (tester) async {
-      SharedPreferences.setMockInitialValues({
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
         'mennyiment_character_setup_complete_v1': true,
       });
       final dispatcher = tester.binding.platformDispatcher;
@@ -261,7 +263,7 @@ void main() {
   }
 
   test('Preference load handles invalid data conservatively and disposal during IO', () async {
-    SharedPreferences.setMockInitialValues({
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
       MentiMotionSettings.preferenceKey: 'unknown',
     });
     final controller = MentiMotionSettings();

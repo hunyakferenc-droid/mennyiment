@@ -3049,6 +3049,426 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'Nem sikerült biztonságosan befejezni. Az adataid megmaradtak; próbáld újra. Sérült profil esetén állítsd helyre a mentést.'**
   String get startSaveError;
+
+  /// No description provided for @wellbeingQuestion.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hogy érzed magad?'**
+  String get wellbeingQuestion;
+
+  /// No description provided for @wellbeingBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'A közérzeted és az alvásod is fontos. Nincs jó vagy rossz válasz.'**
+  String get wellbeingBody;
+
+  /// No description provided for @wellbeingMood.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hangulat'**
+  String get wellbeingMood;
+
+  /// No description provided for @wellbeingScale.
+  ///
+  /// In hu, this message translates to:
+  /// **'1 = nagyon rossz, 5 = nagyon jó'**
+  String get wellbeingScale;
+
+  /// No description provided for @wellbeingSleep.
+  ///
+  /// In hu, this message translates to:
+  /// **'Alvásminőség'**
+  String get wellbeingSleep;
+
+  /// No description provided for @wellbeingSleepHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'A legutóbbi alvásod saját értékelése'**
+  String get wellbeingSleepHint;
+
+  /// No description provided for @wellbeingHangover.
+  ///
+  /// In hu, this message translates to:
+  /// **'Másnaposság tünetei'**
+  String get wellbeingHangover;
+
+  /// No description provided for @wellbeingHangoverHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'0 = nincs, 4 = nagyon erős'**
+  String get wellbeingHangoverHint;
+
+  /// No description provided for @wellbeingVeryBad.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nagyon rossz'**
+  String get wellbeingVeryBad;
+
+  /// No description provided for @wellbeingBad.
+  ///
+  /// In hu, this message translates to:
+  /// **'Rossz'**
+  String get wellbeingBad;
+
+  /// No description provided for @wellbeingMedium.
+  ///
+  /// In hu, this message translates to:
+  /// **'Közepes'**
+  String get wellbeingMedium;
+
+  /// No description provided for @wellbeingGood.
+  ///
+  /// In hu, this message translates to:
+  /// **'Jó'**
+  String get wellbeingGood;
+
+  /// No description provided for @wellbeingVeryGood.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nagyon jó'**
+  String get wellbeingVeryGood;
+
+  /// No description provided for @wellbeingNone.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nincs'**
+  String get wellbeingNone;
+
+  /// No description provided for @wellbeingMild.
+  ///
+  /// In hu, this message translates to:
+  /// **'Enyhe'**
+  String get wellbeingMild;
+
+  /// No description provided for @wellbeingStrong.
+  ///
+  /// In hu, this message translates to:
+  /// **'Erős'**
+  String get wellbeingStrong;
+
+  /// No description provided for @wellbeingVeryStrong.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nagyon erős'**
+  String get wellbeingVeryStrong;
+
+  /// No description provided for @wellbeingNote.
+  ///
+  /// In hu, this message translates to:
+  /// **'Megjegyzés (nem kötelező)'**
+  String get wellbeingNote;
+
+  /// No description provided for @wellbeingNoteHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mi befolyásolta ma a közérzeted?'**
+  String get wellbeingNoteHint;
+
+  /// No description provided for @wellbeingUpdate.
+  ///
+  /// In hu, this message translates to:
+  /// **'Bejegyzés frissítése'**
+  String get wellbeingUpdate;
+
+  /// No description provided for @wellbeingSave.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nap mentése'**
+  String get wellbeingSave;
+
+  /// No description provided for @wellbeingDelete.
+  ///
+  /// In hu, this message translates to:
+  /// **'E napi bejegyzés törlése'**
+  String get wellbeingDelete;
+
+  /// No description provided for @wellbeingHistory.
+  ///
+  /// In hu, this message translates to:
+  /// **'Korábbi napok ({count})'**
+  String wellbeingHistory(int count);
+
+  /// No description provided for @wellbeingEmpty.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még nincs mentett nap.'**
+  String get wellbeingEmpty;
+
+  /// No description provided for @wellbeingSummary.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hangulat {mood}/5 • Alvás {sleep}/5'**
+  String wellbeingSummary(int mood, int sleep);
+
+  /// No description provided for @wellbeingSymptoms.
+  ///
+  /// In hu, this message translates to:
+  /// **'Tünetek {rating}/4'**
+  String wellbeingSymptoms(int rating);
+
+  /// No description provided for @wellbeingCaution.
+  ///
+  /// In hu, this message translates to:
+  /// **'A feljegyzések önbevalláson alapulnak, nem orvosi értékelések. Súlyos tünetek esetén kérj egészségügyi segítséget.'**
+  String get wellbeingCaution;
+
+  /// No description provided for @wellbeingSaved.
+  ///
+  /// In hu, this message translates to:
+  /// **'A napi közérzeted mentve.'**
+  String get wellbeingSaved;
+
+  /// No description provided for @wellbeingReadError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A napló nem olvasható biztonságosan. A meglévő adatok megmaradtak; az írás letiltva.'**
+  String get wellbeingReadError;
+
+  /// No description provided for @wellbeingSafeHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hangulat, alvás és saját jegyzetek'**
+  String get wellbeingSafeHint;
+
+  /// No description provided for @profileLocalTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Saját Mentim'**
+  String get profileLocalTitle;
+
+  /// No description provided for @journalCustomWriteError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A saját italok módosítása nem sikerült; az eredeti adatokat megőriztük.'**
+  String get journalCustomWriteError;
+
+  /// No description provided for @journalNewCustom.
+  ///
+  /// In hu, this message translates to:
+  /// **'Új saját ital'**
+  String get journalNewCustom;
+
+  /// No description provided for @journalDrinkName.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ital neve'**
+  String get journalDrinkName;
+
+  /// No description provided for @journalDrinkHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Pl. Házi barackpálinka'**
+  String get journalDrinkHint;
+
+  /// No description provided for @journalMl.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mennyiség (ml)'**
+  String get journalMl;
+
+  /// No description provided for @journalPercent.
+  ///
+  /// In hu, this message translates to:
+  /// **'Alkoholfok (%)'**
+  String get journalPercent;
+
+  /// No description provided for @journalInvalid.
+  ///
+  /// In hu, this message translates to:
+  /// **'Adj meg érvényes adatokat!'**
+  String get journalInvalid;
+
+  /// No description provided for @journalSetPrice.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ár megadása: {name}'**
+  String journalSetPrice(String name);
+
+  /// No description provided for @journalPrice.
+  ///
+  /// In hu, this message translates to:
+  /// **'Fizetett ár (Ft)'**
+  String get journalPrice;
+
+  /// No description provided for @journalRemovePrice.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ár törlése'**
+  String get journalRemovePrice;
+
+  /// No description provided for @journalInvalidAmount.
+  ///
+  /// In hu, this message translates to:
+  /// **'Adj meg érvényes összeget!'**
+  String get journalInvalidAmount;
+
+  /// No description provided for @journalSaved.
+  ///
+  /// In hu, this message translates to:
+  /// **'{name} mentve a naplóba'**
+  String journalSaved(String name);
+
+  /// No description provided for @journalAddTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ital hozzáadása'**
+  String get journalAddTitle;
+
+  /// No description provided for @journalFavorites.
+  ///
+  /// In hu, this message translates to:
+  /// **'⭐ Kedvenceid'**
+  String get journalFavorites;
+
+  /// No description provided for @journalFavorite.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kedvenc'**
+  String get journalFavorite;
+
+  /// No description provided for @journalCustoms.
+  ///
+  /// In hu, this message translates to:
+  /// **'Saját italok'**
+  String get journalCustoms;
+
+  /// No description provided for @journalDeleteCustom.
+  ///
+  /// In hu, this message translates to:
+  /// **'Saját ital törlése'**
+  String get journalDeleteCustom;
+
+  /// No description provided for @journalCustomReadError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A saját italok nem tölthetők be biztonságosan; módosításuk letiltva.'**
+  String get journalCustomReadError;
+
+  /// No description provided for @journalCreateCustom.
+  ///
+  /// In hu, this message translates to:
+  /// **'Új saját ital létrehozása'**
+  String get journalCreateCustom;
+
+  /// No description provided for @journalDeleteTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Bejegyzés törlése?'**
+  String get journalDeleteTitle;
+
+  /// No description provided for @journalDeleteBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'A(z) {name} bejegyzést eltávolítjuk a naplóból.'**
+  String journalDeleteBody(String name);
+
+  /// No description provided for @journalDelete.
+  ///
+  /// In hu, this message translates to:
+  /// **'Törlés'**
+  String get journalDelete;
+
+  /// No description provided for @journalDetailsHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Rögzítsd, amit ténylegesen fogyasztottál.'**
+  String get journalDetailsHint;
+
+  /// No description provided for @journalMlError.
+  ///
+  /// In hu, this message translates to:
+  /// **'Adj meg 1 és 10 000 ml közötti mennyiséget.'**
+  String get journalMlError;
+
+  /// No description provided for @journalPercentError.
+  ///
+  /// In hu, this message translates to:
+  /// **'Adj meg 0 és 100 közötti alkoholfokot.'**
+  String get journalPercentError;
+
+  /// No description provided for @journalOptionalPrice.
+  ///
+  /// In hu, this message translates to:
+  /// **'Fizetett ár (Ft) – opcionális'**
+  String get journalOptionalPrice;
+
+  /// No description provided for @journalPriceHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Üresen hagyva ismeretlen árként mentjük.'**
+  String get journalPriceHint;
+
+  /// No description provided for @journalPriceError.
+  ///
+  /// In hu, this message translates to:
+  /// **'Adj meg érvényes árat (0–10 000 000 Ft).'**
+  String get journalPriceError;
+
+  /// No description provided for @journalSave.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mentés a naplóba'**
+  String get journalSave;
+
+  /// No description provided for @catalogBeer.
+  ///
+  /// In hu, this message translates to:
+  /// **'Sör (általános)'**
+  String get catalogBeer;
+
+  /// No description provided for @catalogLager.
+  ///
+  /// In hu, this message translates to:
+  /// **'Világos sör'**
+  String get catalogLager;
+
+  /// No description provided for @catalogDarkBeer.
+  ///
+  /// In hu, this message translates to:
+  /// **'Barna sör'**
+  String get catalogDarkBeer;
+
+  /// No description provided for @catalogWhiteWine.
+  ///
+  /// In hu, this message translates to:
+  /// **'Fehérbor'**
+  String get catalogWhiteWine;
+
+  /// No description provided for @catalogRedWine.
+  ///
+  /// In hu, this message translates to:
+  /// **'Vörösbor'**
+  String get catalogRedWine;
+
+  /// No description provided for @catalogRoseWine.
+  ///
+  /// In hu, this message translates to:
+  /// **'Rozé'**
+  String get catalogRoseWine;
+
+  /// No description provided for @catalogSmallSpritzer.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kisfröccs'**
+  String get catalogSmallSpritzer;
+
+  /// No description provided for @catalogLargeSpritzer.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nagyfröccs'**
+  String get catalogLargeSpritzer;
+
+  /// No description provided for @catalogPalinka.
+  ///
+  /// In hu, this message translates to:
+  /// **'Pálinka'**
+  String get catalogPalinka;
+
+  /// No description provided for @catalogUnicum.
+  ///
+  /// In hu, this message translates to:
+  /// **'Unicum (általános)'**
+  String get catalogUnicum;
 }
 
 class _AppLocalizationsDelegate

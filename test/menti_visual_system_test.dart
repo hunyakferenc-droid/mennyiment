@@ -49,7 +49,7 @@ void main() {
   test('layer order puts bag behind body, glasses over eyes and reaction last', () {
     final p = MentiIdentityProfile(visual: MentiVisualProfile({
       'back': 'cape', 'glasses': 'sunglasses', 'held': 'flower'}));
-    final layers = MentiAvatarRenderer.layers(p, reaction: 'proud');
+    final layers = MentiAvatarRenderer.legacyLayers(p, reaction: 'proud');
     expect(layers.indexWhere((p) => p.endsWith('accessories/cape.svg')),
       lessThan(layers.indexWhere((p) => p.contains('/bases/'))));
     expect(layers.indexWhere((p) => p.endsWith('accessories/sunglasses.svg')),
@@ -58,15 +58,15 @@ void main() {
   });
   test('unknown option safely renders but preserves stored identifier', () {
     final p = MentiIdentityProfile(visual: MentiVisualProfile({'family': 'future', 'outfit': 'future'}));
-    expect(MentiAvatarRenderer.layers(p), contains('${MentiVisualCatalog.root}bases/boy-young.svg'));
-    expect(MentiAvatarRenderer.layers(p), contains('${MentiVisualCatalog.root}outfits/basic.svg'));
+    expect(MentiAvatarRenderer.legacyLayers(p), contains('${MentiVisualCatalog.root}bases/boy-young.svg'));
+    expect(MentiAvatarRenderer.legacyLayers(p), contains('${MentiVisualCatalog.root}outfits/basic.svg'));
     expect(p.visual.value('outfit'), 'future');
   });
   test('family and age produce distinct base layer paths', () {
     final paths = <String>{};
     for (final family in ['boy','girl','neutral']) {
       for (final age in ['young','adult','veteran']) {
-        final layers = MentiAvatarRenderer.layers(MentiIdentityProfile(
+        final layers = MentiAvatarRenderer.legacyLayers(MentiIdentityProfile(
           visual: MentiVisualProfile({'family': family, 'age': age})));
         paths.add(layers.singleWhere((p) => p.contains('/bases/')));
       }

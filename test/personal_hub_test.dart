@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -88,7 +89,7 @@ void main() {
     }
     testWidgets('$locale missing data is not displayed as recorded zero; corrupt XP stays separate', (tester) async {
       viewport(tester);
-      SharedPreferences.setMockInitialValues({MentiXpStore.currentKey: '{bad'});
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,MentiXpStore.currentKey: '{bad'});
       await tester.pumpWidget(app(locale, PersonalHubPage(clock: () => now)));
       await tester.pumpAndSettle();
       final s = appStrings(tester.element(find.byType(PersonalHubPage)));
@@ -226,7 +227,7 @@ void main() {
   });
   testWidgets('Home opens one hub and back returns without preference writes', (tester) async {
     viewport(tester, 390);
-    SharedPreferences.setMockInitialValues({...hubValues(DateTime.now()), 'mennyiment_locale_v1': 'en'});
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,...hubValues(DateTime.now()), 'mennyiment_locale_v1': 'en'});
     final prefs = await SharedPreferences.getInstance();
     await tester.pumpWidget(const MennyiMentApp());
     await tester.pumpAndSettle();

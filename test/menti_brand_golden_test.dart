@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mennyiment/l10n/generated/app_localizations.dart';
 import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
 import 'package:mennyiment/menti_identity/menti_identity.dart';
-import 'package:mennyiment/menti_identity/menti_family_layout.dart';
+import 'package:mennyiment/menti_identity/menti_premium_renderer.dart';
 
 void main() {
   testWidgets('Menti brand classic and customized identity render consistently', (tester) async {
@@ -24,15 +24,12 @@ void main() {
         ])))));
     final ctx = tester.element(find.byType(Row));
     await tester.runAsync(() async {
-      for (final profile in [classic,variant]) {
-        await precacheImage(ResizeImage(AssetImage(MentiFamilyLayout.of(profile).core), width: 960), ctx);
-      }
-      await precacheImage(const AssetImage(MentiAssetLayer.crownCap), ctx);
+      for(final path in MentiPremiumComposition.assets) { await precacheImage(AssetImage(path),ctx); }
     });
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
     await expectLater(find.byKey(const ValueKey('brand-golden')),
-      matchesGoldenFile('goldens/menti_brand_pair.png'));
+      matchesGoldenFile('goldens/menti_final_pair.png'));
     await tester.pumpWidget(const SizedBox.shrink());
   });
 }

@@ -1,0 +1,480 @@
+{
+  "bodies": {
+    "asset": "assets/images/menti_2_2/premium/bodies.png",
+    "size": [
+      1121,
+      1403
+    ],
+    "bytes": 1279182,
+    "sha256": "f0720a3ace6c86b8e5fc49da4ff68816288cfaad787620edafd0e39a33099f8c",
+    "crc32": 1436020501,
+    "columns": 3,
+    "rows": 3,
+    "sprites": {
+      "boy-young": [
+        100,
+        48,
+        201,
+        407
+      ],
+      "boy-adult": [
+        446,
+        14,
+        230,
+        441
+      ],
+      "boy-veteran": [
+        809,
+        16,
+        248,
+        439
+      ],
+      "girl-young": [
+        99,
+        513,
+        199,
+        418
+      ],
+      "girl-adult": [
+        448,
+        475,
+        225,
+        457
+      ],
+      "girl-veteran": [
+        809,
+        485,
+        249,
+        447
+      ],
+      "neutral-young": [
+        98,
+        975,
+        203,
+        414
+      ],
+      "neutral-adult": [
+        447,
+        945,
+        227,
+        445
+      ],
+      "neutral-veteran": [
+        811,
+        950,
+        242,
+        440
+      ]
+    }
+  },
+  "outfits": {
+    "asset": "assets/images/menti_2_2/premium/outfits.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "bytes": 2507966,
+    "sha256": "92b6dd3969c23d6959c448bcbbb1cb808ad6d2ddc50611b1ddcc9d0a1c3f132f",
+    "crc32": 1288467304,
+    "columns": 5,
+    "rows": 4,
+    "sprites": {
+      "basic": [
+        28,
+        20,
+        221,
+        284
+      ],
+      "basic-alt": [
+        272,
+        20,
+        209,
+        284
+      ],
+      "party": [
+        517,
+        21,
+        221,
+        282
+      ],
+      "party-alt": [
+        773,
+        20,
+        217,
+        283
+      ],
+      "sport": [
+        1020,
+        19,
+        211,
+        285
+      ],
+      "sport-alt": [
+        31,
+        325,
+        211,
+        287
+      ],
+      "business": [
+        268,
+        325,
+        225,
+        286
+      ],
+      "business-alt": [
+        514,
+        327,
+        223,
+        284
+      ],
+      "festival": [
+        765,
+        327,
+        235,
+        285
+      ],
+      "festival-alt": [
+        1022,
+        328,
+        212,
+        285
+      ],
+      "legendary": [
+        22,
+        628,
+        229,
+        291
+      ],
+      "legendary-alt": [
+        251,
+        629,
+        246,
+        290
+      ],
+      "street": [
+        514,
+        630,
+        225,
+        289
+      ],
+      "street-alt": [
+        759,
+        629,
+        230,
+        290
+      ],
+      "cozy": [
+        1012,
+        632,
+        224,
+        286
+      ],
+      "cozy-alt": [
+        26,
+        938,
+        217,
+        293
+      ],
+      "explorer": [
+        268,
+        932,
+        216,
+        299
+      ],
+      "explorer-alt": [
+        515,
+        931,
+        221,
+        300
+      ],
+      "creative": [
+        763,
+        932,
+        230,
+        299
+      ],
+      "creative-alt": [
+        1024,
+        932,
+        205,
+        299
+      ]
+    }
+  },
+  "hair": {
+    "asset": "assets/images/menti_2_2/premium/hair.png",
+    "size": [
+      1774,
+      887
+    ],
+    "bytes": 1964961,
+    "sha256": "4b4fb3611864cec6a3176bb5d2b2792ea4a105f1d57c7c30d8a11b7fdc6d286c",
+    "crc32": 4110209687,
+    "columns": 6,
+    "rows": 3,
+    "sprites": {
+      "boy-crop": [
+        34,
+        39,
+        238,
+        207
+      ],
+      "boy-waves": [
+        311,
+        31,
+        260,
+        265
+      ],
+      "boy-curls": [
+        600,
+        35,
+        287,
+        243
+      ],
+      "boy-braid": [
+        887,
+        40,
+        263,
+        256
+      ],
+      "boy-bob": [
+        1196,
+        59,
+        281,
+        208
+      ],
+      "boy-crest": [
+        1515,
+        11,
+        236,
+        285
+      ],
+      "girl-crop": [
+        38,
+        322,
+        225,
+        200
+      ],
+      "girl-waves": [
+        297,
+        296,
+        283,
+        295
+      ],
+      "girl-curls": [
+        605,
+        324,
+        281,
+        249
+      ],
+      "girl-braid": [
+        887,
+        296,
+        264,
+        295
+      ],
+      "girl-bob": [
+        1205,
+        340,
+        263,
+        220
+      ],
+      "girl-crest": [
+        1523,
+        296,
+        218,
+        290
+      ],
+      "neutral-crop": [
+        33,
+        602,
+        233,
+        210
+      ],
+      "neutral-waves": [
+        310,
+        591,
+        261,
+        255
+      ],
+      "neutral-curls": [
+        598,
+        607,
+        289,
+        241
+      ],
+      "neutral-braid": [
+        887,
+        591,
+        261,
+        296
+      ],
+      "neutral-bob": [
+        1220,
+        623,
+        233,
+        221
+      ],
+      "neutral-crest": [
+        1501,
+        601,
+        243,
+        253
+      ]
+    }
+  },
+  "features": {
+    "asset": "assets/images/menti_2_2/premium/features.png",
+    "size": [
+      2172,
+      724
+    ],
+    "bytes": 957730,
+    "sha256": "867f17ca7fb4b74010bee9ee276fa04ca36bb020acd5bc31a808db0727ae619c",
+    "crc32": 3870768022,
+    "columns": 6,
+    "rows": 2,
+    "sprites": {
+      "face:cheerful": [
+        26,
+        119,
+        336,
+        203
+      ],
+      "face:calm": [
+        362,
+        157,
+        357,
+        130
+      ],
+      "face:playful": [
+        768,
+        117,
+        311,
+        182
+      ],
+      "face:confident": [
+        1117,
+        145,
+        323,
+        144
+      ],
+      "face:sleepy": [
+        1519,
+        135,
+        291,
+        180
+      ],
+      "face:determined": [
+        1810,
+        150,
+        333,
+        138
+      ],
+      "eyes:round": [
+        36,
+        445,
+        306,
+        191
+      ],
+      "eyes:wide": [
+        391,
+        426,
+        318,
+        211
+      ],
+      "eyes:relaxed": [
+        763,
+        450,
+        300,
+        183
+      ],
+      "eyes:sharp": [
+        1117,
+        447,
+        310,
+        188
+      ],
+      "eyes:blink": [
+        1472,
+        459,
+        312,
+        171
+      ],
+      "eyes:wink": [
+        1835,
+        436,
+        307,
+        197
+      ]
+    }
+  },
+  "headwear": {
+    "asset": "assets/images/menti_2_2/premium/headwear.png",
+    "size": [
+      1254,
+      1254
+    ],
+    "bytes": 2101842,
+    "sha256": "bd2c0da22f104ebe384d1dec647cc686e4c00ed5b7788a5bc95ba6d351181fcf",
+    "crc32": 1505735645,
+    "columns": 3,
+    "rows": 3,
+    "sprites": {
+      "crown-cap": [
+        22,
+        80,
+        389,
+        292
+      ],
+      "sport-cap": [
+        439,
+        84,
+        376,
+        292
+      ],
+      "beanie": [
+        857,
+        63,
+        377,
+        316
+      ],
+      "headphones": [
+        26,
+        441,
+        388,
+        395
+      ],
+      "party-crown": [
+        445,
+        474,
+        368,
+        305
+      ],
+      "hood": [
+        867,
+        428,
+        345,
+        385
+      ],
+      "party-hat": [
+        45,
+        836,
+        373,
+        373
+      ],
+      "beret": [
+        418,
+        895,
+        406,
+        259
+      ],
+      "cowboy": [
+        842,
+        897,
+        388,
+        298
+      ]
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -71,7 +72,8 @@ void main() {
         testWidgets('$locale intro $width px ${scale}x is optional and preserves all existing data', (tester) async {
           viewport(tester, width);
           final initial = hubValues(now);
-          SharedPreferences.setMockInitialValues(initial);
+          initial[adultAccessKey] = adultAccessValue;
+    SharedPreferences.setMockInitialValues(initial);
           final settings = MentiExperienceSettings();
           await tester.pumpWidget(app(locale, introHost(), settings, scale: scale));
           await tester.pumpAndSettle();
@@ -95,7 +97,8 @@ void main() {
       testWidgets('$locale settings $width px 200% keep OS motion priority and keyboard focus', (tester) async {
         viewport(tester, width);
         final initial = hubValues(now);
-        SharedPreferences.setMockInitialValues(initial);
+        initial[adultAccessKey] = adultAccessValue;
+    SharedPreferences.setMockInitialValues(initial);
         final settings = MentiExperienceSettings();
         await tester.pumpWidget(app(locale, const MentiSettingsPage(), settings, scale: 2));
         await tester.pumpAndSettle();
@@ -120,7 +123,8 @@ void main() {
     testWidgets('$locale intro cancellation does not save; skip and help reopen are explicit', (tester) async {
       viewport(tester, 390);
       final initial = hubValues(now);
-      SharedPreferences.setMockInitialValues(initial);
+      initial[adultAccessKey] = adultAccessValue;
+    SharedPreferences.setMockInitialValues(initial);
       final settings = MentiExperienceSettings();
       await tester.pumpWidget(app(locale, introHost(), settings));
       await tester.pumpAndSettle();
@@ -148,6 +152,7 @@ void main() {
   testWidgets('An unconfirmed intro dismissal stays open and does not touch data', (tester) async {
     viewport(tester, 390);
     final initial = hubValues(now);
+    initial[adultAccessKey] = adultAccessValue;
     SharedPreferences.setMockInitialValues(initial);
     final settings = _RejectIntroSettings();
     await tester.pumpWidget(app('en', introHost(), settings));
@@ -165,9 +170,9 @@ void main() {
     await close(tester, settings);
   });
 
-  testWidgets('Fresh root offers an invitation, existing data and failed recovery never force intro', (tester) async {
+  testWidgets('Age-confirmed root offers an invitation, existing data and failed recovery never force intro', (tester) async {
     viewport(tester, 390);
-    SharedPreferences.setMockInitialValues({});
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,});
     await tester.pumpWidget(const MennyiMentApp());
     await tester.pumpAndSettle();
     expect(find.byType(HomePage), findsOneWidget);
@@ -181,6 +186,7 @@ void main() {
     expect((await SharedPreferences.getInstance()).containsKey(MentiExperienceSettings.introKey), false);
     await close(tester, null);
     final initial = {...hubValues(now), 'mennyiment_character_setup_complete_v1': false};
+    initial[adultAccessKey] = adultAccessValue;
     SharedPreferences.setMockInitialValues(initial);
     await tester.pumpWidget(const MennyiMentApp());
     await tester.pumpAndSettle();
@@ -193,7 +199,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(MentiIntroPage), findsOneWidget);
     await close(tester, null);
-    SharedPreferences.setMockInitialValues({BackupRestorer.recoveryKey: 'broken',
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,BackupRestorer.recoveryKey: 'broken',
       'mennyiment_menti_progress_v1': '{"xp":70}'});
     await tester.pumpWidget(const MennyiMentApp());
     await tester.pumpAndSettle();
@@ -208,6 +214,7 @@ void main() {
   testWidgets('Missing journal and a saved empty journal stay distinct on home and journal routes', (tester) async {
     viewport(tester, 390);
     final initial = hubValues(now)..remove('mennyiment_drinks_v1');
+    initial[adultAccessKey] = adultAccessValue;
     SharedPreferences.setMockInitialValues(initial);
     await tester.pumpWidget(const MennyiMentApp());
     await tester.pumpAndSettle();
@@ -220,7 +227,7 @@ void main() {
     expect(find.text(s.hubMissing), findsOneWidget);
     expect(experienceSnapshot(await SharedPreferences.getInstance()), initial);
     await close(tester, null);
-    SharedPreferences.setMockInitialValues({...initial, 'mennyiment_drinks_v1': '[]'});
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,...initial, 'mennyiment_drinks_v1': '[]'});
     await tester.pumpWidget(const MennyiMentApp());
     await tester.pumpAndSettle();
     await scroll(tester, 'daily-menti-mini-card');
@@ -239,6 +246,7 @@ void main() {
     viewport(tester, 390);
     final initial = {...hubValues(now), MentiExperienceSettings.reactionsKey: false,
       PersonalGoalStore.key: '{"reflectionGoal":2,"reflectionDays":["2026-10-24","2026-10-25"]}'};
+    initial[adultAccessKey] = adultAccessValue;
     SharedPreferences.setMockInitialValues(initial);
     final settings = MentiExperienceSettings();
     await tester.pumpWidget(app('en', PersonalGoalsPage(drinks: const [], clock: () => now), settings));
@@ -257,6 +265,7 @@ void main() {
   testWidgets('Disabling reactions hides an event without replay; new events and motion are finite', (tester) async {
     viewport(tester, 390);
     final initial = {...hubValues(now), MentiMotionSettings.preferenceKey: false};
+    initial[adultAccessKey] = adultAccessValue;
     SharedPreferences.setMockInitialValues(initial);
     final settings = MentiExperienceSettings();
     var token = 1;
@@ -318,7 +327,7 @@ void main() {
   testWidgets('Daily mini-card stays stable on rebuild and re-reads after day/resume without writes', (tester) async {
     viewport(tester, 390);
     var clock = DateTime(2027, 1, 3, 23, 59);
-    SharedPreferences.setMockInitialValues({});
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,});
     final settings = MentiExperienceSettings();
     late StateSetter update;
     var unrelated = 0;
@@ -333,14 +342,14 @@ void main() {
     await tester.pumpAndSettle();
     expect(tester.widget<Text>(find.byKey(const ValueKey('daily-menti-message'))).data, first);
     final prefs = await SharedPreferences.getInstance();
-    expect(experienceSnapshot(prefs), isEmpty);
+    expect(experienceSnapshot(prefs), {adultAccessKey: adultAccessValue});
     clock = DateTime(2027, 1, 4, 0, 1);
     await prefs.setString(DailyMentiStore.key(clock), jsonEncode({'energy': 4}));
     await tester.pump(const Duration(minutes: 1));
     await tester.pumpAndSettle();
     final s = appStrings(tester.element(find.byType(DailyMentiMiniCard)));
     expect(find.text(s.experienceTodayAnswers), findsOneWidget);
-    expect(experienceSnapshot(prefs), {DailyMentiStore.key(clock): '{"energy":4}'});
+    expect(experienceSnapshot(prefs), {adultAccessKey: adultAccessValue, DailyMentiStore.key(clock): '{"energy":4}'});
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
     tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
     await tester.pumpAndSettle();

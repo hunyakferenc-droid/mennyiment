@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -26,7 +27,7 @@ void main() {
   Finder prepare() => find.byKey(const ValueKey('backup-prepare'));
   Finder save() => find.byKey(const ValueKey('backup-save'));
   setUp(
-    () => SharedPreferences.setMockInitialValues({
+    () => SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
       'mennyiment_drinks_v1': '  [{"legacy": true}]  ',
       'mennyiment_character_style_v2': 'Lány Menti',
       'mennyiment_outfit_v2': 'Legendás szett',

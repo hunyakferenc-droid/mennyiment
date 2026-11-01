@@ -1,3 +1,5 @@
+import 'l10n/generated/app_localizations.dart';
+
 class CatalogDrink {
   final String name;
   final String category;
@@ -100,3 +102,17 @@ const List<CatalogDrink> drinkCatalog = [
     percent: 40,
   ),
 ];
+/// Labels only: persisted journal names and favorite IDs never change.
+String catalogDrinkLabel(String name, AppLocalizations s) => switch(name) {
+  'Sör (általános)' => s.catalogBeer,
+  'Világos sör' => s.catalogLager,
+  'Barna sör' => s.catalogDarkBeer,
+  'Fehérbor' => s.catalogWhiteWine,
+  'Vörösbor' => s.catalogRedWine,
+  'Rozé' => s.catalogRoseWine,
+  'Kisfröccs' => s.catalogSmallSpritzer,
+  'Nagyfröccs' => s.catalogLargeSpritzer,
+  'Pálinka' => s.catalogPalinka,
+  'Unicum (általános)' => s.catalogUnicum,
+  _ => name,
+};

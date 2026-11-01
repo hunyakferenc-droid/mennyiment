@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    SharedPreferences.setMockInitialValues({
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
       journalKey: journal,
       xpKey: xp,
       familyKey: 'Lány Menti',
@@ -91,7 +92,7 @@ void main() {
     await tester.ensureVisible(find.text('LOG A DRINK'));
     await tester.tap(find.text('LOG A DRINK'));
     await frames(tester);
-    await tester.tap(find.text('Sör (általános)'));
+    await tester.tap(find.text('Beer (standard)'));
     await frames(tester);
   }
 
@@ -127,7 +128,7 @@ void main() {
       await details(tester);
       final submit = tester
           .widget<FilledButton>(
-            find.widgetWithText(FilledButton, 'Mentés a naplóba'),
+            find.widgetWithText(FilledButton, 'Save to journal'),
           )
           .onPressed!;
       submit();
@@ -143,7 +144,8 @@ void main() {
       await language(tester, 'en');
       final persisted = {for (final k in prefs.getKeys()) k: prefs.get(k)!};
       await dispose(tester);
-      SharedPreferences.setMockInitialValues(persisted);
+      persisted[adultAccessKey] = adultAccessValue;
+    SharedPreferences.setMockInitialValues(persisted);
       await tester.pumpWidget(const MennyiMentApp());
       await frames(tester);
       await tester.pumpAndSettle();
@@ -231,7 +233,7 @@ void main() {
         for (final k in prefs.getKeys()) 'flutter.$k': prefs.get(k)!,
       });
       await details(tester);
-      await tester.tap(find.text('Mentés a naplóba'));
+      await tester.tap(find.text('Save to journal'));
       await frames(tester);
       await prefs.reload();
       expect(prefs.getString(journalKey), saved);

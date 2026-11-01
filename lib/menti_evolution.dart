@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'menti_motion.dart';
+import 'app_language.dart';
 import 'menti_experience_settings.dart';
 import 'menti_identity/menti_avatar_renderer.dart';
 
@@ -81,9 +82,7 @@ class _MentiEvolutionState extends State<MentiEvolution>
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: _animate
-          ? 'Menti, ${widget.level}. szintű karakter. Koppints az animációhoz.'
-          : 'Menti, ${widget.level}. szintű karakter.',
+      label: '${appStrings(context).avatarPreview('Menti')}, ${appStrings(context).evolutionLevel(widget.level)}',
       button: _animate || widget.onTap != null,
       child: GestureDetector(
         onTap: () {
@@ -165,8 +164,8 @@ class _MentiEvolutionState extends State<MentiEvolution>
               height: widget.size,
               fit: BoxFit.contain,
               gaplessPlayback: true,
-              errorBuilder: (_, _, _) => const Center(
-                child: Text('Menti képe nem található'),
+              errorBuilder: (_, _, _) => Center(
+                child: Text(appStrings(context).evolutionImage),
               ),
             )),
           ),

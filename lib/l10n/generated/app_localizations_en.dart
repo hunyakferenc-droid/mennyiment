@@ -1636,4 +1636,232 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get startSaveError =>
       'We couldn’t finish safely. Your data is preserved; please retry. If the profile is damaged, restore a backup.';
+
+  @override
+  String get wellbeingQuestion => 'How are you feeling?';
+
+  @override
+  String get wellbeingBody =>
+      'Your mood and sleep matter. There are no right or wrong answers.';
+
+  @override
+  String get wellbeingMood => 'Mood';
+
+  @override
+  String get wellbeingScale => '1 = very low, 5 = very good';
+
+  @override
+  String get wellbeingSleep => 'Sleep quality';
+
+  @override
+  String get wellbeingSleepHint => 'Your own rating of your most recent sleep';
+
+  @override
+  String get wellbeingHangover => 'Hangover symptoms';
+
+  @override
+  String get wellbeingHangoverHint => '0 = none, 4 = very strong';
+
+  @override
+  String get wellbeingVeryBad => 'Very low';
+
+  @override
+  String get wellbeingBad => 'Low';
+
+  @override
+  String get wellbeingMedium => 'Moderate';
+
+  @override
+  String get wellbeingGood => 'Good';
+
+  @override
+  String get wellbeingVeryGood => 'Very good';
+
+  @override
+  String get wellbeingNone => 'None';
+
+  @override
+  String get wellbeingMild => 'Mild';
+
+  @override
+  String get wellbeingStrong => 'Strong';
+
+  @override
+  String get wellbeingVeryStrong => 'Very strong';
+
+  @override
+  String get wellbeingNote => 'Note (optional)';
+
+  @override
+  String get wellbeingNoteHint => 'What influenced how you felt today?';
+
+  @override
+  String get wellbeingUpdate => 'Update entry';
+
+  @override
+  String get wellbeingSave => 'Save day';
+
+  @override
+  String get wellbeingDelete => 'Delete this day’s entry';
+
+  @override
+  String wellbeingHistory(int count) {
+    return 'Previous days ($count)';
+  }
+
+  @override
+  String get wellbeingEmpty => 'No saved days yet.';
+
+  @override
+  String wellbeingSummary(int mood, int sleep) {
+    return 'Mood $mood/5 • Sleep $sleep/5';
+  }
+
+  @override
+  String wellbeingSymptoms(int rating) {
+    return 'Symptoms $rating/4';
+  }
+
+  @override
+  String get wellbeingCaution =>
+      'These are personal observations, not medical assessments. Seek medical help for severe symptoms.';
+
+  @override
+  String get wellbeingSaved => 'Your daily wellbeing has been saved.';
+
+  @override
+  String get wellbeingReadError =>
+      'The journal cannot be read safely. Your existing data is preserved; editing is disabled.';
+
+  @override
+  String get wellbeingSafeHint => 'Mood, sleep and personal notes';
+
+  @override
+  String get profileLocalTitle => 'My Menti';
+
+  @override
+  String get journalCustomWriteError =>
+      'Your custom drinks could not be changed. The original data is preserved.';
+
+  @override
+  String get journalNewCustom => 'New custom drink';
+
+  @override
+  String get journalDrinkName => 'Drink name';
+
+  @override
+  String get journalDrinkHint => 'For example, a homemade drink';
+
+  @override
+  String get journalMl => 'Amount (ml)';
+
+  @override
+  String get journalPercent => 'Alcohol content (%)';
+
+  @override
+  String get journalInvalid => 'Please enter valid details.';
+
+  @override
+  String journalSetPrice(String name) {
+    return 'Set price: $name';
+  }
+
+  @override
+  String get journalPrice => 'Price paid (HUF)';
+
+  @override
+  String get journalRemovePrice => 'Remove price';
+
+  @override
+  String get journalInvalidAmount => 'Please enter a valid amount.';
+
+  @override
+  String journalSaved(String name) {
+    return '$name saved to your journal';
+  }
+
+  @override
+  String get journalAddTitle => 'Add a drink';
+
+  @override
+  String get journalFavorites => '⭐ Your favorites';
+
+  @override
+  String get journalFavorite => 'Favorite';
+
+  @override
+  String get journalCustoms => 'Custom drinks';
+
+  @override
+  String get journalDeleteCustom => 'Delete custom drink';
+
+  @override
+  String get journalCustomReadError =>
+      'Custom drinks could not be loaded safely; editing is disabled.';
+
+  @override
+  String get journalCreateCustom => 'Create a custom drink';
+
+  @override
+  String get journalDeleteTitle => 'Delete this entry?';
+
+  @override
+  String journalDeleteBody(String name) {
+    return 'The entry for $name will be removed from your journal.';
+  }
+
+  @override
+  String get journalDelete => 'Delete';
+
+  @override
+  String get journalDetailsHint => 'Record what you actually consumed.';
+
+  @override
+  String get journalMlError => 'Enter an amount between 1 and 10,000 ml.';
+
+  @override
+  String get journalPercentError => 'Enter an alcohol content from 0 to 100%.';
+
+  @override
+  String get journalOptionalPrice => 'Price paid (HUF) — optional';
+
+  @override
+  String get journalPriceHint => 'Leave blank to save the price as unknown.';
+
+  @override
+  String get journalPriceError =>
+      'Enter a valid price from 0 to 10,000,000 HUF.';
+
+  @override
+  String get journalSave => 'Save to journal';
+
+  @override
+  String get catalogBeer => 'Beer (standard)';
+
+  @override
+  String get catalogLager => 'Lager';
+
+  @override
+  String get catalogDarkBeer => 'Dark beer';
+
+  @override
+  String get catalogWhiteWine => 'White wine';
+
+  @override
+  String get catalogRedWine => 'Red wine';
+
+  @override
+  String get catalogRoseWine => 'Rosé';
+
+  @override
+  String get catalogSmallSpritzer => 'Small wine spritzer';
+
+  @override
+  String get catalogLargeSpritzer => 'Large wine spritzer';
+
+  @override
+  String get catalogPalinka => 'Pálinka';
+
+  @override
+  String get catalogUnicum => 'Unicum (standard)';
 }

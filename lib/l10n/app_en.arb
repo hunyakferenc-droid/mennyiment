@@ -741,5 +741,120 @@
   "startName": "Nickname",
   "startNameBody": "What should I call you? You can restyle your Menti in the Studio anytime.",
   "startFinish": "Save and let’s go",
-  "startSaveError": "We couldn’t finish safely. Your data is preserved; please retry. If the profile is damaged, restore a backup."
+  "startSaveError": "We couldn’t finish safely. Your data is preserved; please retry. If the profile is damaged, restore a backup.",
+  "wellbeingQuestion": "How are you feeling?",
+  "wellbeingBody": "Your mood and sleep matter. There are no right or wrong answers.",
+  "wellbeingMood": "Mood",
+  "wellbeingScale": "1 = very low, 5 = very good",
+  "wellbeingSleep": "Sleep quality",
+  "wellbeingSleepHint": "Your own rating of your most recent sleep",
+  "wellbeingHangover": "Hangover symptoms",
+  "wellbeingHangoverHint": "0 = none, 4 = very strong",
+  "wellbeingVeryBad": "Very low",
+  "wellbeingBad": "Low",
+  "wellbeingMedium": "Moderate",
+  "wellbeingGood": "Good",
+  "wellbeingVeryGood": "Very good",
+  "wellbeingNone": "None",
+  "wellbeingMild": "Mild",
+  "wellbeingStrong": "Strong",
+  "wellbeingVeryStrong": "Very strong",
+  "wellbeingNote": "Note (optional)",
+  "wellbeingNoteHint": "What influenced how you felt today?",
+  "wellbeingUpdate": "Update entry",
+  "wellbeingSave": "Save day",
+  "wellbeingDelete": "Delete this day’s entry",
+  "wellbeingHistory": "Previous days ({count})",
+  "@wellbeingHistory": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wellbeingEmpty": "No saved days yet.",
+  "wellbeingSummary": "Mood {mood}/5 • Sleep {sleep}/5",
+  "@wellbeingSummary": {
+    "placeholders": {
+      "mood": {
+        "type": "int"
+      },
+      "sleep": {
+        "type": "int"
+      }
+    }
+  },
+  "wellbeingSymptoms": "Symptoms {rating}/4",
+  "@wellbeingSymptoms": {
+    "placeholders": {
+      "rating": {
+        "type": "int"
+      }
+    }
+  },
+  "wellbeingCaution": "These are personal observations, not medical assessments. Seek medical help for severe symptoms.",
+  "wellbeingSaved": "Your daily wellbeing has been saved.",
+  "wellbeingReadError": "The journal cannot be read safely. Your existing data is preserved; editing is disabled.",
+  "wellbeingSafeHint": "Mood, sleep and personal notes",
+  "profileLocalTitle": "My Menti",
+  "journalCustomWriteError": "Your custom drinks could not be changed. The original data is preserved.",
+  "journalNewCustom": "New custom drink",
+  "journalDrinkName": "Drink name",
+  "journalDrinkHint": "For example, a homemade drink",
+  "journalMl": "Amount (ml)",
+  "journalPercent": "Alcohol content (%)",
+  "journalInvalid": "Please enter valid details.",
+  "journalSetPrice": "Set price: {name}",
+  "@journalSetPrice": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "journalPrice": "Price paid (HUF)",
+  "journalRemovePrice": "Remove price",
+  "journalInvalidAmount": "Please enter a valid amount.",
+  "journalSaved": "{name} saved to your journal",
+  "@journalSaved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "journalAddTitle": "Add a drink",
+  "journalFavorites": "⭐ Your favorites",
+  "journalFavorite": "Favorite",
+  "journalCustoms": "Custom drinks",
+  "journalDeleteCustom": "Delete custom drink",
+  "journalCustomReadError": "Custom drinks could not be loaded safely; editing is disabled.",
+  "journalCreateCustom": "Create a custom drink",
+  "journalDeleteTitle": "Delete this entry?",
+  "journalDeleteBody": "The entry for {name} will be removed from your journal.",
+  "@journalDeleteBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "journalDelete": "Delete",
+  "journalDetailsHint": "Record what you actually consumed.",
+  "journalMlError": "Enter an amount between 1 and 10,000 ml.",
+  "journalPercentError": "Enter an alcohol content from 0 to 100%.",
+  "journalOptionalPrice": "Price paid (HUF) — optional",
+  "journalPriceHint": "Leave blank to save the price as unknown.",
+  "journalPriceError": "Enter a valid price from 0 to 10,000,000 HUF.",
+  "journalSave": "Save to journal",
+  "catalogBeer": "Beer (standard)",
+  "catalogLager": "Lager",
+  "catalogDarkBeer": "Dark beer",
+  "catalogWhiteWine": "White wine",
+  "catalogRedWine": "Red wine",
+  "catalogRoseWine": "Rosé",
+  "catalogSmallSpritzer": "Small wine spritzer",
+  "catalogLargeSpritzer": "Large wine spritzer",
+  "catalogPalinka": "Pálinka",
+  "catalogUnicum": "Unicum (standard)"
 }

@@ -1636,4 +1636,231 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get startSaveError =>
       'Nem sikerült biztonságosan befejezni. Az adataid megmaradtak; próbáld újra. Sérült profil esetén állítsd helyre a mentést.';
+
+  @override
+  String get wellbeingQuestion => 'Hogy érzed magad?';
+
+  @override
+  String get wellbeingBody =>
+      'A közérzeted és az alvásod is fontos. Nincs jó vagy rossz válasz.';
+
+  @override
+  String get wellbeingMood => 'Hangulat';
+
+  @override
+  String get wellbeingScale => '1 = nagyon rossz, 5 = nagyon jó';
+
+  @override
+  String get wellbeingSleep => 'Alvásminőség';
+
+  @override
+  String get wellbeingSleepHint => 'A legutóbbi alvásod saját értékelése';
+
+  @override
+  String get wellbeingHangover => 'Másnaposság tünetei';
+
+  @override
+  String get wellbeingHangoverHint => '0 = nincs, 4 = nagyon erős';
+
+  @override
+  String get wellbeingVeryBad => 'Nagyon rossz';
+
+  @override
+  String get wellbeingBad => 'Rossz';
+
+  @override
+  String get wellbeingMedium => 'Közepes';
+
+  @override
+  String get wellbeingGood => 'Jó';
+
+  @override
+  String get wellbeingVeryGood => 'Nagyon jó';
+
+  @override
+  String get wellbeingNone => 'Nincs';
+
+  @override
+  String get wellbeingMild => 'Enyhe';
+
+  @override
+  String get wellbeingStrong => 'Erős';
+
+  @override
+  String get wellbeingVeryStrong => 'Nagyon erős';
+
+  @override
+  String get wellbeingNote => 'Megjegyzés (nem kötelező)';
+
+  @override
+  String get wellbeingNoteHint => 'Mi befolyásolta ma a közérzeted?';
+
+  @override
+  String get wellbeingUpdate => 'Bejegyzés frissítése';
+
+  @override
+  String get wellbeingSave => 'Nap mentése';
+
+  @override
+  String get wellbeingDelete => 'E napi bejegyzés törlése';
+
+  @override
+  String wellbeingHistory(int count) {
+    return 'Korábbi napok ($count)';
+  }
+
+  @override
+  String get wellbeingEmpty => 'Még nincs mentett nap.';
+
+  @override
+  String wellbeingSummary(int mood, int sleep) {
+    return 'Hangulat $mood/5 • Alvás $sleep/5';
+  }
+
+  @override
+  String wellbeingSymptoms(int rating) {
+    return 'Tünetek $rating/4';
+  }
+
+  @override
+  String get wellbeingCaution =>
+      'A feljegyzések önbevalláson alapulnak, nem orvosi értékelések. Súlyos tünetek esetén kérj egészségügyi segítséget.';
+
+  @override
+  String get wellbeingSaved => 'A napi közérzeted mentve.';
+
+  @override
+  String get wellbeingReadError =>
+      'A napló nem olvasható biztonságosan. A meglévő adatok megmaradtak; az írás letiltva.';
+
+  @override
+  String get wellbeingSafeHint => 'Hangulat, alvás és saját jegyzetek';
+
+  @override
+  String get profileLocalTitle => 'Saját Mentim';
+
+  @override
+  String get journalCustomWriteError =>
+      'A saját italok módosítása nem sikerült; az eredeti adatokat megőriztük.';
+
+  @override
+  String get journalNewCustom => 'Új saját ital';
+
+  @override
+  String get journalDrinkName => 'Ital neve';
+
+  @override
+  String get journalDrinkHint => 'Pl. Házi barackpálinka';
+
+  @override
+  String get journalMl => 'Mennyiség (ml)';
+
+  @override
+  String get journalPercent => 'Alkoholfok (%)';
+
+  @override
+  String get journalInvalid => 'Adj meg érvényes adatokat!';
+
+  @override
+  String journalSetPrice(String name) {
+    return 'Ár megadása: $name';
+  }
+
+  @override
+  String get journalPrice => 'Fizetett ár (Ft)';
+
+  @override
+  String get journalRemovePrice => 'Ár törlése';
+
+  @override
+  String get journalInvalidAmount => 'Adj meg érvényes összeget!';
+
+  @override
+  String journalSaved(String name) {
+    return '$name mentve a naplóba';
+  }
+
+  @override
+  String get journalAddTitle => 'Ital hozzáadása';
+
+  @override
+  String get journalFavorites => '⭐ Kedvenceid';
+
+  @override
+  String get journalFavorite => 'Kedvenc';
+
+  @override
+  String get journalCustoms => 'Saját italok';
+
+  @override
+  String get journalDeleteCustom => 'Saját ital törlése';
+
+  @override
+  String get journalCustomReadError =>
+      'A saját italok nem tölthetők be biztonságosan; módosításuk letiltva.';
+
+  @override
+  String get journalCreateCustom => 'Új saját ital létrehozása';
+
+  @override
+  String get journalDeleteTitle => 'Bejegyzés törlése?';
+
+  @override
+  String journalDeleteBody(String name) {
+    return 'A(z) $name bejegyzést eltávolítjuk a naplóból.';
+  }
+
+  @override
+  String get journalDelete => 'Törlés';
+
+  @override
+  String get journalDetailsHint => 'Rögzítsd, amit ténylegesen fogyasztottál.';
+
+  @override
+  String get journalMlError => 'Adj meg 1 és 10 000 ml közötti mennyiséget.';
+
+  @override
+  String get journalPercentError => 'Adj meg 0 és 100 közötti alkoholfokot.';
+
+  @override
+  String get journalOptionalPrice => 'Fizetett ár (Ft) – opcionális';
+
+  @override
+  String get journalPriceHint => 'Üresen hagyva ismeretlen árként mentjük.';
+
+  @override
+  String get journalPriceError => 'Adj meg érvényes árat (0–10 000 000 Ft).';
+
+  @override
+  String get journalSave => 'Mentés a naplóba';
+
+  @override
+  String get catalogBeer => 'Sör (általános)';
+
+  @override
+  String get catalogLager => 'Világos sör';
+
+  @override
+  String get catalogDarkBeer => 'Barna sör';
+
+  @override
+  String get catalogWhiteWine => 'Fehérbor';
+
+  @override
+  String get catalogRedWine => 'Vörösbor';
+
+  @override
+  String get catalogRoseWine => 'Rozé';
+
+  @override
+  String get catalogSmallSpritzer => 'Kisfröccs';
+
+  @override
+  String get catalogLargeSpritzer => 'Nagyfröccs';
+
+  @override
+  String get catalogPalinka => 'Pálinka';
+
+  @override
+  String get catalogUnicum => 'Unicum (általános)';
 }

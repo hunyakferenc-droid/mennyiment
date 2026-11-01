@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ Future<MentiXpState> morning(DateTime date) => DailyMentiStore.save(
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final day = DateTime(2026, 10, 25, 8);
-  setUp(() => SharedPreferences.setMockInitialValues({
+  setUp(() => SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
     xpKey: jsonEncode({'xp': 40, 'days': [], 'completed': [], 'future': 42}),
     'mennyiment_drinks_v1': '[]',
     MentiProfileStorage.characterStyleKey: 'girl',
@@ -58,7 +59,7 @@ void main() {
     expect(prefs.getString('mennyiment_drinks_v1'), '[]');
     expect(prefs.getString('mennyiment_personal_goals_v1'), '{"reflectionDays":["2026-10-24"]}');
     expect(prefs.getString(MentiProfileStorage.outfitKey), 'legendary');
-    SharedPreferences.setMockInitialValues({for (final k in prefs.getKeys()) k: prefs.get(k)!});
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,for (final k in prefs.getKeys()) k: prefs.get(k)!});
     final restored = ChallengeStore();
     await restored.load();
     expect(restored.week(day)['custom']['status'], 'stopped');

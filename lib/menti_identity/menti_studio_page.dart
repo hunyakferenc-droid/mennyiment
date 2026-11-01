@@ -154,7 +154,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
     final c = _controller!;
     final profile = c.draft.profile;
     return Padding(padding: const EdgeInsets.all(12), child: Column(children: [
-      MentiAvatarRenderer(key: const ValueKey('studio-live-preview'), profile: profile,
+      MentiAvatarRenderer(key: const ValueKey('studio-live-preview'), profile: profile, animate:true,
         reaction: profile.reaction.style, size: math.min(440, maxWidth - 48)),
       TextButton(onPressed: c.writable ? _rename : null, child: Text(profile.name,
         style: Theme.of(context).textTheme.titleLarge)),

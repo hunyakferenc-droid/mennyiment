@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'app_language.dart';
+import 'menti_access.dart';
+import 'menti_identity/menti_avatar_renderer.dart';
+import 'menti_identity/menti_identity_controller.dart';
+import 'menti_identity/menti_studio_page.dart';
 import 'menti_experience_settings.dart';
 import 'menti_intro.dart';
 import 'menti_motion.dart';
@@ -40,6 +44,17 @@ class MentiSettingsPage extends StatelessWidget {
           onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
             builder: (_) => const MentiIntroPage())),
           icon: const Icon(Icons.help_outline), label: Text(s.experienceIntroOpen)),
+        MentiPanel(child: Column(children: [
+          Text(s.profileLocalTitle,style:Theme.of(context).textTheme.titleLarge),
+          const MentiCurrentAvatar(size:160,legacyChild:SizedBox.shrink()),
+          Text(MentiIdentityScope.of(context)?.profile.name??'Menti',
+            style:Theme.of(context).textTheme.headlineSmall),
+          Text(MentiAccessScope.adultOf(context)?s.startAdult:s.startMinor),
+          const SizedBox(height:8),Text(s.startLocalOnly),
+          const SizedBox(height:12),
+          FilledButton.tonalIcon(onPressed:()=>Navigator.of(context).push(MaterialPageRoute<void>(
+            builder:(_)=>const MentiStudioPage())),icon:const Icon(Icons.palette_outlined),label:Text(s.avatarStudio)),
+        ])),
       ]),
     );
   }

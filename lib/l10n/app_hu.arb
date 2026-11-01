@@ -741,5 +741,120 @@
   "startName": "Becenév",
   "startNameBody": "Hogy szólíthatlak? A Mentidet később is átöltöztetheted a Studióban.",
   "startFinish": "Mentés és indulás",
-  "startSaveError": "Nem sikerült biztonságosan befejezni. Az adataid megmaradtak; próbáld újra. Sérült profil esetén állítsd helyre a mentést."
+  "startSaveError": "Nem sikerült biztonságosan befejezni. Az adataid megmaradtak; próbáld újra. Sérült profil esetén állítsd helyre a mentést.",
+  "wellbeingQuestion": "Hogy érzed magad?",
+  "wellbeingBody": "A közérzeted és az alvásod is fontos. Nincs jó vagy rossz válasz.",
+  "wellbeingMood": "Hangulat",
+  "wellbeingScale": "1 = nagyon rossz, 5 = nagyon jó",
+  "wellbeingSleep": "Alvásminőség",
+  "wellbeingSleepHint": "A legutóbbi alvásod saját értékelése",
+  "wellbeingHangover": "Másnaposság tünetei",
+  "wellbeingHangoverHint": "0 = nincs, 4 = nagyon erős",
+  "wellbeingVeryBad": "Nagyon rossz",
+  "wellbeingBad": "Rossz",
+  "wellbeingMedium": "Közepes",
+  "wellbeingGood": "Jó",
+  "wellbeingVeryGood": "Nagyon jó",
+  "wellbeingNone": "Nincs",
+  "wellbeingMild": "Enyhe",
+  "wellbeingStrong": "Erős",
+  "wellbeingVeryStrong": "Nagyon erős",
+  "wellbeingNote": "Megjegyzés (nem kötelező)",
+  "wellbeingNoteHint": "Mi befolyásolta ma a közérzeted?",
+  "wellbeingUpdate": "Bejegyzés frissítése",
+  "wellbeingSave": "Nap mentése",
+  "wellbeingDelete": "E napi bejegyzés törlése",
+  "wellbeingHistory": "Korábbi napok ({count})",
+  "@wellbeingHistory": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wellbeingEmpty": "Még nincs mentett nap.",
+  "wellbeingSummary": "Hangulat {mood}/5 • Alvás {sleep}/5",
+  "@wellbeingSummary": {
+    "placeholders": {
+      "mood": {
+        "type": "int"
+      },
+      "sleep": {
+        "type": "int"
+      }
+    }
+  },
+  "wellbeingSymptoms": "Tünetek {rating}/4",
+  "@wellbeingSymptoms": {
+    "placeholders": {
+      "rating": {
+        "type": "int"
+      }
+    }
+  },
+  "wellbeingCaution": "A feljegyzések önbevalláson alapulnak, nem orvosi értékelések. Súlyos tünetek esetén kérj egészségügyi segítséget.",
+  "wellbeingSaved": "A napi közérzeted mentve.",
+  "wellbeingReadError": "A napló nem olvasható biztonságosan. A meglévő adatok megmaradtak; az írás letiltva.",
+  "wellbeingSafeHint": "Hangulat, alvás és saját jegyzetek",
+  "profileLocalTitle": "Saját Mentim",
+  "journalCustomWriteError": "A saját italok módosítása nem sikerült; az eredeti adatokat megőriztük.",
+  "journalNewCustom": "Új saját ital",
+  "journalDrinkName": "Ital neve",
+  "journalDrinkHint": "Pl. Házi barackpálinka",
+  "journalMl": "Mennyiség (ml)",
+  "journalPercent": "Alkoholfok (%)",
+  "journalInvalid": "Adj meg érvényes adatokat!",
+  "journalSetPrice": "Ár megadása: {name}",
+  "@journalSetPrice": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "journalPrice": "Fizetett ár (Ft)",
+  "journalRemovePrice": "Ár törlése",
+  "journalInvalidAmount": "Adj meg érvényes összeget!",
+  "journalSaved": "{name} mentve a naplóba",
+  "@journalSaved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "journalAddTitle": "Ital hozzáadása",
+  "journalFavorites": "⭐ Kedvenceid",
+  "journalFavorite": "Kedvenc",
+  "journalCustoms": "Saját italok",
+  "journalDeleteCustom": "Saját ital törlése",
+  "journalCustomReadError": "A saját italok nem tölthetők be biztonságosan; módosításuk letiltva.",
+  "journalCreateCustom": "Új saját ital létrehozása",
+  "journalDeleteTitle": "Bejegyzés törlése?",
+  "journalDeleteBody": "A(z) {name} bejegyzést eltávolítjuk a naplóból.",
+  "@journalDeleteBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "journalDelete": "Törlés",
+  "journalDetailsHint": "Rögzítsd, amit ténylegesen fogyasztottál.",
+  "journalMlError": "Adj meg 1 és 10 000 ml közötti mennyiséget.",
+  "journalPercentError": "Adj meg 0 és 100 közötti alkoholfokot.",
+  "journalOptionalPrice": "Fizetett ár (Ft) – opcionális",
+  "journalPriceHint": "Üresen hagyva ismeretlen árként mentjük.",
+  "journalPriceError": "Adj meg érvényes árat (0–10 000 000 Ft).",
+  "journalSave": "Mentés a naplóba",
+  "catalogBeer": "Sör (általános)",
+  "catalogLager": "Világos sör",
+  "catalogDarkBeer": "Barna sör",
+  "catalogWhiteWine": "Fehérbor",
+  "catalogRedWine": "Vörösbor",
+  "catalogRoseWine": "Rozé",
+  "catalogSmallSpritzer": "Kisfröccs",
+  "catalogLargeSpritzer": "Nagyfröccs",
+  "catalogPalinka": "Pálinka",
+  "catalogUnicum": "Unicum (általános)"
 }

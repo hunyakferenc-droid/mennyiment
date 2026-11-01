@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'app_language.dart';
+import 'data_backup_page.dart';
 import 'menti_access.dart';
 import 'menti_identity/menti_avatar_renderer.dart';
 import 'menti_identity/menti_identity_controller.dart';
@@ -8,8 +9,9 @@ import 'menti_identity/menti_identity_controller.dart';
 /// Explicit age declaration for all installs; existing profiles bypass creation.
 /// The completion flag is written only after the character save succeeds.
 class MentiStartGate extends StatefulWidget {
-  const MentiStartGate({super.key, required this.child});
+  const MentiStartGate({super.key, required this.child, this.onRestored});
   final Widget child;
+  final VoidCallback? onRestored;
   @override
   State<MentiStartGate> createState() => _MentiStartGateState();
 }
@@ -18,8 +20,9 @@ class _MentiStartGateState extends State<MentiStartGate> {
   bool? _adult;
   bool _busy = false, _failed = false;
   final _name = TextEditingController(text: 'Menti');
+  final _scroll = ScrollController();
   @override
-  void dispose() { _name.dispose(); super.dispose(); }
+  void dispose() { _name.dispose(); _scroll.dispose(); super.dispose(); }
   Future<void> _finish(MentiAccessSettings access, MentiIdentityController identity) async {
     if (_busy || _adult == null || !identity.writable) return;
     setState(() { _busy = true; _failed = false; });
@@ -55,9 +58,21 @@ class _MentiStartGateState extends State<MentiStartGate> {
         onSelected: _busy ? null : (_) => identity.choose(option)),
     ]);
     return Scaffold(
-      appBar: AppBar(title: const Text('MennyiMent?')),
+      appBar: AppBar(title: const Text('MennyiMent?'), actions: [
+        IconButton(tooltip: s.backupTitle, icon: const Icon(Icons.backup_outlined),
+          onPressed: _busy ? null : () => Navigator.of(context).push(MaterialPageRoute<void>(
+            builder: (_) => DataBackupPage(onRestored: widget.onRestored)))),
+      ]),
+      bottomNavigationBar: SafeArea(minimum: const EdgeInsets.all(16), child: Wrap(spacing: 12, runSpacing: 12, children: [
+            if (_step > 0) OutlinedButton(onPressed: _busy ? null : () => setState(() { _step--; if (_scroll.hasClients) _scroll.jumpTo(0); }),
+              child: Text(s.experienceIntroBack)),
+            FilledButton(key: const ValueKey('start-next'), onPressed: !canContinue ? null : () {
+              if (_step == last) { _finish(access, identity); }
+              else { setState(() { _step++; _failed = false; if (_scroll.hasClients) _scroll.jumpTo(0); }); }
+            }, child: Text(_busy ? s.avatarSaving : _step == last ? s.startFinish : s.experienceIntroNext)),
+          ])),
       body: SafeArea(child: Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 620),
-        child: ListView(padding: const EdgeInsets.all(24), children: [
+        child: ListView(controller:_scroll, padding: const EdgeInsets.all(24), children: [
           LinearProgressIndicator(value: (_step + 1) / (last + 1)),
           const SizedBox(height: 24),
           Text(titles[_step], style: Theme.of(context).textTheme.headlineMedium),
@@ -103,14 +118,7 @@ class _MentiStartGateState extends State<MentiStartGate> {
             Padding(padding: const EdgeInsets.symmetric(vertical: 16),
               child: Semantics(liveRegion: true, child: Text(s.startSaveError))),
           const SizedBox(height: 24),
-          Wrap(spacing: 12, runSpacing: 12, children: [
-            if (_step > 0) OutlinedButton(onPressed: _busy ? null : () => setState(() => _step--),
-              child: Text(s.experienceIntroBack)),
-            FilledButton(key: const ValueKey('start-next'), onPressed: !canContinue ? null : () {
-              if (_step == last) { _finish(access, identity); }
-              else { setState(() { _step++; _failed = false; }); }
-            }, child: Text(_busy ? s.avatarSaving : _step == last ? s.startFinish : s.experienceIntroNext)),
-          ]),
+
         ])))),
     );
   }

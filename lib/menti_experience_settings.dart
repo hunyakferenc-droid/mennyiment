@@ -21,7 +21,7 @@ class MentiExperienceSettings extends ChangeNotifier {
   /// Any existing app data (including unknown future keys) suppresses the invite.
   static bool shouldOfferIntro(SharedPreferences prefs) =>
       prefs.get(introKey) == null && !prefs.getKeys().any((key) =>
-        key.startsWith('mennyiment_') && key != reactionsKey && key != introKey);
+        key.startsWith('mennyiment_') && key != reactionsKey && key != introKey && key != 'mennyiment_access_v1');
 
   void _notify() { if (!_disposed) notifyListeners(); }
 

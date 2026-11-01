@@ -187,7 +187,7 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
                 final challenges = data.weeklyChallenges;
                 if (challenges.isEmpty) return Text(s.hubNoChallenges);
                 return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  for (final item in challenges) Padding(padding: const EdgeInsets.only(bottom: 16),
+                  for (final item in challenges.where((item)=>MentiAccessScope.adultOf(context)||item.id!='journal')) Padding(padding: const EdgeInsets.only(bottom: 16),
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Text(switch (item.id) {
                         'reflection' => s.challengeReflection,

@@ -1,3 +1,5 @@
+import 'support/adult_access_fixture.dart';
+import 'package:mennyiment/menti_identity/menti_premium_renderer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,7 +26,7 @@ final chosen = MentiIdentityProfile(name: 'Mira', visual: MentiVisualProfile({
   'family': 'girl', 'age': 'veteran', 'outfit': 'creative-alt', 'hair': 'girl-braid',
   'headwear': 'none', 'glasses': 'round-glasses', 'held': 'flower', 'background': 'ocean',
 }), reaction: MentiReactionProfile({'style': 'funny'}));
-Map<String, Object> saved() => {
+Map<String, Object> saved() => {adultAccessKey: adultAccessValue,
   MentiIdentityStore.key: MentiIdentityDocument(profile: chosen,
     presets: [MentiPreset(id: 'p1', name: 'Kedvenc', profile: chosen, favorite: true)],
     extras: {'future': {'x': true}}).encode(),
@@ -77,7 +79,7 @@ void main() {
   });
   test('confirmed restore keeps identity presets unknown fields XP and legacy values', () async {
     final original = saved(); final text = (await BackupExporter().capture()).json;
-    SharedPreferences.setMockInitialValues({'foreign': 'keep'});
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,'foreign': 'keep'});
     final restorer = BackupRestorer(); final plan = await restorer.prepare(text);
     await restorer.restore(plan, confirmed: true);
     final p = await SharedPreferences.getInstance(); await p.reload();
@@ -153,7 +155,7 @@ void main() {
       child: MentiReactionRenderer(profile: chosen, mood: 'celebrating')), c));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('assets/images/menti_2_2/reactions/celebrating.svg')), findsNothing);
-    expect(find.byKey(const ValueKey('assets/images/menti_2_2/bases/girl-veteran.svg')), findsOneWidget);
+    expect(find.byWidgetPredicate((w)=>w is MentiPremiumSprite && w.sprite=='bodies/girl-veteran' && w.sourcePart==null), findsOneWidget);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox.shrink());
   });
