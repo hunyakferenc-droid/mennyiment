@@ -49,23 +49,6 @@ jobs:
           flutter gen-l10n
           git diff --exit-code -- pubspec.lock
 
-      # One-time new family-art baseline capture; removed after PNGs are committed.
-      - name: Bootstrap family golden baselines
-        run: |
-          flutter test test/menti_brand_golden_test.dart test/menti_family_golden_test.dart --update-goldens
-          python3 - <<'PYCODE'
-          import base64
-          from pathlib import Path
-          for path in sorted(Path('test/goldens').glob('*.png')):
-              if path.name not in ['menti_brand_pair.png','menti_families_classic.png','menti_families_uncovered.png']:
-                  continue
-              print('FAMILY_GOLDEN_BEGIN '+path.name)
-              value=base64.b64encode(path.read_bytes()).decode()
-              for i in range(0,len(value),1000):
-                  print(value[i:i+1000])
-              print('FAMILY_GOLDEN_END '+path.name)
-          PYCODE
-
       - name: Whitespace check
         run: git diff --check HEAD^ HEAD
 
