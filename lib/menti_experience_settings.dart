@@ -52,8 +52,7 @@ class MentiExperienceSettings extends ChangeNotifier {
   }
 
   Future<bool> setReactions(bool value) => _save(reactionsKey, value);
-  Future<bool> markIntroSeen() => introSeen && ready
-      ? Future.value(true) : _save(introKey, true);
+  Future<bool> markIntroSeen() => _save(introKey, true);
 
   Future<bool> _save(String key, bool value) async {
     if (!ready || saving || _disposed) return false;
@@ -69,6 +68,8 @@ class MentiExperienceSettings extends ChangeNotifier {
         ready = false;
         throw StateError('Experience preference changed; reload required');
       }
+      // Idempotence still verifies the current stored value before reporting success.
+      if (previous == value) return true;
       if (!await prefs.setBool(key, value)) {
         throw StateError('Experience preference write unconfirmed');
       }

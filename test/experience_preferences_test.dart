@@ -93,6 +93,17 @@ void main() {
     a.dispose();
     b.dispose();
   });
+  test('Already-seen intro is rechecked before an idempotent success is reported', () async {
+    SharedPreferences.setMockInitialValues({MentiExperienceSettings.introKey: true});
+    final settings = MentiExperienceSettings();
+    await settings.load();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(MentiExperienceSettings.introKey, false);
+    expect(await settings.markIntroSeen(), false);
+    expect(settings.ready, false);
+    expect(prefs.getBool(MentiExperienceSettings.introKey), false);
+    settings.dispose();
+  });
   for (final throwing in [false, true]) {
     for (final persist in [false, true]) {
       test('Unconfirmed writes never publish a saved choice (throw=$throwing persist=$persist)', () async {
