@@ -28,6 +28,12 @@ function observe(page) {
   page.on('response', response => { if (response.status() >= 400) failures.push(`${response.status()} ${response.url()}`); });
   page.on('console', message => { if (message.type() === 'error') failures.push(message.text()); });
 }
+// Let pointer tooltips close before capturing the unaltered Flutter canvas.
+async function capture(page, options) {
+  await page.mouse.move(1,1);
+  await page.waitForTimeout(450);
+  return page.screenshot(options);
+}
 async function open(context) {
   const page = await context.newPage();
   observe(page);
@@ -81,20 +87,20 @@ function identity(values) {
     const nativeValues = await storage(page);
     const nativeIdentity = identity(nativeValues);
     if(nativeIdentity.profile.visual.hair !== 'girl-waves') throw new Error('Onboarding did not select the native girl hair');
-    await page.screenshot({ path: path.join(output, 'chrome-home-native-en.png') });
+    await capture(page,{ path: path.join(output, 'chrome-home-native-en.png') });
     await page.getByRole('button', { name: strings.chooseMenti, exact: true }).click();
     await page.getByRole('button',{name:strings.avatarEnlargePreview,exact:true}).click();
     await page.getByRole('button',{name:strings.avatarClosePreview,exact:true}).waitFor();
-    await page.screenshot({path:path.join(output,'chrome-studio-zoom-en.png')});
+    await capture(page,{path:path.join(output,'chrome-studio-zoom-en.png')});
     await page.getByRole('button',{name:strings.avatarClosePreview,exact:true}).click();
     checks.push('Full-screen zoom shows the same draft character without saving');
     await page.getByRole('checkbox', { name: strings.avatarTabFace, exact: true }).click();
     const curls=page.getByRole('button', { name:new RegExp(escape(strings.avatarHairGirlCurls)) }).first();
     await curls.scrollIntoViewIfNeeded(); await curls.click();
-    await page.screenshot({ path:path.join(output,'chrome-studio-hair-en.png') });
+    await capture(page,{ path:path.join(output,'chrome-studio-hair-en.png') });
     const wideEyes=page.getByRole('button', { name:new RegExp(escape(strings.avatarEyesWide)) }).first();
     await wideEyes.scrollIntoViewIfNeeded(); await wideEyes.click();
-    await page.screenshot({ path:path.join(output,'chrome-studio-eyes-en.png') });
+    await capture(page,{ path:path.join(output,'chrome-studio-eyes-en.png') });
     if(JSON.stringify(identity(await storage(page)))!==JSON.stringify(nativeIdentity)) throw new Error('Preview changed saved identity');
     await page.getByRole('button', { name: strings.avatarRevert, exact:true }).click();
     checks.push('Hair and eye preview alter the draft, keep saved identity intact, and can be reverted');
@@ -107,7 +113,7 @@ function identity(values) {
       throw new Error('Studio did not persist the edited identity');
     }
     checks.push('Studio outfit editing and confirmed save');
-    await page.screenshot({ path: path.join(output, 'chrome-studio-mobile-en.png') });
+    await capture(page,{ path: path.join(output, 'chrome-studio-mobile-en.png') });
     await page.waitForLoadState('networkidle');
     page.intentionalReload = true;
     await page.reload({ waitUntil: 'networkidle' });
@@ -118,14 +124,14 @@ function identity(values) {
     const reopened = identity(await storage(page));
     if (JSON.stringify(saved) !== JSON.stringify(reopened)) throw new Error('Reload changed the saved identity');
     checks.push('Reload preserves the full saved identity and skips completed onboarding');
-    await page.screenshot({ path: path.join(output, 'chrome-home-mobile-en.png') });
+    await capture(page,{ path: path.join(output, 'chrome-home-mobile-en.png') });
     const values = await storage(page);
     const desktop = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce' });
     await desktop.addInitScript(values => { for (const [key, value] of Object.entries(values)) localStorage.setItem(key, value); }, values);
     const wide = activePage = await open(desktop);
     await wide.getByRole('button', { name: strings.chooseMenti, exact: true }).click();
     await wide.getByRole('heading', { name: strings.avatarStudio, exact: true }).waitFor();
-    await wide.screenshot({ path: path.join(output, 'chrome-studio-desktop-en.png') });
+    await capture(wide,{ path: path.join(output, 'chrome-studio-desktop-en.png') });
     checks.push('1280px desktop Studio loads the saved profile');
     const huValues={...nativeValues};
     const languageKey=Object.keys(huValues).find(key=>key.endsWith('mennyiment_locale_v1'));
@@ -135,10 +141,10 @@ function identity(values) {
     await hungarian.addInitScript(values=>{for(const [key,value] of Object.entries(values)) localStorage.setItem(key,value);},huValues);
     const huPage=activePage=await open(hungarian);
     await huPage.getByRole('button',{name:hu.chooseMenti,exact:true}).waitFor();
-    await huPage.screenshot({path:path.join(output,'chrome-home-native-hu-320.png')});
+    await capture(huPage,{path:path.join(output,'chrome-home-native-hu-320.png')});
     await huPage.getByRole('button',{name:hu.chooseMenti,exact:true}).click();
     await huPage.getByRole('heading',{name:hu.avatarStudio,exact:true}).waitFor();
-    await huPage.screenshot({path:path.join(output,'chrome-studio-hu-320.png')});
+    await capture(huPage,{path:path.join(output,'chrome-studio-hu-320.png')});
     checks.push('320px Hungarian native girl home and Studio retain all controls');
     const minor = await browser.newContext({ viewport: { width: 320, height: 740 }, reducedMotion: 'reduce' });
     const young = activePage = await open(minor);
@@ -146,7 +152,7 @@ function identity(values) {
     if (await young.getByRole('button', { name: strings.addDrink, exact: true }).count()) {
       throw new Error('A minor can access the drink logging action');
     }
-    await young.screenshot({ path: path.join(output, 'chrome-home-minor-en.png') });
+    await capture(young,{ path: path.join(output, 'chrome-home-minor-en.png') });
     checks.push('320px minor onboarding keeps alcohol logging unavailable');
     const version = await page.request.get(`${target}/version.json`);
     const metadata = await version.json();
@@ -160,7 +166,7 @@ function identity(values) {
   } catch (error) {
     if (activePage) {
       console.error((await activePage.locator('body').ariaSnapshot()).slice(0,16000));
-      await activePage.screenshot({ path: path.join(output, 'chrome-failure.png') });
+      await capture(activePage,{ path: path.join(output, 'chrome-failure.png') });
     }
     throw error;
   } finally { await browser.close(); }
