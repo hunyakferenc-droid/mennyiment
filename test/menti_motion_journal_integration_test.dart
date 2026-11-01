@@ -39,7 +39,9 @@ void main() {
   }
 
   Future<void> reduceInStudio(WidgetTester tester) async {
-    await tester.tap(find.byTooltip('Menti és profil'));
+    await tester.tap(find.byKey(const ValueKey('home-menu')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(PopupMenuItem<String>, 'Menti és profil'));
     await frames(tester);
     final toggle = find.byKey(const ValueKey('menti-reduce-motion'));
     await tester.ensureVisible(toggle);

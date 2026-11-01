@@ -36,6 +36,7 @@ import 'menti_ui.dart';
 import 'drink_journal_page.dart';
 import 'menti_evolution.dart';
 import 'app_language.dart';
+import 'menti_design.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'menti_motion.dart';
 import 'data_backup_page.dart';
@@ -110,29 +111,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
       localeResolutionCallback: (locale, supported) => locale?.languageCode == 'en' ? const Locale('en') : const Locale('hu'),
       debugShowCheckedModeBanner: false,
       title: 'MennyiMent?',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color(0xFF0C0A10),
-        appBarTheme: const AppBarTheme(backgroundColor: Color(0xFF0C0A10), foregroundColor: Colors.white, centerTitle: false),
-        cardTheme: CardThemeData(color: const Color(0xFF21182B), elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22))),
-        navigationBarTheme: NavigationBarThemeData(backgroundColor: const Color(0xFF17111E), indicatorColor: const Color(0xFF4B2959), labelTextStyle: WidgetStateProperty.all(const TextStyle(fontSize: 12, color: Colors.white))),
-        filledButtonTheme: FilledButtonThemeData(style: FilledButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)))),
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: const Color(0xFF21182B),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16),
-              borderSide: const BorderSide(color: Color(0xFF60436C))),
-          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16),
-              borderSide: const BorderSide(color: Color(0xFF493552))),
-          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16),
-              borderSide: const BorderSide(color: Color(0xFFFF9E2C), width: 1.6)),
-        ),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFFF9E2C),
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
+      theme: MentiDesign.theme,
       home: MentiStartGate(onRestored: restored, child: HomePage(offerIntro: _offerIntro)),
     )));
     });
@@ -148,6 +127,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool _moreExpanded = false;
   MentiMood _mentiMood = MentiMood.welcome;
 
 int mentiMessageIndex = 0;
@@ -960,21 +940,20 @@ void updateMentiMessage(MentiMood mood) {
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MennyiMent?', maxLines: 1, overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.w800)),
-        actions: [
-          IconButton(key: const ValueKey('open-data-backup'),
-            tooltip: appStrings(context).backupTitle, onPressed: _openDataBackup,
-            icon: const Icon(Icons.backup_outlined)),
+        title: const FittedBox(fit:BoxFit.scaleDown,child:Text('MennyiMent?',
+            style:TextStyle(fontWeight:FontWeight.w800))),
+        actions:[
           const LanguageMenu(),
-          IconButton(key: const ValueKey('open-menti-settings'),
-            tooltip: strings.experienceSettings,
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
-              builder: (_) => const MentiSettingsPage())),
-            icon: const Icon(Icons.settings_outlined)),
-          IconButton(tooltip: appStrings(context).profile, onPressed: _openAvatar,
-              icon: const Icon(Icons.account_circle_outlined)),
-          const SizedBox(width: 8),
+          PopupMenuButton<String>(key:const ValueKey('home-menu'),tooltip:strings.avatarMore,
+            onSelected:(action) {
+              if(action=='backup') _openDataBackup();
+              if(action=='settings') Navigator.of(context).push(MaterialPageRoute<void>(builder:(_)=>const MentiSettingsPage()));
+              if(action=='profile') _openAvatar();
+            },itemBuilder:(_)=>[
+              PopupMenuItem(value:'profile',child:Text(strings.profile)),
+              PopupMenuItem(key:const ValueKey('open-data-backup'),value:'backup',child:Text(strings.backupTitle)),
+              PopupMenuItem(key:const ValueKey('open-menti-settings'),value:'settings',child:Text(strings.experienceSettings)),
+            ]),
         ],
       ),
       bottomNavigationBar: NavigationBar(
@@ -1001,38 +980,6 @@ void updateMentiMessage(MentiMood mood) {
                   style: TextStyle(color: _mint, fontSize: 11,
                       fontWeight: FontWeight.w700, letterSpacing: 1.1)),
               const SizedBox(height: 12),
-              if (adult) FilledButton.icon(
-                onPressed: _canWriteJournal ? _openDrinkPicker : null,
-                icon: const Icon(Icons.add_circle_outline),
-                label: Text(appStrings(context).addDrink,
-                    style: TextStyle(fontWeight: FontWeight.w800)),
-                style: FilledButton.styleFrom(
-                    backgroundColor: _mint,
-                    foregroundColor: const Color(0xFF150D1C),
-                    minimumSize: const Size(double.infinity, 54)),
-              ),
-              const SizedBox(height: 12),
-              const SizedBox(height: 6),
-              Text(strings.homeGreeting, style: const TextStyle(
-                  fontSize: 26, fontWeight: FontWeight.w800)),
-              const SizedBox(height: 5),
-              Text(strings.homeIntro,
-                  style: TextStyle(color: _muted, fontSize: 13)),
-              const SizedBox(height: 12),
-              OutlinedButton.icon(
-                key: const ValueKey('open-personal-hub'),
-                onPressed: _openPersonalHub,
-                icon: const Icon(Icons.dashboard_outlined),
-                label: Text(strings.hubTitle)),
-              const SizedBox(height: 12),
-              if (widget.offerIntro && experience != null && experience.ready && !experience.introSeen)
-                MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(strings.experienceIntroInvite),
-                  TextButton(key: const ValueKey('open-intro-invite'),
-                    onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
-                      builder: (_) => const MentiIntroPage())),
-                    child: Text(strings.experienceIntroOpen)),
-                ])),
               if (_progressReady) HomeMentiCard(
                 character: Stack(alignment: Alignment.topRight, children: [
                       Container(
@@ -1081,6 +1028,39 @@ void updateMentiMessage(MentiMood mood) {
                     child: Text(strings.homeRetryProgress)),
                 ]))),
               const SizedBox(height: 12),
+              if (adult) FilledButton.icon(
+                onPressed: _canWriteJournal ? _openDrinkPicker : null,
+                icon: const Icon(Icons.add_circle_outline),
+                label: Text(appStrings(context).addDrink,
+                    style: TextStyle(fontWeight: FontWeight.w800)),
+                style: FilledButton.styleFrom(
+                    backgroundColor: _mint,
+                    foregroundColor: const Color(0xFF150D1C),
+                    minimumSize: const Size(double.infinity, 54)),
+              ),
+              const SizedBox(height: 12),
+              const SizedBox(height: 6),
+              Text(strings.homeGreeting, style: const TextStyle(
+                  fontSize: 26, fontWeight: FontWeight.w800)),
+              const SizedBox(height: 5),
+              Text(strings.homeIntro,
+                  style: TextStyle(color: _muted, fontSize: 13)),
+              const SizedBox(height: 12),
+              OutlinedButton.icon(
+                key: const ValueKey('open-personal-hub'),
+                onPressed: _openPersonalHub,
+                icon: const Icon(Icons.dashboard_outlined),
+                label: Text(strings.hubTitle)),
+              const SizedBox(height: 12),
+              if (widget.offerIntro && experience != null && experience.ready && !experience.introSeen)
+                MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(strings.experienceIntroInvite),
+                  TextButton(key: const ValueKey('open-intro-invite'),
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                      builder: (_) => const MentiIntroPage())),
+                    child: Text(strings.experienceIntroOpen)),
+                ])),
+              const SizedBox(height: 12),
               DailyMentiMiniCard(
                 key: const ValueKey('daily-menti-mini-card'), refreshToken: _dailyRevision,
                 onOpenDaily: _saveDailyReflection, onOpenHub: _openPersonalHub),
@@ -1115,6 +1095,10 @@ void updateMentiMessage(MentiMood mood) {
               Text(appStrings(context).explore, style: TextStyle(
                   fontSize: 20, fontWeight: FontWeight.w800)),
               const SizedBox(height: 12),
+              Card(child:ExpansionTile(key:const ValueKey('home-more-features'),
+                initiallyExpanded:_moreExpanded,onExpansionChanged:(value)=>_moreExpanded=value,
+                title:Text(strings.homeMore),leading:const Icon(Icons.apps_rounded),
+                childrenPadding:const EdgeInsets.all(12),children:[
               if (adult) OutlinedButton.icon(onPressed: _journalReady ? _openFinanceCenter : null,
                 icon: const Icon(Icons.account_balance_wallet_outlined),
                 label: Text(appStrings(context).financeCenter)),
@@ -1150,6 +1134,7 @@ void updateMentiMessage(MentiMood mood) {
                   icon: const Icon(Icons.auto_graph_rounded),
                   label: Text(appStrings(context).weeklyReport),
                 )),
+              ])),
               if (adult) ...[
               const SizedBox(height: 24),
               Wrap(alignment: WrapAlignment.spaceBetween, spacing: 8, runSpacing: 4, children: [

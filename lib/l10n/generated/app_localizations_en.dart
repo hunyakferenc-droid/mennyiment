@@ -1437,7 +1437,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get avatarReactionFocused => 'Focused';
 
   @override
-  String get avatarStudio => 'Menti Studio 2.2';
+  String get avatarStudio => 'Menti Studio 2.2.1';
 
   @override
   String get avatarSave => 'Save';
@@ -2487,4 +2487,25 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get milestoneHint =>
       'Badges unlock based on the money you manually record as set aside.';
+
+  @override
+  String get avatarDraft => 'Unsaved changes';
+
+  @override
+  String get avatarMore => 'More actions';
+
+  @override
+  String get avatarHidePreview => 'Collapse preview';
+
+  @override
+  String get avatarShowPreview => 'Expand preview';
+
+  @override
+  String get homeMore => 'More features';
+
+  @override
+  String get avatarEnlargePreview => 'Larger preview and zoom';
+
+  @override
+  String get avatarClosePreview => 'Close preview';
 }

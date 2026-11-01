@@ -175,6 +175,9 @@ void main() {
       await tester.pump(const Duration(milliseconds: 500));
       final before = {for (final key in prefs.getKeys()) key: prefs.get(key)};
       final statisticsLabel = appStrings(tester.element(find.byType(HomePage))).statisticsNav;
+      await tester.scrollUntilVisible(find.byKey(const ValueKey('home-more-features')),300,scrollable:find.byType(Scrollable).first,maxScrolls:40);
+      await tester.tap(find.byKey(const ValueKey('home-more-features')));
+      await tester.pumpAndSettle();
       await tester.scrollUntilVisible(find.text(statisticsLabel), 300,
         scrollable: find.byType(Scrollable).first, maxScrolls: 40);
       await tester.pump(const Duration(milliseconds: 500));

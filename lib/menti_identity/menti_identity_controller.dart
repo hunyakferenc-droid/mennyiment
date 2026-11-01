@@ -6,6 +6,7 @@ import '../menti_xp_store.dart';
 import 'menti_identity.dart';
 import 'menti_identity_store.dart';
 import 'menti_visual_catalog.dart';
+import 'menti_reference_rig.dart';
 
 class MentiIdentityController extends ChangeNotifier {
   MentiIdentityController({MentiIdentityStore? store}) : store = store ?? MentiIdentityStore();
@@ -79,7 +80,10 @@ class MentiIdentityController extends ChangeNotifier {
         MentiReactionProfile({...draft.profile.reaction.toJson(), 'style': option.id})));
     } else {
       final changes = {option.field: option.id};
-      if (option.field == 'family') changes['hair'] = '${option.id}-crop';
+      if (option.field == 'family') {
+        changes['hair'] = MentiReferenceRig.of(option.id,
+        MentiVisualCatalog.resolve('age', draft.profile.visual.value('age')).id).hairId;
+      }
       if (option.field == 'style') {
         final outfit = {'classic': 'basic', 'sporty': 'sport'}[option.id] ?? option.id;
         final coordinated = MentiVisualCatalog.resolve('outfit', outfit);

@@ -665,7 +665,7 @@
   "avatarReactionCalming": "Megnyugtató",
   "avatarReactionCelebrating": "Ünneplő",
   "avatarReactionFocused": "Fókuszált",
-  "avatarStudio": "Menti Studio 2.2",
+  "avatarStudio": "Menti Studio 2.2.1",
   "avatarSave": "Mentés",
   "avatarSaving": "Mentés…",
   "avatarSaved": "Az összeállítás elmentve.",
@@ -1265,5 +1265,12 @@
   "milestoneQuarter": "Menti: Megvan az első negyed!",
   "milestoneStarted": "Menti: Minden ténylegesen félretett forint számít.",
   "milestoneFirst": "Menti: Minden nagy cél egy apró lépéssel kezdődik.",
-  "milestoneHint": "A jelvények a kézzel rögzített félretett összeg alapján nyílnak meg."
+  "milestoneHint": "A jelvények a kézzel rögzített félretett összeg alapján nyílnak meg.",
+  "avatarDraft": "Nem mentett változtatások",
+  "avatarMore": "További műveletek",
+  "avatarHidePreview": "Előnézet összecsukása",
+  "avatarShowPreview": "Előnézet megnyitása",
+  "homeMore": "További funkciók",
+  "avatarEnlargePreview": "Nagyobb előnézet és nagyítás",
+  "avatarClosePreview": "Előnézet bezárása"
 }

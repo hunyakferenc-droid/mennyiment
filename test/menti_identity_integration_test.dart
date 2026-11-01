@@ -1,5 +1,5 @@
 import 'support/adult_access_fixture.dart';
-import 'package:mennyiment/menti_identity/menti_premium_renderer.dart';
+import 'package:mennyiment/menti_identity/menti_reference_rig.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -155,7 +155,7 @@ void main() {
       child: MentiReactionRenderer(profile: chosen, mood: 'celebrating')), c));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('assets/images/menti_2_2/reactions/celebrating.svg')), findsNothing);
-    expect(find.byWidgetPredicate((w)=>w is MentiPremiumSprite && w.sprite=='bodies/girl-veteran' && w.sourcePart==null), findsOneWidget);
+    expect(find.byWidgetPredicate((w)=>w is MentiReferencePlate && w.rig.family=='girl' && w.rig.age=='veteran'), findsWidgets);
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox.shrink());
   });

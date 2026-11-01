@@ -164,7 +164,9 @@ void main() {
       await tester.pumpWidget(const MennyiMentApp());
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
-      await tester.tap(find.byTooltip('Menti és profil'));
+      await tester.tap(find.byKey(const ValueKey('home-menu')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(PopupMenuItem<String>, 'Menti és profil'));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
       final toggle = find.byKey(const ValueKey('menti-reduce-motion'));

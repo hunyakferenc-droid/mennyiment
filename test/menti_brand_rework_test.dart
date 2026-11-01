@@ -104,7 +104,7 @@ void main() {
     await tester.pumpWidget(const SizedBox.shrink());
   });
   for (final locale in ['hu', 'en']) {
-    for (final width in [320.0, 360.0, 390.0]) {
+    for (final width in [320.0, 360.0, 390.0, 430.0]) {
       for (final scale in [1.0, 2.0]) {
         testWidgets('brand Studio $locale $width ${scale}x has larger live identity and regional choices', (tester) async {
           tester.view.physicalSize = Size(width, 850); tester.view.devicePixelRatio = 1;

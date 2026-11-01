@@ -29,7 +29,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
     await expectLater(find.byKey(const ValueKey('brand-golden')),
-      matchesGoldenFile('goldens/menti_final_pair.png'));
+      matchesGoldenFile('goldens/menti_221_pair.png'));
     await tester.pumpWidget(const SizedBox.shrink());
   });
 }

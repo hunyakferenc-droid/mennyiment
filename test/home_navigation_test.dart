@@ -46,7 +46,7 @@ void main() {
   }
 
   for (final locale in ['hu', 'en']) {
-    for (final width in [320.0, 390.0]) {
+    for (final width in [320.0, 360.0, 390.0, 430.0]) {
       for (final scale in [1.0, 2.0]) {
         testWidgets('$locale home fits ${width}px at ${scale}x text', (tester) async {
           viewport(tester, width, scale);
@@ -54,17 +54,24 @@ void main() {
           await tester.pumpWidget(const MennyiMentApp());
           await tester.pumpAndSettle();
           final s = appStrings(tester.element(find.byType(HomePage)));
-          expect(find.text(s.homeGreeting), findsOneWidget);
-          // The primary action is before the tall character and summary cards.
+          expect(find.byType(HomeMentiCard),findsOneWidget);
+          // The own character is the first visual focus; the primary action follows it.
           final add = find.widgetWithText(FilledButton, s.addDrink);
-          expect(tester.getRect(add).bottom, lessThan(800));
+          await tester.scrollUntilVisible(add,250,scrollable:find.byType(Scrollable).first,maxScrolls:40);
+          await tester.pumpAndSettle(); await tester.ensureVisible(add); await tester.pumpAndSettle();
+          expect(add.hitTestable(),findsOneWidget);
           final scrollable = find.byType(Scrollable).first;
-          for (final text in [s.homeTodayDrinks, s.homeMonthSpending, s.explore,
-            s.personalGoals, s.recentEntries, s.statisticsCaution]) {
-            await tester.scrollUntilVisible(find.text(text), 250,
-              scrollable: scrollable, maxScrolls: 80);
-            await tester.pumpAndSettle();
-            expect(tester.takeException(), isNull);
+          for(final text in [s.homeTodayDrinks,s.homeMonthSpending]) {
+            try { await tester.scrollUntilVisible(find.text(text),250,scrollable:scrollable,maxScrolls:80); } catch(e) { fail('Missing summary: $text: $e'); }
+            expect(tester.takeException(),isNull);
+          }
+          await tester.scrollUntilVisible(find.byKey(const ValueKey('home-more-features')),250,scrollable:scrollable,maxScrolls:80);
+          await tester.tap(find.byKey(const ValueKey('home-more-features')));await tester.pumpAndSettle();
+          for(final text in [s.personalGoals,s.recentEntries,s.statisticsCaution]) {
+            try {
+              try { await tester.scrollUntilVisible(find.text(text),250,scrollable:scrollable,maxScrolls:80); } catch(e) { fail('Missing summary: $text: $e'); }
+            } catch(error) { fail('Cannot reach $text: $error'); }
+            expect(tester.takeException(),isNull);
           }
           final prefs = await SharedPreferences.getInstance();
           expect(prefs.getString('mennyiment_drinks_v1'), jsonEncode(entries));
