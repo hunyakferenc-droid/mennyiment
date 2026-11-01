@@ -26,7 +26,15 @@ void main() {
         'features',
         'headwear',
       });
-      expect(MentiPremiumAtlas.rects.length, 68);
+      expect(MentiPremiumAtlas.rects.length, 86);
+      expect(MentiPremiumAtlas.handOutlines.length, 18);
+      for (final contour in MentiPremiumAtlas.handOutlines.values) {
+        expect(contour.length, greaterThan(12));
+        for (final point in contour) {
+          expect(point.dx, inInclusiveRange(0, 1));
+          expect(point.dy, inInclusiveRange(0, 1));
+        }
+      }
       for (final entry in manifest.entries) {
         final data = entry.value as Map;
         final bytes = File(data['asset'] as String).readAsBytesSync();

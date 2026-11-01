@@ -12,11 +12,18 @@ const target = process.env.MENTI_WEB_URL || 'http://127.0.0.1:8765';
 const output = path.resolve(process.env.MENTI_EVIDENCE_DIR || path.join(root, '.agent-workspace/chrome-evidence'));
 fs.mkdirSync(output, { recursive: true });
 const failures = [];
+const navigationCancellations = [];
 const checks = [];
 const escape = value => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 function observe(page) {
   page.on('pageerror', error => failures.push(error.message));
-  page.on('requestfailed', request => failures.push(`${request.url()}: ${request.failure()?.errorText}`));
+  page.on('requestfailed', request => {
+    const message = `${request.url()}: ${request.failure()?.errorText}`;
+    // A deliberate reload can cancel an in-flight emoji fallback font. Keep
+    // these visible in the report without treating them as application errors.
+    if (page.intentionalReload && request.failure()?.errorText === 'net::ERR_ABORTED') navigationCancellations.push(message);
+    else failures.push(message);
+  });
   page.on('response', response => { if (response.status() >= 400) failures.push(`${response.status()} ${response.url()}`); });
   page.on('console', message => { if (message.type() === 'error') failures.push(message.text()); });
 }
@@ -81,7 +88,10 @@ function identity(values) {
     }
     checks.push('Studio outfit editing and confirmed save');
     await page.screenshot({ path: path.join(output, 'chrome-studio-mobile-en.png') });
+    await page.waitForLoadState('networkidle');
+    page.intentionalReload = true;
     await page.reload({ waitUntil: 'networkidle' });
+    page.intentionalReload = false;
     const placeholder = page.locator('flt-semantics-placeholder');
     if (await placeholder.count()) await placeholder.evaluate(element => element.click());
     await page.getByRole('button', { name: strings.chooseMenti, exact: true }).waitFor();
@@ -111,7 +121,7 @@ function identity(values) {
     if (failures.length) throw new Error(failures.join('\n'));
     const report = { browser: await browser.version(), sourceCommit: process.env.SOURCE_COMMIT || 'working-tree',
       version: metadata, checks, runtimeErrors: failures, viewports: ['390x844', '1280x900', '320x740'],
-      reducedMotion: true };
+      reducedMotion: true, navigationCancellations };
     fs.writeFileSync(path.join(output, 'chrome-verification.json'), JSON.stringify(report, null, 2) + '\n');
     console.log(JSON.stringify(report, null, 2));
   } catch (error) {

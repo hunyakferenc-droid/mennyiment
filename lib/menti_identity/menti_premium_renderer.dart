@@ -173,6 +173,8 @@ class MentiPremiumComposition extends StatelessWidget {
       );
   static List<String> sprites(MentiIdentityProfile p) => [
     'bodies/${resolve(p, 'family').id}-${resolve(p, 'age').id}',
+    for (final side in ['left', 'right'])
+      'bodies/${resolve(p, 'family').id}-${resolve(p, 'age').id}-$side-hand',
     'outfits/${resolve(p, 'outfit').id}',
     'hair/${resolve(p, 'hair').id}',
     'features/face:${resolve(p, 'face').id}',
@@ -258,10 +260,14 @@ class MentiPremiumComposition extends StatelessWidget {
             r.width * 320,
             r.height * 400,
           ),
-          child:
-              s.startsWith('hair/') ||
-                  s == 'headwear/hood' ||
-                  s == 'headwear/headphones'
+          child: s.endsWith('-hand')
+              ? ClipPath(
+                  clipper: _HandClipper(MentiPremiumAtlas.handOutlines[s]!),
+                  child: MentiPremiumSprite(sprite: s),
+                )
+              : s.startsWith('hair/') ||
+                    s == 'headwear/hood' ||
+                    s == 'headwear/headphones'
               ? ClipPath(
                   clipper: _HairFaceClipper(
                     (s == 'headwear/hood' || s == 'headwear/headphones')
@@ -364,7 +370,7 @@ class MentiPremiumComposition extends StatelessWidget {
               ),
             for (final right in [false, true])
               sprite(
-                'bodies/$family-$age',
+                'bodies/$family-$age-${right ? 'right' : 'left'}-hand',
                 Rect.fromLTWH(
                   right
                       ? (1 + outfitWidth) / 2 - .135
@@ -373,7 +379,6 @@ class MentiPremiumComposition extends StatelessWidget {
                   .115,
                   .14,
                 ),
-                sourcePart: Rect.fromLTWH(right ? .79 : 0, .57, .21, .15),
               ),
             sprite(
               'outfits/${id('outfit')}',
@@ -485,4 +490,17 @@ class _HairFaceClipper extends CustomClipper<Path> {
     );
   @override
   bool shouldReclip(_HairFaceClipper oldClipper) => face != oldClipper.face;
+}
+
+class _HandClipper extends CustomClipper<Path> {
+  const _HandClipper(this.points);
+  final List<Offset> points;
+  @override
+  Path getClip(Size size) => Path()
+    ..addPolygon([
+      for (final point in points)
+        Offset(point.dx * size.width, point.dy * size.height),
+    ], true);
+  @override
+  bool shouldReclip(_HandClipper oldClipper) => points != oldClipper.points;
 }
