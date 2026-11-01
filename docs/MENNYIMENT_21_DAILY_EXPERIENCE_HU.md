@@ -61,3 +61,27 @@ Nem készült backend, regisztráció, közösség, webshop vagy szinkron. A bol
 Az első CI-futás után két tesztfeltételezés javítva: a nagy betűméretes intro teszt közvetlenül a lépésjelzőre görget (a címre igazítás után a lusta lista korábbi eleme már nem feltétlenül van felépítve); a régi backup visszaállításának elvárása a meglévő restore-szabály szerint egyesített/rendezett feloldásazonosítókat ellenőrzi. Egyetlen feloldás sem veszett el, a restore implementáció nem változott.
 
 F4 pontosítás: a kezdőlap a hiányzó naplódokumentum helyett nem mutat nulla adatlapkákat; a teljes napló megkapja a pillanatkép dokumentum-létezési jelzőjét. A mentett üres lista és a hiányzó napló eltérő szöveget kap, külön kezdőlap → napló regresszióval. Ez a jelző csak UI-pillanatkép, nem új tárolókulcs.
+
+## Igazolt CI-eredmény – 2026. november 1.
+
+Draft PR: https://github.com/hunyakferenc-droid/mennyiment/pull/23
+Célág: `feature/mennyiment-2-personal-hub` (#21).
+Tesztelt implementációs HEAD: `632308bf5a704ae044aec9e76facad7907001f83`.
+Teljes sikeres CI: https://github.com/hunyakferenc-droid/mennyiment/actions/runs/41289031979
+
+| Ellenőrzés | Helyi eredmény | GitHub Actions |
+| --- | --- | --- |
+| `flutter pub get` | 127, Flutter SDK nincs | success |
+| `flutter gen-l10n` | 127, Flutter SDK nincs | success |
+| `flutter analyze` | 127, Flutter SDK nincs | success, No issues found |
+| Teljes `flutter test --concurrency=2` | 127, Flutter SDK nincs | success |
+| Europe/Budapest célzott F + A–E / backup / DST regressziók | 127, Flutter SDK nincs | success |
+| `flutter build web` | 127, Flutter SDK nincs | success |
+| Whitespace | `git diff --check` success | success |
+| HU/EN ARB-kulcsok, helyőrzők | Python-ellenőrzés success | lokalizációs tesztek success |
+
+A kezdeti tesztfeltételezések javítva; a végső implementáció minden kötelező CI-lépése sikeres. A további stabilizálás külön kezeli a hiányzó és mentett üres naplót, kikapcsolt üzeneteknél a céloldal opcionális kommentárját is elrejti (a tények és óvatossági szöveg megmaradnak), és az idempotens intro-befejezés előtt is újraellenőrzi a tárolt jelzőt. Ezekhez új regressziók készültek és sikeresen lefutottak.
+
+A köztes, új commit miatt automatikusan cancelled futások nem tesztbizonyítékok. A fenti eredmény a megnevezett implementációs SHA-hoz tartozik. E dokumentációs eredményrögzítés külön commit; az aktuális HEAD végső CI-jét a PR Checks és a PR-leírás mutatja.
+
+A #21 és a main változatlan, nincs merge vagy publikálás. A kézi Android/Chrome, valódi képernyőolvasó és mért kontraszt vizsgálat nem történt meg; a fenti terv nyitott kézi feladat marad. A SharedPreferences pillanatképvédelem nem többfolyamatos ACID-garancia, és a widgetteszt nem helyettesíti a fizikai készülék vizsgálatát.
