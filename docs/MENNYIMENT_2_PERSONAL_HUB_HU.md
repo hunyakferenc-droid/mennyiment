@@ -52,3 +52,26 @@ Helyben továbbra sincs Flutter/Dart SDK. A pub get, gen-l10n, analyze, test és
 ## Ismert korlátok és következő pontok
 
 A központ olvasó áttekintő; a szerkesztés az eredeti oldalakon marad. A SharedPreferences-pillanatkép nem többfolyamatos ACID-garancia; másik böngészőlap párhuzamos írását explicit frissítés után látjuk. Nem készült backend, fiók, webshop vagy chat. További régi aloldalak lokalizációja, valódi eszközök, kézi akadálymentesség és store/jogi ellenőrzés hátravan. A csomag nem jelent Play-kiadásra kész vagy jogilag mindenben megfelelő állapotot.
+
+## Rögzített futási bizonyíték – 2026. november 1.
+
+Draft PR: https://github.com/hunyakferenc-droid/mennyiment/pull/21
+Célág: `feature/mennyiment-2-goal-reactions` (#19), nem main.
+Tesztelt D/E implementációs commit: `49237e7c860de4fea5e0290d7c859e5f60556e93`.
+Teljes sikeres futás: https://github.com/hunyakferenc-droid/mennyiment/actions/runs/41286096981
+A futás SDK-verziói: Flutter 3.47.7 / Dart 3.13.5. Job conclusion: success.
+
+| Ellenőrzés | Helyi eredmény | GitHub Actions eredmény |
+| --- | --- | --- |
+| `flutter pub get` | 127, SDK nincs | success |
+| `flutter gen-l10n` | 127, SDK nincs | success |
+| `flutter analyze` | 127, SDK nincs | success, „No issues found!” |
+| `flutter test --concurrency=2` | 127, SDK nincs | success, teljes tesztcsomag |
+| Europe/Budapest célzott tesztek | 127, SDK nincs | success, hub + DST + korábbi backup/restore/cél/XP regressziók |
+| `flutter build web` | 127, SDK nincs | success, `Built build/web` |
+| Whitespace | `git diff --check` sikeres | success |
+| HU/EN kulcsok és helyőrzők | Python-ellenőrzés sikeres | a teljes lokalizációs tesztcsomag részeként sikeres |
+
+Az első D/E CI-futás minden kötelező lépése sikeres volt, implementációs hibajavító körre nem volt szükség. Ez a dokumentációs bizonyíték külön commitban került a tesztelt implementáció után; annak végső CI-jét a PR aktuális leírása és Checks nézete mutatja.
+
+Nem végrehajtott: Android telepítés/frissítés, valódi Chrome fájlválasztó/E2E, TalkBack/VoiceOver, mért kontraszt és áruházi/jogi felülvizsgálat. Ezek a fenti kézi terv és release checklist nyitott pontjai. Main-módosítás, merge és kiadás nem történt.
