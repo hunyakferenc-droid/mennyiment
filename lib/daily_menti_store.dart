@@ -15,6 +15,11 @@ class DailyMentiStore {
     final prefs = await SharedPreferences.getInstance();
     final raw = prefs.get(key(date));
     if (raw == null) return {};
+    return decodeDocument(raw);
+  }
+
+  /// Pure decoder; unlike load/save, this needs no preferences instance.
+  static Map<String, dynamic> decodeDocument(Object raw) {
     if (raw is! String) throw const FormatException('Invalid daily record');
     final data = jsonDecode(raw);
     if (data is! Map<String, dynamic>) {

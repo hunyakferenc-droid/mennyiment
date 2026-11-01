@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'menti_motion.dart';
+import 'app_language.dart';
 
 enum MentiMood {
   welcome,
@@ -116,6 +117,32 @@ class MentiReactions {
     final messages = (locale == 'en' ? _en : _hu)[mood]!;
     return messages[index % messages.length];
   }
+}
+
+/// Shared presentation for verified events; never creates an event or reward.
+class MentiReactionCard extends StatelessWidget {
+  const MentiReactionCard({super.key, required this.mood, this.index = 0, this.bubbleKey});
+  final MentiMood mood;
+  final int index;
+  final Key? bubbleKey;
+
+  @override
+  Widget build(BuildContext context) => TweenAnimationBuilder<double>(
+    tween: Tween(begin: 0, end: 1),
+    duration: MentiMotionScope.reducedOf(context) ? Duration.zero
+        : const Duration(milliseconds: 200),
+    builder: (context, value, child) => Opacity(opacity: value, child: child),
+    child: Semantics(liveRegion: true, child: Card(
+      margin: const EdgeInsets.only(bottom: 16),
+      child: Padding(padding: const EdgeInsets.all(16),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(appStrings(context).reactionTitle, style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 8),
+          MentiSpeechBubble(key: bubbleKey, message: MentiReactions.message(mood,
+            index: index, locale: Localizations.localeOf(context).languageCode)),
+        ])),
+    )),
+  );
 }
 
 class MentiSpeechBubble extends StatelessWidget {

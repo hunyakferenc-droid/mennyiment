@@ -437,5 +437,68 @@
         "type": "int"
       }
     }
-  }
+  },
+  "hubTitle": "Saját Menti • Áttekintés",
+  "hubIntro": "A rögzített adataid egy helyen. A hiányzó bejegyzés nem jelent alkoholmentes napot.",
+  "hubProfile": "Karakter és ruha",
+  "hubXp": "Menti-előrehaladás",
+  "hubDaily": "Mai önellenőrzés",
+  "hubGoals": "Személyes heti cél",
+  "hubChallenges": "Külön heti kihívások",
+  "hubJournal": "Heti italnapló és költés",
+  "hubMissing": "Ehhez még nincs mentett adat.",
+  "hubReadError": "Ez az adat nem olvasható megbízhatóan. Nem helyettesítettük alapértékkel.",
+  "hubGlobalError": "Az áttekintő nem tölthető be. Az eredeti adatokat nem módosítottuk.",
+  "hubRefresh": "Áttekintő frissítése",
+  "hubUpdated": "Pillanatkép: {date}",
+  "hubWeek": "Aktuális hét: {start} – {end}",
+  "hubDailyAnswers": "A mai napi válaszok rögzítve.",
+  "hubNoDailyAnswers": "Nincs rögzített mai válasz a napi bejegyzésben.",
+  "hubXpToday": "A mai XP-önellenőrzés rögzítve.",
+  "hubNoXpToday": "Ebben az XP-naplóban nincs mai önellenőrzés.",
+  "hubWeekChecks": "Naplózott napi XP-önellenőrzés: {count}",
+  "hubNoTarget": "Nincs mentett személyes célszám.",
+  "hubNoCheckDays": "Nincs mentett önellenőrzési naplista.",
+  "hubGoalConfirmed": "A rögzített önellenőrzések alapján a cél teljesült.",
+  "hubGoalOngoing": "A rögzített önellenőrzések alapján a cél még nincs teljesítve.",
+  "hubNoChallenges": "Erre a hétre nincs választott kihívás.",
+  "hubEvidenceMissing": "A teljesítéshez szükséges naplóadat hiányzik vagy nem olvasható.",
+  "hubRecordedEmpty": "A mentett naplóban ezen a héten 0 bejegyzés van. Ez nem igazol alkoholmentes napokat.",
+  "hubKnownZero": "Az ismert árak rögzített összege 0. Az ismeretlen árak nem számítanak nullának.",
+  "hubOutfitBasic": "Alap szett",
+  "hubOutfitParty": "Buli szett",
+  "hubOutfitSport": "Sport szett",
+  "hubOutfitBusiness": "Üzleti szett",
+  "hubOutfitFestival": "Fesztivál szett",
+  "hubOutfitLegendary": "Legendás szett",
+  "hubFamilyBoy": "Fiú Menti",
+  "hubFamilyGirl": "Lány Menti",
+  "hubFamilyNeutral": "Semleges Menti",
+  "hubImageError": "A kiválasztott karakter képe nem jeleníthető meg.",
+  "reactionTitle": "Menti üzenete",
+  "@hubUpdated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@hubWeek": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "@hubWeekChecks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hubOverview": "Áttekintés"
 }

@@ -194,10 +194,8 @@ class _PersonalGoalsPageState extends State<PersonalGoalsPage>
                     tooltip: s.challengeNext, icon: const Icon(Icons.chevron_right)),
                 ]),
               ])),
-              if (_reaction != null) Padding(padding: const EdgeInsets.only(bottom: 16),
-                child: Semantics(liveRegion: true, child: MentiSpeechBubble(
-                  key: const ValueKey('personal-goal-reaction'),
-                  message: MentiReactions.message(_reaction!, locale: locale)))),
+              if (_reaction != null) MentiReactionCard(mood: _reaction!,
+                bubbleKey: const ValueKey('personal-goal-reaction')),
               MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(s.goalBudgetTitle, style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 8),

@@ -41,9 +41,17 @@ class ChallengeStore {
     writable = false;
     final prefs = await open();
     await prefs.reload();
-    final raw = prefs.getString(key);
+    final raw = prefs.get(key);
+    data = decodeDocument(raw);
+    _raw = raw as String?;
+    writable = true;
+  });
+
+  /// Pure decoder shared with read-only views; never migrates or persists.
+  static Map<String, dynamic> decodeDocument(Object? raw) {
+    if (raw != null && raw is! String) throw const FormatException('Invalid challenges type');
     if (raw != null) {
-      final decoded = jsonDecode(raw) as Map<String, dynamic>;
+      final decoded = jsonDecode(raw as String) as Map<String, dynamic>;
       if (decoded['version'] != 1 || decoded['weeks'] is! Map) {
         throw const FormatException('Unsupported challenge data');
       }
@@ -60,13 +68,11 @@ class ChallengeStore {
           }
         }
       }
-      data = decoded;
+      return decoded;
     } else {
-      data = {'version': 1, 'weeks': <String, dynamic>{}};
+      return {'version': 1, 'weeks': <String, dynamic>{}};
     }
-    _raw = raw;
-    writable = true;
-  });
+  }
 
   Map<String, dynamic> week(DateTime day) => Map<String, dynamic>.from(
       (data['weeks'] as Map)[challengeDate(challengeMonday(day))] as Map? ?? {});
@@ -173,19 +179,7 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
       await store.load();
       final prefs = await store.open();
       final raw = prefs.getString('mennyiment_wellbeing_v1');
-      final days = <String>{};
-      if (raw != null) {
-        for (final entry in jsonDecode(raw) as List) {
-          final dateText = (entry as Map)['day'] as String;
-          final date = DateTime.parse(dateText);
-          if (!dateText.startsWith(mentiDateKey(date))) {
-            throw const FormatException('Invalid wellbeing date');
-          }
-          if (!challengeDay(date).isAfter(challengeDay(now))) {
-            days.add(challengeDate(date));
-          }
-        }
-      }
+      final days = raw == null ? <String>{} : recordedWellbeingDays(raw, now);
       journalDays = days;
       error = null;
       final current = store.week(week)['journal'] as Map?;
@@ -282,11 +276,8 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
       Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 700),
         child: ListView(padding: const EdgeInsets.all(16), children: [
           Text(appStrings(context).challengeOptional),
-          if (_reaction != null) Padding(padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Semantics(liveRegion: true, child: MentiSpeechBubble(
-              key: const ValueKey('challenge-reaction'),
-              message: MentiReactions.message(_reaction!,
-                locale: Localizations.localeOf(context).languageCode)))),
+          if (_reaction != null) MentiReactionCard(mood: _reaction!,
+            bubbleKey: const ValueKey('challenge-reaction')),
           Row(children: [IconButton(onPressed: saving ? null : () => setState(() { back++; _reaction = null; }),
             tooltip: appStrings(context).challengePrevious, icon: const Icon(Icons.chevron_left)),
             Expanded(child: Text('${challengeDate(week)} – ${challengeDate(challengeDay(week, 6))}', textAlign: TextAlign.center)),

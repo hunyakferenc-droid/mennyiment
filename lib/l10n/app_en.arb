@@ -437,5 +437,68 @@
         "type": "int"
       }
     }
-  }
+  },
+  "hubTitle": "My Menti • Overview",
+  "hubIntro": "Your recorded data in one place. A missing entry is not an alcohol-free day.",
+  "hubProfile": "Character and outfit",
+  "hubXp": "Menti progress",
+  "hubDaily": "Today’s check-in",
+  "hubGoals": "Personal weekly goal",
+  "hubChallenges": "Weekly challenges",
+  "hubJournal": "Weekly drink journal and spending",
+  "hubMissing": "No saved data for this section yet.",
+  "hubReadError": "This data could not be read reliably. It has not been replaced with a default value.",
+  "hubGlobalError": "The overview could not be loaded. Your original data has not been changed.",
+  "hubRefresh": "Refresh overview",
+  "hubUpdated": "Snapshot: {date}",
+  "hubWeek": "Current week: {start} – {end}",
+  "hubDailyAnswers": "Today’s daily answers are recorded.",
+  "hubNoDailyAnswers": "No answers are recorded in today’s daily entry.",
+  "hubXpToday": "Today’s XP check-in is recorded.",
+  "hubNoXpToday": "This XP record has no check-in for today.",
+  "hubWeekChecks": "Recorded daily XP check-ins this week: {count}",
+  "hubNoTarget": "No personal target is saved.",
+  "hubNoCheckDays": "No check-in day list is saved.",
+  "hubGoalConfirmed": "The recorded check-ins confirm that this goal is complete.",
+  "hubGoalOngoing": "The recorded check-ins do not yet complete this goal.",
+  "hubNoChallenges": "No challenges are selected for this week.",
+  "hubEvidenceMissing": "The journal evidence needed for this goal is missing or unreadable.",
+  "hubRecordedEmpty": "The saved journal has 0 entries this week. This does not confirm alcohol-free days.",
+  "hubKnownZero": "The recorded sum of known prices is 0. Unknown prices are not counted as zero.",
+  "hubOutfitBasic": "Basic outfit",
+  "hubOutfitParty": "Party outfit",
+  "hubOutfitSport": "Sport outfit",
+  "hubOutfitBusiness": "Business outfit",
+  "hubOutfitFestival": "Festival outfit",
+  "hubOutfitLegendary": "Legendary outfit",
+  "hubFamilyBoy": "Boy Menti",
+  "hubFamilyGirl": "Girl Menti",
+  "hubFamilyNeutral": "Neutral Menti",
+  "hubImageError": "The selected character image could not be displayed.",
+  "reactionTitle": "A message from Menti",
+  "@hubUpdated": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@hubWeek": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "@hubWeekChecks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hubOverview": "Overview"
 }
