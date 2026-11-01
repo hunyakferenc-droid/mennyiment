@@ -1864,4 +1864,627 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get catalogUnicum => 'Unicum (standard)';
+
+  @override
+  String get uiMonthlyBudgetHuf => 'Monthly budget (HUF)';
+
+  @override
+  String get uiMonthlyGoalForDaysWithoutDrinkEntries =>
+      'Monthly goal for days without drink entries';
+
+  @override
+  String get uiCancel => 'Cancel';
+
+  @override
+  String get uiInvalidGoalValue => 'Invalid goal value';
+
+  @override
+  String get uiSave => 'Save';
+
+  @override
+  String get uiMentiNoDrinksHaveBeenLoggedThisMonthYet =>
+      'Menti: No drinks have been logged this month yet. 🌱';
+
+  @override
+  String get uiMentiMindfulTrackingIsWhatMattersGoAtYour =>
+      'Menti: Mindful tracking is what matters. Go at your own pace! 💜';
+
+  @override
+  String get uiAMessageFromMenti => '💜 A message from Menti';
+
+  @override
+  String get uiSpending => '💰 Spending';
+
+  @override
+  String get uiEveryLoggedDrinkHasAPrice => 'Every logged drink has a price.';
+
+  @override
+  String get uiNotSet => 'not set';
+
+  @override
+  String get uiSetBudget => 'Set budget';
+
+  @override
+  String get uiPersonalGoals => '🎯 Personal goals';
+
+  @override
+  String get uiThisDoesNotProveAnAlcoholFreeDayThere =>
+      'This does not prove an alcohol-free day; there is simply no journal entry.';
+
+  @override
+  String get uiSetDaysGoal => 'Set days goal';
+
+  @override
+  String get uiDrinkJournalCalendar => '📅 Drink journal calendar';
+
+  @override
+  String get uiPurpleDrinkLoggedGreenNoDrinkLoggedGrayFuture =>
+      'Purple: drink logged • Green: no drink logged • Gray: future day';
+
+  @override
+  String get uiMonthlySummary => '📊 Monthly summary';
+
+  @override
+  String get uiNoDataYet => 'No data yet.';
+
+  @override
+  String get uiTheseAreSelfReportedRecordsTheyCannotEstablishSobriety =>
+      'These are self-reported records. They cannot establish sobriety or fitness to drive.';
+
+  @override
+  String get uiPreviousAverageMonthlyDrinkSpending =>
+      'Previous average monthly drink spending';
+
+  @override
+  String get uiMonthlyBudget => 'Monthly budget';
+
+  @override
+  String get uiAmountInHuf => 'Amount in HUF';
+
+  @override
+  String get uiEG30000 => 'e.g. 30000';
+
+  @override
+  String get uiEG15000 => 'e.g. 15000';
+
+  @override
+  String get uiEG15 => 'e.g. 15';
+
+  @override
+  String get uiEnterAnAmountBetween0And100000000 =>
+      'Enter an amount between 0 and 100,000,000 HUF.';
+
+  @override
+  String get uiSavingFailed => 'Saving failed.';
+
+  @override
+  String get uiFinanceCenter => 'Finance center';
+
+  @override
+  String get uiPreviousMonth => 'Previous month';
+
+  @override
+  String get uiNextMonth => 'Next month';
+
+  @override
+  String get uiRecordedDrinkSpending => 'RECORDED DRINK SPENDING';
+
+  @override
+  String get uiThisTotalIsIncompleteBecauseSomePricesAreMissing =>
+      'This total is incomplete because some prices are missing.';
+
+  @override
+  String get uiNotSetYet => 'Not set yet';
+
+  @override
+  String get uiUsed => 'Used';
+
+  @override
+  String get uiTheBudgetIsZeroAPercentageCannotBeCalculated =>
+      'The budget is zero. A percentage cannot be calculated.';
+
+  @override
+  String get uiEditBudget => 'Edit budget';
+
+  @override
+  String get uiEstimatedChangeFromPreviousHabits =>
+      'Estimated change from previous habits';
+
+  @override
+  String get uiSetYourPreviousAverageMonthlyDrinkSpending =>
+      'Set your previous average monthly drink spending.';
+
+  @override
+  String get uiAddTheMissingDrinkPricesBeforeComparing =>
+      'Add the missing drink prices before comparing.';
+
+  @override
+  String get uiThisIsAnEstimateNotVerifiedSavingsYouProvide =>
+      'This is an estimate, not verified savings. You provide the previous average; the month is prorated.';
+
+  @override
+  String get uiSetPreviousMonthlyAverage => 'Set previous monthly average';
+
+  @override
+  String get uiWeeklySpending => 'Weekly spending';
+
+  @override
+  String get uiTheChartIncludesKnownPricesOnly =>
+      'The chart includes known prices only.';
+
+  @override
+  String get uiFinancialFiguresAreSelfReportedThisJournalCannotEstablish =>
+      'Financial figures are self-reported. This journal cannot establish sobriety or fitness to drive.';
+
+  @override
+  String get uiTheWellbeingJournalCouldNotBeLoaded =>
+      'The wellbeing journal could not be loaded.';
+
+  @override
+  String get uiMentiYouCanRecordYourMoodTooItHelps =>
+      'Menti: You can record your mood too. It helps make the picture more personal.';
+
+  @override
+  String get uiMentiNoDrinksAreRecordedThisWeekWeCannot =>
+      'Menti: No drinks are recorded this week. We cannot draw conclusions about unrecorded days.';
+
+  @override
+  String get uiMentiYourOwnRecordsAreComingTogetherLookFor =>
+      'Menti: Your own records are coming together. Look for patterns, without jumping to conclusions!';
+
+  @override
+  String get uiLifestyleInsights => 'Lifestyle insights';
+
+  @override
+  String get uiRefresh => 'Refresh';
+
+  @override
+  String get uiMentiSWeeklyMessage => 'Menti’s weekly message';
+
+  @override
+  String get uiThePast7Days => 'The past 7 days';
+
+  @override
+  String get uiLoggedDrinks => 'Logged drinks';
+
+  @override
+  String get uiPureAlcoholRecorded => 'Pure alcohol recorded';
+
+  @override
+  String get uiKnownSpending => 'Known spending';
+
+  @override
+  String get uiWellbeingEntries => 'Wellbeing entries';
+
+  @override
+  String get uiAverageMood => 'Average mood';
+
+  @override
+  String get uiAverageSleepQuality => 'Average sleep quality';
+
+  @override
+  String get uiAverageHangoverSymptoms => 'Average hangover symptoms';
+
+  @override
+  String get uiCompareWithThePrevious7Days =>
+      'Compare with the previous 7 days';
+
+  @override
+  String get uiDrinksPreviousPeriod => 'Drinks — previous period';
+
+  @override
+  String get uiDrinksCurrentPeriod => 'Drinks — current period';
+
+  @override
+  String get uiSpendingDifference => 'Spending difference';
+
+  @override
+  String get uiLess => 'Less';
+
+  @override
+  String get uiMore => 'More';
+
+  @override
+  String get uiIncompletePrices => 'Incomplete prices';
+
+  @override
+  String get uiThisIsADifferenceInRecordedSpendingNotVerified =>
+      'This is a difference in recorded spending, not verified savings. The weeks may differ and entries may be missing.';
+
+  @override
+  String get uiPreviousDayAndNextDayWellbeing =>
+      'Previous day and next-day wellbeing';
+
+  @override
+  String get uiThereAreNoPairedRecordsWithADrinkOn =>
+      'There are no paired records with a drink on one day and a wellbeing entry the following day yet.';
+
+  @override
+  String get uiManyFactorsAffectWellbeingCorrelationDoesNotProveCausation =>
+      'Many factors affect wellbeing. Correlation does not prove causation; this is not a medical assessment.';
+
+  @override
+  String get uiAllRecordsAreLocalAndSelfReportedThisJournal =>
+      'All records are local and self-reported. This journal cannot establish sobriety or fitness to drive.';
+
+  @override
+  String get uiNoData => 'No data';
+
+  @override
+  String get uiNoData2 => 'no data';
+
+  @override
+  String get uiGoalsCouldNotBeLoaded => 'Goals could not be loaded.';
+
+  @override
+  String get uiSavingFailedPleaseTryAgain => 'Saving failed. Please try again.';
+
+  @override
+  String get uiAmountHuf => 'Amount (HUF)';
+
+  @override
+  String get uiEnterAValidAmount => 'Enter a valid amount.';
+
+  @override
+  String get uiNewSavingsGoal => 'New savings goal';
+
+  @override
+  String get uiGoalName => 'Goal name';
+
+  @override
+  String get uiForExampleAHoliday => 'For example: a holiday';
+
+  @override
+  String get uiTargetAmountHuf => 'Target amount (HUF)';
+
+  @override
+  String get uiEnterAGoalNameAndAValidAmount =>
+      'Enter a goal name and a valid amount.';
+
+  @override
+  String get uiCreate => 'Create';
+
+  @override
+  String get uiMoneyActuallySetAside => 'Money actually set aside';
+
+  @override
+  String get uiDeleteThisGoal => 'Delete this goal?';
+
+  @override
+  String get uiDelete => 'Delete';
+
+  @override
+  String get uiMySavingsGoals => 'My savings goals';
+
+  @override
+  String get uiNewGoal => 'New goal';
+
+  @override
+  String get uiMennyiment22 => 'MENNYIMENT? 2.2';
+
+  @override
+  String get uiSaveForWhatMattersToYou => 'Save for what matters to you!';
+
+  @override
+  String get uiEstimatedSavingsProratedMonth =>
+      'Estimated savings — prorated month';
+
+  @override
+  String get uiCannotBeCalculated => 'Cannot be calculated';
+
+  @override
+  String get uiSetYourPreviousMonthlyAverage =>
+      'Set your previous monthly average.';
+
+  @override
+  String get uiSetPreviousAverage => 'Set previous average';
+
+  @override
+  String get uiTheEstimateComparesTheProratedPreviousMonthlyAverageWith =>
+      'The estimate compares the prorated previous monthly average with recorded spending. It is not money actually set aside and may be inaccurate with incomplete records.';
+
+  @override
+  String get uiMentiSWorld => 'MENTI’S WORLD';
+
+  @override
+  String get uiLookAtWhatYouHaveAchieved => 'Look at what you have achieved!';
+
+  @override
+  String get uiMentiCelebratesMilestonesBasedOnTheMoneyYouActually =>
+      'Menti celebrates milestones based on the money you actually set aside.';
+
+  @override
+  String get uiOpenMentiSWorld => 'Open Menti’s world';
+
+  @override
+  String get uiMoneyActuallySetAside2 => 'Money actually set aside';
+
+  @override
+  String get uiNoGoalsYetCreateOneForAHolidayA =>
+      'No goals yet. Create one for a holiday, a car, or something of your own!';
+
+  @override
+  String get uiDeleteGoal => 'Delete goal';
+
+  @override
+  String get uiAddMoneySetAside => 'Add money set aside';
+
+  @override
+  String get uiTheseAmountsAreManualRecordsWithNoBankAccount =>
+      'These amounts are manual records, with no bank account connection. The app does not transfer money between accounts.';
+
+  @override
+  String get uiMentiYourWellbeingJournalCanHelpYouNoticeHow =>
+      'Menti: Your wellbeing journal can help you notice how your days are going.';
+
+  @override
+  String get uiMentiSomeDrinkPricesAreStillMissingSoThe =>
+      'Menti: Some drink prices are still missing, so the spending total is incomplete.';
+
+  @override
+  String get uiMentiThanksForTakingTimeForYourHabitsMindful =>
+      'Menti: Thanks for taking time for your habits. Mindful observation is an important step!';
+
+  @override
+  String get uiWeeklyMentiReport => 'Weekly Menti report';
+
+  @override
+  String get uiYourWeekInOnePlace => 'Your week in one place';
+
+  @override
+  String get uiASummaryOfSelfReportedRecordsNotAHealth =>
+      'A summary of self-reported records, not a health assessment.';
+
+  @override
+  String get uiPreviousWeek => 'Previous week';
+
+  @override
+  String get uiNextWeek => 'Next week';
+
+  @override
+  String get uiAMessageFromMenti2 => 'A message from Menti';
+
+  @override
+  String get uiRecordedConsumption => 'Recorded consumption';
+
+  @override
+  String get uiADayWithoutAnEntryDoesNotProveAn =>
+      'A day without an entry does not prove an alcohol-free day.';
+
+  @override
+  String get uiDailyEntries => 'Daily entries';
+
+  @override
+  String get uiWellbeingAndSleep => 'Wellbeing and sleep';
+
+  @override
+  String get uiRecordDailyWellbeing => 'Record daily wellbeing';
+
+  @override
+  String get uiMissingRecordsDoNotMeanZeroConsumptionOrGood =>
+      'Missing records do not mean zero consumption or good wellbeing. This report helps you observe patterns, but does not prove causation or establish sobriety.';
+
+  @override
+  String get uiHiPickASavingsGoalAndLetSStart =>
+      'Hi! Pick a savings goal and let’s start our adventure!';
+
+  @override
+  String get uiYouDidItYouHaveCompletedASavingsGoal =>
+      'You did it! You have completed a savings goal. Let’s celebrate!';
+
+  @override
+  String get uiYouHaveUnlockedMilestonesKeepGoingAtYourOwn =>
+      'You have unlocked milestones. Keep going at your own pace!';
+
+  @override
+  String get uiEveryGoalStartsWithASmallAmountActuallySet =>
+      'Every goal starts with a small amount actually set aside.';
+
+  @override
+  String get uiMentiSWorld2 => 'Menti’s world';
+
+  @override
+  String get uiMennyimentMentiSWorld => 'MENNYIMENT? • MENTI’S WORLD';
+
+  @override
+  String get uiYourAchievements => 'Your achievements';
+
+  @override
+  String get uiTotalSetAside => 'Total set aside';
+
+  @override
+  String get uiUnlockedBadges => 'Unlocked badges';
+
+  @override
+  String get uiCompletedGoals => 'Completed goals';
+
+  @override
+  String get uiYourGoalsAndMilestones => 'Your goals and milestones';
+
+  @override
+  String get uiNoSavingsGoalsYetYouCanCreateOneOn =>
+      'No savings goals yet. You can create one on the My Goals screen.';
+
+  @override
+  String get uiBadgesReflectOnlyMoneyYouRecordAsActuallySet =>
+      'Badges reflect only money you record as actually set aside. Estimated savings do not count. This screen has no bank account connection.';
+
+  @override
+  String uiDaysValue(String v0) {
+    return '$v0 days';
+  }
+
+  @override
+  String uiRecordedSpendingValue(String v0) {
+    return 'Recorded spending: $v0';
+  }
+
+  @override
+  String uiUnknownPricesTotal(String v0) {
+    return '$v0 drink prices are unknown; this total is incomplete.';
+  }
+
+  @override
+  String uiMonthlyBudgetValue(String v0) {
+    return 'Monthly budget: $v0';
+  }
+
+  @override
+  String uiUnrecordedDays(String v0, String v1) {
+    return 'Days without drink entries: $v0 / $v1';
+  }
+
+  @override
+  String uiMonthlyGoalValue(String v0) {
+    return 'Monthly goal: $v0';
+  }
+
+  @override
+  String uiDayDrinks(String v0, String v1) {
+    return 'Day $v0: $v1 drinks logged';
+  }
+
+  @override
+  String uiDrinksAndGrams(String v0, String v1) {
+    return '$v0 drinks • $v1 g pure alcohol';
+  }
+
+  @override
+  String uiNameOccurrences(String v0, String v1) {
+    return '$v0: $v1 entries';
+  }
+
+  @override
+  String uiDrinkPriceCounts(String v0, String v1) {
+    return '$v0 drinks logged • $v1 missing prices';
+  }
+
+  @override
+  String uiPreviousMonthlyValue(String v0) {
+    return 'Previous monthly average: $v0';
+  }
+
+  @override
+  String uiComparisonDays(String v0, String v1) {
+    return 'Compared with the prorated previous average ($v0 / $v1 days).';
+  }
+
+  @override
+  String uiItemsValue(String v0) {
+    return '$v0 items';
+  }
+
+  @override
+  String uiPartialDrinkSpending(String v0) {
+    return '$v0 prices are missing; spending is a partial total.';
+  }
+
+  @override
+  String uiPairedDays(String v0) {
+    return 'Days with paired records: $v0';
+  }
+
+  @override
+  String uiPairedWellbeing(
+    String v0,
+    String v1,
+    String v2,
+    String v3,
+    String v4,
+  ) {
+    return '$v0 — previous day $v1 g; mood $v2/5, sleep $v3/5, symptoms $v4/4';
+  }
+
+  @override
+  String uiDeleteSavingsGoal(String v0) {
+    return 'The goal $v0 and its recorded amount will be deleted. No real money is moved.';
+  }
+
+  @override
+  String uiKnownMonthlySpending(String v0) {
+    return 'Known monthly drink spending: $v0';
+  }
+
+  @override
+  String uiMissingSavingsPrices(String v0) {
+    return '$v0 drink prices are missing; an estimate cannot be made.';
+  }
+
+  @override
+  String uiPreviousWholeMonth(String v0) {
+    return 'Previous full monthly average: $v0';
+  }
+
+  @override
+  String uiTotalGoalSavings(String v0) {
+    return 'Total in goals: $v0';
+  }
+
+  @override
+  String uiPercentComplete(String v0) {
+    return '$v0% complete';
+  }
+
+  @override
+  String uiKnownSpendingValue(String v0) {
+    return 'Known spending: $v0';
+  }
+
+  @override
+  String uiWeekMissingPrices(String v0) {
+    return '$v0 drink prices are unknown; this total is incomplete.';
+  }
+
+  @override
+  String uiLoggedDayCount(String v0, String v1) {
+    return 'Days with drink entries: $v0 / $v1';
+  }
+
+  @override
+  String uiFilledDayCount(String v0, String v1) {
+    return 'Days completed: $v0 / $v1';
+  }
+
+  @override
+  String uiAverageMoodValue(String v0) {
+    return 'Average mood: $v0';
+  }
+
+  @override
+  String uiAverageSleepValue(String v0) {
+    return 'Average sleep quality: $v0';
+  }
+
+  @override
+  String uiSymptomDayCount(String v0) {
+    return 'Days with reported hangover symptoms: $v0';
+  }
+
+  @override
+  String get milestoneInvalid => 'Set a valid target amount!';
+
+  @override
+  String get milestoneComplete => 'Menti: You reached your goal! 🎉';
+
+  @override
+  String get milestoneClose => 'Menti: You are getting very close!';
+
+  @override
+  String get milestoneHalf =>
+      'Menti: Halfway there — keep going at your own pace!';
+
+  @override
+  String get milestoneQuarter => 'Menti: That is the first quarter!';
+
+  @override
+  String get milestoneStarted =>
+      'Menti: Every bit you actually set aside counts.';
+
+  @override
+  String get milestoneFirst =>
+      'Menti: Every big goal starts with a small step.';
+
+  @override
+  String get milestoneHint =>
+      'Badges unlock based on the money you manually record as set aside.';
 }

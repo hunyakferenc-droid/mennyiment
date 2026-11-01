@@ -110,6 +110,7 @@ class _WellbeingJournalPageState extends State<WellbeingJournalPage> {
       setState(() { _entries..clear()..addAll(next); });
       return true;
     } catch (_) {
+      try { await (await SharedPreferences.getInstance()).reload(); } catch (_) { _writable=false; }
       if(mounted) setState(()=>_error='save');
       return false;
     } finally { if(mounted) setState(()=>_saving=false); }

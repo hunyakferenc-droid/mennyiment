@@ -3469,6 +3469,1032 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'Unicum (általános)'**
   String get catalogUnicum;
+
+  /// No description provided for @uiMonthlyBudgetHuf.
+  ///
+  /// In hu, this message translates to:
+  /// **'Havi költségkeret (Ft)'**
+  String get uiMonthlyBudgetHuf;
+
+  /// No description provided for @uiMonthlyGoalForDaysWithoutDrinkEntries.
+  ///
+  /// In hu, this message translates to:
+  /// **'Havi naplózott ital nélküli napok célja'**
+  String get uiMonthlyGoalForDaysWithoutDrinkEntries;
+
+  /// No description provided for @uiCancel.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mégse'**
+  String get uiCancel;
+
+  /// No description provided for @uiInvalidGoalValue.
+  ///
+  /// In hu, this message translates to:
+  /// **'Érvénytelen célérték'**
+  String get uiInvalidGoalValue;
+
+  /// No description provided for @uiSave.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mentés'**
+  String get uiSave;
+
+  /// No description provided for @uiMentiNoDrinksHaveBeenLoggedThisMonthYet.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: Még nincs naplózott ital ebben a hónapban. 🌱'**
+  String get uiMentiNoDrinksHaveBeenLoggedThisMonthYet;
+
+  /// No description provided for @uiMentiMindfulTrackingIsWhatMattersGoAtYour.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: A tudatos követés a lényeg. Haladj a saját tempódban! 💜'**
+  String get uiMentiMindfulTrackingIsWhatMattersGoAtYour;
+
+  /// No description provided for @uiAMessageFromMenti.
+  ///
+  /// In hu, this message translates to:
+  /// **'💜 Menti üzenete'**
+  String get uiAMessageFromMenti;
+
+  /// No description provided for @uiSpending.
+  ///
+  /// In hu, this message translates to:
+  /// **'💰 Kiadások'**
+  String get uiSpending;
+
+  /// No description provided for @uiEveryLoggedDrinkHasAPrice.
+  ///
+  /// In hu, this message translates to:
+  /// **'Minden naplózott italhoz tartozik ár.'**
+  String get uiEveryLoggedDrinkHasAPrice;
+
+  /// No description provided for @uiNotSet.
+  ///
+  /// In hu, this message translates to:
+  /// **'nincs beállítva'**
+  String get uiNotSet;
+
+  /// No description provided for @uiSetBudget.
+  ///
+  /// In hu, this message translates to:
+  /// **'Keret beállítása'**
+  String get uiSetBudget;
+
+  /// No description provided for @uiPersonalGoals.
+  ///
+  /// In hu, this message translates to:
+  /// **'🎯 Személyes célok'**
+  String get uiPersonalGoals;
+
+  /// No description provided for @uiThisDoesNotProveAnAlcoholFreeDayThere.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ez nem bizonyítja az alkoholmentességet: csak a naplóban nincs bejegyzés.'**
+  String get uiThisDoesNotProveAnAlcoholFreeDayThere;
+
+  /// No description provided for @uiSetDaysGoal.
+  ///
+  /// In hu, this message translates to:
+  /// **'Napcél beállítása'**
+  String get uiSetDaysGoal;
+
+  /// No description provided for @uiDrinkJournalCalendar.
+  ///
+  /// In hu, this message translates to:
+  /// **'📅 Fogyasztási naptár'**
+  String get uiDrinkJournalCalendar;
+
+  /// No description provided for @uiPurpleDrinkLoggedGreenNoDrinkLoggedGrayFuture.
+  ///
+  /// In hu, this message translates to:
+  /// **'Lila: van naplózott ital • Zöld: nincs naplózott ital • Szürke: jövőbeli nap'**
+  String get uiPurpleDrinkLoggedGreenNoDrinkLoggedGrayFuture;
+
+  /// No description provided for @uiMonthlySummary.
+  ///
+  /// In hu, this message translates to:
+  /// **'📊 Havi összesítés'**
+  String get uiMonthlySummary;
+
+  /// No description provided for @uiNoDataYet.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még nincs adat.'**
+  String get uiNoDataYet;
+
+  /// No description provided for @uiTheseAreSelfReportedRecordsTheyCannotEstablishSobriety.
+  ///
+  /// In hu, this message translates to:
+  /// **'Az adatok önbevalláson alapulnak. Nem alkalmasak a józanság vagy vezetési képesség megállapítására.'**
+  String get uiTheseAreSelfReportedRecordsTheyCannotEstablishSobriety;
+
+  /// No description provided for @uiPreviousAverageMonthlyDrinkSpending.
+  ///
+  /// In hu, this message translates to:
+  /// **'Korábbi átlagos havi italköltés'**
+  String get uiPreviousAverageMonthlyDrinkSpending;
+
+  /// No description provided for @uiMonthlyBudget.
+  ///
+  /// In hu, this message translates to:
+  /// **'Havi költségkeret'**
+  String get uiMonthlyBudget;
+
+  /// No description provided for @uiAmountInHuf.
+  ///
+  /// In hu, this message translates to:
+  /// **'Összeg forintban'**
+  String get uiAmountInHuf;
+
+  /// No description provided for @uiEG30000.
+  ///
+  /// In hu, this message translates to:
+  /// **'Pl. 30000'**
+  String get uiEG30000;
+
+  /// No description provided for @uiEG15000.
+  ///
+  /// In hu, this message translates to:
+  /// **'Pl. 15000'**
+  String get uiEG15000;
+
+  /// No description provided for @uiEG15.
+  ///
+  /// In hu, this message translates to:
+  /// **'Pl. 15'**
+  String get uiEG15;
+
+  /// No description provided for @uiEnterAnAmountBetween0And100000000.
+  ///
+  /// In hu, this message translates to:
+  /// **'0 és 100 000 000 Ft közötti számot adj meg.'**
+  String get uiEnterAnAmountBetween0And100000000;
+
+  /// No description provided for @uiSavingFailed.
+  ///
+  /// In hu, this message translates to:
+  /// **'A mentés nem sikerült.'**
+  String get uiSavingFailed;
+
+  /// No description provided for @uiFinanceCenter.
+  ///
+  /// In hu, this message translates to:
+  /// **'Pénzügyi központ'**
+  String get uiFinanceCenter;
+
+  /// No description provided for @uiPreviousMonth.
+  ///
+  /// In hu, this message translates to:
+  /// **'Előző hónap'**
+  String get uiPreviousMonth;
+
+  /// No description provided for @uiNextMonth.
+  ///
+  /// In hu, this message translates to:
+  /// **'Következő hónap'**
+  String get uiNextMonth;
+
+  /// No description provided for @uiRecordedDrinkSpending.
+  ///
+  /// In hu, this message translates to:
+  /// **'RÖGZÍTETT ITALKÖLTÉS'**
+  String get uiRecordedDrinkSpending;
+
+  /// No description provided for @uiThisTotalIsIncompleteBecauseSomePricesAreMissing.
+  ///
+  /// In hu, this message translates to:
+  /// **'Az összeg nem teljes, mert egyes italok ára hiányzik.'**
+  String get uiThisTotalIsIncompleteBecauseSomePricesAreMissing;
+
+  /// No description provided for @uiNotSetYet.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még nincs beállítva'**
+  String get uiNotSetYet;
+
+  /// No description provided for @uiUsed.
+  ///
+  /// In hu, this message translates to:
+  /// **'Felhasználva'**
+  String get uiUsed;
+
+  /// No description provided for @uiTheBudgetIsZeroAPercentageCannotBeCalculated.
+  ///
+  /// In hu, this message translates to:
+  /// **'A keret 0 Ft. Az előrehaladás százalékosan nem értelmezhető.'**
+  String get uiTheBudgetIsZeroAPercentageCannotBeCalculated;
+
+  /// No description provided for @uiEditBudget.
+  ///
+  /// In hu, this message translates to:
+  /// **'Keret módosítása'**
+  String get uiEditBudget;
+
+  /// No description provided for @uiEstimatedChangeFromPreviousHabits.
+  ///
+  /// In hu, this message translates to:
+  /// **'Becsült változás a korábbi szokásokhoz képest'**
+  String get uiEstimatedChangeFromPreviousHabits;
+
+  /// No description provided for @uiSetYourPreviousAverageMonthlyDrinkSpending.
+  ///
+  /// In hu, this message translates to:
+  /// **'Állítsd be a korábbi havi átlagos italköltésedet.'**
+  String get uiSetYourPreviousAverageMonthlyDrinkSpending;
+
+  /// No description provided for @uiAddTheMissingDrinkPricesBeforeComparing.
+  ///
+  /// In hu, this message translates to:
+  /// **'Az összehasonlításhoz előbb add meg a hiányzó italárakat.'**
+  String get uiAddTheMissingDrinkPricesBeforeComparing;
+
+  /// No description provided for @uiThisIsAnEstimateNotVerifiedSavingsYouProvide.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ez becslés, nem igazolt megtakarítás. A korábbi átlagot te adod meg; a hónap időarányosan szerepel.'**
+  String get uiThisIsAnEstimateNotVerifiedSavingsYouProvide;
+
+  /// No description provided for @uiSetPreviousMonthlyAverage.
+  ///
+  /// In hu, this message translates to:
+  /// **'Korábbi havi átlag beállítása'**
+  String get uiSetPreviousMonthlyAverage;
+
+  /// No description provided for @uiWeeklySpending.
+  ///
+  /// In hu, this message translates to:
+  /// **'Heti költések'**
+  String get uiWeeklySpending;
+
+  /// No description provided for @uiTheChartIncludesKnownPricesOnly.
+  ///
+  /// In hu, this message translates to:
+  /// **'A diagram csak az ismert árakat tartalmazza.'**
+  String get uiTheChartIncludesKnownPricesOnly;
+
+  /// No description provided for @uiFinancialFiguresAreSelfReportedThisJournalCannotEstablish.
+  ///
+  /// In hu, this message translates to:
+  /// **'A pénzügyi adatok önbevalláson alapulnak. A napló nem alkalmas a józanság vagy vezetési képesség megállapítására.'**
+  String get uiFinancialFiguresAreSelfReportedThisJournalCannotEstablish;
+
+  /// No description provided for @uiTheWellbeingJournalCouldNotBeLoaded.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nem sikerült betölteni a közérzetnaplót.'**
+  String get uiTheWellbeingJournalCouldNotBeLoaded;
+
+  /// No description provided for @uiMentiYouCanRecordYourMoodTooItHelps.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: Ha van kedved, naplózd a hangulatodat is. Ettől személyesebb lesz az összkép.'**
+  String get uiMentiYouCanRecordYourMoodTooItHelps;
+
+  /// No description provided for @uiMentiNoDrinksAreRecordedThisWeekWeCannot.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: Ezen a héten nincs rögzített ital. A nem naplózott napokról nem tudunk biztosat.'**
+  String get uiMentiNoDrinksAreRecordedThisWeekWeCannot;
+
+  /// No description provided for @uiMentiYourOwnRecordsAreComingTogetherLookFor.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: Már a saját adataidat is együtt láthatod. Figyeld a mintákat, de ne vonj le elhamarkodott következtetéseket!'**
+  String get uiMentiYourOwnRecordsAreComingTogetherLookFor;
+
+  /// No description provided for @uiLifestyleInsights.
+  ///
+  /// In hu, this message translates to:
+  /// **'Életmódelemzés 4.1'**
+  String get uiLifestyleInsights;
+
+  /// No description provided for @uiRefresh.
+  ///
+  /// In hu, this message translates to:
+  /// **'Frissítés'**
+  String get uiRefresh;
+
+  /// No description provided for @uiMentiSWeeklyMessage.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti heti üzenete'**
+  String get uiMentiSWeeklyMessage;
+
+  /// No description provided for @uiThePast7Days.
+  ///
+  /// In hu, this message translates to:
+  /// **'Az elmúlt 7 nap'**
+  String get uiThePast7Days;
+
+  /// No description provided for @uiLoggedDrinks.
+  ///
+  /// In hu, this message translates to:
+  /// **'Naplózott italok'**
+  String get uiLoggedDrinks;
+
+  /// No description provided for @uiPureAlcoholRecorded.
+  ///
+  /// In hu, this message translates to:
+  /// **'Tiszta alkohol a naplóban'**
+  String get uiPureAlcoholRecorded;
+
+  /// No description provided for @uiKnownSpending.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ismert költés'**
+  String get uiKnownSpending;
+
+  /// No description provided for @uiWellbeingEntries.
+  ///
+  /// In hu, this message translates to:
+  /// **'Közérzeti bejegyzések'**
+  String get uiWellbeingEntries;
+
+  /// No description provided for @uiAverageMood.
+  ///
+  /// In hu, this message translates to:
+  /// **'Átlagos hangulat'**
+  String get uiAverageMood;
+
+  /// No description provided for @uiAverageSleepQuality.
+  ///
+  /// In hu, this message translates to:
+  /// **'Átlagos alvásminőség'**
+  String get uiAverageSleepQuality;
+
+  /// No description provided for @uiAverageHangoverSymptoms.
+  ///
+  /// In hu, this message translates to:
+  /// **'Másnapossági tünetek átlaga'**
+  String get uiAverageHangoverSymptoms;
+
+  /// No description provided for @uiCompareWithThePrevious7Days.
+  ///
+  /// In hu, this message translates to:
+  /// **'Összehasonlítás az előző 7 nappal'**
+  String get uiCompareWithThePrevious7Days;
+
+  /// No description provided for @uiDrinksPreviousPeriod.
+  ///
+  /// In hu, this message translates to:
+  /// **'Italok – előző időszak'**
+  String get uiDrinksPreviousPeriod;
+
+  /// No description provided for @uiDrinksCurrentPeriod.
+  ///
+  /// In hu, this message translates to:
+  /// **'Italok – jelenlegi időszak'**
+  String get uiDrinksCurrentPeriod;
+
+  /// No description provided for @uiSpendingDifference.
+  ///
+  /// In hu, this message translates to:
+  /// **'Költéskülönbség'**
+  String get uiSpendingDifference;
+
+  /// No description provided for @uiLess.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kevesebb'**
+  String get uiLess;
+
+  /// No description provided for @uiMore.
+  ///
+  /// In hu, this message translates to:
+  /// **'Több'**
+  String get uiMore;
+
+  /// No description provided for @uiIncompletePrices.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hiányos árak'**
+  String get uiIncompletePrices;
+
+  /// No description provided for @uiThisIsADifferenceInRecordedSpendingNotVerified.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ez naplózott költéskülönbség, nem igazolt megtakarítás. A két hét eltérhet, és hiányozhatnak bejegyzések.'**
+  String get uiThisIsADifferenceInRecordedSpendingNotVerified;
+
+  /// No description provided for @uiPreviousDayAndNextDayWellbeing.
+  ///
+  /// In hu, this message translates to:
+  /// **'Előző nap és másnapi közérzet'**
+  String get uiPreviousDayAndNextDayWellbeing;
+
+  /// No description provided for @uiThereAreNoPairedRecordsWithADrinkOn.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még nincs olyan páros adat, ahol az előző napon ital és a következő napon közérzet is szerepel.'**
+  String get uiThereAreNoPairedRecordsWithADrinkOn;
+
+  /// No description provided for @uiManyFactorsAffectWellbeingCorrelationDoesNotProveCausation.
+  ///
+  /// In hu, this message translates to:
+  /// **'A közérzetet sok tényező befolyásolhatja. Az együttjárás nem bizonyít ok-okozatot, és ez nem orvosi értékelés.'**
+  String get uiManyFactorsAffectWellbeingCorrelationDoesNotProveCausation;
+
+  /// No description provided for @uiAllRecordsAreLocalAndSelfReportedThisJournal.
+  ///
+  /// In hu, this message translates to:
+  /// **'Minden adat helyben, önbevallás alapján készül. A napló nem alkalmas a józanság vagy vezetési képesség megállapítására.'**
+  String get uiAllRecordsAreLocalAndSelfReportedThisJournal;
+
+  /// No description provided for @uiNoData.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nincs adat'**
+  String get uiNoData;
+
+  /// No description provided for @uiNoData2.
+  ///
+  /// In hu, this message translates to:
+  /// **'nincs adat'**
+  String get uiNoData2;
+
+  /// No description provided for @uiGoalsCouldNotBeLoaded.
+  ///
+  /// In hu, this message translates to:
+  /// **'A célok betöltése nem sikerült.'**
+  String get uiGoalsCouldNotBeLoaded;
+
+  /// No description provided for @uiSavingFailedPleaseTryAgain.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nem sikerült menteni. Próbáld újra.'**
+  String get uiSavingFailedPleaseTryAgain;
+
+  /// No description provided for @uiAmountHuf.
+  ///
+  /// In hu, this message translates to:
+  /// **'Összeg (Ft)'**
+  String get uiAmountHuf;
+
+  /// No description provided for @uiEnterAValidAmount.
+  ///
+  /// In hu, this message translates to:
+  /// **'Érvényes összeget adj meg.'**
+  String get uiEnterAValidAmount;
+
+  /// No description provided for @uiNewSavingsGoal.
+  ///
+  /// In hu, this message translates to:
+  /// **'Új megtakarítási cél'**
+  String get uiNewSavingsGoal;
+
+  /// No description provided for @uiGoalName.
+  ///
+  /// In hu, this message translates to:
+  /// **'Cél neve'**
+  String get uiGoalName;
+
+  /// No description provided for @uiForExampleAHoliday.
+  ///
+  /// In hu, this message translates to:
+  /// **'Például: nyaralás'**
+  String get uiForExampleAHoliday;
+
+  /// No description provided for @uiTargetAmountHuf.
+  ///
+  /// In hu, this message translates to:
+  /// **'Célösszeg (Ft)'**
+  String get uiTargetAmountHuf;
+
+  /// No description provided for @uiEnterAGoalNameAndAValidAmount.
+  ///
+  /// In hu, this message translates to:
+  /// **'Add meg a cél nevét és egy érvényes összeget.'**
+  String get uiEnterAGoalNameAndAValidAmount;
+
+  /// No description provided for @uiCreate.
+  ///
+  /// In hu, this message translates to:
+  /// **'Létrehozás'**
+  String get uiCreate;
+
+  /// No description provided for @uiMoneyActuallySetAside.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ténylegesen félretett pénz'**
+  String get uiMoneyActuallySetAside;
+
+  /// No description provided for @uiDeleteThisGoal.
+  ///
+  /// In hu, this message translates to:
+  /// **'Cél törlése?'**
+  String get uiDeleteThisGoal;
+
+  /// No description provided for @uiDelete.
+  ///
+  /// In hu, this message translates to:
+  /// **'Törlés'**
+  String get uiDelete;
+
+  /// No description provided for @uiMySavingsGoals.
+  ///
+  /// In hu, this message translates to:
+  /// **'Megtakarítási céljaim'**
+  String get uiMySavingsGoals;
+
+  /// No description provided for @uiNewGoal.
+  ///
+  /// In hu, this message translates to:
+  /// **'Új cél'**
+  String get uiNewGoal;
+
+  /// No description provided for @uiMennyiment22.
+  ///
+  /// In hu, this message translates to:
+  /// **'MENNYIMENT? 5.0'**
+  String get uiMennyiment22;
+
+  /// No description provided for @uiSaveForWhatMattersToYou.
+  ///
+  /// In hu, this message translates to:
+  /// **'Spórolj arra, ami igazán számít!'**
+  String get uiSaveForWhatMattersToYou;
+
+  /// No description provided for @uiEstimatedSavingsProratedMonth.
+  ///
+  /// In hu, this message translates to:
+  /// **'Becsült megtakarítás – időarányos hónap'**
+  String get uiEstimatedSavingsProratedMonth;
+
+  /// No description provided for @uiCannotBeCalculated.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nem számolható'**
+  String get uiCannotBeCalculated;
+
+  /// No description provided for @uiSetYourPreviousMonthlyAverage.
+  ///
+  /// In hu, this message translates to:
+  /// **'Állítsd be a korábbi havi átlagodat.'**
+  String get uiSetYourPreviousMonthlyAverage;
+
+  /// No description provided for @uiSetPreviousAverage.
+  ///
+  /// In hu, this message translates to:
+  /// **'Korábbi átlag beállítása'**
+  String get uiSetPreviousAverage;
+
+  /// No description provided for @uiTheEstimateComparesTheProratedPreviousMonthlyAverageWith.
+  ///
+  /// In hu, this message translates to:
+  /// **'A becslés a korábbi havi átlag időarányos részét hasonlítja a naplózott költéshez. Nem ténylegesen félretett pénz, és hiányos napló esetén pontatlan lehet.'**
+  String get uiTheEstimateComparesTheProratedPreviousMonthlyAverageWith;
+
+  /// No description provided for @uiMentiSWorld.
+  ///
+  /// In hu, this message translates to:
+  /// **'MENTI VILÁGA'**
+  String get uiMentiSWorld;
+
+  /// No description provided for @uiLookAtWhatYouHaveAchieved.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nézd meg, mit értél el!'**
+  String get uiLookAtWhatYouHaveAchieved;
+
+  /// No description provided for @uiMentiCelebratesMilestonesBasedOnTheMoneyYouActually.
+  ///
+  /// In hu, this message translates to:
+  /// **'A valóban félretett összegek alapján Menti különböző mérföldköveket ünnepel veled.'**
+  String get uiMentiCelebratesMilestonesBasedOnTheMoneyYouActually;
+
+  /// No description provided for @uiOpenMentiSWorld.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti világának megnyitása'**
+  String get uiOpenMentiSWorld;
+
+  /// No description provided for @uiMoneyActuallySetAside2.
+  ///
+  /// In hu, this message translates to:
+  /// **'Valóban félretett pénz'**
+  String get uiMoneyActuallySetAside2;
+
+  /// No description provided for @uiNoGoalsYetCreateOneForAHolidayA.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még nincs célod. Hozz létre például egy nyaralást, autót vagy saját elképzelést!'**
+  String get uiNoGoalsYetCreateOneForAHolidayA;
+
+  /// No description provided for @uiDeleteGoal.
+  ///
+  /// In hu, this message translates to:
+  /// **'Cél törlése'**
+  String get uiDeleteGoal;
+
+  /// No description provided for @uiAddMoneySetAside.
+  ///
+  /// In hu, this message translates to:
+  /// **'Félretett összeg hozzáadása'**
+  String get uiAddMoneySetAside;
+
+  /// No description provided for @uiTheseAmountsAreManualRecordsWithNoBankAccount.
+  ///
+  /// In hu, this message translates to:
+  /// **'A rögzített összegek kézi feljegyzések, nem kapcsolódnak bankszámlához. Az alkalmazás nem tesz át pénzt egyik számláról a másikra.'**
+  String get uiTheseAmountsAreManualRecordsWithNoBankAccount;
+
+  /// No description provided for @uiMentiYourWellbeingJournalCanHelpYouNoticeHow.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: A közérzetnapló segíthet észrevenni, hogyan alakulnak a napjaid.'**
+  String get uiMentiYourWellbeingJournalCanHelpYouNoticeHow;
+
+  /// No description provided for @uiMentiSomeDrinkPricesAreStillMissingSoThe.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: Néhány ital ára még hiányzik. Így a költési összeg csak részleges.'**
+  String get uiMentiSomeDrinkPricesAreStillMissingSoThe;
+
+  /// No description provided for @uiMentiThanksForTakingTimeForYourHabitsMindful.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: Köszi, hogy foglalkozol a szokásaiddal. A tudatos megfigyelés fontos lépés!'**
+  String get uiMentiThanksForTakingTimeForYourHabitsMindful;
+
+  /// No description provided for @uiWeeklyMentiReport.
+  ///
+  /// In hu, this message translates to:
+  /// **'Heti Menti-jelentés'**
+  String get uiWeeklyMentiReport;
+
+  /// No description provided for @uiYourWeekInOnePlace.
+  ///
+  /// In hu, this message translates to:
+  /// **'A heted egy helyen'**
+  String get uiYourWeekInOnePlace;
+
+  /// No description provided for @uiASummaryOfSelfReportedRecordsNotAHealth.
+  ///
+  /// In hu, this message translates to:
+  /// **'Önbevalláson alapuló naplóösszesítő, nem egészségügyi értékelés.'**
+  String get uiASummaryOfSelfReportedRecordsNotAHealth;
+
+  /// No description provided for @uiPreviousWeek.
+  ///
+  /// In hu, this message translates to:
+  /// **'Előző hét'**
+  String get uiPreviousWeek;
+
+  /// No description provided for @uiNextWeek.
+  ///
+  /// In hu, this message translates to:
+  /// **'Következő hét'**
+  String get uiNextWeek;
+
+  /// No description provided for @uiAMessageFromMenti2.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti üzenete'**
+  String get uiAMessageFromMenti2;
+
+  /// No description provided for @uiRecordedConsumption.
+  ///
+  /// In hu, this message translates to:
+  /// **'Naplózott fogyasztás'**
+  String get uiRecordedConsumption;
+
+  /// No description provided for @uiADayWithoutAnEntryDoesNotProveAn.
+  ///
+  /// In hu, this message translates to:
+  /// **'A bejegyzés nélküli nap nem bizonyít alkoholmentességet.'**
+  String get uiADayWithoutAnEntryDoesNotProveAn;
+
+  /// No description provided for @uiDailyEntries.
+  ///
+  /// In hu, this message translates to:
+  /// **'Napi bejegyzések'**
+  String get uiDailyEntries;
+
+  /// No description provided for @uiWellbeingAndSleep.
+  ///
+  /// In hu, this message translates to:
+  /// **'Közérzet és alvás'**
+  String get uiWellbeingAndSleep;
+
+  /// No description provided for @uiRecordDailyWellbeing.
+  ///
+  /// In hu, this message translates to:
+  /// **'Napi közérzet kitöltése'**
+  String get uiRecordDailyWellbeing;
+
+  /// No description provided for @uiMissingRecordsDoNotMeanZeroConsumptionOrGood.
+  ///
+  /// In hu, this message translates to:
+  /// **'Az adatok hiánya nem nulla fogyasztást vagy jó közérzetet jelent. A kimutatás összefüggéseket segít megfigyelni, de nem igazol ok-okozatot és nem alkalmas a józanság megállapítására.'**
+  String get uiMissingRecordsDoNotMeanZeroConsumptionOrGood;
+
+  /// No description provided for @uiHiPickASavingsGoalAndLetSStart.
+  ///
+  /// In hu, this message translates to:
+  /// **'Szia! Válassz egy megtakarítási célt, és indulhat a közös kaland!'**
+  String get uiHiPickASavingsGoalAndLetSStart;
+
+  /// No description provided for @uiYouDidItYouHaveCompletedASavingsGoal.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ez igen! Már teljesítettél megtakarítási célt. Ünnepeljük meg!'**
+  String get uiYouDidItYouHaveCompletedASavingsGoal;
+
+  /// No description provided for @uiYouHaveUnlockedMilestonesKeepGoingAtYourOwn.
+  ///
+  /// In hu, this message translates to:
+  /// **'Már vannak feloldott mérföldköveid. Haladj a saját tempódban!'**
+  String get uiYouHaveUnlockedMilestonesKeepGoingAtYourOwn;
+
+  /// No description provided for @uiEveryGoalStartsWithASmallAmountActuallySet.
+  ///
+  /// In hu, this message translates to:
+  /// **'Minden cél egy apró, valóban félretett összeggel kezdődik.'**
+  String get uiEveryGoalStartsWithASmallAmountActuallySet;
+
+  /// No description provided for @uiMentiSWorld2.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti világa'**
+  String get uiMentiSWorld2;
+
+  /// No description provided for @uiMennyimentMentiSWorld.
+  ///
+  /// In hu, this message translates to:
+  /// **'MENNYIMENT? • MENTI VILÁGA'**
+  String get uiMennyimentMentiSWorld;
+
+  /// No description provided for @uiYourAchievements.
+  ///
+  /// In hu, this message translates to:
+  /// **'A saját eredményeid'**
+  String get uiYourAchievements;
+
+  /// No description provided for @uiTotalSetAside.
+  ///
+  /// In hu, this message translates to:
+  /// **'Félretett összesen'**
+  String get uiTotalSetAside;
+
+  /// No description provided for @uiUnlockedBadges.
+  ///
+  /// In hu, this message translates to:
+  /// **'Feloldott jelvények'**
+  String get uiUnlockedBadges;
+
+  /// No description provided for @uiCompletedGoals.
+  ///
+  /// In hu, this message translates to:
+  /// **'Elért célok'**
+  String get uiCompletedGoals;
+
+  /// No description provided for @uiYourGoalsAndMilestones.
+  ///
+  /// In hu, this message translates to:
+  /// **'Céljaid és mérföldköveid'**
+  String get uiYourGoalsAndMilestones;
+
+  /// No description provided for @uiNoSavingsGoalsYetYouCanCreateOneOn.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még nincs megtakarítási célod. A Céljaim képernyőn létrehozhatsz egyet.'**
+  String get uiNoSavingsGoalsYetYouCanCreateOneOn;
+
+  /// No description provided for @uiBadgesReflectOnlyMoneyYouRecordAsActuallySet.
+  ///
+  /// In hu, this message translates to:
+  /// **'A jelvények kizárólag az alkalmazásban ténylegesen félretettként rögzített pénzhez kötődnek. A becsült megtakarítás nem számít bele. A felület nem kapcsolódik bankszámlához.'**
+  String get uiBadgesReflectOnlyMoneyYouRecordAsActuallySet;
+
+  /// No description provided for @uiDaysValue.
+  ///
+  /// In hu, this message translates to:
+  /// **'{v0} nap'**
+  String uiDaysValue(String v0);
+
+  /// No description provided for @uiRecordedSpendingValue.
+  ///
+  /// In hu, this message translates to:
+  /// **'Rögzített költés: {v0}'**
+  String uiRecordedSpendingValue(String v0);
+
+  /// No description provided for @uiUnknownPricesTotal.
+  ///
+  /// In hu, this message translates to:
+  /// **'{v0} ital ára ismeretlen – az összeg nem teljes.'**
+  String uiUnknownPricesTotal(String v0);
+
+  /// No description provided for @uiMonthlyBudgetValue.
+  ///
+  /// In hu, this message translates to:
+  /// **'Havi keret: {v0}'**
+  String uiMonthlyBudgetValue(String v0);
+
+  /// No description provided for @uiUnrecordedDays.
+  ///
+  /// In hu, this message translates to:
+  /// **'Naplózott ital nélküli napok: {v0} / {v1}'**
+  String uiUnrecordedDays(String v0, String v1);
+
+  /// No description provided for @uiMonthlyGoalValue.
+  ///
+  /// In hu, this message translates to:
+  /// **'Havi cél: {v0}'**
+  String uiMonthlyGoalValue(String v0);
+
+  /// No description provided for @uiDayDrinks.
+  ///
+  /// In hu, this message translates to:
+  /// **'{v0}.: {v1} naplózott ital'**
+  String uiDayDrinks(String v0, String v1);
+
+  /// No description provided for @uiDrinksAndGrams.
+  ///
+  /// In hu, this message translates to:
+  /// **'{v0} ital • {v1} g tiszta alkohol'**
+  String uiDrinksAndGrams(String v0, String v1);
+
+  /// No description provided for @uiNameOccurrences.
+  ///
+  /// In hu, this message translates to:
+  /// **'{v0}: {v1} alkalom'**
+  String uiNameOccurrences(String v0, String v1);
+
+  /// No description provided for @uiDrinkPriceCounts.
+  ///
+  /// In hu, this message translates to:
+  /// **'{v0} naplózott ital • {v1} hiányzó ár'**
+  String uiDrinkPriceCounts(String v0, String v1);
+
+  /// No description provided for @uiPreviousMonthlyValue.
+  ///
+  /// In hu, this message translates to:
+  /// **'Korábbi havi átlag: {v0}'**
+  String uiPreviousMonthlyValue(String v0);
+
+  /// No description provided for @uiComparisonDays.
+  ///
+  /// In hu, this message translates to:
+  /// **'Összevetés az időarányos korábbi átlaggal ({v0} / {v1} nap).'**
+  String uiComparisonDays(String v0, String v1);
+
+  /// No description provided for @uiItemsValue.
+  ///
+  /// In hu, this message translates to:
+  /// **'{v0} db'**
+  String uiItemsValue(String v0);
+
+  /// No description provided for @uiPartialDrinkSpending.
+  ///
+  /// In hu, this message translates to:
+  /// **'{v0} ital ára hiányzik; a költés csak részösszeg.'**
+  String uiPartialDrinkSpending(String v0);
+
+  /// No description provided for @uiPairedDays.
+  ///
+  /// In hu, this message translates to:
+  /// **'Összekapcsolható napok: {v0}'**
+  String uiPairedDays(String v0);
+
+  /// No description provided for @uiPairedWellbeing.
+  ///
+  /// In hu, this message translates to:
+  /// **'{v0}. – előző nap {v1} g; hangulat {v2}/5, alvás {v3}/5, tünet {v4}/4'**
+  String uiPairedWellbeing(
+    String v0,
+    String v1,
+    String v2,
+    String v3,
+    String v4,
+  );
+
+  /// No description provided for @uiDeleteSavingsGoal.
+  ///
+  /// In hu, this message translates to:
+  /// **'A(z) {v0} cél és a hozzá rögzített összeg törlődik a naplóból. Ez nem mozgat valódi pénzt.'**
+  String uiDeleteSavingsGoal(String v0);
+
+  /// No description provided for @uiKnownMonthlySpending.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ismert havi italköltés: {v0}'**
+  String uiKnownMonthlySpending(String v0);
+
+  /// No description provided for @uiMissingSavingsPrices.
+  ///
+  /// In hu, this message translates to:
+  /// **'{v0} ital ára hiányzik – a becslés nem készíthető el.'**
+  String uiMissingSavingsPrices(String v0);
+
+  /// No description provided for @uiPreviousWholeMonth.
+  ///
+  /// In hu, this message translates to:
+  /// **'Korábbi teljes havi átlag: {v0}'**
+  String uiPreviousWholeMonth(String v0);
+
+  /// No description provided for @uiTotalGoalSavings.
+  ///
+  /// In hu, this message translates to:
+  /// **'Összesen a célokban: {v0}'**
+  String uiTotalGoalSavings(String v0);
+
+  /// No description provided for @uiPercentComplete.
+  ///
+  /// In hu, this message translates to:
+  /// **'{v0}% teljesítve'**
+  String uiPercentComplete(String v0);
+
+  /// No description provided for @uiKnownSpendingValue.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ismert költés: {v0}'**
+  String uiKnownSpendingValue(String v0);
+
+  /// No description provided for @uiWeekMissingPrices.
+  ///
+  /// In hu, this message translates to:
+  /// **'{v0} ital ára ismeretlen; ez nem teljes összeg.'**
+  String uiWeekMissingPrices(String v0);
+
+  /// No description provided for @uiLoggedDayCount.
+  ///
+  /// In hu, this message translates to:
+  /// **'Naplózott itallal érintett napok: {v0} / {v1}'**
+  String uiLoggedDayCount(String v0, String v1);
+
+  /// No description provided for @uiFilledDayCount.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kitöltött napok: {v0} / {v1}'**
+  String uiFilledDayCount(String v0, String v1);
+
+  /// No description provided for @uiAverageMoodValue.
+  ///
+  /// In hu, this message translates to:
+  /// **'Átlagos hangulat: {v0}'**
+  String uiAverageMoodValue(String v0);
+
+  /// No description provided for @uiAverageSleepValue.
+  ///
+  /// In hu, this message translates to:
+  /// **'Átlagos alvásminőség: {v0}'**
+  String uiAverageSleepValue(String v0);
+
+  /// No description provided for @uiSymptomDayCount.
+  ///
+  /// In hu, this message translates to:
+  /// **'Másnapossági tünetet jelzett napok: {v0}'**
+  String uiSymptomDayCount(String v0);
+
+  /// No description provided for @milestoneInvalid.
+  ///
+  /// In hu, this message translates to:
+  /// **'Állíts be egy érvényes célösszeget!'**
+  String get milestoneInvalid;
+
+  /// No description provided for @milestoneComplete.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: Elérted a kitűzött célod! 🎉'**
+  String get milestoneComplete;
+
+  /// No description provided for @milestoneClose.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: Már nagyon közel vagy a célodhoz!'**
+  String get milestoneClose;
+
+  /// No description provided for @milestoneHalf.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: Félúton jársz, haladj a saját tempódban!'**
+  String get milestoneHalf;
+
+  /// No description provided for @milestoneQuarter.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: Megvan az első negyed!'**
+  String get milestoneQuarter;
+
+  /// No description provided for @milestoneStarted.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: Minden ténylegesen félretett forint számít.'**
+  String get milestoneStarted;
+
+  /// No description provided for @milestoneFirst.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti: Minden nagy cél egy apró lépéssel kezdődik.'**
+  String get milestoneFirst;
+
+  /// No description provided for @milestoneHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'A jelvények a kézzel rögzített félretett összeg alapján nyílnak meg.'**
+  String get milestoneHint;
 }
 
 class _AppLocalizationsDelegate

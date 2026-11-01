@@ -1863,4 +1863,628 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get catalogUnicum => 'Unicum (általános)';
+
+  @override
+  String get uiMonthlyBudgetHuf => 'Havi költségkeret (Ft)';
+
+  @override
+  String get uiMonthlyGoalForDaysWithoutDrinkEntries =>
+      'Havi naplózott ital nélküli napok célja';
+
+  @override
+  String get uiCancel => 'Mégse';
+
+  @override
+  String get uiInvalidGoalValue => 'Érvénytelen célérték';
+
+  @override
+  String get uiSave => 'Mentés';
+
+  @override
+  String get uiMentiNoDrinksHaveBeenLoggedThisMonthYet =>
+      'Menti: Még nincs naplózott ital ebben a hónapban. 🌱';
+
+  @override
+  String get uiMentiMindfulTrackingIsWhatMattersGoAtYour =>
+      'Menti: A tudatos követés a lényeg. Haladj a saját tempódban! 💜';
+
+  @override
+  String get uiAMessageFromMenti => '💜 Menti üzenete';
+
+  @override
+  String get uiSpending => '💰 Kiadások';
+
+  @override
+  String get uiEveryLoggedDrinkHasAPrice =>
+      'Minden naplózott italhoz tartozik ár.';
+
+  @override
+  String get uiNotSet => 'nincs beállítva';
+
+  @override
+  String get uiSetBudget => 'Keret beállítása';
+
+  @override
+  String get uiPersonalGoals => '🎯 Személyes célok';
+
+  @override
+  String get uiThisDoesNotProveAnAlcoholFreeDayThere =>
+      'Ez nem bizonyítja az alkoholmentességet: csak a naplóban nincs bejegyzés.';
+
+  @override
+  String get uiSetDaysGoal => 'Napcél beállítása';
+
+  @override
+  String get uiDrinkJournalCalendar => '📅 Fogyasztási naptár';
+
+  @override
+  String get uiPurpleDrinkLoggedGreenNoDrinkLoggedGrayFuture =>
+      'Lila: van naplózott ital • Zöld: nincs naplózott ital • Szürke: jövőbeli nap';
+
+  @override
+  String get uiMonthlySummary => '📊 Havi összesítés';
+
+  @override
+  String get uiNoDataYet => 'Még nincs adat.';
+
+  @override
+  String get uiTheseAreSelfReportedRecordsTheyCannotEstablishSobriety =>
+      'Az adatok önbevalláson alapulnak. Nem alkalmasak a józanság vagy vezetési képesség megállapítására.';
+
+  @override
+  String get uiPreviousAverageMonthlyDrinkSpending =>
+      'Korábbi átlagos havi italköltés';
+
+  @override
+  String get uiMonthlyBudget => 'Havi költségkeret';
+
+  @override
+  String get uiAmountInHuf => 'Összeg forintban';
+
+  @override
+  String get uiEG30000 => 'Pl. 30000';
+
+  @override
+  String get uiEG15000 => 'Pl. 15000';
+
+  @override
+  String get uiEG15 => 'Pl. 15';
+
+  @override
+  String get uiEnterAnAmountBetween0And100000000 =>
+      '0 és 100 000 000 Ft közötti számot adj meg.';
+
+  @override
+  String get uiSavingFailed => 'A mentés nem sikerült.';
+
+  @override
+  String get uiFinanceCenter => 'Pénzügyi központ';
+
+  @override
+  String get uiPreviousMonth => 'Előző hónap';
+
+  @override
+  String get uiNextMonth => 'Következő hónap';
+
+  @override
+  String get uiRecordedDrinkSpending => 'RÖGZÍTETT ITALKÖLTÉS';
+
+  @override
+  String get uiThisTotalIsIncompleteBecauseSomePricesAreMissing =>
+      'Az összeg nem teljes, mert egyes italok ára hiányzik.';
+
+  @override
+  String get uiNotSetYet => 'Még nincs beállítva';
+
+  @override
+  String get uiUsed => 'Felhasználva';
+
+  @override
+  String get uiTheBudgetIsZeroAPercentageCannotBeCalculated =>
+      'A keret 0 Ft. Az előrehaladás százalékosan nem értelmezhető.';
+
+  @override
+  String get uiEditBudget => 'Keret módosítása';
+
+  @override
+  String get uiEstimatedChangeFromPreviousHabits =>
+      'Becsült változás a korábbi szokásokhoz képest';
+
+  @override
+  String get uiSetYourPreviousAverageMonthlyDrinkSpending =>
+      'Állítsd be a korábbi havi átlagos italköltésedet.';
+
+  @override
+  String get uiAddTheMissingDrinkPricesBeforeComparing =>
+      'Az összehasonlításhoz előbb add meg a hiányzó italárakat.';
+
+  @override
+  String get uiThisIsAnEstimateNotVerifiedSavingsYouProvide =>
+      'Ez becslés, nem igazolt megtakarítás. A korábbi átlagot te adod meg; a hónap időarányosan szerepel.';
+
+  @override
+  String get uiSetPreviousMonthlyAverage => 'Korábbi havi átlag beállítása';
+
+  @override
+  String get uiWeeklySpending => 'Heti költések';
+
+  @override
+  String get uiTheChartIncludesKnownPricesOnly =>
+      'A diagram csak az ismert árakat tartalmazza.';
+
+  @override
+  String get uiFinancialFiguresAreSelfReportedThisJournalCannotEstablish =>
+      'A pénzügyi adatok önbevalláson alapulnak. A napló nem alkalmas a józanság vagy vezetési képesség megállapítására.';
+
+  @override
+  String get uiTheWellbeingJournalCouldNotBeLoaded =>
+      'Nem sikerült betölteni a közérzetnaplót.';
+
+  @override
+  String get uiMentiYouCanRecordYourMoodTooItHelps =>
+      'Menti: Ha van kedved, naplózd a hangulatodat is. Ettől személyesebb lesz az összkép.';
+
+  @override
+  String get uiMentiNoDrinksAreRecordedThisWeekWeCannot =>
+      'Menti: Ezen a héten nincs rögzített ital. A nem naplózott napokról nem tudunk biztosat.';
+
+  @override
+  String get uiMentiYourOwnRecordsAreComingTogetherLookFor =>
+      'Menti: Már a saját adataidat is együtt láthatod. Figyeld a mintákat, de ne vonj le elhamarkodott következtetéseket!';
+
+  @override
+  String get uiLifestyleInsights => 'Életmódelemzés 4.1';
+
+  @override
+  String get uiRefresh => 'Frissítés';
+
+  @override
+  String get uiMentiSWeeklyMessage => 'Menti heti üzenete';
+
+  @override
+  String get uiThePast7Days => 'Az elmúlt 7 nap';
+
+  @override
+  String get uiLoggedDrinks => 'Naplózott italok';
+
+  @override
+  String get uiPureAlcoholRecorded => 'Tiszta alkohol a naplóban';
+
+  @override
+  String get uiKnownSpending => 'Ismert költés';
+
+  @override
+  String get uiWellbeingEntries => 'Közérzeti bejegyzések';
+
+  @override
+  String get uiAverageMood => 'Átlagos hangulat';
+
+  @override
+  String get uiAverageSleepQuality => 'Átlagos alvásminőség';
+
+  @override
+  String get uiAverageHangoverSymptoms => 'Másnapossági tünetek átlaga';
+
+  @override
+  String get uiCompareWithThePrevious7Days =>
+      'Összehasonlítás az előző 7 nappal';
+
+  @override
+  String get uiDrinksPreviousPeriod => 'Italok – előző időszak';
+
+  @override
+  String get uiDrinksCurrentPeriod => 'Italok – jelenlegi időszak';
+
+  @override
+  String get uiSpendingDifference => 'Költéskülönbség';
+
+  @override
+  String get uiLess => 'Kevesebb';
+
+  @override
+  String get uiMore => 'Több';
+
+  @override
+  String get uiIncompletePrices => 'Hiányos árak';
+
+  @override
+  String get uiThisIsADifferenceInRecordedSpendingNotVerified =>
+      'Ez naplózott költéskülönbség, nem igazolt megtakarítás. A két hét eltérhet, és hiányozhatnak bejegyzések.';
+
+  @override
+  String get uiPreviousDayAndNextDayWellbeing =>
+      'Előző nap és másnapi közérzet';
+
+  @override
+  String get uiThereAreNoPairedRecordsWithADrinkOn =>
+      'Még nincs olyan páros adat, ahol az előző napon ital és a következő napon közérzet is szerepel.';
+
+  @override
+  String get uiManyFactorsAffectWellbeingCorrelationDoesNotProveCausation =>
+      'A közérzetet sok tényező befolyásolhatja. Az együttjárás nem bizonyít ok-okozatot, és ez nem orvosi értékelés.';
+
+  @override
+  String get uiAllRecordsAreLocalAndSelfReportedThisJournal =>
+      'Minden adat helyben, önbevallás alapján készül. A napló nem alkalmas a józanság vagy vezetési képesség megállapítására.';
+
+  @override
+  String get uiNoData => 'Nincs adat';
+
+  @override
+  String get uiNoData2 => 'nincs adat';
+
+  @override
+  String get uiGoalsCouldNotBeLoaded => 'A célok betöltése nem sikerült.';
+
+  @override
+  String get uiSavingFailedPleaseTryAgain =>
+      'Nem sikerült menteni. Próbáld újra.';
+
+  @override
+  String get uiAmountHuf => 'Összeg (Ft)';
+
+  @override
+  String get uiEnterAValidAmount => 'Érvényes összeget adj meg.';
+
+  @override
+  String get uiNewSavingsGoal => 'Új megtakarítási cél';
+
+  @override
+  String get uiGoalName => 'Cél neve';
+
+  @override
+  String get uiForExampleAHoliday => 'Például: nyaralás';
+
+  @override
+  String get uiTargetAmountHuf => 'Célösszeg (Ft)';
+
+  @override
+  String get uiEnterAGoalNameAndAValidAmount =>
+      'Add meg a cél nevét és egy érvényes összeget.';
+
+  @override
+  String get uiCreate => 'Létrehozás';
+
+  @override
+  String get uiMoneyActuallySetAside => 'Ténylegesen félretett pénz';
+
+  @override
+  String get uiDeleteThisGoal => 'Cél törlése?';
+
+  @override
+  String get uiDelete => 'Törlés';
+
+  @override
+  String get uiMySavingsGoals => 'Megtakarítási céljaim';
+
+  @override
+  String get uiNewGoal => 'Új cél';
+
+  @override
+  String get uiMennyiment22 => 'MENNYIMENT? 5.0';
+
+  @override
+  String get uiSaveForWhatMattersToYou => 'Spórolj arra, ami igazán számít!';
+
+  @override
+  String get uiEstimatedSavingsProratedMonth =>
+      'Becsült megtakarítás – időarányos hónap';
+
+  @override
+  String get uiCannotBeCalculated => 'Nem számolható';
+
+  @override
+  String get uiSetYourPreviousMonthlyAverage =>
+      'Állítsd be a korábbi havi átlagodat.';
+
+  @override
+  String get uiSetPreviousAverage => 'Korábbi átlag beállítása';
+
+  @override
+  String get uiTheEstimateComparesTheProratedPreviousMonthlyAverageWith =>
+      'A becslés a korábbi havi átlag időarányos részét hasonlítja a naplózott költéshez. Nem ténylegesen félretett pénz, és hiányos napló esetén pontatlan lehet.';
+
+  @override
+  String get uiMentiSWorld => 'MENTI VILÁGA';
+
+  @override
+  String get uiLookAtWhatYouHaveAchieved => 'Nézd meg, mit értél el!';
+
+  @override
+  String get uiMentiCelebratesMilestonesBasedOnTheMoneyYouActually =>
+      'A valóban félretett összegek alapján Menti különböző mérföldköveket ünnepel veled.';
+
+  @override
+  String get uiOpenMentiSWorld => 'Menti világának megnyitása';
+
+  @override
+  String get uiMoneyActuallySetAside2 => 'Valóban félretett pénz';
+
+  @override
+  String get uiNoGoalsYetCreateOneForAHolidayA =>
+      'Még nincs célod. Hozz létre például egy nyaralást, autót vagy saját elképzelést!';
+
+  @override
+  String get uiDeleteGoal => 'Cél törlése';
+
+  @override
+  String get uiAddMoneySetAside => 'Félretett összeg hozzáadása';
+
+  @override
+  String get uiTheseAmountsAreManualRecordsWithNoBankAccount =>
+      'A rögzített összegek kézi feljegyzések, nem kapcsolódnak bankszámlához. Az alkalmazás nem tesz át pénzt egyik számláról a másikra.';
+
+  @override
+  String get uiMentiYourWellbeingJournalCanHelpYouNoticeHow =>
+      'Menti: A közérzetnapló segíthet észrevenni, hogyan alakulnak a napjaid.';
+
+  @override
+  String get uiMentiSomeDrinkPricesAreStillMissingSoThe =>
+      'Menti: Néhány ital ára még hiányzik. Így a költési összeg csak részleges.';
+
+  @override
+  String get uiMentiThanksForTakingTimeForYourHabitsMindful =>
+      'Menti: Köszi, hogy foglalkozol a szokásaiddal. A tudatos megfigyelés fontos lépés!';
+
+  @override
+  String get uiWeeklyMentiReport => 'Heti Menti-jelentés';
+
+  @override
+  String get uiYourWeekInOnePlace => 'A heted egy helyen';
+
+  @override
+  String get uiASummaryOfSelfReportedRecordsNotAHealth =>
+      'Önbevalláson alapuló naplóösszesítő, nem egészségügyi értékelés.';
+
+  @override
+  String get uiPreviousWeek => 'Előző hét';
+
+  @override
+  String get uiNextWeek => 'Következő hét';
+
+  @override
+  String get uiAMessageFromMenti2 => 'Menti üzenete';
+
+  @override
+  String get uiRecordedConsumption => 'Naplózott fogyasztás';
+
+  @override
+  String get uiADayWithoutAnEntryDoesNotProveAn =>
+      'A bejegyzés nélküli nap nem bizonyít alkoholmentességet.';
+
+  @override
+  String get uiDailyEntries => 'Napi bejegyzések';
+
+  @override
+  String get uiWellbeingAndSleep => 'Közérzet és alvás';
+
+  @override
+  String get uiRecordDailyWellbeing => 'Napi közérzet kitöltése';
+
+  @override
+  String get uiMissingRecordsDoNotMeanZeroConsumptionOrGood =>
+      'Az adatok hiánya nem nulla fogyasztást vagy jó közérzetet jelent. A kimutatás összefüggéseket segít megfigyelni, de nem igazol ok-okozatot és nem alkalmas a józanság megállapítására.';
+
+  @override
+  String get uiHiPickASavingsGoalAndLetSStart =>
+      'Szia! Válassz egy megtakarítási célt, és indulhat a közös kaland!';
+
+  @override
+  String get uiYouDidItYouHaveCompletedASavingsGoal =>
+      'Ez igen! Már teljesítettél megtakarítási célt. Ünnepeljük meg!';
+
+  @override
+  String get uiYouHaveUnlockedMilestonesKeepGoingAtYourOwn =>
+      'Már vannak feloldott mérföldköveid. Haladj a saját tempódban!';
+
+  @override
+  String get uiEveryGoalStartsWithASmallAmountActuallySet =>
+      'Minden cél egy apró, valóban félretett összeggel kezdődik.';
+
+  @override
+  String get uiMentiSWorld2 => 'Menti világa';
+
+  @override
+  String get uiMennyimentMentiSWorld => 'MENNYIMENT? • MENTI VILÁGA';
+
+  @override
+  String get uiYourAchievements => 'A saját eredményeid';
+
+  @override
+  String get uiTotalSetAside => 'Félretett összesen';
+
+  @override
+  String get uiUnlockedBadges => 'Feloldott jelvények';
+
+  @override
+  String get uiCompletedGoals => 'Elért célok';
+
+  @override
+  String get uiYourGoalsAndMilestones => 'Céljaid és mérföldköveid';
+
+  @override
+  String get uiNoSavingsGoalsYetYouCanCreateOneOn =>
+      'Még nincs megtakarítási célod. A Céljaim képernyőn létrehozhatsz egyet.';
+
+  @override
+  String get uiBadgesReflectOnlyMoneyYouRecordAsActuallySet =>
+      'A jelvények kizárólag az alkalmazásban ténylegesen félretettként rögzített pénzhez kötődnek. A becsült megtakarítás nem számít bele. A felület nem kapcsolódik bankszámlához.';
+
+  @override
+  String uiDaysValue(String v0) {
+    return '$v0 nap';
+  }
+
+  @override
+  String uiRecordedSpendingValue(String v0) {
+    return 'Rögzített költés: $v0';
+  }
+
+  @override
+  String uiUnknownPricesTotal(String v0) {
+    return '$v0 ital ára ismeretlen – az összeg nem teljes.';
+  }
+
+  @override
+  String uiMonthlyBudgetValue(String v0) {
+    return 'Havi keret: $v0';
+  }
+
+  @override
+  String uiUnrecordedDays(String v0, String v1) {
+    return 'Naplózott ital nélküli napok: $v0 / $v1';
+  }
+
+  @override
+  String uiMonthlyGoalValue(String v0) {
+    return 'Havi cél: $v0';
+  }
+
+  @override
+  String uiDayDrinks(String v0, String v1) {
+    return '$v0.: $v1 naplózott ital';
+  }
+
+  @override
+  String uiDrinksAndGrams(String v0, String v1) {
+    return '$v0 ital • $v1 g tiszta alkohol';
+  }
+
+  @override
+  String uiNameOccurrences(String v0, String v1) {
+    return '$v0: $v1 alkalom';
+  }
+
+  @override
+  String uiDrinkPriceCounts(String v0, String v1) {
+    return '$v0 naplózott ital • $v1 hiányzó ár';
+  }
+
+  @override
+  String uiPreviousMonthlyValue(String v0) {
+    return 'Korábbi havi átlag: $v0';
+  }
+
+  @override
+  String uiComparisonDays(String v0, String v1) {
+    return 'Összevetés az időarányos korábbi átlaggal ($v0 / $v1 nap).';
+  }
+
+  @override
+  String uiItemsValue(String v0) {
+    return '$v0 db';
+  }
+
+  @override
+  String uiPartialDrinkSpending(String v0) {
+    return '$v0 ital ára hiányzik; a költés csak részösszeg.';
+  }
+
+  @override
+  String uiPairedDays(String v0) {
+    return 'Összekapcsolható napok: $v0';
+  }
+
+  @override
+  String uiPairedWellbeing(
+    String v0,
+    String v1,
+    String v2,
+    String v3,
+    String v4,
+  ) {
+    return '$v0. – előző nap $v1 g; hangulat $v2/5, alvás $v3/5, tünet $v4/4';
+  }
+
+  @override
+  String uiDeleteSavingsGoal(String v0) {
+    return 'A(z) $v0 cél és a hozzá rögzített összeg törlődik a naplóból. Ez nem mozgat valódi pénzt.';
+  }
+
+  @override
+  String uiKnownMonthlySpending(String v0) {
+    return 'Ismert havi italköltés: $v0';
+  }
+
+  @override
+  String uiMissingSavingsPrices(String v0) {
+    return '$v0 ital ára hiányzik – a becslés nem készíthető el.';
+  }
+
+  @override
+  String uiPreviousWholeMonth(String v0) {
+    return 'Korábbi teljes havi átlag: $v0';
+  }
+
+  @override
+  String uiTotalGoalSavings(String v0) {
+    return 'Összesen a célokban: $v0';
+  }
+
+  @override
+  String uiPercentComplete(String v0) {
+    return '$v0% teljesítve';
+  }
+
+  @override
+  String uiKnownSpendingValue(String v0) {
+    return 'Ismert költés: $v0';
+  }
+
+  @override
+  String uiWeekMissingPrices(String v0) {
+    return '$v0 ital ára ismeretlen; ez nem teljes összeg.';
+  }
+
+  @override
+  String uiLoggedDayCount(String v0, String v1) {
+    return 'Naplózott itallal érintett napok: $v0 / $v1';
+  }
+
+  @override
+  String uiFilledDayCount(String v0, String v1) {
+    return 'Kitöltött napok: $v0 / $v1';
+  }
+
+  @override
+  String uiAverageMoodValue(String v0) {
+    return 'Átlagos hangulat: $v0';
+  }
+
+  @override
+  String uiAverageSleepValue(String v0) {
+    return 'Átlagos alvásminőség: $v0';
+  }
+
+  @override
+  String uiSymptomDayCount(String v0) {
+    return 'Másnapossági tünetet jelzett napok: $v0';
+  }
+
+  @override
+  String get milestoneInvalid => 'Állíts be egy érvényes célösszeget!';
+
+  @override
+  String get milestoneComplete => 'Menti: Elérted a kitűzött célod! 🎉';
+
+  @override
+  String get milestoneClose => 'Menti: Már nagyon közel vagy a célodhoz!';
+
+  @override
+  String get milestoneHalf => 'Menti: Félúton jársz, haladj a saját tempódban!';
+
+  @override
+  String get milestoneQuarter => 'Menti: Megvan az első negyed!';
+
+  @override
+  String get milestoneStarted =>
+      'Menti: Minden ténylegesen félretett forint számít.';
+
+  @override
+  String get milestoneFirst =>
+      'Menti: Minden nagy cél egy apró lépéssel kezdődik.';
+
+  @override
+  String get milestoneHint =>
+      'A jelvények a kézzel rögzített félretett összeg alapján nyílnak meg.';
 }

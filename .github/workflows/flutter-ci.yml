@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families, feature/mennyiment-2-2-concept-redesign]
   push:
-    branches: [main, feature/mennyiment-2-2-final-playable]
+    branches: [main]
 
 permissions:
   contents: read
@@ -22,10 +22,12 @@ jobs:
       CI: "true"
       FLUTTER_SUPPRESS_ANALYTICS: "true"
       DART_SUPPRESS_ANALYTICS: "true"
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
           fetch-depth: 2
 
@@ -77,13 +79,13 @@ jobs:
       - name: flutter build web
         id: web
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: flutter build web
+        run: flutter build web --no-web-resources-cdn
 
       - name: Upload Chrome web build
         if: ${{ !cancelled() && steps.web.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.2-web-${{ github.sha }}
+          name: mennyiment-2.2-web-${{ env.SOURCE_SHA }}
           path: build/web/
           if-no-files-found: error
           retention-days: 14
@@ -93,12 +95,32 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: flutter build apk --debug
 
-      - name: Upload installable debug APK
+      - name: Verify debug APK signature and package
+        id: verify_apk
         if: ${{ !cancelled() && steps.apk.outcome == 'success' }}
+        run: |
+          APK_SIGNER="$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)"
+          APK_AAPT="$(find "$ANDROID_HOME/build-tools" -name aapt -type f | sort -V | tail -1)"
+          "$APK_SIGNER" verify --verbose build/app/outputs/flutter-apk/app-debug.apk
+          (
+            cd build/app/outputs/flutter-apk
+            sha256sum app-debug.apk > app-debug.apk.sha256
+          )
+          {
+            printf 'source_commit=%s\n' "$SOURCE_SHA"
+            "$APK_AAPT" dump badging build/app/outputs/flutter-apk/app-debug.apk
+          } > build/app/outputs/flutter-apk/build-info.txt
+          cat build/app/outputs/flutter-apk/build-info.txt
+
+      - name: Upload installable debug APK
+        if: ${{ !cancelled() && steps.apk.outcome == 'success' && steps.verify_apk.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.2-debug-apk-${{ github.sha }}
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          name: mennyiment-2.2-debug-apk-${{ env.SOURCE_SHA }}
+          path: |
+            build/app/outputs/flutter-apk/app-debug.apk
+            build/app/outputs/flutter-apk/app-debug.apk.sha256
+            build/app/outputs/flutter-apk/build-info.txt
           if-no-files-found: error
           retention-days: 14
 
@@ -112,6 +134,7 @@ jobs:
           BUDAPEST: ${{ steps.budapest.outcome }}
           WEB: ${{ steps.web.outcome }}
           APK: ${{ steps.apk.outcome }}
+          APK_SIGNATURE: ${{ steps.verify_apk.outcome }}
         run: |
           {
             echo "## MennyiMent? Flutter CI"
@@ -126,6 +149,7 @@ jobs:
             echo "| Europe/Budapest DST regressziók | $BUDAPEST |"
             echo "| flutter build web | $WEB |"
             echo "| flutter build apk --debug | $APK |"
+            echo "| Android APK signature + package | $APK_SIGNATURE |"
             echo
             echo "Hibánál nyisd meg a piros lépés naplóját. A skipped lépés nem sikeres ellenőrzés."
           } >> "$GITHUB_STEP_SUMMARY"

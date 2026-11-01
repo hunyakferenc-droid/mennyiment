@@ -1,3 +1,4 @@
+import 'app_language.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dashboard_v2.dart';
@@ -36,8 +37,7 @@ class _FinanceCenterPageState extends State<FinanceCenterPage> {
     });
   }
 
-  String _ft(num value) => value.round().toString().replaceAllMapped(
-      RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ' ');
+  String _ft(num value) => localeCurrency(value,Localizations.localeOf(context).languageCode);
 
   Future<void> _editValue({required bool isBaseline}) async {
     final current = isBaseline ? baseline : budget;
@@ -45,24 +45,24 @@ class _FinanceCenterPageState extends State<FinanceCenterPage> {
     final value = await showDialog<int>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(isBaseline ? 'Korábbi átlagos havi italköltés' : 'Havi költségkeret'),
+        title: Text(isBaseline ? appStrings(context).uiPreviousAverageMonthlyDrinkSpending : appStrings(context).uiMonthlyBudget),
         content: TextField(
           controller: ctrl,
           autofocus: true,
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(labelText: 'Összeg forintban', hintText: 'Pl. 30000'),
+          decoration: InputDecoration(labelText: appStrings(context).uiAmountInHuf, hintText: appStrings(context).uiEG30000),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Mégse')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(appStrings(context).uiCancel)),
           FilledButton(onPressed: () {
             final n = int.tryParse(ctrl.text.trim().replaceAll(' ', ''));
             if (n == null || n < 0 || n > 100000000) {
               ScaffoldMessenger.of(ctx).showSnackBar(
-                const SnackBar(content: Text('0 és 100 000 000 Ft közötti számot adj meg.')));
+                SnackBar(content: Text(appStrings(context).uiEnterAnAmountBetween0And100000000)));
               return;
             }
             Navigator.pop(ctx, n);
-          }, child: const Text('Mentés')),
+          }, child: Text(appStrings(context).uiSave)),
         ],
       ),
     );
@@ -77,7 +77,7 @@ class _FinanceCenterPageState extends State<FinanceCenterPage> {
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('A mentés nem sikerült.')));
+        SnackBar(content: Text(appStrings(context).uiSavingFailed)));
     }
   }
 
@@ -97,7 +97,7 @@ class _FinanceCenterPageState extends State<FinanceCenterPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 7),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [Expanded(child: Text(label)), Text(detail)]),
+        Wrap(spacing:12,runSpacing:4,alignment:WrapAlignment.spaceBetween,children:[Text(label),Text(detail)]),
         const SizedBox(height: 5),
         LinearProgressIndicator(
           value: value.clamp(0.0, 1.0),
@@ -133,78 +133,78 @@ class _FinanceCenterPageState extends State<FinanceCenterPage> {
     final future = month.isAfter(DateTime(now.year, now.month));
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Pénzügyi központ')),
+      appBar: AppBar(title: Text(appStrings(context).uiFinanceCenter)),
       body: Center(child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 720),
         child: ListView(padding: const EdgeInsets.all(18), children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            IconButton(tooltip: 'Előző hónap', onPressed: () => setState(() =>
+            IconButton(tooltip: appStrings(context).uiPreviousMonth, onPressed: () => setState(() =>
               month = DateTime(month.year, month.month - 1)),
               icon: const Icon(Icons.chevron_left)),
-            Text('${month.year}. ${month.month.toString().padLeft(2, '0')}.',
-              style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
-            IconButton(tooltip: 'Következő hónap',
+            Expanded(child:Text('${month.year}. ${month.month.toString().padLeft(2, '0')}.',textAlign:TextAlign.center,
+              style:const TextStyle(fontSize:21,fontWeight:FontWeight.bold))),
+            IconButton(tooltip: appStrings(context).uiNextMonth,
               onPressed: thisMonth || future ? null : () => setState(() =>
                 month = DateTime(month.year, month.month + 1)),
               icon: const Icon(Icons.chevron_right)),
           ]),
           _card(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('RÖGZÍTETT ITALKÖLTÉS', style: TextStyle(color: _mint, fontWeight: FontWeight.bold)),
+            Text(appStrings(context).uiRecordedDrinkSpending, style: TextStyle(color: _mint, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
-            Text('${_ft(cost)} Ft', style: const TextStyle(fontSize: 34, fontWeight: FontWeight.w800)),
+            Text(_ft(cost), style: const TextStyle(fontSize: 34, fontWeight: FontWeight.w800)),
             const SizedBox(height: 6),
-            Text('${entries.length} naplózott ital • $missing hiányzó ár',
+            Text(appStrings(context).uiDrinkPriceCounts((entries.length).toString(),(missing).toString()),
               style: const TextStyle(color: Colors.white70)),
-            if (!complete) const Padding(padding: EdgeInsets.only(top: 8),
-              child: Text('Az összeg nem teljes, mert egyes italok ára hiányzik.',
+            if (!complete) Padding(padding: EdgeInsets.only(top: 8),
+              child: Text(appStrings(context).uiThisTotalIsIncompleteBecauseSomePricesAreMissing,
                 style: TextStyle(color: Colors.amberAccent))),
           ])),
           _card(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Havi költségkeret', style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
+            Text(appStrings(context).uiMonthlyBudget, style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
-            Text(budget == null ? 'Még nincs beállítva' : '${_ft(budget!)} Ft'),
+            Text(budget == null ? appStrings(context).uiNotSetYet : _ft(budget!)),
             if (budget != null && budget! > 0) _bar(
-              value: cost / budget!, label: 'Felhasználva',
+              value: cost / budget!, label: appStrings(context).uiUsed,
               detail: '${(cost / budget! * 100).round()}%'),
             if (budget != null && budget == 0)
-              const Text('A keret 0 Ft. Az előrehaladás százalékosan nem értelmezhető.'),
+              Text(appStrings(context).uiTheBudgetIsZeroAPercentageCannotBeCalculated),
             TextButton.icon(onPressed: () => _editValue(isBaseline: false),
-              icon: const Icon(Icons.edit), label: const Text('Keret módosítása')),
+              icon: const Icon(Icons.edit), label: Text(appStrings(context).uiEditBudget)),
           ])),
           _card(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Becsült változás a korábbi szokásokhoz képest',
+            Text(appStrings(context).uiEstimatedChangeFromPreviousHabits,
               style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
-            Text(baseline == null ? 'Állítsd be a korábbi havi átlagos italköltésedet.'
-              : 'Korábbi havi átlag: ${_ft(baseline!)} Ft'),
+            Text(baseline == null ? appStrings(context).uiSetYourPreviousAverageMonthlyDrinkSpending
+              : appStrings(context).uiPreviousMonthlyValue((_ft(baseline!)).toString())),
             const SizedBox(height: 6),
             if (canCompare && difference != null) ...[
-              Text('${difference >= 0 ? '+' : '−'}${_ft(difference.abs())} Ft',
+              Text('${difference >= 0 ? '+' : '−'}${_ft(difference.abs())}',
                 style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w800, color: _mint)),
-              Text('Összevetés az időarányos korábbi átlaggal ($elapsed / $monthDays nap).',
+              Text(appStrings(context).uiComparisonDays((elapsed).toString(),(monthDays).toString()),
                 style: const TextStyle(color: Colors.white70)),
             ] else if (baseline != null && !complete)
-              const Text('Az összehasonlításhoz előbb add meg a hiányzó italárakat.'),
+              Text(appStrings(context).uiAddTheMissingDrinkPricesBeforeComparing),
             const SizedBox(height: 9),
-            const Text('Ez becslés, nem igazolt megtakarítás. A korábbi átlagot te adod meg; a hónap időarányosan szerepel.',
+            Text(appStrings(context).uiThisIsAnEstimateNotVerifiedSavingsYouProvide,
               style: TextStyle(color: Colors.white70, fontSize: 12)),
             TextButton.icon(onPressed: () => _editValue(isBaseline: true),
-              icon: const Icon(Icons.tune), label: const Text('Korábbi havi átlag beállítása')),
+              icon: const Icon(Icons.tune), label: Text(appStrings(context).uiSetPreviousMonthlyAverage)),
           ])),
           _card(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Heti költések', style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
+            Text(appStrings(context).uiWeeklySpending, style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             ...List.generate(5, (i) {
               final start = i * 7 + 1;
               final end = (start + 6).clamp(1, monthDays);
               if (start > monthDays) return const SizedBox.shrink();
               return _bar(value: maxWeekly == 0 ? 0 : weekly[i] / maxWeekly,
-                label: '$start–$end. nap', detail: '${_ft(weekly[i])} Ft');
+                label: appStrings(context).uiDaysValue('$start–$end'), detail: _ft(weekly[i]));
             }),
-            if (!complete) const Text('A diagram csak az ismert árakat tartalmazza.',
+            if (!complete) Text(appStrings(context).uiTheChartIncludesKnownPricesOnly,
               style: TextStyle(fontSize: 12, color: Colors.white70)),
           ])),
-          const Text('A pénzügyi adatok önbevalláson alapulnak. A napló nem alkalmas a józanság vagy vezetési képesség megállapítására.',
+          Text(appStrings(context).uiFinancialFiguresAreSelfReportedThisJournalCannotEstablish,
             style: TextStyle(fontSize: 12, color: Colors.white70)),
         ]),
       )),
