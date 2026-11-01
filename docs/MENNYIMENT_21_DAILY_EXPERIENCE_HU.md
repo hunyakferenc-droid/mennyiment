@@ -57,3 +57,5 @@ Helyi Flutter SDK továbbra sem elérhető. Az öt kötelező Flutter-parancs é
 5. Export/restore régi és új mentéssel; napló, saját italok, XP, összes feloldás, cél és unknown mezők összehasonlítása. Ismeretlen ár és valódi 0 Ft külön; hibás adatnál nincs fogyasztásra vonatkozó állítás.
 
 Nem készült backend, regisztráció, közösség, webshop vagy szinkron. A bolti/jogi és képernyőolvasós/készülékes kézi ellenőrzések továbbra is kiadás előtti kapuk. A kész csomag nem jelent automatikus kiadásengedélyt.
+
+Az első CI-futás után két tesztfeltételezés javítva: a nagy betűméretes intro teszt közvetlenül a lépésjelzőre görget (a címre igazítás után a lusta lista korábbi eleme már nem feltétlenül van felépítve); a régi backup visszaállításának elvárása a meglévő restore-szabály szerint egyesített/rendezett feloldásazonosítókat ellenőrzi. Egyetlen feloldás sem veszett el, a restore implementáció nem változott.

@@ -75,7 +75,7 @@ void main() {
           await tester.tap(find.byKey(const ValueKey('launch-intro')));
           await tester.pumpAndSettle();
           for (var step = 0; step < 4; step++) {
-            await scroll(tester, 'intro-title', up: true);
+            await scroll(tester, 'intro-step', up: true);
             final s = appStrings(tester.element(find.byType(MentiIntroPage)));
             expect(find.text(s.experienceIntroStep(step + 1, 4)), findsOneWidget);
             await scroll(tester, 'intro-next');

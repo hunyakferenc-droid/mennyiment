@@ -134,7 +134,9 @@ void main() {
     await settings.load();
     expect(settings.reactions, false);
     expect(settings.introSeen, true);
+    // Existing restore unions/sorts permanent unlock IDs; their exact set survives.
     expect(experienceSnapshot(await SharedPreferences.getInstance()), {...initial,
+      'mennyiment_menti_rewards_v1': (List<String>.from(initial['mennyiment_menti_rewards_v1'] as List)..sort()),
       MentiExperienceSettings.reactionsKey: false, MentiExperienceSettings.introKey: true});
     settings.dispose();
   });

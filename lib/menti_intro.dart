@@ -48,7 +48,7 @@ class _MentiIntroPageState extends State<MentiIntroPage> {
         Center(child: Image.asset('assets/images/menti_outfits/alap.png',
           width: 100, height: 100, excludeFromSemantics: true)),
         const SizedBox(height: 16),
-        Semantics(liveRegion: true, child: Text(s.experienceIntroStep(_step + 1, 4))),
+        Semantics(liveRegion: true, child: Text(s.experienceIntroStep(_step + 1, 4), key: const ValueKey('intro-step'))),
         const SizedBox(height: 12),
         Text(titles[_step], key: const ValueKey('intro-title'),
           style: Theme.of(context).textTheme.headlineSmall),
