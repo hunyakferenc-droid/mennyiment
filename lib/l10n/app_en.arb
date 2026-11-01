@@ -446,7 +446,7 @@
   "hubGoals": "Personal weekly goal",
   "hubChallenges": "Weekly challenges",
   "hubJournal": "Weekly drink journal and spending",
-  "hubMissing": "No saved data for this section yet.",
+  "hubMissing": "Menti has no saved data for this section yet.",
   "hubReadError": "This data could not be read reliably. It has not been replaced with a default value.",
   "hubGlobalError": "The overview could not be loaded. Your original data has not been changed.",
   "hubRefresh": "Refresh overview",
@@ -500,5 +500,55 @@
       }
     }
   },
-  "hubOverview": "Overview"
+  "hubOverview": "Overview",
+  "experienceSettings": "Settings and help",
+  "experienceIntroTitle": "Meet Menti",
+  "experienceIntroInvite": "A new companion for your journal. Meet Menti?",
+  "experienceIntroOpen": "Menti introduction",
+  "experienceIntroSkip": "Skip",
+  "experienceIntroNext": "Next",
+  "experienceIntroBack": "Previous",
+  "experienceIntroDone": "Open my journal",
+  "experienceIntroStep": "Step {step} / {total}",
+  "experienceIntro1Title": "Hi, I’m Menti!",
+  "experienceIntro1Body": "Your orange companion for self-reflection. You choose your pace, character and outfit. No registration is required.",
+  "experienceIntro2Title": "Your journal, your call",
+  "experienceIntro2Body": "Record drinks and known prices, then review your summaries. A missing entry does not prove an alcohol-free day, and an unknown price is not zero.",
+  "experienceIntro3Title": "A minute for yourself",
+  "experienceIntro3Body": "Daily Menti and your personal goals support mindful reflection. XP is linked to existing check-ins and tasks, never to the number of drinks.",
+  "experienceIntro4Title": "Your data and backups",
+  "experienceIntro4Body": "Your journal uses local storage. You start backups and restores yourself. An exported file may contain personal data and is not encrypted; keep it private. This app cannot determine sobriety or fitness to drive.",
+  "experienceReactions": "Menti messages and reactions",
+  "experienceReactionsHint": "Turning this off only changes presentation. Your XP and goals stay unchanged.",
+  "experienceLoadError": "This presentation preference could not be read safely. The original value is preserved.",
+  "experienceSaveError": "The preference could not be confirmed as saved. The previous state remains active; reload and retry.",
+  "experienceReload": "Reload preferences",
+  "experienceMotionTitle": "Reduce Menti motion",
+  "experienceMotionHint": "A still image instead of floating, wobbling and reaction animations.",
+  "experienceMotionSystem": "System reduced motion is active. This switch cannot override it.",
+  "experienceMotionLoadError": "Could not load the motion preference.",
+  "experienceMotionSaveError": "Could not save the motion preference. Please retry.",
+  "experienceToday": "Today with Menti",
+  "experienceTodayStart1": "A minute for yourself? Menti is listening; your journal can wait.",
+  "experienceTodayStart2": "Your own pace is a good pace. A short check-in may be enough for today.",
+  "experienceTodayAnswers": "Today’s answers are saved. That’s in Menti’s notebook.",
+  "experienceTodayChecked": "Today’s check-in is recorded. An imaginary nod from Menti.",
+  "experienceTodayGoal": "Your recorded days complete your weekly check-in goal. Mindful steps count!",
+  "experienceTodayChallenge": "Your records show a completed weekly challenge. Menti tips the hat.",
+  "experienceTodayUnknown": "Some data is unavailable. Menti won’t guess; you can retry in the overview.",
+  "experienceOpenDaily": "Open daily Menti",
+  "experienceOpenHub": "Open overview",
+  "experienceEmptyJournal": "Menti’s notebook has no entries yet. Record something when it is useful for you.",
+  "experienceAddEntry": "Record an entry",
+  "@experienceIntroStep": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "experienceTodayLoading": "Menti is checking today’s records…"
 }

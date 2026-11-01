@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'app_language.dart';
+import 'menti_experience_settings.dart';
 import 'menti_completion.dart';
 import 'menti_reactions.dart';
 import 'package:flutter/material.dart';
@@ -133,6 +134,7 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
   String? error;
   Set<String> journalDays = {};
   MentiMood? _reaction;
+  int _reactionSequence = 0;
   String? _observedWeek;
 
   int _count(String id, Map item, DateTime week, DateTime asOf) =>
@@ -183,11 +185,12 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
       journalDays = days;
       error = null;
       final current = store.week(week)['journal'] as Map?;
-      if (compare && challengeMonday(now) == week && previous != null && current != null &&
+      if (mounted && MentiExperienceScope.reactionsOf(context) && compare && challengeMonday(now) == week && previous != null && current != null &&
           previous['status'] == 'active' && current['status'] == 'active' &&
           crossedRecordedGoal(before: before, after: _count('journal', current, week, now),
             previousTarget: previous['goal'] as int, target: current['goal'] as int)) {
         _reaction = MentiMood.challengeCompleted;
+        _reactionSequence++;
       }
       _observedWeek = challengeDate(week);
     } catch (failure, stack) {
@@ -211,11 +214,12 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
     setState(() {
       saving = false;
       final current = store.week(week)[id] as Map?;
-      if (ok && previous != null && current != null && challengeMonday(now) == week &&
+      if (MentiExperienceScope.reactionsOf(context) && ok && previous != null && current != null && challengeMonday(now) == week &&
           previous['status'] == 'active' && current['status'] == 'active' &&
           crossedRecordedGoal(before: before, after: _count(id, current, week, now),
             previousTarget: previous['goal'] as int, target: current['goal'] as int)) {
         _reaction = MentiMood.challengeCompleted;
+        _reactionSequence++;
       }
     });
     if (!ok) {
@@ -277,7 +281,7 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
         child: ListView(padding: const EdgeInsets.all(16), children: [
           Text(appStrings(context).challengeOptional),
           if (_reaction != null) MentiReactionCard(mood: _reaction!,
-            bubbleKey: const ValueKey('challenge-reaction')),
+            bubbleKey: const ValueKey('challenge-reaction'), eventToken: _reactionSequence),
           Row(children: [IconButton(onPressed: saving ? null : () => setState(() { back++; _reaction = null; }),
             tooltip: appStrings(context).challengePrevious, icon: const Icon(Icons.chevron_left)),
             Expanded(child: Text('${challengeDate(week)} – ${challengeDate(challengeDay(week, 6))}', textAlign: TextAlign.center)),

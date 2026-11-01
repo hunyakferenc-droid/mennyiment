@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_language.dart';
+import 'menti_experience_settings.dart';
 import 'menti_motion.dart';
 import 'menti_xp_store.dart';
 
@@ -90,11 +91,12 @@ class HomeMentiCard extends StatelessWidget {
   const HomeMentiCard({super.key, required this.character, required this.name,
     required this.xp, required this.message, required this.checkedToday,
     required this.busy, required this.onChoose, required this.onProgress,
-    required this.onCheckIn});
+    required this.onCheckIn, this.reactionToken});
   final Widget character;
   final String name;
   final int xp;
   final String message;
+  final Object? reactionToken;
   final bool checkedToday;
   final bool busy;
   final VoidCallback onChoose;
@@ -110,7 +112,8 @@ class HomeMentiCard extends StatelessWidget {
       const SizedBox(height: 6),
       Text(s.homeMentiHint),
       const SizedBox(height: 8),
-      Text(message, style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+      MentiReactionVisibility(token: reactionToken ?? message,
+        child: Text(message, style: TextStyle(color: Theme.of(context).colorScheme.primary))),
       TextButton.icon(onPressed: onChoose,
         icon: const Icon(Icons.palette_outlined), label: Text(s.chooseMenti)),
       TextButton.icon(onPressed: onProgress,

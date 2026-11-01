@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'menti_motion.dart';
+import 'menti_experience_settings.dart';
 
 /// Menti Evolution: drop-in character widget for the existing PNG asset.
 /// No additional packages required.
@@ -47,10 +48,11 @@ class _MentiEvolutionState extends State<MentiEvolution>
   void didChangeDependencies() {
     super.didChangeDependencies();
     final animate = MentiMotionScope.animateOf(context);
+    if (!MentiExperienceScope.reactionsOf(context)) _celebrate.reset();
     if (animate == _animate) return;
     _animate = animate;
     if (animate) {
-      _idle.repeat(reverse: true);
+      _idle.forward(from: 0);
     } else {
       _idle.reset();
       _celebrate.reset();
@@ -60,7 +62,7 @@ class _MentiEvolutionState extends State<MentiEvolution>
   @override
   void didUpdateWidget(covariant MentiEvolution oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (_animate && (oldWidget.reaction != widget.reaction ||
+    if (_animate && MentiExperienceScope.reactionsOf(context) && (oldWidget.reaction != widget.reaction ||
         oldWidget.level != widget.level)) {
       _celebrate.forward(from: 0);
     }
@@ -82,7 +84,7 @@ class _MentiEvolutionState extends State<MentiEvolution>
       button: _animate || widget.onTap != null,
       child: GestureDetector(
         onTap: () {
-          if (_animate) _celebrate.forward(from: 0);
+          if (_animate && MentiExperienceScope.reactionsOf(context)) _celebrate.forward(from: 0);
           widget.onTap?.call();
         },
         child: SizedBox(

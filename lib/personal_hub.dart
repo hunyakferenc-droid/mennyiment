@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'app_language.dart';
+import 'menti_experience_settings.dart';
 import 'home_widgets.dart';
 import 'menti_character_catalog.dart';
 import 'menti_completion.dart';
@@ -28,6 +29,7 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
   bool _failed = false;
   int _request = 0;
   MentiMood? _reaction;
+  int _reactionSequence = 0;
   Timer? _timer;
 
   @override
@@ -62,7 +64,12 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
     try {
       final data = await _reader.load(() => _now);
       if (!mounted || request != _request) return;
-      setState(() { _snapshot = data; _reaction = data.reactionSince(previous); _loading = false; });
+      setState(() {
+        _snapshot = data;
+        _reaction = MentiExperienceScope.reactionsOf(context) ? data.reactionSince(previous) : null;
+        if (_reaction != null) _reactionSequence++;
+        _loading = false;
+      });
     } catch (error, stack) {
       debugPrint('Personal hub load failure: ${error.runtimeType}\n$stack');
       if (mounted && request == _request) {
@@ -114,7 +121,7 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
               Text(s.hubUpdated(DateFormat.yMMMd(locale).add_Hm().format(data.now))),
               const SizedBox(height: 16),
               if (_reaction != null) MentiReactionCard(mood: _reaction!,
-                bubbleKey: const ValueKey('hub-reaction')),
+                bubbleKey: const ValueKey('hub-reaction'), eventToken: _reactionSequence),
               _section('profile', s.hubProfile, data.profile, (profile) {
                 final family = switch (profile.family) {
                   MentiCharacterFamily.boy => s.hubFamilyBoy,

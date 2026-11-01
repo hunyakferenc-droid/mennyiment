@@ -23,6 +23,11 @@ import 'statistics.dart';
 import 'dashboard_v2.dart';
 import 'home_widgets.dart';
 import 'personal_hub.dart';
+import 'menti_experience_settings.dart';
+import 'menti_intro.dart';
+import 'menti_settings_page.dart';
+import 'daily_menti_message.dart';
+import 'menti_ui.dart';
 import 'drink_journal_page.dart';
 import 'menti_evolution.dart';
 import 'app_language.dart';
@@ -46,9 +51,16 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
   late final AppLanguage language;
   late Future<bool> _recovery;
   int _epoch = 0;
+  bool _offerIntro = false;
   Future<bool> _recoverBeforeApp() async {
     try {
       await BackupRestorer().recover();
+      // Recovery must finish before any new presentation preference is read.
+      try {
+        _offerIntro = MentiExperienceSettings.shouldOfferIntro(await SharedPreferences.getInstance());
+      } catch (_) {
+        _offerIntro = false;
+      }
       await language.load();
       return true;
     } catch (_) {
@@ -58,7 +70,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
     }
   }
   void restored() {
-    setState(() { _epoch++; });
+    setState(() { _offerIntro = false; _epoch++; });
     language.load();
   }
   @override
@@ -83,7 +95,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
       }
     return ListenableBuilder(listenable: language, builder: (context, _) => AppLanguageScope(language: language, child: MaterialApp(
       key: ValueKey(_epoch),
-      builder: (context, child) => MentiMotionScope(child: child!),
+      builder: (context, child) => MentiExperienceScope(child: MentiMotionScope(child: child!)),
       locale: language.locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -113,14 +125,15 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
         ),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: HomePage(offerIntro: _offerIntro),
     )));
     });
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, this.offerIntro = false});
+  final bool offerIntro;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -132,6 +145,7 @@ class _HomePageState extends State<HomePage> {
 int mentiMessageIndex = 0;
 int mentiReaction = 0;
 void updateMentiMessage(MentiMood mood) {
+  if (!MentiExperienceScope.reactionsOf(context)) return;
   setState(() {
     if (mood == MentiMood.drinkAdded) {
   mentiReaction = (mentiReaction ~/ 3 + 1) * 3;
@@ -153,6 +167,7 @@ void updateMentiMessage(MentiMood mood) {
   final Set<String> _reflectionDays = {};
   bool _reflectionBusy = false;
   int _totalMentiXp = 0;
+  int _dailyRevision = 0;
   bool _progressLoading = true;
   bool _progressReady = false;
 
@@ -170,6 +185,7 @@ void updateMentiMessage(MentiMood mood) {
       if (!mounted) return;
       setState(() {
         _progressReady = true;
+        _dailyRevision++;
         _totalMentiXp = state.xp;
         _reflectionDays
           ..clear()
@@ -632,7 +648,7 @@ void updateMentiMessage(MentiMood mood) {
   Future<void> _openJournal() async {
     if (isLoading || !_journalReady) return;
     final add = await Navigator.of(context).push<bool>(MaterialPageRoute(
-      builder: (_) => DrinkJournalPage(drinks: drinks),
+      builder: (_) => DrinkJournalPage(drinks: drinks, hasSavedJournal: _journalSnapshot != null),
     ));
     if (mounted && add == true) await _openDrinkPicker();
   }
@@ -651,10 +667,11 @@ void updateMentiMessage(MentiMood mood) {
     updateMentiMessage(MentiMood.goals);
   }
 
-  void _openWellbeingJournal() {
-    Navigator.push(context, MaterialPageRoute(
+  Future<void> _openWellbeingJournal() async {
+    await Navigator.push(context, MaterialPageRoute(
       builder: (_) => const WellbeingJournalPage(),
     ));
+    if (mounted) setState(() => _dailyRevision++);
   }
 
   Future<void> _openLifestyleInsights() async {
@@ -675,15 +692,16 @@ void updateMentiMessage(MentiMood mood) {
     ));
   }
 
-  void _openPersonalGoals() {
+  Future<void> _openPersonalGoals() async {
     if (isLoading || !_journalReady) return;
-    Navigator.push(context, MaterialPageRoute(
+    await Navigator.push(context, MaterialPageRoute(
       builder: (_) => PersonalGoalsPage(
         drinks: drinks.map((d) => PersonalGoalDrink(
           time: d.time, priceFt: d.priceFt,
         )).toList(),
       ),
     ));
+    if (mounted) setState(() => _dailyRevision++);
   }
 
   void _openSavingsGoals() {
@@ -727,11 +745,6 @@ void updateMentiMessage(MentiMood mood) {
         _characterAccessory = prefs.getString(MentiCharacterProfile.accessoryKey) ?? 'Nincs';
         _characterAura = prefs.getString(MentiCharacterProfile.auraKey) ?? 'Narancs';
       });
-      if (prefs.getBool(MentiCharacterProfile.completedKey) != true) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted) _openCharacterSetup();
-        });
-      }
     } catch (error) {
       debugPrint('Menti-karakter betöltési hiba: $error');
     }
@@ -916,6 +929,7 @@ void updateMentiMessage(MentiMood mood) {
   @override
   Widget build(BuildContext context) {
     final strings = appStrings(context);
+    final experience = MentiExperienceScope.of(context);
     final locale = Localizations.localeOf(context).languageCode;
     final now = DateTime.now();
     final today = drinks.where((d) => d.time.year == now.year &&
@@ -943,6 +957,11 @@ void updateMentiMessage(MentiMood mood) {
             tooltip: appStrings(context).backupTitle, onPressed: _openDataBackup,
             icon: const Icon(Icons.backup_outlined)),
           const LanguageMenu(),
+          IconButton(key: const ValueKey('open-menti-settings'),
+            tooltip: strings.experienceSettings,
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+              builder: (_) => const MentiSettingsPage())),
+            icon: const Icon(Icons.settings_outlined)),
           IconButton(tooltip: appStrings(context).profile, onPressed: _openAvatar,
               icon: const Icon(Icons.account_circle_outlined)),
           const SizedBox(width: 8),
@@ -996,6 +1015,14 @@ void updateMentiMessage(MentiMood mood) {
                 icon: const Icon(Icons.dashboard_outlined),
                 label: Text(strings.hubTitle)),
               const SizedBox(height: 12),
+              if (widget.offerIntro && experience != null && experience.ready && !experience.introSeen)
+                MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(strings.experienceIntroInvite),
+                  TextButton(key: const ValueKey('open-intro-invite'),
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                      builder: (_) => const MentiIntroPage())),
+                    child: Text(strings.experienceIntroOpen)),
+                ])),
               if (_progressReady) HomeMentiCard(
                 character: Stack(alignment: Alignment.topRight, children: [
                       Container(
@@ -1023,6 +1050,7 @@ void updateMentiMessage(MentiMood mood) {
                           'Bulikalap' => '🎉', 'Csillag' => '⭐', _ => '',
                         }, style: const TextStyle(fontSize: 25)),
                     ]),
+                reactionToken: mentiReaction,
                 name: _characterName,
                 xp: _reflectionXp,
                 message: MentiReactions.message(_mentiMood,
@@ -1041,7 +1069,10 @@ void updateMentiMessage(MentiMood mood) {
                     child: Text(strings.homeRetryProgress)),
                 ]))),
               const SizedBox(height: 12),
-              if (_journalReady) HomeAdaptiveGrid(children: [
+              DailyMentiMiniCard(
+                key: const ValueKey('daily-menti-mini-card'), refreshToken: _dailyRevision,
+                onOpenDaily: _saveDailyReflection, onOpenHub: _openPersonalHub),
+              if (_journalReady && _journalSnapshot != null) HomeAdaptiveGrid(children: [
                 HomeStatTile(label: strings.homeTodayDrinks, value: '${today.length}',
                   icon: Icons.local_bar_outlined),
                 HomeStatTile(label: strings.homeTodaySpending,
@@ -1053,8 +1084,10 @@ void updateMentiMessage(MentiMood mood) {
               ]) else if (isLoading)
                 Semantics(label: strings.homeLoading,
                   child: const Center(child: CircularProgressIndicator()))
+              else if (_journalReady) MentiStatusMessage(key: const ValueKey('home-journal-missing'), message: strings.hubMissing,
+                onRetry: _canWriteJournal ? _openDrinkPicker : null, retryLabel: strings.experienceAddEntry)
               else Text(strings.homeJournalUnavailable),
-              if (_journalReady && (todayUnknown > 0 || monthlyUnknown > 0))
+              if (_journalReady && _journalSnapshot != null && (todayUnknown > 0 || monthlyUnknown > 0))
                 Padding(padding: const EdgeInsets.only(top: 8),
                   child: Text(strings.homeMissingPrices(todayUnknown, monthlyUnknown))),
               const SizedBox(height: 12),
@@ -1111,8 +1144,12 @@ void updateMentiMessage(MentiMood mood) {
               _panelCard(child: isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : recent.isEmpty
-                      ? Text(_journalReady ? strings.homeEmptyJournal : strings.homeJournalUnavailable,
-                          style: const TextStyle(color: _muted))
+                      ? MentiStatusMessage(
+                          message: !_journalReady ? strings.homeJournalUnavailable
+                              : _journalSnapshot == null ? strings.hubMissing : strings.experienceEmptyJournal,
+                          isError: !_journalReady,
+                          onRetry: _journalReady ? (_canWriteJournal ? _openDrinkPicker : null) : loadDrinks,
+                          retryLabel: _journalReady ? strings.experienceAddEntry : strings.homeJournalRetry)
                       : Column(children: recent.take(4)
                           .map(_recentEntry).toList())),
               const SizedBox(height: 18),

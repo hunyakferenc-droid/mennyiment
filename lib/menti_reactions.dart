@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'menti_motion.dart';
 import 'app_language.dart';
+import 'menti_experience_settings.dart';
 
 enum MentiMood {
   welcome,
@@ -121,13 +122,15 @@ class MentiReactions {
 
 /// Shared presentation for verified events; never creates an event or reward.
 class MentiReactionCard extends StatelessWidget {
-  const MentiReactionCard({super.key, required this.mood, this.index = 0, this.bubbleKey});
+  const MentiReactionCard({super.key, required this.mood, this.index = 0, this.bubbleKey, this.eventToken});
   final MentiMood mood;
   final int index;
   final Key? bubbleKey;
+  final Object? eventToken;
 
   @override
-  Widget build(BuildContext context) => TweenAnimationBuilder<double>(
+  Widget build(BuildContext context) => MentiReactionVisibility(
+    token: eventToken ?? (mood, index), child: TweenAnimationBuilder<double>(
     tween: Tween(begin: 0, end: 1),
     duration: MentiMotionScope.reducedOf(context) ? Duration.zero
         : const Duration(milliseconds: 200),
@@ -142,20 +145,22 @@ class MentiReactionCard extends StatelessWidget {
             index: index, locale: Localizations.localeOf(context).languageCode)),
         ])),
     )),
-  );
+  ));
 }
 
 class MentiSpeechBubble extends StatelessWidget {
   const MentiSpeechBubble({
     super.key,
     required this.message,
+    this.eventToken,
   });
 
   final String message;
+  final Object? eventToken;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
+    return MentiReactionVisibility(token: eventToken ?? message, child: AnimatedSwitcher(
       duration: MentiMotionScope.animateOf(context)
           ? const Duration(milliseconds: 350)
           : Duration.zero,
@@ -190,6 +195,6 @@ class MentiSpeechBubble extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }

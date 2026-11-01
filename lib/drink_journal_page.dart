@@ -3,15 +3,17 @@ import 'package:intl/intl.dart';
 
 import 'app_language.dart';
 import 'drink_journal.dart';
+import 'menti_ui.dart';
 
 /// A read-only snapshot. Opening this route cannot migrate or change records.
 /// Editing remains on the existing home persistence path.
 class DrinkJournalPage extends StatelessWidget {
-  DrinkJournalPage({super.key, required List<Drink> drinks})
+  DrinkJournalPage({super.key, required List<Drink> drinks, this.hasSavedJournal = true})
       : drinks = List.unmodifiable(drinks.toList()
           ..sort((a, b) => b.time.compareTo(a.time)));
 
   final List<Drink> drinks;
+  final bool hasSavedJournal;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +38,9 @@ class DrinkJournalPage extends StatelessWidget {
               return Padding(
               padding: const EdgeInsets.only(bottom: 16),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(drinks.isEmpty ? s.homeEmptyJournal : s.drinkCount(drinks.length),
-                  style: Theme.of(context).textTheme.titleLarge),
+                if (drinks.isEmpty) MentiStatusMessage(message: hasSavedJournal ? s.experienceEmptyJournal : s.hubMissing,
+                  onRetry: () => Navigator.of(context).pop(true), retryLabel: s.experienceAddEntry)
+                else Text(s.drinkCount(drinks.length), style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 8),
                 Text(s.statisticsCaution),
               ]),

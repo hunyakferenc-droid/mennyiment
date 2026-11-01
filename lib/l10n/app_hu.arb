@@ -326,7 +326,7 @@
   "homeTotalXp": "{xp} XP összesen",
   "homeLevelProgress": "Haladás a következő Menti-szintig",
   "homeXpHint": "Az XP önellenőrzésért és tudatos heti kihívásokért jár, nem az elfogyasztott italokért.",
-  "homeTodayDrinks": "Mai ital",
+  "homeTodayDrinks": "Ma rögzített ital",
   "homeTodaySpending": "Mai ismert költés",
   "homeMonthSpending": "Havi ismert költés",
   "homeWeekDays": "Heti naplózott nap",
@@ -446,7 +446,7 @@
   "hubGoals": "Személyes heti cél",
   "hubChallenges": "Külön heti kihívások",
   "hubJournal": "Heti italnapló és költés",
-  "hubMissing": "Ehhez még nincs mentett adat.",
+  "hubMissing": "Menti itt még nem lát mentett adatot.",
   "hubReadError": "Ez az adat nem olvasható megbízhatóan. Nem helyettesítettük alapértékkel.",
   "hubGlobalError": "Az áttekintő nem tölthető be. Az eredeti adatokat nem módosítottuk.",
   "hubRefresh": "Áttekintő frissítése",
@@ -500,5 +500,55 @@
       }
     }
   },
-  "hubOverview": "Áttekintés"
+  "hubOverview": "Áttekintés",
+  "experienceSettings": "Beállítások és súgó",
+  "experienceIntroTitle": "Ismerd meg Mentit",
+  "experienceIntroInvite": "Új társ a naplód mellé. Megismered Mentit?",
+  "experienceIntroOpen": "Menti bemutatkozása",
+  "experienceIntroSkip": "Átugrás",
+  "experienceIntroNext": "Tovább",
+  "experienceIntroBack": "Előző",
+  "experienceIntroDone": "Nézzük a naplómat",
+  "experienceIntroStep": "{step} / {total} lépés",
+  "experienceIntro1Title": "Szia, Menti vagyok!",
+  "experienceIntro1Body": "Narancssárga társad az önmegfigyelésben. Te döntesz a tempóról, a karakterről és a ruháról. Nincs kötelező regisztráció.",
+  "experienceIntro2Title": "A napló a tiéd",
+  "experienceIntro2Body": "Rögzíthetsz italokat és ismert árakat, majd megnézheted az összesítéseket. A hiányzó bejegyzés nem bizonyít alkoholmentes napot, az ismeretlen ár pedig nem nulla.",
+  "experienceIntro3Title": "Egy perc magadra",
+  "experienceIntro3Body": "A napi Menti és a saját céljaid a tudatos átgondolásról szólnak. Az XP a meglévő önellenőrzésekhez és feladatokhoz kapcsolódik, nem az italok mennyiségéhez.",
+  "experienceIntro4Title": "Adataid és mentéseid",
+  "experienceIntro4Body": "A napló helyi tárhelyet használ. A mentést és visszaállítást te indítod. Az exportált fájl személyes adatokat tartalmazhat és nem titkosított; kezeld bizalmasan. Ez az app nem állapítja meg a józanságot vagy a vezetési képességet.",
+  "experienceReactions": "Menti-üzenetek és reakciók",
+  "experienceReactionsHint": "A kikapcsolás csak a megjelenítést érinti. Az XP és a céljaid változatlanok.",
+  "experienceLoadError": "A megjelenítési beállítás nem olvasható biztonságosan. Az eredeti értéket megőriztük.",
+  "experienceSaveError": "A beállítás mentését nem sikerült igazolni. Az előző állapot maradt érvényben; töltsd újra, majd próbáld ismét.",
+  "experienceReload": "Beállítások újratöltése",
+  "experienceMotionTitle": "Menti mozgásának csökkentése",
+  "experienceMotionHint": "Állókép a lebegés, billegés és reakcióanimáció helyett.",
+  "experienceMotionSystem": "A rendszer mozgáscsökkentése aktív. Ezt a kapcsoló nem írja felül.",
+  "experienceMotionLoadError": "A mozgásbeállítás nem tölthető be.",
+  "experienceMotionSaveError": "A mozgásbeállítás nem menthető. Próbáld újra.",
+  "experienceToday": "Ma Mentivel",
+  "experienceTodayStart1": "Egy perc magadra? Menti figyel, a napló megvár.",
+  "experienceTodayStart2": "A saját tempód jó tempó. Egy rövid önellenőrzés is elég lehet mára.",
+  "experienceTodayAnswers": "A mai válaszaid elmentve. Menti füzetében ez már megvan.",
+  "experienceTodayChecked": "A mai önellenőrzés rögzítve. Menti képzeletben bólint.",
+  "experienceTodayGoal": "A rögzített napok szerint a heti önellenőrzési célod teljesült. Szép, tudatos lépések!",
+  "experienceTodayChallenge": "A rögzített adatok szerint van teljesített heti kihívásod. Menti megemeli a sapkáját.",
+  "experienceTodayUnknown": "Most nem minden adat olvasható. Menti nem találgat; az áttekintőben újrapróbálhatod.",
+  "experienceOpenDaily": "Napi Menti megnyitása",
+  "experienceOpenHub": "Áttekintés megnyitása",
+  "experienceEmptyJournal": "Menti füzetében még nincs bejegyzés. Akkor naplózz, amikor neked hasznos.",
+  "experienceAddEntry": "Bejegyzés rögzítése",
+  "@experienceIntroStep": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "experienceTodayLoading": "Menti megnézi a mai rögzítéseket…"
 }
