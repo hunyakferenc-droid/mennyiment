@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'menti_motion.dart';
 import 'app_language.dart';
 import 'menti_experience_settings.dart';
+import 'menti_identity/menti_avatar_renderer.dart';
+import 'menti_identity/menti_identity_controller.dart';
 
 enum MentiMood {
   welcome,
@@ -139,6 +141,11 @@ class MentiReactionCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       child: Padding(padding: const EdgeInsets.all(16),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          if (MentiIdentityScope.of(context)?.ready == true)
+            MentiCurrentAvatar(size: 80, reaction: switch (mood) {
+              MentiMood.drinkAdded || MentiMood.statistics || MentiMood.goals => 'focused',
+              MentiMood.welcome => 'motivating', _ => 'personality',
+            }, legacyChild: const SizedBox.shrink()),
           Text(appStrings(context).reactionTitle, style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
           MentiSpeechBubble(key: bubbleKey, message: MentiReactions.message(mood,

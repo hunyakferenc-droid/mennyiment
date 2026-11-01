@@ -9,6 +9,9 @@ import 'home_widgets.dart';
 import 'menti_character_catalog.dart';
 import 'menti_completion.dart';
 import 'menti_evolution.dart';
+import 'menti_identity/menti_avatar_renderer.dart';
+import 'menti_identity/menti_identity_controller.dart';
+import 'menti_identity/menti_visual_catalog.dart';
 import 'menti_reactions.dart';
 import 'menti_ui.dart';
 import 'personal_hub_data.dart';
@@ -123,6 +126,7 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
               if (_reaction != null) MentiReactionCard(mood: _reaction!,
                 bubbleKey: const ValueKey('hub-reaction'), eventToken: _reactionSequence),
               _section('profile', s.hubProfile, data.profile, (profile) {
+                final currentIdentity = profile.identity ?? MentiIdentityScope.of(context)?.profile;
                 final family = switch (profile.family) {
                   MentiCharacterFamily.boy => s.hubFamilyBoy,
                   MentiCharacterFamily.girl => s.hubFamilyGirl,
@@ -138,13 +142,16 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
                 };
                 return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Center(child: Semantics(label: '${profile.name} • $family • $outfit',
-                    child: ExcludeSemantics(child: data.xp.value == null
+                    child: ExcludeSemantics(child: currentIdentity != null
+                      ? MentiAvatarRenderer(profile: currentIdentity, size: 130)
+                      : data.xp.value == null
                       ? Image.asset(profile.asset, width: 130, height: 130,
                           errorBuilder: (_, error, stack) => Text(s.hubImageError))
                       : MentiEvolution(assetPath: profile.asset, size: 130,
                           level: data.xp.value!.state.level)))),
-                  Text(profile.name, style: Theme.of(context).textTheme.titleMedium),
-                  Text('$family • $outfit'),
+                  Text(currentIdentity?.name ?? profile.name, style: Theme.of(context).textTheme.titleMedium),
+                  if (currentIdentity == null) Text('$family • $outfit')
+                  else Text('${MentiVisualCatalog.resolve('family', currentIdentity.visual.value('family')).label(s)} • ${MentiVisualCatalog.resolve('outfit', currentIdentity.visual.value('outfit')).label(s)}'),
                 ]);
               }),
               _section('xp', s.hubXp, data.xp, (xp) => Column(

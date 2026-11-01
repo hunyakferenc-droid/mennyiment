@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'menti_identity/menti_identity_controller.dart';
+import 'menti_identity/menti_avatar_renderer.dart';
 
 /// Shared spacing for progressively modernized screens.
 class MentiPanel extends StatelessWidget {
@@ -47,6 +49,8 @@ class MentiStatusMessage extends StatelessWidget {
   Widget build(BuildContext context) => Semantics(
     liveRegion: isError,
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      if (!isError && MentiIdentityScope.of(context)?.ready == true)
+        const MentiCurrentAvatar(size: 72, legacyChild: SizedBox.shrink()),
       ExcludeSemantics(child: Icon(isError ? Icons.error_outline : Icons.info_outline)),
       const SizedBox(height: 8),
       Text(message),

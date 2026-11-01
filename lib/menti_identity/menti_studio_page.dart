@@ -31,7 +31,8 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
     _controller = widget.controller ?? MentiIdentityScope.of(context);
     _owned = _controller == null;
     _controller ??= MentiIdentityController();
-    if (!_controller!.ready) _controller!.load();
+    if (!_controller!.ready) { _controller!.load(); }
+    else { _controller!.refreshXp(); }
   }
   @override
   void dispose() { if (_owned) _controller?.dispose(); super.dispose(); }

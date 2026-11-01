@@ -50,6 +50,17 @@ class MentiIdentityController extends ChangeNotifier {
     }
   }
 
+  Future<void> refreshXp() async {
+    try {
+      final prefs = await store.open();
+      await prefs.reload();
+      final raw = prefs.get(MentiXpStore.currentKey);
+      level = raw == null ? 1 : MentiXpStore.readCurrent(raw).level;
+      xpUnavailable = false;
+    } catch (_) { level = 1; xpUnavailable = true; }
+    _notify();
+  }
+
   Set<String> get effectiveUnlocks => {
     ...draft.unlocks.unlocked,
     for (final o in MentiVisualCatalog.options) if (level >= o.level) o.rewardId,

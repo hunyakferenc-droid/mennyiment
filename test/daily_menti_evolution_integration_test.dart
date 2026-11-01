@@ -1,3 +1,4 @@
+import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -211,11 +212,12 @@ void main() {
         await tester.pumpWidget(const MennyiMentApp());
         await tester.pumpAndSettle();
       }
-      String character() => tester.widget<MentiEvolution>(
-        find.byType(MentiEvolution).first).assetPath;
+      String character() => tester.widget<MentiAvatarRenderer>(find.descendant(
+        of: find.byType(MentiEvolution).first, matching: find.byType(MentiAvatarRenderer)).first)
+          .profile.visual.value('outfit');
       await openApp();
       final s = appStrings(tester.element(find.byType(HomePage)));
-      expect(character(), MentiCharacterFamily.girl.assetFor(MentiOutfit.basic));
+      expect(character(), 'basic');
       await tester.tap(find.text(s.dailyOpen));
       await tester.pumpAndSettle();
       expect(find.byType(DailyMentiPage), findsOneWidget);
@@ -235,16 +237,15 @@ void main() {
         FilledButton, s.evolutionChecked)).onPressed, isNull);
       await tester.tap(find.text(s.evolutionWardrobe));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('Üzleti szett'));
-      await tester.tap(find.text('Üzleti szett'));
-      await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text('Saját Menti mentése'));
-      await tester.tap(find.text('Saját Menti mentése'));
-      await tester.pumpAndSettle();
-      expect(character(), MentiCharacterFamily.girl.assetFor(MentiOutfit.business));
-      await tester.tap(find.byType(BackButton));
-      await tester.pumpAndSettle();
-      expect(character(), MentiCharacterFamily.girl.assetFor(MentiOutfit.business));
+      final outfitTab = find.byKey(const ValueKey('studio-tab-2'));
+      await tester.ensureVisible(outfitTab); await tester.tap(outfitTab); await tester.pumpAndSettle();
+      final business = find.byKey(const ValueKey('option-outfit-business'));
+      await tester.ensureVisible(business); await tester.tap(business); await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('studio-save'))); await tester.pumpAndSettle();
+      await tester.tap(find.byType(BackButton)); await tester.pumpAndSettle();
+      expect(character(), 'business');
+      await tester.tap(find.byType(BackButton)); await tester.pumpAndSettle();
+      expect(character(), 'business');
       // Reopening the morning form and editing answers cannot award a second daily XP.
       await tester.tap(find.text(s.dailyOpenSaved));
       await tester.pumpAndSettle();
@@ -258,7 +259,7 @@ void main() {
       await tester.pump();
       await coldReload();
       await openApp();
-      expect(character(), MentiCharacterFamily.girl.assetFor(MentiOutfit.business));
+      expect(character(), 'business');
       expect(tester.widget<MentiEvolution>(find.byType(MentiEvolution)).level, 2);
       expect((await MentiXpStore.load()).xp, 50);
       expect(tester.hasRunningAnimations, isFalse);

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'app_language.dart';
 import 'daily_menti_store.dart';
 import 'menti_xp_store.dart';
+import 'menti_identity/menti_avatar_renderer.dart';
+import 'menti_identity/menti_identity_controller.dart';
 
 /// A static character uses the selected profile asset and adds no motion.
 class DailyMentiPage extends StatefulWidget {
@@ -132,6 +134,7 @@ class _DailyMentiPageState extends State<DailyMentiPage>
   @override
   Widget build(BuildContext context) {
     final s = appStrings(context);
+    final characterName = MentiIdentityScope.of(context)?.profile.name ?? widget.characterName;
     final greeting = _now.hour < 12 ? s.dailyMorning :
         _now.hour < 18 ? s.dailyAfternoon : s.dailyEveningGreeting;
     final feedback = _mood == null ? s.dailyWelcome : _mood! <= 2
@@ -145,9 +148,11 @@ class _DailyMentiPageState extends State<DailyMentiPage>
           Text(s.dailyLoadError),
           TextButton(onPressed: _load, child: Text(s.dailyRetry)),
         ]) : ListView(padding: const EdgeInsets.all(16), children: [
-          Image.asset(widget.assetPath, height: 120, fit: BoxFit.contain,
-            semanticLabel: widget.characterName),
-          Text(s.dailyGreeting(greeting, widget.characterName),
+          Center(child: MentiCurrentAvatar(size: 120, reaction: _mood == null ? null :
+              _mood! <= 2 ? 'calming' : _mood! == 3 ? 'focused' : 'personality',
+            legacyChild: Image.asset(widget.assetPath, height: 120, fit: BoxFit.contain,
+              semanticLabel: characterName))),
+          Text(s.dailyGreeting(greeting, characterName),
             style: Theme.of(context).textTheme.headlineSmall),
           Text(MaterialLocalizations.of(context).formatMediumDate(_date)),
           Text(s.dailyOptional),

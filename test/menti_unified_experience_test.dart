@@ -6,6 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/main.dart';
 import 'package:mennyiment/avatar.dart';
 import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
+import 'package:mennyiment/menti_identity/menti_identity.dart';
+import 'package:mennyiment/menti_identity/menti_identity_store.dart';
 import 'package:mennyiment/menti_character_catalog.dart';
 import 'package:mennyiment/menti_character_setup.dart';
 import 'package:mennyiment/menti_evolution.dart';
@@ -47,32 +49,32 @@ void main() {
           final prefs = await SharedPreferences.getInstance();
           await tester.pumpWidget(const MennyiMentApp());
           await frames(tester);
-          expect(asset(tester), family.assetFor(outfit));
+          MentiAvatarRenderer homeAvatar() => tester.widget<MentiAvatarRenderer>(find.descendant(
+            of: find.byType(MentiEvolution), matching: find.byType(MentiAvatarRenderer)).first);
+          expect(homeAvatar().profile.visual.value('family'), family.id);
+          expect(homeAvatar().profile.visual.value('outfit'), outfit.id);
           await tester.tap(find.text('Saját Menti kiválasztása'));
-          await frames(tester);
-          expect(
-            find.text('${family.label}  •  ${outfit.label}'),
-            findsOneWidget,
-          );
-          expect(find.text('6. szint  •  250 XP'), findsOneWidget);
-          final nextFamily =
-              MentiCharacterFamily.values[(family.index + 1) % 3];
+          await tester.pumpAndSettle();
+          final studio = tester.widget<MentiAvatarRenderer>(find.byKey(const ValueKey('studio-live-preview')));
+          expect(studio.profile.visual.value('family'), family.id);
+          expect(studio.profile.visual.value('outfit'), outfit.id);
+          final nextFamily = MentiCharacterFamily.values[(family.index + 1) % 3];
           final nextOutfit = MentiOutfit.values[(outfit.index + 1) % 6];
-          await tester.tap(find.text(nextFamily.label));
-          await tester.pump();
-          await tester.ensureVisible(find.text(nextOutfit.label));
-          await tester.tap(find.text(nextOutfit.label));
-          await tester.pump();
-          expect(
-            find.text('${nextFamily.label}  •  ${nextOutfit.label}'),
-            findsOneWidget,
-          );
-          await tester.ensureVisible(find.text('Saját Menti mentése'));
-          await tester.tap(find.text('Saját Menti mentése'));
-          await frames(tester);
-          expect(asset(tester), nextFamily.assetFor(nextOutfit));
-          expect(prefs.get(familyKey), nextFamily.id);
-          expect(prefs.get(outfitKey), nextOutfit.id);
+          final familyOption = find.byKey(ValueKey('option-family-${nextFamily.id}'));
+          await tester.ensureVisible(familyOption); await tester.tap(familyOption); await tester.pumpAndSettle();
+          final tab = find.byKey(const ValueKey('studio-tab-2'));
+          await tester.ensureVisible(tab); await tester.tap(tab); await tester.pumpAndSettle();
+          final outfitOption = find.byKey(ValueKey('option-outfit-${nextOutfit.id}'));
+          await tester.ensureVisible(outfitOption); await tester.tap(outfitOption); await tester.pumpAndSettle();
+          await tester.tap(find.byKey(const ValueKey('studio-save'))); await tester.pumpAndSettle();
+          await tester.tap(find.byType(BackButton)); await tester.pumpAndSettle();
+          expect(homeAvatar().profile.visual.value('family'), nextFamily.id);
+          expect(homeAvatar().profile.visual.value('outfit'), nextOutfit.id);
+          final saved = MentiIdentityDocument.decode(prefs.get(MentiIdentityStore.key));
+          expect(saved.profile.visual.value('family'), nextFamily.id);
+          expect(saved.profile.visual.value('outfit'), nextOutfit.id);
+          expect(prefs.get(familyKey), family.label); // Legacy keys are retained, not overwritten.
+          expect(prefs.get(outfitKey), outfit.label);
           await tester.pumpWidget(const SizedBox.shrink());
           await tester.pump();
           // A fresh preference instance and app tree simulate cold reload.
@@ -81,7 +83,8 @@ void main() {
           });
           await tester.pumpWidget(const MennyiMentApp());
           await frames(tester);
-          expect(asset(tester), nextFamily.assetFor(nextOutfit));
+          expect(homeAvatar().profile.visual.value('family'), nextFamily.id);
+          expect(homeAvatar().profile.visual.value('outfit'), nextOutfit.id);
           expect(tester.takeException(), isNull);
           await tester.pumpWidget(const SizedBox.shrink());
           await tester.pump();
