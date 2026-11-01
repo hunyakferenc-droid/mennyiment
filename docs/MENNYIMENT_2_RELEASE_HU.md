@@ -87,3 +87,10 @@ Felnőtt célcsoporthoz igazított kommunikáció; a Menti karakter ne célozzon
 ## Későbbi közösségi funkciók feltételei
 
 Külön specifikáció és jóváhagyás szükséges. Alapértelmezetten privát napló; explicit és visszavonható megosztás, tárgyankénti szerveroldali jogosultságvizsgálat, azonosítás és fióktörlés. Kiskorúak védelme, jelentés/tiltás/moderáció, visszaélés- és spamvédelem, sebességkorlát, adatminimalizálás, incidenskezelés és adattárolási régió vizsgálata. Alkoholmennyiséget rangsoroló toplista és fogyasztásösztönző verseny nem kerülhet be. Nyilvános profil és üzenetküldés most nem készült.
+
+## D/E személyes központ – további kézi kapu
+
+- [ ] A `MENNYIMENT_2_PERSONAL_HUB_HU.md` Android/Chrome tesztterve végrehajtva, különösen 320 px/200%, TalkBack, mozgáscsökkentés, éjféli app-resume és DST.
+- [ ] A központ megnyitása/frissítése előtti-utáni export megegyezik, az ismeretlen ár és a rögzített nulla világosan megkülönböztethető.
+- [ ] A kiválasztott karakter/ruha a ruhatárral egyezik, a kezdeti betöltés és újranyitás nem játszik le célünneplést.
+- [ ] A D/E PR végleges commitján teljes CI sikeres. Ez a kézi és áruházi ellenőrzést nem helyettesíti.
