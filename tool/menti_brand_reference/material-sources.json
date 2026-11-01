@@ -1,0 +1,19 @@
+{
+  "kind": "Versioned 2D material checkpoints, not a 3D model",
+  "reference": "assets/images/menti_open.png",
+  "generator": "image_gen.imagegen",
+  "bodyBrief": "Original Menti species: round orange peel head, squat compact torso, oversized mitten hands, very short legs, purple large sneakers. Blank smooth face with no eyes, mouth, hair or cap; no beer, props or accessories. Front-facing neutral pose on transparent 4:5 canvas. Soft volumetric light and rich surface detail.",
+  "capBrief": "Isolated front-facing purple Menti baseball cap, iconic three-point raised gold crown, woven purple fabric, warm upper-left light, broad curved brim; transparent background, no head or body.",
+  "capConversion": "ImageMagick: convert generated-cap.png -trim +repage -resize 800x400 core/crown-cap.png",
+  "reproduction": "The two committed final PNGs are immutable inputs. Generate SVG/thumbnail/evidence files from them; do not rerun a stochastic image model as a build step.",
+  "files": {
+    "crown-cap.png": {
+      "sha256": "f32e9fc6a97825883a199b6ffa4ca92de60e1c5fbdfc34f007540626034d217f",
+      "bytes": 319633
+    },
+    "menti-body.png": {
+      "sha256": "3e892e1e82d1880dabae264a8c590f07d140740d1de57a5df6c0d80673bf3f1e",
+      "bytes": 1765683
+    }
+  }
+}

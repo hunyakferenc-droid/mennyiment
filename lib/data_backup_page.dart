@@ -5,6 +5,8 @@ import 'app_language.dart';
 import 'data_backup.dart';
 import 'backup_file.dart';
 import 'data_restore.dart';
+import 'menti_identity/menti_avatar_renderer.dart';
+import 'menti_identity/menti_identity_controller.dart';
 
 class DataBackupPage extends StatefulWidget {
   const DataBackupPage({super.key, this.capture, this.save, this.pick, this.restorer, this.onRestored});
@@ -158,6 +160,8 @@ class _DataBackupPageState extends State<DataBackupPage> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          if (MentiIdentityScope.of(context)?.ready == true)
+            const Center(child: MentiCurrentAvatar(size: 88, legacyChild: SizedBox.shrink())),
           Text(strings.backupContents),
           const SizedBox(height: 12),
           Text(strings.backupPrivacy),

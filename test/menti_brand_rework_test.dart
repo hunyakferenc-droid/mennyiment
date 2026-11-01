@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/l10n/generated/app_localizations.dart';
+import 'package:mennyiment/data_backup_page.dart';
 import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
 import 'package:mennyiment/menti_identity/menti_identity.dart';
 import 'package:mennyiment/menti_identity/menti_identity_controller.dart';
@@ -21,6 +22,26 @@ void main() {
     expect(options.map((o) => '${o.field}:${o.id}').toSet().length, 115);
     expect(MentiVisualCatalog.resolve('headwear', 'crown-cap').asset, 'core/crown-cap.png');
     expect(options.map((o) => o.preview).toSet().length, 115);
+  });
+  test('option IDs and required levels match the pre-rework fixture exactly', () {
+    final baseline = jsonDecode(File('test/fixtures/menti_brand_stable_options.json').readAsStringSync());
+    expect([for (final o in MentiVisualCatalog.options) [o.field, o.id, o.level.toString()]], baseline);
+  });
+  test('all seven original brand bitmaps remain byte-identical', () {
+    final reference = jsonDecode(File('tool/menti_brand_reference/history.json').readAsStringSync()) as Map;
+    for (final entry in (reference['references'] as List).cast<Map>()) {
+      final bytes = File(entry['path'] as String).readAsBytesSync();
+      var crc = 0xffffffff;
+      for (final byte in bytes) {
+        crc ^= byte;
+        for (var bit = 0; bit < 8; bit++) {
+          crc = (crc >> 1) ^ ((crc & 1) == 1 ? 0xedb88320 : 0);
+        }
+      }
+      expect((crc ^ 0xffffffff) & 0xffffffff, entry['crc32'], reason: entry['path'] as String);
+      expect(bytes.length, entry['bytes']);
+      expect(entry['gitBlob'], entry['mainGitBlob']);
+    }
   });
   test('committed visual evidence matches the actual renderer layer contracts', () {
     final cases = jsonDecode(File('test/fixtures/menti_brand_render_cases.json').readAsStringSync()) as List;
@@ -60,6 +81,25 @@ void main() {
       expect(source, isNot(contains('base64,')));
       expect(source.length, lessThan(30000));
     }
+  });
+  testWidgets('backup screen keeps the saved identity while an uncommitted draft differs', (tester) async {
+    final c = MentiIdentityController(); addTearDown(c.dispose); await c.load();
+    await tester.pumpWidget(MaterialApp(locale: const Locale('en'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      builder: (context, child) => MentiIdentityScope(controller: c, child: child!),
+      home: const DataBackupPage()));
+    await tester.pumpAndSettle();
+    final before = (await SharedPreferences.getInstance()).getKeys();
+    c.choose(MentiVisualCatalog.resolve('family', 'girl'));
+    await tester.pumpAndSettle();
+    expect(c.draft.profile.visual.value('family'), 'girl');
+    expect(tester.widget<MentiAvatarRenderer>(find.byType(MentiAvatarRenderer)).profile.visual.value('family'), 'boy');
+    final prepare = find.byKey(const ValueKey('backup-prepare'));
+    await tester.ensureVisible(prepare); await tester.tap(prepare); await tester.pumpAndSettle();
+    expect((await SharedPreferences.getInstance()).getKeys(), before);
+    expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox.shrink());
   });
   for (final locale in ['hu', 'en']) {
     for (final width in [320.0, 360.0, 390.0]) {
