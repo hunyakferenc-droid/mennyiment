@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:async';
 import 'app_language.dart';
+import 'menti_completion.dart';
+import 'menti_reactions.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -124,6 +126,12 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
   bool saving = false;
   String? error;
   Set<String> journalDays = {};
+  MentiMood? _reaction;
+  String? _observedWeek;
+
+  int _count(String id, Map item, DateTime week, DateTime asOf) =>
+      recordedGoalDays(id == 'journal' && item['status'] == 'active'
+          ? journalDays : (item['days'] as List).cast<String>(), week, asOf);
   Timer? _timer;
   late String _shownDay;
   DateTime get monday => challengeDay(challengeMonday(now), -7 * back);
@@ -155,7 +163,12 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
   }
   Future<void> load() async {
     if (saving || !mounted) return;
-    setState(() => loading = true);
+    final week = monday;
+    final previous = store.week(week)['journal'] as Map?;
+    final before = previous == null ? 0 : _count('journal', previous, week, now);
+    final compare = !loading && error == null && back == 0 &&
+        _observedWeek == challengeDate(week);
+    setState(() { loading = true; _reaction = null; });
     try {
       await store.load();
       final prefs = await store.open();
@@ -163,7 +176,11 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
       final days = <String>{};
       if (raw != null) {
         for (final entry in jsonDecode(raw) as List) {
-          final date = DateTime.parse((entry as Map)['day'] as String);
+          final dateText = (entry as Map)['day'] as String;
+          final date = DateTime.parse(dateText);
+          if (!dateText.startsWith(mentiDateKey(date))) {
+            throw const FormatException('Invalid wellbeing date');
+          }
           if (!challengeDay(date).isAfter(challengeDay(now))) {
             days.add(challengeDate(date));
           }
@@ -171,7 +188,16 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
       }
       journalDays = days;
       error = null;
-    } catch (_) {
+      final current = store.week(week)['journal'] as Map?;
+      if (compare && challengeMonday(now) == week && previous != null && current != null &&
+          previous['status'] == 'active' && current['status'] == 'active' &&
+          crossedRecordedGoal(before: before, after: _count('journal', current, week, now),
+            previousTarget: previous['goal'] as int, target: current['goal'] as int)) {
+        _reaction = MentiMood.challengeCompleted;
+      }
+      _observedWeek = challengeDate(week);
+    } catch (failure, stack) {
+      debugPrint('Challenge load failure: ${failure.runtimeType}\n$stack');
       error = 'load';
     }
     if (mounted) setState(() => loading = false);
@@ -183,10 +209,21 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
     }
     if (saving || loading || error != null || back != 0) return;
     final week = monday;
-    setState(() => saving = true);
+    final previous = store.week(week)[id] as Map?;
+    final before = previous == null ? 0 : _count(id, previous, week, now);
+    setState(() { saving = true; _reaction = null; });
     final ok = await store.put(week, id, item);
     if (!mounted) return;
-    setState(() => saving = false);
+    setState(() {
+      saving = false;
+      final current = store.week(week)[id] as Map?;
+      if (ok && previous != null && current != null && challengeMonday(now) == week &&
+          previous['status'] == 'active' && current['status'] == 'active' &&
+          crossedRecordedGoal(before: before, after: _count(id, current, week, now),
+            previousTarget: previous['goal'] as int, target: current['goal'] as int)) {
+        _reaction = MentiMood.challengeCompleted;
+      }
+    });
     if (!ok) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(appStrings(context).challengeSaveError)));
     }
@@ -231,8 +268,7 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
     final dates = {for (var i = 0; i < 7; i++)
       if (!challengeDay(week, i).isAfter(challengeDay(now)))
         challengeDate(challengeDay(week, i))};
-    int count(String id, Map item) => (id == 'journal' && item['status'] == 'active' ? journalDays :
-        (item['days'] as List).whereType<String>().toSet()).intersection(dates).length;
+    int count(String id, Map item) => _count(id, item, week, now);
     final titles = {
       'reflection': appStrings(context).challengeReflection,
       'journal': appStrings(context).challengeJournal,
@@ -246,10 +282,15 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
       Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 700),
         child: ListView(padding: const EdgeInsets.all(16), children: [
           Text(appStrings(context).challengeOptional),
-          Row(children: [IconButton(onPressed: saving ? null : () => setState(() => back++),
+          if (_reaction != null) Padding(padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Semantics(liveRegion: true, child: MentiSpeechBubble(
+              key: const ValueKey('challenge-reaction'),
+              message: MentiReactions.message(_reaction!,
+                locale: Localizations.localeOf(context).languageCode)))),
+          Row(children: [IconButton(onPressed: saving ? null : () => setState(() { back++; _reaction = null; }),
             tooltip: appStrings(context).challengePrevious, icon: const Icon(Icons.chevron_left)),
             Expanded(child: Text('${challengeDate(week)} – ${challengeDate(challengeDay(week, 6))}', textAlign: TextAlign.center)),
-            IconButton(onPressed: back == 0 || saving ? null : () => setState(() => back--),
+            IconButton(onPressed: back == 0 || saving ? null : () => setState(() { back--; _reaction = null; }),
               tooltip: appStrings(context).challengeNext, icon: const Icon(Icons.chevron_right))]),
           if (error != null) ...[
             Text(appStrings(context).challengeLoadError),

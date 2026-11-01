@@ -367,5 +367,75 @@
     }
   },
   "homeJournalSaveError": "The journal could not be saved. Your change was not applied. Retry or reload the journal.",
-  "homeJournalLoadError": "The journal could not be loaded safely. Your original data is preserved and editing is disabled."
+  "homeJournalLoadError": "The journal could not be loaded safely. Your original data is preserved and editing is disabled.",
+  "goalPageTitle": "My personal goals",
+  "goalOwnPace": "At your own pace",
+  "goalIntro": "You choose what to track. Mindful reflection matters, never the number of drinks.",
+  "goalBudgetTitle": "Weekly drink budget",
+  "goalRecordedSpending": "Recorded spending: {amount}",
+  "goalNoBudget": "No budget set yet.",
+  "goalBudgetValue": "Your weekly budget: {amount}",
+  "goalMissingPrices": "{count} drink prices are missing. Spending is only a partial total, so meeting the budget cannot be confirmed.",
+  "goalOverBudget": "Recorded spending is above your budget.",
+  "goalWithinBudget": "Recorded spending is within your budget. This does not confirm total weekly spending.",
+  "goalEditBudget": "Edit budget",
+  "goalReflectionTitle": "Mindful weekly check-ins",
+  "goalProgress": "{count} / {target} check-ins",
+  "goalCheckDone": "Today’s check-in is done",
+  "goalCheckAction": "I reflected on my day today",
+  "goalCurrentWeekOnly": "Check-ins can only be recorded for the current week",
+  "goalEditTarget": "Edit weekly target",
+  "goalMentiThought": "A thought from Menti",
+  "goalThoughtComplete": "Your recorded check-ins show that you reached your weekly goal.",
+  "goalThoughtStart": "No perfect day needed. A short reflection is a good start.",
+  "goalThoughtProgress": "You have taken time to reflect {count} times. Keep your own pace!",
+  "goalCaution": "A missing journal entry does not prove an alcohol-free day. Spending is self-reported. This check-in does not award extra XP.",
+  "goalBudgetDialog": "Weekly drink budget (HUF)",
+  "goalTargetDialog": "Weekly check-in target",
+  "goalBudgetHint": "For example 10000",
+  "goalTargetHint": "1–7 days",
+  "goalBudgetHelp": "A zero budget is allowed.",
+  "goalTargetHelp": "At most one check-in per day.",
+  "goalInvalidValue": "Invalid goal value.",
+  "goalLoadError": "Your goals could not be loaded safely. Original data is preserved and editing is disabled.",
+  "goalSaveError": "Your goals could not be saved. The change is not shown as completed. Reload the data and retry.",
+  "goalReload": "Reload goals",
+  "@goalRecordedSpending": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@goalBudgetValue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@goalMissingPrices": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@goalProgress": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "@goalThoughtProgress": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

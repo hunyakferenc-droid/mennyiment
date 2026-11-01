@@ -11,6 +11,8 @@ enum MentiMood {
   weeklyCompleted,
   levelUp,
   alcoholFreeEntry,
+  challengeCompleted,
+  personalGoalCompleted,
 }
 
 class MentiReactions {
@@ -48,6 +50,14 @@ class MentiReactions {
     MentiMood.levelUp: [
       'Új Menti-szint! A sapka marad, a tapasztalat nő. 💜',
       'Szintet léptél a tudatos követéssel! 🍊',
+    ],
+    MentiMood.challengeCompleted: [
+      'Heti kihívás teljesítve. Menti képzeletben pacsizik! ✋',
+      'Megvan a vállalt napok száma. A sapkám megemelem! 💜',
+    ],
+    MentiMood.personalGoalCompleted: [
+      'Elérted a heti önellenőrzési célodat. Menti bólogat! 🍊',
+      'Időt szántál magadra: a heti cél teljesült. 💜',
     ],
     MentiMood.alcoholFreeEntry: [
       'Alkoholmentes ital feljegyezve. Menti bólint! 🍊',
@@ -87,6 +97,14 @@ class MentiReactions {
     MentiMood.levelUp: [
       'New Menti level! Same hat, more experience. 💜',
       'You levelled up through mindful tracking! 🍊',
+    ],
+    MentiMood.challengeCompleted: [
+      'Weekly challenge complete. Imaginary Menti high five! ✋',
+      'You reached your chosen number of days. Hats off! 💜',
+    ],
+    MentiMood.personalGoalCompleted: [
+      'Weekly check-in goal reached. Menti nods! 🍊',
+      'You made time for yourself: weekly goal complete. 💜',
     ],
     MentiMood.alcoholFreeEntry: [
       'Alcohol-free drink recorded. Menti nods! 🍊',

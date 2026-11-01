@@ -367,5 +367,75 @@
     }
   },
   "homeJournalSaveError": "A napló mentése nem sikerült. A módosítást nem alkalmaztuk. Próbáld újra vagy töltsd be újra a naplót.",
-  "homeJournalLoadError": "A napló nem tölthető be biztonságosan. Az eredeti adatokat megőriztük; a módosításokat letiltottuk."
+  "homeJournalLoadError": "A napló nem tölthető be biztonságosan. Az eredeti adatokat megőriztük; a módosításokat letiltottuk.",
+  "goalPageTitle": "Személyes céljaim",
+  "goalOwnPace": "A saját tempódban",
+  "goalIntro": "Itt te döntöd el, mit szeretnél követni. A tudatos átgondolás számít, nem az elfogyasztott italok száma.",
+  "goalBudgetTitle": "Heti ital-költségkeret",
+  "goalRecordedSpending": "Rögzített költés: {amount}",
+  "goalNoBudget": "Még nincs keret beállítva.",
+  "goalBudgetValue": "Saját heti keret: {amount}",
+  "goalMissingPrices": "{count} ital ára hiányzik. A költés csak részösszeg, így a keret teljesítése nem igazolható.",
+  "goalOverBudget": "A rögzített költés meghaladja a keretet.",
+  "goalWithinBudget": "A rögzített költés a kereten belül van. Ez nem igazolja a teljes heti költést.",
+  "goalEditBudget": "Keret szerkesztése",
+  "goalReflectionTitle": "Heti tudatos önellenőrzés",
+  "goalProgress": "{count} / {target} alkalom",
+  "goalCheckDone": "Mai önellenőrzés kész",
+  "goalCheckAction": "Ma átgondoltam a napomat",
+  "goalCurrentWeekOnly": "Csak az aktuális héten rögzíthető",
+  "goalEditTarget": "Heti cél módosítása",
+  "goalMentiThought": "Menti gondolata",
+  "goalThoughtComplete": "A rögzített önellenőrzéseid alapján teljesítetted a heti célodat.",
+  "goalThoughtStart": "Nem kell tökéletes nap. Egy rövid átgondolás is jó kezdet.",
+  "goalThoughtProgress": "Már {count} alkalommal megálltál átgondolni a napodat. Haladj a saját tempódban!",
+  "goalCaution": "A hiányzó naplóbejegyzés nem bizonyít alkoholmentes napot. A költések önbevalláson alapulnak. Ez az önellenőrzés nem ad külön XP-t.",
+  "goalBudgetDialog": "Heti ital-költségkeret (Ft)",
+  "goalTargetDialog": "Heti önellenőrzések célja",
+  "goalBudgetHint": "Például 10000",
+  "goalTargetHint": "1–7 nap",
+  "goalBudgetHelp": "A nullás keret is megengedett.",
+  "goalTargetHelp": "Naponta legfeljebb egy önellenőrzés.",
+  "goalInvalidValue": "Érvénytelen célérték.",
+  "goalLoadError": "A célok nem tölthetők be biztonságosan. Az eredeti adatok megmaradtak, a módosítások letiltva.",
+  "goalSaveError": "A célok mentése nem sikerült. A felület nem jelöli teljesítettnek a módosítást. Töltsd újra az adatokat, majd próbáld újra.",
+  "goalReload": "Célok újratöltése",
+  "@goalRecordedSpending": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@goalBudgetValue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "@goalMissingPrices": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@goalProgress": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "@goalThoughtProgress": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
