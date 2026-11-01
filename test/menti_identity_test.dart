@@ -200,4 +200,22 @@ void main() {
     expect(prefs.containsKey(MentiIdentityStore.key), isFalse);
   });
 
+  test('partial preset applies its effective defaults without reviving previous visual values', () async {
+    final old = MentiIdentityDocument(profile: MentiIdentityProfile(name: 'Previous',
+      visual: MentiVisualProfile({'family': 'girl', 'outfit': 'legendary', 'future': 7})));
+    SharedPreferences.setMockInitialValues({MentiIdentityStore.key: old.encode()});
+    final store = MentiIdentityStore(); await store.load();
+    final partialPreset = MentiIdentityProfile.fromJson(<String, dynamic>{});
+    expect(await store.save(store.document.copyWith(profile: partialPreset)), isTrue);
+    expect(store.document.profile.name, 'Menti');
+    expect(store.document.profile.visual.value('family'), 'boy');
+    expect(store.document.profile.visual.value('outfit'), 'basic');
+    expect(store.document.profile.visual.toJson()['future'], 7);
+  });
+  test('missing hair defaults to the selected family without writing a value', () {
+    final p = MentiVisualProfile({'family': 'girl'});
+    expect(p.value('hair'), 'girl-crop');
+    expect(p.toJson().containsKey('hair'), isFalse);
+  });
+
 }

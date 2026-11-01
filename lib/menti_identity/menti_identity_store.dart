@@ -102,8 +102,11 @@ class MentiIdentityStore {
         // Merge top-level extension fields from the loaded document as well.
         final mergedProfile = <String, dynamic>{
           ...document.profile.toJson(), ...next.profile.toJson(),
-          'visual': {...document.profile.visual.toJson(), ...next.profile.visual.toJson()},
-          'reaction': {...document.profile.reaction.toJson(), ...next.profile.reaction.toJson()},
+          'name': next.profile.name,
+          'visual': {...document.profile.visual.toJson(), ...next.profile.visual.toJson(),
+            for (final field in MentiVisualProfile.defaults.keys) field: next.profile.visual.value(field)},
+          'reaction': {...document.profile.reaction.toJson(), ...next.profile.reaction.toJson(),
+            'style': next.profile.reaction.style},
         };
         final candidate = MentiIdentityDocument(
           profile: MentiIdentityProfile.fromJson(mergedProfile), presets: next.presets, unlocks: preservedUnlocks,

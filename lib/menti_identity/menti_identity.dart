@@ -16,7 +16,15 @@ class MentiVisualProfile {
     'neck': 'none', 'held': 'none', 'detail': 'none', 'back': 'none',
     'aura': 'sunrise', 'accent': 'gold', 'background': 'amber',
   };
-  String value(String field) => _json[field] as String? ?? defaults[field]!;
+  String value(String field) {
+    final stored = _json[field] as String?;
+    if (stored != null) return stored;
+    if (field == 'hair') {
+      final family = _json['family'];
+      return '${['boy', 'girl', 'neutral'].contains(family) ? family : 'boy'}-crop';
+    }
+    return defaults[field]!;
+  }
   Map<String, dynamic> toJson() => _copy(_json);
   MentiVisualProfile withValues(Map<String, String> values) {
     if (!values.keys.every(defaults.containsKey)) {
