@@ -65,7 +65,7 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         env:
           TZ: Europe/Budapest
-        run: flutter test test/daily_menti_test.dart test/data_backup_test.dart test/data_restore_test.dart test/weekly_challenges_test.dart test/weekly_challenges_integration_test.dart test/daily_menti_evolution_integration_test.dart test/menti_evolution_rewards_test.dart --concurrency=2
+        run: flutter test test/menti_2_foundations_test.dart test/daily_menti_test.dart test/data_backup_test.dart test/data_restore_test.dart test/weekly_challenges_test.dart test/weekly_challenges_integration_test.dart test/daily_menti_evolution_integration_test.dart test/menti_evolution_rewards_test.dart --concurrency=2
 
       - name: flutter build web
         id: web
