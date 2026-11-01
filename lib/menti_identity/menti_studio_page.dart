@@ -143,7 +143,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
       Text(s.avatarPresetHint),
     ]));
   }
-  Widget _editor(AppLocalizations s) => ListView(key: ValueKey('studio-tab-$_tab'), children: [
+  Widget _editor(AppLocalizations s) => ListView(key: ValueKey('studio-editor-$_tab'), children: [
     if (_tab == 0) const Padding(padding: EdgeInsets.all(18), child: MentiMotionPreference()),
     if (_tab == 5) _presets(s) else ...[for (final f in _sections[_tab]) _choices(f, s)],
     const SizedBox(height: 24),
