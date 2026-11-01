@@ -101,7 +101,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
         key: ValueKey('choices-$field'), padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           for (final o in c.choices(field)) Padding(padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: SizedBox(width: 132, child: Semantics(selected: selected == o.id,
+            child: SizedBox(width: 176, child: Semantics(selected: selected == o.id,
               child: Card(clipBehavior: Clip.antiAlias, color: selected == o.id
                 ? Theme.of(context).colorScheme.secondaryContainer : null,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18),
@@ -109,7 +109,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                 child: InkWell(key: ValueKey('option-$field-${o.id}'),
                   onTap: c.writable && c.unlocked(o) ? () => c.choose(o) : null,
                   child: Padding(padding: const EdgeInsets.all(8), child: Column(children: [
-                    MentiPreviewRenderer(option: o, size: 86), const SizedBox(height: 6),
+                    MentiPreviewRenderer(option: o, size: 140), const SizedBox(height: 6),
                     Text(o.label(s), textAlign: TextAlign.center), const SizedBox(height: 4),
                     Text(!c.unlocked(o) ? s.avatarLocked(o.level) : o.level == 1 ? s.avatarDefault
                         : c.newlyAcquired(o) ? s.avatarNew : s.avatarUnlocked,
@@ -154,7 +154,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
     final profile = c.draft.profile;
     return SingleChildScrollView(child: Padding(padding: const EdgeInsets.all(12), child: Column(children: [
       MentiAvatarRenderer(key: const ValueKey('studio-live-preview'), profile: profile,
-        reaction: profile.reaction.style, size: math.min(250, math.min(maxWidth - 24, maxHeight * .56))),
+        reaction: profile.reaction.style, size: math.min(440, math.min(maxWidth - 24, maxHeight / 1.25))),
       TextButton(onPressed: c.writable ? _rename : null, child: Text(profile.name,
         style: Theme.of(context).textTheme.titleLarge)),
       Wrap(alignment: WrapAlignment.center, spacing: 8, runSpacing: 6, children: [
@@ -188,12 +188,12 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                   key: ValueKey('studio-tab-$i'), label: Text(tabs[i]), selected: _tab == i,
                   onSelected: (_) => setState(() => _tab = i)))])),
             Expanded(child: LayoutBuilder(builder: (context, constraints) {
-              final wide = constraints.maxWidth >= 760;
-              if (wide) { return Row(children: [SizedBox(width: math.min(360, constraints.maxWidth * .4),
-                child: _preview(s, math.min(360, constraints.maxWidth * .4), constraints.maxHeight)),
+              final wide = constraints.maxWidth >= 900;
+              if (wide) { return Row(children: [SizedBox(width: math.min(560, constraints.maxWidth * .48),
+                child: _preview(s, math.min(560, constraints.maxWidth * .48), constraints.maxHeight)),
                 Expanded(child: _editor(s))]); }
-              return Column(children: [SizedBox(height: constraints.maxHeight * .43,
-                child: _preview(s, constraints.maxWidth, constraints.maxHeight * .75)),
+              return Column(children: [SizedBox(height: constraints.maxHeight * .53,
+                child: _preview(s, constraints.maxWidth, constraints.maxHeight * .53)),
                 Expanded(child: _editor(s))]);
             })),
           ]))));

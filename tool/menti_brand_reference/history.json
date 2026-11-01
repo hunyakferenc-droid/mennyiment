@@ -1,0 +1,55 @@
+{
+  "beforeV20Commit": "6bc8eb38b9b67c0ef76c7f60254e78573450a384",
+  "mainCommit": "f9103b08c282b2dfc0217ae160f72e5b24eb7e04",
+  "references": [
+    {
+      "path": "assets/images/menti_blink.png",
+      "gitBlob": "8d5674b789005b537491b316fc024fa21d819800",
+      "mainGitBlob": "8d5674b789005b537491b316fc024fa21d819800",
+      "crc32": 3560917293,
+      "bytes": 515074
+    },
+    {
+      "path": "assets/images/menti_characters/fiu.png",
+      "gitBlob": "731db64040f046879081b06c4128cf74dec960fc",
+      "mainGitBlob": "731db64040f046879081b06c4128cf74dec960fc",
+      "crc32": 2414767954,
+      "bytes": 335877
+    },
+    {
+      "path": "assets/images/menti_characters/lany.png",
+      "gitBlob": "62110c8daa89164b5a888f56451c90d0d4e3ed89",
+      "mainGitBlob": "62110c8daa89164b5a888f56451c90d0d4e3ed89",
+      "crc32": 2379376055,
+      "bytes": 379804
+    },
+    {
+      "path": "assets/images/menti_characters/semleges.png",
+      "gitBlob": "0944370fbc201f343c4d94dc07037d947b420b84",
+      "mainGitBlob": "0944370fbc201f343c4d94dc07037d947b420b84",
+      "crc32": 2602796026,
+      "bytes": 342285
+    },
+    {
+      "path": "assets/images/menti_double_blink.png",
+      "gitBlob": "c6c928b1fc1239e4045fb08a4be004430d60cc9f",
+      "mainGitBlob": "c6c928b1fc1239e4045fb08a4be004430d60cc9f",
+      "crc32": 2412039058,
+      "bytes": 510155
+    },
+    {
+      "path": "assets/images/menti_open.png",
+      "gitBlob": "81d3ce15cc12c9cf0bdf13d35c904281d080b457",
+      "mainGitBlob": "81d3ce15cc12c9cf0bdf13d35c904281d080b457",
+      "crc32": 320111873,
+      "bytes": 521524
+    },
+    {
+      "path": "assets/images/menti_wink.png",
+      "gitBlob": "bff836eb3d04213b3853fd92a548682e7a44ec65",
+      "mainGitBlob": "bff836eb3d04213b3853fd92a548682e7a44ec65",
+      "crc32": 659148113,
+      "bytes": 518053
+    }
+  ]
+}

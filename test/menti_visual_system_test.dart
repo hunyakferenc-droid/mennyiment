@@ -35,8 +35,13 @@ void main() {
     for (final o in MentiVisualCatalog.options) {
       for (final path in [o.asset, o.preview]) {
         expect(manifest, contains(MentiVisualCatalog.root + path));
-        final source = await rootBundle.loadString(MentiVisualCatalog.root + path);
-        expect(source, contains('<svg'));
+        if (path.endsWith('.png')) {
+          final bytes = await rootBundle.load(MentiVisualCatalog.root + path);
+          expect(bytes.getUint32(0), 0x89504e47);
+        } else {
+          final source = await rootBundle.loadString(MentiVisualCatalog.root + path);
+          expect(source, contains('<svg'));
+        }
       }
       expect(sources.add(o.preview), isTrue, reason: 'Every option has its own preview');
     }
