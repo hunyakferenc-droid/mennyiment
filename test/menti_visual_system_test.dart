@@ -149,6 +149,7 @@ void main() {
       await tester.scrollUntilVisible(find.byKey(const ValueKey('choices-family')),160,
         scrollable:find.descendant(of:find.byKey(const ValueKey('studio-editor-0')),matching:find.byType(Scrollable)).first);
       await tester.ensureVisible(find.byKey(const ValueKey('option-family-girl')));
+      await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('option-family-girl'))); await tester.pumpAndSettle();
       expect(c.draft.profile.visual.value('family'), 'girl');
       await tester.tap(find.byKey(const ValueKey('studio-save'))); await tester.pumpAndSettle();

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Reproducible original Menti 2.2 vector layers, thumbnails and typed catalog.
-Brand revision E: one immutable raster material core + registered vector layers.
+Family revision: nine independent immutable raster cores + registered vector layers.
 No legacy bitmap is edited; all layers use the same 320 × 400 artboard.
 Run from the repository root. SVGs are Flutter SVG compatible (no filters/fonts).
 """
@@ -33,10 +33,11 @@ def crown(x,y,s=1):
 def star(x,y,s=1,color='#ffe09b'):
     return f'<g transform="translate({x} {y}) scale({s})">'+path('M0 -10 L3 -3 L10 0 L3 3 L0 10 L-3 3 L-10 0 L-3 -3 Z',color,'none')+'</g>'
 # Fixed, generated source retained in Git. Reproduction never calls an image API.
-CORE = ROOT / 'core/menti-body.png'
-# Main and thumbnails reference one shared raster core; SVG previews remain
-# transparent vector foregrounds, avoiding 115 embedded bitmap copies.
-CORE_IMAGE = '<image xlink:href="../../assets/images/menti_2_2/core/menti-body.png" x="0" y="0" width="320" height="400"/>'
+FAMILY_MATERIALS = json.loads(Path('tool/menti_family_fits.json').read_text())
+for material in FAMILY_MATERIALS.values():
+    if not (ROOT/material['asset']).exists():
+        raise SystemExit('Missing immutable family material: '+material['asset'])
+# Thumbnails use the actual context-aware renderer; vector files retain stable paths.
 # All assets share a lighting direction. These gradients use explicit SVG units.
 DEFS += '''<defs>
 <radialGradient id="eyeWhite" cx=".3" cy=".23" r=".85"><stop stop-color="#fffef8"/><stop offset=".55" stop-color="#fff6e2"/><stop offset=".85" stop-color="#e0c5a1"/><stop offset="1" stop-color="#9b603d"/></radialGradient>
@@ -395,7 +396,7 @@ for locale in ['hu','en']:
     for o in OPTIONS:data[f"avatar{key(o['field'])}{key(o['id'])}"]=o[locale]
     p.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
 Path('docs/2.2-menti-asset-catalog-hu.md').write_text('# Menti 2.2 – vektorréteg-katalógus\n\n'
-  '2.2-E: egy verziókezelt, generált raster anyagmag és regisztrált SVG-rétegek, változatlan legacy PNG-k. Közös 320×400 koordinátarendszer; '
+  'Kilenc önálló család/kor raster anyagalap, közös sapka és regisztrált SVG-rétegek; változatlan legacy PNG-k. Közös 320×400 koordinátarendszer; '
   'tömzsi, gömbölyded Menti-arányok; 2D raster + vektor, nem valódi 3D modell. '
   'Narancs test, barna szem, lila koronás sapka és fekete/arany alapruha. '
   'A családok sziluettje, hajai és életkorrajzolata eltér. '

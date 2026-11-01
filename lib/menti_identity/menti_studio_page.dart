@@ -145,7 +145,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
     ]));
   }
   Widget _editor(AppLocalizations s, {Widget? header}) => ListView(key: ValueKey('studio-editor-$_tab'), children: [
-    if (header != null) header,
+    ?header,
     if (_tab == 0) const Padding(padding: EdgeInsets.all(18), child: MentiMotionPreference()),
     if (_tab == 5) _presets(s) else ...[for (final f in _sections[_tab]) _choices(f, s)],
     const SizedBox(height: 24),

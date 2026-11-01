@@ -141,12 +141,12 @@ class MentiPreviewRenderer extends StatelessWidget {
   final double size;
   final MentiIdentityProfile? profile;
   static MentiIdentityProfile previewProfile(MentiIdentityProfile base, MentiVisualOption option) {
-    if (option.field == 'reaction') return base.copyWith(reaction:
-      MentiReactionProfile({...base.reaction.toJson(), 'style': option.id}));
+    if (option.field == 'reaction') { return base.copyWith(reaction:
+      MentiReactionProfile({...base.reaction.toJson(), 'style': option.id})); }
     final values = {option.field: option.id};
     if (option.field == 'family') values['hair'] = '${option.id}-crop';
-    if (option.field == 'style') values['outfit'] =
-      {'classic':'basic','sporty':'sport'}[option.id] ?? option.id;
+    if (option.field == 'style') { values['outfit'] =
+      {'classic':'basic','sporty':'sport'}[option.id] ?? option.id; }
     return base.copyWith(visual: base.visual.withValues(values));
   }
   static Rect cropFor(MentiVisualOption option, {MentiIdentityProfile? profile}) {
