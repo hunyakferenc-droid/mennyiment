@@ -133,12 +133,12 @@ class MentiVisualCatalog {
   static const root = 'assets/images/menti_2_2/';
   static const previewCrops = <String, List<double>>{'family': [15,5,290,380],'age': [42,74,238,158],'style': [28,202,264,104],'face': [58,151,204,78],'eyes': [52,92,216,81],'hair': [5,0,310,209],'headwear': [0,0,320,126],'outfit': [22,198,276,110],'glasses': [47,96,226,84],'neck': [86,196,150,66],'held': [4,217,312,92],'detail': [57,132,210,75],'back': [21,193,280,126],'accent': [28,221,264,92],'background': [0,0,320,400],'aura': [0,0,320,400],'reaction': [0,0,320,400]};
   static const options = <MentiVisualOption>[
-    MentiVisualOption('family', 'boy', 'families/boy.svg', 'previews/family-boy.svg', 1),
-    MentiVisualOption('family', 'girl', 'families/girl.svg', 'previews/family-girl.svg', 1),
-    MentiVisualOption('family', 'neutral', 'families/neutral.svg', 'previews/family-neutral.svg', 1),
-    MentiVisualOption('age', 'young', 'ages/young.svg', 'previews/age-young.svg', 1),
-    MentiVisualOption('age', 'adult', 'ages/adult.svg', 'previews/age-adult.svg', 1),
-    MentiVisualOption('age', 'veteran', 'ages/veteran.svg', 'previews/age-veteran.svg', 1),
+    MentiVisualOption('family', 'boy', 'identities/boy-young.png', 'previews/family-boy.svg', 1),
+    MentiVisualOption('family', 'girl', 'identities/girl-young.png', 'previews/family-girl.svg', 1),
+    MentiVisualOption('family', 'neutral', 'identities/neutral-young.png', 'previews/family-neutral.svg', 1),
+    MentiVisualOption('age', 'young', 'identities/boy-young.png', 'previews/age-young.svg', 1),
+    MentiVisualOption('age', 'adult', 'identities/boy-adult.png', 'previews/age-adult.svg', 1),
+    MentiVisualOption('age', 'veteran', 'identities/boy-veteran.png', 'previews/age-veteran.svg', 1),
     MentiVisualOption('face', 'cheerful', 'faces/cheerful.svg', 'previews/face-cheerful.svg', 1),
     MentiVisualOption('face', 'calm', 'faces/calm.svg', 'previews/face-calm.svg', 1),
     MentiVisualOption('face', 'playful', 'faces/playful.svg', 'previews/face-playful.svg', 1),
