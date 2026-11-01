@@ -49,7 +49,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
       content: TextField(key: const ValueKey('preset-name'), controller: input,
         maxLength: 80, autofocus: true, decoration: InputDecoration(labelText: s.avatarPresetName)),
       actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: Text(s.avatarCancel)),
-        FilledButton(onPressed: () { if (input.text.trim().isNotEmpty) Navigator.pop(ctx, input.text.trim()); }, child: Text(s.avatarSave))]);
+        FilledButton(onPressed: () { if (input.text.trim().isNotEmpty) { Navigator.pop(ctx, input.text.trim()); } }, child: Text(s.avatarSave))]));
     final result = await Navigator.of(context).push(route);
     await route.completed;
     input.dispose();
@@ -186,9 +186,9 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                   onSelected: (_) => setState(() => _tab = i)))])),
             Expanded(child: LayoutBuilder(builder: (context, constraints) {
               final wide = constraints.maxWidth >= 760;
-              if (wide) return Row(children: [SizedBox(width: math.min(360, constraints.maxWidth * .4),
+              if (wide) { return Row(children: [SizedBox(width: math.min(360, constraints.maxWidth * .4),
                 child: _preview(s, math.min(360, constraints.maxWidth * .4), constraints.maxHeight)),
-                Expanded(child: _editor(s))]);
+                Expanded(child: _editor(s))]); }
               return Column(children: [SizedBox(height: constraints.maxHeight * .43,
                 child: _preview(s, constraints.maxWidth, constraints.maxHeight * .75)),
                 Expanded(child: _editor(s))]);
