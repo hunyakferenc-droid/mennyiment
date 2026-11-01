@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'menti_identity.dart';
+import '../menti_character_catalog.dart';
 
 /// Mount only after backup recovery. Loading/migration never writes preferences.
 /// A corrupt or future document remains untouched and blocks all writes.
@@ -86,9 +87,16 @@ class MentiIdentityStore {
           error = 'conflict';
           return false;
         }
+        final savedLegacyRewards = latestLegacy['mennyiment_menti_rewards_v1'];
+        final equippedLegacyOutfit = MentiOutfit.resolve(latestLegacy['mennyiment_outfit_v2']);
+        final legacyUnlocks = <String>{
+          if (savedLegacyRewards is List && savedLegacyRewards.every((v) => v is String))
+            ...savedLegacyRewards.cast<String>(),
+          if (equippedLegacyOutfit != null) 'outfit:${equippedLegacyOutfit.id}',
+        };
         final preservedUnlocks = MentiUnlockState(
           unlocked: {...document.unlocks.unlocked, ...next.unlocks.unlocked,
-            ...MentiIdentityDocument.fromLegacy(latestLegacy).unlocks.unlocked},
+            ...legacyUnlocks},
           seen: {...document.unlocks.seen, ...next.unlocks.seen},
           extras: {...document.unlocks.toJson(), ...next.unlocks.toJson()});
         // Merge top-level extension fields from the loaded document as well.
