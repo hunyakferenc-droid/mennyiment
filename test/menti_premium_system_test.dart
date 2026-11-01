@@ -177,6 +177,7 @@ void main() {
       bool spriteOnly = true;
       Color? tint;
       String headwear = 'none';
+      var rig = MentiReferenceRig.of('boy', 'young');
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -198,6 +199,9 @@ void main() {
                             profile: MentiIdentityProfile(
                               visual: MentiVisualProfile({
                                 'headwear': headwear,
+                                'family': rig.family,
+                                'age': rig.age,
+                                'hair': rig.hairId,
                               }),
                             ),
                           ),
@@ -236,23 +240,34 @@ void main() {
       for (var i = 3; i < plain.length; i += 4) {
         expect(colored[i], closeTo(plain[i], 1), reason: 'alpha byte $i');
       }
-      update(() => spriteOnly = false);
-      final uncovered = await pixels();
-      for (final equipment in ['headphones', 'hood']) {
-        update(() => headwear = equipment);
-        final equipped = await pixels();
-        final eyeRect=MentiReferenceRig.of('boy','young').register(
-          MentiReferenceRig.of('boy','young').eyes);
-        for (final xCenter in [eyeRect.left+eyeRect.width*.25,eyeRect.left+eyeRect.width*.75].map((x)=>(x*200/320).round())) {
-          final cy=(eyeRect.center.dy*200/320).round();
-          for (var y = cy-3; y < cy+3; y++) {
-            for (var x = xCenter - 3; x < xCenter + 3; x++) {
-              final offset = (y * 200 + x) * 4;
-              expect(
-                equipped.sublist(offset, offset + 4),
-                uncovered.sublist(offset, offset + 4),
-                reason: '$equipment must not paint over a pupil at $x,$y',
-              );
+      for (final identity in MentiReferenceRig.all) {
+        update(() {
+          spriteOnly = false;
+          rig = identity;
+          headwear = 'none';
+        });
+        final uncovered = await pixels();
+        for (final equipment in MentiVisualCatalog.forField(
+          'headwear',
+        ).where((o) => o.id != 'none')) {
+          update(() => headwear = equipment.id);
+          final equipped = await pixels();
+          final eyeRect = rig.register(rig.eyes);
+          for (final xCenter in [
+            eyeRect.left + eyeRect.width * .25,
+            eyeRect.left + eyeRect.width * .75,
+          ].map((x) => (x * 200 / 320).round())) {
+            final cy = (eyeRect.center.dy * 200 / 320).round();
+            for (var y = cy - 3; y < cy + 3; y++) {
+              for (var x = xCenter - 3; x < xCenter + 3; x++) {
+                final offset = (y * 200 + x) * 4;
+                expect(
+                  equipped.sublist(offset, offset + 4),
+                  uncovered.sublist(offset, offset + 4),
+                  reason:
+                      '${rig.family}/${rig.age}/${equipment.id}: pupil $x,$y',
+                );
+              }
             }
           }
         }

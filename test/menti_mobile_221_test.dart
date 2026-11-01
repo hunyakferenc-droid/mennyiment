@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/app_language.dart';
 import 'package:mennyiment/l10n/generated/app_localizations.dart';
 import 'package:mennyiment/menti_identity/menti_identity.dart';
+import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
 import 'package:mennyiment/menti_identity/menti_identity_controller.dart';
 import 'package:mennyiment/menti_identity/menti_identity_store.dart';
 import 'package:mennyiment/menti_identity/menti_studio_page.dart';
@@ -91,6 +92,19 @@ void main() {
             await tester.pumpAndSettle();
             c.choose(MentiVisualCatalog.resolve('eyes', 'relaxed'));
             await tester.pumpAndSettle();
+            await tester.tap(
+              find.byKey(const ValueKey('studio-enlarge-preview')),
+            );
+            await tester.pumpAndSettle();
+            final enlarged = tester.widget<MentiAvatarRenderer>(
+              find.byKey(const ValueKey('studio-large-preview')),
+            );
+            expect(enlarged.profile.toJson(), c.draft.profile.toJson());
+            final close = appStrings(tester.element(find.byType(Dialog)))
+                .avatarClosePreview;
+            await tester.tap(find.byTooltip(close));
+            await tester.pumpAndSettle();
+            expect(c.dirty, isTrue);
             // Naming remains usable with the Android-sized keyboard inset.
             await tester.tap(find.widgetWithText(TextButton, 'Mira'));
             await tester.pumpAndSettle();

@@ -2675,7 +2675,7 @@ abstract class AppLocalizations {
   /// No description provided for @avatarStudio.
   ///
   /// In hu, this message translates to:
-  /// **'Menti Studio 2.2'**
+  /// **'Menti Studio 2.2.1'**
   String get avatarStudio;
 
   /// No description provided for @avatarSave.
@@ -4525,6 +4525,18 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'További funkciók'**
   String get homeMore;
+
+  /// No description provided for @avatarEnlargePreview.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nagyobb előnézet és nagyítás'**
+  String get avatarEnlargePreview;
+
+  /// No description provided for @avatarClosePreview.
+  ///
+  /// In hu, this message translates to:
+  /// **'Előnézet bezárása'**
+  String get avatarClosePreview;
 }
 
 class _AppLocalizationsDelegate

@@ -665,7 +665,7 @@
   "avatarReactionCalming": "Calming",
   "avatarReactionCelebrating": "Celebrating",
   "avatarReactionFocused": "Focused",
-  "avatarStudio": "Menti Studio 2.2",
+  "avatarStudio": "Menti Studio 2.2.1",
   "avatarSave": "Save",
   "avatarSaving": "Saving…",
   "avatarSaved": "Your Menti has been saved.",
@@ -1270,5 +1270,7 @@
   "avatarMore": "More actions",
   "avatarHidePreview": "Collapse preview",
   "avatarShowPreview": "Expand preview",
-  "homeMore": "More features"
+  "homeMore": "More features",
+  "avatarEnlargePreview": "Larger preview and zoom",
+  "avatarClosePreview": "Close preview"
 }

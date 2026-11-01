@@ -1437,7 +1437,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get avatarReactionFocused => 'Focused';
 
   @override
-  String get avatarStudio => 'Menti Studio 2.2';
+  String get avatarStudio => 'Menti Studio 2.2.1';
 
   @override
   String get avatarSave => 'Save';
@@ -2502,4 +2502,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeMore => 'More features';
+
+  @override
+  String get avatarEnlargePreview => 'Larger preview and zoom';
+
+  @override
+  String get avatarClosePreview => 'Close preview';
 }

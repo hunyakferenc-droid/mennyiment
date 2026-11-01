@@ -343,6 +343,41 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
       const SizedBox(height: 24),
     ],
   );
+  Future<void> _enlarge() async {
+    final profile = _controller!.draft.profile;
+    final s = appStrings(context);
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => Dialog.fullscreen(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(profile.name),
+            leading: IconButton(
+              tooltip: s.avatarClosePreview,
+              onPressed: () => Navigator.pop(ctx),
+              icon: const Icon(Icons.close),
+            ),
+          ),
+          body: SafeArea(
+            child: LayoutBuilder(
+              builder: (context, box) => InteractiveViewer(
+                minScale: 1,
+                maxScale: 3,
+                child: Center(
+                  child: MentiAvatarRenderer(
+                    key: const ValueKey('studio-large-preview'),
+                    profile: profile,
+                    size: math.min(box.maxWidth, box.maxHeight / 1.25),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _preview(AppLocalizations s, double maxWidth, double maxHeight) {
     final c = _controller!;
     final profile = c.draft.profile;
@@ -352,17 +387,31 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
       child: Column(
         children: [
           Expanded(
-            child: Center(
-              child: FittedBox(
-                fit: BoxFit.contain,
-                child: MentiAvatarRenderer(
-                  key: const ValueKey('studio-live-preview'),
-                  profile: profile,
-                  animate: true,
-                  reaction: profile.reaction.style,
-                  size: avatarSize,
+            child: Stack(
+              children: [
+                Center(
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: MentiAvatarRenderer(
+                      key: const ValueKey('studio-live-preview'),
+                      profile: profile,
+                      animate: true,
+                      reaction: profile.reaction.style,
+                      size: avatarSize,
+                    ),
+                  ),
                 ),
-              ),
+                Positioned(
+                  top: 0,
+                  right: 12,
+                  child: IconButton(
+                    key: const ValueKey('studio-enlarge-preview'),
+                    tooltip: s.avatarEnlargePreview,
+                    onPressed: _enlarge,
+                    icon: const Icon(Icons.zoom_in),
+                  ),
+                ),
+              ],
             ),
           ),
           TextButton(

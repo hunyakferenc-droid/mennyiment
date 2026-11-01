@@ -567,14 +567,17 @@ class MentiPremiumComposition extends StatelessWidget {
       resolve(p, 'hair').id == rig.hairId
           ? rig.asset
           : rig.asset.replaceFirst('.png', '-hairless.png'),
-      if (resolve(p, 'outfit').id != 'basic')
+      if (resolve(p, 'outfit').id != 'basic') ...[
         '${MentiPremiumAtlas.root}outfits.png',
+        rig.asset,
+      ],
       if (resolve(p, 'hair').id != rig.hairId)
         '${MentiPremiumAtlas.root}hair.png',
       if (resolve(p, 'headwear').id != 'none')
         '${MentiPremiumAtlas.root}headwear.png',
       for (final f in ['style', 'detail', 'neck', 'glasses', 'held'])
-        if (resolve(p, f).id != 'none')
+        if (resolve(p, f).id != 'none' &&
+            (f != 'style' || resolve(p, f).id != 'classic'))
           MentiVisualCatalog.root + resolve(p, f).asset,
       if (reaction != null)
         MentiVisualCatalog.root +
@@ -589,7 +592,9 @@ class MentiPremiumComposition extends StatelessWidget {
     final nativeHair = id('hair') == rig.hairId;
     final nativeOutfit = id('outfit') == 'basic';
     final face = rig.register(rig.face);
-    final neckY = rig.neckY * 400 / 820;
+    final neckY =
+        MentiReferenceRig.target.top +
+        rig.neckY * MentiReferenceRig.target.height / 820;
     final accent = <String, Color>{
       'violet': const Color(0xFFD9BFF5),
       'blue': const Color(0xFFB5D9FC),
@@ -668,9 +673,9 @@ class MentiPremiumComposition extends StatelessWidget {
     // A native full master remains intact whenever the selected hair and outfit
     // match it. Other equipment is scaled to the native neck and foot anchors.
     final outfitTarget = Rect.fromLTRB(
-      face.center.dx - (id('family') == 'girl' ? 91 : 100),
+      face.center.dx - face.width * (id('family') == 'girl' ? .87 : .84),
       neckY,
-      face.center.dx + (id('family') == 'girl' ? 91 : 100),
+      face.center.dx + face.width * (id('family') == 'girl' ? .87 : .84),
       397,
     );
     final hairSource = MentiPremiumAtlas.rects['hair/${id('hair')}']!;
@@ -694,6 +699,12 @@ class MentiPremiumComposition extends StatelessWidget {
           (face.height - 18) / target.height,
         ),
       );
+    final hatSource = MentiPremiumAtlas.rects['headwear/${id('headwear')}'];
+    final hatWidth = face.width + 20;
+    final hatHeight = hatSource == null
+        ? 0.0
+        : hatWidth * hatSource.height / hatSource.width;
+    final eyeTop = rig.register(rig.eyes).top;
     final hat = switch (id('headwear')) {
       'headphones' => Rect.fromLTRB(
         face.left - 25,
@@ -707,8 +718,12 @@ class MentiPremiumComposition extends StatelessWidget {
         face.right + 25,
         face.bottom + 12,
       ),
-      'party-hat' => Rect.fromLTWH(face.center.dx - 40, 0, 80, face.top + 25),
-      _ => Rect.fromLTWH(face.left - 15, 0, face.width + 30, face.top + 36),
+      _ => Rect.fromLTWH(
+        face.center.dx - hatWidth / 2,
+        eyeTop - 6 - hatHeight,
+        hatWidth,
+        hatHeight,
+      ),
     };
     return FittedBox(
       fit: BoxFit.fill,
@@ -736,10 +751,12 @@ class MentiPremiumComposition extends StatelessWidget {
                       final path = rig.mask(right ? 'rightHand' : 'leftHand');
                       final bounds = path.getBounds();
                       final target = Rect.fromLTWH(
-                        right ? outfitTarget.right - 40 : outfitTarget.left + 6,
+                        right
+                            ? outfitTarget.right - outfitTarget.width * .16 - 6
+                            : outfitTarget.left + 6,
                         neckY + (397 - neckY) * .39,
-                        34,
-                        48,
+                        outfitTarget.width * .16,
+                        outfitTarget.width * .225,
                       );
                       return Transform(
                         transform: Matrix4.identity()

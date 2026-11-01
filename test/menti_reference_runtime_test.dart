@@ -228,31 +228,42 @@ void main() {
                     Column(
                       children: [
                         label('$fam · $age'),
-                        SizedBox(
-                          width: 400,
-                          height: 420,
-                          child: ClipRect(
-                            child: OverflowBox(
-                              alignment: Alignment.topLeft,
-                              minWidth: 800,
-                              maxWidth: 800,
-                              minHeight: 1000,
-                              maxHeight: 1000,
-                              child: Transform.translate(
-                                offset: const Offset(-200, 0),
+                        Builder(
+                          builder: (context) {
+                            final rig = MentiReferenceRig.of(fam, age);
+                            final crop = rig.register(rig.face).inflate(30);
+                            return SizedBox(
+                              width: 400,
+                              height: 420,
+                              child: FittedBox(
+                                fit: BoxFit.contain,
                                 child: SizedBox(
-                                  width: 800,
-                                  height: 1000,
-                                  child: MentiPremiumComposition(
-                                    profile: profile(
-                                      MentiReferenceRig.of(fam, age),
+                                  width: crop.width,
+                                  height: crop.height,
+                                  child: ClipRect(
+                                    child: OverflowBox(
+                                      alignment: Alignment.topLeft,
+                                      minWidth: 320,
+                                      maxWidth: 320,
+                                      minHeight: 400,
+                                      maxHeight: 400,
+                                      child: Transform.translate(
+                                        offset: Offset(-crop.left, -crop.top),
+                                        child: SizedBox(
+                                          width: 320,
+                                          height: 400,
+                                          child: MentiPremiumComposition(
+                                            profile: profile(rig),
+                                            showBackground: false,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                    showBackground: false,
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         ),
                       ],
                     ),

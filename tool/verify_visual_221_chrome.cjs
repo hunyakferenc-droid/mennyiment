@@ -83,6 +83,11 @@ function identity(values) {
     if(nativeIdentity.profile.visual.hair !== 'girl-waves') throw new Error('Onboarding did not select the native girl hair');
     await page.screenshot({ path: path.join(output, 'chrome-home-native-en.png') });
     await page.getByRole('button', { name: strings.chooseMenti, exact: true }).click();
+    await page.getByRole('button',{name:strings.avatarEnlargePreview,exact:true}).click();
+    await page.getByRole('button',{name:strings.avatarClosePreview,exact:true}).waitFor();
+    await page.screenshot({path:path.join(output,'chrome-studio-zoom-en.png')});
+    await page.getByRole('button',{name:strings.avatarClosePreview,exact:true}).click();
+    checks.push('Full-screen zoom shows the same draft character without saving');
     await page.getByRole('checkbox', { name: strings.avatarTabFace, exact: true }).click();
     const curls=page.getByRole('button', { name:new RegExp(escape(strings.avatarHairGirlCurls)) }).first();
     await curls.scrollIntoViewIfNeeded(); await curls.click();
@@ -96,7 +101,7 @@ function identity(values) {
     await page.getByRole('checkbox', { name: strings.avatarTabOutfit, exact: true }).click();
     await page.getByRole('button', { name: new RegExp(escape(strings.avatarOutfitBasicAlt)) }).first().click();
     await page.getByRole('button', { name: strings.avatarSave, exact: true }).click();
-    await page.getByText(strings.avatarSaved, { exact: true }).waitFor();
+    await page.getByText(strings.avatarSaved, { exact: true }).last().waitFor();
     const saved = identity(await storage(page));
     if (saved.profile.name !== 'Chrome Menti' || saved.profile.visual.outfit !== 'basic-alt') {
       throw new Error('Studio did not persist the edited identity');

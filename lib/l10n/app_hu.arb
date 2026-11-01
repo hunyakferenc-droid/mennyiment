@@ -665,7 +665,7 @@
   "avatarReactionCalming": "Megnyugtató",
   "avatarReactionCelebrating": "Ünneplő",
   "avatarReactionFocused": "Fókuszált",
-  "avatarStudio": "Menti Studio 2.2",
+  "avatarStudio": "Menti Studio 2.2.1",
   "avatarSave": "Mentés",
   "avatarSaving": "Mentés…",
   "avatarSaved": "Az összeállítás elmentve.",
@@ -1270,5 +1270,7 @@
   "avatarMore": "További műveletek",
   "avatarHidePreview": "Előnézet összecsukása",
   "avatarShowPreview": "Előnézet megnyitása",
-  "homeMore": "További funkciók"
+  "homeMore": "További funkciók",
+  "avatarEnlargePreview": "Nagyobb előnézet és nagyítás",
+  "avatarClosePreview": "Előnézet bezárása"
 }

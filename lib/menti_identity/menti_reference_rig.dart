@@ -26,7 +26,7 @@ class MentiReferenceRig {
   String get asset => 'assets/images/menti_2_2/reference/$family.png';
   Rect get source => Rect.fromLTWH(originX, 0, 520, 820);
   // Original source aspect and ground line remain invariant for every layer.
-  static const target = Rect.fromLTWH(33.17, 0, 253.66, 400);
+  static const target = Rect.fromLTWH(47.7561, 46, 224.4878, 354);
   static const assets = [
     'assets/images/menti_2_2/reference/boy.png',
     'assets/images/menti_2_2/reference/girl.png',
@@ -147,7 +147,7 @@ class MentiReferenceRig {
         for (final p in contour)
           Offset(
             target.left + (p.dx - originX) * target.width / 520,
-            p.dy * 400 / 820,
+            target.top + p.dy * target.height / 820,
           ),
       ], true);
     }
@@ -155,9 +155,9 @@ class MentiReferenceRig {
   });
   Rect register(Rect original) => Rect.fromLTWH(
     target.left + (original.left - originX) * target.width / 520,
-    original.top * 400 / 820,
+    target.top + original.top * target.height / 820,
     original.width * target.width / 520,
-    original.height * 400 / 820,
+    original.height * target.height / 820,
   );
 }
 
@@ -252,9 +252,9 @@ class _PlatePainter extends CustomPainter {
       rig.source.intersect(const Rect.fromLTWH(0, 0, 1942, 809)),
       Rect.fromLTWH(
         MentiReferenceRig.target.left,
-        0,
+        MentiReferenceRig.target.top,
         MentiReferenceRig.target.width,
-        809 * 400 / 820,
+        809 * MentiReferenceRig.target.height / 820,
       ),
       paint,
     );
