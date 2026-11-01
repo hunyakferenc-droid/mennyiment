@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mennyiment/l10n/generated/app_localizations.dart';
 import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
-import 'package:mennyiment/menti_identity/menti_family_layout.dart';
+import 'package:mennyiment/menti_identity/menti_premium_renderer.dart';
 import 'package:mennyiment/menti_identity/menti_identity.dart';
 
 void main() {
@@ -24,15 +24,12 @@ void main() {
           ])))));
       final ctx=tester.element(find.byKey(const ValueKey('family-grid')));
       await tester.runAsync(() async {
-        for(final p in profiles) {
-          await precacheImage(ResizeImage(AssetImage(MentiFamilyLayout.of(p).core),width:960),ctx);
-        }
-        if(cap) await precacheImage(const AssetImage(MentiAssetLayer.crownCap),ctx);
+        for(final path in MentiPremiumComposition.assets) { await precacheImage(AssetImage(path),ctx); }
       });
       await tester.pumpAndSettle();
       expect(tester.takeException(),isNull);
       await expectLater(find.byKey(const ValueKey('family-grid')),
-        matchesGoldenFile('goldens/menti_families_${cap ? 'classic' : 'uncovered'}.png'));
+        matchesGoldenFile('goldens/menti_final_families_${cap ? 'classic' : 'uncovered'}.png'));
       await tester.pumpWidget(const SizedBox.shrink());
     });
   }

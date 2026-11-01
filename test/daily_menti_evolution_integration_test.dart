@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -44,15 +45,15 @@ void main() {
   );
   Future<void> coldReload() async {
     final prefs = await SharedPreferences.getInstance();
-    SharedPreferences.setMockInitialValues({
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
       for (final key in prefs.getKeys()) key: prefs.get(key)!,
     });
   }
-  setUp(() => SharedPreferences.setMockInitialValues({}));
+  setUp(() => SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,}));
 
   test('Concurrent morning, daily and weekly events retain one daily reward and unlocks', () async {
     final journal = '[{"legacy":"unchanged","priceFt":0}]';
-    SharedPreferences.setMockInitialValues({
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
       xpKey: xpDocument(40),
       MentiProfileStorage.characterStyleKey: 'Lány Menti',
       MentiProfileStorage.outfitKey: 'Legendás szett',
@@ -88,7 +89,7 @@ void main() {
 
   test('Morning-first and progress-first both grant exactly ten XP per day', () async {
     for (final morningFirst in [true, false]) {
-      SharedPreferences.setMockInitialValues({xpKey: xpDocument(40)});
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,xpKey: xpDocument(40)});
       final first = morningFirst
         ? await save(day) : await MentiXpStore.checkInToday(now: day);
       final second = morningFirst
@@ -105,7 +106,7 @@ void main() {
   test('All 18 legacy profiles survive morning level-up, evening edits and cold reload', () async {
     for (final family in MentiCharacterFamily.values) {
       for (final outfit in MentiOutfit.values) {
-        SharedPreferences.setMockInitialValues({
+        SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
           xpKey: xpDocument(49),
           MentiProfileStorage.characterStyleKey: family.label,
           MentiProfileStorage.outfitKey: outfit.label,
@@ -132,7 +133,7 @@ void main() {
   });
 
   test('Failed XP persistence preserves answers and unlocks only after a safe retry', () async {
-    SharedPreferences.setMockInitialValues({xpKey: xpDocument(40)});
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,xpKey: xpDocument(40)});
     final state = await MentiXpStore.load();
     expect(await rewards(state), isNot(contains('outfit:business')));
     final prefs = await SharedPreferences.getInstance();
@@ -156,7 +157,7 @@ void main() {
   });
 
   test('Morning cannot overwrite corrupt XP or acquired reward data', () async {
-    SharedPreferences.setMockInitialValues({
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
       xpKey: '{broken',
       MentiRewards.preferenceKey: ['outfit:legendary', 'future:item'],
     });
@@ -170,7 +171,7 @@ void main() {
   });
 
   test('DST repeated hour shares one daily reward, level-up and next local day', () async {
-    SharedPreferences.setMockInitialValues({xpKey: xpDocument(49)});
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,xpKey: xpDocument(49)});
     final first = DateTime.utc(2026, 10, 25, 0, 30);
     final repeated = DateTime.utc(2026, 10, 25, 1, 30);
     if (Platform.environment['TZ'] == 'Europe/Budapest') {
@@ -199,7 +200,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
-      SharedPreferences.setMockInitialValues({
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
         xpKey: xpDocument(40),
         AppLanguage.preferenceKey: locale,
         MentiMotionSettings.preferenceKey: true,

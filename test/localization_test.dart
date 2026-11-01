@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -15,7 +16,7 @@ import 'package:mennyiment/l10n/generated/app_localizations.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUp(
-    () => SharedPreferences.setMockInitialValues({
+    () => SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
       'mennyiment_character_setup_complete_v1': true,
     }),
   );
@@ -56,7 +57,7 @@ void main() {
     'Language preference reloads and never changes legacy profiles',
     () async {
       for (final family in MentiCharacterFamily.values) {
-        SharedPreferences.setMockInitialValues({
+        SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
           MentiProfileStorage.characterStyleKey: family.label,
           MentiProfileStorage.outfitKey: 'Legendás szett',
         });
@@ -85,7 +86,7 @@ void main() {
   test(
     'Unknown language value is retained and falls back to Hungarian',
     () async {
-      SharedPreferences.setMockInitialValues({
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
         AppLanguage.preferenceKey: 'future-locale',
       });
       final controller = AppLanguage();
@@ -184,7 +185,7 @@ void main() {
     'Explicit automatic follows supported system locale and falls back to Hungarian',
     (tester) async {
       large(tester);
-      SharedPreferences.setMockInitialValues({
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
         AppLanguage.preferenceKey: 'auto',
         'mennyiment_character_setup_complete_v1': true,
       });
@@ -207,7 +208,7 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    SharedPreferences.setMockInitialValues({
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
       AppLanguage.preferenceKey: 'en',
       'mennyiment_character_setup_complete_v1': true,
     });

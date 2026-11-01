@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ void main() {
       (tester) async {
         largeView(tester);
         for (final outfit in MentiOutfit.values) {
-          SharedPreferences.setMockInitialValues({
+          SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
             familyKey: family.id,
             outfitKey: outfit.id,
             MentiCharacterProfile.completedKey: true,
@@ -105,7 +106,7 @@ void main() {
     'Home reloads the profile after saving stable IDs in the selector',
     (tester) async {
       largeView(tester);
-      SharedPreferences.setMockInitialValues({
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
         familyKey: 'girl',
         outfitKey: 'legendary',
         MentiCharacterProfile.completedKey: true,
@@ -140,7 +141,7 @@ void main() {
     () async {
       for (final family in MentiCharacterFamily.values) {
         for (final outfit in MentiOutfit.values) {
-          SharedPreferences.setMockInitialValues({
+          SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
             familyKey: family.id,
             outfitKey: outfit.id,
           });
@@ -163,7 +164,7 @@ void main() {
       tester,
     ) async {
       largeView(tester);
-      SharedPreferences.setMockInitialValues({
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
         familyKey: value,
         outfitKey: value,
       });
@@ -199,7 +200,7 @@ void main() {
     'Explicit selections replace only their own unrecognized preference',
     (tester) async {
       largeView(tester);
-      SharedPreferences.setMockInitialValues({
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
         familyKey: 'future-family',
         outfitKey: 'future-outfit',
       });

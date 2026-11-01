@@ -33,12 +33,12 @@ void main() {
     }
     expect(checksums.length, 9);
   });
-  test('uncovered and classic proof matrices match the real composition paths', () {
+  test('legacy uncovered and classic proof matrices retain their original composition paths', () {
     final cases = (jsonDecode(File('test/fixtures/menti_family_render_cases.json').readAsStringSync()) as List).cast<Map>();
     expect(cases.length, 18);
     for (final item in cases) {
       final p = MentiIdentityProfile(visual: MentiVisualProfile(Map<String,dynamic>.from(item['visual'] as Map)));
-      expect(MentiAvatarRenderer.layers(p), item['layers'], reason: item['name'] as String);
+      expect(MentiAvatarRenderer.legacyLayers(p), item['layers'], reason: item['name'] as String);
     }
   });
   for (final key in MentiFamilyLayout.fits.keys) {

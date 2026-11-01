@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'app_language.dart';
+import 'menti_access.dart';
 import 'menti_experience_settings.dart';
 import 'menti_completion.dart';
 import 'menti_reactions.dart';
@@ -200,6 +201,7 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
     if (mounted) setState(() => loading = false);
   }
   Future<void> save(String id, Map<String, dynamic> item, DateTime expectedWeek) async {
+    if(id=='journal' && !MentiAccessScope.adultOf(context)) return;
     if (challengeMonday(now) != expectedWeek) {
       setState(() {});
       return;
@@ -269,7 +271,7 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
     int count(String id, Map item) => _count(id, item, week, now);
     final titles = {
       'reflection': appStrings(context).challengeReflection,
-      'journal': appStrings(context).challengeJournal,
+      if(MentiAccessScope.adultOf(context)) 'journal': appStrings(context).challengeJournal,
       'habit': appStrings(context).challengeHabit,
       'custom': appStrings(context).challengeCustom,
     };
@@ -323,7 +325,7 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
             style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
           for (final entry in titles.entries)
             if (items[entry.key] != null) Text('${entry.value}: ${count(entry.key, items[entry.key] as Map)} / ${(items[entry.key] as Map)['goal']}'),
-          Text('${appStrings(context).challengeJournalDays}: ${journalDays.intersection(dates).length} / ${dates.length}'),
+          if(MentiAccessScope.adultOf(context)) Text('${appStrings(context).challengeJournalDays}: ${journalDays.intersection(dates).length} / ${dates.length}'),
           Text(appStrings(context).challengeCaution),
           OutlinedButton(onPressed: saving ? null : load, child: Text(appStrings(context).challengeRefresh)),
         ]))),

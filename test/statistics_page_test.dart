@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'dart:convert';
 
 import 'package:intl/date_symbol_data_local.dart';
@@ -163,7 +164,7 @@ void main() {
         },
       ]);
       final xp = jsonEncode({'xp': 150, 'days': [], 'completed': []});
-      SharedPreferences.setMockInitialValues({
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
         'mennyiment_drinks_v1': saved,
         'mennyiment_menti_xp_v2': xp,
         'mennyiment_character_setup_complete_v1': true,

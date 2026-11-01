@@ -1,3 +1,4 @@
+import 'app_language.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -91,17 +92,17 @@ class _LifestyleInsightsPageState extends State<LifestyleInsightsPage> {
       if (!mounted) return;
       setState(() { _entries = values; _loading = false; _error = null; });
     } catch (_) {
-      if (mounted) setState(() { _loading = false; _error = 'Nem sikerült betölteni a közérzetnaplót.'; });
+      if (mounted) setState(() { _loading = false; _error = appStrings(context).uiTheWellbeingJournalCouldNotBeLoaded; });
     }
   }
   Widget _card(String title, Widget body) => Card(child: Padding(
     padding: const EdgeInsets.all(18), child: Column(crossAxisAlignment: CrossAxisAlignment.start,
       children: [Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 12), body])));
-  String _ft(double n) => '${n.round()} Ft';
-  String _avg(double? n, {int max = 5}) => n == null ? 'Nincs adat' : '${n.toStringAsFixed(1)} / $max';
+  String _ft(double n) => localeCurrency(n,Localizations.localeOf(context).languageCode);
+  String _avg(double? n, {int max = 5}) => n == null ? appStrings(context).uiNoData : '${n.toStringAsFixed(1)} / $max';
   Widget _line(String label, String value) => Padding(padding: const EdgeInsets.symmetric(vertical: 5),
-    child: Row(children: [Expanded(child: Text(label)), Text(value, style: const TextStyle(fontWeight: FontWeight.bold))]));
+    child: Wrap(spacing:12,runSpacing:4,alignment:WrapAlignment.spaceBetween,children:[Text(label),Text(value,style:const TextStyle(fontWeight:FontWeight.bold))]));
 
   @override
   Widget build(BuildContext context) {
@@ -115,13 +116,13 @@ class _LifestyleInsightsPageState extends State<LifestyleInsightsPage> {
     final allWithPrice = current.pricesComplete && previous.pricesComplete;
     final difference = previous.knownFt - current.knownFt;
     final message = current.wellbeingDays == 0
-      ? 'Menti: Ha van kedved, naplózd a hangulatodat is. Ettől személyesebb lesz az összkép.'
+      ? appStrings(context).uiMentiYouCanRecordYourMoodTooItHelps
       : current.drinks == 0
-        ? 'Menti: Ezen a héten nincs rögzített ital. A nem naplózott napokról nem tudunk biztosat.'
-        : 'Menti: Már a saját adataidat is együtt láthatod. Figyeld a mintákat, de ne vonj le elhamarkodott következtetéseket!';
+        ? appStrings(context).uiMentiNoDrinksAreRecordedThisWeekWeCannot
+        : appStrings(context).uiMentiYourOwnRecordsAreComingTogetherLookFor;
     return Scaffold(
-      appBar: AppBar(title: const Text('Életmódelemzés 4.1'), actions: [IconButton(
-        tooltip: 'Frissítés', onPressed: _load, icon: const Icon(Icons.refresh))]),
+      appBar: AppBar(title: Text(appStrings(context).uiLifestyleInsights), actions: [IconButton(
+        tooltip: appStrings(context).uiRefresh, onPressed: _load, icon: const Icon(Icons.refresh))]),
       body: _loading ? const Center(child: CircularProgressIndicator()) :
       _error != null ? Center(child: Text(_error!)) : Center(child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 760), child: ListView(
@@ -132,43 +133,42 @@ class _LifestyleInsightsPageState extends State<LifestyleInsightsPage> {
               IconButton(onPressed: _anchor.isBefore(InsightsCalculator.day(DateTime.now()))
                 ? () => setState(() => _anchor = _anchor.add(const Duration(days: 7))) : null,
                 icon: const Icon(Icons.chevron_right))]),
-            _card('Menti heti üzenete', Text(message)),
-            _card('Az elmúlt 7 nap', Column(children: [
-              _line('Naplózott italok', '${current.drinks} db'),
-              _line('Tiszta alkohol a naplóban', '${current.grams.toStringAsFixed(1)} g'),
-              _line('Ismert költés', _ft(current.knownFt)),
-              if (!current.pricesComplete) Text('${current.drinks - current.priced} ital ára hiányzik; a költés csak részösszeg.',
+            _card(appStrings(context).uiMentiSWeeklyMessage, Text(message)),
+            _card(appStrings(context).uiThePast7Days, Column(children: [
+              _line(appStrings(context).uiLoggedDrinks, appStrings(context).uiItemsValue((current.drinks).toString())),
+              _line(appStrings(context).uiPureAlcoholRecorded, '${current.grams.toStringAsFixed(1)} g'),
+              _line(appStrings(context).uiKnownSpending, _ft(current.knownFt)),
+              if (!current.pricesComplete) Text(appStrings(context).uiPartialDrinkSpending((current.drinks-current.priced).toString()),
                 style: const TextStyle(color: Colors.orangeAccent)),
-              _line('Közérzeti bejegyzések', '${current.wellbeingDays} nap'),
-              _line('Átlagos hangulat', _avg(current.moodAverage)),
-              _line('Átlagos alvásminőség', _avg(current.sleepAverage)),
-              _line('Másnapossági tünetek átlaga', _avg(current.hangoverAverage, max: 4)),
+              _line(appStrings(context).uiWellbeingEntries, appStrings(context).uiDaysValue((current.wellbeingDays).toString())),
+              _line(appStrings(context).uiAverageMood, _avg(current.moodAverage)),
+              _line(appStrings(context).uiAverageSleepQuality, _avg(current.sleepAverage)),
+              _line(appStrings(context).uiAverageHangoverSymptoms, _avg(current.hangoverAverage, max: 4)),
             ])),
-            _card('Összehasonlítás az előző 7 nappal', Column(
+            _card(appStrings(context).uiCompareWithThePrevious7Days, Column(
               crossAxisAlignment: CrossAxisAlignment.start, children: [
-                _line('Italok – előző időszak', '${previous.drinks} db'),
-                _line('Italok – jelenlegi időszak', '${current.drinks} db'),
-                _line('Költéskülönbség', allWithPrice
-                  ? '${difference >= 0 ? 'Kevesebb' : 'Több'} ${_ft(difference.abs())}' : 'Hiányos árak'),
+                _line(appStrings(context).uiDrinksPreviousPeriod, appStrings(context).uiItemsValue((previous.drinks).toString())),
+                _line(appStrings(context).uiDrinksCurrentPeriod, appStrings(context).uiItemsValue((current.drinks).toString())),
+                _line(appStrings(context).uiSpendingDifference, allWithPrice
+                  ? '${difference >= 0 ? appStrings(context).uiLess : appStrings(context).uiMore} ${_ft(difference.abs())}' : appStrings(context).uiIncompletePrices),
                 const SizedBox(height: 6),
-                const Text('Ez naplózott költéskülönbség, nem igazolt megtakarítás. A két hét eltérhet, és hiányozhatnak bejegyzések.',
+                Text(appStrings(context).uiThisIsADifferenceInRecordedSpendingNotVerified,
                   style: TextStyle(color: Colors.white70, fontSize: 12)),
               ])),
-            _card('Előző nap és másnapi közérzet', Column(
+            _card(appStrings(context).uiPreviousDayAndNextDayWellbeing, Column(
               crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('Összekapcsolható napok: ${pairs.length}'),
+                Text(appStrings(context).uiPairedDays((pairs.length).toString())),
                 const SizedBox(height: 8),
-                if (pairs.isEmpty) const Text('Még nincs olyan páros adat, ahol az előző napon ital és a következő napon közérzet is szerepel.'),
+                if (pairs.isEmpty) Text(appStrings(context).uiThereAreNoPairedRecordsWithADrinkOn),
                 for (final pair in pairs.take(7)) Padding(
                   padding: const EdgeInsets.symmetric(vertical: 5), child: Text(
-                    '${pair.$2.day.month}.${pair.$2.day.day}. – előző nap ${pair.$1.toStringAsFixed(1)} g; '
-                    'hangulat ${pair.$2.mood}/5, alvás ${pair.$2.sleepQuality}/5, tünet ${pair.$2.hangover}/4')),
+                    appStrings(context).uiPairedWellbeing(('${pair.$2.day.month}.${pair.$2.day.day}').toString(),(pair.$1.toStringAsFixed(1)).toString(),(pair.$2.mood).toString(),(pair.$2.sleepQuality).toString(),(pair.$2.hangover).toString()))),
                 const SizedBox(height: 8),
-                const Text('A közérzetet sok tényező befolyásolhatja. Az együttjárás nem bizonyít ok-okozatot, és ez nem orvosi értékelés.',
+                Text(appStrings(context).uiManyFactorsAffectWellbeingCorrelationDoesNotProveCausation,
                   style: TextStyle(color: Colors.white70, fontSize: 12)),
               ])),
             const SizedBox(height: 16),
-            const Text('Minden adat helyben, önbevallás alapján készül. A napló nem alkalmas a józanság vagy vezetési képesség megállapítására.',
+            Text(appStrings(context).uiAllRecordsAreLocalAndSelfReportedThisJournal,
               style: TextStyle(color: Colors.white70, fontSize: 12)),
           ]))));
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'app_language.dart';
+import 'menti_access.dart';
 import 'menti_experience_settings.dart';
 import 'home_widgets.dart';
 import 'menti_character_catalog.dart';
@@ -168,7 +169,7 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
                 ])),
               _section('daily', s.hubDaily, data.daily, (_) => Text(
                 data.dailyAnswersRecorded ? s.hubDailyAnswers : s.hubNoDailyAnswers)),
-              _section('goals', s.hubGoals, data.goals, (_) => Column(
+              if (MentiAccessScope.adultOf(context)) _section('goals', s.hubGoals, data.goals, (_) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start, children: [
                   if (data.personalTarget == null) Text(s.hubNoTarget)
                   else if (data.personalCount == null) Text(s.hubNoCheckDays)
@@ -186,7 +187,7 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
                 final challenges = data.weeklyChallenges;
                 if (challenges.isEmpty) return Text(s.hubNoChallenges);
                 return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  for (final item in challenges) Padding(padding: const EdgeInsets.only(bottom: 16),
+                  for (final item in challenges.where((item)=>MentiAccessScope.adultOf(context)||item.id!='journal')) Padding(padding: const EdgeInsets.only(bottom: 16),
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                       Text(switch (item.id) {
                         'reflection' => s.challengeReflection,
@@ -206,7 +207,7 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
                   Text(s.challengeCaution),
                 ]);
               }),
-              _section('journal', s.hubJournal, data.journal, (_) => Column(
+              if (MentiAccessScope.adultOf(context)) _section('journal', s.hubJournal, data.journal, (_) => Column(
                 crossAxisAlignment: CrossAxisAlignment.start, children: [
                   if (data.weeklyDrinks.isEmpty) Text(s.hubRecordedEmpty),
                   HomeAdaptiveGrid(children: [

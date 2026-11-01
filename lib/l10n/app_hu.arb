@@ -729,5 +729,541 @@
       }
     }
   },
-  "avatarHeadwearCowboy": "Cowboykalap"
+  "avatarHeadwearCowboy": "Cowboykalap",
+  "startLanguage": "Szia! Milyen nyelven mentizzünk?",
+  "startWelcome": "Én vagyok Menti. Kis lépések, saját tempó – és egy kabala, aki veled tart.",
+  "startAgeTitle": "Előbb egy fontos kérdés",
+  "startAgeBody": "Elmúltál 18 éves? A Menti megjelenésének korosztálya ettől független. 18 év alatt csak az életmód- és karakterfunkciók érhetők el.",
+  "startAdult": "Betöltöttem a 18. életévemet",
+  "startMinor": "Még nem vagyok 18 éves",
+  "startLocalOnly": "Ez helyi életkori nyilatkozat, nem személyazonosítás. A profil ezen az eszközön tárolódik; nincs fiókregisztráció.",
+  "startCharacter": "Jöhet a saját Mentid!",
+  "startName": "Becenév",
+  "startNameBody": "Hogy szólíthatlak? A Mentidet később is átöltöztetheted a Studióban.",
+  "startFinish": "Mentés és indulás",
+  "startSaveError": "Nem sikerült biztonságosan befejezni. Az adataid megmaradtak; próbáld újra. Sérült profil esetén állítsd helyre a mentést.",
+  "wellbeingQuestion": "Hogy érzed magad?",
+  "wellbeingBody": "A közérzeted és az alvásod is fontos. Nincs jó vagy rossz válasz.",
+  "wellbeingMood": "Hangulat",
+  "wellbeingScale": "1 = nagyon rossz, 5 = nagyon jó",
+  "wellbeingSleep": "Alvásminőség",
+  "wellbeingSleepHint": "A legutóbbi alvásod saját értékelése",
+  "wellbeingHangover": "Másnaposság tünetei",
+  "wellbeingHangoverHint": "0 = nincs, 4 = nagyon erős",
+  "wellbeingVeryBad": "Nagyon rossz",
+  "wellbeingBad": "Rossz",
+  "wellbeingMedium": "Közepes",
+  "wellbeingGood": "Jó",
+  "wellbeingVeryGood": "Nagyon jó",
+  "wellbeingNone": "Nincs",
+  "wellbeingMild": "Enyhe",
+  "wellbeingStrong": "Erős",
+  "wellbeingVeryStrong": "Nagyon erős",
+  "wellbeingNote": "Megjegyzés (nem kötelező)",
+  "wellbeingNoteHint": "Mi befolyásolta ma a közérzeted?",
+  "wellbeingUpdate": "Bejegyzés frissítése",
+  "wellbeingSave": "Nap mentése",
+  "wellbeingDelete": "E napi bejegyzés törlése",
+  "wellbeingHistory": "Korábbi napok ({count})",
+  "@wellbeingHistory": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wellbeingEmpty": "Még nincs mentett nap.",
+  "wellbeingSummary": "Hangulat {mood}/5 • Alvás {sleep}/5",
+  "@wellbeingSummary": {
+    "placeholders": {
+      "mood": {
+        "type": "int"
+      },
+      "sleep": {
+        "type": "int"
+      }
+    }
+  },
+  "wellbeingSymptoms": "Tünetek {rating}/4",
+  "@wellbeingSymptoms": {
+    "placeholders": {
+      "rating": {
+        "type": "int"
+      }
+    }
+  },
+  "wellbeingCaution": "A feljegyzések önbevalláson alapulnak, nem orvosi értékelések. Súlyos tünetek esetén kérj egészségügyi segítséget.",
+  "wellbeingSaved": "A napi közérzeted mentve.",
+  "wellbeingReadError": "A napló nem olvasható biztonságosan. A meglévő adatok megmaradtak; az írás letiltva.",
+  "wellbeingSafeHint": "Hangulat, alvás és saját jegyzetek",
+  "profileLocalTitle": "Saját Mentim",
+  "journalCustomWriteError": "A saját italok módosítása nem sikerült; az eredeti adatokat megőriztük.",
+  "journalNewCustom": "Új saját ital",
+  "journalDrinkName": "Ital neve",
+  "journalDrinkHint": "Pl. Házi barackpálinka",
+  "journalMl": "Mennyiség (ml)",
+  "journalPercent": "Alkoholfok (%)",
+  "journalInvalid": "Adj meg érvényes adatokat!",
+  "journalSetPrice": "Ár megadása: {name}",
+  "@journalSetPrice": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "journalPrice": "Fizetett ár (Ft)",
+  "journalRemovePrice": "Ár törlése",
+  "journalInvalidAmount": "Adj meg érvényes összeget!",
+  "journalSaved": "{name} mentve a naplóba",
+  "@journalSaved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "journalAddTitle": "Ital hozzáadása",
+  "journalFavorites": "⭐ Kedvenceid",
+  "journalFavorite": "Kedvenc",
+  "journalCustoms": "Saját italok",
+  "journalDeleteCustom": "Saját ital törlése",
+  "journalCustomReadError": "A saját italok nem tölthetők be biztonságosan; módosításuk letiltva.",
+  "journalCreateCustom": "Új saját ital létrehozása",
+  "journalDeleteTitle": "Bejegyzés törlése?",
+  "journalDeleteBody": "A(z) {name} bejegyzést eltávolítjuk a naplóból.",
+  "@journalDeleteBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "journalDelete": "Törlés",
+  "journalDetailsHint": "Rögzítsd, amit ténylegesen fogyasztottál.",
+  "journalMlError": "Adj meg 1 és 10 000 ml közötti mennyiséget.",
+  "journalPercentError": "Adj meg 0 és 100 közötti alkoholfokot.",
+  "journalOptionalPrice": "Fizetett ár (Ft) – opcionális",
+  "journalPriceHint": "Üresen hagyva ismeretlen árként mentjük.",
+  "journalPriceError": "Adj meg érvényes árat (0–10 000 000 Ft).",
+  "journalSave": "Mentés a naplóba",
+  "catalogBeer": "Sör (általános)",
+  "catalogLager": "Világos sör",
+  "catalogDarkBeer": "Barna sör",
+  "catalogWhiteWine": "Fehérbor",
+  "catalogRedWine": "Vörösbor",
+  "catalogRoseWine": "Rozé",
+  "catalogSmallSpritzer": "Kisfröccs",
+  "catalogLargeSpritzer": "Nagyfröccs",
+  "catalogPalinka": "Pálinka",
+  "catalogUnicum": "Unicum (általános)",
+  "uiMonthlyBudgetHuf": "Havi költségkeret (Ft)",
+  "uiMonthlyGoalForDaysWithoutDrinkEntries": "Havi naplózott ital nélküli napok célja",
+  "uiCancel": "Mégse",
+  "uiInvalidGoalValue": "Érvénytelen célérték",
+  "uiSave": "Mentés",
+  "uiMentiNoDrinksHaveBeenLoggedThisMonthYet": "Menti: Még nincs naplózott ital ebben a hónapban. 🌱",
+  "uiMentiMindfulTrackingIsWhatMattersGoAtYour": "Menti: A tudatos követés a lényeg. Haladj a saját tempódban! 💜",
+  "uiAMessageFromMenti": "💜 Menti üzenete",
+  "uiSpending": "💰 Kiadások",
+  "uiEveryLoggedDrinkHasAPrice": "Minden naplózott italhoz tartozik ár.",
+  "uiNotSet": "nincs beállítva",
+  "uiSetBudget": "Keret beállítása",
+  "uiPersonalGoals": "🎯 Személyes célok",
+  "uiThisDoesNotProveAnAlcoholFreeDayThere": "Ez nem bizonyítja az alkoholmentességet: csak a naplóban nincs bejegyzés.",
+  "uiSetDaysGoal": "Napcél beállítása",
+  "uiDrinkJournalCalendar": "📅 Fogyasztási naptár",
+  "uiPurpleDrinkLoggedGreenNoDrinkLoggedGrayFuture": "Lila: van naplózott ital • Zöld: nincs naplózott ital • Szürke: jövőbeli nap",
+  "uiMonthlySummary": "📊 Havi összesítés",
+  "uiNoDataYet": "Még nincs adat.",
+  "uiTheseAreSelfReportedRecordsTheyCannotEstablishSobriety": "Az adatok önbevalláson alapulnak. Nem alkalmasak a józanság vagy vezetési képesség megállapítására.",
+  "uiPreviousAverageMonthlyDrinkSpending": "Korábbi átlagos havi italköltés",
+  "uiMonthlyBudget": "Havi költségkeret",
+  "uiAmountInHuf": "Összeg forintban",
+  "uiEG30000": "Pl. 30000",
+  "uiEG15000": "Pl. 15000",
+  "uiEG15": "Pl. 15",
+  "uiEnterAnAmountBetween0And100000000": "0 és 100 000 000 Ft közötti számot adj meg.",
+  "uiSavingFailed": "A mentés nem sikerült.",
+  "uiFinanceCenter": "Pénzügyi központ",
+  "uiPreviousMonth": "Előző hónap",
+  "uiNextMonth": "Következő hónap",
+  "uiRecordedDrinkSpending": "RÖGZÍTETT ITALKÖLTÉS",
+  "uiThisTotalIsIncompleteBecauseSomePricesAreMissing": "Az összeg nem teljes, mert egyes italok ára hiányzik.",
+  "uiNotSetYet": "Még nincs beállítva",
+  "uiUsed": "Felhasználva",
+  "uiTheBudgetIsZeroAPercentageCannotBeCalculated": "A keret 0 Ft. Az előrehaladás százalékosan nem értelmezhető.",
+  "uiEditBudget": "Keret módosítása",
+  "uiEstimatedChangeFromPreviousHabits": "Becsült változás a korábbi szokásokhoz képest",
+  "uiSetYourPreviousAverageMonthlyDrinkSpending": "Állítsd be a korábbi havi átlagos italköltésedet.",
+  "uiAddTheMissingDrinkPricesBeforeComparing": "Az összehasonlításhoz előbb add meg a hiányzó italárakat.",
+  "uiThisIsAnEstimateNotVerifiedSavingsYouProvide": "Ez becslés, nem igazolt megtakarítás. A korábbi átlagot te adod meg; a hónap időarányosan szerepel.",
+  "uiSetPreviousMonthlyAverage": "Korábbi havi átlag beállítása",
+  "uiWeeklySpending": "Heti költések",
+  "uiTheChartIncludesKnownPricesOnly": "A diagram csak az ismert árakat tartalmazza.",
+  "uiFinancialFiguresAreSelfReportedThisJournalCannotEstablish": "A pénzügyi adatok önbevalláson alapulnak. A napló nem alkalmas a józanság vagy vezetési képesség megállapítására.",
+  "uiTheWellbeingJournalCouldNotBeLoaded": "Nem sikerült betölteni a közérzetnaplót.",
+  "uiMentiYouCanRecordYourMoodTooItHelps": "Menti: Ha van kedved, naplózd a hangulatodat is. Ettől személyesebb lesz az összkép.",
+  "uiMentiNoDrinksAreRecordedThisWeekWeCannot": "Menti: Ezen a héten nincs rögzített ital. A nem naplózott napokról nem tudunk biztosat.",
+  "uiMentiYourOwnRecordsAreComingTogetherLookFor": "Menti: Már a saját adataidat is együtt láthatod. Figyeld a mintákat, de ne vonj le elhamarkodott következtetéseket!",
+  "uiLifestyleInsights": "Életmódelemzés 4.1",
+  "uiRefresh": "Frissítés",
+  "uiMentiSWeeklyMessage": "Menti heti üzenete",
+  "uiThePast7Days": "Az elmúlt 7 nap",
+  "uiLoggedDrinks": "Naplózott italok",
+  "uiPureAlcoholRecorded": "Tiszta alkohol a naplóban",
+  "uiKnownSpending": "Ismert költés",
+  "uiWellbeingEntries": "Közérzeti bejegyzések",
+  "uiAverageMood": "Átlagos hangulat",
+  "uiAverageSleepQuality": "Átlagos alvásminőség",
+  "uiAverageHangoverSymptoms": "Másnapossági tünetek átlaga",
+  "uiCompareWithThePrevious7Days": "Összehasonlítás az előző 7 nappal",
+  "uiDrinksPreviousPeriod": "Italok – előző időszak",
+  "uiDrinksCurrentPeriod": "Italok – jelenlegi időszak",
+  "uiSpendingDifference": "Költéskülönbség",
+  "uiLess": "Kevesebb",
+  "uiMore": "Több",
+  "uiIncompletePrices": "Hiányos árak",
+  "uiThisIsADifferenceInRecordedSpendingNotVerified": "Ez naplózott költéskülönbség, nem igazolt megtakarítás. A két hét eltérhet, és hiányozhatnak bejegyzések.",
+  "uiPreviousDayAndNextDayWellbeing": "Előző nap és másnapi közérzet",
+  "uiThereAreNoPairedRecordsWithADrinkOn": "Még nincs olyan páros adat, ahol az előző napon ital és a következő napon közérzet is szerepel.",
+  "uiManyFactorsAffectWellbeingCorrelationDoesNotProveCausation": "A közérzetet sok tényező befolyásolhatja. Az együttjárás nem bizonyít ok-okozatot, és ez nem orvosi értékelés.",
+  "uiAllRecordsAreLocalAndSelfReportedThisJournal": "Minden adat helyben, önbevallás alapján készül. A napló nem alkalmas a józanság vagy vezetési képesség megállapítására.",
+  "uiNoData": "Nincs adat",
+  "uiNoData2": "nincs adat",
+  "uiGoalsCouldNotBeLoaded": "A célok betöltése nem sikerült.",
+  "uiSavingFailedPleaseTryAgain": "Nem sikerült menteni. Próbáld újra.",
+  "uiAmountHuf": "Összeg (Ft)",
+  "uiEnterAValidAmount": "Érvényes összeget adj meg.",
+  "uiNewSavingsGoal": "Új megtakarítási cél",
+  "uiGoalName": "Cél neve",
+  "uiForExampleAHoliday": "Például: nyaralás",
+  "uiTargetAmountHuf": "Célösszeg (Ft)",
+  "uiEnterAGoalNameAndAValidAmount": "Add meg a cél nevét és egy érvényes összeget.",
+  "uiCreate": "Létrehozás",
+  "uiMoneyActuallySetAside": "Ténylegesen félretett pénz",
+  "uiDeleteThisGoal": "Cél törlése?",
+  "uiDelete": "Törlés",
+  "uiMySavingsGoals": "Megtakarítási céljaim",
+  "uiNewGoal": "Új cél",
+  "uiMennyiment22": "MENNYIMENT? 5.0",
+  "uiSaveForWhatMattersToYou": "Spórolj arra, ami igazán számít!",
+  "uiEstimatedSavingsProratedMonth": "Becsült megtakarítás – időarányos hónap",
+  "uiCannotBeCalculated": "Nem számolható",
+  "uiSetYourPreviousMonthlyAverage": "Állítsd be a korábbi havi átlagodat.",
+  "uiSetPreviousAverage": "Korábbi átlag beállítása",
+  "uiTheEstimateComparesTheProratedPreviousMonthlyAverageWith": "A becslés a korábbi havi átlag időarányos részét hasonlítja a naplózott költéshez. Nem ténylegesen félretett pénz, és hiányos napló esetén pontatlan lehet.",
+  "uiMentiSWorld": "MENTI VILÁGA",
+  "uiLookAtWhatYouHaveAchieved": "Nézd meg, mit értél el!",
+  "uiMentiCelebratesMilestonesBasedOnTheMoneyYouActually": "A valóban félretett összegek alapján Menti különböző mérföldköveket ünnepel veled.",
+  "uiOpenMentiSWorld": "Menti világának megnyitása",
+  "uiMoneyActuallySetAside2": "Valóban félretett pénz",
+  "uiNoGoalsYetCreateOneForAHolidayA": "Még nincs célod. Hozz létre például egy nyaralást, autót vagy saját elképzelést!",
+  "uiDeleteGoal": "Cél törlése",
+  "uiAddMoneySetAside": "Félretett összeg hozzáadása",
+  "uiTheseAmountsAreManualRecordsWithNoBankAccount": "A rögzített összegek kézi feljegyzések, nem kapcsolódnak bankszámlához. Az alkalmazás nem tesz át pénzt egyik számláról a másikra.",
+  "uiMentiYourWellbeingJournalCanHelpYouNoticeHow": "Menti: A közérzetnapló segíthet észrevenni, hogyan alakulnak a napjaid.",
+  "uiMentiSomeDrinkPricesAreStillMissingSoThe": "Menti: Néhány ital ára még hiányzik. Így a költési összeg csak részleges.",
+  "uiMentiThanksForTakingTimeForYourHabitsMindful": "Menti: Köszi, hogy foglalkozol a szokásaiddal. A tudatos megfigyelés fontos lépés!",
+  "uiWeeklyMentiReport": "Heti Menti-jelentés",
+  "uiYourWeekInOnePlace": "A heted egy helyen",
+  "uiASummaryOfSelfReportedRecordsNotAHealth": "Önbevalláson alapuló naplóösszesítő, nem egészségügyi értékelés.",
+  "uiPreviousWeek": "Előző hét",
+  "uiNextWeek": "Következő hét",
+  "uiAMessageFromMenti2": "Menti üzenete",
+  "uiRecordedConsumption": "Naplózott fogyasztás",
+  "uiADayWithoutAnEntryDoesNotProveAn": "A bejegyzés nélküli nap nem bizonyít alkoholmentességet.",
+  "uiDailyEntries": "Napi bejegyzések",
+  "uiWellbeingAndSleep": "Közérzet és alvás",
+  "uiRecordDailyWellbeing": "Napi közérzet kitöltése",
+  "uiMissingRecordsDoNotMeanZeroConsumptionOrGood": "Az adatok hiánya nem nulla fogyasztást vagy jó közérzetet jelent. A kimutatás összefüggéseket segít megfigyelni, de nem igazol ok-okozatot és nem alkalmas a józanság megállapítására.",
+  "uiHiPickASavingsGoalAndLetSStart": "Szia! Válassz egy megtakarítási célt, és indulhat a közös kaland!",
+  "uiYouDidItYouHaveCompletedASavingsGoal": "Ez igen! Már teljesítettél megtakarítási célt. Ünnepeljük meg!",
+  "uiYouHaveUnlockedMilestonesKeepGoingAtYourOwn": "Már vannak feloldott mérföldköveid. Haladj a saját tempódban!",
+  "uiEveryGoalStartsWithASmallAmountActuallySet": "Minden cél egy apró, valóban félretett összeggel kezdődik.",
+  "uiMentiSWorld2": "Menti világa",
+  "uiMennyimentMentiSWorld": "MENNYIMENT? • MENTI VILÁGA",
+  "uiYourAchievements": "A saját eredményeid",
+  "uiTotalSetAside": "Félretett összesen",
+  "uiUnlockedBadges": "Feloldott jelvények",
+  "uiCompletedGoals": "Elért célok",
+  "uiYourGoalsAndMilestones": "Céljaid és mérföldköveid",
+  "uiNoSavingsGoalsYetYouCanCreateOneOn": "Még nincs megtakarítási célod. A Céljaim képernyőn létrehozhatsz egyet.",
+  "uiBadgesReflectOnlyMoneyYouRecordAsActuallySet": "A jelvények kizárólag az alkalmazásban ténylegesen félretettként rögzített pénzhez kötődnek. A becsült megtakarítás nem számít bele. A felület nem kapcsolódik bankszámlához.",
+  "uiDaysValue": "{v0} nap",
+  "@uiDaysValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiRecordedSpendingValue": "Rögzített költés: {v0}",
+  "@uiRecordedSpendingValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiUnknownPricesTotal": "{v0} ital ára ismeretlen – az összeg nem teljes.",
+  "@uiUnknownPricesTotal": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiMonthlyBudgetValue": "Havi keret: {v0}",
+  "@uiMonthlyBudgetValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiUnrecordedDays": "Naplózott ital nélküli napok: {v0} / {v1}",
+  "@uiUnrecordedDays": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiMonthlyGoalValue": "Havi cél: {v0}",
+  "@uiMonthlyGoalValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiDayDrinks": "{v0}.: {v1} naplózott ital",
+  "@uiDayDrinks": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiDrinksAndGrams": "{v0} ital • {v1} g tiszta alkohol",
+  "@uiDrinksAndGrams": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiNameOccurrences": "{v0}: {v1} alkalom",
+  "@uiNameOccurrences": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiDrinkPriceCounts": "{v0} naplózott ital • {v1} hiányzó ár",
+  "@uiDrinkPriceCounts": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiPreviousMonthlyValue": "Korábbi havi átlag: {v0}",
+  "@uiPreviousMonthlyValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiComparisonDays": "Összevetés az időarányos korábbi átlaggal ({v0} / {v1} nap).",
+  "@uiComparisonDays": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiItemsValue": "{v0} db",
+  "@uiItemsValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiPartialDrinkSpending": "{v0} ital ára hiányzik; a költés csak részösszeg.",
+  "@uiPartialDrinkSpending": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiPairedDays": "Összekapcsolható napok: {v0}",
+  "@uiPairedDays": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiPairedWellbeing": "{v0}. – előző nap {v1} g; hangulat {v2}/5, alvás {v3}/5, tünet {v4}/4",
+  "@uiPairedWellbeing": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      },
+      "v2": {
+        "type": "String"
+      },
+      "v3": {
+        "type": "String"
+      },
+      "v4": {
+        "type": "String"
+      }
+    }
+  },
+  "uiDeleteSavingsGoal": "A(z) {v0} cél és a hozzá rögzített összeg törlődik a naplóból. Ez nem mozgat valódi pénzt.",
+  "@uiDeleteSavingsGoal": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiKnownMonthlySpending": "Ismert havi italköltés: {v0}",
+  "@uiKnownMonthlySpending": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiMissingSavingsPrices": "{v0} ital ára hiányzik – a becslés nem készíthető el.",
+  "@uiMissingSavingsPrices": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiPreviousWholeMonth": "Korábbi teljes havi átlag: {v0}",
+  "@uiPreviousWholeMonth": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiTotalGoalSavings": "Összesen a célokban: {v0}",
+  "@uiTotalGoalSavings": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiPercentComplete": "{v0}% teljesítve",
+  "@uiPercentComplete": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiKnownSpendingValue": "Ismert költés: {v0}",
+  "@uiKnownSpendingValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiWeekMissingPrices": "{v0} ital ára ismeretlen; ez nem teljes összeg.",
+  "@uiWeekMissingPrices": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiLoggedDayCount": "Naplózott itallal érintett napok: {v0} / {v1}",
+  "@uiLoggedDayCount": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiFilledDayCount": "Kitöltött napok: {v0} / {v1}",
+  "@uiFilledDayCount": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiAverageMoodValue": "Átlagos hangulat: {v0}",
+  "@uiAverageMoodValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiAverageSleepValue": "Átlagos alvásminőség: {v0}",
+  "@uiAverageSleepValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiSymptomDayCount": "Másnapossági tünetet jelzett napok: {v0}",
+  "@uiSymptomDayCount": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "milestoneInvalid": "Állíts be egy érvényes célösszeget!",
+  "milestoneComplete": "Menti: Elérted a kitűzött célod! 🎉",
+  "milestoneClose": "Menti: Már nagyon közel vagy a célodhoz!",
+  "milestoneHalf": "Menti: Félúton jársz, haladj a saját tempódban!",
+  "milestoneQuarter": "Menti: Megvan az első negyed!",
+  "milestoneStarted": "Menti: Minden ténylegesen félretett forint számít.",
+  "milestoneFirst": "Menti: Minden nagy cél egy apró lépéssel kezdődik.",
+  "milestoneHint": "A jelvények a kézzel rögzített félretett összeg alapján nyílnak meg."
 }

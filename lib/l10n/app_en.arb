@@ -729,5 +729,541 @@
       }
     }
   },
-  "avatarHeadwearCowboy": "Cowboy hat"
+  "avatarHeadwearCowboy": "Cowboy hat",
+  "startLanguage": "Hey! Which language shall we use?",
+  "startWelcome": "I’m Menti. Small steps, your own pace — and a mascot by your side.",
+  "startAgeTitle": "First, one important question",
+  "startAgeBody": "Are you 18 or older? Your Menti’s appearance is independent of your age. Under 18, only lifestyle and character features are available.",
+  "startAdult": "I am 18 or older",
+  "startMinor": "I am under 18",
+  "startLocalOnly": "This is a local age declaration, not identity verification. Your profile stays on this device; no account registration is required.",
+  "startCharacter": "Meet your own Menti!",
+  "startName": "Nickname",
+  "startNameBody": "What should I call you? You can restyle your Menti in the Studio anytime.",
+  "startFinish": "Save and let’s go",
+  "startSaveError": "We couldn’t finish safely. Your data is preserved; please retry. If the profile is damaged, restore a backup.",
+  "wellbeingQuestion": "How are you feeling?",
+  "wellbeingBody": "Your mood and sleep matter. There are no right or wrong answers.",
+  "wellbeingMood": "Mood",
+  "wellbeingScale": "1 = very low, 5 = very good",
+  "wellbeingSleep": "Sleep quality",
+  "wellbeingSleepHint": "Your own rating of your most recent sleep",
+  "wellbeingHangover": "Hangover symptoms",
+  "wellbeingHangoverHint": "0 = none, 4 = very strong",
+  "wellbeingVeryBad": "Very low",
+  "wellbeingBad": "Low",
+  "wellbeingMedium": "Moderate",
+  "wellbeingGood": "Good",
+  "wellbeingVeryGood": "Very good",
+  "wellbeingNone": "None",
+  "wellbeingMild": "Mild",
+  "wellbeingStrong": "Strong",
+  "wellbeingVeryStrong": "Very strong",
+  "wellbeingNote": "Note (optional)",
+  "wellbeingNoteHint": "What influenced how you felt today?",
+  "wellbeingUpdate": "Update entry",
+  "wellbeingSave": "Save day",
+  "wellbeingDelete": "Delete this day’s entry",
+  "wellbeingHistory": "Previous days ({count})",
+  "@wellbeingHistory": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "wellbeingEmpty": "No saved days yet.",
+  "wellbeingSummary": "Mood {mood}/5 • Sleep {sleep}/5",
+  "@wellbeingSummary": {
+    "placeholders": {
+      "mood": {
+        "type": "int"
+      },
+      "sleep": {
+        "type": "int"
+      }
+    }
+  },
+  "wellbeingSymptoms": "Symptoms {rating}/4",
+  "@wellbeingSymptoms": {
+    "placeholders": {
+      "rating": {
+        "type": "int"
+      }
+    }
+  },
+  "wellbeingCaution": "These are personal observations, not medical assessments. Seek medical help for severe symptoms.",
+  "wellbeingSaved": "Your daily wellbeing has been saved.",
+  "wellbeingReadError": "The journal cannot be read safely. Your existing data is preserved; editing is disabled.",
+  "wellbeingSafeHint": "Mood, sleep and personal notes",
+  "profileLocalTitle": "My Menti",
+  "journalCustomWriteError": "Your custom drinks could not be changed. The original data is preserved.",
+  "journalNewCustom": "New custom drink",
+  "journalDrinkName": "Drink name",
+  "journalDrinkHint": "For example, a homemade drink",
+  "journalMl": "Amount (ml)",
+  "journalPercent": "Alcohol content (%)",
+  "journalInvalid": "Please enter valid details.",
+  "journalSetPrice": "Set price: {name}",
+  "@journalSetPrice": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "journalPrice": "Price paid (HUF)",
+  "journalRemovePrice": "Remove price",
+  "journalInvalidAmount": "Please enter a valid amount.",
+  "journalSaved": "{name} saved to your journal",
+  "@journalSaved": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "journalAddTitle": "Add a drink",
+  "journalFavorites": "⭐ Your favorites",
+  "journalFavorite": "Favorite",
+  "journalCustoms": "Custom drinks",
+  "journalDeleteCustom": "Delete custom drink",
+  "journalCustomReadError": "Custom drinks could not be loaded safely; editing is disabled.",
+  "journalCreateCustom": "Create a custom drink",
+  "journalDeleteTitle": "Delete this entry?",
+  "journalDeleteBody": "The entry for {name} will be removed from your journal.",
+  "@journalDeleteBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "journalDelete": "Delete",
+  "journalDetailsHint": "Record what you actually consumed.",
+  "journalMlError": "Enter an amount between 1 and 10,000 ml.",
+  "journalPercentError": "Enter an alcohol content from 0 to 100%.",
+  "journalOptionalPrice": "Price paid (HUF) — optional",
+  "journalPriceHint": "Leave blank to save the price as unknown.",
+  "journalPriceError": "Enter a valid price from 0 to 10,000,000 HUF.",
+  "journalSave": "Save to journal",
+  "catalogBeer": "Beer (standard)",
+  "catalogLager": "Lager",
+  "catalogDarkBeer": "Dark beer",
+  "catalogWhiteWine": "White wine",
+  "catalogRedWine": "Red wine",
+  "catalogRoseWine": "Rosé",
+  "catalogSmallSpritzer": "Small wine spritzer",
+  "catalogLargeSpritzer": "Large wine spritzer",
+  "catalogPalinka": "Pálinka",
+  "catalogUnicum": "Unicum (standard)",
+  "uiMonthlyBudgetHuf": "Monthly budget (HUF)",
+  "uiMonthlyGoalForDaysWithoutDrinkEntries": "Monthly goal for days without drink entries",
+  "uiCancel": "Cancel",
+  "uiInvalidGoalValue": "Invalid goal value",
+  "uiSave": "Save",
+  "uiMentiNoDrinksHaveBeenLoggedThisMonthYet": "Menti: No drinks have been logged this month yet. 🌱",
+  "uiMentiMindfulTrackingIsWhatMattersGoAtYour": "Menti: Mindful tracking is what matters. Go at your own pace! 💜",
+  "uiAMessageFromMenti": "💜 A message from Menti",
+  "uiSpending": "💰 Spending",
+  "uiEveryLoggedDrinkHasAPrice": "Every logged drink has a price.",
+  "uiNotSet": "not set",
+  "uiSetBudget": "Set budget",
+  "uiPersonalGoals": "🎯 Personal goals",
+  "uiThisDoesNotProveAnAlcoholFreeDayThere": "This does not prove an alcohol-free day; there is simply no journal entry.",
+  "uiSetDaysGoal": "Set days goal",
+  "uiDrinkJournalCalendar": "📅 Drink journal calendar",
+  "uiPurpleDrinkLoggedGreenNoDrinkLoggedGrayFuture": "Purple: drink logged • Green: no drink logged • Gray: future day",
+  "uiMonthlySummary": "📊 Monthly summary",
+  "uiNoDataYet": "No data yet.",
+  "uiTheseAreSelfReportedRecordsTheyCannotEstablishSobriety": "These are self-reported records. They cannot establish sobriety or fitness to drive.",
+  "uiPreviousAverageMonthlyDrinkSpending": "Previous average monthly drink spending",
+  "uiMonthlyBudget": "Monthly budget",
+  "uiAmountInHuf": "Amount in HUF",
+  "uiEG30000": "e.g. 30000",
+  "uiEG15000": "e.g. 15000",
+  "uiEG15": "e.g. 15",
+  "uiEnterAnAmountBetween0And100000000": "Enter an amount between 0 and 100,000,000 HUF.",
+  "uiSavingFailed": "Saving failed.",
+  "uiFinanceCenter": "Finance center",
+  "uiPreviousMonth": "Previous month",
+  "uiNextMonth": "Next month",
+  "uiRecordedDrinkSpending": "RECORDED DRINK SPENDING",
+  "uiThisTotalIsIncompleteBecauseSomePricesAreMissing": "This total is incomplete because some prices are missing.",
+  "uiNotSetYet": "Not set yet",
+  "uiUsed": "Used",
+  "uiTheBudgetIsZeroAPercentageCannotBeCalculated": "The budget is zero. A percentage cannot be calculated.",
+  "uiEditBudget": "Edit budget",
+  "uiEstimatedChangeFromPreviousHabits": "Estimated change from previous habits",
+  "uiSetYourPreviousAverageMonthlyDrinkSpending": "Set your previous average monthly drink spending.",
+  "uiAddTheMissingDrinkPricesBeforeComparing": "Add the missing drink prices before comparing.",
+  "uiThisIsAnEstimateNotVerifiedSavingsYouProvide": "This is an estimate, not verified savings. You provide the previous average; the month is prorated.",
+  "uiSetPreviousMonthlyAverage": "Set previous monthly average",
+  "uiWeeklySpending": "Weekly spending",
+  "uiTheChartIncludesKnownPricesOnly": "The chart includes known prices only.",
+  "uiFinancialFiguresAreSelfReportedThisJournalCannotEstablish": "Financial figures are self-reported. This journal cannot establish sobriety or fitness to drive.",
+  "uiTheWellbeingJournalCouldNotBeLoaded": "The wellbeing journal could not be loaded.",
+  "uiMentiYouCanRecordYourMoodTooItHelps": "Menti: You can record your mood too. It helps make the picture more personal.",
+  "uiMentiNoDrinksAreRecordedThisWeekWeCannot": "Menti: No drinks are recorded this week. We cannot draw conclusions about unrecorded days.",
+  "uiMentiYourOwnRecordsAreComingTogetherLookFor": "Menti: Your own records are coming together. Look for patterns, without jumping to conclusions!",
+  "uiLifestyleInsights": "Lifestyle insights",
+  "uiRefresh": "Refresh",
+  "uiMentiSWeeklyMessage": "Menti’s weekly message",
+  "uiThePast7Days": "The past 7 days",
+  "uiLoggedDrinks": "Logged drinks",
+  "uiPureAlcoholRecorded": "Pure alcohol recorded",
+  "uiKnownSpending": "Known spending",
+  "uiWellbeingEntries": "Wellbeing entries",
+  "uiAverageMood": "Average mood",
+  "uiAverageSleepQuality": "Average sleep quality",
+  "uiAverageHangoverSymptoms": "Average hangover symptoms",
+  "uiCompareWithThePrevious7Days": "Compare with the previous 7 days",
+  "uiDrinksPreviousPeriod": "Drinks — previous period",
+  "uiDrinksCurrentPeriod": "Drinks — current period",
+  "uiSpendingDifference": "Spending difference",
+  "uiLess": "Less",
+  "uiMore": "More",
+  "uiIncompletePrices": "Incomplete prices",
+  "uiThisIsADifferenceInRecordedSpendingNotVerified": "This is a difference in recorded spending, not verified savings. The weeks may differ and entries may be missing.",
+  "uiPreviousDayAndNextDayWellbeing": "Previous day and next-day wellbeing",
+  "uiThereAreNoPairedRecordsWithADrinkOn": "There are no paired records with a drink on one day and a wellbeing entry the following day yet.",
+  "uiManyFactorsAffectWellbeingCorrelationDoesNotProveCausation": "Many factors affect wellbeing. Correlation does not prove causation; this is not a medical assessment.",
+  "uiAllRecordsAreLocalAndSelfReportedThisJournal": "All records are local and self-reported. This journal cannot establish sobriety or fitness to drive.",
+  "uiNoData": "No data",
+  "uiNoData2": "no data",
+  "uiGoalsCouldNotBeLoaded": "Goals could not be loaded.",
+  "uiSavingFailedPleaseTryAgain": "Saving failed. Please try again.",
+  "uiAmountHuf": "Amount (HUF)",
+  "uiEnterAValidAmount": "Enter a valid amount.",
+  "uiNewSavingsGoal": "New savings goal",
+  "uiGoalName": "Goal name",
+  "uiForExampleAHoliday": "For example: a holiday",
+  "uiTargetAmountHuf": "Target amount (HUF)",
+  "uiEnterAGoalNameAndAValidAmount": "Enter a goal name and a valid amount.",
+  "uiCreate": "Create",
+  "uiMoneyActuallySetAside": "Money actually set aside",
+  "uiDeleteThisGoal": "Delete this goal?",
+  "uiDelete": "Delete",
+  "uiMySavingsGoals": "My savings goals",
+  "uiNewGoal": "New goal",
+  "uiMennyiment22": "MENNYIMENT? 2.2",
+  "uiSaveForWhatMattersToYou": "Save for what matters to you!",
+  "uiEstimatedSavingsProratedMonth": "Estimated savings — prorated month",
+  "uiCannotBeCalculated": "Cannot be calculated",
+  "uiSetYourPreviousMonthlyAverage": "Set your previous monthly average.",
+  "uiSetPreviousAverage": "Set previous average",
+  "uiTheEstimateComparesTheProratedPreviousMonthlyAverageWith": "The estimate compares the prorated previous monthly average with recorded spending. It is not money actually set aside and may be inaccurate with incomplete records.",
+  "uiMentiSWorld": "MENTI’S WORLD",
+  "uiLookAtWhatYouHaveAchieved": "Look at what you have achieved!",
+  "uiMentiCelebratesMilestonesBasedOnTheMoneyYouActually": "Menti celebrates milestones based on the money you actually set aside.",
+  "uiOpenMentiSWorld": "Open Menti’s world",
+  "uiMoneyActuallySetAside2": "Money actually set aside",
+  "uiNoGoalsYetCreateOneForAHolidayA": "No goals yet. Create one for a holiday, a car, or something of your own!",
+  "uiDeleteGoal": "Delete goal",
+  "uiAddMoneySetAside": "Add money set aside",
+  "uiTheseAmountsAreManualRecordsWithNoBankAccount": "These amounts are manual records, with no bank account connection. The app does not transfer money between accounts.",
+  "uiMentiYourWellbeingJournalCanHelpYouNoticeHow": "Menti: Your wellbeing journal can help you notice how your days are going.",
+  "uiMentiSomeDrinkPricesAreStillMissingSoThe": "Menti: Some drink prices are still missing, so the spending total is incomplete.",
+  "uiMentiThanksForTakingTimeForYourHabitsMindful": "Menti: Thanks for taking time for your habits. Mindful observation is an important step!",
+  "uiWeeklyMentiReport": "Weekly Menti report",
+  "uiYourWeekInOnePlace": "Your week in one place",
+  "uiASummaryOfSelfReportedRecordsNotAHealth": "A summary of self-reported records, not a health assessment.",
+  "uiPreviousWeek": "Previous week",
+  "uiNextWeek": "Next week",
+  "uiAMessageFromMenti2": "A message from Menti",
+  "uiRecordedConsumption": "Recorded consumption",
+  "uiADayWithoutAnEntryDoesNotProveAn": "A day without an entry does not prove an alcohol-free day.",
+  "uiDailyEntries": "Daily entries",
+  "uiWellbeingAndSleep": "Wellbeing and sleep",
+  "uiRecordDailyWellbeing": "Record daily wellbeing",
+  "uiMissingRecordsDoNotMeanZeroConsumptionOrGood": "Missing records do not mean zero consumption or good wellbeing. This report helps you observe patterns, but does not prove causation or establish sobriety.",
+  "uiHiPickASavingsGoalAndLetSStart": "Hi! Pick a savings goal and let’s start our adventure!",
+  "uiYouDidItYouHaveCompletedASavingsGoal": "You did it! You have completed a savings goal. Let’s celebrate!",
+  "uiYouHaveUnlockedMilestonesKeepGoingAtYourOwn": "You have unlocked milestones. Keep going at your own pace!",
+  "uiEveryGoalStartsWithASmallAmountActuallySet": "Every goal starts with a small amount actually set aside.",
+  "uiMentiSWorld2": "Menti’s world",
+  "uiMennyimentMentiSWorld": "MENNYIMENT? • MENTI’S WORLD",
+  "uiYourAchievements": "Your achievements",
+  "uiTotalSetAside": "Total set aside",
+  "uiUnlockedBadges": "Unlocked badges",
+  "uiCompletedGoals": "Completed goals",
+  "uiYourGoalsAndMilestones": "Your goals and milestones",
+  "uiNoSavingsGoalsYetYouCanCreateOneOn": "No savings goals yet. You can create one on the My Goals screen.",
+  "uiBadgesReflectOnlyMoneyYouRecordAsActuallySet": "Badges reflect only money you record as actually set aside. Estimated savings do not count. This screen has no bank account connection.",
+  "uiDaysValue": "{v0} days",
+  "@uiDaysValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiRecordedSpendingValue": "Recorded spending: {v0}",
+  "@uiRecordedSpendingValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiUnknownPricesTotal": "{v0} drink prices are unknown; this total is incomplete.",
+  "@uiUnknownPricesTotal": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiMonthlyBudgetValue": "Monthly budget: {v0}",
+  "@uiMonthlyBudgetValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiUnrecordedDays": "Days without drink entries: {v0} / {v1}",
+  "@uiUnrecordedDays": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiMonthlyGoalValue": "Monthly goal: {v0}",
+  "@uiMonthlyGoalValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiDayDrinks": "Day {v0}: {v1} drinks logged",
+  "@uiDayDrinks": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiDrinksAndGrams": "{v0} drinks • {v1} g pure alcohol",
+  "@uiDrinksAndGrams": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiNameOccurrences": "{v0}: {v1} entries",
+  "@uiNameOccurrences": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiDrinkPriceCounts": "{v0} drinks logged • {v1} missing prices",
+  "@uiDrinkPriceCounts": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiPreviousMonthlyValue": "Previous monthly average: {v0}",
+  "@uiPreviousMonthlyValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiComparisonDays": "Compared with the prorated previous average ({v0} / {v1} days).",
+  "@uiComparisonDays": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiItemsValue": "{v0} items",
+  "@uiItemsValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiPartialDrinkSpending": "{v0} prices are missing; spending is a partial total.",
+  "@uiPartialDrinkSpending": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiPairedDays": "Days with paired records: {v0}",
+  "@uiPairedDays": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiPairedWellbeing": "{v0} — previous day {v1} g; mood {v2}/5, sleep {v3}/5, symptoms {v4}/4",
+  "@uiPairedWellbeing": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      },
+      "v2": {
+        "type": "String"
+      },
+      "v3": {
+        "type": "String"
+      },
+      "v4": {
+        "type": "String"
+      }
+    }
+  },
+  "uiDeleteSavingsGoal": "The goal {v0} and its recorded amount will be deleted. No real money is moved.",
+  "@uiDeleteSavingsGoal": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiKnownMonthlySpending": "Known monthly drink spending: {v0}",
+  "@uiKnownMonthlySpending": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiMissingSavingsPrices": "{v0} drink prices are missing; an estimate cannot be made.",
+  "@uiMissingSavingsPrices": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiPreviousWholeMonth": "Previous full monthly average: {v0}",
+  "@uiPreviousWholeMonth": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiTotalGoalSavings": "Total in goals: {v0}",
+  "@uiTotalGoalSavings": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiPercentComplete": "{v0}% complete",
+  "@uiPercentComplete": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiKnownSpendingValue": "Known spending: {v0}",
+  "@uiKnownSpendingValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiWeekMissingPrices": "{v0} drink prices are unknown; this total is incomplete.",
+  "@uiWeekMissingPrices": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiLoggedDayCount": "Days with drink entries: {v0} / {v1}",
+  "@uiLoggedDayCount": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiFilledDayCount": "Days completed: {v0} / {v1}",
+  "@uiFilledDayCount": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      },
+      "v1": {
+        "type": "String"
+      }
+    }
+  },
+  "uiAverageMoodValue": "Average mood: {v0}",
+  "@uiAverageMoodValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiAverageSleepValue": "Average sleep quality: {v0}",
+  "@uiAverageSleepValue": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "uiSymptomDayCount": "Days with reported hangover symptoms: {v0}",
+  "@uiSymptomDayCount": {
+    "placeholders": {
+      "v0": {
+        "type": "String"
+      }
+    }
+  },
+  "milestoneInvalid": "Set a valid target amount!",
+  "milestoneComplete": "Menti: You reached your goal! 🎉",
+  "milestoneClose": "Menti: You are getting very close!",
+  "milestoneHalf": "Menti: Halfway there — keep going at your own pace!",
+  "milestoneQuarter": "Menti: That is the first quarter!",
+  "milestoneStarted": "Menti: Every bit you actually set aside counts.",
+  "milestoneFirst": "Menti: Every big goal starts with a small step.",
+  "milestoneHint": "Badges unlock based on the money you manually record as set aside."
 }

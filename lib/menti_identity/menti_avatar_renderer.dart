@@ -7,18 +7,27 @@ import 'menti_identity.dart';
 import 'menti_identity_controller.dart';
 import 'menti_visual_catalog.dart';
 import 'menti_family_layout.dart';
+import 'menti_premium_renderer.dart';
+import 'menti_premium_motion.dart';
 
 /// Pure, deterministic composition. Unknown IDs render a known safe layer without
 /// mutating the saved identity. No timers, rewards or preference writes.
 class MentiAvatarRenderer extends StatelessWidget {
   const MentiAvatarRenderer({super.key, required this.profile, this.size = 260,
-    this.reaction, this.showBackground = true});
+    this.reaction, this.showBackground = true, this.animate = false});
   final MentiIdentityProfile profile;
   final double size;
   final String? reaction;
   final bool showBackground;
+  final bool animate;
 
+  /// Actual source files used by the current premium composition.
   static List<String> layers(MentiIdentityProfile profile, {String? reaction,
+      bool showBackground = true}) => MentiPremiumComposition.layers(profile,
+        reaction:reaction,showBackground:showBackground);
+
+  /// Retained only to reproduce the immutable PR28/29 SVG evidence and fixtures.
+  static List<String> legacyLayers(MentiIdentityProfile profile, {String? reaction,
       bool showBackground = true}) {
     final v = profile.visual;
     final family = MentiVisualCatalog.resolve('family', v.value('family')).id;
@@ -46,14 +55,13 @@ class MentiAvatarRenderer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final activeReaction = MentiExperienceScope.reactionsOf(context) ? reaction : null;
-    final paths = layers(profile, reaction: activeReaction, showBackground: showBackground);
+    final paths = MentiPremiumComposition.assets;
     return Semantics(label: appStrings(context).avatarPreview(profile.name), image: true,
       child: ExcludeSemantics(child: RepaintBoundary(child: SizedBox(
         width: size, height: size * 1.25,
         child: MentiMaterialGate(paths: paths.where((p) => p.endsWith('.png')).toList(),
-          child: Stack(fit: StackFit.expand, children: [
-            for (final path in paths) MentiFittedLayer(path: path, layout: MentiFamilyLayout.of(profile)),
-          ])),
+          child: animate ? MentiPremiumMotion(profile: profile,reaction: activeReaction,showBackground:showBackground)
+            : MentiPremiumComposition(profile: profile, reaction: activeReaction,showBackground:showBackground)),
       ))));
   }
 }
@@ -153,16 +161,14 @@ class MentiPreviewRenderer extends StatelessWidget {
     Rect crop;
     if (option.field == 'family' || option.field == 'age') return const Rect.fromLTWH(0,0,320,400);
     if (option.field == 'held' && option.id == 'notebook') {
-      crop = const Rect.fromLTWH(0, 215, 100, 105);
+      crop = const Rect.fromLTWH(0, 225, 100, 115);
     } else if (option.field == 'held' && option.id != 'none') {
-      crop = const Rect.fromLTWH(230, 210, 90, 110);
+      crop = const Rect.fromLTWH(230, 225, 90, 115);
     } else {
-      final box = MentiVisualCatalog.previewCrops[option.field]!;
+      final box = MentiPremiumComposition.previewCrops[option.field]!;
       crop = Rect.fromLTWH(box[0],box[1],box[2],box[3]);
     }
-    if (profile == null) return crop;
-    final fitted = MentiFamilyLayout.of(profile).forField(option.field).mapRect(crop);
-    return fitted.intersect(const Rect.fromLTWH(0,0,320,400));
+    return crop.intersect(const Rect.fromLTWH(0,0,320,400));
   }
   @override
   Widget build(BuildContext context) {
@@ -210,7 +216,7 @@ class MentiCurrentAvatar extends StatelessWidget {
     var profile = identity.profile;
     if (outfit != null) { profile = profile.copyWith(
       visual: profile.visual.withValues({'outfit': outfit!})); }
-    return MentiAvatarRenderer(profile: profile, size: size,
+    return MentiAvatarRenderer(profile: profile, size: size, animate:true,
       reaction: reaction == 'personality' ? profile.reaction.style : reaction);
   }
 }

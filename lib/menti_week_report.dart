@@ -1,3 +1,4 @@
+import 'app_language.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,8 +76,7 @@ class _MentiWeekReportPageState extends State<MentiWeekReportPage> {
   }
 
   String _formatDate(DateTime d) => '${d.month}. ${d.day.toString().padLeft(2, '0')}.';
-  String _ft(double n) => n.round().toString().replaceAllMapped(
-      RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ' ');
+  String _ft(double n) => localeCurrency(n,Localizations.localeOf(context).languageCode);
   Widget _card(Widget child) => Container(
     width: double.infinity,
     padding: const EdgeInsets.all(16),
@@ -115,58 +115,58 @@ class _MentiWeekReportPageState extends State<MentiWeekReportPage> {
     final observed = List.generate(7, (i) => start.add(Duration(days: i)))
         .where((d) => !d.isAfter(_date(now))).length;
     final message = moods.isEmpty
-        ? 'Menti: A közérzetnapló segíthet észrevenni, hogyan alakulnak a napjaid.'
+        ? appStrings(context).uiMentiYourWellbeingJournalCanHelpYouNoticeHow
         : unknown > 0
-            ? 'Menti: Néhány ital ára még hiányzik. Így a költési összeg csak részleges.'
-            : 'Menti: Köszi, hogy foglalkozol a szokásaiddal. A tudatos megfigyelés fontos lépés!';
+            ? appStrings(context).uiMentiSomeDrinkPricesAreStillMissingSoThe
+            : appStrings(context).uiMentiThanksForTakingTimeForYourHabitsMindful;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Heti Menti-jelentés')),
+      appBar: AppBar(title: Text(appStrings(context).uiWeeklyMentiReport)),
       body: _loading ? const Center(child: CircularProgressIndicator()) :
       Center(child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 720),
         child: ListView(padding: const EdgeInsets.all(16), children: [
-          const Text('A heted egy helyen',
+          Text(appStrings(context).uiYourWeekInOnePlace,
               style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800)),
           const SizedBox(height: 6),
-          const Text('Önbevalláson alapuló naplóösszesítő, nem egészségügyi értékelés.',
+          Text(appStrings(context).uiASummaryOfSelfReportedRecordsNotAHealth,
               style: TextStyle(color: Colors.white70)),
           const SizedBox(height: 12),
           Row(children: [
             IconButton(onPressed: () => setState(() => _weeksBack++),
-                icon: const Icon(Icons.chevron_left), tooltip: 'Előző hét'),
+                icon: const Icon(Icons.chevron_left), tooltip: appStrings(context).uiPreviousWeek),
             Expanded(child: Text('${_formatDate(start)} – ${_formatDate(endDay)}',
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17))),
             IconButton(onPressed: _weeksBack == 0 ? null :
                 () => setState(() => _weeksBack--),
-                icon: const Icon(Icons.chevron_right), tooltip: 'Következő hét'),
+                icon: const Icon(Icons.chevron_right), tooltip: appStrings(context).uiNextWeek),
           ]),
           const SizedBox(height: 12),
           _card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Menti üzenete', style: TextStyle(color: _mint,
+            Text(appStrings(context).uiAMessageFromMenti2, style: TextStyle(color: _mint,
                 fontWeight: FontWeight.bold, fontSize: 17)),
             const SizedBox(height: 8), Text(message),
           ])),
           const SizedBox(height: 12),
           _card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Naplózott fogyasztás',
+            Text(appStrings(context).uiRecordedConsumption,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             const SizedBox(height: 12),
-            Text('${thisWeek.length} ital • ${grams.toStringAsFixed(1)} g tiszta alkohol'),
+            Text(appStrings(context).uiDrinksAndGrams((thisWeek.length).toString(),(grams.toStringAsFixed(1)).toString())),
             const SizedBox(height: 6),
-            Text('Ismert költés: ${_ft(known)} Ft'),
-            if (unknown > 0) Text('$unknown ital ára ismeretlen; ez nem teljes összeg.',
+            Text(appStrings(context).uiKnownSpendingValue((_ft(known)).toString())),
+            if (unknown > 0) Text(appStrings(context).uiWeekMissingPrices((unknown).toString()),
                 style: const TextStyle(color: Colors.amber)),
             const SizedBox(height: 6),
-            Text('Naplózott itallal érintett napok: $loggedDays / $observed'),
+            Text(appStrings(context).uiLoggedDayCount((loggedDays).toString(),(observed).toString())),
             const SizedBox(height: 8),
-            const Text('A bejegyzés nélküli nap nem bizonyít alkoholmentességet.',
+            Text(appStrings(context).uiADayWithoutAnEntryDoesNotProveAn,
                 style: TextStyle(fontSize: 12, color: Colors.white70)),
           ])),
           const SizedBox(height: 12),
           _card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Napi bejegyzések',
+            Text(appStrings(context).uiDailyEntries,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             const SizedBox(height: 12),
             for (var i = 0; i < 7; i++) Padding(
@@ -189,23 +189,21 @@ class _MentiWeekReportPageState extends State<MentiWeekReportPage> {
           ])),
           const SizedBox(height: 12),
           _card(Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text('Közérzet és alvás',
+            Text(appStrings(context).uiWellbeingAndSleep,
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
             const SizedBox(height: 10),
-            Text('Kitöltött napok: ${moods.length} / $observed'),
+            Text(appStrings(context).uiFilledDayCount((moods.length).toString(),(observed).toString())),
             const SizedBox(height: 6),
-            Text('Átlagos hangulat: ${avgMood == null ? 'nincs adat' : '${avgMood.toStringAsFixed(1)} / 5'}'),
-            Text('Átlagos alvásminőség: ${avgSleep == null ? 'nincs adat' : '${avgSleep.toStringAsFixed(1)} / 5'}'),
-            Text('Másnapossági tünetet jelzett napok: $symptomDays'),
+            Text(appStrings(context).uiAverageMoodValue((avgMood==null?appStrings(context).uiNoData2:'${avgMood.toStringAsFixed(1)} / 5').toString())),
+            Text(appStrings(context).uiAverageSleepValue((avgSleep==null?appStrings(context).uiNoData2:'${avgSleep.toStringAsFixed(1)} / 5').toString())),
+            Text(appStrings(context).uiSymptomDayCount((symptomDays).toString())),
             const SizedBox(height: 12),
             OutlinedButton.icon(onPressed: _openDailyJournal,
                 icon: const Icon(Icons.edit_note),
-                label: const Text('Napi közérzet kitöltése')),
+                label: Text(appStrings(context).uiRecordDailyWellbeing)),
           ])),
           const SizedBox(height: 14),
-          const Text('Az adatok hiánya nem nulla fogyasztást vagy jó közérzetet jelent. '
-              'A kimutatás összefüggéseket segít megfigyelni, de nem igazol ok-okozatot '
-              'és nem alkalmas a józanság megállapítására.',
+          Text(appStrings(context).uiMissingRecordsDoNotMeanZeroConsumptionOrGood,
               style: TextStyle(fontSize: 12, color: Colors.white70)),
           const SizedBox(height: 20),
         ])),

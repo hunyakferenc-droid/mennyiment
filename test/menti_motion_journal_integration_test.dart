@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
-    SharedPreferences.setMockInitialValues({
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
       journalKey: saved,
       xpKey: xp,
       familyKey: 'girl',
@@ -96,7 +97,8 @@ void main() {
       };
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump();
-      SharedPreferences.setMockInitialValues(persisted);
+      persisted[adultAccessKey] = adultAccessValue;
+    SharedPreferences.setMockInitialValues(persisted);
       await tester.pumpWidget(const MennyiMentApp());
       await tester.pumpAndSettle();
       expect(tester.hasRunningAnimations, isFalse);

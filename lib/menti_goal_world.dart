@@ -1,5 +1,7 @@
+import 'app_language.dart';
 import 'package:flutter/material.dart';
 import 'menti_motion.dart';
+import 'menti_identity/menti_avatar_renderer.dart';
 
 /// Megjelenítési adatmodell: a meglévő megtakarítási célokból készül.
 /// Nem módosít és nem ment felhasználói adatokat.
@@ -42,7 +44,7 @@ class _MentiGoalWorldPageState extends State<MentiGoalWorldPage>
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (MentiMotionScope.animateOf(context)) {
-      if (!_float.isAnimating) _float.repeat(reverse: true);
+      if (_float.isDismissed) _float.forward();
     } else {
       _float.reset();
     }
@@ -54,8 +56,7 @@ class _MentiGoalWorldPageState extends State<MentiGoalWorldPage>
     super.dispose();
   }
 
-  String _formatFt(int value) =>
-      '${value.toString().replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (m) => ' ')} Ft';
+  String _formatFt(int value) => localeCurrency(value,Localizations.localeOf(context).languageCode);
 
   Widget _panel(Widget child) => Container(
     width: double.infinity,
@@ -73,18 +74,18 @@ class _MentiGoalWorldPageState extends State<MentiGoalWorldPage>
     final achieved = widget.goals.fold<int>(0, (sum, g) => sum + g.unlocked);
     final completed = widget.goals.where((g) => g.percent == 100).length;
     final message = widget.goals.isEmpty
-        ? 'Szia! Válassz egy megtakarítási célt, és indulhat a közös kaland!'
+        ? appStrings(context).uiHiPickASavingsGoalAndLetSStart
         : completed > 0
-            ? 'Ez igen! Már teljesítettél megtakarítási célt. Ünnepeljük meg!'
+            ? appStrings(context).uiYouDidItYouHaveCompletedASavingsGoal
             : achieved > 0
-                ? 'Már vannak feloldott mérföldköveid. Haladj a saját tempódban!'
-                : 'Minden cél egy apró, valóban félretett összeggel kezdődik.';
+                ? appStrings(context).uiYouHaveUnlockedMilestonesKeepGoingAtYourOwn
+                : appStrings(context).uiEveryGoalStartsWithASmallAmountActuallySet;
 
     return Scaffold(
       backgroundColor: const Color(0xFF100C17),
       appBar: AppBar(
         backgroundColor: const Color(0xFF100C17),
-        title: const Text('Menti világa'),
+        title: Text(appStrings(context).uiMentiSWorld2),
       ),
       body: Center(child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 700),
@@ -101,7 +102,7 @@ class _MentiGoalWorldPageState extends State<MentiGoalWorldPage>
               ),
               padding: const EdgeInsets.all(18),
               child: Column(children: [
-                const Text('MENNYIMENT? • MENTI VILÁGA',
+                Text(appStrings(context).uiMennyimentMentiSWorld,
                   style: TextStyle(color: orange,
                     fontSize: 12, fontWeight: FontWeight.w800,
                     letterSpacing: 1.2)),
@@ -109,9 +110,8 @@ class _MentiGoalWorldPageState extends State<MentiGoalWorldPage>
                 AnimatedBuilder(animation: _float, builder: (ctx, child) =>
                   Transform.translate(offset: Offset(0, -5 + _float.value * 10),
                     child: child),
-                  child: Semantics(label: 'Menti karakter',
-                    child: Image.asset('assets/images/menti_open.png',
-                      width: 180, height: 180, fit: BoxFit.contain))),
+                  child: MentiCurrentAvatar(size:180,legacyChild:Image.asset('assets/images/menti_open.png',
+                      width:180,height:180,fit:BoxFit.contain))),
                 const SizedBox(height: 8),
                 Text(message, textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 16,
@@ -121,21 +121,21 @@ class _MentiGoalWorldPageState extends State<MentiGoalWorldPage>
             const SizedBox(height: 16),
             _panel(Column(crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('A saját eredményeid',
+                Text(appStrings(context).uiYourAchievements,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 14),
                 Wrap(spacing: 18, runSpacing: 12, children: [
-                  _metric('Félretett összesen', _formatFt(total)),
-                  _metric('Feloldott jelvények', '$achieved db'),
-                  _metric('Elért célok', '$completed db'),
+                  _metric(appStrings(context).uiTotalSetAside, _formatFt(total)),
+                  _metric(appStrings(context).uiUnlockedBadges, appStrings(context).uiItemsValue((achieved).toString())),
+                  _metric(appStrings(context).uiCompletedGoals, appStrings(context).uiItemsValue((completed).toString())),
                 ]),
               ])),
             const SizedBox(height: 22),
-            const Text('Céljaid és mérföldköveid',
+            Text(appStrings(context).uiYourGoalsAndMilestones,
               style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold)),
             const SizedBox(height: 12),
             if (widget.goals.isEmpty)
-              _panel(const Text('Még nincs megtakarítási célod. A Céljaim képernyőn létrehozhatsz egyet.')),
+              _panel(Text(appStrings(context).uiNoSavingsGoalsYetYouCanCreateOneOn)),
             ...widget.goals.map((goal) => Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: _panel(Column(crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,7 +173,7 @@ class _MentiGoalWorldPageState extends State<MentiGoalWorldPage>
                 ])),
               )),
             const SizedBox(height: 12),
-            const Text('A jelvények kizárólag az alkalmazásban ténylegesen félretettként rögzített pénzhez kötődnek. A becsült megtakarítás nem számít bele. A felület nem kapcsolódik bankszámlához.',
+            Text(appStrings(context).uiBadgesReflectOnlyMoneyYouRecordAsActuallySet,
               style: TextStyle(color: Colors.white60, fontSize: 12)),
           ],
         ),

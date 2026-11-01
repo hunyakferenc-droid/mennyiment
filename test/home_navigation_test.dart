@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ void main() {
         'time': DateTime(2026, 10, 25, 12, i).toIso8601String(),
         if (i == 0) 'priceFt': 0, 'future': {'keep': i}},
   ];
-  Map<String, Object> seed(String locale, {String? journal, String? experience}) => {
+  Map<String, Object> seed(String locale, {String? journal, String? experience}) => {adultAccessKey: adultAccessValue,
     AppLanguage.preferenceKey: locale,
     MentiMotionSettings.preferenceKey: true,
     'mennyiment_character_setup_complete_v1': true,
@@ -119,7 +120,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('journal-add-drink')));
       await tester.pumpAndSettle();
       expect(find.byType(DrinkJournalPage), findsNothing);
-      expect(find.text('Ital hozzáadása'), findsOneWidget);
+      expect(find.text(appStrings(tester.element(find.byType(HomePage))).journalAddTitle), findsOneWidget);
       expect((await SharedPreferences.getInstance()).getString('mennyiment_drinks_v1'), jsonEncode(entries));
       expect(tester.takeException(), isNull);
       await disposeApp(tester);

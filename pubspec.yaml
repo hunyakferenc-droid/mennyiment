@@ -1,8 +1,8 @@
 name: mennyiment
-description: "MennyiMent alkalmazĂˇs"
+description: "MennyiMent? – személyes Menti és tudatos szokáskövetés."
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 2.2.0+22
 
 environment:
   sdk: ^3.13.5
@@ -22,6 +22,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  shared_preferences_platform_interface: ^2.4.1
 
 flutter:
   generate: true
@@ -53,3 +54,5 @@ flutter:
     - assets/images/menti_2_2/styles/
     - assets/images/menti_2_2/core/
     - assets/images/menti_2_2/identities/
+
+    - assets/images/menti_2_2/premium/

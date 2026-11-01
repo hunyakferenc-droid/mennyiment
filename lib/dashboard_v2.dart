@@ -1,3 +1,4 @@
+import 'app_language.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -62,23 +63,23 @@ class _DashboardV2PageState extends State<DashboardV2Page> {
     final result = await showDialog<int>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(money ? 'Havi költségkeret (Ft)' : 'Havi naplózott ital nélküli napok célja'),
+        title: Text(money ? appStrings(context).uiMonthlyBudgetHuf : appStrings(context).uiMonthlyGoalForDaysWithoutDrinkEntries),
         content: TextField(
           controller: controller,
           autofocus: true,
           keyboardType: TextInputType.number,
-          decoration: InputDecoration(hintText: money ? 'Pl. 15000' : 'Pl. 15'),
+          decoration: InputDecoration(hintText: money ? appStrings(context).uiEG15000 : appStrings(context).uiEG15),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Mégse')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(appStrings(context).uiCancel)),
           FilledButton(onPressed: () {
             final value = int.tryParse(controller.text.trim());
             if (value == null || value < 0 || (money && value > 100000000) || (!money && value > 31)) {
-              ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(content: Text('Érvénytelen célérték')));
+              ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(content: Text(appStrings(context).uiInvalidGoalValue)));
               return;
             }
             Navigator.pop(ctx, value);
-          }, child: const Text('Mentés')),
+          }, child: Text(appStrings(context).uiSave)),
         ],
       ),
     );
@@ -104,35 +105,35 @@ class _DashboardV2PageState extends State<DashboardV2Page> {
     final now = DateTime.now();
     final isCurrent = month.year == now.year && month.month == now.month;
     final message = _monthly.isEmpty
-      ? 'Menti: Még nincs naplózott ital ebben a hónapban. 🌱'
-      : 'Menti: A tudatos követés a lényeg. Haladj a saját tempódban! 💜';
+      ? appStrings(context).uiMentiNoDrinksHaveBeenLoggedThisMonthYet
+      : appStrings(context).uiMentiMindfulTrackingIsWhatMattersGoAtYour;
     return Scaffold(
-      appBar: AppBar(title: const Text('✨ MennyiMent? 2.0')),
+      appBar: AppBar(title: Text('✨ MennyiMent? 2.2')),
       body: ListView(padding: const EdgeInsets.all(14), children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           IconButton(onPressed: () => setState(() => month = DateTime(month.year, month.month - 1)), icon: const Icon(Icons.chevron_left)),
-          Text('${month.year}. ${month.month.toString().padLeft(2, '0')}.', style: Theme.of(context).textTheme.titleLarge),
+          Expanded(child:Text('${month.year}. ${month.month.toString().padLeft(2, '0')}.',textAlign:TextAlign.center,style: Theme.of(context).textTheme.titleLarge)),
           IconButton(onPressed: isCurrent || month.isAfter(DateTime(now.year, now.month)) ? null : () => setState(() => month = DateTime(month.year, month.month + 1)), icon: const Icon(Icons.chevron_right)),
         ]),
-        _section('💜 Menti üzenete', Text(message)),
-        _section('💰 Kiadások', Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Rögzített költés: ${_knownCost.toStringAsFixed(0)} Ft', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-          Text(_unknownCount == 0 ? 'Minden naplózott italhoz tartozik ár.' : '$_unknownCount ital ára ismeretlen – az összeg nem teljes.'),
+        _section(appStrings(context).uiAMessageFromMenti, Text(message)),
+        _section(appStrings(context).uiSpending, Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(appStrings(context).uiRecordedSpendingValue((localeCurrency(_knownCost,Localizations.localeOf(context).languageCode)).toString()), style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+          Text(_unknownCount == 0 ? appStrings(context).uiEveryLoggedDrinkHasAPrice : appStrings(context).uiUnknownPricesTotal((_unknownCount).toString())),
           const SizedBox(height: 10),
-          Text('Havi keret: ${budget == null ? 'nincs beállítva' : '$budget Ft'}'),
+          Text(appStrings(context).uiMonthlyBudgetValue((budget==null?appStrings(context).uiNotSet:localeCurrency(budget!,Localizations.localeOf(context).languageCode)).toString())),
           if (budget != null && budget! > 0) LinearProgressIndicator(value: (_knownCost / budget!).clamp(0.0, 1.0)),
-          TextButton.icon(onPressed: () => _editGoal(money: true), icon: const Icon(Icons.edit), label: const Text('Keret beállítása')),
+          TextButton.icon(onPressed: () => _editGoal(money: true), icon: const Icon(Icons.edit), label: Text(appStrings(context).uiSetBudget)),
         ])),
-        _section('🎯 Személyes célok', Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Naplózott ital nélküli napok: $_unrecordedDays / $_observedDays'),
-          const Text('Ez nem bizonyítja az alkoholmentességet: csak a naplóban nincs bejegyzés.', style: TextStyle(fontSize: 12, color: Colors.white70)),
+        _section(appStrings(context).uiPersonalGoals, Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(appStrings(context).uiUnrecordedDays((_unrecordedDays).toString(),(_observedDays).toString())),
+          Text(appStrings(context).uiThisDoesNotProveAnAlcoholFreeDayThere, style: TextStyle(fontSize: 12, color: Colors.white70)),
           const SizedBox(height: 8),
-          Text('Havi cél: ${daysGoal == null ? 'nincs beállítva' : '$daysGoal nap'}'),
+          Text(appStrings(context).uiMonthlyGoalValue((daysGoal==null?appStrings(context).uiNotSet:appStrings(context).uiDaysValue(daysGoal.toString())).toString())),
           if (daysGoal != null && daysGoal! > 0) LinearProgressIndicator(value: (_unrecordedDays / daysGoal!).clamp(0.0, 1.0)),
-          TextButton.icon(onPressed: () => _editGoal(money: false), icon: const Icon(Icons.edit), label: const Text('Napcél beállítása')),
+          TextButton.icon(onPressed: () => _editGoal(money: false), icon: const Icon(Icons.edit), label: Text(appStrings(context).uiSetDaysGoal)),
         ])),
-        _section('📅 Fogyasztási naptár', Column(children: [
-           Row(children: [for (final day in ['H', 'K', 'Sz', 'Cs', 'P', 'Sz', 'V']) Expanded(child: Center(child: Text(day)))]),
+        _section(appStrings(context).uiDrinkJournalCalendar, Column(children: [
+           Row(children: [for (final day in List.generate(7,(i)=>MaterialLocalizations.of(context).narrowWeekdays[(i+1)%7])) Expanded(child: Center(child: Text(day)))]),
           const SizedBox(height: 8),
           ...List.generate(((_daysInMonth + DateTime(month.year, month.month, 1).weekday - 2) ~/ 7) + 1, (week) =>
             Row(children: List.generate(7, (weekday) {
@@ -141,7 +142,7 @@ class _DashboardV2PageState extends State<DashboardV2Page> {
               final items = _monthly.where((d) => d.time.day == day).toList();
               final inFuture = DateTime(month.year, month.month, day).isAfter(_date(now));
               return Expanded(child: Padding(padding: const EdgeInsets.all(2), child: Tooltip(
-                message: '$day.: ${items.length} naplózott ital',
+                message: appStrings(context).uiDayDrinks((day).toString(),(items.length).toString()),
                 child: Container(height: 40, alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: inFuture ? Colors.white10 : items.isEmpty ? Colors.green.withValues(alpha: 0.18) : Colors.deepPurple.withValues(alpha: 0.65),
@@ -152,16 +153,16 @@ class _DashboardV2PageState extends State<DashboardV2Page> {
             })),
           ),
           const SizedBox(height: 8),
-          const Text('Lila: van naplózott ital • Zöld: nincs naplózott ital • Szürke: jövőbeli nap', style: TextStyle(fontSize: 12)),
+          Text(appStrings(context).uiPurpleDrinkLoggedGreenNoDrinkLoggedGrayFuture, style: TextStyle(fontSize: 12)),
         ])),
-        _section('📊 Havi összesítés', Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('${_monthly.length} ital • ${_grams.toStringAsFixed(1)} g tiszta alkohol'),
+        _section(appStrings(context).uiMonthlySummary, Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(appStrings(context).uiDrinksAndGrams((_monthly.length).toString(),(_grams.toStringAsFixed(1)).toString())),
           const SizedBox(height: 8),
-          if (top.isEmpty) const Text('Még nincs adat.') else
-          ...top.take(5).map((e) => Padding(padding: const EdgeInsets.symmetric(vertical: 3), child: Text('${e.key}: ${e.value} alkalom'))),
+          if (top.isEmpty) Text(appStrings(context).uiNoDataYet) else
+          ...top.take(5).map((e) => Padding(padding: const EdgeInsets.symmetric(vertical: 3), child: Text(appStrings(context).uiNameOccurrences((e.key).toString(),(e.value).toString())))),
         ])),
         const SizedBox(height: 12),
-        const Text('Az adatok önbevalláson alapulnak. Nem alkalmasak a józanság vagy vezetési képesség megállapítására.', style: TextStyle(fontSize: 12, color: Colors.white70)),
+        Text(appStrings(context).uiTheseAreSelfReportedRecordsTheyCannotEstablishSobriety, style: TextStyle(fontSize: 12, color: Colors.white70)),
       ]),
     );
   }

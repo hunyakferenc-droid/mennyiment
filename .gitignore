@@ -94,3 +94,6 @@ pubspec.yaml.bak
 !test/backup_file_test.dart
 !test/data_backup_page_test.dart
 !docs/6.7-data-backup.md
+
+# Local Flutter golden comparison diagnostics
+/test/failures/

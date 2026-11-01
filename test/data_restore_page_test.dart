@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,10 +17,10 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
     const xp = '{"xp":90,"days":[],"completed":[]}';
-    SharedPreferences.setMockInitialValues({'mennyiment_menti_xp_v2': xp,
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,'mennyiment_menti_xp_v2': xp,
       'mennyiment_character_setup_complete_v1': true, 'mennyiment_reduce_motion_v1': true});
     final previous = (await BackupExporter().capture()).json;
-    SharedPreferences.setMockInitialValues({'mennyiment_menti_xp_v2': 'partial',
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,'mennyiment_menti_xp_v2': 'partial',
       'mennyiment_character_setup_complete_v1': true, 'mennyiment_reduce_motion_v1': true,
       BackupRestorer.recoveryKey: jsonEncode({'backup': previous,
         'keys': ['mennyiment_menti_xp_v2']})});
@@ -33,7 +34,7 @@ void main() {
     await tester.pump();
   });
   testWidgets('unreadable recovery journal blocks all app screens and migrations', (tester) async {
-    SharedPreferences.setMockInitialValues({BackupRestorer.recoveryKey: 'broken',
+    SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,BackupRestorer.recoveryKey: 'broken',
       'mennyiment_menti_progress_v1': '{"xp":70}'});
     await tester.pumpWidget(const MennyiMentApp());
     await tester.pumpAndSettle();
@@ -49,10 +50,10 @@ void main() {
   });
   for (final locale in ['hu', 'en']) {
     testWidgets('$locale validated preview, cancel, confirm and one restore in a narrow viewport', (tester) async {
-      SharedPreferences.setMockInitialValues({'mennyiment_locale_v1': 'en',
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,'mennyiment_locale_v1': 'en',
         'mennyiment_menti_xp_v2': '{"xp":90,"days":[],"completed":[]}'});
       final text = (await BackupExporter().capture()).json;
-      SharedPreferences.setMockInitialValues({'mennyiment_locale_v1': 'hu'});
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,'mennyiment_locale_v1': 'hu'});
       tester.view.physicalSize = const Size(320, 1400);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
@@ -87,7 +88,7 @@ void main() {
       expect(tester.takeException(), isNull);
     });
     testWidgets('$locale invalid or cancelled file never offers restore or changes data', (tester) async {
-      SharedPreferences.setMockInitialValues({'mennyiment_locale_v1': 'hu'});
+      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,'mennyiment_locale_v1': 'hu'});
       String? file = '{bad';
       await tester.pumpWidget(MaterialApp(locale: Locale(locale),
         supportedLocales: AppLocalizations.supportedLocales,

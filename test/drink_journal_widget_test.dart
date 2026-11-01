@@ -1,3 +1,4 @@
+import 'support/adult_access_fixture.dart';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ import 'package:shared_preferences_platform_interface/shared_preferences_platfor
 import 'package:mennyiment/main.dart';
 
 const key = 'mennyiment_drinks_v1';
-Map<String, Object> initial(Object? journal) => {
+Map<String, Object> initial(Object? journal) => {adultAccessKey: adultAccessValue,
   key: ?journal,
   'mennyiment_character_setup_complete_v1': true,
   'mennyiment_menti_xp_v2': jsonEncode({'xp': 0, 'days': [], 'completed': []}),

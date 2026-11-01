@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_language.dart';
+import 'menti_identity/menti_avatar_renderer.dart';
 import 'menti_experience_settings.dart';
 import 'menti_ui.dart';
 
@@ -45,8 +46,8 @@ class _MentiIntroPageState extends State<MentiIntroPage> {
           onPressed: _saving ? null : _finish, child: Text(s.experienceIntroSkip))],
       ),
       body: MentiPageBody(children: [
-        Center(child: Image.asset('assets/images/menti_outfits/alap.png',
-          width: 100, height: 100, excludeFromSemantics: true)),
+        Center(child: MentiCurrentAvatar(size:120,legacyChild:Image.asset('assets/images/menti_outfits/alap.png',
+          width:100,height:100,excludeFromSemantics:true))),
         const SizedBox(height: 16),
         Semantics(liveRegion: true, child: Text(s.experienceIntroStep(_step + 1, 4), key: const ValueKey('intro-step'))),
         const SizedBox(height: 12),
