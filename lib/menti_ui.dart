@@ -33,3 +33,45 @@ class MentiPageBody extends StatelessWidget {
     ),
   );
 }
+
+/// Shared missing/error presentation. Never silently substitutes a zero value.
+class MentiStatusMessage extends StatelessWidget {
+  const MentiStatusMessage({super.key, required this.message, this.onRetry,
+    this.retryLabel, this.isError = false});
+  final String message;
+  final VoidCallback? onRetry;
+  final String? retryLabel;
+  final bool isError;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    liveRegion: isError,
+    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      ExcludeSemantics(child: Icon(isError ? Icons.error_outline : Icons.info_outline)),
+      const SizedBox(height: 8),
+      Text(message),
+      if (onRetry != null && retryLabel != null)
+        TextButton(onPressed: onRetry, child: Text(retryLabel!)),
+    ]),
+  );
+}
+
+class MentiProgressSummary extends StatelessWidget {
+  const MentiProgressSummary({super.key, required this.label,
+    required this.current, required this.target});
+  final String label;
+  final int current;
+  final int target;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(label),
+      const SizedBox(height: 8),
+      Semantics(label: label, value: '$current / $target', child: ExcludeSemantics(
+        child: LinearProgressIndicator(value: target > 0
+            ? (current / target).clamp(0.0, 1.0) : 0))),
+    ],
+  );
+}

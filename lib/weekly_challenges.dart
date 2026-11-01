@@ -276,11 +276,8 @@ class _WeeklyChallengesPageState extends State<WeeklyChallengesPage>
       Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 700),
         child: ListView(padding: const EdgeInsets.all(16), children: [
           Text(appStrings(context).challengeOptional),
-          if (_reaction != null) Padding(padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Semantics(liveRegion: true, child: MentiSpeechBubble(
-              key: const ValueKey('challenge-reaction'),
-              message: MentiReactions.message(_reaction!,
-                locale: Localizations.localeOf(context).languageCode)))),
+          if (_reaction != null) MentiReactionCard(mood: _reaction!,
+            bubbleKey: const ValueKey('challenge-reaction')),
           Row(children: [IconButton(onPressed: saving ? null : () => setState(() { back++; _reaction = null; }),
             tooltip: appStrings(context).challengePrevious, icon: const Icon(Icons.chevron_left)),
             Expanded(child: Text('${challengeDate(week)} – ${challengeDate(challengeDay(week, 6))}', textAlign: TextAlign.center)),

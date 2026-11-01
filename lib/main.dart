@@ -22,6 +22,7 @@ import 'menti_profile_storage.dart';
 import 'statistics.dart';
 import 'dashboard_v2.dart';
 import 'home_widgets.dart';
+import 'personal_hub.dart';
 import 'drink_journal_page.dart';
 import 'menti_evolution.dart';
 import 'app_language.dart';
@@ -600,6 +601,18 @@ void updateMentiMessage(MentiMood mood) {
     updateMentiMessage(MentiMood.statistics);
   }
 
+  bool _hubOpen = false;
+  Future<void> _openPersonalHub() async {
+    if (_hubOpen) return;
+    _hubOpen = true;
+    try {
+      await Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (_) => const PersonalHubPage()));
+    } finally {
+      _hubOpen = false;
+    }
+  }
+
   bool _navigationBusy = false;
 
   Future<void> _navigateHome(int index) async {
@@ -976,6 +989,12 @@ void updateMentiMessage(MentiMood mood) {
               const SizedBox(height: 5),
               Text(strings.homeIntro,
                   style: TextStyle(color: _muted, fontSize: 13)),
+              const SizedBox(height: 12),
+              OutlinedButton.icon(
+                key: const ValueKey('open-personal-hub'),
+                onPressed: _openPersonalHub,
+                icon: const Icon(Icons.dashboard_outlined),
+                label: Text(strings.hubTitle)),
               const SizedBox(height: 12),
               if (_progressReady) HomeMentiCard(
                 character: Stack(alignment: Alignment.topRight, children: [
