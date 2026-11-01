@@ -8,6 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/app_language.dart';
 import 'package:mennyiment/daily_menti_message.dart';
 import 'package:mennyiment/daily_menti_store.dart';
+import 'package:mennyiment/drink_journal_page.dart';
+import 'package:mennyiment/home_widgets.dart';
 import 'package:mennyiment/data_restore.dart';
 import 'package:mennyiment/l10n/generated/app_localizations.dart';
 import 'package:mennyiment/main.dart';
@@ -199,6 +201,36 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.containsKey(MentiExperienceSettings.introKey), false);
     expect(prefs.containsKey(MentiXpStore.currentKey), false);
+    await close(tester, null);
+  });
+
+  testWidgets('Missing journal and a saved empty journal stay distinct on home and journal routes', (tester) async {
+    viewport(tester, 390);
+    final initial = hubValues(now)..remove('mennyiment_drinks_v1');
+    SharedPreferences.setMockInitialValues(initial);
+    await tester.pumpWidget(const MennyiMentApp());
+    await tester.pumpAndSettle();
+    await scroll(tester, 'home-journal-missing');
+    expect(find.byType(HomeStatTile), findsNothing);
+    final s = appStrings(tester.element(find.byType(HomePage)));
+    await tester.tap(find.byKey(const ValueKey('nav-journal')));
+    await tester.pumpAndSettle();
+    expect(tester.widget<DrinkJournalPage>(find.byType(DrinkJournalPage)).hasSavedJournal, false);
+    expect(find.text(s.hubMissing), findsOneWidget);
+    expect(experienceSnapshot(await SharedPreferences.getInstance()), initial);
+    await close(tester, null);
+    SharedPreferences.setMockInitialValues({...initial, 'mennyiment_drinks_v1': '[]'});
+    await tester.pumpWidget(const MennyiMentApp());
+    await tester.pumpAndSettle();
+    await scroll(tester, 'daily-menti-mini-card');
+    await tester.scrollUntilVisible(find.byType(HomeStatTile).first, 250,
+      scrollable: find.byType(Scrollable).first, maxScrolls: 40);
+    expect(find.byType(HomeStatTile), findsWidgets);
+    await tester.tap(find.byKey(const ValueKey('nav-journal')));
+    await tester.pumpAndSettle();
+    expect(tester.widget<DrinkJournalPage>(find.byType(DrinkJournalPage)).hasSavedJournal, true);
+    expect(find.text(s.experienceEmptyJournal), findsOneWidget);
+    expect(tester.takeException(), isNull);
     await close(tester, null);
   });
 

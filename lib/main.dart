@@ -648,7 +648,7 @@ void updateMentiMessage(MentiMood mood) {
   Future<void> _openJournal() async {
     if (isLoading || !_journalReady) return;
     final add = await Navigator.of(context).push<bool>(MaterialPageRoute(
-      builder: (_) => DrinkJournalPage(drinks: drinks),
+      builder: (_) => DrinkJournalPage(drinks: drinks, hasSavedJournal: _journalSnapshot != null),
     ));
     if (mounted && add == true) await _openDrinkPicker();
   }
@@ -1072,7 +1072,7 @@ void updateMentiMessage(MentiMood mood) {
               DailyMentiMiniCard(
                 key: const ValueKey('daily-menti-mini-card'), refreshToken: _dailyRevision,
                 onOpenDaily: _saveDailyReflection, onOpenHub: _openPersonalHub),
-              if (_journalReady) HomeAdaptiveGrid(children: [
+              if (_journalReady && _journalSnapshot != null) HomeAdaptiveGrid(children: [
                 HomeStatTile(label: strings.homeTodayDrinks, value: '${today.length}',
                   icon: Icons.local_bar_outlined),
                 HomeStatTile(label: strings.homeTodaySpending,
@@ -1084,8 +1084,10 @@ void updateMentiMessage(MentiMood mood) {
               ]) else if (isLoading)
                 Semantics(label: strings.homeLoading,
                   child: const Center(child: CircularProgressIndicator()))
+              else if (_journalReady) MentiStatusMessage(key: const ValueKey('home-journal-missing'), message: strings.hubMissing,
+                onRetry: _canWriteJournal ? _openDrinkPicker : null, retryLabel: strings.experienceAddEntry)
               else Text(strings.homeJournalUnavailable),
-              if (_journalReady && (todayUnknown > 0 || monthlyUnknown > 0))
+              if (_journalReady && _journalSnapshot != null && (todayUnknown > 0 || monthlyUnknown > 0))
                 Padding(padding: const EdgeInsets.only(top: 8),
                   child: Text(strings.homeMissingPrices(todayUnknown, monthlyUnknown))),
               const SizedBox(height: 12),
@@ -1143,7 +1145,8 @@ void updateMentiMessage(MentiMood mood) {
                   ? const Center(child: CircularProgressIndicator())
                   : recent.isEmpty
                       ? MentiStatusMessage(
-                          message: _journalReady ? strings.experienceEmptyJournal : strings.homeJournalUnavailable,
+                          message: !_journalReady ? strings.homeJournalUnavailable
+                              : _journalSnapshot == null ? strings.hubMissing : strings.experienceEmptyJournal,
                           isError: !_journalReady,
                           onRetry: _journalReady ? (_canWriteJournal ? _openDrinkPicker : null) : loadDrinks,
                           retryLabel: _journalReady ? strings.experienceAddEntry : strings.homeJournalRetry)

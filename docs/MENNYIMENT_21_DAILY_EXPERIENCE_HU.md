@@ -59,3 +59,5 @@ Helyi Flutter SDK továbbra sem elérhető. Az öt kötelező Flutter-parancs é
 Nem készült backend, regisztráció, közösség, webshop vagy szinkron. A bolti/jogi és képernyőolvasós/készülékes kézi ellenőrzések továbbra is kiadás előtti kapuk. A kész csomag nem jelent automatikus kiadásengedélyt.
 
 Az első CI-futás után két tesztfeltételezés javítva: a nagy betűméretes intro teszt közvetlenül a lépésjelzőre görget (a címre igazítás után a lusta lista korábbi eleme már nem feltétlenül van felépítve); a régi backup visszaállításának elvárása a meglévő restore-szabály szerint egyesített/rendezett feloldásazonosítókat ellenőrzi. Egyetlen feloldás sem veszett el, a restore implementáció nem változott.
+
+F4 pontosítás: a kezdőlap a hiányzó naplódokumentum helyett nem mutat nulla adatlapkákat; a teljes napló megkapja a pillanatkép dokumentum-létezési jelzőjét. A mentett üres lista és a hiányzó napló eltérő szöveget kap, külön kezdőlap → napló regresszióval. Ez a jelző csak UI-pillanatkép, nem új tárolókulcs.
