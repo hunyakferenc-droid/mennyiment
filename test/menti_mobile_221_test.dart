@@ -21,6 +21,7 @@ void main() {
             tester.view.physicalSize = Size(width, 740);
             tester.view.devicePixelRatio = 1;
             addTearDown(tester.view.resetPhysicalSize);
+            addTearDown(tester.view.resetViewInsets);
             addTearDown(tester.view.resetDevicePixelRatio);
             final profile = MentiIdentityProfile(
               name: 'Mira',
@@ -90,6 +91,28 @@ void main() {
             await tester.pumpAndSettle();
             c.choose(MentiVisualCatalog.resolve('eyes', 'relaxed'));
             await tester.pumpAndSettle();
+            // Naming remains usable with the Android-sized keyboard inset.
+            await tester.tap(find.widgetWithText(TextButton, 'Mira'));
+            await tester.pumpAndSettle();
+            tester.view.viewInsets = const FakeViewPadding(bottom: 260);
+            await tester.pumpAndSettle();
+            expect(tester.takeException(), isNull);
+            expect(find.byType(TextField), findsOneWidget);
+            final dialogStrings = appStrings(
+              tester.element(find.byType(AlertDialog)),
+            );
+            final cancel = find.descendant(
+              of: find.byType(AlertDialog),
+              matching: find.widgetWithText(
+                TextButton,
+                dialogStrings.avatarCancel,
+              ),
+            );
+            await tester.ensureVisible(cancel);
+            await tester.tap(cancel);
+            await tester.pumpAndSettle();
+            tester.view.resetViewInsets();
+            await tester.pumpAndSettle();
             expect(
               find.byKey(const ValueKey('studio-save')).hitTestable(),
               findsOneWidget,
@@ -114,7 +137,13 @@ void main() {
             await tester.tap(find.byType(BackButton));
             await tester.pumpAndSettle();
             final s = appStrings(tester.element(find.byType(MentiStudioPage)));
-            expect(find.descendant(of:find.byType(AlertDialog),matching:find.text(s.avatarUnsaved)), findsOneWidget);
+            expect(
+              find.descendant(
+                of: find.byType(AlertDialog),
+                matching: find.text(s.avatarUnsaved),
+              ),
+              findsOneWidget,
+            );
             await tester.tap(find.widgetWithText(TextButton, s.avatarCancel));
             await tester.pumpAndSettle();
             expect(c.dirty, isTrue);

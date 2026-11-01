@@ -69,6 +69,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
     final route = DialogRoute<String>(
       context: context,
       builder: (ctx) => AlertDialog(
+        scrollable: true,
         title: Text(s.avatarPresetName),
         content: TextField(
           key: const ValueKey('preset-name'),
@@ -117,6 +118,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
       final discard = await showDialog<bool>(
         context: context,
         builder: (ctx) => AlertDialog(
+          scrollable: true,
           title: Text(s.avatarUnsaved),
           content: Text(s.avatarUnsavedBody),
           actions: [
