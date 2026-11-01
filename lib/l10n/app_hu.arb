@@ -1265,5 +1265,10 @@
   "milestoneQuarter": "Menti: Megvan az első negyed!",
   "milestoneStarted": "Menti: Minden ténylegesen félretett forint számít.",
   "milestoneFirst": "Menti: Minden nagy cél egy apró lépéssel kezdődik.",
-  "milestoneHint": "A jelvények a kézzel rögzített félretett összeg alapján nyílnak meg."
+  "milestoneHint": "A jelvények a kézzel rögzített félretett összeg alapján nyílnak meg.",
+  "avatarDraft": "Nem mentett változtatások",
+  "avatarMore": "További műveletek",
+  "avatarHidePreview": "Előnézet összecsukása",
+  "avatarShowPreview": "Előnézet megnyitása",
+  "homeMore": "További funkciók"
 }

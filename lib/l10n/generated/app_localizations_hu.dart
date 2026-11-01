@@ -2487,4 +2487,19 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get milestoneHint =>
       'A jelvények a kézzel rögzített félretett összeg alapján nyílnak meg.';
+
+  @override
+  String get avatarDraft => 'Nem mentett változtatások';
+
+  @override
+  String get avatarMore => 'További műveletek';
+
+  @override
+  String get avatarHidePreview => 'Előnézet összecsukása';
+
+  @override
+  String get avatarShowPreview => 'Előnézet megnyitása';
+
+  @override
+  String get homeMore => 'További funkciók';
 }

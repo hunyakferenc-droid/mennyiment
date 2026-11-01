@@ -4495,6 +4495,36 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'A jelvények a kézzel rögzített félretett összeg alapján nyílnak meg.'**
   String get milestoneHint;
+
+  /// No description provided for @avatarDraft.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nem mentett változtatások'**
+  String get avatarDraft;
+
+  /// No description provided for @avatarMore.
+  ///
+  /// In hu, this message translates to:
+  /// **'További műveletek'**
+  String get avatarMore;
+
+  /// No description provided for @avatarHidePreview.
+  ///
+  /// In hu, this message translates to:
+  /// **'Előnézet összecsukása'**
+  String get avatarHidePreview;
+
+  /// No description provided for @avatarShowPreview.
+  ///
+  /// In hu, this message translates to:
+  /// **'Előnézet megnyitása'**
+  String get avatarShowPreview;
+
+  /// No description provided for @homeMore.
+  ///
+  /// In hu, this message translates to:
+  /// **'További funkciók'**
+  String get homeMore;
 }
 
 class _AppLocalizationsDelegate

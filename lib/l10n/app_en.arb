@@ -1265,5 +1265,10 @@
   "milestoneQuarter": "Menti: That is the first quarter!",
   "milestoneStarted": "Menti: Every bit you actually set aside counts.",
   "milestoneFirst": "Menti: Every big goal starts with a small step.",
-  "milestoneHint": "Badges unlock based on the money you manually record as set aside."
+  "milestoneHint": "Badges unlock based on the money you manually record as set aside.",
+  "avatarDraft": "Unsaved changes",
+  "avatarMore": "More actions",
+  "avatarHidePreview": "Collapse preview",
+  "avatarShowPreview": "Expand preview",
+  "homeMore": "More features"
 }
