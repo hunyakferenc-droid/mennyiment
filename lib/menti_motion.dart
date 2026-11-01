@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'app_language.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Presentation preference only; never reads or changes profile or XP data.
@@ -120,11 +121,11 @@ class MentiMotionPreference extends StatelessWidget {
         SwitchListTile.adaptive(
           key: const ValueKey('menti-reduce-motion'),
           contentPadding: EdgeInsets.zero,
-          title: const Text('Menti mozgásának csökkentése'),
+          title: Text(appStrings(context).experienceMotionTitle),
           subtitle: Text(
             system
-                ? 'A rendszer mozgáscsökkentése aktív. A kapcsoló kikapcsolása ezt nem írja felül.'
-                : 'Állókép a lebegés, billegés és reakcióanimáció helyett.',
+                ? appStrings(context).experienceMotionSystem
+                : appStrings(context).experienceMotionHint,
           ),
           value: settings.manual,
           onChanged: settings.ready && !settings.saving
@@ -132,11 +133,11 @@ class MentiMotionPreference extends StatelessWidget {
               : null,
         ),
         if (settings.error != null) ...[
-          Text(settings.error!),
+          Text(settings.ready ? appStrings(context).experienceMotionSaveError : appStrings(context).experienceMotionLoadError),
           if (!settings.ready)
             TextButton(
               onPressed: settings.load,
-              child: const Text('Újrapróbálás'),
+              child: Text(appStrings(context).challengeRetry),
             ),
         ],
       ],

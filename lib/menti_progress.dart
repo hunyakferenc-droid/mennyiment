@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'app_language.dart';
+import 'menti_experience_settings.dart';
 import 'menti_xp_store.dart';
 import 'menti_evolution.dart';
 import 'menti_profile_storage.dart';
@@ -74,13 +75,15 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
         _state = state;
         _unlocked = unlocked;
         // No reaction for duplicate events: the persisted XP must have changed.
-        if (state.xp > before) {
+        if (state.xp > before && MentiExperienceScope.reactionsOf(context)) {
           _reaction++;
           _message = state.level > MentiXpState.levelFor(before)
               ? MentiMood.levelUp
               : task == null
                   ? MentiMood.dailyCheckIn
                   : MentiMood.weeklyCompleted;
+        } else {
+          _message = null;
         }
       });
       ScaffoldMessenger.of(context).showSnackBar(
@@ -133,7 +136,7 @@ class _MentiProgressPageState extends State<MentiProgressPage> {
                 MentiLevelIndicator(xp: state.xp),
                 if (_message != null) ...[
                   const SizedBox(height: 12),
-                  MentiSpeechBubble(message: MentiReactions.message(_message!,
+                  MentiSpeechBubble(eventToken: _reaction, message: MentiReactions.message(_message!,
                     index: _reaction,
                     locale: Localizations.localeOf(context).languageCode)),
                 ],

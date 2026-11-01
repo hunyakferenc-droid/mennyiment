@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'app_language.dart';
+import 'menti_experience_settings.dart';
 import 'menti_completion.dart';
 import 'menti_reactions.dart';
 import 'menti_ui.dart';
@@ -36,6 +37,7 @@ class _PersonalGoalsPageState extends State<PersonalGoalsPage>
   bool _saving = false;
   bool _error = false;
   MentiMood? _reaction;
+  int _reactionSequence = 0;
   Timer? _timer;
   late String _shownDay;
 
@@ -104,9 +106,9 @@ class _PersonalGoalsPageState extends State<PersonalGoalsPage>
     final saved = await _commit({'reflectionDays': [..._store.reflectionDays, today]});
     if (!saved || !mounted || mentiMonday(_now) != week) return;
     final after = recordedGoalDays(_store.reflectionDays, week, _now);
-    if (crossedRecordedGoal(before: before, after: after,
+    if (MentiExperienceScope.reactionsOf(context) && crossedRecordedGoal(before: before, after: after,
         previousTarget: target, target: _store.reflectionGoal)) {
-      setState(() => _reaction = MentiMood.personalGoalCompleted);
+      setState(() { _reaction = MentiMood.personalGoalCompleted; _reactionSequence++; });
     }
   }
 
@@ -195,7 +197,7 @@ class _PersonalGoalsPageState extends State<PersonalGoalsPage>
                 ]),
               ])),
               if (_reaction != null) MentiReactionCard(mood: _reaction!,
-                bubbleKey: const ValueKey('personal-goal-reaction')),
+                bubbleKey: const ValueKey('personal-goal-reaction'), eventToken: _reactionSequence),
               MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(s.goalBudgetTitle, style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 8),
