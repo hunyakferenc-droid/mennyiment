@@ -321,7 +321,7 @@ class MentiPreviewRenderer extends StatelessWidget {
         rig.neckY * MentiReferenceRig.target.height / 820;
     crop = switch (option.field) {
       'eyes' || 'glasses' => geometry.eyes.inflate(12),
-      'face' => geometry.mouth.inflate(16),
+      'face' => geometry.eyes.expandToInclude(geometry.mouth).inflate(12),
       'headwear' => Rect.fromLTWH(
         face.left - 35,
         0,
@@ -329,7 +329,10 @@ class MentiPreviewRenderer extends StatelessWidget {
         geometry.eyes.bottom,
       ),
       'hair' => Rect.fromLTWH(face.left - 40, 0, face.width + 80, neck + 25),
-      'outfit' || 'accent' => Rect.fromLTWH(30, neck - 12, 260, 412 - neck),
+      'outfit' || 'accent' => MentiWardrobeGeometry(
+        geometry,
+        p.visual.value('outfit'),
+      ).garment.inflate(12),
       'style' => Rect.fromLTWH(face.center.dx - 50, neck + 30, 100, 85),
       'neck' => Rect.fromLTWH(face.center.dx - 50, neck - 15, 100, 75),
       'detail' => Rect.fromLTWH(

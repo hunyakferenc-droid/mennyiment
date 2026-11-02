@@ -396,11 +396,17 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
               builder: (context, box) => InteractiveViewer(
                 minScale: 1,
                 maxScale: 3,
-                child: Center(
-                  child: MentiAvatarRenderer(
-                    key: const ValueKey('studio-large-preview'),
-                    profile: profile,
-                    size: math.min(box.maxWidth, box.maxHeight / 1.25),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Center(
+                    child: MentiAvatarRenderer(
+                      key: const ValueKey('studio-large-preview'),
+                      profile: profile,
+                      size: math.min(
+                        box.maxWidth - 32,
+                        (box.maxHeight - 32) / 1.25,
+                      ),
+                    ),
                   ),
                 ),
               ),
