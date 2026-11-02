@@ -329,10 +329,13 @@ class MentiPreviewRenderer extends StatelessWidget {
         geometry.eyes.bottom,
       ),
       'hair' => Rect.fromLTWH(face.left - 40, 0, face.width + 80, neck + 25),
-      'outfit' || 'accent' => MentiWardrobeGeometry(
-        geometry,
-        p.visual.value('outfit'),
-      ).garment.inflate(12),
+      'outfit' || 'accent' =>
+        p.visual.value('outfit') == 'basic'
+            ? Rect.fromLTWH(30, neck - 12, 260, 412 - neck)
+            : MentiWardrobeGeometry(
+                geometry,
+                p.visual.value('outfit'),
+              ).garment.inflate(12),
       'style' => Rect.fromLTWH(face.center.dx - 50, neck + 30, 100, 85),
       'neck' => Rect.fromLTWH(face.center.dx - 50, neck - 15, 100, 75),
       'detail' => Rect.fromLTWH(

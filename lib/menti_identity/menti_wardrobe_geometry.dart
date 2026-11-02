@@ -14,7 +14,7 @@ class MentiWardrobeGeometry {
   double get neck => math.min(
     MentiReferenceRig.target.top +
         rig.neckY * MentiReferenceRig.target.height / 820,
-    head.mouth.bottom + 9,
+    head.mouth.bottom + 3,
   );
   Rect get garment {
     final face = rig.register(rig.face);
@@ -32,7 +32,13 @@ class MentiWardrobeGeometry {
     final g = garment;
     return Rect.fromLTWH(
       right ? g.right - g.width * .16 - 6 : g.left + 6,
-      g.top + g.height * .39,
+      g.top +
+          g.height *
+              (['sport-alt', 'creative-alt'].contains(outfit)
+                  ? .31
+                  : ['business', 'business-alt'].contains(outfit)
+                  ? .35
+                  : .38),
       g.width * .16,
       g.width * .225,
     );
