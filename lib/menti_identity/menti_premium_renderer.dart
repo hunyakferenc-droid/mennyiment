@@ -6,6 +6,7 @@ import 'menti_visual_catalog.dart';
 import 'menti_premium_atlas.dart';
 import 'menti_reference_rig.dart';
 import 'menti_head_geometry.dart';
+import 'menti_wardrobe_geometry.dart';
 
 /// Original high-resolution material sheets are shared by the image cache.
 /// Runtime crops avoid hundreds of duplicate files and preserve source pixels.
@@ -299,7 +300,7 @@ class MentiAtlasComposition extends StatelessWidget {
                   sourcePart: sourcePart,
                 ),
         );
-    Widget vector(String field, {Rect? target}) {
+    Widget vector(String field, {Rect? target, List<double>? sourceCrop}) {
       final o = resolve(profile, field);
       final path = MentiVisualCatalog.root + o.asset;
       if (target == null) {
@@ -307,7 +308,7 @@ class MentiAtlasComposition extends StatelessWidget {
           child: SvgPicture.asset(path, key: ValueKey(path), fit: BoxFit.fill),
         );
       }
-      final crop = MentiVisualCatalog.previewCrops[field]!;
+      final crop = sourceCrop ?? MentiVisualCatalog.previewCrops[field]!;
       return Positioned(
         left: target.left * 320,
         top: target.top * 400,
@@ -630,14 +631,14 @@ class MentiPremiumComposition extends StatelessWidget {
             child: MentiPremiumSprite(sprite: s, color: color),
           ),
         );
-    Widget vector(String field, {Rect? target}) {
+    Widget vector(String field, {Rect? target, List<double>? sourceCrop}) {
       final path = MentiVisualCatalog.root + resolve(profile, field).asset;
       if (target == null) {
         return Positioned.fill(
           child: SvgPicture.asset(path, key: ValueKey(path), fit: BoxFit.fill),
         );
       }
-      final crop = MentiVisualCatalog.previewCrops[field]!;
+      final crop = sourceCrop ?? MentiVisualCatalog.previewCrops[field]!;
       return Positioned.fromRect(
         rect: target,
         child: ClipRect(
@@ -667,14 +668,8 @@ class MentiPremiumComposition extends StatelessWidget {
       );
     }
 
-    // A native full master remains intact whenever the selected hair and outfit
-    // match it. Other equipment is scaled to the native neck and foot anchors.
-    final outfitTarget = Rect.fromLTRB(
-      face.center.dx - face.width * (id('family') == 'girl' ? .87 : .84),
-      neckY,
-      face.center.dx + face.width * (id('family') == 'girl' ? .87 : .84),
-      397,
-    );
+    final wardrobe = MentiWardrobeGeometry(geometry, id('outfit'));
+    final outfitTarget = wardrobe.garment;
     final hairSource = MentiPremiumAtlas.rects['hair/${id('hair')}']!;
     final hairSeat = geometry.hairTarget;
     final hairWidth = hairSeat.width;
@@ -761,14 +756,7 @@ class MentiPremiumComposition extends StatelessWidget {
                     builder: (context, c) {
                       final path = rig.mask(right ? 'rightHand' : 'leftHand');
                       final bounds = path.getBounds();
-                      final target = Rect.fromLTWH(
-                        right
-                            ? outfitTarget.right - outfitTarget.width * .16 - 6
-                            : outfitTarget.left + 6,
-                        neckY + (397 - neckY) * .39,
-                        outfitTarget.width * .16,
-                        outfitTarget.width * .225,
-                      );
+                      final target = wardrobe.hand(right);
                       return Transform(
                         transform: Matrix4.identity()
                           ..translateByDouble(
@@ -831,7 +819,11 @@ class MentiPremiumComposition extends StatelessWidget {
             if (id('glasses') != 'none')
               vector('glasses', target: rig.register(rig.eyes).inflate(4)),
             if (id('held') != 'none')
-              vector('held', target: Rect.fromLTWH(25, neckY + 83, 270, 105)),
+              vector(
+                'held',
+                target: wardrobe.held(id('held')),
+                sourceCrop: MentiWardrobeGeometry.heldCrops[id('held')],
+              ),
             if (reaction != null)
               Positioned.fill(
                 child: SvgPicture.asset(

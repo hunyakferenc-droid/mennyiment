@@ -10,6 +10,7 @@ import 'menti_family_layout.dart';
 import 'menti_premium_renderer.dart';
 import 'menti_reference_rig.dart';
 import 'menti_head_geometry.dart';
+import 'menti_wardrobe_geometry.dart';
 import 'menti_premium_motion.dart';
 
 /// Pure, deterministic composition. Unknown IDs render a known safe layer without
@@ -338,9 +339,12 @@ class MentiPreviewRenderer extends StatelessWidget {
         55,
       ),
       'held' =>
-        option.id == 'notebook'
-            ? Rect.fromLTWH(0, neck + 80, 100, 115)
-            : Rect.fromLTWH(230, neck + 80, 90, 115),
+        option.id == 'none'
+            ? const Rect.fromLTWH(30, 180, 260, 160)
+            : MentiWardrobeGeometry(
+                geometry,
+                p.visual.value('outfit'),
+              ).held(option.id).inflate(12),
       _ => Rect.fromLTWH(
         MentiPremiumComposition.previewCrops[option.field]![0],
         MentiPremiumComposition.previewCrops[option.field]![1],
