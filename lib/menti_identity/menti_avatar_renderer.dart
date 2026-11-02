@@ -11,6 +11,7 @@ import 'menti_premium_renderer.dart';
 import 'menti_reference_rig.dart';
 import 'menti_head_geometry.dart';
 import 'menti_wardrobe_geometry.dart';
+import 'menti_accessory_rig.dart';
 import 'menti_premium_motion.dart';
 
 /// Pure, deterministic composition. Unknown IDs render a known safe layer without
@@ -320,7 +321,11 @@ class MentiPreviewRenderer extends StatelessWidget {
         MentiReferenceRig.target.top +
         rig.neckY * MentiReferenceRig.target.height / 820;
     crop = switch (option.field) {
-      'eyes' || 'glasses' => geometry.eyes.inflate(12),
+      'eyes' => geometry.eyes.inflate(12),
+      'glasses' => MentiAccessoryRig(
+        geometry,
+        MentiWardrobeGeometry(geometry, p.visual.value('outfit')),
+      ).glasses.inflate(4),
       'face' => geometry.eyes.expandToInclude(geometry.mouth).inflate(12),
       'headwear' => Rect.fromLTWH(
         face.left - 35,
@@ -337,7 +342,10 @@ class MentiPreviewRenderer extends StatelessWidget {
                 p.visual.value('outfit'),
               ).garment.inflate(12),
       'style' => Rect.fromLTWH(face.center.dx - 50, neck + 30, 100, 85),
-      'neck' => Rect.fromLTWH(face.center.dx - 50, neck - 15, 100, 75),
+      'neck' => MentiAccessoryRig(
+        geometry,
+        MentiWardrobeGeometry(geometry, p.visual.value('outfit')),
+      ).neckBounds.inflate(8),
       'detail' => Rect.fromLTWH(
         face.left - 12,
         face.center.dy - 8,

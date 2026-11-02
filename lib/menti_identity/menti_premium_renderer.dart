@@ -7,6 +7,7 @@ import 'menti_premium_atlas.dart';
 import 'menti_reference_rig.dart';
 import 'menti_head_geometry.dart';
 import 'menti_wardrobe_geometry.dart';
+import 'menti_accessory_rig.dart';
 
 /// Original high-resolution material sheets are shared by the image cache.
 /// Runtime crops avoid hundreds of duplicate files and preserve source pixels.
@@ -670,6 +671,7 @@ class MentiPremiumComposition extends StatelessWidget {
 
     final wardrobe = MentiWardrobeGeometry(geometry, id('outfit'));
     final outfitTarget = wardrobe.garment;
+    final accessories = MentiAccessoryRig(geometry, wardrobe);
     final hairSource = MentiPremiumAtlas.rects['hair/${id('hair')}']!;
     final hairSeat = geometry.hairTarget;
     final hairWidth = hairSeat.width;
@@ -781,6 +783,15 @@ class MentiPremiumComposition extends StatelessWidget {
               plate(part: head, expression: true),
               sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
             ],
+            if (id('neck') != 'none')
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: MentiFittedAccessories(
+                    accessories,
+                    neck: id('neck'),
+                  ),
+                ),
+              ),
             if (profile.visual.hairVisible)
               sprite(
                 'hair/${id('hair')}',
@@ -803,11 +814,6 @@ class MentiPremiumComposition extends StatelessWidget {
                   35,
                 ),
               ),
-            if (id('neck') != 'none')
-              vector(
-                'neck',
-                target: Rect.fromLTWH(face.center.dx - 36, neckY - 7, 72, 50),
-              ),
             if (id('headwear') != 'none')
               sprite(
                 'headwear/${id('headwear')}',
@@ -817,7 +823,14 @@ class MentiPremiumComposition extends StatelessWidget {
                     : null,
               ),
             if (id('glasses') != 'none')
-              vector('glasses', target: rig.register(rig.eyes).inflate(4)),
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: MentiFittedAccessories(
+                    accessories,
+                    glasses: id('glasses'),
+                  ),
+                ),
+              ),
             if (id('held') != 'none')
               vector(
                 'held',

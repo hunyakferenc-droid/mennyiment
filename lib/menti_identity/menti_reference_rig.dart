@@ -271,8 +271,8 @@ class _PlatePainter extends CustomPainter {
             ? .48
             : switch (spec.eyeStyle) {
                 'wide' => 1.055,
-                'relaxed' => .85,
-                'sharp' => .93,
+                'relaxed' => .65,
+                'sharp' => .76,
                 _ => 1.0,
               };
         _warp(
@@ -287,11 +287,11 @@ class _PlatePainter extends CustomPainter {
     }
     if (spec.faceStyle != 'cheerful') {
       final (sx, sy) = switch (spec.faceStyle) {
-        'calm' => (.98, .93),
-        'playful' => (1.025, .98),
-        'confident' => (.96, .97),
-        'sleepy' => (.93, .87),
-        _ => (.98, .90),
+        'calm' => (.94, .52),
+        'playful' => (1.055, .79),
+        'confident' => (.91, .68),
+        'sleepy' => (.91, .42),
+        _ => (1.02, .59),
       };
       canvas.save();
       // Mouth samples cannot overwrite an eye, even on tilted reference heads.
