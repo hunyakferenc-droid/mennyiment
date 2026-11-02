@@ -287,7 +287,9 @@ class MentiPreviewRenderer extends StatelessWidget {
           {'classic': 'basic', 'sporty': 'sport'}[option.id] ?? option.id;
     }
     return base.copyWith(
-      visual: option.field == 'hair'
+      visual:
+          option.field == 'hair' ||
+              (option.field == 'family' && option.id == 'girl')
           ? base.visual.withValues(values).withHairVisible(true)
           : base.visual.withValues(values),
     );

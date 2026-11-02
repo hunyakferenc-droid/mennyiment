@@ -238,7 +238,13 @@ void main() {
     expect(reload.draft.profile.visual.hairVisible, isTrue);
     reload.reset();
     expect(reload.draft.profile.visual.hairVisible, isFalse);
-    reload.choose(MentiVisualCatalog.resolve('family', 'girl'));
+    final girl = MentiVisualCatalog.resolve('family', 'girl');
+    final preview = MentiPreviewRenderer.previewProfile(
+      reload.draft.profile,
+      girl,
+    );
+    reload.choose(girl);
+    expect(reload.draft.profile.visual.toJson(), preview.visual.toJson());
     expect(reload.draft.profile.visual.hairVisible, isTrue);
     expect(reload.draft.profile.visual.value('hair'), 'girl-waves');
     reload.setHairVisible(false);
