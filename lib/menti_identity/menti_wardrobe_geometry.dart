@@ -20,17 +20,15 @@ class MentiWardrobeGeometry {
     final face = rig.register(rig.face);
     final src = MentiPremiumAtlas.rects['outfits/$outfit']!;
     final height = 397 - neck;
-    final width = math.min(
-      face.width * (rig.family == 'girl' ? 1.74 : 1.68),
-      height * src.width / src.height,
-    );
+    final width = height * src.width / src.height;
     // Uniform material scale: stitching, buttons and shoes retain their shape.
     return Rect.fromLTWH(face.center.dx - width / 2, neck, width, height);
   }
 
   Rect hand(bool right) {
-    if (outfit == 'basic')
+    if (outfit == 'basic') {
       return rig.mask(right ? 'rightHand' : 'leftHand').getBounds();
+    }
     final g = garment;
     return Rect.fromLTWH(
       right ? g.right - g.width * .16 - 6 : g.left + 6,
