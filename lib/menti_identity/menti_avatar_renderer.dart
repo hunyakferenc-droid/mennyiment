@@ -10,6 +10,7 @@ import 'menti_family_layout.dart';
 import 'menti_premium_renderer.dart';
 import 'menti_reference_rig.dart';
 import 'menti_head_geometry.dart';
+import 'menti_wardrobe_geometry.dart';
 import 'menti_premium_motion.dart';
 
 /// Pure, deterministic composition. Unknown IDs render a known safe layer without
@@ -320,7 +321,7 @@ class MentiPreviewRenderer extends StatelessWidget {
         rig.neckY * MentiReferenceRig.target.height / 820;
     crop = switch (option.field) {
       'eyes' || 'glasses' => geometry.eyes.inflate(12),
-      'face' => geometry.mouth.inflate(16),
+      'face' => geometry.eyes.expandToInclude(geometry.mouth).inflate(12),
       'headwear' => Rect.fromLTWH(
         face.left - 35,
         0,
@@ -328,7 +329,13 @@ class MentiPreviewRenderer extends StatelessWidget {
         geometry.eyes.bottom,
       ),
       'hair' => Rect.fromLTWH(face.left - 40, 0, face.width + 80, neck + 25),
-      'outfit' || 'accent' => Rect.fromLTWH(30, neck - 12, 260, 412 - neck),
+      'outfit' || 'accent' =>
+        p.visual.value('outfit') == 'basic'
+            ? Rect.fromLTWH(30, neck - 12, 260, 412 - neck)
+            : MentiWardrobeGeometry(
+                geometry,
+                p.visual.value('outfit'),
+              ).garment.inflate(12),
       'style' => Rect.fromLTWH(face.center.dx - 50, neck + 30, 100, 85),
       'neck' => Rect.fromLTWH(face.center.dx - 50, neck - 15, 100, 75),
       'detail' => Rect.fromLTWH(
@@ -338,9 +345,12 @@ class MentiPreviewRenderer extends StatelessWidget {
         55,
       ),
       'held' =>
-        option.id == 'notebook'
-            ? Rect.fromLTWH(0, neck + 80, 100, 115)
-            : Rect.fromLTWH(230, neck + 80, 90, 115),
+        option.id == 'none'
+            ? const Rect.fromLTWH(30, 180, 260, 160)
+            : MentiWardrobeGeometry(
+                geometry,
+                p.visual.value('outfit'),
+              ).held(option.id).inflate(12),
       _ => Rect.fromLTWH(
         MentiPremiumComposition.previewCrops[option.field]![0],
         MentiPremiumComposition.previewCrops[option.field]![1],

@@ -373,7 +373,7 @@ void main() {
     },
   );
   testWidgets(
-    '2.2.3 family defaults, caps, face and hair contact sheets use actual runtime',
+    '2.2.4 family defaults, caps, face and hair contact sheets use actual runtime',
     (t) async {
       t.view.physicalSize = const Size(1440, 2200);
       t.view.devicePixelRatio = 1;
@@ -442,7 +442,7 @@ void main() {
                         as RenderRepaintBoundary)
                     .toImage();
             final data = await im.toByteData(format: ui.ImageByteFormat.png);
-            File('docs/images/menti-2.2.3/$name.png')
+            File('docs/images/menti-2.2.4/$name.png')
                 .writeAsBytesSync(data!.buffer.asUint8List());
             im.dispose();
           });
@@ -454,7 +454,7 @@ void main() {
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            label('2.2.3 · family defaults · actual Flutter runtime'),
+            label('2.2.4 · family defaults · actual Flutter runtime'),
             for (final family in ['boy', 'girl', 'neutral'])
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -580,6 +580,65 @@ void main() {
             ],
           ),
         );
+      }
+      for (final family in ['boy', 'girl', 'neutral']) {
+        final r = MentiReferenceRig.of(family, 'adult');
+        final outfits = MentiVisualCatalog.forField('outfit');
+        await capture(
+          '$family-wardrobe',
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              label(
+                '$family · all 20 existing garment IDs · actual Flutter runtime',
+              ),
+              for (var row = 0; row < 4; row++)
+                Row(
+                  children: [
+                    for (final o in outfits.skip(row * 5).take(5))
+                      tile(
+                        p(r, hair: true).copyWith(
+                          visual: p(
+                            r,
+                            hair: true,
+                          ).visual.withValues({'outfit': o.id}),
+                        ),
+                        o.id,
+                        width: 280,
+                      ),
+                  ],
+                ),
+            ],
+          ),
+        );
+        for (final field in ['headwear', 'held', 'neck', 'glasses', 'back']) {
+          final options = MentiVisualCatalog.forField(field);
+          await capture(
+            '$family-$field',
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                label('$family · $field · registered accessories'),
+                for (var row = 0; row < (options.length / 4).ceil(); row++)
+                  Row(
+                    children: [
+                      for (final o in options.skip(row * 4).take(4))
+                        tile(
+                          p(r, hair: true).copyWith(
+                            visual: p(r, hair: true).visual.withValues({
+                              'outfit': 'street',
+                              field: o.id,
+                            }),
+                          ),
+                          o.id,
+                          width: 340,
+                        ),
+                    ],
+                  ),
+              ],
+            ),
+          );
+        }
       }
       await t.pumpWidget(const SizedBox.shrink());
       await t.pump();

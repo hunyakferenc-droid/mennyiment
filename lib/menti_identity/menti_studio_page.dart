@@ -202,15 +202,15 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                       child: Card(
                         clipBehavior: Clip.antiAlias,
                         color: selected == o.id
-                            ? Theme.of(context).colorScheme.secondaryContainer
-                            : null,
+                            ? const Color(0xFF3A274F)
+                            : const Color(0xFF241D30),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18),
                           side: BorderSide(
                             color: selected == o.id
                                 ? const Color(0xFFB58BE6)
-                                : Colors.transparent,
-                            width: 2,
+                                : const Color(0xFF493552),
+                            width: selected == o.id ? 2 : 1,
                           ),
                         ),
                         child: InkWell(
@@ -222,10 +222,28 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                             padding: const EdgeInsets.all(8),
                             child: Column(
                               children: [
-                                MentiPreviewRenderer(
-                                  option: o,
-                                  profile: c.draft.profile,
-                                  size: 140,
+                                DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Color(0xFF3B2B46),
+                                        Color(0xFF19131F),
+                                      ],
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4),
+                                    child: RepaintBoundary(
+                                      child: MentiPreviewRenderer(
+                                        option: o,
+                                        profile: c.draft.profile,
+                                        size: 132,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                                 const SizedBox(height: 6),
                                 Text(o.label(s), textAlign: TextAlign.center),
@@ -241,11 +259,18 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                                   textAlign: TextAlign.center,
                                   style: Theme.of(context).textTheme.labelSmall,
                                 ),
-                                if (selected == o.id)
-                                  const Icon(
-                                    Icons.check_circle_outline,
-                                    size: 20,
-                                  ),
+                                SizedBox(
+                                  height: 24,
+                                  child: selected == o.id
+                                      ? const Icon(
+                                          Icons.check_circle,
+                                          size: 20,
+                                          color: Color(0xFF76E4B8),
+                                        )
+                                      : !c.unlocked(o)
+                                      ? const Icon(Icons.lock_outline, size: 18)
+                                      : null,
+                                ),
                               ],
                             ),
                           ),
@@ -371,11 +396,17 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
               builder: (context, box) => InteractiveViewer(
                 minScale: 1,
                 maxScale: 3,
-                child: Center(
-                  child: MentiAvatarRenderer(
-                    key: const ValueKey('studio-large-preview'),
-                    profile: profile,
-                    size: math.min(box.maxWidth, box.maxHeight / 1.25),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Center(
+                    child: MentiAvatarRenderer(
+                      key: const ValueKey('studio-large-preview'),
+                      profile: profile,
+                      size: math.min(
+                        box.maxWidth - 32,
+                        (box.maxHeight - 32) / 1.25,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -404,7 +435,6 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                       key: const ValueKey('studio-live-preview'),
                       profile: profile,
                       animate: true,
-                      reaction: profile.reaction.style,
                       size: avatarSize,
                     ),
                   ),
