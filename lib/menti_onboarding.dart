@@ -186,7 +186,20 @@ class _MentiStartGateState extends State<MentiStartGate> {
               controller: _scroll,
               padding: const EdgeInsets.all(24),
               children: [
-                LinearProgressIndicator(value: (_step + 1) / (last + 1)),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: LinearProgressIndicator(
+                    value: (_step + 1) / (last + 1),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    '${_step + 1} / ${last + 1}',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                ),
                 const SizedBox(height: 24),
                 Text(
                   titles[_step],

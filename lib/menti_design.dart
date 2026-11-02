@@ -28,7 +28,26 @@ abstract final class MentiDesign {
     cardTheme: CardThemeData(
       color: surface,
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(22),
+        side: const BorderSide(color: Color(0xFF3A2B46)),
+      ),
+    ),
+    dividerTheme: const DividerThemeData(
+      color: Color(0xFF493552),
+      thickness: 1,
+    ),
+    chipTheme: ChipThemeData(
+      backgroundColor: surface,
+      selectedColor: const Color(0xFF4B2959),
+      side: const BorderSide(color: Color(0xFF60436C)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+    ),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: violet,
+      linearTrackColor: surface,
+      linearMinHeight: 6,
     ),
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: const Color(0xFF17111E),
