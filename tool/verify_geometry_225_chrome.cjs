@@ -124,13 +124,31 @@ function identity(values) {
     checks.push('Hair and eye preview alter the draft, keep saved identity intact, and can be reverted');
     await page.getByRole('checkbox', { name: strings.avatarTabOutfit, exact: true }).click();
     await page.getByRole('button', { name: new RegExp(escape(strings.avatarOutfitBasicAlt)) }).first().click();
+    const accessoriesTab=page.getByRole('checkbox',{name:strings.avatarTabAccessories,exact:true});
+    await accessoriesTab.scrollIntoViewIfNeeded();await accessoriesTab.click();
+    for(const label of [strings.avatarGlassesRoundGlasses,strings.avatarNeckChain,strings.avatarHeldNotebook]) {
+      const item=await option(page,label);await item.click();
+    }
+    await page.getByRole('button',{name:strings.avatarEnlargePreview,exact:true}).click();
+    await capture(page,{path:path.join(output,'chrome-fitted-accessories-zoom.png')});
+    await page.getByRole('button',{name:strings.avatarClosePreview,exact:true}).click();
     await page.getByRole('button', { name: strings.avatarSave, exact: true }).click();
     await page.getByText(strings.avatarSaved, { exact: true }).last().waitFor();
     const saved = identity(await storage(page));
-    if (saved.profile.name !== 'Chrome Menti' || saved.profile.visual.outfit !== 'basic-alt') {
+    if (saved.profile.name !== 'Chrome Menti' || saved.profile.visual.outfit !== 'basic-alt' || saved.profile.visual.glasses !== 'round-glasses' || saved.profile.visual.neck !== 'chain' || saved.profile.visual.held !== 'notebook') {
       throw new Error('Studio did not persist the edited identity');
     }
     checks.push('Studio outfit editing and confirmed save');
+    for(const label of [strings.avatarGlassesSunglasses,strings.avatarNeckScarf]) {
+      const item=await option(page,label);await item.click();
+    }
+    await page.getByRole('button',{name:strings.avatarEnlargePreview,exact:true}).click();
+    await capture(page,{path:path.join(output,'chrome-scarf-sunglasses-zoom.png')});
+    await page.getByRole('button',{name:strings.avatarClosePreview,exact:true}).click();
+    if(JSON.stringify(identity(await storage(page)))!==JSON.stringify(saved)) throw new Error('Accessory draft wrote saved profile');
+    await page.getByRole('button',{name:strings.avatarRevert,exact:true}).click();
+    checks.push('Fitted glasses, collar and grip save together; scarf/sunglasses draft reverts without storage writes');
+
     await capture(page,{ path: path.join(output, 'chrome-studio-mobile-en.png') });
     await page.waitForLoadState('networkidle');
     page.intentionalReload = true;
