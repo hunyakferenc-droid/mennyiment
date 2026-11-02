@@ -127,7 +127,9 @@ class MentiIdentityController extends ChangeNotifier {
       }
       draft = draft.copyWith(
         profile: draft.profile.copyWith(
-          visual: option.field == 'hair'
+          visual:
+              option.field == 'hair' ||
+                  (option.field == 'family' && option.id == 'girl')
               ? draft.profile.visual.withValues(changes).withHairVisible(true)
               : draft.profile.visual.withValues(changes),
         ),

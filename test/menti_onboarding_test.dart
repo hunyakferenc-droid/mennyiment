@@ -138,7 +138,7 @@ void main() {
             expect(identity.profile.name, 'Teszt Menti');
             expect(identity.profile.visual.value('family'), 'girl');
             expect(identity.profile.visual.value('age'), 'veteran');
-            expect(identity.profile.visual.hairVisible, isFalse);
+            expect(identity.profile.visual.hairVisible, isTrue);
             final navigation = tester.widget<NavigationBar>(
               find.byType(NavigationBar),
             );

@@ -705,12 +705,25 @@ class MentiPremiumComposition extends StatelessWidget {
         'beret',
         'cowboy',
       ].contains(id('headwear'))) {
-        // Above the brim, hair belongs under the cap rather than poking through it.
-        final cut = Path.combine(
-          PathOperation.difference,
-          Path()..addRect(Rect.fromLTRB(0, 0, 320, hat.bottom - 3)),
-          Path()..addRect(hat.inflate(1)),
-        );
+        // The cap PNG has transparent corners. Hiding only outside its
+        // rectangle let a ponytail show through those corners above the crown.
+        // Keep the side lengths below the band, with all crown hair tucked in.
+        final sideY = hat.bottom + hat.height * .30;
+        final cut = Path()
+          ..moveTo(0, 0)
+          ..lineTo(320, 0)
+          ..lineTo(320, sideY)
+          ..lineTo(hat.right + hat.width * .22, sideY)
+          ..cubicTo(
+            hat.right + hat.width * .05,
+            hat.bottom - hat.height * .16,
+            hat.left - hat.width * .05,
+            hat.bottom - hat.height * .16,
+            hat.left - hat.width * .22,
+            sideY,
+          )
+          ..lineTo(0, sideY)
+          ..close();
         final matrix = Matrix4.identity()
           ..scaleByDouble(1 / hairTarget.width, 1 / hairTarget.height, 1, 1)
           ..translateByDouble(-hairTarget.left, -hairTarget.top, 0, 1);

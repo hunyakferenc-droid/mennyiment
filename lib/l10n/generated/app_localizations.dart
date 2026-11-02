@@ -2675,7 +2675,7 @@ abstract class AppLocalizations {
   /// No description provided for @avatarStudio.
   ///
   /// In hu, this message translates to:
-  /// **'Menti Studio 2.2.2'**
+  /// **'Menti Studio 2.2.3'**
   String get avatarStudio;
 
   /// No description provided for @avatarSave.

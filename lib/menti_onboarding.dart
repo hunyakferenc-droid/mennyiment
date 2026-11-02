@@ -107,7 +107,9 @@ class _MentiStartGateState extends State<MentiStartGate> {
                       identity.choose(
                         MentiVisualCatalog.resolve('hair', rig.hairId),
                       );
-                      identity.setHairVisible(visible);
+                      identity.setHairVisible(
+                        access.existing ? visible : v.value('family') == 'girl',
+                      );
                     }
                   },
           ),

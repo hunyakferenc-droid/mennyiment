@@ -117,6 +117,87 @@ void main() {
       }
     }
   });
+  testWidgets(
+    'cap centre follows source upper-scalp pixels, with and without hair',
+    (t) async {
+      await t.runAsync(() async {
+        for (final family in ['boy', 'girl', 'neutral']) {
+          final bytes = await rootBundle.load(
+            'assets/images/menti_2_2/reference/$family-hairless.png',
+          );
+          final codec = await ui.instantiateImageCodec(
+            bytes.buffer.asUint8List(),
+          );
+          final image = (await codec.getNextFrame()).image;
+          final data = (await image.toByteData(
+            format: ui.ImageByteFormat.rawRgba,
+          ))!.buffer.asUint8List();
+          for (final rig in MentiReferenceRig.all.where(
+            (r) => r.family == family,
+          )) {
+            final skull =
+                MentiFaceAnchors.values['$family-${rig.age}-clean']!['skull']!;
+            var total = 0.0, count = 0;
+            for (
+              var y = (skull.top + skull.height * .15).round();
+              y <= (skull.top + skull.height * .22).round();
+              y++
+            ) {
+              int? left, right;
+              for (var x = skull.left.round(); x < skull.right.round(); x++) {
+                final i = (y * image.width + x) * 4;
+                final r = data[i], g = data[i + 1], b = data[i + 2];
+                if (data[i + 3] > 100 &&
+                    r > 140 &&
+                    g > 65 &&
+                    r > g * 1.1 &&
+                    g > b * 1.6) {
+                  left ??= x;
+                  right = x;
+                }
+              }
+              if (left != null && right != null) {
+                total += (left + right) / 2;
+                count++;
+              }
+            }
+            expect(count, greaterThan(8));
+            final sourceCentre = total / count;
+            final registered = rig
+                .register(Rect.fromLTWH(sourceCentre, skull.top, 1, 1))
+                .left;
+            for (final visible in [false, true]) {
+              for (final hair in MentiVisualCatalog.forField(
+                'hair',
+                family: family,
+              )) {
+                final g = MentiHeadGeometry(
+                  rig,
+                  clean: true,
+                  hair: hair.id,
+                  hairVisible: visible,
+                );
+                final cap = g.cap(
+                  MentiPremiumAtlas.rects['headwear/crown-cap']!,
+                );
+                expect(
+                  (cap.center.dx - registered).abs(),
+                  lessThan(1),
+                  reason: '$family/${rig.age}/$visible/${hair.id}',
+                );
+                expect(
+                  cap.bottom,
+                  greaterThan(g.scalp.top + g.scalp.height * .30),
+                );
+              }
+            }
+          }
+          image.dispose();
+          codec.dispose();
+        }
+      });
+    },
+  );
   test('old identities keep visible hair; clean toggle saves, reverts and preserves future fields', () async {
     final old = MentiIdentityDocument(
       profile: MentiIdentityProfile(
@@ -157,6 +238,16 @@ void main() {
     expect(reload.draft.profile.visual.hairVisible, isTrue);
     reload.reset();
     expect(reload.draft.profile.visual.hairVisible, isFalse);
+    reload.choose(MentiVisualCatalog.resolve('family', 'girl'));
+    expect(reload.draft.profile.visual.hairVisible, isTrue);
+    expect(reload.draft.profile.visual.value('hair'), 'girl-waves');
+    reload.setHairVisible(false);
+    expect(await reload.save(), isTrue);
+    final hidden = MentiIdentityController();
+    addTearDown(hidden.dispose);
+    await hidden.load();
+    expect(hidden.profile.visual.hairVisible, isFalse);
+    expect(hidden.profile.visual.value('family'), 'girl');
     expect(
       (await SharedPreferences.getInstance()).getString(
         'mennyiment_menti_xp_v2',
@@ -276,7 +367,7 @@ void main() {
     },
   );
   testWidgets(
-    '2.2.2 clean defaults, caps, face and hair contact sheets use actual runtime',
+    '2.2.3 family defaults, caps, face and hair contact sheets use actual runtime',
     (t) async {
       t.view.physicalSize = const Size(1440, 2200);
       t.view.devicePixelRatio = 1;
@@ -294,7 +385,7 @@ void main() {
       );
       MentiIdentityProfile p(
         MentiReferenceRig r, {
-        bool hair = false,
+        bool? hair,
         String? hairId,
         String cap = 'crown-cap',
         String face = 'cheerful',
@@ -304,7 +395,7 @@ void main() {
           'family': r.family,
           'age': r.age,
           'hair': hairId ?? r.hairId,
-          'hairVisible': hair,
+          'hairVisible': hair ?? r.family == 'girl',
           'headwear': cap,
           'face': face,
           'eyes': eyes,
@@ -345,7 +436,7 @@ void main() {
                         as RenderRepaintBoundary)
                     .toImage();
             final data = await im.toByteData(format: ui.ImageByteFormat.png);
-            File('docs/images/menti-2.2.2/$name.png')
+            File('docs/images/menti-2.2.3/$name.png')
                 .writeAsBytesSync(data!.buffer.asUint8List());
             im.dispose();
           });
@@ -357,7 +448,7 @@ void main() {
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            label('2.2.2 · clean defaults · actual Flutter runtime'),
+            label('2.2.3 · family defaults · actual Flutter runtime'),
             for (final family in ['boy', 'girl', 'neutral'])
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -376,6 +467,22 @@ void main() {
             .where((r) => r.family == family)
             .toList();
         await capture(
+          '$family-defaults',
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              label('$family · 2.2.3 defaults · actual Flutter runtime'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (final r in rigs)
+                    tile(p(r), '${r.family} / ${r.age}', width: 370),
+                ],
+              ),
+            ],
+          ),
+        );
+        await capture(
           '$family-cap-pairs',
           Column(
             mainAxisSize: MainAxisSize.min,
@@ -387,6 +494,25 @@ void main() {
                   children: [
                     tile(p(r, cap: 'none'), '${r.age} · no cap', width: 340),
                     tile(p(r), '${r.age} · cap', width: 340),
+                  ],
+                ),
+            ],
+          ),
+        );
+        await capture(
+          '$family-hair-pairs',
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              label(
+                '$family · hair off / hair on · same head and calibrated cap',
+              ),
+              for (final r in rigs)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    tile(p(r, hair: false), '${r.age} · hair off', width: 340),
+                    tile(p(r, hair: true), '${r.age} · hair on', width: 340),
                   ],
                 ),
             ],
