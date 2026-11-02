@@ -32,18 +32,52 @@ class MentiWardrobeGeometry {
     final g = garment;
     return Rect.fromLTWH(
       right ? g.right - g.width * .16 - 6 : g.left + 6,
-      g.top +
-          g.height *
-              (['sport-alt', 'creative-alt'].contains(outfit)
-                  ? .31
-                  : ['business', 'business-alt'].contains(outfit)
-                  ? .35
-                  : .38),
+      g.top + g.height * (_cuffs[outfit] ?? .38),
       g.width * .16,
       g.width * .225,
     );
   }
 
+  // Sleeve openings in the retained 20 masters. Native basic uses its mask.
+  static const _cuffs = <String, double>{
+    'basic-alt': .38,
+    'party': .38,
+    'party-alt': .38,
+    'sport': .38,
+    'sport-alt': .31,
+    'business': .35,
+    'business-alt': .35,
+    'festival': .38,
+    'festival-alt': .38,
+    'legendary': .37,
+    'legendary-alt': .37,
+    'street': .38,
+    'street-alt': .38,
+    'cozy': .39,
+    'cozy-alt': .39,
+    'explorer': .36,
+    'explorer-alt': .36,
+    'creative': .38,
+    'creative-alt': .31,
+  };
+  Rect get shoulders => Rect.fromLTWH(
+    garment.left + garment.width * .12,
+    garment.top + garment.height * .06,
+    garment.width * .76,
+    garment.height * .12,
+  );
+  Rect get waist => Rect.fromLTWH(
+    garment.left + garment.width * .25,
+    garment.top + garment.height * .45,
+    garment.width * .5,
+    garment.height * .1,
+  );
+  Rect get shoes => Rect.fromLTWH(
+    garment.left,
+    garment.bottom - garment.height * .20,
+    garment.width,
+    garment.height * .20,
+  );
   Rect held(String id) {
     final grip = hand(id != 'notebook').center;
     final width = head.scalp.width * (id == 'notebook' ? .44 : .34);

@@ -575,7 +575,7 @@ class MentiPremiumComposition extends StatelessWidget {
       if (p.visual.hairVisible) '${MentiPremiumAtlas.root}hair.png',
       if (resolve(p, 'headwear').id != 'none')
         '${MentiPremiumAtlas.root}headwear.png',
-      for (final f in ['style', 'detail', 'neck', 'glasses', 'held'])
+      for (final f in ['style', 'detail', 'held'])
         if (resolve(p, f).id != 'none' &&
             (f != 'style' || resolve(p, f).id != 'classic'))
           MentiVisualCatalog.root + resolve(p, f).asset,
@@ -672,6 +672,44 @@ class MentiPremiumComposition extends StatelessWidget {
     final wardrobe = MentiWardrobeGeometry(geometry, id('outfit'));
     final outfitTarget = wardrobe.garment;
     final accessories = MentiAccessoryRig(geometry, wardrobe);
+    Widget handLayer(bool right, {bool grip = false}) {
+      final path = rig.mask(right ? 'rightHand' : 'leftHand');
+      final bounds = path.getBounds();
+      final target = wardrobe.hand(right);
+      final visible = grip
+          ? Path.combine(
+              PathOperation.intersect,
+              path,
+              Path()..addRect(
+                Rect.fromLTRB(
+                  bounds.left,
+                  bounds.top + bounds.height * .45,
+                  bounds.right,
+                  bounds.bottom,
+                ),
+              ),
+            )
+          : path;
+      return Positioned.fill(
+        child: Transform(
+          transform: Matrix4.identity()
+            ..translateByDouble(
+              target.left - bounds.left * target.width / bounds.width,
+              target.top - bounds.top * target.height / bounds.height,
+              0,
+              1,
+            )
+            ..scaleByDouble(
+              target.width / bounds.width,
+              target.height / bounds.height,
+              1,
+              1,
+            ),
+          child: MentiReferencePlate(rig: rig, part: visible),
+        ),
+      );
+    }
+
     final hairSource = MentiPremiumAtlas.rects['hair/${id('hair')}']!;
     final hairSeat = geometry.hairTarget;
     final hairWidth = hairSeat.width;
@@ -750,36 +788,7 @@ class MentiPremiumComposition extends StatelessWidget {
               if (accent != null)
                 plate(part: rig.mask('garments'), tint: accent),
             ] else ...[
-              // Real source hands stay behind the sleeve edge, never generic
-              // hand shapes or a body-sized rectangle sampled from an atlas.
-              for (final right in [false, true])
-                Positioned.fill(
-                  child: LayoutBuilder(
-                    builder: (context, c) {
-                      final path = rig.mask(right ? 'rightHand' : 'leftHand');
-                      final bounds = path.getBounds();
-                      final target = wardrobe.hand(right);
-                      return Transform(
-                        transform: Matrix4.identity()
-                          ..translateByDouble(
-                            target.left -
-                                bounds.left * target.width / bounds.width,
-                            target.top -
-                                bounds.top * target.height / bounds.height,
-                            0,
-                            1,
-                          )
-                          ..scaleByDouble(
-                            target.width / bounds.width,
-                            target.height / bounds.height,
-                            1,
-                            1,
-                          ),
-                        child: MentiReferencePlate(rig: rig, part: path),
-                      );
-                    },
-                  ),
-                ),
+              for (final right in [false, true]) handLayer(right),
               plate(part: head, expression: true),
               sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
             ],
@@ -837,6 +846,8 @@ class MentiPremiumComposition extends StatelessWidget {
                 target: wardrobe.held(id('held')),
                 sourceCrop: MentiWardrobeGeometry.heldCrops[id('held')],
               ),
+            if (id('held') != 'none')
+              handLayer(id('held') != 'notebook', grip: true),
             if (reaction != null)
               Positioned.fill(
                 child: SvgPicture.asset(
