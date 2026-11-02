@@ -15,7 +15,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   for (final locale in ['hu', 'en']) {
     for (final scale in [1.0, 2.0]) {
-      for (final width in [320.0, 1024.0]) {
+      for (final width in [320.0, 360.0, 390.0, 430.0, 1024.0]) {
         testWidgets(
           '$locale legacy feature pages fit ${width}px at ${scale}x without changing stored data',
           (tester) async {

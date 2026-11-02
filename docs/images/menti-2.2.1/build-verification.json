@@ -1,0 +1,27 @@
+{
+  "sourceCommit": "176bfd887f1665c241217c56bfa3ded87670d1f1",
+  "apkSha256": "e65c9d7a1e042bf1329cbff9581384dcf4c3844b2373165d53a3b6fe18615c0d",
+  "zipSha256": "35dd4e2dd72bdb17d49c4198e9109c188604e0de0ac23e22ad9b229ba97bf0e1",
+  "oldCertificateSha256": "2e48e34cd78e575fb0f666a45a2109ff9c463f1b7fa6a7de48f6c0b7165dd20e",
+  "certificateSha256": "c87d3f6dcc98d966e1543f6091c357edba53d80a481c3dd1d6e0dd77743d508c",
+  "signature": "v2 verified in GitHub CI",
+  "package": "com.example.mennyiment",
+  "version": "2.2.1",
+  "versionCode": 23,
+  "minSdk": 24,
+  "targetSdk": 36,
+  "runId": 41352787759,
+  "ciUrl": "https://github.com/hunyakferenc-droid/mennyiment/actions/runs/41352787759",
+  "apkArtifactId": 13101509202,
+  "webArtifactId": 13102580126,
+  "archiveCrcVerified": true,
+  "apkChecksumVerified": true,
+  "webArchiveCrcVerified": true,
+  "webZipSha256": "0a60377741475b7378acedf5b96e48df16f97094f9c381141bdf3e2d25211169",
+  "oldArtifact": {
+    "runId": 41332128970,
+    "sourceCommit": "4f0ff9ecfe49eaa910f5a082ac09290f9d8edcff"
+  },
+  "physicalAndroidTested": false,
+  "emulatorAndroidTested": false
+}

@@ -108,7 +108,9 @@ void main() {
       final saved = jsonEncode([old]);
       final prefs = await open(tester, saved);
       expect(find.text('Kezdőlap'), findsOneWidget);
-      await tester.tap(find.byTooltip('Menti és profil'));
+      await tester.tap(find.byKey(const ValueKey('home-menu')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(PopupMenuItem<String>, 'Menti és profil'));
       await frames(tester);
       await tester.ensureVisible(
         find.byKey(const ValueKey('menti-reduce-motion')),

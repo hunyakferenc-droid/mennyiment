@@ -192,6 +192,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('open-intro-invite')), findsNothing);
     expect(experienceSnapshot(await SharedPreferences.getInstance()), initial);
+    await tester.tap(find.byKey(const ValueKey('home-menu')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('open-menti-settings')));
     await tester.pumpAndSettle();
     await scroll(tester, 'settings-open-intro');

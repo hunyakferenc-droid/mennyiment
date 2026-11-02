@@ -215,6 +215,8 @@ void main() {
     await tester.pumpWidget(const MennyiMentApp());
     await frames(tester);
     expect(find.text('Home'), findsOneWidget);
+    await tester.scrollUntilVisible(find.byKey(const ValueKey('home-more-features')),300,scrollable:find.byType(Scrollable).first,maxScrolls:40);
+    await tester.tap(find.byKey(const ValueKey('home-more-features')));await tester.pumpAndSettle();
     await tester.scrollUntilVisible(find.text('Finance centre – detailed overview'), 300,
       scrollable: find.byType(Scrollable).first, maxScrolls: 40);
     await frames(tester);

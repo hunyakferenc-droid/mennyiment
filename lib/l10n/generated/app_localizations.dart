@@ -2675,7 +2675,7 @@ abstract class AppLocalizations {
   /// No description provided for @avatarStudio.
   ///
   /// In hu, this message translates to:
-  /// **'Menti Studio 2.2'**
+  /// **'Menti Studio 2.2.3'**
   String get avatarStudio;
 
   /// No description provided for @avatarSave.
@@ -2891,7 +2891,7 @@ abstract class AppLocalizations {
   /// No description provided for @avatarFieldHair.
   ///
   /// In hu, this message translates to:
-  /// **'Haj és fejforma'**
+  /// **'Frizura (opcionális)'**
   String get avatarFieldHair;
 
   /// No description provided for @avatarFieldHeadwear.
@@ -4495,6 +4495,60 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'A jelvények a kézzel rögzített félretett összeg alapján nyílnak meg.'**
   String get milestoneHint;
+
+  /// No description provided for @avatarDraft.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nem mentett változtatások'**
+  String get avatarDraft;
+
+  /// No description provided for @avatarMore.
+  ///
+  /// In hu, this message translates to:
+  /// **'További műveletek'**
+  String get avatarMore;
+
+  /// No description provided for @avatarHidePreview.
+  ///
+  /// In hu, this message translates to:
+  /// **'Előnézet összecsukása'**
+  String get avatarHidePreview;
+
+  /// No description provided for @avatarShowPreview.
+  ///
+  /// In hu, this message translates to:
+  /// **'Előnézet megnyitása'**
+  String get avatarShowPreview;
+
+  /// No description provided for @homeMore.
+  ///
+  /// In hu, this message translates to:
+  /// **'További funkciók'**
+  String get homeMore;
+
+  /// No description provided for @avatarEnlargePreview.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nagyobb előnézet és nagyítás'**
+  String get avatarEnlargePreview;
+
+  /// No description provided for @avatarClosePreview.
+  ///
+  /// In hu, this message translates to:
+  /// **'Előnézet bezárása'**
+  String get avatarClosePreview;
+
+  /// No description provided for @avatarHairVisible.
+  ///
+  /// In hu, this message translates to:
+  /// **'Frizura megjelenítése'**
+  String get avatarHairVisible;
+
+  /// No description provided for @avatarHairOptional.
+  ///
+  /// In hu, this message translates to:
+  /// **'A haj opcionális. Kikapcsolva a letisztult Menti-alap látható.'**
+  String get avatarHairOptional;
 }
 
 class _AppLocalizationsDelegate

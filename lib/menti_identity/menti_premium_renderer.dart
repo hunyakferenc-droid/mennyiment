@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'menti_identity.dart';
 import 'menti_visual_catalog.dart';
 import 'menti_premium_atlas.dart';
+import 'menti_reference_rig.dart';
+import 'menti_head_geometry.dart';
 
 /// Original high-resolution material sheets are shared by the image cache.
 /// Runtime crops avoid hundreds of duplicate files and preserve source pixels.
@@ -102,8 +104,8 @@ class MentiPremiumSprite extends StatelessWidget {
   };
 }
 
-class MentiPremiumComposition extends StatelessWidget {
-  const MentiPremiumComposition({
+class MentiAtlasComposition extends StatelessWidget {
+  const MentiAtlasComposition({
     super.key,
     required this.profile,
     this.reaction,
@@ -504,4 +506,360 @@ class _HandClipper extends CustomClipper<Path> {
     ], true);
   @override
   bool shouldReclip(_HandClipper oldClipper) => points != oldClipper.points;
+}
+
+/// 2.2.1: the nine complete source characters define anatomy and materials.
+/// Native regions stay registered together. Equipment adapts to that rig.
+class MentiPremiumComposition extends StatelessWidget {
+  const MentiPremiumComposition({
+    super.key,
+    required this.profile,
+    this.reaction,
+    this.showBackground = true,
+    this.blink = false,
+    this.wink = false,
+    this.smile = false,
+  });
+  final MentiIdentityProfile profile;
+  final String? reaction;
+  final bool showBackground, blink, wink, smile;
+  static const previewCrops = <String, List<double>>{
+    'style': [95, 160, 130, 100],
+    'face': [80, 75, 170, 85],
+    'eyes': [80, 40, 170, 100],
+    'hair': [35, 0, 250, 190],
+    'headwear': [35, 0, 250, 145],
+    'outfit': [40, 145, 240, 255],
+    'glasses': [80, 45, 170, 100],
+    'neck': [95, 120, 140, 80],
+    'held': [0, 210, 320, 125],
+    'detail': [80, 65, 170, 90],
+    'back': [30, 130, 260, 235],
+    'accent': [60, 135, 210, 265],
+    'background': [0, 0, 320, 400],
+    'aura': [0, 0, 320, 400],
+    'reaction': [0, 0, 320, 400],
+  };
+  static MentiVisualOption resolve(MentiIdentityProfile p, String f) =>
+      MentiAtlasComposition.resolve(p, f);
+  static const sheets = MentiAtlasComposition.sheets;
+  static List<String> get assets => [
+    ...MentiReferenceRig.assets,
+    ...MentiAtlasComposition.assets,
+  ];
+  // Legacy atlas indexing remains available for archive integrity regressions.
+  static List<String> sprites(MentiIdentityProfile p) =>
+      MentiAtlasComposition.sprites(p);
+  static List<String> layers(
+    MentiIdentityProfile p, {
+    String? reaction,
+    bool showBackground = true,
+  }) {
+    final rig = MentiReferenceRig.of(
+      resolve(p, 'family').id,
+      resolve(p, 'age').id,
+    );
+    return [
+      if (showBackground)
+        MentiVisualCatalog.root + resolve(p, 'background').asset,
+      MentiVisualCatalog.root + resolve(p, 'aura').asset,
+      if (resolve(p, 'back').id != 'none')
+        MentiVisualCatalog.root + resolve(p, 'back').asset,
+      rig.asset.replaceFirst('.png', '-hairless.png'),
+      if (resolve(p, 'outfit').id != 'basic') ...[
+        '${MentiPremiumAtlas.root}outfits.png',
+        rig.asset,
+      ],
+      if (p.visual.hairVisible) '${MentiPremiumAtlas.root}hair.png',
+      if (resolve(p, 'headwear').id != 'none')
+        '${MentiPremiumAtlas.root}headwear.png',
+      for (final f in ['style', 'detail', 'neck', 'glasses', 'held'])
+        if (resolve(p, f).id != 'none' &&
+            (f != 'style' || resolve(p, f).id != 'classic'))
+          MentiVisualCatalog.root + resolve(p, f).asset,
+      if (reaction != null)
+        MentiVisualCatalog.root +
+            MentiVisualCatalog.resolve('reaction', reaction).asset,
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String id(String f) => resolve(profile, f).id;
+    final rig = MentiReferenceRig.of(id('family'), id('age'));
+    final geometry = MentiHeadGeometry(
+      rig,
+      clean: true,
+      hair: id('hair'),
+      hairVisible: profile.visual.hairVisible,
+    );
+    final nativeOutfit = id('outfit') == 'basic';
+    final face = rig.register(rig.face);
+    final neckY =
+        MentiReferenceRig.target.top +
+        rig.neckY * MentiReferenceRig.target.height / 820;
+    final accent = <String, Color>{
+      'violet': const Color(0xFFD9BFF5),
+      'blue': const Color(0xFFB5D9FC),
+      'mint': const Color(0xFFB1E8D0),
+      'rose': const Color(0xFFF6BDDA),
+      'orange': const Color(0xFFFFC57E),
+    }[id('accent')];
+    final full = Path()..addRect(const Rect.fromLTWH(0, 0, 320, 400));
+    final head = rig.mask('cleanHeadSkin');
+    Widget plate({Path? part, Color? tint, bool expression = false}) =>
+        Positioned.fill(
+          child: MentiReferencePlate(
+            rig: rig,
+            hairless: true,
+            part: part,
+            tint: tint,
+            eyeStyle: expression ? id('eyes') : 'round',
+            faceStyle: expression
+                ? (smile ? 'cheerful' : id('face'))
+                : 'cheerful',
+            blink: expression && blink,
+            wink: expression && wink,
+          ),
+        );
+    Widget sprite(String s, Rect target, {Color? color, Path? mask}) =>
+        Positioned.fromRect(
+          rect: target,
+          child: ClipPath(
+            clipper: _RegisteredClipper(mask),
+            child: MentiPremiumSprite(sprite: s, color: color),
+          ),
+        );
+    Widget vector(String field, {Rect? target}) {
+      final path = MentiVisualCatalog.root + resolve(profile, field).asset;
+      if (target == null) {
+        return Positioned.fill(
+          child: SvgPicture.asset(path, key: ValueKey(path), fit: BoxFit.fill),
+        );
+      }
+      final crop = MentiVisualCatalog.previewCrops[field]!;
+      return Positioned.fromRect(
+        rect: target,
+        child: ClipRect(
+          child: OverflowBox(
+            alignment: Alignment.topLeft,
+            minWidth: 0,
+            maxWidth: double.infinity,
+            minHeight: 0,
+            maxHeight: double.infinity,
+            child: Transform.translate(
+              offset: Offset(
+                -crop[0] * target.width / crop[2],
+                -crop[1] * target.height / crop[3],
+              ),
+              child: SizedBox(
+                width: 320 * target.width / crop[2],
+                height: 400 * target.height / crop[3],
+                child: SvgPicture.asset(
+                  path,
+                  key: ValueKey(path),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    // A native full master remains intact whenever the selected hair and outfit
+    // match it. Other equipment is scaled to the native neck and foot anchors.
+    final outfitTarget = Rect.fromLTRB(
+      face.center.dx - face.width * (id('family') == 'girl' ? .87 : .84),
+      neckY,
+      face.center.dx + face.width * (id('family') == 'girl' ? .87 : .84),
+      397,
+    );
+    final hairSource = MentiPremiumAtlas.rects['hair/${id('hair')}']!;
+    final hairSeat = geometry.hairTarget;
+    final hairWidth = hairSeat.width;
+    final hairHeight = hairWidth * hairSource.height / hairSource.width;
+    final hairTarget = Rect.fromLTWH(
+      hairSeat.left,
+      geometry.eyes.center.dy - hairHeight * .68,
+      hairWidth,
+      hairHeight,
+    );
+    final hatSource = MentiPremiumAtlas.rects['headwear/${id('headwear')}'];
+    final hat = switch (id('headwear')) {
+      'headphones' => Rect.fromLTRB(
+        geometry.scalp.left - 10,
+        geometry.scalp.top - 12,
+        geometry.scalp.right + 10,
+        geometry.scalp.bottom - 18,
+      ),
+      'hood' => geometry.scalp.inflate(12),
+      _ => hatSource == null ? Rect.zero : geometry.cap(hatSource),
+    };
+    Path hairWindow() {
+      var visible = geometry.window(hairTarget);
+      if ([
+        'crown-cap',
+        'sport-cap',
+        'beanie',
+        'beret',
+        'cowboy',
+      ].contains(id('headwear'))) {
+        // The cap PNG has transparent corners. Hiding only outside its
+        // rectangle let a ponytail show through those corners above the crown.
+        // Keep the side lengths below the band, with all crown hair tucked in.
+        final sideY = hat.bottom + hat.height * .30;
+        final cut = Path()
+          ..moveTo(0, 0)
+          ..lineTo(320, 0)
+          ..lineTo(320, sideY)
+          ..lineTo(hat.right + hat.width * .22, sideY)
+          ..cubicTo(
+            hat.right + hat.width * .05,
+            hat.bottom - hat.height * .16,
+            hat.left - hat.width * .05,
+            hat.bottom - hat.height * .16,
+            hat.left - hat.width * .22,
+            sideY,
+          )
+          ..lineTo(0, sideY)
+          ..close();
+        final matrix = Matrix4.identity()
+          ..scaleByDouble(1 / hairTarget.width, 1 / hairTarget.height, 1, 1)
+          ..translateByDouble(-hairTarget.left, -hairTarget.top, 0, 1);
+        visible = Path.combine(
+          PathOperation.difference,
+          visible,
+          cut.transform(matrix.storage),
+        );
+      }
+      return visible;
+    }
+
+    return FittedBox(
+      fit: BoxFit.fill,
+      child: SizedBox(
+        width: 320,
+        height: 400,
+        child: Stack(
+          clipBehavior: Clip.hardEdge,
+          children: [
+            if (showBackground) vector('background'),
+            vector('aura'),
+            if (id('back') != 'none')
+              vector('back', target: const Rect.fromLTWH(45, 145, 230, 205)),
+            if (nativeOutfit) ...[
+              plate(part: full, expression: true),
+              if (accent != null)
+                plate(part: rig.mask('garments'), tint: accent),
+            ] else ...[
+              // Real source hands stay behind the sleeve edge, never generic
+              // hand shapes or a body-sized rectangle sampled from an atlas.
+              for (final right in [false, true])
+                Positioned.fill(
+                  child: LayoutBuilder(
+                    builder: (context, c) {
+                      final path = rig.mask(right ? 'rightHand' : 'leftHand');
+                      final bounds = path.getBounds();
+                      final target = Rect.fromLTWH(
+                        right
+                            ? outfitTarget.right - outfitTarget.width * .16 - 6
+                            : outfitTarget.left + 6,
+                        neckY + (397 - neckY) * .39,
+                        outfitTarget.width * .16,
+                        outfitTarget.width * .225,
+                      );
+                      return Transform(
+                        transform: Matrix4.identity()
+                          ..translateByDouble(
+                            target.left -
+                                bounds.left * target.width / bounds.width,
+                            target.top -
+                                bounds.top * target.height / bounds.height,
+                            0,
+                            1,
+                          )
+                          ..scaleByDouble(
+                            target.width / bounds.width,
+                            target.height / bounds.height,
+                            1,
+                            1,
+                          ),
+                        child: MentiReferencePlate(rig: rig, part: path),
+                      );
+                    },
+                  ),
+                ),
+              plate(part: head, expression: true),
+              sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
+            ],
+            if (profile.visual.hairVisible)
+              sprite(
+                'hair/${id('hair')}',
+                hairTarget,
+                color: id('age') == 'veteran' ? const Color(0xFFE3DFE8) : null,
+                mask: hairWindow(),
+              ),
+            if (id('style') != 'classic')
+              vector(
+                'style',
+                target: Rect.fromLTWH(face.center.dx - 30, neckY + 55, 60, 42),
+              ),
+            if (id('detail') != 'none')
+              vector(
+                'detail',
+                target: Rect.fromLTWH(
+                  face.left,
+                  face.center.dy,
+                  face.width,
+                  35,
+                ),
+              ),
+            if (id('neck') != 'none')
+              vector(
+                'neck',
+                target: Rect.fromLTWH(face.center.dx - 36, neckY - 7, 72, 50),
+              ),
+            if (id('headwear') != 'none')
+              sprite(
+                'headwear/${id('headwear')}',
+                hat,
+                mask: ['hood', 'headphones'].contains(id('headwear'))
+                    ? geometry.window(hat)
+                    : null,
+              ),
+            if (id('glasses') != 'none')
+              vector('glasses', target: rig.register(rig.eyes).inflate(4)),
+            if (id('held') != 'none')
+              vector('held', target: Rect.fromLTWH(25, neckY + 83, 270, 105)),
+            if (reaction != null)
+              Positioned.fill(
+                child: SvgPicture.asset(
+                  MentiVisualCatalog.root +
+                      MentiVisualCatalog.resolve('reaction', reaction!).asset,
+                  key: ValueKey(
+                    MentiVisualCatalog.root +
+                        MentiVisualCatalog.resolve('reaction', reaction!).asset,
+                  ),
+                  fit: BoxFit.fill,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _RegisteredClipper extends CustomClipper<Path> {
+  const _RegisteredClipper(this.path);
+  final Path? path;
+  @override
+  Path getClip(Size size) => path == null
+      ? (Path()..addRect(Offset.zero & size))
+      : path!.transform(
+          Matrix4.diagonal3Values(size.width, size.height, 1).storage,
+        );
+  @override
+  bool shouldReclip(_RegisteredClipper old) => path != old.path;
 }

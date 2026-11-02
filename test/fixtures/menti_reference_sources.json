@@ -1,0 +1,32 @@
+{
+  "boy": {
+    "source": "docs/images/menti-final-playable/boy-ages.png",
+    "asset": "assets/images/menti_2_2/reference/boy.png",
+    "sha256": "13ce17d404ecfc3571c1d46bcc799bf6a79bec3b5850670a86aec38dc3cb2fe4",
+    "bytes": 1493459,
+    "size": [
+      1942,
+      809
+    ]
+  },
+  "girl": {
+    "source": "docs/images/menti-final-playable/girl-ages.png",
+    "asset": "assets/images/menti_2_2/reference/girl.png",
+    "sha256": "3fa0bb57c83cfcbdd1b46b58750c7017c3f6ec080b9aa4521415a4777c4a6801",
+    "bytes": 1656669,
+    "size": [
+      1942,
+      809
+    ]
+  },
+  "neutral": {
+    "source": "docs/images/menti-final-playable/neutral-ages.png",
+    "asset": "assets/images/menti_2_2/reference/neutral.png",
+    "sha256": "75e8d0a07cd26c41c82c40026e0a6efa3d0e02ea92c17e899302918c24c2aae3",
+    "bytes": 1502340,
+    "size": [
+      1942,
+      809
+    ]
+  }
+}

@@ -123,7 +123,7 @@ void main() {
       expect(preview.profile.visual.value('outfit'), 'legendary');
       await tester.tap(find.text(preview.profile.name)); await tester.pumpAndSettle();
       await tester.enterText(find.byKey(const ValueKey('preset-name')), 'Friss név');
-      await tester.tap(find.widgetWithText(FilledButton, 'Mentés')); await tester.pumpAndSettle();
+      await tester.tap(find.descendant(of:find.byType(AlertDialog),matching:find.widgetWithText(FilledButton, 'Mentés'))); await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('studio-save'))); await tester.pumpAndSettle();
       await tester.tap(find.byType(BackButton)); await tester.pumpAndSettle();
       expect(find.byType(MentiCharacterSetupPage), findsNothing);
