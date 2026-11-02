@@ -18,6 +18,26 @@ class MentiWardrobeGeometry {
         rig.neckY * MentiReferenceRig.target.height / 820,
     head.mouth.bottom + 3,
   );
+  String get collarKind {
+    if (outfit == 'basic') {
+      if ((rig.family == 'boy' || rig.family == 'neutral') &&
+          rig.age == 'young')
+        return 'hooded';
+      return 'open';
+    }
+    if (['basic-alt', 'sport', 'street-alt'].contains(outfit)) return 'hooded';
+    if (['cozy', 'cozy-alt'].contains(outfit)) return 'knit';
+    if (['business', 'business-alt', 'party'].contains(outfit)) return 'shirt';
+    if ([
+      'legendary',
+      'legendary-alt',
+      'explorer',
+      'explorer-alt',
+    ].contains(outfit))
+      return 'stand';
+    return 'open';
+  }
+
   Rect get garment {
     final face = rig.register(rig.face);
     final src = MentiPremiumAtlas.rects['outfits/$outfit']!;
@@ -80,17 +100,31 @@ class MentiWardrobeGeometry {
     garment.width,
     garment.height * .20,
   );
+  static const _heldFit = <String, (double, double, double, double)>{
+    // width / scalp, natural height / width, source grip x/y.
+    'notebook': (.38, 112 / 80, .82, .78),
+    'flower': (.32, 120 / 70, .52, .80),
+    'spark-wand': (.24, 140 / 60, .5, .84),
+  };
   Rect held(String id) {
     final grip = hand(id != 'notebook').center;
-    final width = head.scalp.width * (id == 'notebook' ? .44 : .34);
-    final height = width * (id == 'notebook' ? 1.08 : 1.7);
+    final (scale, aspect, gx, gy) = _heldFit[id]!;
+    final width = head.scalp.width * scale, height = width * aspect;
     return Rect.fromLTWH(
-      grip.dx - width / 2,
-      grip.dy - height * .8,
+      grip.dx - width * gx,
+      grip.dy - height * gy,
       width,
       height,
     );
   }
+
+  Offset heldGrip(String id) {
+    final r = held(id), fit = _heldFit[id]!;
+    return Offset(r.left + r.width * fit.$3, r.top + r.height * fit.$4);
+  }
+
+  static String heldAsset(String id) =>
+      'assets/images/menti_2_2/fitted/$id.svg';
 
   static const heldCrops = <String, List<double>>{
     'notebook': [1, 233, 58, 34],

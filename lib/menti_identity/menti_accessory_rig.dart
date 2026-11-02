@@ -30,10 +30,25 @@ class MentiAccessoryRig {
   Rect get collar {
     final native = wardrobe.outfit == 'basic';
     final chin = head.mouth.bottom + head.scalp.height * .045;
-    final y = native
-        ? math.max(chin, wardrobe.neck)
-        : math.max(chin, wardrobe.garment.top + 5);
-    final width = head.scalp.width * (head.rig.family == 'girl' ? .48 : .52);
+    final kind = wardrobe.collarKind;
+    final seat = switch (kind) {
+      'hooded' => 3.0,
+      'stand' => 2.0,
+      _ => 0.0,
+    };
+    final y =
+        (native
+            ? math.max(chin, wardrobe.neck)
+            : math.max(chin, wardrobe.garment.top + 5)) +
+        seat;
+    final width =
+        head.scalp.width *
+        switch (kind) {
+          'shirt' => .44,
+          'knit' => .46,
+          'stand' => .44,
+          _ => head.rig.family == 'girl' ? .48 : .52,
+        };
     return Rect.fromLTWH(
       head.mouth.center.dx - width / 2,
       y,

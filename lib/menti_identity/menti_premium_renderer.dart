@@ -575,10 +575,12 @@ class MentiPremiumComposition extends StatelessWidget {
       if (p.visual.hairVisible) '${MentiPremiumAtlas.root}hair.png',
       if (resolve(p, 'headwear').id != 'none')
         '${MentiPremiumAtlas.root}headwear.png',
-      for (final f in ['style', 'held'])
+      for (final f in ['style'])
         if (resolve(p, f).id != 'none' &&
             (f != 'style' || resolve(p, f).id != 'classic'))
           MentiVisualCatalog.root + resolve(p, f).asset,
+      if (resolve(p, 'held').id != 'none')
+        MentiWardrobeGeometry.heldAsset(resolve(p, 'held').id),
       if (reaction != null)
         MentiVisualCatalog.root +
             MentiVisualCatalog.resolve('reaction', reaction).asset,
@@ -865,10 +867,12 @@ class MentiPremiumComposition extends StatelessWidget {
                 ),
               ),
             if (id('held') != 'none')
-              vector(
-                'held',
-                target: wardrobe.held(id('held')),
-                sourceCrop: MentiWardrobeGeometry.heldCrops[id('held')],
+              Positioned.fromRect(
+                rect: wardrobe.held(id('held')),
+                child: SvgPicture.asset(
+                  MentiWardrobeGeometry.heldAsset(id('held')),
+                  fit: BoxFit.fill,
+                ),
               ),
             if (id('held') != 'none')
               handLayer(id('held') != 'notebook', grip: true),
