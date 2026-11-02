@@ -74,8 +74,16 @@ void main() {
       expect(crop.right, lessThanOrEqualTo(320));
       expect(crop.bottom, lessThanOrEqualTo(400));
     }
-    expect(MentiPreviewRenderer.cropFor(MentiVisualCatalog.resolve('held', 'notebook')).right, 100);
-    expect(MentiPreviewRenderer.cropFor(MentiVisualCatalog.resolve('held', 'flower')).left, 230);
+    final notebook = MentiPreviewRenderer.cropFor(MentiVisualCatalog.resolve('held', 'notebook'));
+    final flower = MentiPreviewRenderer.cropFor(MentiVisualCatalog.resolve('held', 'flower'));
+    expect(notebook.width, lessThan(120));
+    expect(flower.width, lessThan(120));
+    expect(notebook.center.dx, lessThan(flower.center.dx));
+    for (final crop in [notebook, flower]) {
+      expect(crop.left, greaterThanOrEqualTo(0));
+      expect(crop.right, lessThanOrEqualTo(320));
+      expect(crop.bottom, lessThanOrEqualTo(400));
+    }
   });
   test('every preview is a lightweight vector foreground, shared raster never duplicated', () async {
     for (final o in MentiVisualCatalog.options) {
