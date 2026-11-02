@@ -34,6 +34,17 @@ async function capture(page, options) {
   await page.waitForTimeout(450);
   return page.screenshot(options);
 }
+async function option(page,label) {
+  const target=page.getByRole('button',{name:new RegExp(escape(label))}).first();
+  for(const direction of [1,-1]) {
+    for(let n=0;n<14;n++) {
+      if(await target.count()) {await target.scrollIntoViewIfNeeded();return target;}
+      const v=page.viewportSize();await page.mouse.move(v.width*.72,v.height*.67);
+      await page.mouse.wheel(0,direction*240);await page.waitForTimeout(160);
+    }
+  }
+  throw new Error(`Option is unreachable: ${label}`);
+}
 async function open(context) {
   const page = await context.newPage();
   observe(page);
@@ -95,17 +106,17 @@ function identity(values) {
     await page.getByRole('button',{name:strings.avatarClosePreview,exact:true}).click();
     checks.push('Full-screen zoom shows the same draft character without saving');
     await page.getByRole('checkbox', { name: strings.avatarTabFace, exact: true }).click();
-    const curls=page.getByRole('button', { name:new RegExp(escape(strings.avatarHairGirlCurls)) }).first();
+    const curls=await option(page,strings.avatarHairGirlCurls);
     await curls.scrollIntoViewIfNeeded(); await curls.click();
     await capture(page,{ path:path.join(output,'chrome-studio-hair-en.png') });
-    const calm=page.getByRole('button',{name:new RegExp(escape(strings.avatarFaceCalm))}).first();
+    const calm=await option(page,strings.avatarFaceCalm);
     await calm.scrollIntoViewIfNeeded();await calm.click();
     await capture(page,{path:path.join(output,'chrome-studio-face-en.png')});
-    const wideEyes=page.getByRole('button', { name:new RegExp(escape(strings.avatarEyesWide)) }).first();
+    const wideEyes=await option(page,strings.avatarEyesWide);
     await wideEyes.scrollIntoViewIfNeeded(); await wideEyes.click();
     await capture(page,{ path:path.join(output,'chrome-studio-eyes-en.png') });
     if(JSON.stringify(identity(await storage(page)))!==JSON.stringify(nativeIdentity)) throw new Error('Preview changed saved identity');
-    const noCap=page.getByRole('button',{name:new RegExp(escape(strings.avatarHeadwearNone))}).first();
+    const noCap=await option(page,strings.avatarHeadwearNone);
     await noCap.scrollIntoViewIfNeeded();await noCap.click();
     await capture(page,{path:path.join(output,'chrome-studio-no-cap-en.png')});
     await page.getByRole('button', { name: strings.avatarRevert, exact:true }).click();

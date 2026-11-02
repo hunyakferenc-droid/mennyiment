@@ -1,0 +1,23 @@
+{
+  "source_commit": "70fbf8d648f029af8750cb3d3fef4cc18eef4201",
+  "version": "2.2.2+24",
+  "run_id": 41472162200,
+  "conclusion": "success",
+  "apk_artifact_id": 13156631189,
+  "web_artifact_id": 13156475649,
+  "apk_zip_sha256": "ff3ac6b882fa89712c30115e066840c4ccd045cb97ec44c754e17f8ae25118e7",
+  "web_zip_sha256": "53defc8d5503be399043722c1b7ccf3e71c7cfdd29c6d2885d9fbdf162225868",
+  "apk_sha256": "0f3572f84ea7ce1b8504dd0ca55581888168cf2554054f17db5b07ebe0961afe",
+  "certificate_sha256": "6f24357f80caf66399cc447ec38191bdf21eb30f934eed49bc612f73243c2289",
+  "previous_221_certificate_sha256": "c87d3f6dcc98d966e1543f6091c357edba53d80a481c3dd1d6e0dd77743d508c",
+  "same_signing_certificate": false,
+  "zip_crc_checked": true,
+  "artifact_digests_match": true,
+  "apk_checksum_matches": true,
+  "v2_signature_verified_by_ci": true,
+  "physical_android_tested": false,
+  "min_sdk": 24,
+  "target_sdk": 36,
+  "local_tests_passed": 634,
+  "local_tests_skipped": 1
+}
