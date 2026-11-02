@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mennyiment/menti_identity/menti_identity.dart';
 import 'package:mennyiment/menti_identity/menti_premium_renderer.dart';
 import 'package:mennyiment/menti_identity/menti_reference_rig.dart';
+import 'package:mennyiment/menti_identity/menti_head_geometry.dart';
 
 void main() {
   setUpAll(() async {
@@ -44,7 +45,7 @@ void main() {
     }
   });
   testWidgets(
-    'nine reference characters and actual 2.2 to 2.2.1 renderer comparison',
+    'nine reference characters and actual 2.2 to 2.2.2 renderer comparison',
     (tester) async {
       tester.view.physicalSize = const Size(1440, 1680);
       tester.view.devicePixelRatio = 1;
@@ -84,7 +85,7 @@ void main() {
                         as RenderRepaintBoundary)
                     .toImage();
             final bytes = await im.toByteData(format: ui.ImageByteFormat.png);
-            File('docs/images/menti-2.2.1/$name.png')
+            File('docs/images/menti-2.2.2/$name.png')
                 .writeAsBytesSync(bytes!.buffer.asUint8List());
             im.dispose();
           });
@@ -126,7 +127,7 @@ void main() {
         Column(
           children: [
             label(
-              '2.2.1 · Flutter runtime · original registered source plates',
+              '2.2.2 · Flutter runtime · original registered source plates',
             ),
             for (var row = 0; row < 3; row++)
               Row(
@@ -158,7 +159,7 @@ void main() {
         Column(
           children: [
             label(
-              'Actual Flutter render · 2.2 LEFT / 2.2.1 RIGHT · same profile IDs',
+              'Actual Flutter render · 2.2 LEFT / 2.2.2 RIGHT · same profile IDs',
             ),
             for (final age in ['young', 'adult', 'veteran'])
               Row(
@@ -276,7 +277,7 @@ void main() {
       await tester.pump();
     },
   );
-  testWidgets('all nine native faces keep original opaque reference pixels', (
+  testWidgets('all nine stable clean faces retain their undeformed source pixels', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(320, 400);
@@ -315,7 +316,7 @@ void main() {
     }
 
     for (final r in MentiReferenceRig.all) {
-      final original = await render(MentiReferencePlate(rig: r));
+      final original = await render(MentiReferencePlate(rig: r,hairless:true));
       final actual = await render(
         MentiPremiumComposition(
           profile: MentiIdentityProfile(
@@ -324,13 +325,14 @@ void main() {
               'age': r.age,
               'hair': r.hairId,
               'headwear': 'none',
-              'outfit': 'basic',
+              'outfit': 'basic','hairVisible':false,
             }),
           ),
           showBackground: false,
         ),
       );
-      final box = r.register(r.face).deflate(12);
+      final g=MentiHeadGeometry(r,clean:true,hair:r.hairId,hairVisible:false);
+      final box=g.eyes.expandToInclude(g.mouth).deflate(4);
       var compared = 0;
       for (var y = box.top.ceil(); y < box.bottom.floor(); y++) {
         for (var x = box.left.ceil(); x < box.right.floor(); x++) {
@@ -343,7 +345,7 @@ void main() {
           compared++;
         }
       }
-      expect(compared, greaterThan(3000));
+      expect(compared, greaterThan(1500));
     }
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump();

@@ -9,6 +9,7 @@ import 'menti_visual_catalog.dart';
 import 'menti_family_layout.dart';
 import 'menti_premium_renderer.dart';
 import 'menti_reference_rig.dart';
+import 'menti_head_geometry.dart';
 import 'menti_premium_motion.dart';
 
 /// Pure, deterministic composition. Unknown IDs render a known safe layer without
@@ -285,7 +286,11 @@ class MentiPreviewRenderer extends StatelessWidget {
       values['outfit'] =
           {'classic': 'basic', 'sporty': 'sport'}[option.id] ?? option.id;
     }
-    return base.copyWith(visual: base.visual.withValues(values));
+    return base.copyWith(
+      visual: option.field == 'hair'
+          ? base.visual.withValues(values).withHairVisible(true)
+          : base.visual.withValues(values),
+    );
   }
 
   static Rect cropFor(
@@ -301,18 +306,24 @@ class MentiPreviewRenderer extends StatelessWidget {
       MentiVisualCatalog.resolve('family', p.visual.value('family')).id,
       MentiVisualCatalog.resolve('age', p.visual.value('age')).id,
     );
-    final face = rig.register(rig.face);
+    final geometry = MentiHeadGeometry(
+      rig,
+      clean: true,
+      hair: p.visual.value('hair'),
+      hairVisible: p.visual.hairVisible,
+    );
+    final face = geometry.scalp;
     final neck =
         MentiReferenceRig.target.top +
         rig.neckY * MentiReferenceRig.target.height / 820;
     crop = switch (option.field) {
-      'eyes' || 'glasses' => rig.register(rig.eyes).inflate(12),
-      'face' => rig.register(rig.mouth).inflate(16),
+      'eyes' || 'glasses' => geometry.eyes.inflate(12),
+      'face' => geometry.mouth.inflate(16),
       'headwear' => Rect.fromLTWH(
         face.left - 35,
         0,
         face.width + 70,
-        rig.register(rig.eyes).bottom,
+        geometry.eyes.bottom,
       ),
       'hair' => Rect.fromLTWH(face.left - 40, 0, face.width + 80, neck + 25),
       'outfit' || 'accent' => Rect.fromLTWH(30, neck - 12, 260, 412 - neck),

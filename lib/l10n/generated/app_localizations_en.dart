@@ -1437,7 +1437,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get avatarReactionFocused => 'Focused';
 
   @override
-  String get avatarStudio => 'Menti Studio 2.2.1';
+  String get avatarStudio => 'Menti Studio 2.2.2';
 
   @override
   String get avatarSave => 'Save';
@@ -1548,7 +1548,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get avatarFieldEyes => 'Eyes';
 
   @override
-  String get avatarFieldHair => 'Hair and silhouette';
+  String get avatarFieldHair => 'Hairstyle (optional)';
 
   @override
   String get avatarFieldHeadwear => 'Headwear';
@@ -2508,4 +2508,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get avatarClosePreview => 'Close preview';
+
+  @override
+  String get avatarHairVisible => 'Show hairstyle';
+
+  @override
+  String get avatarHairOptional =>
+      'Hair is optional. Turn it off for the clean Menti base.';
 }

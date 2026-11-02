@@ -665,7 +665,7 @@
   "avatarReactionCalming": "Calming",
   "avatarReactionCelebrating": "Celebrating",
   "avatarReactionFocused": "Focused",
-  "avatarStudio": "Menti Studio 2.2.1",
+  "avatarStudio": "Menti Studio 2.2.2",
   "avatarSave": "Save",
   "avatarSaving": "Saving…",
   "avatarSaved": "Your Menti has been saved.",
@@ -701,7 +701,7 @@
   "avatarFieldStyle": "Style",
   "avatarFieldFace": "Expression",
   "avatarFieldEyes": "Eyes",
-  "avatarFieldHair": "Hair and silhouette",
+  "avatarFieldHair": "Hairstyle (optional)",
   "avatarFieldHeadwear": "Headwear",
   "avatarFieldOutfit": "Outfit",
   "avatarFieldAccent": "Accent color",
@@ -1272,5 +1272,7 @@
   "avatarShowPreview": "Expand preview",
   "homeMore": "More features",
   "avatarEnlargePreview": "Larger preview and zoom",
-  "avatarClosePreview": "Close preview"
+  "avatarClosePreview": "Close preview",
+  "avatarHairVisible": "Show hairstyle",
+  "avatarHairOptional": "Hair is optional. Turn it off for the clean Menti base."
 }

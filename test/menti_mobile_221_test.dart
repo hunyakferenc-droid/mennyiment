@@ -17,7 +17,7 @@ void main() {
     for (final width in [320.0, 360.0, 390.0, 430.0]) {
       for (final scale in [1.0, 2.0]) {
         testWidgets(
-          '2.2.1 $locale ${width}px ${scale}x persistent save, discard and back protection',
+          '2.2.2 $locale ${width}px ${scale}x persistent save, discard and back protection',
           (tester) async {
             tester.view.physicalSize = Size(width, 740);
             tester.view.devicePixelRatio = 1;
@@ -105,6 +105,30 @@ void main() {
             await tester.tap(find.byTooltip(close));
             await tester.pumpAndSettle();
             expect(c.dirty, isTrue);
+            final faceTab = find.byKey(const ValueKey('studio-tab-1'));
+            await tester.ensureVisible(faceTab);
+            await tester.tap(faceTab);
+            await tester.pumpAndSettle();
+            final hairToggle = find.byKey(
+              const ValueKey('studio-hair-visible'),
+            );
+            await tester.scrollUntilVisible(
+              hairToggle,
+              120,
+              scrollable: find
+                  .descendant(
+                    of: find.byKey(const ValueKey('studio-editor-1')),
+                    matching: find.byType(Scrollable),
+                  )
+                  .first,
+              maxScrolls: 40,
+            );
+            final switchControl=find.descendant(of:hairToggle,matching:find.byType(Switch));
+            await tester.ensureVisible(switchControl);await tester.pumpAndSettle();
+            await tester.tap(switchControl);
+            await tester.pumpAndSettle();
+            expect(c.draft.profile.visual.hairVisible, isFalse);
+            expect(c.profile.visual.hairVisible, isTrue);
             // Naming remains usable with the Android-sized keyboard inset.
             await tester.tap(find.widgetWithText(TextButton, 'Mira'));
             await tester.pumpAndSettle();

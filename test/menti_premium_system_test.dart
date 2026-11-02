@@ -11,6 +11,7 @@ import 'package:mennyiment/menti_identity/menti_premium_renderer.dart';
 import 'package:mennyiment/menti_identity/menti_premium_atlas.dart';
 import 'package:mennyiment/menti_identity/menti_visual_catalog.dart';
 import 'package:mennyiment/menti_identity/menti_reference_rig.dart';
+import 'package:mennyiment/menti_identity/menti_head_geometry.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -178,6 +179,7 @@ void main() {
       Color? tint;
       String headwear = 'none';
       var rig = MentiReferenceRig.of('boy', 'young');
+      var selectedHair = rig.hairId;
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -201,7 +203,7 @@ void main() {
                                 'headwear': headwear,
                                 'family': rig.family,
                                 'age': rig.age,
-                                'hair': rig.hairId,
+                                'hair': selectedHair,
                               }),
                             ),
                           ),
@@ -241,32 +243,45 @@ void main() {
         expect(colored[i], closeTo(plain[i], 1), reason: 'alpha byte $i');
       }
       for (final identity in MentiReferenceRig.all) {
-        update(() {
-          spriteOnly = false;
-          rig = identity;
-          headwear = 'none';
-        });
-        final uncovered = await pixels();
-        for (final equipment in MentiVisualCatalog.forField(
-          'headwear',
-        ).where((o) => o.id != 'none')) {
-          update(() => headwear = equipment.id);
-          final equipped = await pixels();
-          final eyeRect = rig.register(rig.eyes);
-          for (final xCenter in [
-            eyeRect.left + eyeRect.width * .25,
-            eyeRect.left + eyeRect.width * .75,
-          ].map((x) => (x * 200 / 320).round())) {
-            final cy = (eyeRect.center.dy * 200 / 320).round();
-            for (var y = cy - 3; y < cy + 3; y++) {
-              for (var x = xCenter - 3; x < xCenter + 3; x++) {
-                final offset = (y * 200 + x) * 4;
-                expect(
-                  equipped.sublist(offset, offset + 4),
-                  uncovered.sublist(offset, offset + 4),
-                  reason:
-                      '${rig.family}/${rig.age}/${equipment.id}: pupil $x,$y',
-                );
+        for (final hairstyle in MentiVisualCatalog.forField(
+          'hair',
+          family: identity.family,
+        )) {
+          update(() {
+            spriteOnly = false;
+            rig = identity;
+            selectedHair = hairstyle.id;
+            headwear = 'none';
+          });
+          final uncovered = await pixels();
+          final g = MentiHeadGeometry(
+            rig,
+            clean: true,
+            hair: selectedHair,
+            hairVisible: true,
+          );
+          for (final equipment in MentiVisualCatalog.forField(
+            'headwear',
+          ).where((o) => o.id != 'none')) {
+            update(() => headwear = equipment.id);
+            final equipped = await pixels();
+            for (final rect in [g.leftEye, g.rightEye]) {
+              final box = Rect.fromLTRB(
+                rect.left * 200 / 320,
+                rect.top * 200 / 320,
+                rect.right * 200 / 320,
+                rect.bottom * 200 / 320,
+              ).deflate(1);
+              for (var y = box.top.ceil(); y < box.bottom.floor(); y++) {
+                for (var x = box.left.ceil(); x < box.right.floor(); x++) {
+                  final offset = (y * 200 + x) * 4;
+                  expect(
+                    equipped.sublist(offset, offset + 4),
+                    uncovered.sublist(offset, offset + 4),
+                    reason:
+                        '${rig.family}/${rig.age}/$selectedHair/${equipment.id}: eye $x,$y',
+                  );
+                }
               }
             }
           }

@@ -5,6 +5,7 @@ import 'menti_identity.dart';
 import 'menti_visual_catalog.dart';
 import 'menti_premium_atlas.dart';
 import 'menti_reference_rig.dart';
+import 'menti_head_geometry.dart';
 
 /// Original high-resolution material sheets are shared by the image cache.
 /// Runtime crops avoid hundreds of duplicate files and preserve source pixels.
@@ -564,15 +565,12 @@ class MentiPremiumComposition extends StatelessWidget {
       MentiVisualCatalog.root + resolve(p, 'aura').asset,
       if (resolve(p, 'back').id != 'none')
         MentiVisualCatalog.root + resolve(p, 'back').asset,
-      resolve(p, 'hair').id == rig.hairId
-          ? rig.asset
-          : rig.asset.replaceFirst('.png', '-hairless.png'),
+      rig.asset.replaceFirst('.png', '-hairless.png'),
       if (resolve(p, 'outfit').id != 'basic') ...[
         '${MentiPremiumAtlas.root}outfits.png',
         rig.asset,
       ],
-      if (resolve(p, 'hair').id != rig.hairId)
-        '${MentiPremiumAtlas.root}hair.png',
+      if (p.visual.hairVisible) '${MentiPremiumAtlas.root}hair.png',
       if (resolve(p, 'headwear').id != 'none')
         '${MentiPremiumAtlas.root}headwear.png',
       for (final f in ['style', 'detail', 'neck', 'glasses', 'held'])
@@ -589,7 +587,12 @@ class MentiPremiumComposition extends StatelessWidget {
   Widget build(BuildContext context) {
     String id(String f) => resolve(profile, f).id;
     final rig = MentiReferenceRig.of(id('family'), id('age'));
-    final nativeHair = id('hair') == rig.hairId;
+    final geometry = MentiHeadGeometry(
+      rig,
+      clean: true,
+      hair: id('hair'),
+      hairVisible: profile.visual.hairVisible,
+    );
     final nativeOutfit = id('outfit') == 'basic';
     final face = rig.register(rig.face);
     final neckY =
@@ -603,18 +606,12 @@ class MentiPremiumComposition extends StatelessWidget {
       'orange': const Color(0xFFFFC57E),
     }[id('accent')];
     final full = Path()..addRect(const Rect.fromLTWH(0, 0, 320, 400));
-    final head = nativeHair
-        ? Path.combine(
-            PathOperation.union,
-            Path()..addRect(Rect.fromLTWH(0, 0, 320, neckY - 12)),
-            rig.mask('headSkin'),
-          )
-        : rig.mask('cleanHeadSkin');
+    final head = rig.mask('cleanHeadSkin');
     Widget plate({Path? part, Color? tint, bool expression = false}) =>
         Positioned.fill(
           child: MentiReferencePlate(
             rig: rig,
-            hairless: !nativeHair,
+            hairless: true,
             part: part,
             tint: tint,
             eyeStyle: expression ? id('eyes') : 'round',
@@ -679,52 +676,53 @@ class MentiPremiumComposition extends StatelessWidget {
       397,
     );
     final hairSource = MentiPremiumAtlas.rects['hair/${id('hair')}']!;
-    final hairWidth = face.width + 32;
+    final hairSeat = geometry.hairTarget;
+    final hairWidth = hairSeat.width;
     final hairHeight = hairWidth * hairSource.height / hairSource.width;
     final hairTarget = Rect.fromLTWH(
-      face.center.dx - hairWidth / 2,
-      face.top - hairHeight * .30,
+      hairSeat.left,
+      geometry.eyes.center.dy - hairHeight * .68,
       hairWidth,
       hairHeight,
     );
-    // Hair and head equipment leave the original, family-specific face visible.
-    Path faceWindow(Rect target) => Path()
-      ..fillType = PathFillType.evenOdd
-      ..addRect(const Rect.fromLTWH(0, 0, 1, 1))
-      ..addOval(
-        Rect.fromLTWH(
-          (face.left + 8 - target.left) / target.width,
-          (face.top + 9 - target.top) / target.height,
-          (face.width - 16) / target.width,
-          (face.height - 18) / target.height,
-        ),
-      );
     final hatSource = MentiPremiumAtlas.rects['headwear/${id('headwear')}'];
-    final hatWidth = face.width + 20;
-    final hatHeight = hatSource == null
-        ? 0.0
-        : hatWidth * hatSource.height / hatSource.width;
-    final eyeTop = rig.register(rig.eyes).top;
     final hat = switch (id('headwear')) {
       'headphones' => Rect.fromLTRB(
-        face.left - 25,
-        face.top - 40,
-        face.right + 25,
-        face.bottom - 4,
+        geometry.scalp.left - 10,
+        geometry.scalp.top - 12,
+        geometry.scalp.right + 10,
+        geometry.scalp.bottom - 18,
       ),
-      'hood' => Rect.fromLTRB(
-        face.left - 25,
-        face.top - 28,
-        face.right + 25,
-        face.bottom + 12,
-      ),
-      _ => Rect.fromLTWH(
-        face.center.dx - hatWidth / 2,
-        eyeTop - 6 - hatHeight,
-        hatWidth,
-        hatHeight,
-      ),
+      'hood' => geometry.scalp.inflate(12),
+      _ => hatSource == null ? Rect.zero : geometry.cap(hatSource),
     };
+    Path hairWindow() {
+      var visible = geometry.window(hairTarget);
+      if ([
+        'crown-cap',
+        'sport-cap',
+        'beanie',
+        'beret',
+        'cowboy',
+      ].contains(id('headwear'))) {
+        // Above the brim, hair belongs under the cap rather than poking through it.
+        final cut = Path.combine(
+          PathOperation.difference,
+          Path()..addRect(Rect.fromLTRB(0, 0, 320, hat.bottom - 3)),
+          Path()..addRect(hat.inflate(1)),
+        );
+        final matrix = Matrix4.identity()
+          ..scaleByDouble(1 / hairTarget.width, 1 / hairTarget.height, 1, 1)
+          ..translateByDouble(-hairTarget.left, -hairTarget.top, 0, 1);
+        visible = Path.combine(
+          PathOperation.difference,
+          visible,
+          cut.transform(matrix.storage),
+        );
+      }
+      return visible;
+    }
+
     return FittedBox(
       fit: BoxFit.fill,
       child: SizedBox(
@@ -781,14 +779,13 @@ class MentiPremiumComposition extends StatelessWidget {
                 ),
               plate(part: head, expression: true),
               sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
-              if (nativeHair) plate(part: rig.mask('hair')),
             ],
-            if (!nativeHair)
+            if (profile.visual.hairVisible)
               sprite(
                 'hair/${id('hair')}',
                 hairTarget,
                 color: id('age') == 'veteran' ? const Color(0xFFE3DFE8) : null,
-                mask: faceWindow(hairTarget),
+                mask: hairWindow(),
               ),
             if (id('style') != 'classic')
               vector(
@@ -815,7 +812,7 @@ class MentiPremiumComposition extends StatelessWidget {
                 'headwear/${id('headwear')}',
                 hat,
                 mask: ['hood', 'headphones'].contains(id('headwear'))
-                    ? faceWindow(hat)
+                    ? geometry.window(hat)
                     : null,
               ),
             if (id('glasses') != 'none')

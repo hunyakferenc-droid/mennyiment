@@ -665,7 +665,7 @@
   "avatarReactionCalming": "Megnyugtató",
   "avatarReactionCelebrating": "Ünneplő",
   "avatarReactionFocused": "Fókuszált",
-  "avatarStudio": "Menti Studio 2.2.1",
+  "avatarStudio": "Menti Studio 2.2.2",
   "avatarSave": "Mentés",
   "avatarSaving": "Mentés…",
   "avatarSaved": "Az összeállítás elmentve.",
@@ -701,7 +701,7 @@
   "avatarFieldStyle": "Stílus",
   "avatarFieldFace": "Arckifejezés",
   "avatarFieldEyes": "Szemek",
-  "avatarFieldHair": "Haj és fejforma",
+  "avatarFieldHair": "Frizura (opcionális)",
   "avatarFieldHeadwear": "Fejfedő",
   "avatarFieldOutfit": "Ruhaszett",
   "avatarFieldAccent": "Színkiemelés",
@@ -1272,5 +1272,7 @@
   "avatarShowPreview": "Előnézet megnyitása",
   "homeMore": "További funkciók",
   "avatarEnlargePreview": "Nagyobb előnézet és nagyítás",
-  "avatarClosePreview": "Előnézet bezárása"
+  "avatarClosePreview": "Előnézet bezárása",
+  "avatarHairVisible": "Frizura megjelenítése",
+  "avatarHairOptional": "A haj opcionális. Kikapcsolva a letisztult Menti-alap látható."
 }

@@ -1,10 +1,11 @@
 import 'dart:ui' as ui;
-import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
 import 'menti_reference_masks.dart';
+import 'menti_face_anchors.dart';
+import 'menti_feature_mesh.dart';
 
 /// A registered, uniformly scaled view of an unchanged reference PNG. All source
 /// coordinates refer to the original 1942 × 809 artboards, never a redrawn body.
@@ -258,43 +259,53 @@ class _PlatePainter extends CustomPainter {
       ),
       paint,
     );
-    // Native feature meshes keep their boundary fixed. Source skin fills the
-    // space without repainting rectangles or swapping a family's face.
+    final features = MentiFaceAnchors
+        .values['${rig.family}-${rig.age}${spec.hairless ? '-clean' : ''}']!;
+    final eyeRegions = [
+      features['leftEye']!.inflate(2),
+      features['rightEye']!.inflate(2),
+    ];
     if (spec.eyeStyle != 'round' || spec.blink || spec.wink) {
       for (var side = 0; side < 2; side++) {
-        final eye = Rect.fromLTWH(
-          rig.eyes.left + side * rig.eyes.width / 2,
-          rig.eyes.top,
-          rig.eyes.width / 2,
-          rig.eyes.height,
-        );
-        final sy = spec.blink || (spec.wink && side == 1)
-            ? .10
+        final sy = (spec.blink || (spec.wink && side == 1))
+            ? .48
             : switch (spec.eyeStyle) {
-                'wide' => 1.12,
-                'relaxed' => .62,
-                'sharp' => .80,
+                'wide' => 1.055,
+                'relaxed' => .85,
+                'sharp' => .93,
                 _ => 1.0,
               };
         _warp(
           canvas,
           rig,
-          eye.inflate(6),
-          sx: spec.eyeStyle == 'wide' ? 1.06 : 1,
+          eyeRegions[side],
+          sx: spec.eyeStyle == 'sharp' ? .96 : 1,
           sy: sy,
-          angle: spec.eyeStyle == 'sharp' ? (side == 0 ? -.11 : .11) : 0,
+          angle: 0,
         );
       }
     }
     if (spec.faceStyle != 'cheerful') {
-      final (sx, sy, angle) = switch (spec.faceStyle) {
-        'calm' => (.86, .44, 0.0),
-        'playful' => (1.0, .91, -.10),
-        'confident' => (.96, .70, 0.0),
-        'sleepy' => (.58, 1.0, 0.0),
-        _ => (.91, .32, .04),
+      final (sx, sy) = switch (spec.faceStyle) {
+        'calm' => (.98, .93),
+        'playful' => (1.025, .98),
+        'confident' => (.96, .97),
+        'sleepy' => (.93, .87),
+        _ => (.98, .90),
       };
-      _warp(canvas, rig, rig.mouth.inflate(8), sx: sx, sy: sy, angle: angle);
+      canvas.save();
+      // Mouth samples cannot overwrite an eye, even on tilted reference heads.
+      var allowed = Path()..addRect(rig.register(features['mouth']!));
+      for (final eye in eyeRegions) {
+        allowed = Path.combine(
+          PathOperation.difference,
+          allowed,
+          Path()..addRect(rig.register(eye).inflate(2)),
+        );
+      }
+      canvas.clipPath(allowed);
+      _warp(canvas, rig, features['mouth']!, sx: sx, sy: sy, angle: 0);
+      canvas.restore();
     }
     canvas.restore();
   }
@@ -307,49 +318,13 @@ class _PlatePainter extends CustomPainter {
     required double sy,
     required double angle,
   }) {
-    const steps = 24;
-    final positions = <Offset>[], texture = <Offset>[], indices = <int>[];
-    final dest = rig.register(region);
-    for (var y = 0; y <= steps; y++) {
-      for (var x = 0; x <= steps; x++) {
-        final u = 2 * x / steps - 1, v = 2 * y / steps - 1;
-        final weight = (1 - math.pow(u.abs(), 4)) * (1 - math.pow(v.abs(), 4));
-        final px = u * (1 + (sx - 1) * weight),
-            py = v * (1 + (sy - 1) * weight);
-        final r = angle * weight;
-        positions.add(
-          Offset(
-            dest.center.dx +
-                (px * math.cos(r) - py * math.sin(r)) * dest.width / 2,
-            dest.center.dy +
-                (px * math.sin(r) + py * math.cos(r)) * dest.height / 2,
-          ),
-        );
-        texture.add(
-          Offset(
-            region.left + x * region.width / steps,
-            region.top + y * region.height / steps,
-          ),
-        );
-        if (x < steps && y < steps) {
-          final n = y * (steps + 1) + x;
-          indices.addAll([
-            n,
-            n + 1,
-            n + steps + 1,
-            n + 1,
-            n + steps + 2,
-            n + steps + 1,
-          ]);
-        }
-      }
-    }
+    final mesh = MentiFeatureMesh(rig.register(region), region, sx: sx, sy: sy);
     canvas.drawVertices(
       ui.Vertices(
         ui.VertexMode.triangles,
-        positions,
-        textureCoordinates: texture,
-        indices: indices,
+        mesh.positions,
+        textureCoordinates: mesh.texture,
+        indices: mesh.indices,
       ),
       BlendMode.srcOver,
       Paint()

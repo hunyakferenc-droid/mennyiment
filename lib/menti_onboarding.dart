@@ -103,9 +103,11 @@ class _MentiStartGateState extends State<MentiStartGate> {
                         v.value('family'),
                         v.value('age'),
                       );
+                      final visible = v.hairVisible;
                       identity.choose(
                         MentiVisualCatalog.resolve('hair', rig.hairId),
                       );
+                      identity.setHairVisible(visible);
                     }
                   },
           ),
@@ -154,6 +156,9 @@ class _MentiStartGateState extends State<MentiStartGate> {
                         _finish(access, identity);
                       } else {
                         setState(() {
+                          if (_step == 1 && !access.existing) {
+                            identity.setHairVisible(false);
+                          }
                           _step++;
                           _failed = false;
                           if (_scroll.hasClients) _scroll.jumpTo(0);

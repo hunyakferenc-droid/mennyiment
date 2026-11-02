@@ -1435,7 +1435,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get avatarReactionFocused => 'Fókuszált';
 
   @override
-  String get avatarStudio => 'Menti Studio 2.2.1';
+  String get avatarStudio => 'Menti Studio 2.2.2';
 
   @override
   String get avatarSave => 'Mentés';
@@ -1548,7 +1548,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get avatarFieldEyes => 'Szemek';
 
   @override
-  String get avatarFieldHair => 'Haj és fejforma';
+  String get avatarFieldHair => 'Frizura (opcionális)';
 
   @override
   String get avatarFieldHeadwear => 'Fejfedő';
@@ -2508,4 +2508,11 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get avatarClosePreview => 'Előnézet bezárása';
+
+  @override
+  String get avatarHairVisible => 'Frizura megjelenítése';
+
+  @override
+  String get avatarHairOptional =>
+      'A haj opcionális. Kikapcsolva a letisztult Menti-alap látható.';
 }

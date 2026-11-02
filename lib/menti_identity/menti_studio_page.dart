@@ -177,6 +177,14 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
+        if (field == 'hair')
+          SwitchListTile(
+            key: const ValueKey('studio-hair-visible'),
+            title: Text(s.avatarHairVisible),
+            subtitle: Text(s.avatarHairOptional),
+            value: c.draft.profile.visual.hairVisible,
+            onChanged: c.writable ? c.setHairVisible : null,
+          ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           key: ValueKey('choices-$field'),

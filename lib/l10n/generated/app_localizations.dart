@@ -2675,7 +2675,7 @@ abstract class AppLocalizations {
   /// No description provided for @avatarStudio.
   ///
   /// In hu, this message translates to:
-  /// **'Menti Studio 2.2.1'**
+  /// **'Menti Studio 2.2.2'**
   String get avatarStudio;
 
   /// No description provided for @avatarSave.
@@ -2891,7 +2891,7 @@ abstract class AppLocalizations {
   /// No description provided for @avatarFieldHair.
   ///
   /// In hu, this message translates to:
-  /// **'Haj és fejforma'**
+  /// **'Frizura (opcionális)'**
   String get avatarFieldHair;
 
   /// No description provided for @avatarFieldHeadwear.
@@ -4537,6 +4537,18 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'Előnézet bezárása'**
   String get avatarClosePreview;
+
+  /// No description provided for @avatarHairVisible.
+  ///
+  /// In hu, this message translates to:
+  /// **'Frizura megjelenítése'**
+  String get avatarHairVisible;
+
+  /// No description provided for @avatarHairOptional.
+  ///
+  /// In hu, this message translates to:
+  /// **'A haj opcionális. Kikapcsolva a letisztult Menti-alap látható.'**
+  String get avatarHairOptional;
 }
 
 class _AppLocalizationsDelegate
