@@ -223,6 +223,18 @@ class MentiFittedAccessories extends CustomPainter {
       c.drawPath(tail, paint);
       c.drawShadow(loop, Colors.black, 1.5, false);
       c.drawPath(loop, paint);
+      c.save();
+      c.clipPath(loop);
+      for (double x = r.left; x < r.right; x += 1.8) {
+        line(
+          c,
+          Offset(x, r.top),
+          Offset(x - 2, r.bottom + 4),
+          const Color(0x22f5d9ff),
+          .4,
+        );
+      }
+      c.restore();
       for (var i = 1; i < 4; i++) {
         final y = r.top + r.height * i / 4;
         final p = Path()
