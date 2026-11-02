@@ -575,7 +575,7 @@ class MentiPremiumComposition extends StatelessWidget {
       if (p.visual.hairVisible) '${MentiPremiumAtlas.root}hair.png',
       if (resolve(p, 'headwear').id != 'none')
         '${MentiPremiumAtlas.root}headwear.png',
-      for (final f in ['style', 'detail', 'held'])
+      for (final f in ['style', 'held'])
         if (resolve(p, f).id != 'none' &&
             (f != 'style' || resolve(p, f).id != 'classic'))
           MentiVisualCatalog.root + resolve(p, f).asset,
@@ -797,7 +797,17 @@ class MentiPremiumComposition extends StatelessWidget {
             if (showBackground) vector('background'),
             vector('aura'),
             if (id('back') != 'none')
-              vector('back', target: const Rect.fromLTWH(45, 145, 230, 205)),
+              vector(
+                'back',
+                target: Rect.fromCenter(
+                  center: wardrobe.shoulders.center.translate(
+                    0,
+                    wardrobe.garment.height * .22,
+                  ),
+                  width: wardrobe.garment.width * 1.20,
+                  height: wardrobe.garment.height * .72,
+                ),
+              ),
             if (nativeOutfit) ...[
               plate(part: full, expression: true),
               if (accent != null)
@@ -829,13 +839,12 @@ class MentiPremiumComposition extends StatelessWidget {
                 target: Rect.fromLTWH(face.center.dx - 30, neckY + 55, 60, 42),
               ),
             if (id('detail') != 'none')
-              vector(
-                'detail',
-                target: Rect.fromLTWH(
-                  face.left,
-                  face.center.dy,
-                  face.width,
-                  35,
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: MentiFittedAccessories(
+                    accessories,
+                    detail: id('detail'),
+                  ),
                 ),
               ),
             if (id('headwear') != 'none')

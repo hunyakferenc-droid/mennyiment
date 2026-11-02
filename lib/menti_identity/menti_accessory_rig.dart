@@ -55,9 +55,14 @@ class MentiAccessoryRig {
 }
 
 class MentiFittedAccessories extends CustomPainter {
-  MentiFittedAccessories(this.rig, {this.glasses = 'none', this.neck = 'none'});
+  MentiFittedAccessories(
+    this.rig, {
+    this.glasses = 'none',
+    this.neck = 'none',
+    this.detail = 'none',
+  });
   final MentiAccessoryRig rig;
-  final String glasses, neck;
+  final String glasses, neck, detail;
   Paint stroke(Color c, double w) => Paint()
     ..color = c
     ..style = PaintingStyle.stroke
@@ -71,8 +76,64 @@ class MentiFittedAccessories extends CustomPainter {
     c.save();
     c.scale(size.width / 320, size.height / 400);
     if (neck != 'none') _neck(c);
+    if (detail != 'none') _detail(c);
     if (glasses != 'none') _glasses(c);
     c.restore();
+  }
+
+  void _detail(Canvas c) {
+    final h = rig.head;
+    final y = h.eyes.bottom + 2;
+    final left = Offset(h.leftEye.center.dx - h.leftEye.width * .32, y);
+    final right = Offset(h.rightEye.center.dx + h.rightEye.width * .30, y + 1);
+    if (detail == 'freckles') {
+      for (final centre in [left, right]) {
+        for (var i = 0; i < 3; i++)
+          c.drawCircle(
+            centre + Offset((i - 1) * 3, (i % 2) * 2),
+            .85,
+            Paint()..color = const Color(0x997c481b),
+          );
+      }
+    } else if (detail == 'star') {
+      final r = Rect.fromCenter(center: left, width: 8, height: 8);
+      final p = Path();
+      for (var i = 0; i < 10; i++) {
+        final a = i * math.pi / 5 - math.pi / 2;
+        final radius = i.isEven ? 4.0 : 1.9;
+        final x = left.dx + math.cos(a) * radius,
+            y = left.dy + math.sin(a) * radius;
+        if (i == 0) {
+          p.moveTo(x, y);
+        } else {
+          p.lineTo(x, y);
+        }
+      }
+      p.close();
+      c.drawPath(
+        p,
+        Paint()
+          ..shader = const LinearGradient(
+            colors: [Color(0xfffff0b3), Color(0xffb78128)],
+          ).createShader(r),
+      );
+      c.drawPath(p, stroke(const Color(0xffbd7d22), .5));
+    } else {
+      c.drawArc(
+        Rect.fromCenter(center: left, width: 7, height: 7),
+        .6,
+        4.2,
+        false,
+        stroke(const Color(0xffe7ddfa), 2),
+      );
+      c.drawArc(
+        Rect.fromCenter(center: left, width: 7, height: 7),
+        .6,
+        4.2,
+        false,
+        stroke(const Color(0xffa38bbb), .5),
+      );
+    }
   }
 
   void _glasses(Canvas c) {
@@ -295,5 +356,8 @@ class MentiFittedAccessories extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant MentiFittedAccessories old) =>
-      old.rig != rig || old.glasses != glasses || old.neck != neck;
+      old.rig != rig ||
+      old.glasses != glasses ||
+      old.neck != neck ||
+      old.detail != detail;
 }

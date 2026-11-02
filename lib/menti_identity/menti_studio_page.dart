@@ -198,7 +198,6 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                   child: SizedBox(
                     width: 176,
                     child: Semantics(
-                      button: true,
                       selected: selected == o.id,
                       child: Card(
                         clipBehavior: Clip.antiAlias,
