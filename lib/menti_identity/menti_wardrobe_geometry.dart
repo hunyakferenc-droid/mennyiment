@@ -4,10 +4,12 @@ import 'dart:ui';
 import 'menti_reference_rig.dart';
 import 'menti_head_geometry.dart';
 import 'menti_premium_atlas.dart';
+import 'menti_visual_catalog.dart';
 
 /// Shared garment, cuff and grip anchors for the full figure and Studio crops.
 class MentiWardrobeGeometry {
-  MentiWardrobeGeometry(this.head, this.outfit);
+  MentiWardrobeGeometry(this.head, String outfit)
+    : outfit = MentiVisualCatalog.resolve('outfit', outfit).id;
   final MentiHeadGeometry head;
   final String outfit;
   MentiReferenceRig get rig => head.rig;

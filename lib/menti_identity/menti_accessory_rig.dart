@@ -88,12 +88,13 @@ class MentiFittedAccessories extends CustomPainter {
     final right = Offset(h.rightEye.center.dx + h.rightEye.width * .30, y + 1);
     if (detail == 'freckles') {
       for (final centre in [left, right]) {
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < 3; i++) {
           c.drawCircle(
             centre + Offset((i - 1) * 3, (i % 2) * 2),
             .85,
             Paint()..color = const Color(0x997c481b),
           );
+        }
       }
     } else if (detail == 'star') {
       final r = Rect.fromCenter(center: left, width: 8, height: 8);

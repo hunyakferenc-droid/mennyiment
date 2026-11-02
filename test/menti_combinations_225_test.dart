@@ -38,6 +38,22 @@ void main() {
       expect(covered, fixture['pairs']);
     },
   );
+  test('future outfit identifiers use a safe graphic without rewriting profile data', () {
+    final p = MentiVisualProfile({
+      'family': 'girl',
+      'outfit': 'future-cut',
+      'future': 42,
+    });
+    final r = MentiReferenceRig.of('girl', 'adult');
+    final w = MentiWardrobeGeometry(
+      MentiHeadGeometry(r, clean: true, hair: r.hairId, hairVisible: true),
+      p.value('outfit'),
+    );
+    expect(w.outfit, 'basic');
+    expect(w.garment.width, greaterThan(0));
+    expect(p.value('outfit'), 'future-cut');
+    expect(p.toJson()['future'], 42);
+  });
   testWidgets(
     'all nine rigs render every covering case with stable lenses, safe collars and grips',
     (t) async {
@@ -75,13 +91,14 @@ void main() {
           expect(a.collar.top, greaterThan(h.mouth.bottom));
           expect(a.glasses.left, greaterThan(0));
           expect(a.glasses.right, lessThan(320));
-          if (v['held'] != 'none')
+          if (v['held'] != 'none') {
             expect(
               w
                   .held(v['held'])
                   .contains(w.hand(v['held'] != 'notebook').center),
               isTrue,
             );
+          }
           await t.pumpWidget(
             MaterialApp(
               home: Scaffold(
