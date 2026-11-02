@@ -38,7 +38,13 @@ void main() {
           final src = a[name]!, dest = rig.register(src);
           for (final scales in [
             (1.0, .48),
-            (1.0, .85),
+            (1.0, .65),
+            (1.0, .76),
+            (.94, .52),
+            (1.055, .79),
+            (.91, .68),
+            (.91, .42),
+            (1.02, .59),
             (1.0, 1.055),
             (.96, .93),
             (.98, .93),
@@ -373,7 +379,7 @@ void main() {
     },
   );
   testWidgets(
-    '2.2.4 family defaults, caps, face and hair contact sheets use actual runtime',
+    '2.2.5 family defaults, caps, face and hair contact sheets use actual runtime',
     (t) async {
       t.view.physicalSize = const Size(1440, 2200);
       t.view.devicePixelRatio = 1;
@@ -442,7 +448,7 @@ void main() {
                         as RenderRepaintBoundary)
                     .toImage();
             final data = await im.toByteData(format: ui.ImageByteFormat.png);
-            File('docs/images/menti-2.2.4/$name.png')
+            File('docs/images/menti-2.2.5/$name.png')
                 .writeAsBytesSync(data!.buffer.asUint8List());
             im.dispose();
           });
@@ -454,7 +460,7 @@ void main() {
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            label('2.2.4 · family defaults · actual Flutter runtime'),
+            label('2.2.5 · family defaults · actual Flutter runtime'),
             for (final family in ['boy', 'girl', 'neutral'])
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
