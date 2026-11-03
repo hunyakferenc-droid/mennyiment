@@ -265,16 +265,26 @@ class _PlatePainter extends CustomPainter {
       features['leftEye']!.inflate(2),
       features['rightEye']!.inflate(2),
     ];
-    if (spec.eyeStyle != 'round' || spec.blink || spec.wink) {
+    if (spec.eyeStyle != 'round' ||
+        spec.blink ||
+        spec.wink ||
+        spec.faceStyle == 'sleepy' ||
+        spec.faceStyle == 'playful') {
       for (var side = 0; side < 2; side++) {
-        final sy = (spec.blink || (spec.wink && side == 1))
+        final baseSy = (spec.blink || (spec.wink && side == 1))
             ? .48
             : switch (spec.eyeStyle) {
                 'wide' => 1.055,
-                'relaxed' => .85,
-                'sharp' => .93,
+                'relaxed' => .65,
+                'sharp' => .76,
                 _ => 1.0,
               };
+        final factor = spec.faceStyle == 'sleepy'
+            ? .68
+            : spec.faceStyle == 'playful' && side == 1
+            ? .70
+            : 1.0;
+        final sy = (baseSy * factor).clamp(.4, 1.06).toDouble();
         _warp(
           canvas,
           rig,
@@ -287,11 +297,11 @@ class _PlatePainter extends CustomPainter {
     }
     if (spec.faceStyle != 'cheerful') {
       final (sx, sy) = switch (spec.faceStyle) {
-        'calm' => (.98, .93),
-        'playful' => (1.025, .98),
-        'confident' => (.96, .97),
-        'sleepy' => (.93, .87),
-        _ => (.98, .90),
+        'calm' => (.94, .52),
+        'playful' => (1.055, .79),
+        'confident' => (.91, .68),
+        'sleepy' => (.91, .42),
+        _ => (1.02, .59),
       };
       canvas.save();
       // Mouth samples cannot overwrite an eye, even on tilted reference heads.

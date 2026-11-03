@@ -121,6 +121,19 @@ class _MentiPremiumMotionState extends State<MentiPremiumMotion>
   @override
   void didUpdateWidget(covariant MentiPremiumMotion oldWidget) {
     super.didUpdateWidget(oldWidget);
+    final oldVisual = oldWidget.profile.visual;
+    final visual = widget.profile.visual;
+    final changed =
+        oldVisual.hairVisible != visual.hairVisible ||
+        MentiVisualProfile.defaults.keys.any(
+          (field) => oldVisual.value(field) != visual.value(field),
+        );
+    if (changed) {
+      // A gesture belongs to the character that started it. Selecting a new
+      // face, family or outfit must immediately show that draft's own state.
+      _stop();
+      _schedule();
+    }
     if (oldWidget.reaction == widget.reaction) return;
     if (widget.reaction == 'focused') {
       _stop();
@@ -129,6 +142,9 @@ class _MentiPremiumMotionState extends State<MentiPremiumMotion>
       _expression(wink: true);
     } else if (_positive.contains(widget.reaction)) {
       _expression(smile: true);
+    } else {
+      _stop();
+      _schedule();
     }
   }
 

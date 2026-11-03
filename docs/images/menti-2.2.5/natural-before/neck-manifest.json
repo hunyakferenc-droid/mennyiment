@@ -1,0 +1,542 @@
+{
+  "boy/young/basic/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "boy",
+      "age": "young",
+      "hair": "boy-crop",
+      "hairVisible": false,
+      "outfit": "basic",
+      "neck": "bow",
+      "glasses": "none",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "boy/young/business/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "boy",
+      "age": "young",
+      "hair": "boy-crop",
+      "hairVisible": false,
+      "outfit": "business",
+      "neck": "bow",
+      "glasses": "round-glasses",
+      "held": "none",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "boy/young/cozy/scarf": {
+    "name": "Menti",
+    "visual": {
+      "family": "boy",
+      "age": "young",
+      "hair": "boy-crop",
+      "hairVisible": false,
+      "outfit": "cozy",
+      "neck": "scarf",
+      "glasses": "sunglasses",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "boy/young/sport/chain": {
+    "name": "Menti",
+    "visual": {
+      "family": "boy",
+      "age": "young",
+      "hair": "boy-crop",
+      "hairVisible": false,
+      "outfit": "sport",
+      "neck": "chain",
+      "glasses": "sunglasses",
+      "held": "flower",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "boy/adult/basic/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "boy",
+      "age": "adult",
+      "hair": "boy-waves",
+      "hairVisible": false,
+      "outfit": "basic",
+      "neck": "bow",
+      "glasses": "none",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "boy/adult/business/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "boy",
+      "age": "adult",
+      "hair": "boy-waves",
+      "hairVisible": false,
+      "outfit": "business",
+      "neck": "bow",
+      "glasses": "round-glasses",
+      "held": "none",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "boy/adult/cozy/scarf": {
+    "name": "Menti",
+    "visual": {
+      "family": "boy",
+      "age": "adult",
+      "hair": "boy-waves",
+      "hairVisible": false,
+      "outfit": "cozy",
+      "neck": "scarf",
+      "glasses": "sunglasses",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "boy/adult/sport/chain": {
+    "name": "Menti",
+    "visual": {
+      "family": "boy",
+      "age": "adult",
+      "hair": "boy-waves",
+      "hairVisible": false,
+      "outfit": "sport",
+      "neck": "chain",
+      "glasses": "sunglasses",
+      "held": "flower",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "boy/veteran/basic/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "boy",
+      "age": "veteran",
+      "hair": "boy-crop",
+      "hairVisible": false,
+      "outfit": "basic",
+      "neck": "bow",
+      "glasses": "none",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "boy/veteran/business/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "boy",
+      "age": "veteran",
+      "hair": "boy-crop",
+      "hairVisible": false,
+      "outfit": "business",
+      "neck": "bow",
+      "glasses": "round-glasses",
+      "held": "none",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "boy/veteran/cozy/scarf": {
+    "name": "Menti",
+    "visual": {
+      "family": "boy",
+      "age": "veteran",
+      "hair": "boy-crop",
+      "hairVisible": false,
+      "outfit": "cozy",
+      "neck": "scarf",
+      "glasses": "sunglasses",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "boy/veteran/sport/chain": {
+    "name": "Menti",
+    "visual": {
+      "family": "boy",
+      "age": "veteran",
+      "hair": "boy-crop",
+      "hairVisible": false,
+      "outfit": "sport",
+      "neck": "chain",
+      "glasses": "sunglasses",
+      "held": "flower",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "girl/young/basic/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "girl",
+      "age": "young",
+      "hair": "girl-waves",
+      "hairVisible": true,
+      "outfit": "basic",
+      "neck": "bow",
+      "glasses": "none",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "girl/young/business/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "girl",
+      "age": "young",
+      "hair": "girl-waves",
+      "hairVisible": true,
+      "outfit": "business",
+      "neck": "bow",
+      "glasses": "round-glasses",
+      "held": "none",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "girl/young/cozy/scarf": {
+    "name": "Menti",
+    "visual": {
+      "family": "girl",
+      "age": "young",
+      "hair": "girl-waves",
+      "hairVisible": true,
+      "outfit": "cozy",
+      "neck": "scarf",
+      "glasses": "sunglasses",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "girl/young/sport/chain": {
+    "name": "Menti",
+    "visual": {
+      "family": "girl",
+      "age": "young",
+      "hair": "girl-waves",
+      "hairVisible": true,
+      "outfit": "sport",
+      "neck": "chain",
+      "glasses": "sunglasses",
+      "held": "flower",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "girl/adult/basic/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "girl",
+      "age": "adult",
+      "hair": "girl-waves",
+      "hairVisible": true,
+      "outfit": "basic",
+      "neck": "bow",
+      "glasses": "none",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "girl/adult/business/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "girl",
+      "age": "adult",
+      "hair": "girl-waves",
+      "hairVisible": true,
+      "outfit": "business",
+      "neck": "bow",
+      "glasses": "round-glasses",
+      "held": "none",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "girl/adult/cozy/scarf": {
+    "name": "Menti",
+    "visual": {
+      "family": "girl",
+      "age": "adult",
+      "hair": "girl-waves",
+      "hairVisible": true,
+      "outfit": "cozy",
+      "neck": "scarf",
+      "glasses": "sunglasses",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "girl/adult/sport/chain": {
+    "name": "Menti",
+    "visual": {
+      "family": "girl",
+      "age": "adult",
+      "hair": "girl-waves",
+      "hairVisible": true,
+      "outfit": "sport",
+      "neck": "chain",
+      "glasses": "sunglasses",
+      "held": "flower",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "girl/veteran/basic/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "girl",
+      "age": "veteran",
+      "hair": "girl-bob",
+      "hairVisible": true,
+      "outfit": "basic",
+      "neck": "bow",
+      "glasses": "none",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "girl/veteran/business/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "girl",
+      "age": "veteran",
+      "hair": "girl-bob",
+      "hairVisible": true,
+      "outfit": "business",
+      "neck": "bow",
+      "glasses": "round-glasses",
+      "held": "none",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "girl/veteran/cozy/scarf": {
+    "name": "Menti",
+    "visual": {
+      "family": "girl",
+      "age": "veteran",
+      "hair": "girl-bob",
+      "hairVisible": true,
+      "outfit": "cozy",
+      "neck": "scarf",
+      "glasses": "sunglasses",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "girl/veteran/sport/chain": {
+    "name": "Menti",
+    "visual": {
+      "family": "girl",
+      "age": "veteran",
+      "hair": "girl-bob",
+      "hairVisible": true,
+      "outfit": "sport",
+      "neck": "chain",
+      "glasses": "sunglasses",
+      "held": "flower",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "neutral/young/basic/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "neutral",
+      "age": "young",
+      "hair": "neutral-curls",
+      "hairVisible": false,
+      "outfit": "basic",
+      "neck": "bow",
+      "glasses": "none",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "neutral/young/business/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "neutral",
+      "age": "young",
+      "hair": "neutral-curls",
+      "hairVisible": false,
+      "outfit": "business",
+      "neck": "bow",
+      "glasses": "round-glasses",
+      "held": "none",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "neutral/young/cozy/scarf": {
+    "name": "Menti",
+    "visual": {
+      "family": "neutral",
+      "age": "young",
+      "hair": "neutral-curls",
+      "hairVisible": false,
+      "outfit": "cozy",
+      "neck": "scarf",
+      "glasses": "sunglasses",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "neutral/young/sport/chain": {
+    "name": "Menti",
+    "visual": {
+      "family": "neutral",
+      "age": "young",
+      "hair": "neutral-curls",
+      "hairVisible": false,
+      "outfit": "sport",
+      "neck": "chain",
+      "glasses": "sunglasses",
+      "held": "flower",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "neutral/adult/basic/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "neutral",
+      "age": "adult",
+      "hair": "neutral-crest",
+      "hairVisible": false,
+      "outfit": "basic",
+      "neck": "bow",
+      "glasses": "none",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "neutral/adult/business/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "neutral",
+      "age": "adult",
+      "hair": "neutral-crest",
+      "hairVisible": false,
+      "outfit": "business",
+      "neck": "bow",
+      "glasses": "round-glasses",
+      "held": "none",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "neutral/adult/cozy/scarf": {
+    "name": "Menti",
+    "visual": {
+      "family": "neutral",
+      "age": "adult",
+      "hair": "neutral-crest",
+      "hairVisible": false,
+      "outfit": "cozy",
+      "neck": "scarf",
+      "glasses": "sunglasses",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "neutral/adult/sport/chain": {
+    "name": "Menti",
+    "visual": {
+      "family": "neutral",
+      "age": "adult",
+      "hair": "neutral-crest",
+      "hairVisible": false,
+      "outfit": "sport",
+      "neck": "chain",
+      "glasses": "sunglasses",
+      "held": "flower",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "neutral/veteran/basic/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "neutral",
+      "age": "veteran",
+      "hair": "neutral-crop",
+      "hairVisible": false,
+      "outfit": "basic",
+      "neck": "bow",
+      "glasses": "none",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "neutral/veteran/business/bow": {
+    "name": "Menti",
+    "visual": {
+      "family": "neutral",
+      "age": "veteran",
+      "hair": "neutral-crop",
+      "hairVisible": false,
+      "outfit": "business",
+      "neck": "bow",
+      "glasses": "round-glasses",
+      "held": "none",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  },
+  "neutral/veteran/cozy/scarf": {
+    "name": "Menti",
+    "visual": {
+      "family": "neutral",
+      "age": "veteran",
+      "hair": "neutral-crop",
+      "hairVisible": false,
+      "outfit": "cozy",
+      "neck": "scarf",
+      "glasses": "sunglasses",
+      "held": "none",
+      "headwear": "none"
+    },
+    "reaction": {}
+  },
+  "neutral/veteran/sport/chain": {
+    "name": "Menti",
+    "visual": {
+      "family": "neutral",
+      "age": "veteran",
+      "hair": "neutral-crop",
+      "hairVisible": false,
+      "outfit": "sport",
+      "neck": "chain",
+      "glasses": "sunglasses",
+      "held": "flower",
+      "headwear": "crown-cap"
+    },
+    "reaction": {}
+  }
+}

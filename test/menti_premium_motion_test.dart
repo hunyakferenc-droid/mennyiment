@@ -8,6 +8,43 @@ import 'package:mennyiment/menti_identity/menti_premium_renderer.dart';
 
 void main() {
   testWidgets(
+    'profile replacement and neutral reactions cancel stale expressions without preference writes',
+    (t) async {
+      var profile = MentiIdentityProfile(
+        visual: MentiVisualProfile({
+          'family': 'boy',
+          'face': 'calm',
+          'future': 'keep',
+        }),
+      );
+      String? reaction = 'funny';
+      Widget host() => MaterialApp(
+        home: MentiPremiumMotion(profile: profile, reaction: reaction),
+      );
+      MentiPremiumComposition frame() =>
+          t.widget(find.byType(MentiPremiumComposition));
+      await t.pumpWidget(host());
+      expect(frame().wink, isTrue);
+      profile = profile.copyWith(
+        visual: profile.visual.withValues({'family': 'girl', 'face': 'sleepy'}),
+      );
+      await t.pumpWidget(host());
+      expect(frame().wink, isFalse);
+      expect(frame().smile, isFalse);
+      expect(frame().profile.visual.value('face'), 'sleepy');
+      reaction = 'proud';
+      await t.pumpWidget(host());
+      expect(frame().smile, isTrue);
+      reaction = null;
+      await t.pumpWidget(host());
+      expect(frame().smile, isFalse);
+      expect(profile.visual.toJson()['future'], 'keep');
+      await t.pump(const Duration(seconds: 7));
+      expect(frame().blink, isTrue);
+      await t.pumpWidget(const SizedBox.shrink());
+    },
+  );
+  testWidgets(
     'blink, wink and positive smiles are finite, preserve identity and stop with accessibility or background',
     (tester) async {
       final profile = MentiIdentityProfile(

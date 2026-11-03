@@ -1,0 +1,31 @@
+{
+  "browser": "154.0.8037.57",
+  "sourceCommit": "20458fcb7265c6f3b38818dcb4507b71c8b1a2d9",
+  "version": {
+    "app_name": "mennyiment",
+    "version": "2.2.5",
+    "build_number": "27",
+    "package_name": "mennyiment"
+  },
+  "checks": [
+    "HU to EN selection and complete adult onboarding",
+    "Full-screen zoom shows the same draft character without saving",
+    "Hair and eye preview alter the draft, keep saved identity intact, and can be reverted",
+    "Studio outfit editing and confirmed save",
+    "Fitted glasses, collar and grip save together; scarf/sunglasses draft reverts without storage writes",
+    "Reload preserves the full saved identity and skips completed onboarding",
+    "1280px desktop Studio loads the saved profile",
+    "320px Hungarian native girl home and Studio retain all controls",
+    "Existing document without the new hair flag loads without writes",
+    "320px minor onboarding keeps alcohol logging unavailable"
+  ],
+  "runtimeErrors": [],
+  "viewports": [
+    "390x844 EN",
+    "1280x900 EN",
+    "320x740 HU",
+    "320x740 minor EN"
+  ],
+  "reducedMotion": true,
+  "navigationCancellations": []
+}

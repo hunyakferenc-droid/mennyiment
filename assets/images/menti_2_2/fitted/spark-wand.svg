@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 140">
+<defs><linearGradient id="shaft"><stop stop-color="#58402c"/><stop offset=".35" stop-color="#f9d98a"/><stop offset=".7" stop-color="#c69a50"/><stop offset="1" stop-color="#76552c"/></linearGradient><linearGradient id="star" x2="1" y2="1"><stop stop-color="#fffbe2"/><stop offset=".4" stop-color="#f3d77d"/><stop offset="1" stop-color="#a97226"/></linearGradient></defs>
+<path d="M28 133 L30 39" stroke="#604225" stroke-width="5.5" stroke-linecap="round"/><path d="M28 133 L30 39" stroke="url(#shaft)" stroke-width="4" stroke-linecap="round"/>
+<path d="M26 99 L31 98 L31 125 L26 126 Z" fill="#583b78" stroke="#332440" stroke-width=".7"/>
+<path d="M26 102 L31 100 M26 107 L31 105 M26 112 L31 110 M26 117 L31 115 M26 122 L31 120" stroke="#ac8bc5" stroke-width="1.2"/>
+<path d="M30 5 L36 23 L54 29 L37 37 L31 55 L23 38 L6 31 L23 23 Z" fill="url(#star)" stroke="#8c622f" stroke-width="1.1"/>
+<path d="M30 5 L30 30 L6 31 L23 23 Z" fill="#fff6ca"/><path d="M30 30 L54 29 L37 37 L31 55 Z" fill="#bf923e" opacity=".8"/>
+<path d="M30 12 L33 25 L45 29" fill="none" stroke="#fffdeb" stroke-width="1.1"/>
+<path d="M8 13 L9 17 L13 18 L9 19 L8 23 L7 19 L3 18 L7 17 Z M50 47 L51 50 L54 51 L51 52 L50 55 L49 52 L46 51 L49 50 Z" fill="#f5dc97"/>
+</svg>
