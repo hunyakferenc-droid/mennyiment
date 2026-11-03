@@ -548,6 +548,7 @@ class MentiPremiumComposition extends StatelessWidget {
   static List<String> get assets => [
     ...MentiReferenceRig.assets,
     ...MentiAtlasComposition.assets,
+    ...MentiAccessoryRig.clothAssets.values,
   ];
   // Legacy atlas indexing remains available for archive integrity regressions.
   static List<String> sprites(MentiIdentityProfile p) =>
@@ -579,6 +580,8 @@ class MentiPremiumComposition extends StatelessWidget {
         if (resolve(p, f).id != 'none' &&
             (f != 'style' || resolve(p, f).id != 'classic'))
           MentiVisualCatalog.root + resolve(p, f).asset,
+      if (MentiAccessoryRig.clothAssets.containsKey(resolve(p, 'neck').id))
+        MentiAccessoryRig.clothAssets[resolve(p, 'neck').id]!,
       if (resolve(p, 'held').id != 'none')
         MentiWardrobeGeometry.heldAsset(resolve(p, 'held').id),
       if (reaction != null)
@@ -846,8 +849,26 @@ class MentiPremiumComposition extends StatelessWidget {
                 plate(part: rig.mask('garments'), tint: accent),
             ] else ...[
               for (final right in [false, true]) handLayer(right),
+              Positioned.fromRect(
+                rect: wardrobe.neckBridge,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                    wardrobe.neckBridge.width * .22,
+                  ),
+                  child: MentiMaterialPatch(
+                    asset: rig.asset,
+                    source: const Size(1942, 809),
+                    crop: rig.skin,
+                  ),
+                ),
+              ),
               plate(part: head, expression: true),
-              sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
+              sprite(
+                'outfits/${id('outfit')}',
+                outfitTarget,
+                color: accent,
+                mask: wardrobe.garmentMask,
+              ),
               if (id('outfit') == 'business' && id('neck') == 'bow')
                 sprite(
                   'outfits/business-alt',
@@ -868,12 +889,27 @@ class MentiPremiumComposition extends StatelessWidget {
                     ..close(),
                 ),
             ],
-            if (id('neck') != 'none')
+            if (MentiAccessoryRig.clothAssets.containsKey(id('neck')))
+              Positioned.fromRect(
+                rect: accessories.neckTarget(id('neck')),
+                child: MentiClothAccessory(id: id('neck')),
+              )
+            else if (id('neck') != 'none')
               Positioned.fill(
                 child: CustomPaint(
                   painter: MentiFittedAccessories(
                     accessories,
                     neck: id('neck'),
+                  ),
+                ),
+              ),
+            if (id('glasses') != 'none')
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: MentiFittedAccessories(
+                    accessories,
+                    glasses: id('glasses'),
+                    glassesPass: MentiGlassesPass.temples,
                   ),
                 ),
               ),
@@ -912,6 +948,7 @@ class MentiPremiumComposition extends StatelessWidget {
                   painter: MentiFittedAccessories(
                     accessories,
                     glasses: id('glasses'),
+                    glassesPass: MentiGlassesPass.front,
                   ),
                 ),
               ),

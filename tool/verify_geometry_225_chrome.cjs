@@ -221,7 +221,7 @@ function identity(values) {
     checks.push('320px minor onboarding keeps alcohol logging unavailable');
     const version = await page.request.get(`${target}/version.json`);
     const metadata = await version.json();
-    if (metadata.version !== '2.2.5' || metadata.build_number !== '27') throw new Error('Unexpected web build version');
+    if (metadata.version !== (process.env.MENTI_EXPECTED_VERSION || '2.2.5') || metadata.build_number !== (process.env.MENTI_EXPECTED_BUILD || '27')) throw new Error('Unexpected web build version');
     if (failures.length) throw new Error(failures.join('\n'));
     const report = { browser: await browser.version(), sourceCommit: process.env.SOURCE_COMMIT || 'working-tree',
       version: metadata, checks, runtimeErrors: failures, viewports: ['390x844 EN', '1280x900 EN', '320x740 HU', '320x740 minor EN'],

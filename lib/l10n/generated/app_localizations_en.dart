@@ -1437,7 +1437,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get avatarReactionFocused => 'Focused';
 
   @override
-  String get avatarStudio => 'Menti Studio 2.2.5';
+  String get avatarStudio => 'Menti Studio 2.2.6';
 
   @override
   String get avatarSave => 'Save';
