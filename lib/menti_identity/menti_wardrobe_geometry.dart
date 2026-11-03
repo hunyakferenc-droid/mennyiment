@@ -159,42 +159,6 @@ class MentiWardrobeGeometry {
     );
   }
 
-  Rect get neckBridge {
-    final opening = collarOpening;
-    final top = math.max(head.mouth.bottom + 2, garment.top - 4);
-    return Rect.fromLTRB(
-      opening.center.dx - opening.width * .39,
-      top,
-      opening.center.dx + opening.width * .39,
-      math.max(top + 1, opening.bottom + 1),
-    );
-  }
-
-  Path get garmentMask {
-    final g = garment, opening = collarOpening;
-    final hole = Rect.fromLTWH(
-      (opening.left + opening.width * .18 - g.left) / g.width,
-      (opening.top - g.top) / g.height,
-      opening.width * .64 / g.width,
-      opening.height * .44 / g.height,
-    );
-    // Retained masters contain an opaque empty-neck insert. Expose the small
-    // inner opening to the original skin material; leave the collar lip intact.
-    return Path.combine(
-      PathOperation.difference,
-      Path()..addRect(const Rect.fromLTWH(0, 0, 1, 1)),
-      // A polygon avoids conic containment precision loss when the normalized
-      // opening is transformed nonuniformly to different garment dimensions.
-      Path()..addPolygon([
-        for (var i = 0; i < 32; i++)
-          Offset(
-            hole.center.dx + hole.width / 2 * math.cos(i * math.pi / 16),
-            hole.center.dy + hole.height / 2 * math.sin(i * math.pi / 16),
-          ),
-      ], true),
-    );
-  }
-
   Rect get shoulders => Rect.fromLTWH(
     garment.left + garment.width * .12,
     garment.top + garment.height * .06,

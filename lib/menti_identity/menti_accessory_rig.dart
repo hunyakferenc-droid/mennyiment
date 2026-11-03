@@ -84,11 +84,13 @@ class MentiAccessoryRig {
     }
     if (id == 'scarf') {
       final width = r.width * (compact ? 1.05 : 1.12);
+      final height = width * 888 / 928;
+      final jaw = head.scalp.bottom;
       return Rect.fromLTWH(
         r.center.dx - width / 2,
-        math.max(head.mouth.bottom + 2, r.center.dy - width * .36),
+        math.max(head.mouth.bottom + 2 - height * .42, jaw - height * .44),
         width,
-        width * 888 / 928,
+        height,
       );
     }
     return Rect.fromLTWH(r.left, r.top, r.width, r.height + r.width * .55);

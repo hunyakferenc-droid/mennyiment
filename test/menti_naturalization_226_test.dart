@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'dart:ui' as ui;
+
+import 'package:flutter/rendering.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -54,59 +57,39 @@ void main() {
     },
   );
 
-  test('cloth source aspect and collar safety hold for every rig and garment', () {
-    for (final r in MentiReferenceRig.all) {
-      final h = MentiHeadGeometry(
-        r,
-        clean: true,
-        hair: r.hairId,
-        hairVisible: true,
-      );
-      for (final o in MentiVisualCatalog.forField('outfit')) {
-        final w = MentiWardrobeGeometry(h, o.id);
-        for (final compact in [false, true]) {
-          final a = MentiAccessoryRig(h, w, compact: compact);
-          for (final (id, aspect) in [
-            ('bow', 2015 / 737),
-            ('scarf', 928 / 888),
-          ]) {
-            final target = a.neckTarget(id);
-            expect(target.width / target.height, closeTo(aspect, 1e-8));
-            expect(target.top, greaterThan(h.mouth.bottom));
-            expect(target.bottom, lessThan(w.waist.top));
-            expect(a.neckBounds.contains(target.topLeft), isTrue);
-            expect(a.neckBounds.contains(target.bottomRight), isTrue);
+  test(
+    'cloth source aspect and collar safety hold for every rig and garment',
+    () {
+      for (final r in MentiReferenceRig.all) {
+        final h = MentiHeadGeometry(
+          r,
+          clean: true,
+          hair: r.hairId,
+          hairVisible: true,
+        );
+        for (final o in MentiVisualCatalog.forField('outfit')) {
+          final w = MentiWardrobeGeometry(h, o.id);
+          for (final compact in [false, true]) {
+            final a = MentiAccessoryRig(h, w, compact: compact);
+            for (final (id, aspect) in [
+              ('bow', 2015 / 737),
+              ('scarf', 928 / 888),
+            ]) {
+              final target = a.neckTarget(id);
+              expect(target.width / target.height, closeTo(aspect, 1e-8));
+              expect(
+                id == 'scarf' ? target.top + target.height * .42 : target.top,
+                greaterThan(h.mouth.bottom),
+              );
+              expect(target.bottom, lessThan(w.waist.top));
+              expect(a.neckBounds.contains(target.topLeft), isTrue);
+              expect(a.neckBounds.contains(target.bottomRight), isTrue);
+            }
           }
         }
-        if (o.id != 'basic') {
-          // The revealed inner hole is fully backed by original skin material.
-          final g = w.garment, opening = w.collarOpening;
-          final sample = Offset(
-            opening.center.dx,
-            opening.top + opening.height * .22,
-          );
-          final normalized = Offset(
-            (sample.dx - g.left) / g.width,
-            (sample.dy - g.top) / g.height,
-          );
-          expect(
-            w.garmentMask
-                .transform(
-                  Matrix4.diagonal3Values(g.width, g.height, 1).storage,
-                )
-                .contains(
-                  Offset(normalized.dx * g.width, normalized.dy * g.height),
-                ),
-            isFalse,
-            reason:
-                '${r.family}/${r.age}/${o.id}: $normalized, ${w.garmentMask.fillType}',
-          );
-          expect(w.neckBridge.contains(sample), isTrue);
-          expect(w.garmentMask.contains(const Offset(.25, .25)), isTrue);
-        }
       }
-    }
-  });
+    },
+  );
 
   testWidgets(
     'runtime uses detailed cloth and separate occluded temples without rewriting selection',
@@ -155,6 +138,112 @@ void main() {
         contains(MentiAccessoryRig.clothAssets['bow']),
       );
       expect(jsonEncode(p.toJson()), before);
+      await t.pumpWidget(const SizedBox.shrink());
+    },
+  );
+  testWidgets(
+    'scarf wraps below the jaw without changing eyes or mouth in all nine rigs',
+    (t) async {
+      t.view.physicalSize = const Size(320, 400);
+      t.view.devicePixelRatio = 1;
+      addTearDown(t.view.resetPhysicalSize);
+      addTearDown(t.view.resetDevicePixelRatio);
+      final key = GlobalKey();
+      var profile = MentiIdentityProfile();
+      late StateSetter update;
+      await t.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: StatefulBuilder(
+              builder: (context, set) {
+                update = set;
+                return RepaintBoundary(
+                  key: key,
+                  child: SizedBox(
+                    width: 320,
+                    height: 400,
+                    child: MentiPremiumComposition(profile: profile),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+      await t.runAsync(() async {
+        for (final asset in MentiPremiumComposition.assets) {
+          await precacheImage(AssetImage(asset), key.currentContext!);
+        }
+      });
+      Future<List<int>> pixels() async {
+        await t.pumpAndSettle();
+        expect(t.takeException(), isNull);
+        return (await t.runAsync(() async {
+          final image =
+              await (key.currentContext!.findRenderObject()
+                      as RenderRepaintBoundary)
+                  .toImage();
+          final data = await image.toByteData(
+            format: ui.ImageByteFormat.rawRgba,
+          );
+          image.dispose();
+          return data!.buffer.asUint8List().toList();
+        }))!;
+      }
+
+      for (final r in MentiReferenceRig.all) {
+        final h = MentiHeadGeometry(
+          r,
+          clean: true,
+          hair: r.hairId,
+          hairVisible: false,
+        );
+        for (final outfit in ['basic', 'cozy']) {
+          final visual = MentiVisualProfile({
+            'family': r.family,
+            'age': r.age,
+            'hairVisible': false,
+            'headwear': 'none',
+            'outfit': outfit,
+            'neck': 'none',
+          });
+          update(() => profile = MentiIdentityProfile(visual: visual));
+          final before = await pixels();
+          update(
+            () => profile = MentiIdentityProfile(
+              visual: visual.withValues({'neck': 'scarf'}),
+            ),
+          );
+          final after = await pixels();
+          final a = MentiAccessoryRig(h, MentiWardrobeGeometry(h, outfit));
+          final protected = [
+            h.leftEye.inflate(1),
+            h.rightEye.inflate(1),
+            h.mouth.inflate(1),
+          ];
+          var changedNeck = 0;
+          for (var y = 0; y < 400; y++) {
+            for (var x = 0; x < 320; x++) {
+              final point = Offset(x + .5, y + .5), i = (y * 320 + x) * 4;
+              final changed = List.generate(
+                4,
+                (channel) => before[i + channel] != after[i + channel],
+              ).any((v) => v);
+              if (changed && protected.any((rect) => rect.contains(point))) {
+                fail(
+                  'Scarf changed protected face ${r.family}/${r.age}/$outfit at $point',
+                );
+              }
+              if (changed && a.neckBounds.contains(point)) changedNeck++;
+            }
+          }
+          expect(
+            changedNeck,
+            greaterThan(15),
+            reason: '${r.family}/${r.age}/$outfit scarf really rendered',
+          );
+        }
+      }
       await t.pumpWidget(const SizedBox.shrink());
     },
   );

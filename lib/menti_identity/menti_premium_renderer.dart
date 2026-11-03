@@ -690,6 +690,32 @@ class MentiPremiumComposition extends StatelessWidget {
       wardrobe,
       profile.visual,
     );
+    Path scarfWindow() {
+      final target = accessories.neckTarget('scarf');
+      // Hide the rear rim behind the real jaw without painting the face twice.
+      // The reference head mask also contains a neck extension: only its
+      // measured skull portion is an occluder for a worn scarf.
+      final skull = Path.combine(
+        PathOperation.intersect,
+        head,
+        Path()..addOval(geometry.scalp),
+      );
+      final occluder = Path.combine(
+        PathOperation.union,
+        skull,
+        geometry.guard(),
+      );
+      final visible = Path.combine(
+        PathOperation.difference,
+        Path()..addRect(target),
+        occluder,
+      );
+      final matrix = Matrix4.identity()
+        ..scaleByDouble(1 / target.width, 1 / target.height, 1, 1)
+        ..translateByDouble(-target.left, -target.top, 0, 1);
+      return visible.transform(matrix.storage);
+    }
+
     Widget handLayer(bool right, {bool grip = false}) {
       final path = rig.mask(right ? 'rightHand' : 'leftHand');
       final bounds = path.getBounds();
@@ -849,26 +875,8 @@ class MentiPremiumComposition extends StatelessWidget {
                 plate(part: rig.mask('garments'), tint: accent),
             ] else ...[
               for (final right in [false, true]) handLayer(right),
-              Positioned.fromRect(
-                rect: wardrobe.neckBridge,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    wardrobe.neckBridge.width * .22,
-                  ),
-                  child: MentiMaterialPatch(
-                    asset: rig.asset,
-                    source: const Size(1942, 809),
-                    crop: rig.skin,
-                  ),
-                ),
-              ),
               plate(part: head, expression: true),
-              sprite(
-                'outfits/${id('outfit')}',
-                outfitTarget,
-                color: accent,
-                mask: wardrobe.garmentMask,
-              ),
+              sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
               if (id('outfit') == 'business' && id('neck') == 'bow')
                 sprite(
                   'outfits/business-alt',
@@ -892,7 +900,12 @@ class MentiPremiumComposition extends StatelessWidget {
             if (MentiAccessoryRig.clothAssets.containsKey(id('neck')))
               Positioned.fromRect(
                 rect: accessories.neckTarget(id('neck')),
-                child: MentiClothAccessory(id: id('neck')),
+                child: ClipPath(
+                  clipper: _RegisteredClipper(
+                    id('neck') == 'scarf' ? scarfWindow() : null,
+                  ),
+                  child: MentiClothAccessory(id: id('neck')),
+                ),
               )
             else if (id('neck') != 'none')
               Positioned.fill(
