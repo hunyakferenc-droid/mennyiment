@@ -196,6 +196,21 @@ function identity(values) {
     if(JSON.stringify(identity(await storage(oldPage)))!==JSON.stringify(oldDoc))throw new Error('Old profile was rewritten');
     await capture(oldPage,{path:path.join(output,'chrome-existing-profile-en.png')});
     checks.push('Existing document without the new hair flag loads without writes');
+    // Existing selected-outfit fixture, isolated from the interactive save test.
+    // This checks rendering/preservation, not unlocking the level-2 garment.
+    const formalDoc=JSON.parse(JSON.stringify(nativeIdentity));
+    formalDoc.profile.name='Formal bow fixture';
+    Object.assign(formalDoc.profile.visual,{outfit:'business',neck:'bow',glasses:'none',held:'none',headwear:'none'});
+    const formalValues={...nativeValues,[idKey]:repack(nativeValues[idKey],formalDoc)};
+    const formalContext=await browser.newContext({viewport:{width:1280,height:900},reducedMotion:'reduce'});
+    await formalContext.addInitScript(values=>{for(const[k,v]of Object.entries(values))localStorage.setItem(k,v);},formalValues);
+    const formal=activePage=await open(formalContext);
+    await formal.getByRole('button',{name:strings.chooseMenti,exact:true}).click();
+    await formal.getByRole('button',{name:strings.avatarEnlargePreview,exact:true}).click();
+    await capture(formal,{path:path.join(output,'chrome-business-bow-fixture.png')});
+    if(JSON.stringify(identity(await storage(formal)))!==JSON.stringify(formalDoc))throw new Error('Formal outfit fixture was rewritten');
+    checks.push('Existing business/bow fixture renders in the large preview without rewriting saved data');
+
     const minor = await browser.newContext({ viewport: { width: 320, height: 740 }, reducedMotion: 'reduce' });
     const young = activePage = await open(minor);
     await start(young, false, 'Lifestyle Menti');
