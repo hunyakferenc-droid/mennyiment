@@ -21,13 +21,13 @@ void main() {
           'docs/images/menti-2.2.5/${Platform.environment['MENTI_STAGE'] ?? 'after'}';
       Directory(dir).createSync(recursive: true);
       await t.runAsync(() async {
-      final loader = FontLoader('ProofSans')
-        ..addFont(
-          File('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf')
-              .readAsBytes()
-              .then(ByteData.sublistView),
-        );
-      await loader.load();
+        final loader = FontLoader('ProofSans')
+          ..addFont(
+            File('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf')
+                .readAsBytes()
+                .then(ByteData.sublistView),
+          );
+        await loader.load();
       });
       t.view.physicalSize = const Size(1440, 2200);
       t.view.devicePixelRatio = 1;
@@ -85,6 +85,13 @@ void main() {
       }
 
       final combos = <Widget>[];
+      final focusOnly = Platform.environment['MENTI_FOCUS_ONLY'] == '1';
+      final neckPanels = <String, List<Widget>>{
+        'boy': [],
+        'girl': [],
+        'neutral': [],
+      };
+      final neckManifest = <String, dynamic>{};
       for (final r in MentiReferenceRig.all) {
         final base = MentiIdentityProfile(
           visual: MentiVisualProfile({
@@ -101,33 +108,66 @@ void main() {
           'base': base.toJson(),
           'options': options.map((o) => '${o.field}:${o.id}').toList(),
         };
-        await capture('${r.family}-${r.age}-options', [
-          for (final o in options)
-            SizedBox(
-              width: 144,
-              child: Column(
-                children: [
-                  label('${o.field}:${o.id}'),
-                  MentiPreviewRenderer(profile: base, option: o, size: 128),
-                ],
+        if (!focusOnly)
+          await capture('${r.family}-${r.age}-options', [
+            for (final o in options)
+              SizedBox(
+                width: 144,
+                child: Column(
+                  children: [
+                    label('${o.field}:${o.id}'),
+                    MentiPreviewRenderer(profile: base, option: o, size: 128),
+                  ],
+                ),
               ),
-            ),
-        ], 10);
-        await capture('${r.family}-${r.age}-outfits', [
-          for (final o in MentiVisualCatalog.forField('outfit'))
+          ], 10);
+        if (!focusOnly)
+          await capture('${r.family}-${r.age}-outfits', [
+            for (final o in MentiVisualCatalog.forField('outfit'))
+              SizedBox(
+                width: 288,
+                child: Column(
+                  children: [
+                    label('${r.family}/${r.age}/${o.id}'),
+                    MentiAvatarRenderer(
+                      profile: MentiPreviewRenderer.previewProfile(base, o),
+                      size: 288,
+                    ),
+                  ],
+                ),
+              ),
+          ], 5);
+        for (final item in [
+          ('basic', 'bow', 'none', 'none'),
+          ('business', 'bow', 'round-glasses', 'none'),
+          ('cozy', 'scarf', 'sunglasses', 'none'),
+          ('sport', 'chain', 'sunglasses', 'flower'),
+        ]) {
+          final profile = base.copyWith(
+            visual: base.visual.withValues({
+              'outfit': item.$1,
+              'neck': item.$2,
+              'glasses': item.$3,
+              'held': item.$4,
+              'headwear': item.$1 == 'basic' || item.$1 == 'cozy'
+                  ? 'none'
+                  : 'crown-cap',
+            }),
+          );
+          final title = '${r.family}/${r.age}/${item.$1}/${item.$2}';
+          neckManifest[title] = profile.toJson();
+          neckPanels[r.family]!.add(
             SizedBox(
               width: 288,
               child: Column(
                 children: [
-                  label('${r.family}/${r.age}/${o.id}'),
-                  MentiAvatarRenderer(
-                    profile: MentiPreviewRenderer.previewProfile(base, o),
-                    size: 288,
-                  ),
+                  label(title),
+                  MentiAvatarRenderer(profile: profile, size: 288),
                 ],
               ),
             ),
-        ], 5);
+          );
+        }
         for (var i = 0; i < 2; i++) {
           final values = {
             'outfit': i == 0 ? 'business' : 'legendary-alt',
@@ -155,7 +195,13 @@ void main() {
           );
         }
       }
-      await capture('complete-combinations', combos, 5);
+      if (!focusOnly) await capture('complete-combinations', combos, 5);
+      for (final family in neckPanels.keys) {
+        await capture('$family-neck-outfits', neckPanels[family]!, 4);
+      }
+      File('$dir/neck-manifest.json').writeAsStringSync(
+        const JsonEncoder.withIndent('  ').convert(neckManifest),
+      );
       File(
         '$dir/manifest.json',
       ).writeAsStringSync(const JsonEncoder.withIndent('  ').convert(manifest));

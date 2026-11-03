@@ -673,7 +673,11 @@ class MentiPremiumComposition extends StatelessWidget {
 
     final wardrobe = MentiWardrobeGeometry(geometry, id('outfit'));
     final outfitTarget = wardrobe.garment;
-    final accessories = MentiAccessoryRig(geometry, wardrobe);
+    final accessories = MentiAccessoryRig.forProfile(
+      geometry,
+      wardrobe,
+      profile.visual,
+    );
     Widget handLayer(bool right, {bool grip = false}) {
       final path = rig.mask(right ? 'rightHand' : 'leftHand');
       final bounds = path.getBounds();
@@ -707,7 +711,19 @@ class MentiPremiumComposition extends StatelessWidget {
               1,
               1,
             ),
-          child: MentiReferencePlate(rig: rig, part: visible),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: MentiReferencePlate(rig: rig, part: visible),
+              ),
+              if (!grip && !nativeOutfit)
+                Positioned.fill(
+                  child: CustomPaint(
+                    painter: _CuffContactPainter(path, bounds),
+                  ),
+                ),
+            ],
+          ),
         ),
       );
     }
@@ -911,4 +927,37 @@ class _RegisteredClipper extends CustomClipper<Path> {
         );
   @override
   bool shouldReclip(_RegisteredClipper old) => path != old.path;
+}
+
+/// Contact shade follows the real hand mask and stays behind the sleeve.
+class _CuffContactPainter extends CustomPainter {
+  _CuffContactPainter(this.mask, this.bounds);
+  final Path mask;
+  final Rect bounds;
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.save();
+    canvas.scale(size.width / 320, size.height / 400);
+    canvas.clipPath(mask);
+    final band = Rect.fromLTWH(
+      bounds.left,
+      bounds.top,
+      bounds.width,
+      bounds.height * .30,
+    );
+    canvas.drawRect(
+      band,
+      Paint()
+        ..shader = const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0x450e0806), Color(0x000e0806)],
+        ).createShader(band),
+    );
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant _CuffContactPainter old) =>
+      old.mask != mask || old.bounds != bounds;
 }

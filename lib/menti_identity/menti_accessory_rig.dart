@@ -4,19 +4,34 @@ import 'package:flutter/material.dart';
 
 import 'menti_head_geometry.dart';
 import 'menti_wardrobe_geometry.dart';
+import 'menti_identity.dart';
+import 'menti_visual_catalog.dart';
 
 /// Separate measured lens seats, plus a clothing-aware collar. No global SVG
 /// stretching: each eye retains its own size, height and perspective.
 class MentiAccessoryRig {
-  MentiAccessoryRig(this.head, this.wardrobe);
+  MentiAccessoryRig(this.head, this.wardrobe, {this.compact = false});
+  final bool compact;
+  factory MentiAccessoryRig.forProfile(
+    MentiHeadGeometry head,
+    MentiWardrobeGeometry wardrobe,
+    MentiVisualProfile visual,
+  ) {
+    final count = ['glasses', 'neck', 'held', 'headwear', 'back', 'detail']
+        .where(
+          (f) => MentiVisualCatalog.resolve(f, visual.value(f)).id != 'none',
+        )
+        .length;
+    return MentiAccessoryRig(head, wardrobe, compact: count >= 3);
+  }
   final MentiHeadGeometry head;
   final MentiWardrobeGeometry wardrobe;
-  Rect lens(bool right) {
+  Rect lens(bool right, {String style = 'round-glasses'}) {
     final e = right ? head.rightEye : head.leftEye;
     return Rect.fromCenter(
       center: e.center,
-      width: e.width * 1.13,
-      height: e.height * .94,
+      width: e.width * (style == 'sunglasses' ? (compact ? .98 : 1.01) : 1.10),
+      height: e.height * (style == 'sunglasses' ? .82 : .92),
     );
   }
 
@@ -26,6 +41,17 @@ class MentiAccessoryRig {
         head.rightEye.center.dx - head.leftEye.center.dx,
       ) *
       .65;
+  Offset rim(bool right, bool outer, {String style = 'round-glasses'}) {
+    final r = lens(right, style: style);
+    final x = (right == outer ? 1.0 : -1.0) * r.width / 2;
+    final y = -r.height * .06;
+    return r.center +
+        Offset(
+          x * math.cos(angle) - y * math.sin(angle),
+          x * math.sin(angle) + y * math.cos(angle),
+        );
+  }
+
   Rect get glasses => lens(false).expandToInclude(lens(true)).inflate(9);
   Rect get collar {
     final native = wardrobe.outfit == 'basic';
@@ -44,29 +70,26 @@ class MentiAccessoryRig {
     final width =
         head.scalp.width *
         switch (kind) {
-          'shirt' => .44,
-          'knit' => .46,
-          'stand' => .44,
-          _ => head.rig.family == 'girl' ? .48 : .52,
-        };
+          'shirt' => .28,
+          'knit' => .32,
+          'stand' => .30,
+          _ => head.rig.family == 'girl' ? .29 : .32,
+        } *
+        (compact ? .92 : 1);
     return Rect.fromLTWH(
       head.mouth.center.dx - width / 2,
       y,
       width,
-      width * .48,
+      width * .27,
     );
   }
 
-  Rect get neckBounds => collar
-      .expandToInclude(
-        Rect.fromLTWH(
-          collar.left,
-          collar.top,
-          collar.width,
-          collar.height * 2.4,
-        ),
-      )
-      .inflate(5);
+  Rect get neckBounds => Rect.fromLTWH(
+    collar.left - 3,
+    collar.top,
+    collar.width + 6,
+    collar.height + collar.width * (compact ? .38 : .55),
+  ).inflate(5);
 }
 
 class MentiFittedAccessories extends CustomPainter {
@@ -153,33 +176,26 @@ class MentiFittedAccessories extends CustomPainter {
   }
 
   void _glasses(Canvas c) {
-    final left = rig.lens(false), right = rig.lens(true);
+    final left = rig.lens(false, style: glasses),
+        right = rig.lens(true, style: glasses);
     final dark = glasses == 'sunglasses';
     final frame = dark ? const Color(0xff292132) : const Color(0xff9b6729);
     // Temples sit behind the front rims; the smaller far lens stays smaller.
-    for (final pair in [(left, false), (right, true)]) {
-      final (r, far) = pair;
-      final anchor = Offset(
-        far ? r.right : r.left,
-        r.center.dy - r.height * .12,
-      );
-      line(
-        c,
-        anchor,
-        Offset(anchor.dx + (far ? 7 : -7), anchor.dy - 3),
-        const Color(0xff382737),
-        2.1,
-      );
+    for (final far in [false, true]) {
+      final anchor = rig.rim(far, true, style: glasses);
+      line(c, anchor, anchor + Offset(far ? 4 : -4, -1.5), frame, 1.1);
     }
+    final innerLeft = rig.rim(false, false, style: glasses);
+    final innerRight = rig.rim(true, false, style: glasses);
     final bridge = Path()
-      ..moveTo(left.right - 1, left.center.dy - 2)
+      ..moveTo(innerLeft.dx, innerLeft.dy)
       ..quadraticBezierTo(
-        (left.right + right.left) / 2,
-        math.min(left.center.dy, right.center.dy) - 5,
-        right.left + 1,
-        right.center.dy - 2,
+        (innerLeft.dx + innerRight.dx) / 2,
+        (innerLeft.dy + innerRight.dy) / 2 - 1.5,
+        innerRight.dx,
+        innerRight.dy,
       );
-    c.drawPath(bridge, stroke(frame, 2.0));
+    c.drawPath(bridge, stroke(frame, 1.1));
     for (final r in [left, right]) {
       c.save();
       c.translate(r.center.dx, r.center.dy);
@@ -191,11 +207,11 @@ class MentiFittedAccessories extends CustomPainter {
       );
       final shape = RRect.fromRectAndRadius(
         local,
-        Radius.circular(dark ? r.height * .23 : r.height * .48),
+        Radius.circular(dark ? r.height * .36 : r.height * .48),
       );
       c.drawRRect(
         shape.shift(const Offset(0, 1.1)),
-        stroke(const Color(0x44301919), 2),
+        stroke(const Color(0x22301919), .8),
       );
       c.drawRRect(
         shape,
@@ -205,28 +221,31 @@ class MentiFittedAccessories extends CustomPainter {
             end: Alignment.bottomRight,
             colors: dark
                 ? [
-                    const Color(0xff60546e),
-                    const Color(0xff191a32),
-                    const Color(0xff151020),
+                    const Color(0xe04e4b56),
+                    const Color(0xf0262733),
+                    const Color(0xed151922),
                   ]
                 : [const Color(0x22e4f5ff), const Color(0x09b7d6ff)],
           ).createShader(local),
       );
-      c.drawRRect(shape, stroke(frame, dark ? 2.8 : 1.65));
+      c.drawRRect(
+        shape,
+        stroke(frame, dark ? (rig.compact ? 1.2 : 1.4) : 1.15),
+      );
       c.drawArc(
         local.deflate(1.8),
         3.6,
         1.7,
         false,
-        stroke(const Color(0xaaffedc4), .7),
+        stroke(const Color(0x55ffedc4), .5),
       );
       c.clipRRect(shape);
       line(
         c,
         Offset(local.left + 3, local.top + 3),
         Offset(local.center.dx, local.top + local.height * .32),
-        const Color(0x55ffffff),
-        1.5,
+        const Color(0x33ffffff),
+        .85,
       );
       c.restore();
     }
@@ -251,19 +270,19 @@ class MentiFittedAccessories extends CustomPainter {
         );
       c.drawPath(
         path.shift(const Offset(0, 1.5)),
-        stroke(const Color(0x77321714), 2.8),
+        stroke(const Color(0x44321714), 1.7),
       );
-      c.drawPath(path, stroke(const Color(0xff986022), 2.6));
-      c.drawPath(path, stroke(const Color(0xffffd566), 1.3));
+      c.drawPath(path, stroke(const Color(0xff986022), 1.3));
+      c.drawPath(path, stroke(const Color(0xffffd566), .65));
       final metric = path.computeMetrics().first;
-      for (double d = 0; d < metric.length; d += 3.0) {
+      for (double d = 0; d < metric.length; d += 2.2) {
         final t = metric.getTangentForOffset(d)!;
-        c.drawCircle(t.position, .62, Paint()..color = const Color(0xfffff4b6));
+        c.drawCircle(t.position, .38, Paint()..color = const Color(0xfffff4b6));
       }
       final pendant = Offset(r.center.dx, r.bottom + w * .17);
       c.drawRRect(
         RRect.fromRectAndRadius(
-          Rect.fromCenter(center: pendant, width: w * .16, height: w * .20),
+          Rect.fromCenter(center: pendant, width: w * .10, height: w * .13),
           const Radius.circular(2),
         ),
         Paint()
@@ -271,7 +290,7 @@ class MentiFittedAccessories extends CustomPainter {
             colors: [Color(0xffffed9d), Color(0xffb67a24)],
           ).createShader(r),
       );
-      c.drawCircle(pendant, w * .035, Paint()..color = const Color(0xff683794));
+      c.drawCircle(pendant, w * .022, Paint()..color = const Color(0xff683794));
     } else if (neck == 'scarf') {
       final loop = Path()
         ..moveTo(r.left, r.top)
@@ -284,21 +303,33 @@ class MentiFittedAccessories extends CustomPainter {
           r.bottom,
         )
         ..close();
+      final fall = rig.compact ? .30 : .44;
       final tail = Path()
-        ..moveTo(r.center.dx + 3, r.bottom - 3)
-        ..lineTo(r.right - 4, r.bottom - 5)
-        ..lineTo(r.right + 4, r.bottom + w * .58)
-        ..lineTo(r.center.dx + 2, r.bottom + w * .65)
+        ..moveTo(r.center.dx + w * .06, r.bottom - 2)
+        ..lineTo(r.right - w * .18, r.bottom - 3)
+        ..quadraticBezierTo(
+          r.right - w * .17,
+          r.bottom + w * .20,
+          r.right - w * .08,
+          r.bottom + w * fall,
+        )
+        ..lineTo(r.center.dx + w * .10, r.bottom + w * (fall + .04))
+        ..quadraticBezierTo(
+          r.center.dx + w * .14,
+          r.bottom + w * .20,
+          r.center.dx + w * .06,
+          r.bottom - 2,
+        )
         ..close();
       final paint = Paint()
         ..shader = const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xffbda0df), Color(0xff7942ac), Color(0xff39204f)],
+          colors: [Color(0xffa48dbb), Color(0xff70517d), Color(0xff382d42)],
         ).createShader(rig.neckBounds);
-      c.drawShadow(tail, Colors.black, 2, false);
+      c.drawShadow(tail, const Color(0x66000000), 1.1, false);
       c.drawPath(tail, paint);
-      c.drawShadow(loop, Colors.black, 1.5, false);
+      c.drawShadow(loop, const Color(0x66000000), .8, false);
       c.drawPath(loop, paint);
       c.save();
       c.clipPath(loop);
@@ -307,7 +338,7 @@ class MentiFittedAccessories extends CustomPainter {
           c,
           Offset(x, r.top),
           Offset(x - 2, r.bottom + 4),
-          const Color(0x22f5d9ff),
+          const Color(0x18f5d9ff),
           .4,
         );
       }
@@ -317,16 +348,16 @@ class MentiFittedAccessories extends CustomPainter {
         final p = Path()
           ..moveTo(r.left + 3, y)
           ..quadraticBezierTo(r.center.dx, y + r.height * .36, r.right - 3, y);
-        c.drawPath(p, stroke(const Color(0x77e1c7f2), .65));
+        c.drawPath(p, stroke(const Color(0x55d4c4df), .45));
       }
       for (var i = 0; i < 7; i++) {
-        final x = r.center.dx + 3 + (w * .38) * i / 7;
+        final x = r.center.dx + w * .10 + (w * .32) * i / 7;
         line(
           c,
-          Offset(x, r.bottom + w * .57),
-          Offset(x + 1, r.bottom + w * .67),
-          const Color(0xffd7b77a),
-          .8,
+          Offset(x, r.bottom + w * fall),
+          Offset(x + 1, r.bottom + w * (fall + .06)),
+          const Color(0xffbca98b),
+          .5,
         );
       }
     } else {
@@ -350,10 +381,23 @@ class MentiFittedAccessories extends CustomPainter {
           p,
           Paint()
             ..shader = const LinearGradient(
-              colors: [Color(0xffdab3ed), Color(0xff623286)],
+              colors: [Color(0xffb7a4c7), Color(0xff594263)],
             ).createShader(r),
         );
-        c.drawPath(p, stroke(const Color(0xff3c214c), .8));
+        c.drawPath(p, stroke(const Color(0xff3c2b42), .65));
+        final crease = Path()
+          ..moveTo(r.center.dx + side * w * .07, r.center.dy)
+          ..quadraticBezierTo(
+            r.center.dx + side * w * .22,
+            r.center.dy - r.height * .16,
+            r.center.dx + side * w * .36,
+            r.top + r.height * .22,
+          );
+        c.drawPath(crease, stroke(const Color(0x88644870), .8));
+        c.drawPath(
+          crease.shift(const Offset(0, -.6)),
+          stroke(const Color(0x55e4d7ec), .4),
+        );
       }
       c.drawRRect(
         RRect.fromRectAndRadius(
