@@ -737,8 +737,13 @@ class MentiPremiumComposition extends StatelessWidget {
       var visible = geometry.window(hairTarget);
       if (id('headwear') == 'hood') {
         final inside = Path()
-          ..addRRect(
-            RRect.fromRectAndRadius(hat.deflate(4), const Radius.circular(22)),
+          ..addOval(
+            Rect.fromLTRB(
+              hat.left + 4,
+              geometry.eyes.top - 14,
+              hat.right - 4,
+              hat.bottom + 6,
+            ),
           )
           ..addRect(Rect.fromLTRB(0, hat.bottom - 5, 320, 400));
         final matrix = Matrix4.identity()

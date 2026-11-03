@@ -21,8 +21,9 @@ class MentiWardrobeGeometry {
   String get collarKind {
     if (outfit == 'basic') {
       if ((rig.family == 'boy' || rig.family == 'neutral') &&
-          rig.age == 'young')
+          rig.age == 'young') {
         return 'hooded';
+      }
       return 'open';
     }
     if (['basic-alt', 'sport', 'street-alt'].contains(outfit)) return 'hooded';
@@ -33,8 +34,9 @@ class MentiWardrobeGeometry {
       'legendary-alt',
       'explorer',
       'explorer-alt',
-    ].contains(outfit))
+    ].contains(outfit)) {
       return 'stand';
+    }
     return 'open';
   }
 
