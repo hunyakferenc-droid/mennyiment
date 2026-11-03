@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,10 @@ import 'menti_visual_catalog.dart';
 /// Separate measured lens seats, plus a clothing-aware collar. No global SVG
 /// stretching: each eye retains its own size, height and perspective.
 class MentiAccessoryRig {
+  static const clothAssets = {
+    'bow': 'assets/images/menti_2_2/premium/bow-silk-226.png',
+    'scarf': 'assets/images/menti_2_2/premium/scarf-wool-226.png',
+  };
   MentiAccessoryRig(this.head, this.wardrobe, {this.compact = false});
   final bool compact;
   factory MentiAccessoryRig.forProfile(
@@ -52,44 +57,142 @@ class MentiAccessoryRig {
         );
   }
 
-  Rect get glasses => lens(false).expandToInclude(lens(true)).inflate(9);
+  Rect get glasses => lens(false).expandToInclude(lens(true)).inflate(12);
   Rect get collar {
-    final native = wardrobe.outfit == 'basic';
     final chin = head.mouth.bottom + head.scalp.height * .045;
-    final kind = wardrobe.collarKind;
-    final seat = switch (kind) {
-      'hooded' => 3.0,
-      'stand' => 2.0,
-      _ => 0.0,
-    };
-    final y =
-        (native
-            ? math.max(chin, wardrobe.neck)
-            : math.max(chin, wardrobe.garment.top + 5)) +
-        seat;
+    final opening = wardrobe.collarOpening;
     final width =
-        head.scalp.width *
-        switch (kind) {
-          'shirt' => .28,
-          'knit' => .32,
-          'stand' => .30,
-          _ => head.rig.family == 'girl' ? .29 : .32,
-        } *
-        (compact ? .92 : 1);
-    return Rect.fromLTWH(
-      head.mouth.center.dx - width / 2,
-      y,
-      width,
-      width * .27,
+        math.min(opening.width, head.scalp.width * .32) * (compact ? .92 : 1);
+    return Rect.fromCenter(
+      center: Offset(
+        opening.center.dx,
+        math.max(chin + width * .135, opening.center.dy),
+      ),
+      width: width,
+      height: width * .27,
     );
   }
 
-  Rect get neckBounds => Rect.fromLTWH(
-    collar.left - 3,
-    collar.top,
-    collar.width + 6,
-    collar.height + collar.width * (compact ? .38 : .55),
-  ).inflate(5);
+  Rect neckTarget(String id) {
+    final r = collar;
+    if (id == 'bow') {
+      return Rect.fromCenter(
+        center: r.center,
+        width: r.width * .90,
+        height: r.width * .90 * 737 / 2015,
+      );
+    }
+    if (id == 'scarf') {
+      final width = r.width * (compact ? 1.05 : 1.12);
+      final height = width * 888 / 928;
+      final jaw = head.scalp.bottom;
+      return Rect.fromLTWH(
+        r.center.dx - width / 2,
+        math.max(head.mouth.bottom + 2 - height * .42, jaw - height * .44),
+        width,
+        height,
+      );
+    }
+    return Rect.fromLTWH(r.left, r.top, r.width, r.height + r.width * .55);
+  }
+
+  Rect get neckBounds =>
+      neckTarget('scarf')
+          .expandToInclude(neckTarget('bow'))
+          .expandToInclude(neckTarget('chain'))
+          .inflate(5);
+}
+
+enum MentiGlassesPass { all, temples, front }
+
+/// Uses the original high-resolution PNG, cropping only transparent canvas.
+/// The same cached image is shared by every runtime and Studio card.
+class MentiClothAccessory extends StatelessWidget {
+  const MentiClothAccessory({super.key, required this.id});
+  final String id;
+  static const _frames = {
+    'bow': (Size(2098, 749), Rect.fromLTWH(38, 6, 2015, 737)),
+    'scarf': (Size(1195, 1316), Rect.fromLTWH(124, 241, 928, 888)),
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final (source, crop) = _frames[id]!;
+    Widget material() => MentiMaterialPatch(
+      asset: MentiAccessoryRig.clothAssets[id]!,
+      source: source,
+      crop: crop,
+    );
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Positioned.fill(
+          child: Transform.translate(
+            offset: const Offset(.4, 1.2),
+            child: ImageFiltered(
+              imageFilter: ui.ImageFilter.blur(sigmaX: .55, sigmaY: .55),
+              child: ColorFiltered(
+                colorFilter: const ColorFilter.mode(
+                  Color(0x4420182a),
+                  BlendMode.srcIn,
+                ),
+                child: material(),
+              ),
+            ),
+          ),
+        ),
+        Positioned.fill(child: material()),
+      ],
+    );
+  }
+}
+
+class MentiMaterialPatch extends StatelessWidget {
+  const MentiMaterialPatch({
+    super.key,
+    required this.asset,
+    required this.source,
+    required this.crop,
+  });
+  final String asset;
+  final Size source;
+  final Rect crop;
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      asset,
+      excludeFromSemantics: true,
+      gaplessPlayback: true,
+      filterQuality: FilterQuality.medium,
+      fit: BoxFit.fill,
+      frameBuilder: (context, image, frame, synchronous) => frame == null
+          ? const SizedBox.shrink()
+          : LayoutBuilder(
+              builder: (context, constraints) {
+                final scaleX = constraints.maxWidth / crop.width;
+                final scaleY = constraints.maxHeight / crop.height;
+                return ClipRect(
+                  child: OverflowBox(
+                    alignment: Alignment.topLeft,
+                    minWidth: 0,
+                    minHeight: 0,
+                    maxWidth: double.infinity,
+                    maxHeight: double.infinity,
+                    child: Transform.translate(
+                      offset: Offset(-crop.left * scaleX, -crop.top * scaleY),
+                      child: SizedBox(
+                        width: source.width * scaleX,
+                        height: source.height * scaleY,
+                        child: image,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+    );
+  }
 }
 
 class MentiFittedAccessories extends CustomPainter {
@@ -98,9 +201,11 @@ class MentiFittedAccessories extends CustomPainter {
     this.glasses = 'none',
     this.neck = 'none',
     this.detail = 'none',
+    this.glassesPass = MentiGlassesPass.all,
   });
   final MentiAccessoryRig rig;
   final String glasses, neck, detail;
+  final MentiGlassesPass glassesPass;
   Paint stroke(Color c, double w) => Paint()
     ..color = c
     ..style = PaintingStyle.stroke
@@ -180,11 +285,29 @@ class MentiFittedAccessories extends CustomPainter {
         right = rig.lens(true, style: glasses);
     final dark = glasses == 'sunglasses';
     final frame = dark ? const Color(0xff292132) : const Color(0xff9b6729);
-    // Temples sit behind the front rims; the smaller far lens stays smaller.
-    for (final far in [false, true]) {
-      final anchor = rig.rim(far, true, style: glasses);
-      line(c, anchor, anchor + Offset(far ? 4 : -4, -1.5), frame, 1.1);
+    // Runtime puts these arms behind hair/headwear, with the lenses in front.
+    if (glassesPass != MentiGlassesPass.front) {
+      for (final far in [false, true]) {
+        final anchor = rig.rim(far, true, style: glasses);
+        final direction = far ? 1.0 : -1.0;
+        final length = rig.head.scalp.width * .065;
+        final arm = Path()
+          ..moveTo(anchor.dx, anchor.dy)
+          ..quadraticBezierTo(
+            anchor.dx + direction * length * .60,
+            anchor.dy - 2,
+            anchor.dx + direction * length,
+            anchor.dy - .8,
+          );
+        c.drawPath(arm, stroke(const Color(0x33271923), 1.8));
+        c.drawPath(arm, stroke(frame, dark ? 1.05 : .8));
+        c.drawPath(
+          arm.shift(const Offset(0, -.3)),
+          stroke(const Color(0x66eee2ca), .25),
+        );
+      }
     }
+    if (glassesPass == MentiGlassesPass.temples) return;
     final innerLeft = rig.rim(false, false, style: glasses);
     final innerRight = rig.rim(true, false, style: glasses);
     final bridge = Path()
@@ -211,7 +334,8 @@ class MentiFittedAccessories extends CustomPainter {
       );
       c.drawRRect(
         shape.shift(const Offset(0, 1.1)),
-        stroke(const Color(0x22301919), .8),
+        stroke(const Color(0x44301919), 1.2)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, .8),
       );
       c.drawRRect(
         shape,
@@ -231,6 +355,22 @@ class MentiFittedAccessories extends CustomPainter {
       c.drawRRect(
         shape,
         stroke(frame, dark ? (rig.compact ? 1.2 : 1.4) : 1.15),
+      );
+      // Fine reflected bevel and inner lip give the frame material thickness
+      // without restoring the old heavy outline.
+      c.drawArc(
+        local.deflate(.15),
+        3.25,
+        2.7,
+        false,
+        stroke(dark ? const Color(0x887f7d86) : const Color(0xffe5c98f), .4),
+      );
+      c.drawArc(
+        local.deflate(.7),
+        .2,
+        2.4,
+        false,
+        stroke(const Color(0x55201822), .35),
       );
       c.drawArc(
         local.deflate(1.8),
@@ -275,9 +415,18 @@ class MentiFittedAccessories extends CustomPainter {
       c.drawPath(path, stroke(const Color(0xff986022), 1.3));
       c.drawPath(path, stroke(const Color(0xffffd566), .65));
       final metric = path.computeMetrics().first;
-      for (double d = 0; d < metric.length; d += 2.2) {
+      for (double d = 0; d < metric.length; d += 1.65) {
         final t = metric.getTangentForOffset(d)!;
-        c.drawCircle(t.position, .38, Paint()..color = const Color(0xfffff4b6));
+        c.save();
+        c.translate(t.position.dx, t.position.dy);
+        c.rotate(t.angle);
+        const link = Rect.fromLTWH(-.85, -.48, 1.7, .96);
+        c.drawOval(link, stroke(const Color(0xff704418), .55));
+        c.drawOval(
+          link.shift(const Offset(0, -.15)),
+          stroke(const Color(0xffffe4a1), .3),
+        );
+        c.restore();
       }
       final pendant = Offset(r.center.dx, r.bottom + w * .17);
       c.drawRRect(
@@ -418,6 +567,7 @@ class MentiFittedAccessories extends CustomPainter {
   bool shouldRepaint(covariant MentiFittedAccessories old) =>
       old.rig != rig ||
       old.glasses != glasses ||
+      old.glassesPass != glassesPass ||
       old.neck != neck ||
       old.detail != detail;
 }

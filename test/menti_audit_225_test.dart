@@ -18,7 +18,7 @@ void main() {
     (t) async {
       if (Platform.environment['MENTI_AUDIT'] != '1') return;
       final dir =
-          'docs/images/menti-2.2.5/${Platform.environment['MENTI_STAGE'] ?? 'after'}';
+          "${Platform.environment['MENTI_EVIDENCE_ROOT'] ?? 'docs/images/menti-2.2.5'}/${Platform.environment['MENTI_STAGE'] ?? 'after'}";
       Directory(dir).createSync(recursive: true);
       await t.runAsync(() async {
         final loader = FontLoader('ProofSans')

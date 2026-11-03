@@ -1,0 +1,15 @@
+{
+  "files_compared": 334,
+  "differences": [
+    "flutter_bootstrap.js"
+  ],
+  "all_files_byte_identical": false,
+  "main_dart_js_identical": true,
+  "source_commit": "2a794bfa87bd9f0ad8713f6a0ed350083e43c9e7",
+  "bootstrap_semantically_equal": true,
+  "bootstrap_differences": [
+    "Wasm hash map key order",
+    "serviceWorkerVersion cache key"
+  ],
+  "all_application_and_asset_files_byte_identical": true
+}

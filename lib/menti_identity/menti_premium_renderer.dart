@@ -548,6 +548,7 @@ class MentiPremiumComposition extends StatelessWidget {
   static List<String> get assets => [
     ...MentiReferenceRig.assets,
     ...MentiAtlasComposition.assets,
+    ...MentiAccessoryRig.clothAssets.values,
   ];
   // Legacy atlas indexing remains available for archive integrity regressions.
   static List<String> sprites(MentiIdentityProfile p) =>
@@ -579,6 +580,8 @@ class MentiPremiumComposition extends StatelessWidget {
         if (resolve(p, f).id != 'none' &&
             (f != 'style' || resolve(p, f).id != 'classic'))
           MentiVisualCatalog.root + resolve(p, f).asset,
+      if (MentiAccessoryRig.clothAssets.containsKey(resolve(p, 'neck').id))
+        MentiAccessoryRig.clothAssets[resolve(p, 'neck').id]!,
       if (resolve(p, 'held').id != 'none')
         MentiWardrobeGeometry.heldAsset(resolve(p, 'held').id),
       if (reaction != null)
@@ -687,6 +690,32 @@ class MentiPremiumComposition extends StatelessWidget {
       wardrobe,
       profile.visual,
     );
+    Path scarfWindow() {
+      final target = accessories.neckTarget('scarf');
+      // Hide the rear rim behind the real jaw without painting the face twice.
+      // The reference head mask also contains a neck extension: only its
+      // measured skull portion is an occluder for a worn scarf.
+      final skull = Path.combine(
+        PathOperation.intersect,
+        head,
+        Path()..addOval(geometry.scalp),
+      );
+      final occluder = Path.combine(
+        PathOperation.union,
+        skull,
+        geometry.guard(),
+      );
+      final visible = Path.combine(
+        PathOperation.difference,
+        Path()..addRect(target),
+        occluder,
+      );
+      final matrix = Matrix4.identity()
+        ..scaleByDouble(1 / target.width, 1 / target.height, 1, 1)
+        ..translateByDouble(-target.left, -target.top, 0, 1);
+      return visible.transform(matrix.storage);
+    }
+
     Widget handLayer(bool right, {bool grip = false}) {
       final path = rig.mask(right ? 'rightHand' : 'leftHand');
       final bounds = path.getBounds();
@@ -868,12 +897,32 @@ class MentiPremiumComposition extends StatelessWidget {
                     ..close(),
                 ),
             ],
-            if (id('neck') != 'none')
+            if (MentiAccessoryRig.clothAssets.containsKey(id('neck')))
+              Positioned.fromRect(
+                rect: accessories.neckTarget(id('neck')),
+                child: ClipPath(
+                  clipper: _RegisteredClipper(
+                    id('neck') == 'scarf' ? scarfWindow() : null,
+                  ),
+                  child: MentiClothAccessory(id: id('neck')),
+                ),
+              )
+            else if (id('neck') != 'none')
               Positioned.fill(
                 child: CustomPaint(
                   painter: MentiFittedAccessories(
                     accessories,
                     neck: id('neck'),
+                  ),
+                ),
+              ),
+            if (id('glasses') != 'none')
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: MentiFittedAccessories(
+                    accessories,
+                    glasses: id('glasses'),
+                    glassesPass: MentiGlassesPass.temples,
                   ),
                 ),
               ),
@@ -912,6 +961,7 @@ class MentiPremiumComposition extends StatelessWidget {
                   painter: MentiFittedAccessories(
                     accessories,
                     glasses: id('glasses'),
+                    glassesPass: MentiGlassesPass.front,
                   ),
                 ),
               ),

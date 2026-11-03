@@ -1,0 +1,40 @@
+[
+  {
+    "asset": "assets/images/menti_2_2/premium/bow-silk-226.png",
+    "sha256": "7c3509c3b28c66c078656c0af748ac2d775cb5513dab9492b8168b6ba0dc21ab",
+    "size": [
+      2098,
+      749
+    ],
+    "mode": "RGBA",
+    "runtime_crop_xywh": [
+      38,
+      6,
+      2015,
+      737
+    ],
+    "origin": "Generated in this development session with image_gen on 2026-11-03",
+    "style_reference": "assets/images/menti_2_2/premium/outfits.png @ 3448e5ea52daed86a1ca30c53171354c1b88aade",
+    "original_character_reference": false,
+    "owner_artistic_approval": "pending"
+  },
+  {
+    "asset": "assets/images/menti_2_2/premium/scarf-wool-226.png",
+    "sha256": "1c29bf4fc6459869fad8a4d010cbfbb7e1770230d60173ff722d926f20df576b",
+    "size": [
+      1195,
+      1316
+    ],
+    "mode": "RGBA",
+    "runtime_crop_xywh": [
+      124,
+      241,
+      928,
+      888
+    ],
+    "origin": "Generated in this development session with image_gen on 2026-11-03",
+    "style_reference": "assets/images/menti_2_2/premium/outfits.png @ 3448e5ea52daed86a1ca30c53171354c1b88aade",
+    "original_character_reference": false,
+    "owner_artistic_approval": "pending"
+  }
+]
