@@ -626,14 +626,23 @@ class MentiPremiumComposition extends StatelessWidget {
             wink: expression && wink,
           ),
         );
-    Widget sprite(String s, Rect target, {Color? color, Path? mask}) =>
-        Positioned.fromRect(
-          rect: target,
-          child: ClipPath(
-            clipper: _RegisteredClipper(mask),
-            child: MentiPremiumSprite(sprite: s, color: color),
-          ),
-        );
+    Widget sprite(
+      String s,
+      Rect target, {
+      Color? color,
+      Path? mask,
+      Rect? sourcePart,
+    }) => Positioned.fromRect(
+      rect: target,
+      child: ClipPath(
+        clipper: _RegisteredClipper(mask),
+        child: MentiPremiumSprite(
+          sprite: s,
+          color: color,
+          sourcePart: sourcePart,
+        ),
+      ),
+    );
     Widget vector(String field, {Rect? target, List<double>? sourceCrop}) {
       final path = MentiVisualCatalog.root + resolve(profile, field).asset;
       if (target == null) {
@@ -839,6 +848,25 @@ class MentiPremiumComposition extends StatelessWidget {
               for (final right in [false, true]) handLayer(right),
               plate(part: head, expression: true),
               sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
+              if (id('outfit') == 'business' && id('neck') == 'bow')
+                sprite(
+                  'outfits/business-alt',
+                  Rect.fromLTWH(
+                    outfitTarget.left + outfitTarget.width * .42,
+                    outfitTarget.top + outfitTarget.height * .07,
+                    outfitTarget.width * .16,
+                    outfitTarget.height * .26,
+                  ),
+                  sourcePart: const Rect.fromLTWH(.42, .07, .16, .26),
+                  color: accent,
+                  mask: Path()
+                    ..moveTo(.15, 0)
+                    ..lineTo(.85, 0)
+                    ..lineTo(1, .45)
+                    ..lineTo(.5, 1)
+                    ..lineTo(0, .45)
+                    ..close(),
+                ),
             ],
             if (id('neck') != 'none')
               Positioned.fill(

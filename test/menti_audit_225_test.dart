@@ -108,7 +108,7 @@ void main() {
           'base': base.toJson(),
           'options': options.map((o) => '${o.field}:${o.id}').toList(),
         };
-        if (!focusOnly)
+        if (!focusOnly) {
           await capture('${r.family}-${r.age}-options', [
             for (final o in options)
               SizedBox(
@@ -121,7 +121,8 @@ void main() {
                 ),
               ),
           ], 10);
-        if (!focusOnly)
+        }
+        if (!focusOnly) {
           await capture('${r.family}-${r.age}-outfits', [
             for (final o in MentiVisualCatalog.forField('outfit'))
               SizedBox(
@@ -137,6 +138,7 @@ void main() {
                 ),
               ),
           ], 5);
+        }
         for (final item in [
           ('basic', 'bow', 'none', 'none'),
           ('business', 'bow', 'round-glasses', 'none'),
