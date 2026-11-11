@@ -197,7 +197,7 @@ class MentiWardrobeGeometry {
 
   Path get neckBridge {
     final r = innerNeck;
-    final top = math.min(head.scalp.bottom - 3, r.top - 2);
+    final top = math.min(head.mouth.bottom + 1, r.top - 2);
     // The jaw conceals the upper seam. The lower curve stops at the front
     // collar rather than covering a rectangular patch of lapel or shirt.
     return Path()

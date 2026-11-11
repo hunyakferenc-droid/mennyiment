@@ -110,8 +110,9 @@ void main() {
                   pixels[i + 1] > 40 &&
                   pixels[i + 2] < 105 &&
                   pixels[i] > pixels[i + 1] &&
-                  pixels[i + 3] > 240)
+                  pixels[i + 3] > 240) {
                 skin++;
+              }
             }
           }
           expect(count, greaterThan(0), reason: label);

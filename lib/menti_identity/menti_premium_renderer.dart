@@ -879,15 +879,7 @@ class MentiPremiumComposition extends StatelessWidget {
               for (final right in [false, true]) handLayer(right),
               sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
               MentiNeckBridge(wardrobe: wardrobe),
-              plate(
-                part: Path.combine(
-                  PathOperation.intersect,
-                  head,
-                  Path()
-                    ..addRect(Rect.fromLTRB(0, 0, 320, geometry.scalp.bottom)),
-                ),
-                expression: true,
-              ),
+              plate(part: geometry.skullSkin, expression: true),
               if (id('outfit') == 'business' && id('neck') == 'bow')
                 sprite(
                   'outfits/business-alt',
