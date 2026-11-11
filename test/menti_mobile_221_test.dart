@@ -100,6 +100,15 @@ void main() {
               find.byKey(const ValueKey('studio-large-preview')),
             );
             expect(enlarged.profile.toJson(), c.draft.profile.toJson());
+            final live = tester.widget<MentiAvatarRenderer>(
+              find.byKey(
+                const ValueKey('studio-live-preview'),
+                skipOffstage: false,
+              ),
+            );
+            expect(live.profile.toJson(), enlarged.profile.toJson());
+            expect(live.animate, isFalse);
+            expect(enlarged.animate, isFalse);
             final close = appStrings(tester.element(find.byType(Dialog)))
                 .avatarClosePreview;
             await tester.tap(find.byTooltip(close));
@@ -123,8 +132,12 @@ void main() {
                   .first,
               maxScrolls: 40,
             );
-            final switchControl=find.descendant(of:hairToggle,matching:find.byType(Switch));
-            await tester.ensureVisible(switchControl);await tester.pumpAndSettle();
+            final switchControl = find.descendant(
+              of: hairToggle,
+              matching: find.byType(Switch),
+            );
+            await tester.ensureVisible(switchControl);
+            await tester.pumpAndSettle();
             await tester.tap(switchControl);
             await tester.pumpAndSettle();
             expect(c.draft.profile.visual.hairVisible, isFalse);

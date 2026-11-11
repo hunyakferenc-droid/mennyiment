@@ -434,7 +434,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                     child: MentiAvatarRenderer(
                       key: const ValueKey('studio-live-preview'),
                       profile: profile,
-                      animate: true,
+                      animate: false,
                       size: avatarSize,
                     ),
                   ),

@@ -159,6 +159,62 @@ class MentiWardrobeGeometry {
     );
   }
 
+  static const openings = <String, Rect>{
+    'basic-alt': Rect.fromLTRB(354, 27, 399, 50),
+    'party': Rect.fromLTRB(607, 26, 649, 40),
+    'party-alt': Rect.fromLTRB(861, 26, 900, 40),
+    'sport': Rect.fromLTRB(1104, 27, 1147, 49),
+    'sport-alt': Rect.fromLTRB(112, 329, 161, 350),
+    'business': Rect.fromLTRB(359, 329, 402, 347),
+    'business-alt': Rect.fromLTRB(604, 332, 647, 355),
+    'festival': Rect.fromLTRB(860, 333, 904, 350),
+    'festival-alt': Rect.fromLTRB(1108, 334, 1153, 355),
+    'legendary': Rect.fromLTRB(120, 633, 163, 647),
+    'legendary-alt': Rect.fromLTRB(356, 635, 398, 650),
+    'street': Rect.fromLTRB(603, 635, 646, 656),
+    'street-alt': Rect.fromLTRB(854, 642, 899, 665),
+    'cozy': Rect.fromLTRB(1104, 637, 1145, 648),
+    'cozy-alt': Rect.fromLTRB(111, 943, 156, 960),
+    'explorer': Rect.fromLTRB(353, 939, 395, 960),
+    'explorer-alt': Rect.fromLTRB(605, 937, 647, 957),
+    'creative': Rect.fromLTRB(856, 938, 899, 955),
+    'creative-alt': Rect.fromLTRB(1107, 937, 1151, 955),
+  };
+
+  /// Front edge of each actual atlas opening, registered with the garment.
+  Rect get innerNeck {
+    if (outfit == 'basic') return collarOpening;
+    final src = MentiPremiumAtlas.rects['outfits/$outfit']!;
+    final opening = openings[outfit]!;
+    final g = garment, scale = g.width / src.width;
+    return Rect.fromLTWH(
+      g.left + (opening.left - src.left) * scale,
+      g.top + (opening.top - src.top) * scale,
+      opening.width * scale,
+      opening.height * scale,
+    );
+  }
+
+  Path get neckBridge {
+    final r = innerNeck;
+    final top = math.min(head.scalp.bottom - 3, r.top - 2);
+    // The jaw conceals the upper seam. The lower curve stops at the front
+    // collar rather than covering a rectangular patch of lapel or shirt.
+    return Path()
+      ..moveTo(r.left + r.width * .24, top)
+      ..lineTo(r.left, r.top)
+      ..cubicTo(
+        r.left + r.width * .05,
+        r.bottom,
+        r.right - r.width * .05,
+        r.bottom,
+        r.right,
+        r.top,
+      )
+      ..lineTo(r.right - r.width * .24, top)
+      ..close();
+  }
+
   Rect get shoulders => Rect.fromLTWH(
     garment.left + garment.width * .12,
     garment.top + garment.height * .06,

@@ -1,3 +1,5 @@
+import 'menti_neck_bridge.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -875,8 +877,17 @@ class MentiPremiumComposition extends StatelessWidget {
                 plate(part: rig.mask('garments'), tint: accent),
             ] else ...[
               for (final right in [false, true]) handLayer(right),
-              plate(part: head, expression: true),
               sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
+              MentiNeckBridge(wardrobe: wardrobe),
+              plate(
+                part: Path.combine(
+                  PathOperation.intersect,
+                  head,
+                  Path()
+                    ..addRect(Rect.fromLTRB(0, 0, 320, geometry.scalp.bottom)),
+                ),
+                expression: true,
+              ),
               if (id('outfit') == 'business' && id('neck') == 'bow')
                 sprite(
                   'outfits/business-alt',
