@@ -878,6 +878,27 @@ class MentiPremiumComposition extends StatelessWidget {
             ] else ...[
               for (final right in [false, true]) handLayer(right),
               sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
+              // The atlas paints its empty cuff interiors opaque black. Reveal
+              // the existing wrist inside that aperture, above the empty inner
+              // sleeve and below the retained front rim; do not redraw a hand.
+              for (final right in [false, true])
+                Positioned.fill(
+                  child: ClipPath(
+                    clipper: _RegisteredClipper(
+                      Path()..addOval(
+                        Rect.fromCenter(
+                          center: Offset(
+                            wardrobe.cuff(right).dx / 320,
+                            wardrobe.cuff(right).dy / 400,
+                          ),
+                          width: outfitTarget.width * .085 / 320,
+                          height: outfitTarget.height * .035 / 400,
+                        ),
+                      ),
+                    ),
+                    child: Stack(children: [handLayer(right)]),
+                  ),
+                ),
               MentiNeckBridge(wardrobe: wardrobe),
               plate(part: geometry.skullSkin, expression: true),
               if (id('outfit') == 'business' && id('neck') == 'bow')

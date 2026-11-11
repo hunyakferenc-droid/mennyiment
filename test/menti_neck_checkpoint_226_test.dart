@@ -96,7 +96,31 @@ void main() {
             }
           }
           if (o.id == 'basic') continue;
-          final opening = MentiWardrobeGeometry(h, o.id).innerNeck;
+          final wardrobe = MentiWardrobeGeometry(h, o.id);
+          for (final right in [false, true]) {
+            final wrist = wardrobe.cuff(right);
+            var wristSkin = 0;
+            for (var y = wrist.dy.floor() - 1; y <= wrist.dy.floor() + 1; y++) {
+              for (
+                var x = wrist.dx.floor() - 1;
+                x <= wrist.dx.floor() + 1;
+                x++
+              ) {
+                final i = (y * 320 + x) * 4;
+                if (pixels[i] > 145 &&
+                    pixels[i + 1] > 40 &&
+                    pixels[i + 2] < 105) {
+                  wristSkin++;
+                }
+              }
+            }
+            expect(
+              wristSkin,
+              greaterThan(0),
+              reason: '$label/$right wrist is hidden by the empty cuff',
+            );
+          }
+          final opening = wardrobe.innerNeck;
           var skin = 0, count = 0;
           for (var y = opening.top.ceil(); y < opening.center.dy.ceil(); y++) {
             for (
