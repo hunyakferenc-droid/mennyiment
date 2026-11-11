@@ -119,6 +119,47 @@ void main() {
               greaterThan(0),
               reason: '$label/$right wrist is hidden by the empty cuff',
             );
+            final hand = wardrobe.hand(right).inflate(1);
+            bool skinAt(int x, int y) {
+              if (!hand.contains(Offset(x + .5, y + .5))) return false;
+              final i = (y * 320 + x) * 4;
+              return pixels[i] > 145 &&
+                  pixels[i + 1] > 40 &&
+                  pixels[i + 2] < 105;
+            }
+
+            final queue = <(int, int)>[
+              for (var y = wrist.dy.floor() - 1; y <= wrist.dy.floor() + 1; y++)
+                for (
+                  var x = wrist.dx.floor() - 1;
+                  x <= wrist.dx.floor() + 1;
+                  x++
+                )
+                  if (skinAt(x, y)) (x, y),
+            ];
+            final visited = <int>{};
+            var connected = false;
+            for (var cursor = 0; cursor < queue.length; cursor++) {
+              final (x, y) = queue[cursor];
+              if (!visited.add(y * 320 + x)) continue;
+              if (y > wardrobe.hand(right).center.dy) {
+                connected = true;
+                break;
+              }
+              for (var dy = -1; dy <= 1; dy++) {
+                for (var dx = -1; dx <= 1; dx++) {
+                  if (skinAt(x + dx, y + dy) &&
+                      !visited.contains((y + dy) * 320 + x + dx)) {
+                    queue.add((x + dx, y + dy));
+                  }
+                }
+              }
+            }
+            expect(
+              connected,
+              isTrue,
+              reason: '$label/$right wrist is severed by the cuff rim',
+            );
           }
           final opening = wardrobe.innerNeck;
           var skin = 0, count = 0;

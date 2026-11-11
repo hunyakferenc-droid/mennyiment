@@ -880,21 +880,35 @@ class MentiPremiumComposition extends StatelessWidget {
               sprite('outfits/${id('outfit')}', outfitTarget, color: accent),
               // The atlas paints its empty cuff interiors opaque black. Reveal
               // the existing wrist inside that aperture, above the empty inner
-              // sleeve and below the retained front rim; do not redraw a hand.
+              // sleeve. Continue through the front opening so a black atlas rim
+              // cannot sever the wrist; the original skin contour is retained.
               for (final right in [false, true])
                 Positioned.fill(
                   child: ClipPath(
                     clipper: _RegisteredClipper(
-                      Path()..addOval(
-                        Rect.fromCenter(
-                          center: Offset(
-                            wardrobe.cuff(right).dx / 320,
-                            wardrobe.cuff(right).dy / 400,
+                      Path()
+                        ..addOval(
+                          Rect.fromCenter(
+                            center: Offset(
+                              wardrobe.cuff(right).dx / 320,
+                              wardrobe.cuff(right).dy / 400,
+                            ),
+                            width: outfitTarget.width * .085 / 320,
+                            height: outfitTarget.height * .035 / 400,
                           ),
-                          width: outfitTarget.width * .085 / 320,
-                          height: outfitTarget.height * .035 / 400,
+                        )
+                        ..addRect(
+                          Rect.fromLTRB(
+                            (wardrobe.cuff(right).dx -
+                                    outfitTarget.width * .0425) /
+                                320,
+                            wardrobe.cuff(right).dy / 400,
+                            (wardrobe.cuff(right).dx +
+                                    outfitTarget.width * .0425) /
+                                320,
+                            wardrobe.hand(right).bottom / 400,
+                          ),
                         ),
-                      ),
                     ),
                     child: Stack(children: [handLayer(right)]),
                   ),
