@@ -1,0 +1,830 @@
+{
+  "boy/young/clear-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.00853634615385,
+      106.54390243902438,
+      100.0,
+      91.66666669999998
+    ]
+  },
+  "boy/young/sun-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.00853634615385,
+      106.54390243902438,
+      100.0,
+      91.66666669999998
+    ]
+  },
+  "boy/young/silk-bow": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.74878038461537,
+      176.2609756097561,
+      90.0,
+      82.5
+    ]
+  },
+  "boy/young/wool-scarf": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "scarf",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.74878038461537,
+      176.2609756097561,
+      90.0,
+      82.5
+    ]
+  },
+  "boy/adult/clear-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      120.79268269230766,
+      84.52682926829269,
+      100.0,
+      91.66666669999998
+    ]
+  },
+  "boy/adult/sun-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      120.79268269230766,
+      84.52682926829269,
+      100.0,
+      91.66666669999998
+    ]
+  },
+  "boy/adult/silk-bow": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.96463403846153,
+      155.10731707317075,
+      90.0,
+      82.5
+    ]
+  },
+  "boy/adult/wool-scarf": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "scarf",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.96463403846153,
+      155.10731707317075,
+      90.0,
+      82.5
+    ]
+  },
+  "boy/veteran/clear-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      122.30365826923077,
+      88.84390243902439,
+      100.0,
+      91.66666669999998
+    ]
+  },
+  "boy/veteran/sun-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      122.30365826923077,
+      88.84390243902439,
+      100.0,
+      91.66666669999998
+    ]
+  },
+  "boy/veteran/silk-bow": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      120.82804865384614,
+      161.5829268292683,
+      90.0,
+      82.5
+    ]
+  },
+  "boy/veteran/wool-scarf": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "scarf",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      120.82804865384614,
+      161.5829268292683,
+      90.0,
+      82.5
+    ]
+  },
+  "girl/young/clear-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      124.03048749999999,
+      89.05975609756098,
+      100.0,
+      91.66666670000001
+    ]
+  },
+  "girl/young/sun-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      124.03048749999999,
+      89.05975609756098,
+      100.0,
+      91.66666670000001
+    ]
+  },
+  "girl/young/silk-bow": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      122.33902423076921,
+      154.24390243902437,
+      90.0,
+      82.5
+    ]
+  },
+  "girl/young/wool-scarf": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "scarf",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      122.33902423076921,
+      154.24390243902437,
+      90.0,
+      82.5
+    ]
+  },
+  "girl/adult/clear-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      120.7926826923077,
+      79.13048780487804,
+      100.0,
+      91.66666670000001
+    ]
+  },
+  "girl/adult/sun-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      120.7926826923077,
+      79.13048780487804,
+      100.0,
+      91.66666670000001
+    ]
+  },
+  "girl/adult/silk-bow": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.74878038461537,
+      145.1780487804878,
+      90.0,
+      82.5
+    ]
+  },
+  "girl/adult/wool-scarf": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "scarf",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.74878038461537,
+      145.1780487804878,
+      90.0,
+      82.5
+    ]
+  },
+  "girl/veteran/clear-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      125.9731703846154,
+      83.23170731707317,
+      100.0,
+      91.6666667
+    ]
+  },
+  "girl/veteran/sun-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      125.9731703846154,
+      83.23170731707317,
+      100.0,
+      91.6666667
+    ]
+  },
+  "girl/veteran/silk-bow": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      125.14512173076923,
+      150.35853658536587,
+      90.0,
+      82.5
+    ]
+  },
+  "girl/veteran/wool-scarf": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "scarf",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      125.14512173076923,
+      150.35853658536587,
+      90.0,
+      82.5
+    ]
+  },
+  "neutral/young/clear-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      114.96463403846155,
+      91.21829268292683,
+      100.0,
+      91.66666669999998
+    ]
+  },
+  "neutral/young/sun-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      114.96463403846155,
+      91.21829268292683,
+      100.0,
+      91.66666669999998
+    ]
+  },
+  "neutral/young/silk-bow": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.64756096153846,
+      150.35853658536587,
+      90.0,
+      82.5
+    ]
+  },
+  "neutral/young/wool-scarf": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "scarf",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.64756096153846,
+      150.35853658536587,
+      90.0,
+      82.5
+    ]
+  },
+  "neutral/adult/clear-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.65609730769228,
+      78.4829268292683,
+      100.0,
+      91.6666667
+    ]
+  },
+  "neutral/adult/sun-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.65609730769228,
+      78.4829268292683,
+      100.0,
+      91.6666667
+    ]
+  },
+  "neutral/adult/silk-bow": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      123.4182925,
+      138.70243902439023,
+      90.0,
+      82.5
+    ]
+  },
+  "neutral/adult/wool-scarf": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "scarf",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      123.4182925,
+      138.70243902439023,
+      90.0,
+      82.5
+    ]
+  },
+  "neutral/veteran/clear-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      122.95121923076923,
+      80.64146341463415,
+      100.0,
+      91.6666667
+    ]
+  },
+  "neutral/veteran/sun-frame": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      122.95121923076923,
+      80.64146341463415,
+      100.0,
+      91.6666667
+    ]
+  },
+  "neutral/veteran/silk-bow": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      125.57682903846154,
+      142.5878048780488,
+      90.0,
+      82.5
+    ]
+  },
+  "neutral/veteran/wool-scarf": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "scarf",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      125.57682903846154,
+      142.5878048780488,
+      90.0,
+      82.5
+    ]
+  }
+}

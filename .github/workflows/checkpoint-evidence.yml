@@ -1,0 +1,40 @@
+name: Downloadable visual checkpoint
+
+on:
+  push:
+    branches: [feature/mennyiment-2-2-6-naturalization]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: visual-checkpoint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout checkpoint source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Include Hungarian report for offline viewing
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          source = Path('docs/2.2.6-checkpoint-29-hu.md').read_text()
+          source = source.replace('(images/menti-2.2.6-checkpoint/', '(')
+          Path('docs/images/menti-2.2.6-checkpoint/JELENTES.md').write_text(source)
+          PY
+          git rev-parse HEAD > docs/images/menti-2.2.6-checkpoint/source-checkout.txt
+      - name: Upload comparison viewer and unretouched Flutter images
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.2.6-29-visual-checkpoint-${{ github.sha }}
+          path: docs/images/menti-2.2.6-checkpoint/
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 1

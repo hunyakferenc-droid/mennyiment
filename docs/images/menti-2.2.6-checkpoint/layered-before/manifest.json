@@ -1,0 +1,4322 @@
+{
+  "boy/young/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "basic-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-curls",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "party",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-braid",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-bob",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "sport",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crest",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "sport-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "business-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-braid",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-bob",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "legendary",
+        "glasses": "round-glasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crest",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "legendary-alt",
+        "glasses": "sunglasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "street-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-curls",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "cozy",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-braid",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crest",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "explorer-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/young/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "creative-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "basic-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-curls",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "party",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-braid",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-bob",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "sport",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-crest",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "sport-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "business-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-braid",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-bob",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "legendary",
+        "glasses": "round-glasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-crest",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "legendary-alt",
+        "glasses": "sunglasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "street-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-curls",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "cozy",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-braid",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-crest",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "explorer-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/adult/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "creative-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "basic-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-curls",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "party",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-braid",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-bob",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "sport",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crest",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "sport-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "business-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-braid",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-bob",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "legendary",
+        "glasses": "round-glasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crest",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "legendary-alt",
+        "glasses": "sunglasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "street-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-curls",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "cozy",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-braid",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crest",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "explorer-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "boy/veteran/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "creative-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "basic-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-curls",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "party",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-braid",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "sport",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-crest",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "sport-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-crop",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "business-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-braid",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "legendary",
+        "glasses": "round-glasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-crest",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "legendary-alt",
+        "glasses": "sunglasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-crop",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "street-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-curls",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "cozy",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-braid",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-crest",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "explorer-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-crop",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/young/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "creative-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "basic-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-curls",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "party",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-braid",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "sport",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-crest",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "sport-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-crop",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "business-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-braid",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "legendary",
+        "glasses": "round-glasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-crest",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "legendary-alt",
+        "glasses": "sunglasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-crop",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "street-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-curls",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "cozy",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-braid",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-crest",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "explorer-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-crop",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/adult/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "creative-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "basic-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-curls",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "party",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-braid",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "sport",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-crest",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "sport-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-crop",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "business-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-braid",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "legendary",
+        "glasses": "round-glasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-crest",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "legendary-alt",
+        "glasses": "sunglasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-crop",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "street-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-curls",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "cozy",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-braid",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-crest",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "explorer-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-crop",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "girl/veteran/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "creative-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-waves",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "basic-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "party",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-braid",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-bob",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "sport",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "sport-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-waves",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "business-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-braid",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-bob",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "legendary",
+        "glasses": "round-glasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "legendary-alt",
+        "glasses": "sunglasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-waves",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "street-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "cozy",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-braid",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "explorer-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/young/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-waves",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "creative-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-waves",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "basic-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "party",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-braid",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-bob",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "sport",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "sport-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-waves",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "business-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-braid",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-bob",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "legendary",
+        "glasses": "round-glasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "legendary-alt",
+        "glasses": "sunglasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-waves",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "street-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "cozy",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-braid",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "explorer-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/adult/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-waves",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "creative-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-waves",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "basic-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "party",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-braid",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-bob",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "sport",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "sport-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-waves",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "business-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "sunglasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-braid",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-bob",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "legendary",
+        "glasses": "round-glasses",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "legendary-alt",
+        "glasses": "sunglasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "headphones",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-waves",
+        "hairVisible": true,
+        "headwear": "sport-cap",
+        "outfit": "street-alt",
+        "glasses": "round-glasses",
+        "neck": "chain",
+        "held": "flower",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "beret",
+        "outfit": "cozy",
+        "glasses": "sunglasses",
+        "neck": "bow",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-braid",
+        "hairVisible": true,
+        "headwear": "cowboy",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "scarf",
+        "held": "spark-wand",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "round-glasses",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "crown-cap",
+        "outfit": "explorer-alt",
+        "glasses": "sunglasses",
+        "neck": "chain",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "beanie",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "bow",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  },
+  "neutral/veteran/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-waves",
+        "hairVisible": true,
+        "headwear": "hood",
+        "outfit": "creative-alt",
+        "glasses": "round-glasses",
+        "neck": "scarf",
+        "held": "notebook",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      0.0,
+      0.0,
+      320.0,
+      400.0
+    ]
+  }
+}

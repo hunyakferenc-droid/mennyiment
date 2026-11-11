@@ -1,0 +1,4322 @@
+{
+  "boy/young/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/young/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "young",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      170.2609756097561,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/adult/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "adult",
+        "hair": "boy-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.96463403846153,
+      149.10731707317075,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "boy/veteran/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "boy/veteran/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "boy",
+        "age": "veteran",
+        "hair": "boy-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      116.82804865384614,
+      155.5829268292683,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/young/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "young",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      118.33902423076921,
+      148.24390243902437,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "girl/adult/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/adult/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "adult",
+        "hair": "girl-waves",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      115.74878038461537,
+      139.1780487804878,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "girl/veteran/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "girl",
+        "age": "veteran",
+        "hair": "girl-bob",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.14512173076923,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/young/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "young",
+        "hair": "neutral-curls",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      111.64756096153846,
+      144.35853658536587,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/adult/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "adult",
+        "hair": "neutral-crest",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      119.4182925,
+      132.70243902439023,
+      98.0,
+      89.83333329999999
+    ]
+  },
+  "neutral/veteran/basic": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/basic-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "basic-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/party": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/party-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "party-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/sport": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/sport-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "sport-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/business": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/business-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "business-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/festival": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/festival-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "festival-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/legendary": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/legendary-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "legendary-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/street": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/street-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "street-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/cozy": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/cozy-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "cozy-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/explorer": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/explorer-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "explorer-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/creative": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  },
+  "neutral/veteran/creative-alt": {
+    "profile": {
+      "name": "Menti",
+      "visual": {
+        "family": "neutral",
+        "age": "veteran",
+        "hair": "neutral-crop",
+        "hairVisible": true,
+        "headwear": "none",
+        "outfit": "creative-alt",
+        "glasses": "none",
+        "neck": "none",
+        "held": "none",
+        "aura": "none"
+      },
+      "reaction": {}
+    },
+    "camera": [
+      121.57682903846154,
+      136.5878048780488,
+      98.0,
+      89.83333330000002
+    ]
+  }
+}

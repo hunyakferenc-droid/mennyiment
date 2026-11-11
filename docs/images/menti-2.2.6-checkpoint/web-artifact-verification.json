@@ -1,0 +1,20 @@
+{
+  "artifactId": 13880413686,
+  "runId": 43075349502,
+  "sourceCommit": "a656797a1d13f72d69bd4171be276703f5c5fac5",
+  "sha256": "cdb22785f42ed885425d21bc0eb9f56640a8cba785405ad708619dafba3e4cd3",
+  "bytes": 78798552,
+  "files": 334,
+  "crcValid": true,
+  "identicalFilesFromChromeBuild": 333,
+  "differentFiles": [
+    "flutter_bootstrap.js"
+  ],
+  "normalizedBootstrapEquivalent": true,
+  "bootstrapDifferences": [
+    "JSON map order",
+    "unused empty wasm dry-run placeholder",
+    "service worker cache version"
+  ],
+  "expiresAt": "2026-11-25T18:16:49Z"
+}
