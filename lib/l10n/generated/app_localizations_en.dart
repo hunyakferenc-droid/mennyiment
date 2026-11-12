@@ -590,6 +590,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get restoreQuestion => 'Restore the reviewed backup?';
 
   @override
+  String get restoreProfileRecovery =>
+      'The current Menti profile is unreadable or from an unsupported version. It stays untouched until you confirm replacement with the imported profile. Export the current data first if you need to keep it; its unlocks cannot be safely combined.';
+
+  @override
   String get restoreWarning =>
       'The listed data will be written to this device. Existing values for these keys will be replaced. Do you want to continue?';
 

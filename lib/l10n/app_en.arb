@@ -298,6 +298,7 @@
   "restoreCounts": "{added} new, {replaced} replaced, {unchanged} unchanged keys",
   "restoreConfirm": "Restore these data",
   "restoreQuestion": "Restore the reviewed backup?",
+  "restoreProfileRecovery": "The current Menti profile is unreadable or from an unsupported version. It stays untouched until you confirm replacement with the imported profile. Export the current data first if you need to keep it; its unlocks cannot be safely combined.",
   "restoreWarning": "The listed data will be written to this device. Existing values for these keys will be replaced. Do you want to continue?",
   "restoreCancel": "Cancel",
   "restoreInvalid": "The backup is invalid, unsupported, too large or unreadable. No user data was written.",

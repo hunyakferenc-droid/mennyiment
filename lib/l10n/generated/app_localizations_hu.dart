@@ -590,6 +590,10 @@ class AppLocalizationsHu extends AppLocalizations {
   String get restoreQuestion => 'Visszaállítod az átnézett mentést?';
 
   @override
+  String get restoreProfileRecovery =>
+      'A jelenlegi Menti-profil sérült vagy nem támogatott verzióból származik. Változatlan marad, amíg meg nem erősíted az importált profilra cserélését. Ha meg szeretnéd őrizni, előbb exportáld a jelenlegi adatokat; a feloldásai nem egyesíthetők biztonságosan.';
+
+  @override
   String get restoreWarning =>
       'A felsorolt adatokat erre az eszközre írjuk. Az érintett kulcsok meglévő értékeit felülírjuk. Folytatod?';
 

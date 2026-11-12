@@ -1124,6 +1124,12 @@ abstract class AppLocalizations {
   /// **'Visszaállítod az átnézett mentést?'**
   String get restoreQuestion;
 
+  /// No description provided for @restoreProfileRecovery.
+  ///
+  /// In hu, this message translates to:
+  /// **'A jelenlegi Menti-profil sérült vagy nem támogatott verzióból származik. Változatlan marad, amíg meg nem erősíted az importált profilra cserélését. Ha meg szeretnéd őrizni, előbb exportáld a jelenlegi adatokat; a feloldásai nem egyesíthetők biztonságosan.'**
+  String get restoreProfileRecovery;
+
   /// No description provided for @restoreWarning.
   ///
   /// In hu, this message translates to:

@@ -83,19 +83,31 @@ void main() {
       },
     );
     test(
-      'unreadable local identity $raw is not overwritten by an incoming profile',
+      'unreadable local identity $raw changes only after an explicit recovery confirmation',
       () async {
         final valid = MentiIdentityDocument(profile: MentiIdentityProfile())
             .encode();
         final text = await backup({MentiIdentityStore.key: valid});
         SharedPreferences.setMockInitialValues({MentiIdentityStore.key: raw});
+        final restorer = BackupRestorer();
+        final plan = await restorer.prepare(text);
+        expect(plan.profileRecovery, true);
+        expect(
+          (await SharedPreferences.getInstance()).get(MentiIdentityStore.key),
+          raw,
+        );
         await expectLater(
-          BackupRestorer().prepare(text),
-          throwsFormatException,
+          restorer.restore(plan, confirmed: false),
+          throwsStateError,
         );
         expect(
           (await SharedPreferences.getInstance()).get(MentiIdentityStore.key),
           raw,
+        );
+        await restorer.restore(plan, confirmed: true);
+        expect(
+          (await SharedPreferences.getInstance()).get(MentiIdentityStore.key),
+          valid,
         );
       },
     );

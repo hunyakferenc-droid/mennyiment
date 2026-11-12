@@ -11,6 +11,7 @@ import 'package:mennyiment/drink_catalog.dart';
 import 'package:mennyiment/l10n/generated/app_localizations.dart';
 import 'package:mennyiment/main.dart';
 import 'package:mennyiment/menti_identity/menti_identity_store.dart';
+import 'package:mennyiment/menti_identity/menti_identity.dart';
 import 'package:mennyiment/statistics.dart';
 
 import 'support/adult_access_fixture.dart';
@@ -197,6 +198,44 @@ void main() {
         );
       }
     }
+    testWidgets(
+      '$locale unreadable profile recovery is previewed and confirmed at 320px/2x',
+      (tester) async {
+        viewport(tester, 320, 2);
+        final valid = MentiIdentityDocument(
+          profile: MentiIdentityProfile(name: 'Recovered'),
+        ).encode();
+        SharedPreferences.setMockInitialValues({MentiIdentityStore.key: valid});
+        final text = (await BackupExporter().capture()).json;
+        SharedPreferences.setMockInitialValues({
+          MentiIdentityStore.key: '{broken',
+        });
+        await tester.pumpWidget(
+          localized(locale, 2, DataBackupPage(pick: () async => text)),
+        );
+        await tester.pumpAndSettle();
+        final s = appStrings(tester.element(find.byType(DataBackupPage)));
+        await tap(tester, find.byKey(const ValueKey('restore-pick')));
+        await tap(tester, find.byKey(const ValueKey('restore-apply')));
+        expect(
+          find.descendant(
+            of: find.byType(AlertDialog),
+            matching: find.textContaining(s.restoreProfileRecovery),
+          ),
+          findsOneWidget,
+        );
+        final p = await SharedPreferences.getInstance();
+        expect(p.get(MentiIdentityStore.key), '{broken');
+        await tap(tester, find.byKey(const ValueKey('restore-cancel')));
+        expect(p.get(MentiIdentityStore.key), '{broken');
+        await tap(tester, find.byKey(const ValueKey('restore-apply')));
+        await tap(tester, find.byKey(const ValueKey('restore-confirm')));
+        expect(p.get(MentiIdentityStore.key), valid);
+        expect(tester.takeException(), isNull);
+        await tester.pumpWidget(const SizedBox.shrink());
+        await tester.pumpAndSettle();
+      },
+    );
     testWidgets(
       '$locale editing a fractional price preserves it and localizes visible helper and date',
       (tester) async {

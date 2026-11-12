@@ -298,6 +298,7 @@
   "restoreCounts": "{added} új, {replaced} felülírt, {unchanged} változatlan kulcs",
   "restoreConfirm": "Ezeknek az adatoknak a visszaállítása",
   "restoreQuestion": "Visszaállítod az átnézett mentést?",
+  "restoreProfileRecovery": "A jelenlegi Menti-profil sérült vagy nem támogatott verzióból származik. Változatlan marad, amíg meg nem erősíted az importált profilra cserélését. Ha meg szeretnéd őrizni, előbb exportáld a jelenlegi adatokat; a feloldásai nem egyesíthetők biztonságosan.",
   "restoreWarning": "A felsorolt adatokat erre az eszközre írjuk. Az érintett kulcsok meglévő értékeit felülírjuk. Folytatod?",
   "restoreCancel": "Mégse",
   "restoreInvalid": "A mentés hibás, nem támogatott, túl nagy vagy nem olvasható. Nem írtunk felhasználói adatot.",

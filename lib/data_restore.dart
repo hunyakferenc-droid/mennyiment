@@ -9,10 +9,11 @@ import 'menti_identity/menti_identity_store.dart';
 /// Overlay restore: keys absent from older backups are never deleted.
 /// A preview is bound to the exact local snapshot the user reviewed.
 class RestorePlan {
-  RestorePlan._(this.document, this.before, this.after);
+  RestorePlan._(this.document, this.before, this.after, {this.profileRecovery = false});
   final BackupDocument document;
   final Map<String, Object> before;
   final Map<String, Object> after;
+  final bool profileRecovery;
   List<String> get keys => after.keys.toList()..sort();
   int get added => keys.where((k) => !before.containsKey(k)).length;
   int get replaced => keys.where((k) => before.containsKey(k) &&
@@ -65,12 +66,19 @@ class BackupRestorer {
         ...values[rewards] as List<String>}.toList()..sort();
     }
     const identityKey = MentiIdentityStore.key;
+    var profileRecovery = false;
     if (values.containsKey(identityKey) && before.containsKey(identityKey)) {
-      // A restore must not remove permanent Studio unlocks. Decode both sides
-      // before merging; an unreadable/future local identity needs recovery,
-      // never a guessed replacement.
-      final current = MentiIdentityDocument.decode(before[identityKey]);
+      // Only the explicitly confirmed restore can replace an unreadable local
+      // profile. Preview/load remain read-only; the exact pre-image is still
+      // protected by the restore transaction's rollback journal.
+      MentiIdentityDocument? current;
+      try {
+        current = MentiIdentityDocument.decode(before[identityKey]);
+      } on FormatException {
+        profileRecovery = true;
+      }
       final incoming = MentiIdentityDocument.decode(values[identityKey]);
+      if (current != null) {
       final unlocks = MentiUnlockState(
         unlocked: {...current.unlocks.unlocked, ...incoming.unlocks.unlocked},
         seen: {...current.unlocks.seen, ...incoming.unlocks.seen},
@@ -78,6 +86,7 @@ class BackupRestorer {
       );
       if (!_same(unlocks.toJson(), incoming.unlocks.toJson())) {
         values[identityKey] = incoming.copyWith(unlocks: unlocks).encode();
+      }
       }
     }
     if (values.containsKey(MentiAccessSettings.key) &&
@@ -92,7 +101,7 @@ class BackupRestorer {
       for (final e in data.entries) e.key: e.value is List<String>
           ? List<String>.unmodifiable(e.value as List<String>) : e.value,
     });
-    return RestorePlan._(doc, freeze(before), freeze(values));
+    return RestorePlan._(doc, freeze(before), freeze(values), profileRecovery: profileRecovery);
   }
 
   static Future<void> _write(SharedPreferences p, String k, Object? v) async {
