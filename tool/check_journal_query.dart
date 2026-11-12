@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
-import '../lib/drink_journal.dart';
-import '../lib/journal_query.dart';
+import 'package:mennyiment/drink_journal.dart';
+import 'package:mennyiment/journal_query.dart';
 
 void main() {
   var checks = 0;
@@ -153,5 +154,7 @@ void main() {
     jsonEncode(unknown.toJson()) == jsonEncode(raw),
     'Unknown historic fields unchanged',
   );
-  print('$checks model assertions passed; timezone: ${anchor.timeZoneName}');
+  stdout.writeln(
+    '$checks model assertions passed; timezone: ${anchor.timeZoneName}',
+  );
 }

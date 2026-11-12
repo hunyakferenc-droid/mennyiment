@@ -15,9 +15,15 @@ class DrinkJournalPage extends StatefulWidget {
     required List<Drink> drinks,
     this.hasSavedJournal = true,
     this.clock = DateTime.now,
-  }) : drinks = List.unmodifiable(drinks);
+  }) : _sourceDrinks = List.unmodifiable(drinks),
+       drinks = List.unmodifiable(
+         drinks.toList()..sort((a, b) => b.time.compareTo(a.time)),
+       );
 
+  // Preserve the existing public newest-first snapshot contract. Queries use
+  // the original order so equal sort keys keep the caller's record order.
   final List<Drink> drinks;
+  final List<Drink> _sourceDrinks;
   final bool hasSavedJournal;
   final DateTime Function() clock;
 
@@ -31,11 +37,13 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
   JournalPrice _price = JournalPrice.all;
   JournalOrder _order = JournalOrder.newest;
   late DateTime _anchor;
+  late final DateTime _openedDay;
 
   @override
   void initState() {
     super.initState();
-    _anchor = StatisticsRange.day(widget.clock());
+    _openedDay = StatisticsRange.day(widget.clock());
+    _anchor = _openedDay;
   }
 
   @override
@@ -64,7 +72,7 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
     _period = JournalPeriod.all;
     _price = JournalPrice.all;
     _order = JournalOrder.newest;
-    _anchor = StatisticsRange.day(widget.clock());
+    _anchor = _openedDay;
   });
 
   @override
@@ -78,7 +86,7 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
       order: _order,
     );
     final drinks = query.apply(
-      widget.drinks,
+      widget._sourceDrinks,
       _anchor,
       label: (drink) => catalogDrinkLabel(drink.name, s),
     );

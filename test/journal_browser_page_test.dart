@@ -21,9 +21,11 @@ Future<void> open(
   String locale = 'hu',
   double width = 430,
   double textScale = 1,
+  double height = 2800,
   List<Drink>? drinks,
+  DateTime Function()? clock,
 }) async {
-  tester.view.physicalSize = Size(width, 2800);
+  tester.view.physicalSize = Size(width, height);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
@@ -42,7 +44,10 @@ Future<void> open(
             .copyWith(textScaler: TextScaler.linear(textScale)),
         child: child!,
       ),
-      home: DrinkJournalPage(drinks: drinks ?? fixture(), clock: () => now),
+      home: DrinkJournalPage(
+        drinks: drinks ?? fixture(),
+        clock: clock ?? () => now,
+      ),
     ),
   );
   await tester.pumpAndSettle();
@@ -50,6 +55,69 @@ Future<void> open(
 
 void main() {
   setUpAll(() => initializeDateFormatting());
+  testWidgets('Reset retains the opening calendar day after midnight', (
+    tester,
+  ) async {
+    var clock = now;
+    await open(tester, clock: () => clock);
+    await tester.tap(find.text('Nap'));
+    await tester.pumpAndSettle();
+    expect(find.text('Őszibarack'), findsOneWidget);
+    clock = DateTime(2026, 11, 13);
+    await tester.tap(find.byKey(const ValueKey('journal-reset')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Nap'));
+    await tester.pumpAndSettle();
+    expect(find.text('Őszibarack'), findsOneWidget);
+  });
+  for (final locale in ['hu', 'en']) {
+    for (final width in [320.0, 360.0, 390.0, 430.0]) {
+      for (final scale in [1.0, 2.0]) {
+        testWidgets(
+          '$locale $width / $scale: phone keyboard and real price menu',
+          (tester) async {
+            final drinks = fixture();
+            final before = jsonEncode(drinks.map((d) => d.toJson()).toList());
+            await open(
+              tester,
+              locale: locale,
+              width: width,
+              height: 640,
+              textScale: scale,
+              drinks: drinks,
+            );
+            tester.view.viewInsets = const FakeViewPadding(bottom: 280);
+            addTearDown(tester.view.resetViewInsets);
+            await tester.enterText(
+              find.byKey(const ValueKey('journal-search')),
+              'ar',
+            );
+            await tester.pumpAndSettle();
+            expect(tester.takeException(), isNull);
+            await tester.testTextInput.receiveAction(TextInputAction.done);
+            tester.view.resetViewInsets();
+            await tester.pumpAndSettle();
+            final menu = find.byType(DropdownButtonFormField<JournalPrice>);
+            await tester.ensureVisible(menu);
+            await tester.tap(menu);
+            await tester.pumpAndSettle();
+            await tester.tap(
+              find.text(locale == 'hu' ? 'Hiányzó ár' : 'Missing price').last,
+            );
+            await tester.pumpAndSettle();
+            await tester.scrollUntilVisible(
+              find.text('Ár nélküli'),
+              180,
+              scrollable: find.byType(Scrollable).first,
+            );
+            expect(find.text('Ár nélküli'), findsOneWidget);
+            expect(tester.takeException(), isNull);
+            expect(jsonEncode(drinks.map((d) => d.toJson()).toList()), before);
+          },
+        );
+      }
+    }
+  }
   testWidgets('Accent-free search and reset preserve original JSON', (
     tester,
   ) async {

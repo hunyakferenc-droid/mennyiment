@@ -2519,58 +2519,59 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get avatarHairOptional =>
       'Hair is optional. Turn it off for the clean Menti base.';
-  @override
-  String get journalAllTime => "All time";
 
   @override
-  String get journalDay => "Day";
+  String get journalAllTime => 'All time';
 
   @override
-  String get journalSearch => "Search drinks";
+  String get journalDay => 'Day';
 
   @override
-  String get journalClearSearch => "Clear search";
+  String get journalSearch => 'Search drinks';
 
   @override
-  String get journalAllPrices => "All prices";
+  String get journalClearSearch => 'Clear search';
 
   @override
-  String get journalMissingPrices => "Missing price";
+  String get journalAllPrices => 'All prices';
 
   @override
-  String get journalKnownPrices => "Known price";
+  String get journalMissingPrices => 'Missing price';
 
   @override
-  String get journalNewest => "Newest first";
+  String get journalKnownPrices => 'Known price';
 
   @override
-  String get journalOldest => "Oldest first";
+  String get journalNewest => 'Newest first';
 
   @override
-  String get journalHighestPrice => "Highest price first";
+  String get journalOldest => 'Oldest first';
 
   @override
-  String get journalPriceFilter => "Price filter";
+  String get journalHighestPrice => 'Highest price first';
 
   @override
-  String get journalSort => "Sort order";
+  String get journalPriceFilter => 'Price filter';
 
   @override
-  String get journalReset => "Clear filters";
+  String get journalSort => 'Sort order';
 
   @override
-  String get journalNoMatches => "No entries match these filters.";
+  String get journalReset => 'Clear filters';
 
   @override
-  String get journalVolume => "Recorded volume";
+  String get journalNoMatches => 'No entries match these filters.';
 
   @override
-  String get journalKnownCost => "Known cost";
+  String get journalVolume => 'Recorded volume';
 
   @override
-  String get journalPriceCoverage => "Entries with known prices";
+  String get journalKnownCost => 'Known cost';
+
+  @override
+  String get journalPriceCoverage => 'Entries with known prices';
 
   @override
   String get journalPartialCost =>
-      "Partial total: missing prices do not count as zero.";
+      'Partial total: missing prices do not count as zero.';
 }

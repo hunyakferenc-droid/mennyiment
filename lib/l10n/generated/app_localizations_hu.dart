@@ -2519,58 +2519,59 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get avatarHairOptional =>
       'A haj opcionális. Kikapcsolva a letisztult Menti-alap látható.';
-  @override
-  String get journalAllTime => "Teljes időszak";
 
   @override
-  String get journalDay => "Nap";
+  String get journalAllTime => 'Teljes időszak';
 
   @override
-  String get journalSearch => "Keresés az italok között";
+  String get journalDay => 'Nap';
 
   @override
-  String get journalClearSearch => "Keresés törlése";
+  String get journalSearch => 'Keresés az italok között';
 
   @override
-  String get journalAllPrices => "Minden ár";
+  String get journalClearSearch => 'Keresés törlése';
 
   @override
-  String get journalMissingPrices => "Hiányzó ár";
+  String get journalAllPrices => 'Minden ár';
 
   @override
-  String get journalKnownPrices => "Ismert ár";
+  String get journalMissingPrices => 'Hiányzó ár';
 
   @override
-  String get journalNewest => "Legújabb elöl";
+  String get journalKnownPrices => 'Ismert ár';
 
   @override
-  String get journalOldest => "Legrégebbi elöl";
+  String get journalNewest => 'Legújabb elöl';
 
   @override
-  String get journalHighestPrice => "Legmagasabb ár elöl";
+  String get journalOldest => 'Legrégebbi elöl';
 
   @override
-  String get journalPriceFilter => "Árszűrő";
+  String get journalHighestPrice => 'Legmagasabb ár elöl';
 
   @override
-  String get journalSort => "Rendezés";
+  String get journalPriceFilter => 'Árszűrő';
 
   @override
-  String get journalReset => "Szűrők törlése";
+  String get journalSort => 'Rendezés';
 
   @override
-  String get journalNoMatches => "Nincs a szűrésnek megfelelő bejegyzés.";
+  String get journalReset => 'Szűrők törlése';
 
   @override
-  String get journalVolume => "Rögzített mennyiség";
+  String get journalNoMatches => 'Nincs a szűrésnek megfelelő bejegyzés.';
 
   @override
-  String get journalKnownCost => "Ismert költség";
+  String get journalVolume => 'Rögzített mennyiség';
 
   @override
-  String get journalPriceCoverage => "Ismert árú bejegyzések";
+  String get journalKnownCost => 'Ismert költség';
+
+  @override
+  String get journalPriceCoverage => 'Ismert árú bejegyzések';
 
   @override
   String get journalPartialCost =>
-      "Részösszeg: a hiányzó árak nem számítanak 0 Ft-nak.";
+      'Részösszeg: a hiányzó árak nem számítanak 0 Ft-nak.';
 }

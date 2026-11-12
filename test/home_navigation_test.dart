@@ -92,6 +92,11 @@ void main() {
       navigation.onDestinationSelected!(1);
       await tester.pumpAndSettle();
       expect(find.byType(DrinkJournalPage), findsOneWidget);
+      // The searchable journal has a filter/summary header before the lazy
+      // records. Reveal the first record before checking its content.
+      await tester.scrollUntilVisible(find.text('Entry 7'), 200,
+        scrollable: find.byType(Scrollable).first);
+      await tester.pumpAndSettle();
       expect(find.text('Entry 7'), findsOneWidget);
       final s = appStrings(tester.element(find.byType(DrinkJournalPage)));
       expect(find.text(s.homeUnknownPrice), findsWidgets);

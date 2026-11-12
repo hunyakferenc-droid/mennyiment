@@ -56,7 +56,7 @@ jobs:
         run: |
           flutter pub get
           flutter gen-l10n
-          git diff --exit-code -- pubspec.lock
+          git diff --exit-code -- pubspec.lock lib/l10n/generated
 
       - name: Whitespace check
         run: git diff --check HEAD^ HEAD
@@ -103,7 +103,7 @@ jobs:
         if: ${{ !cancelled() && steps.web.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.2.6-web-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.2.7-web-${{ env.SOURCE_SHA }}
           path: build/web/
           if-no-files-found: error
           retention-days: 14
@@ -136,7 +136,7 @@ jobs:
         if: ${{ !cancelled() && steps.apk.outcome == 'success' && steps.verify_apk.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.2.6-debug-apk-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.2.7-debug-apk-${{ env.SOURCE_SHA }}
           path: |
             build/app/outputs/flutter-apk/app-debug.apk
             build/app/outputs/flutter-apk/app-debug.apk.sha256

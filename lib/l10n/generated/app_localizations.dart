@@ -67,42 +67,6 @@ abstract class AppLocalizations {
 
   final String localeName;
 
-  String get journalAllTime;
-
-  String get journalDay;
-
-  String get journalSearch;
-
-  String get journalClearSearch;
-
-  String get journalAllPrices;
-
-  String get journalMissingPrices;
-
-  String get journalKnownPrices;
-
-  String get journalNewest;
-
-  String get journalOldest;
-
-  String get journalHighestPrice;
-
-  String get journalPriceFilter;
-
-  String get journalSort;
-
-  String get journalReset;
-
-  String get journalNoMatches;
-
-  String get journalVolume;
-
-  String get journalKnownCost;
-
-  String get journalPriceCoverage;
-
-  String get journalPartialCost;
-
   static AppLocalizations? of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
@@ -4591,6 +4555,114 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'A haj opcionális. Kikapcsolva a letisztult Menti-alap látható.'**
   String get avatarHairOptional;
+
+  /// No description provided for @journalAllTime.
+  ///
+  /// In hu, this message translates to:
+  /// **'Teljes időszak'**
+  String get journalAllTime;
+
+  /// No description provided for @journalDay.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nap'**
+  String get journalDay;
+
+  /// No description provided for @journalSearch.
+  ///
+  /// In hu, this message translates to:
+  /// **'Keresés az italok között'**
+  String get journalSearch;
+
+  /// No description provided for @journalClearSearch.
+  ///
+  /// In hu, this message translates to:
+  /// **'Keresés törlése'**
+  String get journalClearSearch;
+
+  /// No description provided for @journalAllPrices.
+  ///
+  /// In hu, this message translates to:
+  /// **'Minden ár'**
+  String get journalAllPrices;
+
+  /// No description provided for @journalMissingPrices.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hiányzó ár'**
+  String get journalMissingPrices;
+
+  /// No description provided for @journalKnownPrices.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ismert ár'**
+  String get journalKnownPrices;
+
+  /// No description provided for @journalNewest.
+  ///
+  /// In hu, this message translates to:
+  /// **'Legújabb elöl'**
+  String get journalNewest;
+
+  /// No description provided for @journalOldest.
+  ///
+  /// In hu, this message translates to:
+  /// **'Legrégebbi elöl'**
+  String get journalOldest;
+
+  /// No description provided for @journalHighestPrice.
+  ///
+  /// In hu, this message translates to:
+  /// **'Legmagasabb ár elöl'**
+  String get journalHighestPrice;
+
+  /// No description provided for @journalPriceFilter.
+  ///
+  /// In hu, this message translates to:
+  /// **'Árszűrő'**
+  String get journalPriceFilter;
+
+  /// No description provided for @journalSort.
+  ///
+  /// In hu, this message translates to:
+  /// **'Rendezés'**
+  String get journalSort;
+
+  /// No description provided for @journalReset.
+  ///
+  /// In hu, this message translates to:
+  /// **'Szűrők törlése'**
+  String get journalReset;
+
+  /// No description provided for @journalNoMatches.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nincs a szűrésnek megfelelő bejegyzés.'**
+  String get journalNoMatches;
+
+  /// No description provided for @journalVolume.
+  ///
+  /// In hu, this message translates to:
+  /// **'Rögzített mennyiség'**
+  String get journalVolume;
+
+  /// No description provided for @journalKnownCost.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ismert költség'**
+  String get journalKnownCost;
+
+  /// No description provided for @journalPriceCoverage.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ismert árú bejegyzések'**
+  String get journalPriceCoverage;
+
+  /// No description provided for @journalPartialCost.
+  ///
+  /// In hu, this message translates to:
+  /// **'Részösszeg: a hiányzó árak nem számítanak 0 Ft-nak.'**
+  String get journalPartialCost;
 }
 
 class _AppLocalizationsDelegate
