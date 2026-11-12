@@ -2,7 +2,7 @@
 const fs=require('node:fs');
 const path=require('node:path');
 const assert=require('node:assert/strict');
-const {chromium,open,seed,screenshot,snapshot,reach,semantics,strings,out,errors}=require('./verify_stabilization_226_chrome.cjs');
+const {chromium,open,seed,screenshot,snapshot,reach,semantics,strings,out,errors,cancelled}=require('./verify_stabilization_226_chrome.cjs');
 const url=process.env.MENTI_WEB_URL||'http://127.0.0.1:7357';
 const key='flutter.mennyiment_drinks_v1';
 const encode=value=>JSON.stringify(JSON.stringify(value));
@@ -88,7 +88,7 @@ async function save(page,s,filtered) {
 }
 (async()=>{
   const browser=await chromium.launch({executablePath:process.env.CHROME_BIN||'/usr/bin/chromium',headless:true,
-    args:['--no-sandbox','--disable-dev-shm-usage']});
+    args:['--no-sandbox','--disable-dev-shm-usage','--force-renderer-accessibility']});
   let active;
   try {
     for(const locale of (process.env.MENTI_LOCALES||'hu,en').split(',')) {
@@ -158,15 +158,17 @@ async function save(page,s,filtered) {
           checks.push(`${locale}: another tab's real storage event marks the open journal stale; explicit reload retains filters and preserves the external data`);
           await back(page,locale);await top(page);await action(page,button(page,s.homeMore));
           await action(page,text(page,s.statisticsNav));await reach(page,text(page,s.knownSpending));
-          assert((await page.locator('flt-semantics').allTextContents()).join(' ').replace(/[\s,]/g,'').includes('1235'));
+          assert((await page.locator('body').ariaSnapshot()).replace(/[\s,]/g,'').includes('1235'));
           await screenshot(page,`statistics-refreshed-${locale}`);await back(page,locale);await top(page);
           await action(page,button(page,s.financeCenter));
-          assert((await page.locator('flt-semantics').allTextContents()).join(' ').replace(/[\s,]/g,'').includes('1235'));
+          assert((await page.locator('body').ariaSnapshot()).replace(/[\s,]/g,'').includes('1235'));
           await screenshot(page,`finance-refreshed-${locale}`);await back(page,locale);
           assert.deepEqual(await assertProtected(page,before),records);
           checks.push(`${locale}: next statistics and finance views show the edited current-month cost and do not change journal/profile/XP`);
         }
+        await ready(page);page.reloading=true;
         await page.reload({waitUntil:'networkidle'});await semantics(page);await button(page,s.chooseMenti).waitFor();
+        await ready(page);page.reloading=false;
         await openJournal(page,s);await screenshot(page,`reloaded-${locale}-${width}`);
         assert.deepEqual(await assertProtected(page,before),records);
         assert.equal(await page.getByRole('textbox',{name:s.journalSearch,exact:true}).inputValue(),'');
@@ -175,7 +177,7 @@ async function save(page,s,filtered) {
       }
     }
     assert.deepEqual(errors,[]);
-    fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify({completedAt:new Date().toISOString(),browser:browser.version(),checks,runtimeErrors:errors},null,2));
+    fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify({completedAt:new Date().toISOString(),browser:browser.version(),checks,runtimeErrors:errors,intentionalReloadCancellations:cancelled},null,2));
     process.stdout.write(`${checks.length} browser checks passed\n`);
   } catch(e) {
     if(active) {

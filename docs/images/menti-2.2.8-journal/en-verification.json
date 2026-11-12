@@ -1,0 +1,24 @@
+{
+  "completedAt": "2026-11-12T20:27:05.466Z",
+  "browser": "154.0.8037.57",
+  "checks": [
+    "en 320px: direct fractional price save affects one duplicate, preserves filters/unknown fields/profile/XP, updates missing-price results",
+    "en 320px: application reload keeps the edited raw records, profile, XP and language; temporary filters reset",
+    "en 360px: direct fractional price save affects one duplicate, preserves filters/unknown fields/profile/XP, updates missing-price results",
+    "en 360px: application reload keeps the edited raw records, profile, XP and language; temporary filters reset",
+    "en: all six fields persisted for only the selected duplicate; search/month/missing-price/order survive; filtered-out feedback is visible",
+    "en: genuine zero is saved as known and leaves the missing-price view without changing filters",
+    "en: an existing price can be modified and explicitly removed; totals/coverage/results refresh and the separate zero-price record stays known",
+    "en: Back asks before discarding, keep-editing retains the draft, confirmed discard writes nothing",
+    "en: another tab's real storage event marks the open journal stale; explicit reload retains filters and preserves the external data",
+    "en: next statistics and finance views show the edited current-month cost and do not change journal/profile/XP",
+    "en 390px: application reload keeps the edited raw records, profile, XP and language; temporary filters reset",
+    "en 430px: direct fractional price save affects one duplicate, preserves filters/unknown fields/profile/XP, updates missing-price results",
+    "en 430px: application reload keeps the edited raw records, profile, XP and language; temporary filters reset"
+  ],
+  "runtimeErrors": [],
+  "intentionalReloadCancellations": [
+    "http://127.0.0.1:7357/assets/FontManifest.json: net::ERR_ABORTED",
+    "http://127.0.0.1:7357/assets/FontManifest.json: net::ERR_ABORTED"
+  ]
+}

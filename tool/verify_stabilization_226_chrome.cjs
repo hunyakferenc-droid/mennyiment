@@ -42,16 +42,23 @@ function observe(page) {
   });
 }
 async function semantics(page) {
-  const p=page.locator('flt-semantics-placeholder');
-  const deadline=Date.now()+30000;
-  while(!await page.locator('flt-semantics').count()) {
-    // Activation may remove the placeholder between a count and a separate
-    // action. Query and activate atomically, also allowing an already enabled tree.
-    await p.evaluateAll(elements=>elements.forEach(element=>element.click()));
-    if(Date.now()>deadline) throw Error('Flutter accessibility tree did not start');
+  const placeholder=page.locator('flt-semantics-placeholder');
+  const deadline=performance.now()+60000;
+  while(true) {
+    // Inspect accessible roles rather than Flutter's private DOM tag names.
+    // ariaSnapshot also requests Chromium's accessibility tree explicitly.
+    const tree=await page.locator('body').ariaSnapshot();
+    if (/^\s*- (heading|menuitem|textbox|tablist|tab|checkbox|dialog|menu)(?:[ :]|$)/m.test(tree) ||
+        /^\s*- button "(?!Enable accessibility)/m.test(tree)) return;
+    if(await placeholder.count()) {
+      try {await placeholder.first().evaluate(element=>element.click());}
+      catch (_) { /* A rendered frame may remove the activation placeholder. */ }
+    }
+    if(performance.now()>deadline) throw Error('Flutter accessibility tree did not start');
     await page.waitForTimeout(100);
   }
 }
+
 async function open(browser, width, values, onPage) {
   const context=await browser.newContext({viewport:{width,height:844},reducedMotion:'reduce',acceptDownloads:true});
   await context.addInitScript(v=>{
@@ -100,7 +107,7 @@ async function semanticTap(locator) {
   await locator.waitFor({state:'visible'});
   await locator.evaluate(element=>element.click());
 }
-module.exports={chromium,open,seed,screenshot,snapshot,reach,semantics,observe,strings,out,errors};
+module.exports={chromium,open,seed,screenshot,snapshot,reach,semantics,observe,strings,out,errors,cancelled};
 if(require.main===module) (async()=>{
   const browser=await chromium.launch({executablePath:process.env.CHROME_BIN||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
   let active;

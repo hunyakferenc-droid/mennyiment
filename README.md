@@ -3,7 +3,8 @@
 Flutter alkalmazás helyi italnaplóval, közérzetkövetéssel és személyre szabható
 Menti karakterrel. Magyar és angol felület; a profil és a naplók helyben maradnak.
 
-- [2.2.7+31: kereshető és szűrhető napló, ellenőrzések és kipróbálás](docs/2.2.7-journal-hu.md).
+- [2.2.8+32: bejegyzésszerkesztés, árpótlás, ellenőrzések és kipróbálás](docs/2.2.8-journal-management-hu.md).
+- [Korábbi 2.2.7+31: kereshető és szűrhető napló](docs/2.2.7-journal-hu.md).
 - [Kezdő Windowsos útmutató: kész web ZIP vagy Flutter-forrás](docs/2.2.6-windows-hu.md).
   A ZIP-ben az `INDITAS.cmd`, a forrásban a `tool/windows/FORRAS_INDITAS.cmd`
   indítható. Python nem szükséges. Cím: **http://127.0.0.1:7357**.
