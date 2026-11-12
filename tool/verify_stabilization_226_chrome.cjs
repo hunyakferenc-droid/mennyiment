@@ -18,7 +18,7 @@ function seed(locale, family = 'girl', age = 'adult') {
     [pref('reduce_motion_v1')]: JSON.stringify(true),
     [pref('identity_v22')]: encode({ version: 1,
       profile: { name: `${family} ${age}`, visual: {family, age, style:'classic',
-        hair: family === 'girl' ? 'girl-curls' : family === 'boy' ? 'boy-crop' : 'neutral-soft',
+        hair: family === 'girl' ? 'girl-curls' : family === 'boy' ? 'boy-crop' : 'neutral-waves',
         hairVisible: true, outfit:'business', headwear:'beanie', glasses:'round-glasses',
         neck:'scarf', held:'notebook', future:'preserve'}, reaction: {style:'motivating'} },
       unlocks: { unlocked:['outfit:business','headwear:beanie'], seen:[] }, presets:[], future:'preserve' }),

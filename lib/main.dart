@@ -522,7 +522,7 @@ void updateMentiMessage(MentiMood mood) {
       context: context,
       builder: (dialogContext) => AlertDialog(
         scrollable: true,
-        title: Text(appStrings(context).journalSetPrice(drink.name)),
+        title: Text(appStrings(context).journalSetPrice(catalogDrinkLabel(drink.name, appStrings(context)))),
         content: TextField(
           controller: controller,
           keyboardType: TextInputType.number,
@@ -797,7 +797,7 @@ void updateMentiMessage(MentiMood mood) {
     updateMentiMessage(result.percent == 0
         ? MentiMood.alcoholFreeEntry : MentiMood.drinkAdded);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(appStrings(context).journalSaved(result.name))),
+      SnackBar(content: Text(appStrings(context).journalSaved(catalogDrinkLabel(result.name, appStrings(context))))),
     );
     } finally { _recording = false; }
   }
@@ -884,7 +884,7 @@ void updateMentiMessage(MentiMood mood) {
     var submitted = false;
     final confirmed = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
       title: Text(appStrings(context).journalDeleteTitle),
-      content: Text(appStrings(context).journalDeleteBody(drink.name)),
+      content: Text(appStrings(context).journalDeleteBody(catalogDrinkLabel(drink.name, appStrings(context)))),
       actions: [
         TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(appStrings(context).avatarCancel)),
         FilledButton(onPressed: () {

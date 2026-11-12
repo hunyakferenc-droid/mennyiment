@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/app_language.dart';
 import 'package:mennyiment/data_backup.dart';
 import 'package:mennyiment/data_backup_page.dart';
+import 'package:mennyiment/drink_catalog.dart';
 import 'package:mennyiment/l10n/generated/app_localizations.dart';
 import 'package:mennyiment/main.dart';
 import 'package:mennyiment/menti_identity/menti_identity_store.dart';
@@ -207,7 +208,7 @@ void main() {
           'mennyiment_reduce_motion_v1': true,
           'mennyiment_drinks_v1': jsonEncode([
             {
-              'name': 'Mobile record',
+              'name': 'Sör (általános)',
               'ml': 250,
               'percent': 4.5,
               'priceFt': 1234.75,
@@ -244,6 +245,10 @@ void main() {
           find.text(s.homeEditPrice(localeCurrency(1234.75, locale))),
         );
         expect(find.text(s.journalPriceHint), findsOneWidget);
+        expect(
+          find.text(s.journalSetPrice(catalogDrinkLabel('Sör (általános)', s))),
+          findsOneWidget,
+        );
         final field = tester.widget<TextField>(find.byType(TextField));
         expect(field.controller!.text, locale == 'hu' ? '1234,75' : '1234.75');
         tester.view.viewInsets = const FakeViewPadding(bottom: 280);
@@ -256,6 +261,7 @@ void main() {
           )!,
         ) as List;
         expect(records.single['priceFt'], 1234.75);
+        expect(records.single['name'], 'Sör (általános)');
         expect(records.single['future'], 'keep');
         expect(tester.takeException(), isNull);
         await tester.pumpWidget(const SizedBox.shrink());
