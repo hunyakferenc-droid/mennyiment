@@ -98,6 +98,7 @@ class _DataBackupPageState extends State<DataBackupPage> {
     final confirmed = await showDialog<bool>(context: context,
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
+        scrollable: true,
         title: Text(strings.restoreQuestion),
         content: Text(strings.restoreWarning),
         actions: [

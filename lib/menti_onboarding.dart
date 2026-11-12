@@ -55,6 +55,15 @@ class _MentiStartGateState extends State<MentiStartGate> {
     });
   }
 
+  void _back() {
+    if (_busy || _step == 0) return;
+    setState(() {
+      _step--;
+      _failed = false;
+      if (_scroll.hasClients) _scroll.jumpTo(0);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final access = MentiAccessScope.of(context)!;
@@ -115,200 +124,206 @@ class _MentiStartGateState extends State<MentiStartGate> {
           ),
       ],
     );
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('MennyiMent?'),
-        actions: [
-          IconButton(
-            tooltip: s.backupTitle,
-            icon: const Icon(Icons.backup_outlined),
-            onPressed: _busy
-                ? null
-                : () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) =>
-                          DataBackupPage(onRestored: widget.onRestored),
-                    ),
-                  ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: SafeArea(
-        minimum: const EdgeInsets.all(16),
-        child: Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: [
-            if (_step > 0)
-              OutlinedButton(
-                onPressed: _busy
-                    ? null
-                    : () => setState(() {
-                        _step--;
-                        if (_scroll.hasClients) _scroll.jumpTo(0);
-                      }),
-                child: Text(s.experienceIntroBack),
-              ),
-            FilledButton(
-              key: const ValueKey('start-next'),
-              onPressed: !canContinue
+    return PopScope(
+      canPop: _step == 0 && !_busy,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) _back();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('MennyiMent?'),
+          actions: [
+            IconButton(
+              tooltip: s.backupTitle,
+              icon: const Icon(Icons.backup_outlined),
+              onPressed: _busy
                   ? null
-                  : () {
-                      if (_step == last) {
-                        _finish(access, identity);
-                      } else {
-                        setState(() {
-                          if (_step == 1 && !access.existing) {
-                            identity.setHairVisible(false);
-                          }
-                          _step++;
-                          _failed = false;
-                          if (_scroll.hasClients) _scroll.jumpTo(0);
-                        });
-                      }
-                    },
-              child: Text(
-                _busy
-                    ? s.avatarSaving
-                    : _step == last
-                    ? s.startFinish
-                    : s.experienceIntroNext,
-              ),
+                  : () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) =>
+                            DataBackupPage(onRestored: widget.onRestored),
+                      ),
+                    ),
             ),
           ],
         ),
-      ),
-      body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 620),
-            child: ListView(
-              controller: _scroll,
-              padding: const EdgeInsets.all(24),
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.viewInsetsOf(context).bottom,
+          ),
+          child: SafeArea(
+            minimum: const EdgeInsets.all(16),
+            child: Wrap(
+              spacing: 12,
+              runSpacing: 12,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: LinearProgressIndicator(
-                    value: (_step + 1) / (last + 1),
+                if (_step > 0)
+                  OutlinedButton(
+                    onPressed: _busy ? null : _back,
+                    child: Text(s.experienceIntroBack),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Align(
-                  alignment: Alignment.centerRight,
+                FilledButton(
+                  key: const ValueKey('start-next'),
+                  onPressed: !canContinue
+                      ? null
+                      : () {
+                          if (_step == last) {
+                            _finish(access, identity);
+                          } else {
+                            setState(() {
+                              if (_step == 1 && !access.existing) {
+                                identity.setHairVisible(false);
+                              }
+                              _step++;
+                              _failed = false;
+                              if (_scroll.hasClients) _scroll.jumpTo(0);
+                            });
+                          }
+                        },
                   child: Text(
-                    '${_step + 1} / ${last + 1}',
-                    style: Theme.of(context).textTheme.labelMedium,
+                    _busy
+                        ? s.avatarSaving
+                        : _step == last
+                        ? s.startFinish
+                        : s.experienceIntroNext,
                   ),
                 ),
-                const SizedBox(height: 24),
-                Text(
-                  titles[_step],
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                const SizedBox(height: 12),
-                if (_step == 0) ...[
-                  Text(s.startWelcome),
-                  const SizedBox(height: 20),
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
-                    children: [
-                      for (final code in ['hu', 'en'])
-                        ChoiceChip(
-                          key: ValueKey('start-language-$code'),
-                          label: Text(code == 'hu' ? s.hungarian : s.english),
-                          selected: language?.selection == code,
-                          onSelected: language == null || language.saving
-                              ? null
-                              : (_) async {
-                                  final ok = await language.select(code);
-                                  if (mounted && !ok) {
-                                    setState(() => _failed = true);
-                                  }
-                                },
-                        ),
-                    ],
-                  ),
-                  Center(
-                    child: MentiAvatarRenderer(
-                      profile: identity.draft.profile,
-                      size: 140,
-                      showBackground: false,
+              ],
+            ),
+          ),
+        ),
+        body: SafeArea(
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 620),
+              child: ListView(
+                controller: _scroll,
+                padding: const EdgeInsets.all(24),
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: LinearProgressIndicator(
+                      value: (_step + 1) / (last + 1),
                     ),
                   ),
-                ],
-                if (_step == 1) ...[
-                  Text(s.startAgeBody),
+                  const SizedBox(height: 8),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      '${_step + 1} / ${last + 1}',
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  Text(
+                    titles[_step],
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
                   const SizedBox(height: 12),
-                  RadioGroup<bool>(
-                    groupValue: _adult,
-                    onChanged: _busy
-                        ? (_) {}
-                        : (v) => setState(() => _adult = v),
-                    child: Column(
+                  if (_step == 0) ...[
+                    Text(s.startWelcome),
+                    const SizedBox(height: 20),
+                    Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
                       children: [
-                        RadioListTile<bool>(
-                          key: const ValueKey('start-adult'),
-                          value: true,
-                          title: Text(s.startAdult),
-                        ),
-                        RadioListTile<bool>(
-                          key: const ValueKey('start-minor'),
-                          value: false,
-                          title: Text(s.startMinor),
-                        ),
+                        for (final code in ['hu', 'en'])
+                          ChoiceChip(
+                            key: ValueKey('start-language-$code'),
+                            label: Text(code == 'hu' ? s.hungarian : s.english),
+                            selected: language?.selection == code,
+                            onSelected: language == null || language.saving
+                                ? null
+                                : (_) async {
+                                    final ok = await language.select(code);
+                                    if (mounted && !ok) {
+                                      setState(() => _failed = true);
+                                    }
+                                  },
+                          ),
                       ],
                     ),
-                  ),
-                  Text(
-                    s.startLocalOnly,
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-                if (_step >= 2) ...[
-                  Center(
-                    child: MentiAvatarRenderer(
-                      profile: identity.draft.profile,
-                      size: math.min(
-                        260,
-                        math.max(120, MediaQuery.sizeOf(context).width - 80),
+                    Center(
+                      child: MentiAvatarRenderer(
+                        profile: identity.draft.profile,
+                        size: 140,
+                        showBackground: false,
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                ],
-                if (_step == 2) ...[
-                  Text(s.avatarFieldFamily),
-                  choices('family'),
-                  const SizedBox(height: 16),
-                  Text(s.avatarFieldAge),
-                  choices('age'),
-                  const SizedBox(height: 16),
-                  Text(s.avatarFieldAccent),
-                  choices('accent'),
-                ],
-                if (_step == 3) ...[
-                  Text(s.startNameBody),
-                  const SizedBox(height: 12),
-                  TextField(
-                    key: const ValueKey('start-name'),
-                    controller: _name,
-                    maxLength: 80,
-                    enabled: !_busy,
-                    onChanged: (_) => setState(() {}),
-                    decoration: InputDecoration(labelText: s.startName),
-                  ),
-                ],
-                if (_failed || access.failed || identity.error != null)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Semantics(
-                      liveRegion: true,
-                      child: Text(s.startSaveError),
+                  ],
+                  if (_step == 1) ...[
+                    Text(s.startAgeBody),
+                    const SizedBox(height: 12),
+                    RadioGroup<bool>(
+                      groupValue: _adult,
+                      onChanged: _busy
+                          ? (_) {}
+                          : (v) => setState(() => _adult = v),
+                      child: Column(
+                        children: [
+                          RadioListTile<bool>(
+                            key: const ValueKey('start-adult'),
+                            value: true,
+                            title: Text(s.startAdult),
+                          ),
+                          RadioListTile<bool>(
+                            key: const ValueKey('start-minor'),
+                            value: false,
+                            title: Text(s.startMinor),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                const SizedBox(height: 24),
-              ],
+                    Text(
+                      s.startLocalOnly,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ],
+                  if (_step >= 2) ...[
+                    Center(
+                      child: MentiAvatarRenderer(
+                        profile: identity.draft.profile,
+                        size: math.min(
+                          260,
+                          math.max(120, MediaQuery.sizeOf(context).width - 80),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                  if (_step == 2) ...[
+                    Text(s.avatarFieldFamily),
+                    choices('family'),
+                    const SizedBox(height: 16),
+                    Text(s.avatarFieldAge),
+                    choices('age'),
+                    const SizedBox(height: 16),
+                    Text(s.avatarFieldAccent),
+                    choices('accent'),
+                  ],
+                  if (_step == 3) ...[
+                    Text(s.startNameBody),
+                    const SizedBox(height: 12),
+                    TextField(
+                      key: const ValueKey('start-name'),
+                      controller: _name,
+                      maxLength: 80,
+                      enabled: !_busy,
+                      onChanged: (_) => setState(() {}),
+                      decoration: InputDecoration(labelText: s.startName),
+                    ),
+                  ],
+                  if (_failed || access.failed || identity.error != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: Semantics(
+                        liveRegion: true,
+                        child: Text(s.startSaveError),
+                      ),
+                    ),
+                  const SizedBox(height: 24),
+                ],
+              ),
             ),
           ),
         ),

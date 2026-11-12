@@ -1,17 +1,25 @@
-# mennyiment
+# MennyiMent?
 
-A new Flutter project.
+Flutter alkalmazás helyi italnaplóval, közérzetkövetéssel és személyre szabható
+Menti karakterrel. Magyar és angol felület; a profil és a naplók helyben maradnak.
 
-## Getting Started
+- [Kezdő Windowsos útmutató: kész web ZIP vagy Flutter-forrás](docs/2.2.6-windows-hu.md).
+  A ZIP-ben az `INDITAS.cmd`, a forrásban a `tool/windows/FORRAS_INDITAS.cmd`
+  indítható. Python nem szükséges. Cím: **http://127.0.0.1:7357**.
+- [Android debug build, adatmegőrzés és telefonos próba](docs/2.2.6-android-hu.md).
+- [Márka- és fejlesztési irány](docs/MENNYIMENT_BRAND_ES_FEJLESZTESI_IRANY.md),
+  [roadmap](docs/roadmap.md).
 
-This project is a starting point for a Flutter application.
+Fejlesztői környezet: Flutter **3.47.7**, Dart **3.13.5**. Ellenőrzés:
 
-A few resources to get you started if this is your first Flutter project:
+```sh
+flutter pub get
+flutter gen-l10n
+flutter analyze
+flutter test --concurrency=2
+flutter build web --no-web-resources-cdn
+flutter build apk --debug
+```
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Ez fejlesztési változat. A debug APK és a jelenlegi debug-aláírásos release
+konfiguráció nem jelent publikálásra kész kiadást.

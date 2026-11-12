@@ -14,6 +14,7 @@ import 'personal_goals.dart';
 import 'weekly_challenges.dart';
 import 'savings_goals.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_reactions.dart';
 import 'drink_catalog.dart';
@@ -513,18 +514,22 @@ void updateMentiMessage(MentiMood mood) {
     var submitted = false;
     try {
     final controller = TextEditingController(
-      text: drink.priceFt?.toStringAsFixed(0) ?? '',
+      text: drink.priceFt?.toString().replaceAll(
+        '.', Localizations.localeOf(context).languageCode == 'hu' ? ',' : '.',
+      ) ?? '',
     );
     final result = await showDialog<double?>(
       context: context,
       builder: (dialogContext) => AlertDialog(
+        scrollable: true,
         title: Text(appStrings(context).journalSetPrice(drink.name)),
         content: TextField(
           controller: controller,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
             labelText: appStrings(context).journalPrice,
-            helperText: 'Üresen hagyva ismeretlen ár',
+            helperText: appStrings(context).journalPriceHint,
+            helperMaxLines: 3,
           ),
         ),
         actions: [
@@ -898,10 +903,10 @@ void updateMentiMessage(MentiMood mood) {
     contentPadding: EdgeInsets.zero,
     leading: CircleAvatar(backgroundColor: const Color(0xFF392447),
       child: const Icon(Icons.local_bar_rounded, color: _mint)),
-    title: Text(drink.name, style: const TextStyle(fontWeight: FontWeight.w600)),
-    subtitle: Text('${drink.time.month}.${drink.time.day.toString().padLeft(2,'0')}. '
-      '${drink.time.hour.toString().padLeft(2,'0')}:${drink.time.minute.toString().padLeft(2,'0')}  •  '
-      '${drink.ml} ml  •  ${drink.alcoholGrams.toStringAsFixed(1)} g'),
+    title: Text(catalogDrinkLabel(drink.name, appStrings(context)), style: const TextStyle(fontWeight: FontWeight.w600)),
+    subtitle: Text('${DateFormat.yMMMd(appStrings(context).localeName).add_Hm().format(drink.time.toLocal())}  •  '
+      '${NumberFormat.decimalPattern(appStrings(context).localeName).format(drink.ml)} ml  •  '
+      '${NumberFormat('0.0', appStrings(context).localeName).format(drink.alcoholGrams)} g'),
     trailing: PopupMenuButton<String>(
       tooltip: appStrings(context).homeRecordActions,
       onSelected: (value) {

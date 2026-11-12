@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'statistics_summary.dart';
 import 'app_language.dart';
+import 'drink_catalog.dart';
 
 import 'package:intl/intl.dart';
 
@@ -222,7 +223,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
           for (final entry in ranked.take(8))
             ListTile(
               contentPadding: EdgeInsets.zero,
-              title: Text(entry.key),
+              title: Text(catalogDrinkLabel(entry.key, strings)),
               trailing: Text(strings.drinkCount(entry.value)),
             ),
           const SizedBox(height: 12),

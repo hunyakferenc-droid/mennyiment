@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'data_backup.dart';
 
 /// Local age declaration, not verified identity or authentication. Unknown,
 /// unreadable or incomplete declarations never authorize adult features.
@@ -22,8 +23,9 @@ class MentiAccessSettings extends ChangeNotifier {
     if (value is! String) {
       throw const FormatException('Invalid access declaration');
     }
-    final data = jsonDecode(value);
+    final data = decodeBackupJson(value);
     if (data is! Map<String, dynamic> ||
+        data['version'] is! int ||
         data['version'] != 1 ||
         !['adult', 'minor'].contains(data['audience']) ||
         data['complete'] is! bool) {

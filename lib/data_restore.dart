@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_access.dart';
 import 'data_backup.dart';
 import 'drink_journal.dart';
+import 'menti_identity/menti_identity.dart';
+import 'menti_identity/menti_identity_store.dart';
 
 /// Overlay restore: keys absent from older backups are never deleted.
 /// A preview is bound to the exact local snapshot the user reviewed.
@@ -61,6 +63,30 @@ class BackupRestorer {
     if (values.containsKey(rewards) && before[rewards] is List<String>) {
       values[rewards] = <String>{...before[rewards] as List<String>,
         ...values[rewards] as List<String>}.toList()..sort();
+    }
+    const identityKey = MentiIdentityStore.key;
+    if (values.containsKey(identityKey) && before.containsKey(identityKey)) {
+      // A restore must not remove permanent Studio unlocks. Decode both sides
+      // before merging; an unreadable/future local identity needs recovery,
+      // never a guessed replacement.
+      final current = MentiIdentityDocument.decode(before[identityKey]);
+      final incoming = MentiIdentityDocument.decode(values[identityKey]);
+      final unlocks = MentiUnlockState(
+        unlocked: {...current.unlocks.unlocked, ...incoming.unlocks.unlocked},
+        seen: {...current.unlocks.seen, ...incoming.unlocks.seen},
+        extras: {...current.unlocks.toJson(), ...incoming.unlocks.toJson()},
+      );
+      if (!_same(unlocks.toJson(), incoming.unlocks.toJson())) {
+        values[identityKey] = incoming.copyWith(unlocks: unlocks).encode();
+      }
+    }
+    if (values.containsKey(MentiAccessSettings.key) &&
+        before.containsKey(MentiAccessSettings.key)) {
+      final current = MentiAccessSettings.decode(before[MentiAccessSettings.key]!);
+      // Importing an adult backup cannot lift this installation's minor gate.
+      if (current['audience'] == 'minor') {
+        values[MentiAccessSettings.key] = before[MentiAccessSettings.key]!;
+      }
     }
     Map<String, Object> freeze(Map<String, Object> data) => Map.unmodifiable({
       for (final e in data.entries) e.key: e.value is List<String>
@@ -182,6 +208,7 @@ void validateRestoreValue(String key, Object value) {
     if (!condition) { throw FormatException('Invalid restore value: $key'); }
   }
   if (key == MentiAccessSettings.key) { MentiAccessSettings.decode(value); return; }
+  if (key == MentiIdentityStore.key) { MentiIdentityDocument.decode(value); return; }
   const lists = {'mennyiment_favorites_v1', 'mennyiment_reflection_days_v1',
     'mennyiment_menti_rewards_v1'};
   const bools = {'mennyiment_reduce_motion_v1', 'mennyiment_character_setup_complete_v1'};

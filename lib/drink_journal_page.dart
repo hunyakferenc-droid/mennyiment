@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 import 'app_language.dart';
 import 'drink_journal.dart';
+import 'drink_catalog.dart';
 import 'menti_ui.dart';
 
 /// A read-only snapshot. Opening this route cannot migrate or change records.
@@ -50,7 +51,7 @@ class DrinkJournalPage extends StatelessWidget {
             return Card(child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(drink.name, style: Theme.of(context).textTheme.titleMedium),
+                Text(catalogDrinkLabel(drink.name, s), style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 8),
                 Text(dateFormat.format(drink.time.toLocal())),
                 Wrap(spacing: 12, runSpacing: 8, children: [
