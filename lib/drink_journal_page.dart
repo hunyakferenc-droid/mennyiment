@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -8,13 +10,15 @@ import 'journal_query.dart';
 import 'statistics_summary.dart';
 import 'menti_ui.dart';
 
-/// A read-only snapshot. Filters never migrate, edit or save journal records.
+/// Filtering is read-only; edits delegate to the owner's single write path.
 class DrinkJournalPage extends StatefulWidget {
   DrinkJournalPage({
     super.key,
     required List<Drink> drinks,
     this.hasSavedJournal = true,
     this.clock = DateTime.now,
+    this.onEdit,
+    this.canEdit = true,
   }) : _sourceDrinks = List.unmodifiable(drinks),
        drinks = List.unmodifiable(
          drinks.toList()..sort((a, b) => b.time.compareTo(a.time)),
@@ -26,6 +30,8 @@ class DrinkJournalPage extends StatefulWidget {
   final List<Drink> _sourceDrinks;
   final bool hasSavedJournal;
   final DateTime Function() clock;
+  final Future<bool> Function(int, Drink, bool)? onEdit;
+  final bool canEdit;
 
   @override
   State<DrinkJournalPage> createState() => _DrinkJournalPageState();
@@ -38,6 +44,36 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
   JournalOrder _order = JournalOrder.newest;
   late DateTime _anchor;
   late final DateTime _openedDay;
+  bool _opening = false;
+
+  Future<void> _edit(int index, Drink drink, bool priceOnly) async {
+    if (_opening || !widget.canEdit || widget.onEdit == null) return;
+    _opening = true;
+    try {
+      final saved = await widget.onEdit!(index, drink, priceOnly);
+      if (!saved || !mounted) return;
+      final s = appStrings(context);
+      final matches =
+          JournalQuery(
+            search: _search.text,
+            period: _period,
+            price: _price,
+            order: _order,
+          ).apply(
+            widget._sourceDrinks,
+            _anchor,
+            label: (d) => catalogDrinkLabel(d.name, s),
+          );
+      final visible =
+          index < widget._sourceDrinks.length &&
+          matches.any((d) => identical(d, widget._sourceDrinks[index]));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(visible ? s.entrySaved : s.entrySavedFiltered)),
+      );
+    } finally {
+      _opening = false;
+    }
+  }
 
   @override
   void initState() {
@@ -91,6 +127,11 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
       label: (drink) => catalogDrinkLabel(drink.name, s),
     );
     final totals = JournalTotals(drinks);
+    final positions = <Drink, Queue<int>>{};
+    for (final entry in widget._sourceDrinks.indexed) {
+      (positions[entry.$2] ??= Queue<int>()).add(entry.$1);
+    }
+    final sourceIndices = [for (final d in drinks) positions[d]!.removeFirst()];
     final range = query.range(_anchor);
     final dateFormat = DateFormat.yMMMd(locale).add_Hm();
     final number = NumberFormat.decimalPattern(locale);
@@ -289,6 +330,7 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
                   );
                 }
                 final drink = drinks[index - 1];
+                final sourceIndex = sourceIndices[index - 1];
                 return Card(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -314,6 +356,29 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
                             ),
                           ],
                         ),
+                        if (widget.onEdit != null)
+                          Wrap(
+                            spacing: 8,
+                            runSpacing: 8,
+                            children: [
+                              TextButton.icon(
+                                key: ValueKey('journal-edit-$sourceIndex'),
+                                onPressed: widget.canEdit
+                                    ? () => _edit(sourceIndex, drink, false)
+                                    : null,
+                                icon: const Icon(Icons.edit_outlined),
+                                label: Text(s.entryEdit),
+                              ),
+                              TextButton.icon(
+                                key: ValueKey('journal-price-$sourceIndex'),
+                                onPressed: widget.canEdit
+                                    ? () => _edit(sourceIndex, drink, true)
+                                    : null,
+                                icon: const Icon(Icons.payments_outlined),
+                                label: Text(s.entryEditPrice),
+                              ),
+                            ],
+                          ),
                       ],
                     ),
                   ),

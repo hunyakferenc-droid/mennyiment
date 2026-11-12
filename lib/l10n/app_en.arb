@@ -1293,5 +1293,20 @@
   "journalVolume": "Recorded volume",
   "journalKnownCost": "Known cost",
   "journalPriceCoverage": "Entries with known prices",
-  "journalPartialCost": "Partial total: missing prices do not count as zero."
+  "journalPartialCost": "Partial total: missing prices do not count as zero.",
+  "entryEdit": "Edit entry",
+  "entryEditPrice": "Add / edit price",
+  "entryDiscardTitle": "Discard changes?",
+  "entryDiscardBody": "Your unsaved changes will be lost. The original entry will remain.",
+  "entryKeepEditing": "Keep editing",
+  "entryDiscard": "Discard changes",
+  "entryDate": "Date",
+  "entryTime": "Time",
+  "entryDateHint": "YYYY-MM-DD, for example 2026-11-12",
+  "entryTimeHint": "24-hour time, for example 18:30",
+  "entryDateError": "Enter a valid local date and time that is not in the future. A time skipped by daylight saving cannot be saved.",
+  "entryFutureRule": "A new timestamp cannot be in the future. An existing future timestamp can be kept unchanged.",
+  "entrySaved": "Entry saved.",
+  "entrySavedFiltered": "Entry saved. It no longer matches the current filters.",
+  "entryStale": "Journal changed or unavailable. Reload before editing."
 }

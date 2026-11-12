@@ -2,7 +2,7 @@ name: mennyiment
 description: "MennyiMent? – személyes Menti és tudatos szokáskövetés."
 publish_to: 'none'
 
-version: 2.2.7+31
+version: 2.2.8+32
 
 environment:
   sdk: ^3.13.5

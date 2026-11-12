@@ -2574,4 +2574,54 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get journalPartialCost =>
       'Partial total: missing prices do not count as zero.';
+
+  @override
+  String get entryEdit => 'Edit entry';
+
+  @override
+  String get entryEditPrice => 'Add / edit price';
+
+  @override
+  String get entryDiscardTitle => 'Discard changes?';
+
+  @override
+  String get entryDiscardBody =>
+      'Your unsaved changes will be lost. The original entry will remain.';
+
+  @override
+  String get entryKeepEditing => 'Keep editing';
+
+  @override
+  String get entryDiscard => 'Discard changes';
+
+  @override
+  String get entryDate => 'Date';
+
+  @override
+  String get entryTime => 'Time';
+
+  @override
+  String get entryDateHint => 'YYYY-MM-DD, for example 2026-11-12';
+
+  @override
+  String get entryTimeHint => '24-hour time, for example 18:30';
+
+  @override
+  String get entryDateError =>
+      'Enter a valid local date and time that is not in the future. A time skipped by daylight saving cannot be saved.';
+
+  @override
+  String get entryFutureRule =>
+      'A new timestamp cannot be in the future. An existing future timestamp can be kept unchanged.';
+
+  @override
+  String get entrySaved => 'Entry saved.';
+
+  @override
+  String get entrySavedFiltered =>
+      'Entry saved. It no longer matches the current filters.';
+
+  @override
+  String get entryStale =>
+      'Journal changed or unavailable. Reload before editing.';
 }

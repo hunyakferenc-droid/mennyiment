@@ -1293,5 +1293,20 @@
   "journalVolume": "Rögzített mennyiség",
   "journalKnownCost": "Ismert költség",
   "journalPriceCoverage": "Ismert árú bejegyzések",
-  "journalPartialCost": "Részösszeg: a hiányzó árak nem számítanak 0 Ft-nak."
+  "journalPartialCost": "Részösszeg: a hiányzó árak nem számítanak 0 Ft-nak.",
+  "entryEdit": "Bejegyzés szerkesztése",
+  "entryEditPrice": "Ár megadása / módosítása",
+  "entryDiscardTitle": "Elveted a módosításokat?",
+  "entryDiscardBody": "A nem mentett módosítások elvesznek. Az eredeti bejegyzés megmarad.",
+  "entryKeepEditing": "Szerkesztés folytatása",
+  "entryDiscard": "Módosítások elvetése",
+  "entryDate": "Dátum",
+  "entryTime": "Idő",
+  "entryDateHint": "ÉÉÉÉ-HH-NN, például 2026-11-12",
+  "entryTimeHint": "24 órás idő, például 18:30",
+  "entryDateError": "Valós helyi dátumot és időt adj meg, amely nem későbbi a jelenleginél. Az óraátállítás miatt nem létező időpont nem menthető.",
+  "entryFutureRule": "Új időpont nem lehet jövőbeli. Régi jövőbeli időpont változtatás nélkül megőrizhető.",
+  "entrySaved": "Bejegyzés mentve.",
+  "entrySavedFiltered": "Bejegyzés mentve. A módosítás után már nem felel meg a jelenlegi szűrőknek.",
+  "entryStale": "A napló változott vagy nem olvasható. Töltsd újra."
 }

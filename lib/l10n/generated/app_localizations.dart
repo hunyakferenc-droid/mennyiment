@@ -4663,6 +4663,96 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'Részösszeg: a hiányzó árak nem számítanak 0 Ft-nak.'**
   String get journalPartialCost;
+
+  /// No description provided for @entryEdit.
+  ///
+  /// In hu, this message translates to:
+  /// **'Bejegyzés szerkesztése'**
+  String get entryEdit;
+
+  /// No description provided for @entryEditPrice.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ár megadása / módosítása'**
+  String get entryEditPrice;
+
+  /// No description provided for @entryDiscardTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Elveted a módosításokat?'**
+  String get entryDiscardTitle;
+
+  /// No description provided for @entryDiscardBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'A nem mentett módosítások elvesznek. Az eredeti bejegyzés megmarad.'**
+  String get entryDiscardBody;
+
+  /// No description provided for @entryKeepEditing.
+  ///
+  /// In hu, this message translates to:
+  /// **'Szerkesztés folytatása'**
+  String get entryKeepEditing;
+
+  /// No description provided for @entryDiscard.
+  ///
+  /// In hu, this message translates to:
+  /// **'Módosítások elvetése'**
+  String get entryDiscard;
+
+  /// No description provided for @entryDate.
+  ///
+  /// In hu, this message translates to:
+  /// **'Dátum'**
+  String get entryDate;
+
+  /// No description provided for @entryTime.
+  ///
+  /// In hu, this message translates to:
+  /// **'Idő'**
+  String get entryTime;
+
+  /// No description provided for @entryDateHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'ÉÉÉÉ-HH-NN, például 2026-11-12'**
+  String get entryDateHint;
+
+  /// No description provided for @entryTimeHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'24 órás idő, például 18:30'**
+  String get entryTimeHint;
+
+  /// No description provided for @entryDateError.
+  ///
+  /// In hu, this message translates to:
+  /// **'Valós helyi dátumot és időt adj meg, amely nem későbbi a jelenleginél. Az óraátállítás miatt nem létező időpont nem menthető.'**
+  String get entryDateError;
+
+  /// No description provided for @entryFutureRule.
+  ///
+  /// In hu, this message translates to:
+  /// **'Új időpont nem lehet jövőbeli. Régi jövőbeli időpont változtatás nélkül megőrizhető.'**
+  String get entryFutureRule;
+
+  /// No description provided for @entrySaved.
+  ///
+  /// In hu, this message translates to:
+  /// **'Bejegyzés mentve.'**
+  String get entrySaved;
+
+  /// No description provided for @entrySavedFiltered.
+  ///
+  /// In hu, this message translates to:
+  /// **'Bejegyzés mentve. A módosítás után már nem felel meg a jelenlegi szűrőknek.'**
+  String get entrySavedFiltered;
+
+  /// No description provided for @entryStale.
+  ///
+  /// In hu, this message translates to:
+  /// **'A napló változott vagy nem olvasható. Töltsd újra.'**
+  String get entryStale;
 }
 
 class _AppLocalizationsDelegate

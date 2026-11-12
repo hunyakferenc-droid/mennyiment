@@ -2574,4 +2574,53 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get journalPartialCost =>
       'Részösszeg: a hiányzó árak nem számítanak 0 Ft-nak.';
+
+  @override
+  String get entryEdit => 'Bejegyzés szerkesztése';
+
+  @override
+  String get entryEditPrice => 'Ár megadása / módosítása';
+
+  @override
+  String get entryDiscardTitle => 'Elveted a módosításokat?';
+
+  @override
+  String get entryDiscardBody =>
+      'A nem mentett módosítások elvesznek. Az eredeti bejegyzés megmarad.';
+
+  @override
+  String get entryKeepEditing => 'Szerkesztés folytatása';
+
+  @override
+  String get entryDiscard => 'Módosítások elvetése';
+
+  @override
+  String get entryDate => 'Dátum';
+
+  @override
+  String get entryTime => 'Idő';
+
+  @override
+  String get entryDateHint => 'ÉÉÉÉ-HH-NN, például 2026-11-12';
+
+  @override
+  String get entryTimeHint => '24 órás idő, például 18:30';
+
+  @override
+  String get entryDateError =>
+      'Valós helyi dátumot és időt adj meg, amely nem későbbi a jelenleginél. Az óraátállítás miatt nem létező időpont nem menthető.';
+
+  @override
+  String get entryFutureRule =>
+      'Új időpont nem lehet jövőbeli. Régi jövőbeli időpont változtatás nélkül megőrizhető.';
+
+  @override
+  String get entrySaved => 'Bejegyzés mentve.';
+
+  @override
+  String get entrySavedFiltered =>
+      'Bejegyzés mentve. A módosítás után már nem felel meg a jelenlegi szűrőknek.';
+
+  @override
+  String get entryStale => 'A napló változott vagy nem olvasható. Töltsd újra.';
 }

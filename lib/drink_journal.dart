@@ -14,6 +14,33 @@ class Drink {
 
   double get alcoholGrams => ml * percent / 100 * 0.789;
 
+  /// Patch only changed fields in the original JSON. No identifier migration,
+  /// timestamp normalization or repair of untouched historic prices occurs.
+  Drink edited({
+    String? name,
+    int? ml,
+    double? percent,
+    DateTime? time,
+    bool editPrice = false,
+    double? priceFt,
+  }) {
+    final json = toJson();
+    if (name != null && name != this.name) json['name'] = name;
+    if (ml != null && ml != this.ml) json['ml'] = ml;
+    if (percent != null && percent != this.percent) json['percent'] = percent;
+    if (time != null && time != this.time) {
+      json['time'] = time.toIso8601String();
+    }
+    if (editPrice) {
+      if (priceFt == null) {
+        json.remove('priceFt');
+      } else if (priceFt != this.priceFt) {
+        json['priceFt'] = priceFt;
+      }
+    }
+    return Drink.fromJson(json);
+  }
+
   Map<String, dynamic> toJson() {
     final result = _source == null
         ? <String, dynamic>{
