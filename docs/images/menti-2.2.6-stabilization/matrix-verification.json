@@ -1,0 +1,38 @@
+{
+  "sourceCommit": "0960acda4fb44ac5754f1839b3d69450cd88a3d0",
+  "browser": "154.0.8037.57",
+  "version": {
+    "app_name": "mennyiment",
+    "version": "2.2.6",
+    "build_number": "30",
+    "package_name": "mennyiment"
+  },
+  "checks": [
+    "320px hu: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "360px hu: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "390px hu: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "430px hu: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "320px en: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "360px en: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "390px en: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "430px en: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "390px girl/young: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px girl/adult: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px girl/veteran: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px boy/young: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px boy/adult: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px boy/veteran: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px neutral/young: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px neutral/adult: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px neutral/veteran: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "360px EN: real browser backup download has valid envelope, profile, XP and drink records",
+    "Malformed file is rejected without changing browser data",
+    "Authentic file preview, cancel, confirmed restore and application remount complete",
+    "Restored profile, journal and XP survive a second tab"
+  ],
+  "runtimeErrors": [],
+  "intentionalReloadCancellations": [],
+  "textScale": "Chrome: normal. Actual 1x/2x Flutter text layout is verified by widget tests at every requested width/language.",
+  "physicalAndroid": false,
+  "emulator": false
+}

@@ -43,7 +43,14 @@ function observe(page) {
 }
 async function semantics(page) {
   const p=page.locator('flt-semantics-placeholder');
-  if(await p.count()) await p.evaluate(e=>e.click());
+  const deadline=Date.now()+30000;
+  while(!await page.locator('flt-semantics').count()) {
+    // Activation may remove the placeholder between a count and a separate
+    // action. Query and activate atomically, also allowing an already enabled tree.
+    await p.evaluateAll(elements=>elements.forEach(element=>element.click()));
+    if(Date.now()>deadline) throw Error('Flutter accessibility tree did not start');
+    await page.waitForTimeout(100);
+  }
 }
 async function open(browser, width, values) {
   const context=await browser.newContext({viewport:{width,height:844},reducedMotion:'reduce',acceptDownloads:true});
@@ -72,12 +79,25 @@ async function snapshot(page) {
   return page.evaluate(()=>Object.fromEntries(Object.entries(localStorage).filter(([k])=>k.startsWith('flutter.mennyiment_'))));
 }
 async function reach(page, locator) {
-  for(let i=0;i<35;i++) {
-    if(await locator.count()) { await locator.scrollIntoViewIfNeeded(); return locator; }
-    await page.mouse.move(page.viewportSize().width*.65,page.viewportSize().height*.67);
-    await page.mouse.wheel(0,260); await page.waitForTimeout(80);
+  // Native DOM scrolling can remove Flutter's virtualized semantics node before
+  // the action resolves. Scroll the rendered list with wheel input instead.
+  for(let i=0;i<80;i++) {
+    const v=page.viewportSize();
+    const boxes=await locator.evaluateAll(nodes=>nodes.map(node=>{
+      const r=node.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};
+    }));
+    const nav=await page.getByRole('tablist').evaluateAll(nodes=>nodes.map(node=>node.getBoundingClientRect().top));
+    const bottom=nav.find(y=>y>0)||v.height;
+    const box=boxes.find(r=>r.w>0&&r.h>0);
+    if(box&&box.x>=0&&box.x+box.w<=v.width+1&&box.y+box.h/2>60&&box.y+box.h/2<bottom-2) return locator;
+    await page.mouse.move(v.width*.65,v.height*.67);
+    await page.mouse.wheel(0,box&&box.y<60?-240:240);await page.waitForTimeout(100);
   }
   throw Error('Unreachable control');
+}
+async function semanticTap(locator) {
+  await locator.waitFor({state:'visible'});
+  await locator.evaluate(element=>element.click());
 }
 module.exports={chromium,open,seed,screenshot,snapshot,reach,semantics,observe,strings,out,errors};
 if(require.main===module) (async()=>{
@@ -93,10 +113,10 @@ if(require.main===module) (async()=>{
       // than Playwright's implicit document-navigation barrier (CDP: no navigation).
       await page.getByRole('button',{name:s.chooseMenti,exact:true}).click({noWaitAfter:true});
       await page.getByRole('heading',{name:s.avatarStudio,exact:true}).waitFor();
-      await page.getByRole('button',{name:s.avatarEnlargePreview,exact:true}).click({noWaitAfter:true});
+      await semanticTap(page.getByRole('button',{name:s.avatarEnlargePreview,exact:true}));
       await page.getByRole('button',{name:s.avatarClosePreview,exact:true}).waitFor();
       await screenshot(page,`zoom-${locale}-${width}`);
-      await page.getByRole('button',{name:s.avatarClosePreview,exact:true}).click({noWaitAfter:true});
+      await semanticTap(page.getByRole('button',{name:s.avatarClosePreview,exact:true}));
       await page.getByRole('heading',{name:s.avatarStudio,exact:true}).waitFor();
       await screenshot(page,`studio-${locale}-${width}`);
       assert.deepEqual(await snapshot(page),before,'Viewing Studio changed local data');
@@ -108,7 +128,7 @@ if(require.main===module) (async()=>{
       const s=strings.en;
       await page.getByRole('button',{name:s.chooseMenti,exact:true}).click({noWaitAfter:true});
       await page.getByRole('heading',{name:s.avatarStudio,exact:true}).waitFor();
-      await page.getByRole('button',{name:s.avatarEnlargePreview,exact:true}).click({noWaitAfter:true});
+      await semanticTap(page.getByRole('button',{name:s.avatarEnlargePreview,exact:true}));
       await page.getByRole('button',{name:s.avatarClosePreview,exact:true}).waitFor();
       await screenshot(page,`character-${family}-${age}`);
       checks.push(`390px ${family}/${age}: saved business outfit, hat, scarf, glasses and notebook rendered`);
@@ -118,7 +138,7 @@ if(require.main===module) (async()=>{
     // preview/cancel, then confirm an authentic file and reload the restored app.
     const {context,page}=await open(browser,360,seed('en')); active=page;
     const s=strings.en;
-    await page.getByRole('button',{name:s.avatarMore,exact:true}).click({noWaitAfter:true});
+    await semanticTap(page.getByRole('button',{name:s.avatarMore,exact:true}));
     await page.getByRole('menuitem',{name:s.backupTitle,exact:true}).click({noWaitAfter:true});
     await (await reach(page,page.getByRole('button',{name:s.backupPrepare,exact:true}))).click({noWaitAfter:true});
     const save=await reach(page,page.getByRole('button',{name:s.backupSave,exact:true}));
@@ -148,6 +168,7 @@ if(require.main===module) (async()=>{
     await screenshot(page,'restore-confirm-360-en');
     await page.getByRole('button',{name:s.restoreConfirm,exact:true}).click({noWaitAfter:true});
     await page.getByRole('button',{name:s.chooseMenti,exact:true}).waitFor();
+    await screenshot(page,'restored-home-360-en');
     checks.push('Authentic file preview, cancel, confirmed restore and application remount complete');
     // Turn off fixture injection before reload to verify persisted data itself.
     const persisted=await snapshot(page);
@@ -156,6 +177,7 @@ if(require.main===module) (async()=>{
     await reloadPage.goto(url,{waitUntil:'networkidle'}); await semantics(reloadPage);
     await reloadPage.getByRole('button',{name:s.chooseMenti,exact:true}).waitFor();
     assert.deepEqual(await snapshot(reloadPage),persisted);
+    await screenshot(reloadPage,'restored-second-tab-360-en');
     checks.push('Restored profile, journal and XP survive a second tab');
     await context.close(); active=null;
     const metadata=await (await browser.newContext()).request.get(`${url}/version.json`).then(r=>r.json());

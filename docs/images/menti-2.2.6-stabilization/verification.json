@@ -1,0 +1,237 @@
+{
+  "completedAt": "2026-11-12T15:56:02.315423+01:00",
+  "applicationCommit": "e95cdd2f195b1c541501062a66a117a1e63aaf82",
+  "packageCommit": "0960acda4fb44ac5754f1839b3d69450cd88a3d0",
+  "ci": {
+    "sourceCommit": "0960acda4fb44ac5754f1839b3d69450cd88a3d0",
+    "applicationCommit": "e95cdd2f195b1c541501062a66a117a1e63aaf82",
+    "run": 43214940422,
+    "job": 131171654742,
+    "url": "https://github.com/hunyakferenc-droid/mennyiment/actions/runs/43214940422",
+    "timezone": "Europe/Budapest",
+    "fullTests": {
+      "passed": 727,
+      "failed": 0,
+      "skipped": 0
+    },
+    "additionalDstTests": {
+      "passed": 349,
+      "failed": 0,
+      "skipped": 0
+    },
+    "newFlutterTests": 76,
+    "evidence": [
+      "2026-11-12T12:07:53.0667569Z No issues found! (ran in 12.8s)",
+      "2026-11-12T12:10:42.9067544Z 🎉 727 tests passed.",
+      "2026-11-12T12:11:21.3634464Z 🎉 349 tests passed.",
+      "2026-11-12T12:12:06.5747559Z ✓ Built build/web",
+      "2026-11-12T12:16:19.0338842Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk",
+      "2026-11-12T12:16:21.5129308Z source_commit=0960acda4fb44ac5754f1839b3d69450cd88a3d0",
+      "2026-11-12T12:16:21.5140376Z V2 Signer: certificate SHA-256 digest: 01f78160e634444f972b8a62647876b537a180d186433630729fa0e28a60c5f1",
+      "2026-11-12T12:16:21.5146324Z package: name='com.example.mennyiment' versionCode='30' versionName='2.2.6' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+      "2026-11-12T12:16:21.5147436Z sdkVersion:'24'",
+      "2026-11-12T12:16:21.5147775Z targetSdkVersion:'36'"
+    ]
+  },
+  "browser": "154.0.8037.57",
+  "browserChecks": [
+    "320px hu: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "360px hu: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "390px hu: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "430px hu: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "320px en: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "360px en: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "390px en: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "430px en: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged",
+    "390px girl/young: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px girl/adult: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px girl/veteran: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px boy/young: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px boy/adult: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px boy/veteran: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px neutral/young: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px neutral/adult: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "390px neutral/veteran: saved business outfit, hat, scarf, glasses and notebook rendered",
+    "360px EN: real browser backup download has valid envelope, profile, XP and drink records",
+    "Malformed file is rejected without changing browser data",
+    "Authentic file preview, cancel, confirmed restore and application remount complete",
+    "Restored profile, journal and XP survive a second tab",
+    "Fresh 390px adult installation: HU to EN, onboarding Back retains age, chosen girl identity and name save",
+    "Real Studio choice, save and undo: draft stays private, selected eyes persist and undo does not write",
+    "Reload keeps language, saved character and completed onboarding",
+    "Actual drink entry saves fractional HUF price and original catalog name; feedback uses its English label",
+    "Existing-price editor opens with exact fractional value and English helper/title; saving does not round",
+    "Fresh 320px minor installation and reload retain restriction and expose no alcohol logging action"
+  ],
+  "browserRuntimeErrors": [],
+  "windowsLauncherChecks": 9,
+  "screenshots": [
+    {
+      "file": "character-boy-adult.png",
+      "sha256": "646352425a38cee8480b9381b18729d2eb5ddfc326183f75ed69199756c75c94"
+    },
+    {
+      "file": "character-boy-veteran.png",
+      "sha256": "fc7aeda5204bf5265f572e473f43551951f357d5b27b9dbf73ebd1ab74363ef2"
+    },
+    {
+      "file": "character-boy-young.png",
+      "sha256": "ee72661213353a155cfd5a740c32ef02799239275d8263b8282d319ea8bbe4d8"
+    },
+    {
+      "file": "character-girl-adult.png",
+      "sha256": "79046de384c1a1eaa522858ffce8786afeba1b10dc066e9c329282436c5199f3"
+    },
+    {
+      "file": "character-girl-veteran.png",
+      "sha256": "406861071664277e502f643f558d5fb50a606caf783c16369bab915389c63855"
+    },
+    {
+      "file": "character-girl-young.png",
+      "sha256": "0743eb44683039fb568318bb0b74e4b63d41e7c62a721d301d11eabc9b95abfa"
+    },
+    {
+      "file": "character-neutral-adult.png",
+      "sha256": "d9b8ec0b6711fd7336203d6ac2f5615d8163a9662ae23d70b8f8970d258d5e87"
+    },
+    {
+      "file": "character-neutral-veteran.png",
+      "sha256": "86a69ac817ebfe01dd69b6289185dd86969a7edbba8d9298d0811c94f9a435e5"
+    },
+    {
+      "file": "character-neutral-young.png",
+      "sha256": "3087b11bb1ccd05f06c69da3562272eaba4434091c9ea891edece9b9a07817a4"
+    },
+    {
+      "file": "drink-details-390-en.png",
+      "sha256": "4f2fb5e665c0f52ad750363cd6ace0258dc9a5a2345a11451eceffc31d133bfd"
+    },
+    {
+      "file": "fractional-price-dialog-en.png",
+      "sha256": "30b62a33d7723d42979397fa1068e24a09c940b52d64923bfc3078a1359fa694"
+    },
+    {
+      "file": "fresh-home-en.png",
+      "sha256": "75ca5e0487839f179a2267154b28a03c2b934e9c7f2c5bd5e9d92659d6eee43e"
+    },
+    {
+      "file": "fresh-minor-home-en-320.png",
+      "sha256": "6e1db0fad6d9a4cc0faed589add1ff71b895777430457dc9077ad9e3cc9c6c58"
+    },
+    {
+      "file": "home-en-320.png",
+      "sha256": "2b78836227460e46adce2ac8c6940d0fa6881e91ee35c0992691d4cb24035db6"
+    },
+    {
+      "file": "home-en-360.png",
+      "sha256": "88a57745e9f1ada6b231a157df66d350e87d0c71642fd3e43da01a1c7c8119fc"
+    },
+    {
+      "file": "home-en-390.png",
+      "sha256": "037d4cdd0c1937ffe0cf4a8a25a96b5166e9c39f7225521d727fb225bea8b9c2"
+    },
+    {
+      "file": "home-en-430.png",
+      "sha256": "36430391f17b9440dfdeea9a81d7a9aa0b97c6c53e7c599ce8d685804c97fb95"
+    },
+    {
+      "file": "home-hu-320.png",
+      "sha256": "1104a96c817771ad6a575d4c1f7895c897167cd2a659183c1919e088fcf96fb4"
+    },
+    {
+      "file": "home-hu-360.png",
+      "sha256": "bbde2601e86900204756634b468b7cbfcc6c05d311f07d5b89cd9afdb5418bcf"
+    },
+    {
+      "file": "home-hu-390.png",
+      "sha256": "cd9bcc51f0622089174d7dcd6d30b255af9500dd6e0f926ccf8b0931845efb33"
+    },
+    {
+      "file": "home-hu-430.png",
+      "sha256": "24c88fcbe220514dfea58b6e6f6743bd0f7d621d1dfa6e1988be3af347fd4c01"
+    },
+    {
+      "file": "localized-recent-entry-en.png",
+      "sha256": "4ac06ce67208a538373d9456dbab08509396128c248b37c8e6afd5543ec451cb"
+    },
+    {
+      "file": "restore-confirm-360-en.png",
+      "sha256": "f7ef955f12df77c61b682f919c29aa6918a5a514167c1039f884ce54afa1b68c"
+    },
+    {
+      "file": "restored-home-360-en.png",
+      "sha256": "88a57745e9f1ada6b231a157df66d350e87d0c71642fd3e43da01a1c7c8119fc"
+    },
+    {
+      "file": "restored-second-tab-360-en.png",
+      "sha256": "88a57745e9f1ada6b231a157df66d350e87d0c71642fd3e43da01a1c7c8119fc"
+    },
+    {
+      "file": "studio-en-320.png",
+      "sha256": "7c58616a8b589e7b456d6e68bcae76a38e11540b2be1b7f1d66d177d13664180"
+    },
+    {
+      "file": "studio-en-360.png",
+      "sha256": "1828790a96d1f6da436786bf49f0ced5ee240cd139973fefa46fcd0256629b04"
+    },
+    {
+      "file": "studio-en-390.png",
+      "sha256": "1ffe4a48b6fadcaec2c56cac75904df61b10c26923e4ae3f76e3277365cb8ef2"
+    },
+    {
+      "file": "studio-en-430.png",
+      "sha256": "2a954e32dac98967b89ec0195cb01ff085c89321db6c82719b33c18bc2b7684e"
+    },
+    {
+      "file": "studio-hu-320.png",
+      "sha256": "622bbcc08e45173a484c6e42277857bbceeda29c70e7974e5aee74e1c7cf6632"
+    },
+    {
+      "file": "studio-hu-360.png",
+      "sha256": "6d3b86e921025fbe1e64d752ab339e1e862e1fc894f833f9348c80e884a22081"
+    },
+    {
+      "file": "studio-hu-390.png",
+      "sha256": "a6b0c7b9610ddc6e9c8aed8b450aa14a30b8c6ebf1f5a54f9f13206d8e559213"
+    },
+    {
+      "file": "studio-hu-430.png",
+      "sha256": "eaa90dbbc72cb40981d46cfe7444a8e39ea6bf096893f3b8ff899f12d22420fd"
+    },
+    {
+      "file": "zoom-en-320.png",
+      "sha256": "cacea6bc4c304c1c4f8a742ccce0b47bb2e865f962268061b811dc11eb60a2ce"
+    },
+    {
+      "file": "zoom-en-360.png",
+      "sha256": "f796a221147d1094061d515a4b49f26dfbe16f580030f936f257ef05e7d5395f"
+    },
+    {
+      "file": "zoom-en-390.png",
+      "sha256": "79046de384c1a1eaa522858ffce8786afeba1b10dc066e9c329282436c5199f3"
+    },
+    {
+      "file": "zoom-en-430.png",
+      "sha256": "fa766abb55d7b10084d3074b8e822ca3956aa5ff29706e77a061d8bcb792fc41"
+    },
+    {
+      "file": "zoom-hu-320.png",
+      "sha256": "cacea6bc4c304c1c4f8a742ccce0b47bb2e865f962268061b811dc11eb60a2ce"
+    },
+    {
+      "file": "zoom-hu-360.png",
+      "sha256": "f796a221147d1094061d515a4b49f26dfbe16f580030f936f257ef05e7d5395f"
+    },
+    {
+      "file": "zoom-hu-390.png",
+      "sha256": "79046de384c1a1eaa522858ffce8786afeba1b10dc066e9c329282436c5199f3"
+    },
+    {
+      "file": "zoom-hu-430.png",
+      "sha256": "fa766abb55d7b10084d3074b8e822ca3956aa5ff29706e77a061d8bcb792fc41"
+    }
+  ],
+  "physicalAndroidTested": false,
+  "androidEmulatorTested": false,
+  "realWindowsTested": false
+}

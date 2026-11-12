@@ -52,7 +52,7 @@ async function start(p,adult,name){
     assert.equal(value(await snapshot(p),'mennyiment_locale_v1'),'en');
     checks.push('Reload keeps language, saved character and completed onboarding');
     await click(await reach(p,button(p,s.addDrink)));
-    await click(await reach(p,p.getByRole('button').filter({hasText:s.catalogBeer}).first()));
+    await click(await reach(p,p.getByRole('button',{name:s.catalogBeer}).first()));
     const fields=p.getByRole('textbox');
     for(const [i,text] of ['250','4.5','1234.75'].entries()){
       await click(fields.nth(i));await p.keyboard.press('Control+A');await p.keyboard.type(text);
@@ -63,9 +63,9 @@ async function start(p,adult,name){
     let records=document(await snapshot(p),'mennyiment_drinks_v1');
     assert.equal(records.length,1);assert.equal(records[0].name,'Sör (általános)');assert.equal(records[0].priceFt,1234.75);
     checks.push('Actual drink entry saves fractional HUF price and original catalog name; feedback uses its English label');
-    await click(await reach(p,p.getByText(s.homeMore,{exact:true})));
+    await click(await reach(p,button(p,s.homeMore)));
     await click(await reach(p,button(p,s.homeRecordActions)));
-    await click(p.getByText(/^Price:.*edit$/));
+    await click(p.getByRole('menuitem',{name:/^Price:/}).first());
     const price=p.getByRole('textbox');await click(price);assert.equal(await price.inputValue(),'1234.75');
     await p.getByText(s.journalPriceHint,{exact:true}).last().waitFor();
     await p.getByText(s.journalSetPrice.replace('{name}',s.catalogBeer),{exact:true}).last().waitFor();

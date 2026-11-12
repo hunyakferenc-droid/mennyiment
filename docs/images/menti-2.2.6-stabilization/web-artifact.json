@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "0960acda4fb44ac5754f1839b3d69450cd88a3d0",
+  "applicationCommit": "e95cdd2f195b1c541501062a66a117a1e63aaf82",
+  "artifact": 13943442279,
+  "sha256": "90d664bde7c76f48e4d111d3735caff05f20fb6458737815c89ad5286d31c5a5",
+  "bytes": 78805316,
+  "files": 338,
+  "crc": "passed",
+  "localIdenticalFiles": 333,
+  "localDifferences": [
+    "flutter_bootstrap.js"
+  ],
+  "mainDartJsByteIdentical": true,
+  "windowsLauncherByteIdentical": true
+}
