@@ -1308,5 +1308,123 @@
   "entryFutureRule": "Új időpont nem lehet jövőbeli. Régi jövőbeli időpont változtatás nélkül megőrizhető.",
   "entrySaved": "Bejegyzés mentve.",
   "entrySavedFiltered": "Bejegyzés mentve. A módosítás után már nem felel meg a jelenlegi szűrőknek.",
-  "entryStale": "A napló változott vagy nem olvasható. Töltsd újra."
+  "entryStale": "A napló változott vagy nem olvasható. Töltsd újra.",
+  "adventureTitle": "Menti-kalandok",
+  "adventureIntro": "Pár perc magadra, a saját tempódban. Válassz legfeljebb három mai küldetést.",
+  "adventureDaily": "Mai küldetések",
+  "adventureMap": "Térkép",
+  "adventureBadges": "Jelvények",
+  "adventureProgress": "Teljesített küldetések: {count} / {target}",
+  "@adventureProgress": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "adventureToday": "Mai nap: {date}",
+  "@adventureToday": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "adventureSlots": "Mai vállalások: {count} / 3. A teljesített feladat is helyet foglal.",
+  "@adventureSlots": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "adventureNoPenalty": "A kihagyott nap nem vesz el semmit. Holnap újra választhatsz; a korábbi haladás megmarad.",
+  "adventureNoXp": "A kalandhaladás és a jelvény a jutalom. A kalandok nem adnak külön XP-t; a meglévő önellenőrzés saját XP-szabálya változatlan.",
+  "adventureChoose": "Ezt vállalom",
+  "adventureResume": "Újra vállalom",
+  "adventureCancel": "Vállalás megszakítása",
+  "adventureComplete": "Teljesítettem – saját jelzésem",
+  "adventureVerify": "Mentett közérzet ellenőrzése",
+  "adventureOpenWellbeing": "Közérzetnapló megnyitása",
+  "adventureOpenGoals": "Saját célok megnyitása",
+  "adventureActive": "Ma vállaltad",
+  "adventureDone": "Teljesítve",
+  "adventureCancelled": "Megszakítva – újra vállalható",
+  "adventureManual": "Önbevallás: a teljesítést te jelzed. Az alkalmazás ezt nem méri.",
+  "adventureVerified": "A mai napra mentett közérzetbejegyzés igazolja. A képernyő megnyitása önmagában nem teljesítés.",
+  "adventureWellbeing": "Hogy vagy ma?",
+  "adventureWellbeingHint": "Rögzíts egy mai közérzetbejegyzést a meglévő naplóban, majd ellenőrizd itt.",
+  "adventureMovement": "Egy rövid mozgásszünet",
+  "adventureMovementHint": "Ha jólesik, állj fel, nyújtózz vagy mozogj a számodra kényelmes módon. Te választod az időt és a formát.",
+  "adventureRest": "Egy kis pihenő",
+  "adventureRestHint": "Tarts egy rövid, nyugodt szünetet. Nincs kötelező időtartam.",
+  "adventureDecision": "Egy tudatos döntésem",
+  "adventureDecisionHelp": "Jegyezz fel egy apró döntést, amellyel ma figyeltél magadra. A saját szöveged helyben marad.",
+  "adventureGoal": "Ránézek a saját célomra",
+  "adventureGoalHint": "Nyisd meg a meglévő céljaidat, és gondold át a következő kis lépést. Az áttekintést csak saját jelzésed igazolja.",
+  "adventureDecisionHint": "Mai tudatos döntésem",
+  "adventureNoteMissing": "Írj néhány szót a döntésedről, vagy válaszd a Mégse gombot.",
+  "adventureConfirmTitle": "Te jelzed a teljesítést",
+  "adventureConfirmBody": "Ezt a feladatot az alkalmazás nem tudja ellenőrizni. Most a saját jelzésedet mentjük.",
+  "adventureCancelTitle": "Megszakítod a vállalást?",
+  "adventureCancelBody": "Nem jár érte levonás. A hely felszabadul, és ma később újra vállalhatod.",
+  "adventureLater": "Mégse",
+  "adventureMentiSays": "{name}: {message}",
+  "@adventureMentiSays": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "adventureSupport0": "Egy kis lépés magadért. Ezt feljegyeztük! 💜",
+  "adventureSupport1": "A saját tempód számít. Ma is tettél magadért. 🌱",
+  "adventureSupport2": "Küldetés kész, képzeletbeli pacsi! ✋",
+  "adventureStationCompleted": "Új állomás teljesült! A térképen látod a következő kis lépést. ✨",
+  "adventureSkipFeedback": "Rendben, tovább",
+  "adventureStation0": "Indulás",
+  "adventureStation1": "Felfedezés",
+  "adventureStation2": "Egyensúly",
+  "adventureStation3": "Lendület",
+  "adventureStation4": "Saját ritmus",
+  "adventureStationRule": "Feltétel: összesen {count} teljesített küldetés, bármely napokról.",
+  "@adventureStationRule": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "adventureStationDone": "Teljesített állomás",
+  "adventureStationCurrent": "Itt jársz most",
+  "adventureStationFuture": "Későbbi állomás",
+  "adventureBadgeFirst": "Első lépés",
+  "adventureBadgeFirstRule": "Teljesíts egy kiválasztott küldetést.",
+  "adventureBadgeVariety": "Sokszínű kaland",
+  "adventureBadgeVarietyRule": "Teljesíts három különböző típusú küldetést, akár több nap alatt.",
+  "adventureBadgeStation": "Megérkeztem",
+  "adventureBadgeStationRule": "Teljesítsd az első állomást: összesen három küldetés.",
+  "adventureEarned": "Megszerzés napja: {date}",
+  "@adventureEarned": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "adventureLocked": "Még előtted áll",
+  "adventureLoadError": "A kalandállapot nem olvasható, vagy újabb verzióhoz tartozik. Érintetlenül megőrizzük; mentést készíthetsz róla az Adatok oldalon.",
+  "adventureSaveError": "A mentés nem igazolt. Nem jeleztünk teljesítést; próbáld újra, vagy töltsd újra az állapotot.",
+  "adventureStale": "A tárolt állapot megváltozott. A felülírás elkerüléséhez töltsd újra.",
+  "adventureDayChanged": "Közben új nap kezdődött. Betöltjük a mai vállalásokat; a tegnapi adat megmarad.",
+  "adventureCapacity": "Ma legfeljebb három vállalt vagy teljesített küldetésed lehet. Egy még nem teljesített vállalást megszakíthatsz.",
+  "adventureEvidence": "Még nincs igazolt mai közérzetbejegyzés. Nyisd meg a közérzetnaplót, ments a mai napra, majd ellenőrizd újra.",
+  "adventureAccess": "Ez a célfeladat ebben a korhatármódban nem érhető el. A jólléti feladatokat továbbra is választhatod.",
+  "adventureRetry": "Kalandállapot újratöltése"
 }

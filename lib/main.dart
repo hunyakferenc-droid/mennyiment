@@ -8,6 +8,7 @@ export 'drink_journal.dart';
 import 'menti_progress.dart';
 import 'menti_xp_store.dart';
 import 'daily_menti.dart';
+import 'menti_adventures.dart';
 import 'finance_center.dart';
 import 'wellbeing_journal.dart';
 import 'lifestyle_insights.dart';
@@ -697,6 +698,12 @@ void updateMentiMessage(MentiMood mood) {
     updateMentiMessage(MentiMood.goals);
   }
 
+  Future<void> _openAdventures() async {
+    await Navigator.push(context, MaterialPageRoute<void>(builder: (_) =>
+      MentiAdventuresPage(onWellbeing: _openWellbeingJournal, onGoals: _openPersonalGoals)));
+    if (mounted) setState(() => _dailyRevision++);
+  }
+
   Future<void> _openWellbeingJournal() async {
     await Navigator.push(context, MaterialPageRoute(
       builder: (_) => const WellbeingJournalPage(),
@@ -1093,6 +1100,10 @@ void updateMentiMessage(MentiMood mood) {
                 onPressed: _openPersonalHub,
                 icon: const Icon(Icons.dashboard_outlined),
                 label: Text(strings.hubTitle)),
+              const SizedBox(height: 12),
+              FilledButton.icon(
+                key: const ValueKey('open-adventures'), onPressed: _openAdventures,
+                icon: const Icon(Icons.explore_outlined), label: Text(strings.adventureTitle)),
               const SizedBox(height: 12),
               if (widget.offerIntro && experience != null && experience.ready && !experience.introSeen)
                 MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

@@ -4753,6 +4753,426 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'A napló változott vagy nem olvasható. Töltsd újra.'**
   String get entryStale;
+
+  /// No description provided for @adventureTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti-kalandok'**
+  String get adventureTitle;
+
+  /// No description provided for @adventureIntro.
+  ///
+  /// In hu, this message translates to:
+  /// **'Pár perc magadra, a saját tempódban. Válassz legfeljebb három mai küldetést.'**
+  String get adventureIntro;
+
+  /// No description provided for @adventureDaily.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mai küldetések'**
+  String get adventureDaily;
+
+  /// No description provided for @adventureMap.
+  ///
+  /// In hu, this message translates to:
+  /// **'Térkép'**
+  String get adventureMap;
+
+  /// No description provided for @adventureBadges.
+  ///
+  /// In hu, this message translates to:
+  /// **'Jelvények'**
+  String get adventureBadges;
+
+  /// No description provided for @adventureProgress.
+  ///
+  /// In hu, this message translates to:
+  /// **'Teljesített küldetések: {count} / {target}'**
+  String adventureProgress(int count, int target);
+
+  /// No description provided for @adventureToday.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mai nap: {date}'**
+  String adventureToday(String date);
+
+  /// No description provided for @adventureSlots.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mai vállalások: {count} / 3. A teljesített feladat is helyet foglal.'**
+  String adventureSlots(int count);
+
+  /// No description provided for @adventureNoPenalty.
+  ///
+  /// In hu, this message translates to:
+  /// **'A kihagyott nap nem vesz el semmit. Holnap újra választhatsz; a korábbi haladás megmarad.'**
+  String get adventureNoPenalty;
+
+  /// No description provided for @adventureNoXp.
+  ///
+  /// In hu, this message translates to:
+  /// **'A kalandhaladás és a jelvény a jutalom. A kalandok nem adnak külön XP-t; a meglévő önellenőrzés saját XP-szabálya változatlan.'**
+  String get adventureNoXp;
+
+  /// No description provided for @adventureChoose.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ezt vállalom'**
+  String get adventureChoose;
+
+  /// No description provided for @adventureResume.
+  ///
+  /// In hu, this message translates to:
+  /// **'Újra vállalom'**
+  String get adventureResume;
+
+  /// No description provided for @adventureCancel.
+  ///
+  /// In hu, this message translates to:
+  /// **'Vállalás megszakítása'**
+  String get adventureCancel;
+
+  /// No description provided for @adventureComplete.
+  ///
+  /// In hu, this message translates to:
+  /// **'Teljesítettem – saját jelzésem'**
+  String get adventureComplete;
+
+  /// No description provided for @adventureVerify.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mentett közérzet ellenőrzése'**
+  String get adventureVerify;
+
+  /// No description provided for @adventureOpenWellbeing.
+  ///
+  /// In hu, this message translates to:
+  /// **'Közérzetnapló megnyitása'**
+  String get adventureOpenWellbeing;
+
+  /// No description provided for @adventureOpenGoals.
+  ///
+  /// In hu, this message translates to:
+  /// **'Saját célok megnyitása'**
+  String get adventureOpenGoals;
+
+  /// No description provided for @adventureActive.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ma vállaltad'**
+  String get adventureActive;
+
+  /// No description provided for @adventureDone.
+  ///
+  /// In hu, this message translates to:
+  /// **'Teljesítve'**
+  String get adventureDone;
+
+  /// No description provided for @adventureCancelled.
+  ///
+  /// In hu, this message translates to:
+  /// **'Megszakítva – újra vállalható'**
+  String get adventureCancelled;
+
+  /// No description provided for @adventureManual.
+  ///
+  /// In hu, this message translates to:
+  /// **'Önbevallás: a teljesítést te jelzed. Az alkalmazás ezt nem méri.'**
+  String get adventureManual;
+
+  /// No description provided for @adventureVerified.
+  ///
+  /// In hu, this message translates to:
+  /// **'A mai napra mentett közérzetbejegyzés igazolja. A képernyő megnyitása önmagában nem teljesítés.'**
+  String get adventureVerified;
+
+  /// No description provided for @adventureWellbeing.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hogy vagy ma?'**
+  String get adventureWellbeing;
+
+  /// No description provided for @adventureWellbeingHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Rögzíts egy mai közérzetbejegyzést a meglévő naplóban, majd ellenőrizd itt.'**
+  String get adventureWellbeingHint;
+
+  /// No description provided for @adventureMovement.
+  ///
+  /// In hu, this message translates to:
+  /// **'Egy rövid mozgásszünet'**
+  String get adventureMovement;
+
+  /// No description provided for @adventureMovementHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ha jólesik, állj fel, nyújtózz vagy mozogj a számodra kényelmes módon. Te választod az időt és a formát.'**
+  String get adventureMovementHint;
+
+  /// No description provided for @adventureRest.
+  ///
+  /// In hu, this message translates to:
+  /// **'Egy kis pihenő'**
+  String get adventureRest;
+
+  /// No description provided for @adventureRestHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Tarts egy rövid, nyugodt szünetet. Nincs kötelező időtartam.'**
+  String get adventureRestHint;
+
+  /// No description provided for @adventureDecision.
+  ///
+  /// In hu, this message translates to:
+  /// **'Egy tudatos döntésem'**
+  String get adventureDecision;
+
+  /// No description provided for @adventureDecisionHelp.
+  ///
+  /// In hu, this message translates to:
+  /// **'Jegyezz fel egy apró döntést, amellyel ma figyeltél magadra. A saját szöveged helyben marad.'**
+  String get adventureDecisionHelp;
+
+  /// No description provided for @adventureGoal.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ránézek a saját célomra'**
+  String get adventureGoal;
+
+  /// No description provided for @adventureGoalHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nyisd meg a meglévő céljaidat, és gondold át a következő kis lépést. Az áttekintést csak saját jelzésed igazolja.'**
+  String get adventureGoalHint;
+
+  /// No description provided for @adventureDecisionHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mai tudatos döntésem'**
+  String get adventureDecisionHint;
+
+  /// No description provided for @adventureNoteMissing.
+  ///
+  /// In hu, this message translates to:
+  /// **'Írj néhány szót a döntésedről, vagy válaszd a Mégse gombot.'**
+  String get adventureNoteMissing;
+
+  /// No description provided for @adventureConfirmTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Te jelzed a teljesítést'**
+  String get adventureConfirmTitle;
+
+  /// No description provided for @adventureConfirmBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ezt a feladatot az alkalmazás nem tudja ellenőrizni. Most a saját jelzésedet mentjük.'**
+  String get adventureConfirmBody;
+
+  /// No description provided for @adventureCancelTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Megszakítod a vállalást?'**
+  String get adventureCancelTitle;
+
+  /// No description provided for @adventureCancelBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nem jár érte levonás. A hely felszabadul, és ma később újra vállalhatod.'**
+  String get adventureCancelBody;
+
+  /// No description provided for @adventureLater.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mégse'**
+  String get adventureLater;
+
+  /// No description provided for @adventureMentiSays.
+  ///
+  /// In hu, this message translates to:
+  /// **'{name}: {message}'**
+  String adventureMentiSays(String name, String message);
+
+  /// No description provided for @adventureSupport0.
+  ///
+  /// In hu, this message translates to:
+  /// **'Egy kis lépés magadért. Ezt feljegyeztük! 💜'**
+  String get adventureSupport0;
+
+  /// No description provided for @adventureSupport1.
+  ///
+  /// In hu, this message translates to:
+  /// **'A saját tempód számít. Ma is tettél magadért. 🌱'**
+  String get adventureSupport1;
+
+  /// No description provided for @adventureSupport2.
+  ///
+  /// In hu, this message translates to:
+  /// **'Küldetés kész, képzeletbeli pacsi! ✋'**
+  String get adventureSupport2;
+
+  /// No description provided for @adventureStationCompleted.
+  ///
+  /// In hu, this message translates to:
+  /// **'Új állomás teljesült! A térképen látod a következő kis lépést. ✨'**
+  String get adventureStationCompleted;
+
+  /// No description provided for @adventureSkipFeedback.
+  ///
+  /// In hu, this message translates to:
+  /// **'Rendben, tovább'**
+  String get adventureSkipFeedback;
+
+  /// No description provided for @adventureStation0.
+  ///
+  /// In hu, this message translates to:
+  /// **'Indulás'**
+  String get adventureStation0;
+
+  /// No description provided for @adventureStation1.
+  ///
+  /// In hu, this message translates to:
+  /// **'Felfedezés'**
+  String get adventureStation1;
+
+  /// No description provided for @adventureStation2.
+  ///
+  /// In hu, this message translates to:
+  /// **'Egyensúly'**
+  String get adventureStation2;
+
+  /// No description provided for @adventureStation3.
+  ///
+  /// In hu, this message translates to:
+  /// **'Lendület'**
+  String get adventureStation3;
+
+  /// No description provided for @adventureStation4.
+  ///
+  /// In hu, this message translates to:
+  /// **'Saját ritmus'**
+  String get adventureStation4;
+
+  /// No description provided for @adventureStationRule.
+  ///
+  /// In hu, this message translates to:
+  /// **'Feltétel: összesen {count} teljesített küldetés, bármely napokról.'**
+  String adventureStationRule(int count);
+
+  /// No description provided for @adventureStationDone.
+  ///
+  /// In hu, this message translates to:
+  /// **'Teljesített állomás'**
+  String get adventureStationDone;
+
+  /// No description provided for @adventureStationCurrent.
+  ///
+  /// In hu, this message translates to:
+  /// **'Itt jársz most'**
+  String get adventureStationCurrent;
+
+  /// No description provided for @adventureStationFuture.
+  ///
+  /// In hu, this message translates to:
+  /// **'Későbbi állomás'**
+  String get adventureStationFuture;
+
+  /// No description provided for @adventureBadgeFirst.
+  ///
+  /// In hu, this message translates to:
+  /// **'Első lépés'**
+  String get adventureBadgeFirst;
+
+  /// No description provided for @adventureBadgeFirstRule.
+  ///
+  /// In hu, this message translates to:
+  /// **'Teljesíts egy kiválasztott küldetést.'**
+  String get adventureBadgeFirstRule;
+
+  /// No description provided for @adventureBadgeVariety.
+  ///
+  /// In hu, this message translates to:
+  /// **'Sokszínű kaland'**
+  String get adventureBadgeVariety;
+
+  /// No description provided for @adventureBadgeVarietyRule.
+  ///
+  /// In hu, this message translates to:
+  /// **'Teljesíts három különböző típusú küldetést, akár több nap alatt.'**
+  String get adventureBadgeVarietyRule;
+
+  /// No description provided for @adventureBadgeStation.
+  ///
+  /// In hu, this message translates to:
+  /// **'Megérkeztem'**
+  String get adventureBadgeStation;
+
+  /// No description provided for @adventureBadgeStationRule.
+  ///
+  /// In hu, this message translates to:
+  /// **'Teljesítsd az első állomást: összesen három küldetés.'**
+  String get adventureBadgeStationRule;
+
+  /// No description provided for @adventureEarned.
+  ///
+  /// In hu, this message translates to:
+  /// **'Megszerzés napja: {date}'**
+  String adventureEarned(String date);
+
+  /// No description provided for @adventureLocked.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még előtted áll'**
+  String get adventureLocked;
+
+  /// No description provided for @adventureLoadError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A kalandállapot nem olvasható, vagy újabb verzióhoz tartozik. Érintetlenül megőrizzük; mentést készíthetsz róla az Adatok oldalon.'**
+  String get adventureLoadError;
+
+  /// No description provided for @adventureSaveError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A mentés nem igazolt. Nem jeleztünk teljesítést; próbáld újra, vagy töltsd újra az állapotot.'**
+  String get adventureSaveError;
+
+  /// No description provided for @adventureStale.
+  ///
+  /// In hu, this message translates to:
+  /// **'A tárolt állapot megváltozott. A felülírás elkerüléséhez töltsd újra.'**
+  String get adventureStale;
+
+  /// No description provided for @adventureDayChanged.
+  ///
+  /// In hu, this message translates to:
+  /// **'Közben új nap kezdődött. Betöltjük a mai vállalásokat; a tegnapi adat megmarad.'**
+  String get adventureDayChanged;
+
+  /// No description provided for @adventureCapacity.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ma legfeljebb három vállalt vagy teljesített küldetésed lehet. Egy még nem teljesített vállalást megszakíthatsz.'**
+  String get adventureCapacity;
+
+  /// No description provided for @adventureEvidence.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még nincs igazolt mai közérzetbejegyzés. Nyisd meg a közérzetnaplót, ments a mai napra, majd ellenőrizd újra.'**
+  String get adventureEvidence;
+
+  /// No description provided for @adventureAccess.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ez a célfeladat ebben a korhatármódban nem érhető el. A jólléti feladatokat továbbra is választhatod.'**
+  String get adventureAccess;
+
+  /// No description provided for @adventureRetry.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kalandállapot újratöltése'**
+  String get adventureRetry;
 }
 
 class _AppLocalizationsDelegate
