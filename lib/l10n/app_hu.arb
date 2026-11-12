@@ -1383,10 +1383,10 @@
       }
     }
   },
-  "adventureSupport0": "Egy kis lépés magadért. Ezt feljegyeztük! 💜",
-  "adventureSupport1": "A saját tempód számít. Ma is tettél magadért. 🌱",
-  "adventureSupport2": "Küldetés kész, képzeletbeli pacsi! ✋",
-  "adventureStationCompleted": "Új állomás teljesült! A térképen látod a következő kis lépést. ✨",
+  "adventureSupport0": "Egy kis lépés magadért. Ezt feljegyeztük!",
+  "adventureSupport1": "A saját tempód számít. Ma is tettél magadért.",
+  "adventureSupport2": "Küldetés kész, képzeletbeli pacsi!",
+  "adventureStationCompleted": "Új állomás teljesült! A térképen látod a következő kis lépést.",
   "adventureSkipFeedback": "Rendben, tovább",
   "adventureStation0": "Indulás",
   "adventureStation1": "Felfedezés",

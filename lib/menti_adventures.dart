@@ -37,6 +37,7 @@ class _MentiAdventuresPageState extends State<MentiAdventuresPage>
       widget.store ?? AdventureStore(clock: widget.clock);
   late DateTime day;
   bool loading = true, saving = false, failed = false;
+  bool _dialogOpen = false;
   Timer? _dayTimer, _feedbackTimer;
   AdventureResult? feedback;
   int sequence = 0;
@@ -125,66 +126,82 @@ class _MentiAdventuresPageState extends State<MentiAdventuresPage>
   }
 
   Future<void> _confirm(AdventureTask task, {bool cancel = false}) async {
-    if (saving || loading || _rollDay()) return;
+    if (_dialogOpen || saving || loading || _rollDay()) return;
+    _dialogOpen = true;
     // Capture the day before opening a dialog: midnight cannot silently apply
     // this confirmation to a newly selected task on another day.
     final selectedDay = day;
     final s = appStrings(context);
     final controller = TextEditingController();
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        scrollable: true,
-        title: Text(cancel ? s.adventureCancelTitle : s.adventureConfirmTitle),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(cancel ? s.adventureCancelBody : s.adventureConfirmBody),
-            if (!cancel && task == AdventureTask.decision)
-              TextField(
-                key: const ValueKey('adventure-note'),
-                controller: controller,
-                autofocus: true,
-                maxLength: 500,
-                minLines: 2,
-                maxLines: 5,
-                decoration: InputDecoration(labelText: s.adventureDecisionHint),
-              ),
+    var resolved = false;
+    void closeDialog(BuildContext ctx, bool value) {
+      if (resolved || ModalRoute.of(ctx)?.isCurrent != true) return;
+      resolved = true;
+      Navigator.pop(ctx, value);
+    }
+
+    try {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          scrollable: true,
+          title: Text(
+            cancel ? s.adventureCancelTitle : s.adventureConfirmTitle,
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(cancel ? s.adventureCancelBody : s.adventureConfirmBody),
+              if (!cancel && task == AdventureTask.decision)
+                TextField(
+                  key: const ValueKey('adventure-note'),
+                  controller: controller,
+                  autofocus: true,
+                  maxLength: 500,
+                  minLines: 2,
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                    labelText: s.adventureDecisionHint,
+                  ),
+                ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => closeDialog(ctx, false),
+              child: Text(s.adventureLater),
+            ),
+            FilledButton(
+              key: const ValueKey('adventure-confirm'),
+              onPressed: () {
+                if (!cancel &&
+                    task == AdventureTask.decision &&
+                    controller.text.trim().isEmpty) {
+                  ScaffoldMessenger.of(ctx).showSnackBar(
+                    SnackBar(content: Text(s.adventureNoteMissing)),
+                  );
+                  return;
+                }
+                closeDialog(ctx, true);
+              },
+              child: Text(cancel ? s.adventureCancel : s.adventureComplete),
+            ),
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: Text(s.adventureLater),
-          ),
-          FilledButton(
-            key: const ValueKey('adventure-confirm'),
-            onPressed: () {
-              if (!cancel &&
-                  task == AdventureTask.decision &&
-                  controller.text.trim().isEmpty) {
-                ScaffoldMessenger.of(
-                  ctx,
-                ).showSnackBar(SnackBar(content: Text(s.adventureNoteMissing)));
-                return;
-              }
-              Navigator.pop(ctx, true);
-            },
-            child: Text(cancel ? s.adventureCancel : s.adventureComplete),
-          ),
-        ],
-      ),
-    );
-    final note = controller.text;
-    // A dialog's exit transition can still hold its text field/controller.
-    await Future<void>.delayed(const Duration(milliseconds: 300));
-    controller.dispose();
-    if (confirmed != true || !mounted) return;
-    await _act(
-      () => cancel
-          ? store.cancel(selectedDay, task)
-          : store.complete(selectedDay, task, note: note),
-    );
+      );
+      final note = controller.text;
+      // A dialog's exit transition can still hold its text field/controller.
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+      if (confirmed != true || !mounted) return;
+      await _act(
+        () => cancel
+            ? store.cancel(selectedDay, task)
+            : store.complete(selectedDay, task, note: note),
+      );
+    } finally {
+      controller.dispose();
+      _dialogOpen = false;
+    }
   }
 
   Future<void> _open(Future<void> Function() route) async {

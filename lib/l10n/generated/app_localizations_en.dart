@@ -2779,19 +2779,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get adventureSupport0 =>
-      'A small step for yourself. It’s recorded! 💜';
+  String get adventureSupport0 => 'A small step for yourself. It’s recorded!';
 
   @override
   String get adventureSupport1 =>
-      'Your own pace matters. You made time for yourself. 🌱';
+      'Your own pace matters. You made time for yourself.';
 
   @override
-  String get adventureSupport2 => 'Mission complete. Imaginary high five! ✋';
+  String get adventureSupport2 => 'Mission complete. Imaginary high five!';
 
   @override
   String get adventureStationCompleted =>
-      'Another station complete! Your map shows the next small step. ✨';
+      'Another station complete! Your map shows the next small step.';
 
   @override
   String get adventureSkipFeedback => 'Continue';

@@ -28,7 +28,14 @@ flutter:
   generate: true
   uses-material-design: true
 
+  fonts:
+    - family: MentiEmoji
+      fonts:
+        - asset: assets/fonts/menti_emoji/NotoColorEmoji.ttf
+
   assets:
+    - assets/fonts/menti_emoji/OFL.txt
+    - assets/fonts/menti_emoji/README.md
     - assets/images/
     - assets/images/menti_outfits/
 

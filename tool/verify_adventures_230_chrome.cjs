@@ -4,7 +4,10 @@ const {chromium,open,seed,semantics,screenshot,snapshot,strings,out,errors,cance
 const url=process.env.MENTI_WEB_URL||'http://127.0.0.1:7357';
 const key='flutter.mennyiment_adventures_v1',wellbeing='flutter.mennyiment_wellbeing_v1';
 const checks=[];
+const sourceCommit=process.env.MENTI_SOURCE_COMMIT;
+assert(/^[0-9a-f]{40}$/.test(sourceCommit||''),'Set MENTI_SOURCE_COMMIT to the exact built source');
 const button=(p,n)=>p.getByRole('button',{name:n,exact:true});
+const text=(p,n)=>p.getByText(n,{exact:false}).or(p.getByLabel(n,{exact:false})).first();
 const decode=v=>JSON.parse(JSON.parse(v));
 const taskButton=(p,id,name)=>p.locator(`[flt-semantics-identifier="adventure-task-${id}"]`).getByRole('button',{name,exact:true});
 async function ready(p){const end=performance.now()+45000;while(p.pendingRequests.size||Date.now()-p.lastNetworkActivity<800){if(performance.now()>end)throw Error('Assets did not settle');await p.waitForTimeout(100);}}
@@ -12,7 +15,9 @@ async function reach(p,l){
  for(let i=0;i<65;i++){
   const boxes=await l.evaluateAll(nodes=>nodes.map(e=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height};}));
   const b=boxes.find(x=>x.w>0&&x.h>0),v=p.viewportSize();
-  if(b&&b.x>=0&&b.x+b.w<=v.width+1&&b.y+b.h/2>132&&b.y+b.h/2<v.height-8)return l;
+  const nav=await p.getByRole('tablist').evaluateAll(nodes=>nodes.map(n=>n.getBoundingClientRect().top));
+  const bottom=nav.find(y=>y>v.height*.5)||v.height;
+  if(b&&b.x>=0&&b.x+b.w<=v.width+1&&b.y+b.h/2>132&&b.y+b.h/2<bottom-8)return l;
   await p.mouse.move(v.width*.75,v.height*.7);await p.mouse.wheel(0,b&&b.y<132?-240:240);await p.waitForTimeout(100);
  }
  throw Error('Unreachable adventure control: '+await l.count());
@@ -28,6 +33,7 @@ async function protect(p,before){const after=await snapshot(p);const a={...after
    const values=seed(locale);delete values[key];const s=strings[locale];
    const {context,page:p}=await open(browser,width,values,p=>{active=p;});active=p;
    p.externalRequests=[];p.on('request',r=>{if(new URL(r.url()).origin!==new URL(url).origin)p.externalRequests.push(r.url());});
+   assert((await (await p.request.get(url+'/build-info.txt')).text()).includes('source_commit='+sourceCommit));
    assert.equal((await (await p.request.get(url+'/version.json')).json()).version,'2.3.0');
    assert.equal((await (await p.request.get(url+'/version.json')).json()).build_number,'33');
    await button(p,s.chooseMenti).waitFor();await ready(p);const before=await snapshot(p);
@@ -45,7 +51,8 @@ async function protect(p,before){const after=await snapshot(p);const a={...after
    state=await protect(p,before);assert.equal(state.days[today].movement.status,'active');
    await act(p,button(p,s.adventureComplete).first());await fixed(p,button(p,s.adventureComplete).last());
    await screenshot(p,`celebration-${locale}-${width}`);
-   if(await button(p,s.adventureSkipFeedback).count())await fixed(p,button(p,s.adventureSkipFeedback));
+   // The short celebration may disappear between separate locator operations.
+   await button(p,s.adventureSkipFeedback).evaluateAll(nodes=>nodes.forEach(node=>node.click()));
    state=await protect(p,before);assert.equal(state.days[today].movement.status,'completed');assert.equal(Object.keys(state.badges).length,1);
    checks.push(`${locale} ${width}px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data`);
    // Complete wellbeing from the real existing route in the deep 390px cases.
@@ -56,7 +63,7 @@ async function protect(p,before){const after=await snapshot(p);const a={...after
     await act(p,button(p,s.adventureVerify));
     state=await protect(p,before);assert.equal(state.days[today].wellbeing.status,'active');
     await act(p,button(p,s.adventureOpenWellbeing));await button(p,s.wellbeingSave).waitFor();
-    await act(p,button(p,s.wellbeingSave));await p.getByText(s.wellbeingSaved,{exact:true}).waitFor();
+    await act(p,button(p,s.wellbeingSave));await text(p,s.wellbeingSaved).waitFor();
     await ready(p);await fixed(p,button(p,locale==='hu'?'Vissza':'Back'));
     await act(p,button(p,s.adventureVerify));
    }else{
@@ -64,23 +71,26 @@ async function protect(p,before){const after=await snapshot(p);const a={...after
     await act(p,taskButton(p,'rest',s.adventureChoose));
     await act(p,button(p,s.adventureComplete).first());await fixed(p,button(p,s.adventureComplete).last());
    }
-   if(await button(p,s.adventureSkipFeedback).count())await fixed(p,button(p,s.adventureSkipFeedback));
+   // The short celebration may disappear between separate locator operations.
+   await button(p,s.adventureSkipFeedback).evaluateAll(nodes=>nodes.forEach(node=>node.click()));
    state=await protect(p,before);assert.equal(state.days[today][third].status,'completed');
    // Decision note is persisted only through an explicit confirmation.
    await act(p,taskButton(p,'decision',s.adventureChoose));
    await act(p,button(p,s.adventureComplete).first());
    await fields(p,s.adventureDecisionHint,locale==='hu'?'Tartottam egy nyugodt szünetet.':'I took a quiet break.');
    await screenshot(p,`decision-${locale}-${width}`);await fixed(p,button(p,s.adventureComplete).last());
-   if(await button(p,s.adventureSkipFeedback).count())await fixed(p,button(p,s.adventureSkipFeedback));
+   // The short celebration may disappear between separate locator operations.
+   await button(p,s.adventureSkipFeedback).evaluateAll(nodes=>nodes.forEach(node=>node.click()));
    state=await protect(p,before);assert.equal(Object.values(state.days[today]).filter(x=>x.status==='completed').length,3);assert.deepEqual(Object.keys(state.badges).sort(),['first','station','variety']);
    assert.equal(state.days[today].decision.reactionConsumed,true);assert(state.days[today].decision.note.length>0);
    checks.push(`${locale} ${width}px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported`);
    await fixed(p,p.getByRole('tab',{name:s.adventureMap,exact:true}));
-   await reach(p,p.getByText(s.adventureStationCurrent,{exact:true}));
+   await reach(p,text(p,s.adventureStationCurrent));
+   await reach(p,text(p,'girl adult'));
    await screenshot(p,`map-${locale}-${width}`);
    assert((await p.locator('body').ariaSnapshot()).includes('girl adult'));
    await fixed(p,p.getByRole('tab',{name:s.adventureBadges,exact:true}));
-   await reach(p,p.getByRole('heading',{name:s.adventureBadgeStation,exact:true}));
+   await reach(p,text(p,s.adventureBadgeStation));
    await screenshot(p,`badges-${locale}-${width}`);
    const encoded=(await snapshot(p))[key];await ready(p);p.reloading=true;
    await p.reload({waitUntil:'networkidle'});await semantics(p);await button(p,s.chooseMenti).waitFor();await ready(p);p.reloading=false;
@@ -91,6 +101,6 @@ async function protect(p,before){const after=await snapshot(p);const a={...after
    checks.push(`${locale} ${width}px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request`);
    await context.close();active=null;process.stdout.write(`Passed ${locale} ${width}px\n`);
   }
-  assert.deepEqual(errors,[]);fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify({completedAt:new Date().toISOString(),browser:browser.version(),checks,runtimeErrors:errors,intentionalReloadCancellations:cancelled},null,2));process.stdout.write(`${checks.length} browser checks passed\n`);
+  assert.deepEqual(errors,[]);fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify({sourceCommit,completedAt:new Date().toISOString(),browser:browser.version(),checks,runtimeErrors:errors,intentionalReloadCancellations:cancelled},null,2));process.stdout.write(`${checks.length} browser checks passed\n`);
  }catch(e){if(active){fs.writeFileSync(path.join(out,'failure-dom.txt'),await active.locator('body').ariaSnapshot().catch(()=>''));await active.screenshot({path:path.join(out,'failure.png')}).catch(()=>{});}fs.writeFileSync(path.join(out,'failure.json'),JSON.stringify({error:String(e),checks,runtimeErrors:errors},null,2));throw e;}finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

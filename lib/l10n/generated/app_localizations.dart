@@ -4997,25 +4997,25 @@ abstract class AppLocalizations {
   /// No description provided for @adventureSupport0.
   ///
   /// In hu, this message translates to:
-  /// **'Egy kis lépés magadért. Ezt feljegyeztük! 💜'**
+  /// **'Egy kis lépés magadért. Ezt feljegyeztük!'**
   String get adventureSupport0;
 
   /// No description provided for @adventureSupport1.
   ///
   /// In hu, this message translates to:
-  /// **'A saját tempód számít. Ma is tettél magadért. 🌱'**
+  /// **'A saját tempód számít. Ma is tettél magadért.'**
   String get adventureSupport1;
 
   /// No description provided for @adventureSupport2.
   ///
   /// In hu, this message translates to:
-  /// **'Küldetés kész, képzeletbeli pacsi! ✋'**
+  /// **'Küldetés kész, képzeletbeli pacsi!'**
   String get adventureSupport2;
 
   /// No description provided for @adventureStationCompleted.
   ///
   /// In hu, this message translates to:
-  /// **'Új állomás teljesült! A térképen látod a következő kis lépést. ✨'**
+  /// **'Új állomás teljesült! A térképen látod a következő kis lépést.'**
   String get adventureStationCompleted;
 
   /// No description provided for @adventureSkipFeedback.

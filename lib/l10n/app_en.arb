@@ -1383,10 +1383,10 @@
       }
     }
   },
-  "adventureSupport0": "A small step for yourself. It’s recorded! 💜",
-  "adventureSupport1": "Your own pace matters. You made time for yourself. 🌱",
-  "adventureSupport2": "Mission complete. Imaginary high five! ✋",
-  "adventureStationCompleted": "Another station complete! Your map shows the next small step. ✨",
+  "adventureSupport0": "A small step for yourself. It’s recorded!",
+  "adventureSupport1": "Your own pace matters. You made time for yourself.",
+  "adventureSupport2": "Mission complete. Imaginary high five!",
+  "adventureStationCompleted": "Another station complete! Your map shows the next small step.",
   "adventureSkipFeedback": "Continue",
   "adventureStation0": "Setting out",
   "adventureStation1": "Discovery",

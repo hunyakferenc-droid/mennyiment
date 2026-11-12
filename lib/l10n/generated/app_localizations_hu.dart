@@ -2766,19 +2766,18 @@ class AppLocalizationsHu extends AppLocalizations {
   }
 
   @override
-  String get adventureSupport0 =>
-      'Egy kis lépés magadért. Ezt feljegyeztük! 💜';
+  String get adventureSupport0 => 'Egy kis lépés magadért. Ezt feljegyeztük!';
 
   @override
   String get adventureSupport1 =>
-      'A saját tempód számít. Ma is tettél magadért. 🌱';
+      'A saját tempód számít. Ma is tettél magadért.';
 
   @override
-  String get adventureSupport2 => 'Küldetés kész, képzeletbeli pacsi! ✋';
+  String get adventureSupport2 => 'Küldetés kész, képzeletbeli pacsi!';
 
   @override
   String get adventureStationCompleted =>
-      'Új állomás teljesült! A térképen látod a következő kis lépést. ✨';
+      'Új állomás teljesült! A térképen látod a következő kis lépést.';
 
   @override
   String get adventureSkipFeedback => 'Rendben, tovább';
