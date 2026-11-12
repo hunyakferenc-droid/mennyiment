@@ -72,7 +72,10 @@ async function filters(page,s,{searchValue='Twin',missing=true,oldest=false,mont
   if(oldest)assert((await page.getByRole('button',{name:s.journalSort,exact:false}).ariaSnapshot()).includes(s.journalOldest));
   if(month)await page.getByRole('checkbox',{name:s.month,exact:true,checked:true}).waitFor();
 }
-async function count(page,s,n) {await reach(page,text(page,s.drinkCount.replace('{count}',String(n))));}
+async function count(page,s,n) {
+  const expected=s.drinkCount.includes(', plural,')?`${n} ${n===1?'drink':'drinks'}`:s.drinkCount.replace('{count}',String(n));
+  await reach(page,text(page,expected));
+}
 async function editor(page,s,priceOnly=false) {
   await top(page);await action(page,button(page,priceOnly?s.entryEditPrice:s.entryEdit).first());
   await page.getByRole('textbox',{name:priceOnly?s.journalPrice:s.journalDrinkName,exact:false}).first().waitFor();

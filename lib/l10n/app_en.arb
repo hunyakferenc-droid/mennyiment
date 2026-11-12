@@ -32,8 +32,8 @@
   "noPeriodData": "No data for this period.",
   "peakTime": "Most entries: {start}–{end} ({count} entries).",
   "statisticsCaution": "Summaries use recorded drinks only. A day without entries is not a confirmed alcohol-free day. These data cannot establish sobriety or fitness to drive.",
-  "drinkCount": "{count} drinks",
-  "dayCount": "{count} days",
+  "drinkCount": "{count, plural, one{{count} drink} other{{count} drinks}}",
+  "dayCount": "{count, plural, one{{count} day} other{{count} days}}",
   "grams": "{value} g",
   "litres": "{value} l",
   "@partialPrices": {
