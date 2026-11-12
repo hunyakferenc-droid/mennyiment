@@ -22,6 +22,7 @@ jobs:
       CI: "true"
       FLUTTER_SUPPRESS_ANALYTICS: "true"
       DART_SUPPRESS_ANALYTICS: "true"
+      TZ: Europe/Budapest
       SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Checkout

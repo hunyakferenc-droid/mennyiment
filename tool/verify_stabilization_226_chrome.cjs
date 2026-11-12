@@ -27,10 +27,15 @@ function seed(locale, family = 'girl', age = 'adult') {
   };
 }
 function observe(page) {
+  page.pendingRequests = new Set();
+  page.lastNetworkActivity = Date.now();
+  page.on('request', r => { page.pendingRequests.add(r); page.lastNetworkActivity=Date.now(); });
+  page.on('requestfinished', r => { page.pendingRequests.delete(r); page.lastNetworkActivity=Date.now(); });
   page.on('pageerror', e => errors.push(e.message));
   page.on('console', m => { if(m.type()==='error') errors.push(m.text()); });
   page.on('response', r => { if(r.status()>=400) errors.push(`${r.status()} ${r.url()}`); });
   page.on('requestfailed', r => {
+    page.pendingRequests.delete(r); page.lastNetworkActivity=Date.now();
     const message=`${r.url()}: ${r.failure()?.errorText}`;
     if(page.reloading && r.failure()?.errorText==='net::ERR_ABORTED') cancelled.push(message);
     else errors.push(message);
@@ -53,7 +58,14 @@ async function open(browser, width, values) {
   return {context,page};
 }
 async function screenshot(page, name) {
-  await page.mouse.move(1,1); await page.waitForTimeout(350);
+  await page.mouse.move(1,1);
+  const deadline=Date.now()+45000;
+  while(page.pendingRequests.size || Date.now()-page.lastNetworkActivity<1500) {
+    if(Date.now()>deadline) throw Error(`Assets did not settle for screenshot ${name}`);
+    await page.waitForTimeout(100);
+  }
+  // Image decoding and Flutter's material gate may finish after HTTP completes.
+  await page.waitForTimeout(1000);
   await page.screenshot({path:path.join(out,`${name}.png`)});
 }
 async function snapshot(page) {
@@ -76,10 +88,15 @@ async function reach(page, locator) {
       await page.getByRole('button',{name:s.chooseMenti,exact:true}).waitFor();
       const before=await snapshot(page);
       await screenshot(page,`home-${locale}-${width}`);
-      await page.getByRole('button',{name:s.chooseMenti,exact:true}).click();
-      await page.getByRole('button',{name:s.avatarEnlargePreview,exact:true}).click();
+      // Flutter uses in-app Navigator routes; assert their rendered state rather
+      // than Playwright's implicit document-navigation barrier (CDP: no navigation).
+      await page.getByRole('button',{name:s.chooseMenti,exact:true}).click({noWaitAfter:true});
+      await page.getByRole('heading',{name:s.avatarStudio,exact:true}).waitFor();
+      await page.getByRole('button',{name:s.avatarEnlargePreview,exact:true}).click({noWaitAfter:true});
+      await page.getByRole('button',{name:s.avatarClosePreview,exact:true}).waitFor();
       await screenshot(page,`zoom-${locale}-${width}`);
-      await page.getByRole('button',{name:s.avatarClosePreview,exact:true}).click();
+      await page.getByRole('button',{name:s.avatarClosePreview,exact:true}).click({noWaitAfter:true});
+      await page.getByRole('heading',{name:s.avatarStudio,exact:true}).waitFor();
       await screenshot(page,`studio-${locale}-${width}`);
       assert.deepEqual(await snapshot(page),before,'Viewing Studio changed local data');
       checks.push(`${width}px ${locale}: home, selected family card, live preview and zoom; saved profile/XP/journal unchanged`);
@@ -88,8 +105,10 @@ async function reach(page, locator) {
     for(const family of ['girl','boy','neutral']) for(const age of ['young','adult','veteran']) {
       const {context,page}=await open(browser,390,seed('en',family,age)); active=page;
       const s=strings.en;
-      await page.getByRole('button',{name:s.chooseMenti,exact:true}).click();
-      await page.getByRole('button',{name:s.avatarEnlargePreview,exact:true}).click();
+      await page.getByRole('button',{name:s.chooseMenti,exact:true}).click({noWaitAfter:true});
+      await page.getByRole('heading',{name:s.avatarStudio,exact:true}).waitFor();
+      await page.getByRole('button',{name:s.avatarEnlargePreview,exact:true}).click({noWaitAfter:true});
+      await page.getByRole('button',{name:s.avatarClosePreview,exact:true}).waitFor();
       await screenshot(page,`character-${family}-${age}`);
       checks.push(`390px ${family}/${age}: saved business outfit, hat, scarf, glasses and notebook rendered`);
       await context.close(); active=null;
