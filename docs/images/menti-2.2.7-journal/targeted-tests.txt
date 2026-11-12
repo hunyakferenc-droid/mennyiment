@@ -1,0 +1,71 @@
+00:00 +0: loading /workspace/mennyiment/test/journal_query_test.dart
+00:00 +0: /workspace/mennyiment/test/journal_query_test.dart: Search folds Hungarian accents and requires all words
+00:00 +1: /workspace/mennyiment/test/journal_query_test.dart: Search includes translated catalog labels without changing names
+00:00 +2: /workspace/mennyiment/test/journal_query_test.dart: Whitespace search retains all entries including duplicates
+00:00 +3: /workspace/mennyiment/test/journal_query_test.dart: JournalPeriod.day includes start and excludes end
+00:00 +4: /workspace/mennyiment/test/journal_query_test.dart: JournalPeriod.week includes start and excludes end
+00:00 +5: /workspace/mennyiment/test/journal_query_test.dart: JournalPeriod.month includes start and excludes end
+00:00 +6: /workspace/mennyiment/test/journal_query_test.dart: JournalPeriod.year includes start and excludes end
+00:00 +7: /workspace/mennyiment/test/journal_query_test.dart: Calendar ranges handle leap years and December
+00:00 +8: /workspace/mennyiment/test/journal_query_test.dart: DST civil day is bounded by local midnights
+00:00 +9: /workspace/mennyiment/test/journal_query_test.dart: UTC instants are classified by the selected local day
+00:00 +10: /workspace/mennyiment/test/journal_query_test.dart: Unknown historic prices are missing, a genuine zero is known
+00:00 +11: /workspace/mennyiment/test/journal_query_test.dart: Out of range and nonfinite in-memory prices remain unknown
+00:00 +12: /workspace/mennyiment/test/journal_query_test.dart: Highest price puts unknown values last and uses time for ties
+00:00 +13: /workspace/mennyiment/test/journal_query_test.dart: Stable sort retains identical records and never mutates source
+00:00 +14: /workspace/mennyiment/test/journal_query_test.dart: Oldest first sorts chronologically
+00:00 +15: /workspace/mennyiment/test/journal_query_test.dart: Combined filters and totals describe only matching entries
+00:00 +16: /workspace/mennyiment/test/journal_browser_page_test.dart: (setUpAll)
+00:00 +17: /workspace/mennyiment/test/journal_browser_page_test.dart: (setUpAll)
+00:00 +17: /workspace/mennyiment/test/journal_browser_page_test.dart: Reset retains the opening calendar day after midnight
+00:18 +18: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 320.0px at 1.0x text
+00:22 +19: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 320.0px at 1.0x text
+00:32 +20: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 320.0px at 1.0x text
+00:36 +21: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 320.0px at 1.0x text
+00:36 +22: /workspace/mennyiment/test/journal_browser_page_test.dart: hu 360.0 / 2.0: phone keyboard and real price menu
+00:38 +23: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 320.0px at 2.0x text
+00:38 +24: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 320.0px at 2.0x text
+00:39 +25: /workspace/mennyiment/test/journal_browser_page_test.dart: hu 390.0 / 2.0: phone keyboard and real price menu
+00:40 +26: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 360.0px at 1.0x text
+00:41 +27: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 360.0px at 1.0x text
+00:42 +28: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 360.0px at 1.0x text
+00:43 +29: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 360.0px at 1.0x text
+00:44 +30: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 360.0px at 1.0x text
+00:44 +31: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 360.0px at 1.0x text
+00:45 +32: /workspace/mennyiment/test/journal_browser_page_test.dart: en 360.0 / 2.0: phone keyboard and real price menu
+00:45 +33: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 360.0px at 2.0x text
+00:46 +34: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 360.0px at 2.0x text
+00:47 +35: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 360.0px at 2.0x text
+00:47 +36: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 360.0px at 2.0x text
+00:47 +37: /workspace/mennyiment/test/journal_browser_page_test.dart: en 430.0 / 2.0: phone keyboard and real price menu
+00:48 +38: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 390.0px at 1.0x text
+00:49 +39: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 390.0px at 1.0x text
+00:49 +40: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 390.0px at 1.0x text
+00:49 +41: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 390.0px at 1.0x text
+00:50 +42: /workspace/mennyiment/test/journal_browser_page_test.dart: No-match message differs from an empty journal
+00:50 +43: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 390.0px at 2.0x text
+00:50 +44: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 390.0px at 2.0x text
+00:50 +45: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 390.0px at 2.0x text
+00:51 +46: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 390.0px at 2.0x text
+00:51 +47: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 390.0px at 2.0x text
+00:52 +48: /workspace/mennyiment/test/journal_browser_page_test.dart: Add action retains the existing pop(true) contract
+00:52 +49: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 430.0px at 1.0x text
+00:54 +50: /workspace/mennyiment/test/home_navigation_test.dart: hu home fits 430.0px at 2.0x text
+01:02 +51: /workspace/mennyiment/test/home_navigation_test.dart: hu journal navigation is read-only and rejects duplicate pushes
+01:06 +52: /workspace/mennyiment/test/home_navigation_test.dart: hu journal add returns to the existing picker
+01:11 +53: /workspace/mennyiment/test/home_navigation_test.dart: hu unreadable journal is not presented as an empty journal
+01:13 +54: /workspace/mennyiment/test/home_navigation_test.dart: hu unreadable XP shows retry without inventing a level
+01:13 +55: /workspace/mennyiment/test/home_navigation_test.dart: en home fits 320.0px at 1.0x text
+01:15 +56: /workspace/mennyiment/test/home_navigation_test.dart: en home fits 320.0px at 2.0x text
+01:17 +57: /workspace/mennyiment/test/home_navigation_test.dart: en home fits 360.0px at 1.0x text
+01:18 +58: /workspace/mennyiment/test/home_navigation_test.dart: en home fits 360.0px at 2.0x text
+01:20 +59: /workspace/mennyiment/test/home_navigation_test.dart: en home fits 390.0px at 1.0x text
+01:21 +60: /workspace/mennyiment/test/home_navigation_test.dart: en home fits 390.0px at 2.0x text
+01:23 +61: /workspace/mennyiment/test/home_navigation_test.dart: en home fits 430.0px at 1.0x text
+01:25 +62: /workspace/mennyiment/test/home_navigation_test.dart: en home fits 430.0px at 2.0x text
+01:26 +63: /workspace/mennyiment/test/home_navigation_test.dart: en journal navigation is read-only and rejects duplicate pushes
+01:27 +64: /workspace/mennyiment/test/home_navigation_test.dart: en journal add returns to the existing picker
+01:32 +65: /workspace/mennyiment/test/home_navigation_test.dart: en unreadable journal is not presented as an empty journal
+01:34 +66: /workspace/mennyiment/test/home_navigation_test.dart: en unreadable XP shows retry without inventing a level
+01:36 +67: /workspace/mennyiment/test/home_navigation_test.dart: Journal snapshot sorts a copy and leaves source and unknown fields intact
+01:37 +68: All tests passed!

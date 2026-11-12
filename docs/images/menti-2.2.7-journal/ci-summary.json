@@ -1,0 +1,120 @@
+{
+  "sourceCommit": "215495f521ebba3044d058b80ef79a427c9a5e25",
+  "run": 43247185562,
+  "job": 131282888063,
+  "url": "https://github.com/hunyakferenc-droid/mennyiment/actions/runs/43247185562",
+  "timezone": "Europe/Budapest",
+  "analyzer": "No issues found",
+  "fullTests": {
+    "passed": 770,
+    "failed": 0,
+    "skipped": 0
+  },
+  "newJournalTests": 43,
+  "targetedLocalTests": 68,
+  "additionalDstTests": {
+    "passed": 349,
+    "failed": 0,
+    "skipped": 0,
+    "overlapsFullSuite": true
+  },
+  "steps": [
+    {
+      "name": "Set up job",
+      "conclusion": "success"
+    },
+    {
+      "name": "Checkout",
+      "conclusion": "success"
+    },
+    {
+      "name": "Set up Flutter 3.47.7 (Dart 3.13.5)",
+      "conclusion": "success"
+    },
+    {
+      "name": "Set up Java for debug Android builds",
+      "conclusion": "success"
+    },
+    {
+      "name": "SDK versions",
+      "conclusion": "success"
+    },
+    {
+      "name": "flutter pub get and gen-l10n",
+      "conclusion": "success"
+    },
+    {
+      "name": "Whitespace check",
+      "conclusion": "success"
+    },
+    {
+      "name": "flutter analyze",
+      "conclusion": "success"
+    },
+    {
+      "name": "flutter test --concurrency=2",
+      "conclusion": "success"
+    },
+    {
+      "name": "Backup, restore and 6.8 regressions in Europe/Budapest (including DST)",
+      "conclusion": "success"
+    },
+    {
+      "name": "flutter build web",
+      "conclusion": "success"
+    },
+    {
+      "name": "Include Python-free Windows launcher and build provenance",
+      "conclusion": "success"
+    },
+    {
+      "name": "Upload Chrome web build",
+      "conclusion": "success"
+    },
+    {
+      "name": "flutter build apk --debug",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify debug APK signature and package",
+      "conclusion": "success"
+    },
+    {
+      "name": "Upload installable debug APK",
+      "conclusion": "success"
+    },
+    {
+      "name": "CI summary",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Set up Java for debug Android builds",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Set up Flutter 3.47.7 (Dart 3.13.5)",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Checkout",
+      "conclusion": "success"
+    },
+    {
+      "name": "Complete job",
+      "conclusion": "success"
+    }
+  ],
+  "evidence": [
+    "2026-11-12T15:24:06.6843680Z No issues found! (ran in 13.6s)",
+    "2026-11-12T15:27:21.8497272Z 🎉 770 tests passed.",
+    "2026-11-12T15:28:03.8179750Z 🎉 349 tests passed.",
+    "2026-11-12T15:28:53.0548720Z ✓ Built build/web",
+    "2026-11-12T15:32:58.4827952Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk",
+    "2026-11-12T15:33:00.3105628Z source_commit=215495f521ebba3044d058b80ef79a427c9a5e25",
+    "2026-11-12T15:33:00.3111633Z V2 Signer: certificate DN: C=US, O=Android, CN=Android Debug",
+    "2026-11-12T15:33:00.3112370Z V2 Signer: certificate SHA-256 digest: cafa853ddb75fe45e0361780a610a1fa00d70b7f8c704403e1253e35f3949818",
+    "2026-11-12T15:33:00.3120055Z package: name='com.example.mennyiment' versionCode='31' versionName='2.2.7' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+    "2026-11-12T15:33:00.3122118Z sdkVersion:'24'",
+    "2026-11-12T15:33:00.3122668Z targetSdkVersion:'36'"
+  ]
+}

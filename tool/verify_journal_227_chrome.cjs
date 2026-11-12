@@ -2,7 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
-const {chromium, open, seed, screenshot, snapshot, reach, strings, out, errors} = require('./verify_stabilization_226_chrome.cjs');
+const {chromium, open, seed, screenshot, snapshot, reach, semantics, strings, out, errors} = require('./verify_stabilization_226_chrome.cjs');
 const checks = [];
 const encode = value => JSON.stringify(JSON.stringify(value));
 const records = [
@@ -14,6 +14,8 @@ const records = [
   {name:'Jövőbeli',ml:100,percent:0,priceFt:50,time:'2027-01-01T12:00:00.000'},
 ];
 async function tap(page, locator) {
+  await page.mouse.move(page.viewportSize().width*.8,300);
+  await page.mouse.wheel(0,-20000); await page.waitForTimeout(200);
   await (await reach(page, locator)).click({noWaitAfter:true});
   await page.waitForTimeout(200);
 }
@@ -25,24 +27,32 @@ async function search(page, s, text) {
 }
 async function menu(page, label, choice) {
   await tap(page,page.getByRole('button',{name:label,exact:false}));
-  await page.getByText(choice,{exact:true}).last().click({noWaitAfter:true});
+  await semantics(page);
+  await page.getByRole('menuitem',{name:choice,exact:true}).evaluate(element=>element.click());
   await page.waitForTimeout(300);
+}
+async function expectCount(page, s, count) {
+  const text=s.drinkCount.replace('{count}',String(count));
+  await reach(page,page.getByText(text,{exact:false}).first());
+  assert((await page.locator('flt-semantics').allTextContents()).join(' ').includes(text));
 }
 (async()=>{
   const browser=await chromium.launch({executablePath:process.env.CHROME_BIN||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
   let active;
   try {
-    for(const locale of ['hu','en']) for(const width of [320,360,390,430]) {
+    for(const locale of (process.env.MENTI_LOCALES||'hu,en').split(',')) for(const width of (process.env.MENTI_WIDTHS||'320,360,390,430').split(',').map(Number)) {
       const values=seed(locale);values['flutter.mennyiment_drinks_v1']=encode(records);
       const {context,page}=await open(browser,width,values);active=page;
-      const s=strings[locale];
+      const metadata=await (await page.request.get('http://127.0.0.1:7357/version.json')).json();
+      assert.equal(metadata.version,'2.2.7');assert.equal(metadata.build_number,'31');
+      const s=strings[locale];process.stdout.write(`Checking ${locale} ${width}px\n`);
       await page.getByRole('button',{name:s.chooseMenti,exact:true}).waitFor();
       const before=await snapshot(page);
-      await page.getByRole('tab',{name:s.journal,exact:false}).click({noWaitAfter:true});
+      await page.getByRole('tab',{name:s.journal,exact:false}).evaluate(element=>element.click());
       await page.getByRole('textbox',{name:s.journalSearch,exact:true}).waitFor();
       await screenshot(page,`journal-${locale}-${width}`);
       await search(page,s,'OSZIBARACK UDITO');
-      await reach(page,page.getByText('Őszibarack üdítő',{exact:true}));
+      await reach(page,page.getByText(/^Őszibarack üdítő(?:\s|$)/));
       const price=locale==='hu'?'1 234,75':'1,234.75';
       assert((await page.locator('flt-semantics').allTextContents()).join(' ').replaceAll('\u00a0',' ').includes(price));
       await screenshot(page,`search-${locale}-${width}`);
@@ -50,24 +60,26 @@ async function menu(page, label, choice) {
       checks.push(`${locale} ${width}px: accent-free multiword search, exact fractional price, read-only storage`);
       if(width===390) {
         await tap(page,page.getByRole('button',{name:s.journalReset,exact:true}));
-        await tap(page,page.getByRole('button',{name:s.month,exact:true}));
+        await tap(page,page.getByLabel(s.month,{exact:true}));
         await tap(page,page.getByRole('button',{name:s.previousPeriod,exact:true}));
-        await reach(page,page.getByText('Korábbi',{exact:true}));
+        await reach(page,page.getByText(/^Korábbi(?:\s|$)/));
         await screenshot(page,`previous-month-${locale}`);
         await tap(page,page.getByRole('button',{name:s.nextPeriod,exact:true}));
         await menu(page,s.journalPriceFilter,s.journalMissingPrices);
-        await reach(page,page.getByText(s.catalogBeer,{exact:true}).first());
+        await expectCount(page,s,2);
+        await reach(page,page.getByText(s.catalogBeer,{exact:false}).first());
         await screenshot(page,`missing-price-${locale}`);
-        assert.equal(await page.getByText('Ingyenes',{exact:true}).count(),0);
+        assert.equal(await page.getByText('Ingyenes',{exact:false}).count(),0);
         assert.deepEqual(await snapshot(page),before);
         checks.push(`${locale}: month back/forward, missing-price filter excludes genuine zero, duplicate catalog records retained`);
         await tap(page,page.getByRole('button',{name:s.journalReset,exact:true}));
         await search(page,s,locale==='en'?'beer':'sor');
-        await reach(page,page.getByText(s.catalogBeer,{exact:true}).first());
+        await expectCount(page,s,2);
+        await reach(page,page.getByText(s.catalogBeer,{exact:false}).first());
         await screenshot(page,`catalog-search-${locale}`);
         checks.push(`${locale}: localized catalog search`);
         await search(page,s,'no-match-xyz');
-        await reach(page,page.getByText(s.journalNoMatches,{exact:true}));
+        await reach(page,page.getByLabel(s.journalNoMatches,{exact:false}));
         await screenshot(page,`no-matches-${locale}`);
         await tap(page,page.getByRole('button',{name:s.journalReset,exact:true}).first());
         await menu(page,s.journalSort,s.journalHighestPrice);
@@ -78,11 +90,16 @@ async function menu(page, label, choice) {
         await screenshot(page,`newest-sort-${locale}`);
         assert.deepEqual(await snapshot(page),before);
         checks.push(`${locale}: no-match/reset and all three sorting controls preserve raw storage`);
-        await page.getByRole('button',{name:locale==='hu'?'Vissza':'Back',exact:true}).click({noWaitAfter:true});
-        await page.getByRole('tab',{name:s.journal,exact:false}).click({noWaitAfter:true});
+        await page.getByRole('button',{name:locale==='hu'?'Vissza':'Back',exact:true}).evaluate(element=>element.click());
+        await page.getByRole('tab',{name:s.journal,exact:false}).evaluate(element=>element.click());
         assert.equal(await page.getByRole('textbox',{name:s.journalSearch,exact:true}).inputValue(),'');
         assert.deepEqual(await snapshot(page),before);
         checks.push(`${locale}: reopening clears temporary filters and preserves journal/profile/XP`);
+        await page.reload({waitUntil:'networkidle'});await semantics(page);
+        await page.getByRole('button',{name:s.chooseMenti,exact:true}).waitFor();
+        await screenshot(page,`reloaded-home-${locale}`);
+        assert.deepEqual(await snapshot(page),before);
+        checks.push(`${locale}: application reload preserves raw journal, profile, XP and language`);
       }
       await context.close();active=null;
     }

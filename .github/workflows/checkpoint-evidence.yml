@@ -37,6 +37,18 @@ jobs:
           path: docs/images/menti-2.2.6-checkpoint/
           if-no-files-found: error
           retention-days: 14
+      - name: Upload searchable journal screenshots and verification report
+        if: ${{ hashFiles('docs/images/menti-2.2.7-journal/verification.json') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.2.7-31-journal-evidence-${{ github.sha }}
+          path: |
+            docs/images/menti-2.2.7-journal/
+            docs/2.2.7-journal-hu.md
+            docs/2.2.6-windows-hu.md
+            docs/2.2.6-android-hu.md
+          if-no-files-found: error
+          retention-days: 14
           compression-level: 1
       - name: Upload fresh stabilization screenshots and verification report
         if: ${{ hashFiles('docs/images/menti-2.2.6-stabilization/verification.json') != '' }}
