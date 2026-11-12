@@ -109,6 +109,7 @@ void main() {
             final prefs = await SharedPreferences.getInstance();
             expect(prefs.containsKey(MentiIdentityStore.key), false);
             await tap(tester, next);
+            await reveal(tester, name);
             expect(
               tester.widget<TextField>(name).controller!.text,
               'Mobile Menti',
