@@ -37,6 +37,7 @@ jobs:
           path: docs/images/menti-2.2.6-checkpoint/
           if-no-files-found: error
           retention-days: 14
+          compression-level: 1
       - name: Upload searchable journal screenshots and verification report
         if: ${{ hashFiles('docs/images/menti-2.2.7-journal/verification.json') != '' }}
         uses: actions/upload-artifact@v4
