@@ -52,7 +52,7 @@ async function semantics(page) {
     await page.waitForTimeout(100);
   }
 }
-async function open(browser, width, values) {
+async function open(browser, width, values, onPage) {
   const context=await browser.newContext({viewport:{width,height:844},reducedMotion:'reduce',acceptDownloads:true});
   await context.addInitScript(v=>{
     if (!localStorage.getItem('menti_test_fixture_loaded')) {
@@ -61,6 +61,7 @@ async function open(browser, width, values) {
     }
   },values);
   const page=await context.newPage(); observe(page);
+  if(onPage) onPage(page,context);
   await page.goto(url,{waitUntil:'networkidle'}); await semantics(page);
   return {context,page};
 }

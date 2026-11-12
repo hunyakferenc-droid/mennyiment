@@ -24,9 +24,7 @@ List<Map<String, dynamic>> records() => [
       'ml': 250.0,
       'percent': 4,
       'priceFt': 'invalid',
-      'time': DateTime.now()
-          .subtract(const Duration(hours: 1))
-          .toIso8601String(),
+      'time': DateUtils.dateOnly(DateTime.now()).toIso8601String(),
       'extension': {'keep': true},
     },
 ];

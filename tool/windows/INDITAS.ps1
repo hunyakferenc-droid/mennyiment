@@ -34,6 +34,110 @@ try {
     if (-not (Test-Path -LiteralPath (Join-Path $root 'index.html') -PathType Leaf)) {
         throw 'Nincs index.html. A teljes web ZIP-et bontsd ki, majd a kibontott INDITAS.cmd fajlt inditsd. Forrashoz: FORRAS_INDITAS.cmd.'
     }
+
+    # Pure .NET workers also run on Windows PowerShell 5.1: no runspace,
+    # Python, Node, administrator permission or downloaded dependency needed.
+    if (-not ('MennyiMentLocalWebServer' -as [type])) {
+        Add-Type -TypeDefinition @'
+using System;
+using System.IO;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+
+public static class MennyiMentLocalWebServer {
+    private static readonly SemaphoreSlim Slots = new SemaphoreSlim(64, 64);
+    public static void Serve(TcpClient client, string root) {
+        if (!Slots.Wait(0)) { client.Close(); return; }
+        ThreadPool.QueueUserWorkItem(delegate(object unused) {
+            try { Handle(client, root); }
+            finally { client.Close(); Slots.Release(); }
+        });
+    }
+    private static string Mime(string path) {
+        switch (Path.GetExtension(path).ToLowerInvariant()) {
+            case ".html": return "text/html; charset=utf-8";
+            case ".js": return "text/javascript; charset=utf-8";
+            case ".json": return "application/json";
+            case ".wasm": return "application/wasm";
+            case ".css": return "text/css";
+            case ".svg": return "image/svg+xml";
+            case ".png": return "image/png";
+            case ".webp": return "image/webp";
+            case ".ico": return "image/x-icon";
+            case ".ttf": return "font/ttf";
+            case ".otf": return "font/otf";
+            case ".woff": return "font/woff";
+            case ".woff2": return "font/woff2";
+            case ".txt": return "text/plain; charset=utf-8";
+            default: return "application/octet-stream";
+        }
+    }
+    private static void Handle(TcpClient client, string root) {
+        FileStream file = null;
+        try {
+            // Chrome preconnects may stay idle while other assets are loading.
+            // Each accepted connection has its own worker, so it blocks no peer.
+            client.ReceiveTimeout = 30000;
+            client.SendTimeout = 15000;
+            using (NetworkStream stream = client.GetStream())
+            using (StreamReader reader = new StreamReader(stream, Encoding.ASCII, false, 1024, true)) {
+                StringBuilder request = new StringBuilder();
+                bool complete = false;
+                while (request.Length < 16384) {
+                    int next = reader.Read();
+                    if (next < 0) return;
+                    request.Append((char)next);
+                    int n = request.Length;
+                    if (n >= 4 && request[n-4]=='\r' && request[n-3]=='\n' &&
+                        request[n-2]=='\r' && request[n-1]=='\n') { complete = true; break; }
+                }
+                string[] parts = request.ToString().Split('\n')[0].TrimEnd('\r')
+                    .Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+                string status = "200 OK", type = "text/plain; charset=utf-8";
+                byte[] body = Encoding.UTF8.GetBytes("Nem talalhato.");
+                if (!complete) status = "431 Request Header Fields Too Large";
+                else if (parts.Length != 3 || (parts[0] != "GET" && parts[0] != "HEAD"))
+                    status = "405 Method Not Allowed";
+                else {
+                    try {
+                        string target = Uri.UnescapeDataString(parts[1].Split('?')[0]);
+                        string relative = target.TrimStart('/').Replace('/', Path.DirectorySeparatorChar);
+                        if (relative.Length == 0) relative = "index.html";
+                        string candidate = Path.GetFullPath(Path.Combine(root, relative));
+                        StringComparison comparison = Path.DirectorySeparatorChar == '\\'
+                            ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+                        if (!candidate.StartsWith(root, comparison)) status = "403 Forbidden";
+                        else if (File.Exists(candidate)) {
+                            file = File.OpenRead(candidate); type = Mime(candidate);
+                        } else status = "404 Not Found";
+                    } catch (ArgumentException) { status = "400 Bad Request"; }
+                    catch (NotSupportedException) { status = "400 Bad Request"; }
+                    catch (UnauthorizedAccessException) { status = "403 Forbidden"; }
+                }
+                long length = file == null ? body.Length : file.Length;
+                string headers = "HTTP/1.1 " + status + "\r\nContent-Type: " + type +
+                    "\r\nContent-Length: " + length +
+                    "\r\nCache-Control: no-store\r\nX-Content-Type-Options: nosniff" +
+                    "\r\nConnection: close\r\n\r\n";
+                byte[] bytes = Encoding.ASCII.GetBytes(headers);
+                stream.Write(bytes, 0, bytes.Length);
+                if (parts.Length == 0 || parts[0] != "HEAD") {
+                    if (file != null) file.CopyTo(stream);
+                    else stream.Write(body, 0, body.Length);
+                }
+            }
+        } catch (IOException) {
+            // Closing a browser tab or an idle preconnect is not a server error.
+        } catch (SocketException) {
+        } catch (Exception) {
+            Console.Error.WriteLine("HTTP kiszolgalasi hiba. Ellenorizd a web ZIP fajljait.");
+        } finally { if (file != null) file.Dispose(); }
+    }
+}
+'@
+    }
+
     # TcpListener uses no HTTP.sys URL reservation and needs no administrator,
     # Python, Node, or downloaded runtime. Bind only the local loopback address.
     $listener = [Net.Sockets.TcpListener]::new([Net.IPAddress]::Loopback, 7357)
@@ -51,65 +155,12 @@ try {
         if ($chrome) { Start-Process -FilePath $chrome -ArgumentList 'http://127.0.0.1:7357' }
         else { Write-Host 'Chrome nem talalhato a szokasos helyen. Nyisd meg kezzel a fenti cimet Chrome-ban.' }
     }
-    $mime = @{
-        '.html' = 'text/html; charset=utf-8'; '.js' = 'text/javascript; charset=utf-8'
-        '.json' = 'application/json'; '.wasm' = 'application/wasm'; '.css' = 'text/css'
-        '.svg' = 'image/svg+xml'; '.png' = 'image/png'; '.webp' = 'image/webp'
-        '.ico' = 'image/x-icon'; '.ttf' = 'font/ttf'; '.otf' = 'font/otf'
-        '.woff' = 'font/woff'; '.woff2' = 'font/woff2'; '.txt' = 'text/plain; charset=utf-8'
-    }
     while ($true) {
-        # Polling lets PowerShell process Ctrl+C even when no browser is connected.
+        # Polling lets PowerShell process Ctrl+C when no browser is connected.
         if (-not $listener.Pending()) { Start-Sleep -Milliseconds 50; continue }
-        $client = $listener.AcceptTcpClient()
-        # Chrome may preconnect without sending headers. Keep an idle socket
-        # from delaying all queued asset requests on this local-only server.
-        $client.ReceiveTimeout = 500
-        $client.SendTimeout = 15000
-        try {
-            $stream = $client.GetStream()
-            $reader = [IO.StreamReader]::new($stream, [Text.Encoding]::ASCII, $false, 1024, $true)
-            $request = $reader.ReadLine()
-            $headerBytes = 0
-            do {
-                $line = $reader.ReadLine()
-                $headerBytes += $line.Length
-                if ($headerBytes -gt 16384) { throw 'Tul nagy HTTP fejlec.' }
-            } while ($line)
-            $parts = $request -split ' '
-            $status = '200 OK'
-            $file = $null
-            $contentType = 'text/plain; charset=utf-8'
-            $body = [Text.Encoding]::UTF8.GetBytes('Nem talalhato.')
-            if ($parts.Count -lt 3 -or $parts[0] -notin @('GET', 'HEAD')) {
-                $status = '405 Method Not Allowed'
-            } else {
-                $urlPath = [Uri]::UnescapeDataString(($parts[1] -split '\?')[0])
-                $relative = $urlPath.TrimStart('/').Replace('/', [IO.Path]::DirectorySeparatorChar)
-                if (-not $relative) { $relative = 'index.html' }
-                $candidate = [IO.Path]::GetFullPath((Join-Path $root $relative))
-                if (-not $candidate.StartsWith($root, [StringComparison]::OrdinalIgnoreCase)) {
-                    $status = '403 Forbidden'
-                } elseif (Test-Path -LiteralPath $candidate -PathType Leaf) {
-                    $file = [IO.File]::OpenRead($candidate)
-                    $extension = [IO.Path]::GetExtension($candidate).ToLowerInvariant()
-                    $contentType = if ($mime.ContainsKey($extension)) { $mime[$extension] } else { 'application/octet-stream' }
-                } else { $status = '404 Not Found' }
-            }
-            $length = if ($file) { $file.Length } else { $body.Length }
-            $headers = "HTTP/1.1 $status`r`nContent-Type: $contentType`r`nContent-Length: $length`r`nCache-Control: no-store`r`nX-Content-Type-Options: nosniff`r`nConnection: close`r`n`r`n"
-            $bytes = [Text.Encoding]::ASCII.GetBytes($headers)
-            $stream.Write($bytes, 0, $bytes.Length)
-            if ($parts[0] -ne 'HEAD') {
-                if ($file) { $file.CopyTo($stream) } else { $stream.Write($body, 0, $body.Length) }
-            }
-        } catch {
-            Write-Verbose "Bongeszo kapcsolat megszakadt: $_"
-        } finally {
-            if ($file) { $file.Dispose(); $file = $null }
-            $client.Dispose()
-        }
+        [MennyiMentLocalWebServer]::Serve($listener.AcceptTcpClient(), $root)
     }
+
 } catch {
     Write-Host "HIBA: $($_.Exception.Message)" -ForegroundColor Red
     exit 1
