@@ -67,6 +67,42 @@ abstract class AppLocalizations {
 
   final String localeName;
 
+  String get journalAllTime;
+
+  String get journalDay;
+
+  String get journalSearch;
+
+  String get journalClearSearch;
+
+  String get journalAllPrices;
+
+  String get journalMissingPrices;
+
+  String get journalKnownPrices;
+
+  String get journalNewest;
+
+  String get journalOldest;
+
+  String get journalHighestPrice;
+
+  String get journalPriceFilter;
+
+  String get journalSort;
+
+  String get journalReset;
+
+  String get journalNoMatches;
+
+  String get journalVolume;
+
+  String get journalKnownCost;
+
+  String get journalPriceCoverage;
+
+  String get journalPartialCost;
+
   static AppLocalizations? of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
