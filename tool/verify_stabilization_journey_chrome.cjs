@@ -5,7 +5,6 @@ const url=process.env.MENTI_WEB_URL||'http://127.0.0.1:7357';
 const s=strings.en, checks=[];
 const click=locator=>locator.click({noWaitAfter:true});
 const button=(p,name)=>p.getByRole('button',{name,exact:true});
-const escape=value=>value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 function value(values,suffix){const key=Object.keys(values).find(k=>k.endsWith(suffix));assert.ok(key,suffix);return JSON.parse(values[key]);}
 const document=(values,suffix)=>JSON.parse(value(values,suffix));
 async function fresh(browser,width){
@@ -53,14 +52,14 @@ async function start(p,adult,name){
     assert.equal(value(await snapshot(p),'mennyiment_locale_v1'),'en');
     checks.push('Reload keeps language, saved character and completed onboarding');
     await click(await reach(p,button(p,s.addDrink)));
-    await click(await reach(p,p.getByRole('button',{name:new RegExp(escape(s.catalogBeer))}).first()));
+    await click(await reach(p,p.getByRole('button').filter({hasText:s.catalogBeer}).first()));
     const fields=p.getByRole('textbox');
     for(const [i,text] of ['250','4.5','1234.75'].entries()){
       await click(fields.nth(i));await p.keyboard.press('Control+A');await p.keyboard.type(text);
     }
     await screenshot(p,'drink-details-390-en');
     await click(button(p,s.journalSave));
-    await p.getByText(s.journalSaved.replace('{name}',s.catalogBeer),{exact:true}).waitFor();
+    await p.getByText(s.journalSaved.replace('{name}',s.catalogBeer),{exact:true}).last().waitFor();
     let records=document(await snapshot(p),'mennyiment_drinks_v1');
     assert.equal(records.length,1);assert.equal(records[0].name,'Sör (általános)');assert.equal(records[0].priceFt,1234.75);
     checks.push('Actual drink entry saves fractional HUF price and original catalog name; feedback uses its English label');
@@ -68,8 +67,8 @@ async function start(p,adult,name){
     await click(await reach(p,button(p,s.homeRecordActions)));
     await click(p.getByText(/^Price:.*edit$/));
     const price=p.getByRole('textbox');await click(price);assert.equal(await price.inputValue(),'1234.75');
-    await p.getByText(s.journalPriceHint,{exact:true}).waitFor();
-    await p.getByText(s.journalSetPrice.replace('{name}',s.catalogBeer),{exact:true}).waitFor();
+    await p.getByText(s.journalPriceHint,{exact:true}).last().waitFor();
+    await p.getByText(s.journalSetPrice.replace('{name}',s.catalogBeer),{exact:true}).last().waitFor();
     await screenshot(p,'fractional-price-dialog-en');
     await click(button(p,s.avatarSave));records=document(await snapshot(p),'mennyiment_drinks_v1');assert.equal(records[0].priceFt,1234.75);
     checks.push('Existing-price editor opens with exact fractional value and English helper/title; saving does not round');

@@ -62,7 +62,9 @@ try {
         # Polling lets PowerShell process Ctrl+C even when no browser is connected.
         if (-not $listener.Pending()) { Start-Sleep -Milliseconds 50; continue }
         $client = $listener.AcceptTcpClient()
-        $client.ReceiveTimeout = 5000
+        # Chrome may preconnect without sending headers. Keep an idle socket
+        # from delaying all queued asset requests on this local-only server.
+        $client.ReceiveTimeout = 500
         $client.SendTimeout = 15000
         try {
             $stream = $client.GetStream()
