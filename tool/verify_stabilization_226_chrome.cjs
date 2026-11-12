@@ -79,7 +79,8 @@ async function reach(page, locator) {
   }
   throw Error('Unreachable control');
 }
-(async()=>{
+module.exports={chromium,open,seed,screenshot,snapshot,reach,semantics,observe,strings,out,errors};
+if(require.main===module) (async()=>{
   const browser=await chromium.launch({executablePath:process.env.CHROME_BIN||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
   let active;
   try {
@@ -117,11 +118,11 @@ async function reach(page, locator) {
     // preview/cancel, then confirm an authentic file and reload the restored app.
     const {context,page}=await open(browser,360,seed('en')); active=page;
     const s=strings.en;
-    await page.getByRole('button',{name:s.avatarMore,exact:true}).click();
-    await page.getByRole('menuitem',{name:s.backupTitle,exact:true}).click();
-    await (await reach(page,page.getByRole('button',{name:s.backupPrepare,exact:true}))).click();
+    await page.getByRole('button',{name:s.avatarMore,exact:true}).click({noWaitAfter:true});
+    await page.getByRole('menuitem',{name:s.backupTitle,exact:true}).click({noWaitAfter:true});
+    await (await reach(page,page.getByRole('button',{name:s.backupPrepare,exact:true}))).click({noWaitAfter:true});
     const save=await reach(page,page.getByRole('button',{name:s.backupSave,exact:true}));
-    const downloadPromise=page.waitForEvent('download'); await save.click();
+    const downloadPromise=page.waitForEvent('download'); await save.click({noWaitAfter:true});
     const download=await downloadPromise;
     const backupPath=path.join(out,'browser-test-backup.json'); await download.saveAs(backupPath);
     const document=JSON.parse(fs.readFileSync(backupPath,'utf8'));
@@ -131,7 +132,7 @@ async function reach(page, locator) {
     const before=await snapshot(page);
     async function pick(file) {
       const chooserPromise=page.waitForEvent('filechooser');
-      await (await reach(page,page.getByRole('button',{name:s.restorePick,exact:true}))).click();
+      await (await reach(page,page.getByRole('button',{name:s.restorePick,exact:true}))).click({noWaitAfter:true});
       const chooser=await chooserPromise; await chooser.setFiles(file);
     }
     const invalid=path.join(out,'invalid-test-backup.json'); fs.writeFileSync(invalid,'{broken');
@@ -140,12 +141,12 @@ async function reach(page, locator) {
     assert.deepEqual(await snapshot(page),before);
     checks.push('Malformed file is rejected without changing browser data');
     await pick(backupPath);
-    await (await reach(page,page.getByRole('button',{name:s.restoreConfirm,exact:true}))).click();
-    await page.getByRole('button',{name:s.restoreCancel,exact:true}).click();
+    await (await reach(page,page.getByRole('button',{name:s.restoreConfirm,exact:true}))).click({noWaitAfter:true});
+    await page.getByRole('button',{name:s.restoreCancel,exact:true}).click({noWaitAfter:true});
     assert.deepEqual(await snapshot(page),before);
-    await (await reach(page,page.getByRole('button',{name:s.restoreConfirm,exact:true}))).click();
+    await (await reach(page,page.getByRole('button',{name:s.restoreConfirm,exact:true}))).click({noWaitAfter:true});
     await screenshot(page,'restore-confirm-360-en');
-    await page.getByRole('button',{name:s.restoreConfirm,exact:true}).click();
+    await page.getByRole('button',{name:s.restoreConfirm,exact:true}).click({noWaitAfter:true});
     await page.getByRole('button',{name:s.chooseMenti,exact:true}).waitFor();
     checks.push('Authentic file preview, cancel, confirmed restore and application remount complete');
     // Turn off fixture injection before reload to verify persisted data itself.

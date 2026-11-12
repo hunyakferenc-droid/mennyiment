@@ -21,6 +21,9 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
   bool _leave = false;
   int _tab = 0;
   bool _showPreview = true;
+  bool _previewOpen = false;
+  bool _nameOpen = false;
+  bool _backPending = false;
   static const _sections = [
     ['family', 'age', 'style'],
     ['face', 'eyes', 'hair', 'headwear'],
@@ -50,6 +53,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
   }
 
   Future<void> _save() async {
+    if (_controller!.saving) return;
     final ok = await _controller!.save();
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -64,40 +68,46 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
   }
 
   Future<String?> _askName({String? initial}) async {
-    final input = TextEditingController(text: initial);
-    final s = appStrings(context);
-    final route = DialogRoute<String>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        scrollable: true,
-        title: Text(s.avatarPresetName),
-        content: TextField(
-          key: const ValueKey('preset-name'),
-          controller: input,
-          maxLength: 80,
-          autofocus: true,
-          decoration: InputDecoration(labelText: s.avatarPresetName),
+    if (_nameOpen) return null;
+    _nameOpen = true;
+    try {
+      final input = TextEditingController(text: initial);
+      final s = appStrings(context);
+      final route = DialogRoute<String>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          scrollable: true,
+          title: Text(s.avatarPresetName),
+          content: TextField(
+            key: const ValueKey('preset-name'),
+            controller: input,
+            maxLength: 80,
+            autofocus: true,
+            decoration: InputDecoration(labelText: s.avatarPresetName),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(s.avatarCancel),
+            ),
+            FilledButton(
+              onPressed: () {
+                if (input.text.trim().isNotEmpty) {
+                  Navigator.pop(ctx, input.text.trim());
+                }
+              },
+              child: Text(s.avatarSave),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: Text(s.avatarCancel),
-          ),
-          FilledButton(
-            onPressed: () {
-              if (input.text.trim().isNotEmpty) {
-                Navigator.pop(ctx, input.text.trim());
-              }
-            },
-            child: Text(s.avatarSave),
-          ),
-        ],
-      ),
-    );
-    final result = await Navigator.of(context).push(route);
-    await route.completed;
-    input.dispose();
-    return result;
+      );
+      final result = await Navigator.of(context).push(route);
+      await route.completed;
+      input.dispose();
+      return result;
+    } finally {
+      _nameOpen = false;
+    }
   }
 
   Future<void> _preset() async {
@@ -112,35 +122,40 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
   }
 
   Future<void> _back() async {
-    if (_controller!.saving) return;
-    if (_controller!.dirty) {
-      final s = appStrings(context);
-      final discard = await showDialog<bool>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          scrollable: true,
-          title: Text(s.avatarUnsaved),
-          content: Text(s.avatarUnsavedBody),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: Text(s.avatarCancel),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: Text(s.avatarDiscard),
-            ),
-          ],
-        ),
-      );
-      if (discard != true || !mounted) return;
-      _controller!.revert();
+    if (_controller!.saving || _backPending || _leave) return;
+    _backPending = true;
+    try {
+      if (_controller!.dirty) {
+        final s = appStrings(context);
+        final discard = await showDialog<bool>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            scrollable: true,
+            title: Text(s.avatarUnsaved),
+            content: Text(s.avatarUnsavedBody),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, false),
+                child: Text(s.avatarCancel),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(ctx, true),
+                child: Text(s.avatarDiscard),
+              ),
+            ],
+          ),
+        );
+        if (discard != true || !mounted) return;
+        _controller!.revert();
+      }
+      if (!mounted) return;
+      setState(() => _leave = true);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) Navigator.pop(context);
+      });
+    } finally {
+      _backPending = false;
     }
-    if (!mounted) return;
-    setState(() => _leave = true);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) Navigator.pop(context);
-    });
   }
 
   String _fieldLabel(AppLocalizations s, String field) => switch (field) {
@@ -377,34 +392,38 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
     ],
   );
   Future<void> _enlarge() async {
-    final profile = _controller!.draft.profile;
-    final s = appStrings(context);
-    await showDialog<void>(
-      context: context,
-      builder: (ctx) => Dialog.fullscreen(
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(profile.name),
-            leading: IconButton(
-              tooltip: s.avatarClosePreview,
-              onPressed: () => Navigator.pop(ctx),
-              icon: const Icon(Icons.close),
+    if (_previewOpen) return;
+    _previewOpen = true;
+    try {
+      final profile = _controller!.draft.profile;
+      final s = appStrings(context);
+      await showDialog<void>(
+        context: context,
+        builder: (ctx) => Dialog.fullscreen(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(profile.name),
+              leading: IconButton(
+                tooltip: s.avatarClosePreview,
+                onPressed: () => Navigator.pop(ctx),
+                icon: const Icon(Icons.close),
+              ),
             ),
-          ),
-          body: SafeArea(
-            child: LayoutBuilder(
-              builder: (context, box) => InteractiveViewer(
-                minScale: 1,
-                maxScale: 3,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Center(
-                    child: MentiAvatarRenderer(
-                      key: const ValueKey('studio-large-preview'),
-                      profile: profile,
-                      size: math.min(
-                        box.maxWidth - 32,
-                        (box.maxHeight - 32) / 1.25,
+            body: SafeArea(
+              child: LayoutBuilder(
+                builder: (context, box) => InteractiveViewer(
+                  minScale: 1,
+                  maxScale: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Center(
+                      child: MentiAvatarRenderer(
+                        key: const ValueKey('studio-large-preview'),
+                        profile: profile,
+                        size: math.min(
+                          box.maxWidth - 32,
+                          (box.maxHeight - 32) / 1.25,
+                        ),
                       ),
                     ),
                   ),
@@ -413,8 +432,10 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
             ),
           ),
         ),
-      ),
-    );
+      );
+    } finally {
+      _previewOpen = false;
+    }
   }
 
   Widget _preview(AppLocalizations s, double maxWidth, double maxHeight) {
