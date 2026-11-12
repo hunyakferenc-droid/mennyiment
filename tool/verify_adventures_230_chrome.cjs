@@ -31,8 +31,10 @@ async function protect(p,before){const after=await snapshot(p);const a={...after
  try{
   for(const locale of (process.env.MENTI_LOCALES||'hu,en').split(','))for(const width of (process.env.MENTI_WIDTHS||'320,360,390,430').split(',').map(Number)){
    const values=seed(locale);delete values[key];const s=strings[locale];
-   const {context,page:p}=await open(browser,width,values,p=>{active=p;});active=p;
-   p.externalRequests=[];p.on('request',r=>{if(new URL(r.url()).origin!==new URL(url).origin)p.externalRequests.push(r.url());});
+   const {context,page:p}=await open(browser,width,values,p=>{
+    active=p;p.externalRequests=[];
+    p.on('request',r=>{if(new URL(r.url()).origin!==new URL(url).origin)p.externalRequests.push(r.url());});
+   });active=p;
    assert((await (await p.request.get(url+'/build-info.txt')).text()).includes('source_commit='+sourceCommit));
    assert.equal((await (await p.request.get(url+'/version.json')).json()).version,'2.3.0');
    assert.equal((await (await p.request.get(url+'/version.json')).json()).build_number,'33');
