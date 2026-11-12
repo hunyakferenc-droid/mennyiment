@@ -81,6 +81,23 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: flutter build web --no-web-resources-cdn
 
+      - name: Include Python-free Windows launcher and build provenance
+        if: ${{ !cancelled() && steps.web.outcome == 'success' }}
+        run: |
+          python3 - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          target = Path('build/web')
+          for name in ['INDITAS.cmd', 'INDITAS.ps1']:
+              shutil.copyfile(Path('tool/windows') / name, target / name)
+          shutil.copyfile('docs/2.2.6-windows-hu.md', target / 'OLVASDEL-WINDOWS.txt')
+          metadata = json.loads((target / 'version.json').read_text())
+          (target / 'build-info.txt').write_text(
+              f"source_commit={os.environ['SOURCE_SHA']}\n"
+              f"version={metadata['version']}+{metadata['build_number']}\n"
+              "url=http://127.0.0.1:7357\n", encoding='utf-8')
+          PY
+
       - name: Upload Chrome web build
         if: ${{ !cancelled() && steps.web.outcome == 'success' }}
         uses: actions/upload-artifact@v4
@@ -111,6 +128,7 @@ jobs:
             "$APK_SIGNER" verify --verbose --print-certs build/app/outputs/flutter-apk/app-debug.apk
             "$APK_AAPT" dump badging build/app/outputs/flutter-apk/app-debug.apk
           } > build/app/outputs/flutter-apk/build-info.txt
+          cp docs/2.2.6-android-hu.md build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
           cat build/app/outputs/flutter-apk/build-info.txt
 
       - name: Upload installable debug APK
@@ -122,6 +140,7 @@ jobs:
             build/app/outputs/flutter-apk/app-debug.apk
             build/app/outputs/flutter-apk/app-debug.apk.sha256
             build/app/outputs/flutter-apk/build-info.txt
+            build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
           if-no-files-found: error
           retention-days: 14
 
