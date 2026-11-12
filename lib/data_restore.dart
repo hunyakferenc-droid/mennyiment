@@ -3,14 +3,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_access.dart';
 import 'data_backup.dart';
 import 'drink_journal.dart';
+import 'menti_identity/menti_identity.dart';
+import 'menti_identity/menti_identity_store.dart';
 
 /// Overlay restore: keys absent from older backups are never deleted.
 /// A preview is bound to the exact local snapshot the user reviewed.
 class RestorePlan {
-  RestorePlan._(this.document, this.before, this.after);
+  RestorePlan._(this.document, this.before, this.after, {this.profileRecovery = false});
   final BackupDocument document;
   final Map<String, Object> before;
   final Map<String, Object> after;
+  final bool profileRecovery;
   List<String> get keys => after.keys.toList()..sort();
   int get added => keys.where((k) => !before.containsKey(k)).length;
   int get replaced => keys.where((k) => before.containsKey(k) &&
@@ -62,11 +65,43 @@ class BackupRestorer {
       values[rewards] = <String>{...before[rewards] as List<String>,
         ...values[rewards] as List<String>}.toList()..sort();
     }
+    const identityKey = MentiIdentityStore.key;
+    var profileRecovery = false;
+    if (values.containsKey(identityKey) && before.containsKey(identityKey)) {
+      // Only the explicitly confirmed restore can replace an unreadable local
+      // profile. Preview/load remain read-only; the exact pre-image is still
+      // protected by the restore transaction's rollback journal.
+      MentiIdentityDocument? current;
+      try {
+        current = MentiIdentityDocument.decode(before[identityKey]);
+      } on FormatException {
+        profileRecovery = true;
+      }
+      final incoming = MentiIdentityDocument.decode(values[identityKey]);
+      if (current != null) {
+      final unlocks = MentiUnlockState(
+        unlocked: {...current.unlocks.unlocked, ...incoming.unlocks.unlocked},
+        seen: {...current.unlocks.seen, ...incoming.unlocks.seen},
+        extras: {...current.unlocks.toJson(), ...incoming.unlocks.toJson()},
+      );
+      if (!_same(unlocks.toJson(), incoming.unlocks.toJson())) {
+        values[identityKey] = incoming.copyWith(unlocks: unlocks).encode();
+      }
+      }
+    }
+    if (values.containsKey(MentiAccessSettings.key) &&
+        before.containsKey(MentiAccessSettings.key)) {
+      final current = MentiAccessSettings.decode(before[MentiAccessSettings.key]!);
+      // Importing an adult backup cannot lift this installation's minor gate.
+      if (current['audience'] == 'minor') {
+        values[MentiAccessSettings.key] = before[MentiAccessSettings.key]!;
+      }
+    }
     Map<String, Object> freeze(Map<String, Object> data) => Map.unmodifiable({
       for (final e in data.entries) e.key: e.value is List<String>
           ? List<String>.unmodifiable(e.value as List<String>) : e.value,
     });
-    return RestorePlan._(doc, freeze(before), freeze(values));
+    return RestorePlan._(doc, freeze(before), freeze(values), profileRecovery: profileRecovery);
   }
 
   static Future<void> _write(SharedPreferences p, String k, Object? v) async {
@@ -182,6 +217,7 @@ void validateRestoreValue(String key, Object value) {
     if (!condition) { throw FormatException('Invalid restore value: $key'); }
   }
   if (key == MentiAccessSettings.key) { MentiAccessSettings.decode(value); return; }
+  if (key == MentiIdentityStore.key) { MentiIdentityDocument.decode(value); return; }
   const lists = {'mennyiment_favorites_v1', 'mennyiment_reflection_days_v1',
     'mennyiment_menti_rewards_v1'};
   const bools = {'mennyiment_reduce_motion_v1', 'mennyiment_character_setup_complete_v1'};

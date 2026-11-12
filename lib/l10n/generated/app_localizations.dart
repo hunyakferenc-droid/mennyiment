@@ -1124,6 +1124,12 @@ abstract class AppLocalizations {
   /// **'Visszaállítod az átnézett mentést?'**
   String get restoreQuestion;
 
+  /// No description provided for @restoreProfileRecovery.
+  ///
+  /// In hu, this message translates to:
+  /// **'A jelenlegi Menti-profil sérült vagy nem támogatott verzióból származik. Változatlan marad, amíg meg nem erősíted az importált profilra cserélését. Ha meg szeretnéd őrizni, előbb exportáld a jelenlegi adatokat; a feloldásai nem egyesíthetők biztonságosan.'**
+  String get restoreProfileRecovery;
+
   /// No description provided for @restoreWarning.
   ///
   /// In hu, this message translates to:
@@ -2675,7 +2681,7 @@ abstract class AppLocalizations {
   /// No description provided for @avatarStudio.
   ///
   /// In hu, this message translates to:
-  /// **'Menti Studio 2.2.5'**
+  /// **'Menti Studio 2.2.6'**
   String get avatarStudio;
 
   /// No description provided for @avatarSave.
@@ -4549,6 +4555,204 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'A haj opcionális. Kikapcsolva a letisztult Menti-alap látható.'**
   String get avatarHairOptional;
+
+  /// No description provided for @journalAllTime.
+  ///
+  /// In hu, this message translates to:
+  /// **'Teljes időszak'**
+  String get journalAllTime;
+
+  /// No description provided for @journalDay.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nap'**
+  String get journalDay;
+
+  /// No description provided for @journalSearch.
+  ///
+  /// In hu, this message translates to:
+  /// **'Keresés az italok között'**
+  String get journalSearch;
+
+  /// No description provided for @journalClearSearch.
+  ///
+  /// In hu, this message translates to:
+  /// **'Keresés törlése'**
+  String get journalClearSearch;
+
+  /// No description provided for @journalAllPrices.
+  ///
+  /// In hu, this message translates to:
+  /// **'Minden ár'**
+  String get journalAllPrices;
+
+  /// No description provided for @journalMissingPrices.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hiányzó ár'**
+  String get journalMissingPrices;
+
+  /// No description provided for @journalKnownPrices.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ismert ár'**
+  String get journalKnownPrices;
+
+  /// No description provided for @journalNewest.
+  ///
+  /// In hu, this message translates to:
+  /// **'Legújabb elöl'**
+  String get journalNewest;
+
+  /// No description provided for @journalOldest.
+  ///
+  /// In hu, this message translates to:
+  /// **'Legrégebbi elöl'**
+  String get journalOldest;
+
+  /// No description provided for @journalHighestPrice.
+  ///
+  /// In hu, this message translates to:
+  /// **'Legmagasabb ár elöl'**
+  String get journalHighestPrice;
+
+  /// No description provided for @journalPriceFilter.
+  ///
+  /// In hu, this message translates to:
+  /// **'Árszűrő'**
+  String get journalPriceFilter;
+
+  /// No description provided for @journalSort.
+  ///
+  /// In hu, this message translates to:
+  /// **'Rendezés'**
+  String get journalSort;
+
+  /// No description provided for @journalReset.
+  ///
+  /// In hu, this message translates to:
+  /// **'Szűrők törlése'**
+  String get journalReset;
+
+  /// No description provided for @journalNoMatches.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nincs a szűrésnek megfelelő bejegyzés.'**
+  String get journalNoMatches;
+
+  /// No description provided for @journalVolume.
+  ///
+  /// In hu, this message translates to:
+  /// **'Rögzített mennyiség'**
+  String get journalVolume;
+
+  /// No description provided for @journalKnownCost.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ismert költség'**
+  String get journalKnownCost;
+
+  /// No description provided for @journalPriceCoverage.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ismert árú bejegyzések'**
+  String get journalPriceCoverage;
+
+  /// No description provided for @journalPartialCost.
+  ///
+  /// In hu, this message translates to:
+  /// **'Részösszeg: a hiányzó árak nem számítanak 0 Ft-nak.'**
+  String get journalPartialCost;
+
+  /// No description provided for @entryEdit.
+  ///
+  /// In hu, this message translates to:
+  /// **'Bejegyzés szerkesztése'**
+  String get entryEdit;
+
+  /// No description provided for @entryEditPrice.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ár megadása / módosítása'**
+  String get entryEditPrice;
+
+  /// No description provided for @entryDiscardTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Elveted a módosításokat?'**
+  String get entryDiscardTitle;
+
+  /// No description provided for @entryDiscardBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'A nem mentett módosítások elvesznek. Az eredeti bejegyzés megmarad.'**
+  String get entryDiscardBody;
+
+  /// No description provided for @entryKeepEditing.
+  ///
+  /// In hu, this message translates to:
+  /// **'Szerkesztés folytatása'**
+  String get entryKeepEditing;
+
+  /// No description provided for @entryDiscard.
+  ///
+  /// In hu, this message translates to:
+  /// **'Módosítások elvetése'**
+  String get entryDiscard;
+
+  /// No description provided for @entryDate.
+  ///
+  /// In hu, this message translates to:
+  /// **'Dátum'**
+  String get entryDate;
+
+  /// No description provided for @entryTime.
+  ///
+  /// In hu, this message translates to:
+  /// **'Idő'**
+  String get entryTime;
+
+  /// No description provided for @entryDateHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'ÉÉÉÉ-HH-NN, például 2026-11-12'**
+  String get entryDateHint;
+
+  /// No description provided for @entryTimeHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'24 órás idő, például 18:30'**
+  String get entryTimeHint;
+
+  /// No description provided for @entryDateError.
+  ///
+  /// In hu, this message translates to:
+  /// **'Valós helyi dátumot és időt adj meg, amely nem későbbi a jelenleginél. Az óraátállítás miatt nem létező időpont nem menthető.'**
+  String get entryDateError;
+
+  /// No description provided for @entryFutureRule.
+  ///
+  /// In hu, this message translates to:
+  /// **'Új időpont nem lehet jövőbeli. Régi jövőbeli időpont változtatás nélkül megőrizhető.'**
+  String get entryFutureRule;
+
+  /// No description provided for @entrySaved.
+  ///
+  /// In hu, this message translates to:
+  /// **'Bejegyzés mentve.'**
+  String get entrySaved;
+
+  /// No description provided for @entrySavedFiltered.
+  ///
+  /// In hu, this message translates to:
+  /// **'Bejegyzés mentve. A módosítás után már nem felel meg a jelenlegi szűrőknek.'**
+  String get entrySavedFiltered;
+
+  /// No description provided for @entryStale.
+  ///
+  /// In hu, this message translates to:
+  /// **'A napló változott vagy nem olvasható. Töltsd újra.'**
+  String get entryStale;
 }
 
 class _AppLocalizationsDelegate

@@ -2,7 +2,7 @@ name: Flutter CI
 
 on:
   pull_request:
-    branches: [main, feature/mennyiment-2-2-4-premium-polish, feature/mennyiment-2-2-1-visual-ux, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families, feature/mennyiment-2-2-concept-redesign, feature/mennyiment-2-2-final-playable]
+    branches: [main, feature/mennyiment-2-2-5-customization-rebuild, feature/mennyiment-2-2-4-premium-polish, feature/mennyiment-2-2-1-visual-ux, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families, feature/mennyiment-2-2-concept-redesign, feature/mennyiment-2-2-final-playable]
   push:
     branches: [main]
 
@@ -22,6 +22,7 @@ jobs:
       CI: "true"
       FLUTTER_SUPPRESS_ANALYTICS: "true"
       DART_SUPPRESS_ANALYTICS: "true"
+      TZ: Europe/Budapest
       SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Checkout
@@ -55,7 +56,8 @@ jobs:
         run: |
           flutter pub get
           flutter gen-l10n
-          git diff --exit-code -- pubspec.lock
+          git diff --exit-code -- pubspec.lock lib/l10n/generated
+          python3 tool/check_localizations.py
 
       - name: Whitespace check
         run: git diff --check HEAD^ HEAD
@@ -81,11 +83,28 @@ jobs:
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         run: flutter build web --no-web-resources-cdn
 
+      - name: Include Python-free Windows launcher and build provenance
+        if: ${{ !cancelled() && steps.web.outcome == 'success' }}
+        run: |
+          python3 - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          target = Path('build/web')
+          for name in ['INDITAS.cmd', 'INDITAS.ps1']:
+              shutil.copyfile(Path('tool/windows') / name, target / name)
+          shutil.copyfile('docs/2.2.6-windows-hu.md', target / 'OLVASDEL-WINDOWS.txt')
+          metadata = json.loads((target / 'version.json').read_text())
+          (target / 'build-info.txt').write_text(
+              f"source_commit={os.environ['SOURCE_SHA']}\n"
+              f"version={metadata['version']}+{metadata['build_number']}\n"
+              "url=http://127.0.0.1:7357\n", encoding='utf-8')
+          PY
+
       - name: Upload Chrome web build
         if: ${{ !cancelled() && steps.web.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.2.5-web-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.2.8-web-${{ env.SOURCE_SHA }}
           path: build/web/
           if-no-files-found: error
           retention-days: 14
@@ -111,17 +130,19 @@ jobs:
             "$APK_SIGNER" verify --verbose --print-certs build/app/outputs/flutter-apk/app-debug.apk
             "$APK_AAPT" dump badging build/app/outputs/flutter-apk/app-debug.apk
           } > build/app/outputs/flutter-apk/build-info.txt
+          cp docs/2.2.6-android-hu.md build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
           cat build/app/outputs/flutter-apk/build-info.txt
 
       - name: Upload installable debug APK
         if: ${{ !cancelled() && steps.apk.outcome == 'success' && steps.verify_apk.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.2.5-debug-apk-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.2.8-debug-apk-${{ env.SOURCE_SHA }}
           path: |
             build/app/outputs/flutter-apk/app-debug.apk
             build/app/outputs/flutter-apk/app-debug.apk.sha256
             build/app/outputs/flutter-apk/build-info.txt
+            build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
           if-no-files-found: error
           retention-days: 14
 

@@ -1,0 +1,31 @@
+{
+  "sourceCommit": "0960acda4fb44ac5754f1839b3d69450cd88a3d0",
+  "applicationCommit": "e95cdd2f195b1c541501062a66a117a1e63aaf82",
+  "run": 43214940422,
+  "job": 131171654742,
+  "url": "https://github.com/hunyakferenc-droid/mennyiment/actions/runs/43214940422",
+  "timezone": "Europe/Budapest",
+  "fullTests": {
+    "passed": 727,
+    "failed": 0,
+    "skipped": 0
+  },
+  "additionalDstTests": {
+    "passed": 349,
+    "failed": 0,
+    "skipped": 0
+  },
+  "newFlutterTests": 76,
+  "evidence": [
+    "2026-11-12T12:07:53.0667569Z No issues found! (ran in 12.8s)",
+    "2026-11-12T12:10:42.9067544Z 🎉 727 tests passed.",
+    "2026-11-12T12:11:21.3634464Z 🎉 349 tests passed.",
+    "2026-11-12T12:12:06.5747559Z ✓ Built build/web",
+    "2026-11-12T12:16:19.0338842Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk",
+    "2026-11-12T12:16:21.5129308Z source_commit=0960acda4fb44ac5754f1839b3d69450cd88a3d0",
+    "2026-11-12T12:16:21.5140376Z V2 Signer: certificate SHA-256 digest: 01f78160e634444f972b8a62647876b537a180d186433630729fa0e28a60c5f1",
+    "2026-11-12T12:16:21.5146324Z package: name='com.example.mennyiment' versionCode='30' versionName='2.2.6' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+    "2026-11-12T12:16:21.5147436Z sdkVersion:'24'",
+    "2026-11-12T12:16:21.5147775Z targetSdkVersion:'36'"
+  ]
+}

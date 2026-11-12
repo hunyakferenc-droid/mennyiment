@@ -98,8 +98,9 @@ class _DataBackupPageState extends State<DataBackupPage> {
     final confirmed = await showDialog<bool>(context: context,
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
+        scrollable: true,
         title: Text(strings.restoreQuestion),
-        content: Text(strings.restoreWarning),
+        content: Text('${strings.restoreWarning}${plan.profileRecovery ? '\n\n${strings.restoreProfileRecovery}' : ''}'),
         actions: [
           TextButton(key: const ValueKey('restore-cancel'), onPressed: () => Navigator.pop(ctx, false), child: Text(strings.restoreCancel)),
           FilledButton(key: const ValueKey('restore-confirm'), onPressed: () => Navigator.pop(ctx, true), child: Text(strings.restoreConfirm)),
@@ -147,6 +148,8 @@ class _DataBackupPageState extends State<DataBackupPage> {
       'mennyiment_savings_goals_v1' || 'mennyiment_savings_baseline_v1' => s.savings,
       'mennyiment_budget_v2' || 'mennyiment_finance_baseline_v1' => s.financeCenter,
       'mennyiment_locale_v1' => s.language,
+      'mennyiment_identity_v22' => s.profile,
+      'mennyiment_access_v1' => s.startAgeTitle,
       _ => s.backupTitle,
     };
   }
@@ -216,6 +219,7 @@ class _DataBackupPageState extends State<DataBackupPage> {
             icon: const Icon(Icons.restore), label: Text(strings.restorePick)),
           if (_plan case final plan?) ...[
             Text(strings.restorePreview, style: Theme.of(context).textTheme.titleLarge),
+            if (plan.profileRecovery) Text(strings.restoreProfileRecovery),
             Text(strings.backupCreated(DateFormat.yMd(strings.localeName).add_Hm().format(plan.document.createdAt.toLocal()))),
             Text(strings.restoreCounts(plan.added, plan.replaced, plan.unchanged)),
             for (final key in plan.keys) Padding(

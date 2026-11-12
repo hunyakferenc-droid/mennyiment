@@ -1,0 +1,13 @@
+{
+  "sourceCommit": "ef4624d3b55179a4348d63f77b6fc7cc70c73c74",
+  "artifactId": 13979257338,
+  "zipSha256": "17ee483ad1d63588ebff5065593d1df476bec3b5c5c28aaf91654093883e6f1a",
+  "crc": "OK",
+  "fileCount": 338,
+  "commonFiles": 334,
+  "differentFiles": [
+    "flutter_bootstrap.js"
+  ],
+  "launcherMatchesSource": true,
+  "buildInfo": "source_commit=ef4624d3b55179a4348d63f77b6fc7cc70c73c74\nversion=2.2.8+32\nurl=http://127.0.0.1:7357\n"
+}

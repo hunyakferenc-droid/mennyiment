@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:async';
 import 'drink_journal.dart';
+import 'journal_entry_editor.dart';
+import 'journal_watch.dart';
 export 'drink_journal.dart';
 
 import 'menti_progress.dart';
@@ -14,6 +16,7 @@ import 'personal_goals.dart';
 import 'weekly_challenges.dart';
 import 'savings_goals.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_reactions.dart';
 import 'drink_catalog.dart';
@@ -126,7 +129,62 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  final _journalRevision = ValueNotifier<int>(0);
+  void Function()? _stopJournalWatch;
+  bool _checkingJournal = false;
+  bool _journalCheckAgain = false;
+
+  void _notifyJournal() { if (mounted) _journalRevision.value++; }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _stopJournalWatch?.call();
+    _journalRevision.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _checkExternalJournal();
+  }
+
+  Future<void> _checkExternalJournal() async {
+    if (!mounted || !_journalReady) return;
+    if (_checkingJournal || isLoading || _journalSaving) {
+      _journalCheckAgain = true;
+      return;
+    }
+    _checkingJournal = true;
+    _journalCheckAgain = false;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.reload();
+      if (mounted && !_journalSaving && prefs.get(storageKey) != _journalSnapshot) {
+        setState(() { _journalReady=false; _journalError="external"; });
+        _notifyJournal();
+      }
+    } catch (_) {
+      if (mounted) { setState(() { _journalReady=false; _journalError="load"; }); _notifyJournal(); }
+    } finally {
+      _checkingJournal=false;
+      if (_journalCheckAgain && mounted && !isLoading && !_journalSaving) {
+        _journalCheckAgain=false;
+        _checkExternalJournal();
+      }
+    }
+  }
+
+  Widget _liveJournal(Widget Function() page) => ValueListenableBuilder<int>(
+    valueListenable:_journalRevision, builder:(context,revision,child)=>Material(child:Column(children:[
+      !_journalReady && !isLoading ? SafeArea(bottom:false,child:Padding(padding:const EdgeInsets.all(12),
+        child:Column(crossAxisAlignment:CrossAxisAlignment.stretch,children:[
+          Text(appStrings(context).entryStale, key:const ValueKey("journal-stale")),
+          TextButton(onPressed:_journalSaving?null:loadDrinks,child:Text(appStrings(context).homeJournalRetry)),
+        ]))) : const SizedBox.shrink(),
+      Expanded(child:page()),
+    ])));
   bool _moreExpanded = false;
   MentiMood _mentiMood = MentiMood.welcome;
 
@@ -234,6 +292,8 @@ void updateMentiMessage(MentiMood mood) {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _stopJournalWatch=watchJournal(_checkExternalJournal);
     _initialLoad = Future.wait([loadDrinks(), loadCustomDrinks(), loadFavorites(),
       _loadReflections(), _loadCharacterProfile()]).then((_) {});
   }
@@ -275,7 +335,10 @@ void updateMentiMessage(MentiMood mood) {
         _journalError = 'load';
       }); }
     } finally {
-      if (mounted) setState(() => isLoading = false);
+      if (mounted) {
+        setState(() => isLoading = false); _notifyJournal();
+        if (_journalCheckAgain) _checkExternalJournal();
+      }
     }
   }
 
@@ -381,6 +444,13 @@ void updateMentiMessage(MentiMood mood) {
       if (!await prefs.setString(storageKey, encoded)) {
         throw StateError('Journal write failed');
       }
+      // SharedPreferences updates its local cache before the platform write.
+      // Verify durable data before notifying any view or reporting success.
+      await prefs.reload();
+      if (prefs.get(storageKey) != encoded) {
+        _journalReady = false;
+        throw StateError('Journal changed during persistence');
+      }
       if (mounted) { setState(() {
         drinks..clear()..addAll(next);
         _journalSnapshot = encoded;
@@ -388,12 +458,17 @@ void updateMentiMessage(MentiMood mood) {
       }); }
       return true;
     } catch (_) {
+      try { await (await SharedPreferences.getInstance()).reload(); }
+      catch (_) { _journalReady = false; }
       if (mounted) { setState(() {
         _journalError = 'save';
       }); }
       return false;
     } finally {
-      if (mounted) setState(() => _journalSaving = false);
+      if (mounted) {
+        setState(() => _journalSaving = false); _notifyJournal();
+        if (_journalCheckAgain) _checkExternalJournal();
+      }
     }
   }
 
@@ -507,73 +582,27 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> editDrinkPrice(Drink drink) async {
-    if (!MentiAccessScope.adultOf(context)) return;
-    if (!_canWriteJournal || _editingEntry) return;
-    _editingEntry = true;
-    var submitted = false;
-    try {
-    final controller = TextEditingController(
-      text: drink.priceFt?.toStringAsFixed(0) ?? '',
-    );
-    final result = await showDialog<double?>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(appStrings(context).journalSetPrice(drink.name)),
-        content: TextField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            labelText: appStrings(context).journalPrice,
-            helperText: 'Üresen hagyva ismeretlen ár',
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: Text(appStrings(context).avatarCancel),
-          ),
-          TextButton(
-            onPressed: () {
-              if (submitted) return;
-              submitted = true;
-              Navigator.pop(dialogContext, -1.0);
-            },
-            child: Text(appStrings(context).journalRemovePrice),
-          ),
-          FilledButton(
-            onPressed: () {
-              if (submitted) return;
-              if (controller.text.trim().isEmpty) {
-                submitted = true;
-                Navigator.pop(dialogContext, -1.0);
-                return;
-              }
-              final value = double.tryParse(
-                controller.text.trim().replaceAll(',', '.'),
-              );
-              if (value == null || !value.isFinite || value < 0 || value > 10000000) {
-                ScaffoldMessenger.of(dialogContext).showSnackBar(
-                  SnackBar(content: Text(appStrings(context).journalInvalidAmount)),
-                );
-                return;
-              }
-              submitted = true;
-              Navigator.pop(dialogContext, value);
-            },
-            child: Text(appStrings(context).avatarSave),
-          ),
-        ],
-      ),
-    );
-    if (!mounted || result == null) return;
-    final index = drinks.indexOf(drink);
-    if (index < 0) return;
-    final next = List<Drink>.of(drinks);
-    next[index] = drink.withPrice(result < 0 ? null : result);
-    await _persistDrinks(next);
-    } finally {
-      _editingEntry = false;
+    await _editEntry(drinks.indexOf(drink), drink, true);
+  }
+
+  Future<bool> _editEntry(int index, Drink original, bool priceOnly) async {
+    if (!_canWriteJournal || _editingEntry || index<0 || index>=drinks.length ||
+        !identical(drinks[index],original)) {
+      return false;
     }
+    _editingEntry=true;
+    final expectedSnapshot=_journalSnapshot;
+    try {
+      return await Navigator.of(context).push<bool>(MaterialPageRoute(builder:(_)=>JournalEntryEditor(
+        drink:original,priceOnly:priceOnly,onSave:(replacement) async {
+          if (!mounted || !_canWriteJournal || expectedSnapshot!=_journalSnapshot ||
+              index>=drinks.length || !identical(drinks[index],original)) {
+            return false;
+          }
+          final next=List<Drink>.of(drinks); next[index]=replacement;
+          return _persistDrinks(next);
+        }))) == true;
+    } finally { _editingEntry=false; }
   }
 
   List<V2Drink> get dashboardDrinks => drinks.map((d) => V2Drink(
@@ -587,13 +616,15 @@ void updateMentiMessage(MentiMood mood) {
       '${drink.name}|${drink.ml}|${drink.percent}';
 
   Future<void> _openStatistics() async {
+    await _checkExternalJournal();
+    if (!mounted) return;
     if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
 
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => StatisticsPage(
+        builder: (_) => _liveJournal(()=>StatisticsPage(
           drinks: drinks.map((d) => StatisticsDrink(
             name: d.name,
             ml: d.ml,
@@ -601,7 +632,7 @@ void updateMentiMessage(MentiMood mood) {
             time: d.time,
             priceFt: d.priceFt,
           )).toList(),
-        ),
+        )),
       ),
     );
 
@@ -638,22 +669,27 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> _openJournal() async {
+    await _checkExternalJournal();
+    if (!mounted) return;
     if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
     final add = await Navigator.of(context).push<bool>(MaterialPageRoute(
-      builder: (_) => DrinkJournalPage(drinks: drinks, hasSavedJournal: _journalSnapshot != null),
+      builder: (_) => _liveJournal(()=>DrinkJournalPage(drinks: drinks,
+        hasSavedJournal: _journalSnapshot != null, canEdit:_canWriteJournal, onEdit:_editEntry)),
     ));
     if (mounted && add == true) await _openDrinkPicker();
   }
 
   Future<void> _openDashboard() async {
+    await _checkExternalJournal();
+    if (!mounted) return;
     if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
 
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => DashboardV2Page(drinks: dashboardDrinks),
+        builder: (_) => _liveJournal(()=>DashboardV2Page(drinks: dashboardDrinks)),
       ),
     );
 
@@ -669,6 +705,8 @@ void updateMentiMessage(MentiMood mood) {
   }
 
   Future<void> _openLifestyleInsights() async {
+    await _checkExternalJournal();
+    if (!mounted) return;
     if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
     await Navigator.push(context, MaterialPageRoute(
@@ -710,11 +748,13 @@ void updateMentiMessage(MentiMood mood) {
     ));
   }
 
-  void _openFinanceCenter() {
+  Future<void> _openFinanceCenter() async {
+    await _checkExternalJournal();
+    if (!mounted) return;
     if (!MentiAccessScope.adultOf(context)) return;
     if (isLoading || !_journalReady) return;
     Navigator.push(context, MaterialPageRoute(
-      builder: (_) => FinanceCenterPage(drinks: dashboardDrinks),
+      builder: (_) => _liveJournal(()=>FinanceCenterPage(drinks: dashboardDrinks)),
     ));
   }
 
@@ -792,7 +832,7 @@ void updateMentiMessage(MentiMood mood) {
     updateMentiMessage(result.percent == 0
         ? MentiMood.alcoholFreeEntry : MentiMood.drinkAdded);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(appStrings(context).journalSaved(result.name))),
+      SnackBar(content: Text(appStrings(context).journalSaved(catalogDrinkLabel(result.name, appStrings(context))))),
     );
     } finally { _recording = false; }
   }
@@ -879,7 +919,7 @@ void updateMentiMessage(MentiMood mood) {
     var submitted = false;
     final confirmed = await showDialog<bool>(context: context, builder: (ctx) => AlertDialog(
       title: Text(appStrings(context).journalDeleteTitle),
-      content: Text(appStrings(context).journalDeleteBody(drink.name)),
+      content: Text(appStrings(context).journalDeleteBody(catalogDrinkLabel(drink.name, appStrings(context)))),
       actions: [
         TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(appStrings(context).avatarCancel)),
         FilledButton(onPressed: () {
@@ -898,17 +938,19 @@ void updateMentiMessage(MentiMood mood) {
     contentPadding: EdgeInsets.zero,
     leading: CircleAvatar(backgroundColor: const Color(0xFF392447),
       child: const Icon(Icons.local_bar_rounded, color: _mint)),
-    title: Text(drink.name, style: const TextStyle(fontWeight: FontWeight.w600)),
-    subtitle: Text('${drink.time.month}.${drink.time.day.toString().padLeft(2,'0')}. '
-      '${drink.time.hour.toString().padLeft(2,'0')}:${drink.time.minute.toString().padLeft(2,'0')}  •  '
-      '${drink.ml} ml  •  ${drink.alcoholGrams.toStringAsFixed(1)} g'),
+    title: Text(catalogDrinkLabel(drink.name, appStrings(context)), style: const TextStyle(fontWeight: FontWeight.w600)),
+    subtitle: Text('${DateFormat.yMMMd(appStrings(context).localeName).add_Hm().format(drink.time.toLocal())}  •  '
+      '${NumberFormat.decimalPattern(appStrings(context).localeName).format(drink.ml)} ml  •  '
+      '${NumberFormat('0.0', appStrings(context).localeName).format(drink.alcoholGrams)} g'),
     trailing: PopupMenuButton<String>(
       tooltip: appStrings(context).homeRecordActions,
       onSelected: (value) {
+        if (value == 'edit') { _editEntry(drinks.indexOf(drink),drink,false); }
         if (value == 'price') { editDrinkPrice(drink); }
         if (value == 'delete') { _deleteEntry(drink); }
       },
       itemBuilder: (ctx) => [
+        PopupMenuItem(value: 'edit', child: Text(appStrings(context).entryEdit)),
         PopupMenuItem(value: 'price', child: Text(drink.priceFt == null ? appStrings(context).homeEnterPrice : appStrings(context).homeEditPrice(localeCurrency(drink.priceFt!, Localizations.localeOf(context).languageCode)))),
         PopupMenuItem(value: 'delete', child: Text(appStrings(context).homeDeleteEntry)),
       ],
@@ -1086,7 +1128,7 @@ void updateMentiMessage(MentiMood mood) {
               const SizedBox(height: 12),
               if (_journalError != null) ...[
                 Semantics(liveRegion: true, child: Text(
-                  _journalError == 'load' ? strings.homeJournalLoadError : strings.homeJournalSaveError,
+                  _journalError == 'external' ? strings.entryStale : _journalError == 'load' ? strings.homeJournalLoadError : strings.homeJournalSaveError,
                   key: const ValueKey('journal-error'))),
                 TextButton(onPressed: _journalSaving || isLoading ? null : loadDrinks, child: Text(strings.homeJournalRetry)),
               ],

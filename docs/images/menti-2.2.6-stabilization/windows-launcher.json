@@ -1,0 +1,51 @@
+{
+  "sourceCommit": "0960acda4fb44ac5754f1839b3d69450cd88a3d0",
+  "platform": "PowerShell 7.7 / Linux; Windows 5.1 not executed",
+  "scriptSha256": "5deef87e452ff302f0c65ae9d738b1709a23bbc7c8c10d7ba72b1b114bad08c2",
+  "checks": [
+    {
+      "path": "/",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/canvaskit/canvaskit.wasm",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/canvaskit/canvaskit.wasm",
+      "method": "HEAD",
+      "status": 200
+    },
+    {
+      "path": "/missing",
+      "method": "GET",
+      "status": 404
+    },
+    {
+      "path": "/%2e%2e/secret",
+      "method": "GET",
+      "status": 403
+    },
+    {
+      "case": "occupied port",
+      "exitCode": 1,
+      "clearMessage": true
+    },
+    {
+      "case": "missing index",
+      "exitCode": 1,
+      "clearMessage": true
+    },
+    {
+      "case": "missing Flutter",
+      "exitCode": 1,
+      "clearMessage": true
+    },
+    {
+      "case": "idle preconnection does not block assets",
+      "seconds": 0.5755821420007123
+    }
+  ]
+}

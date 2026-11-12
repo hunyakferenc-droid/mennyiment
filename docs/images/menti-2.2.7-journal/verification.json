@@ -1,0 +1,161 @@
+{
+  "completedAt": "2026-11-12T15:39:45.022Z",
+  "browser": "154.0.8037.57",
+  "checks": [
+    "hu 320px: accent-free multiword search, exact fractional price, read-only storage",
+    "hu 360px: accent-free multiword search, exact fractional price, read-only storage",
+    "hu 390px: accent-free multiword search, exact fractional price, read-only storage",
+    "hu: month back/forward, missing-price filter excludes genuine zero, duplicate catalog records retained",
+    "hu: localized catalog search",
+    "hu: no-match/reset and all three sorting controls preserve raw storage",
+    "hu: reopening clears temporary filters and preserves journal/profile/XP",
+    "hu: application reload preserves raw journal, profile, XP and language",
+    "hu 430px: accent-free multiword search, exact fractional price, read-only storage",
+    "en 320px: accent-free multiword search, exact fractional price, read-only storage",
+    "en 360px: accent-free multiword search, exact fractional price, read-only storage",
+    "en 390px: accent-free multiword search, exact fractional price, read-only storage",
+    "en: month back/forward, missing-price filter excludes genuine zero, duplicate catalog records retained",
+    "en: localized catalog search",
+    "en: no-match/reset and all three sorting controls preserve raw storage",
+    "en: reopening clears temporary filters and preserves journal/profile/XP",
+    "en: application reload preserves raw journal, profile, XP and language",
+    "en 430px: accent-free multiword search, exact fractional price, read-only storage"
+  ],
+  "runtimeErrors": [],
+  "sourceCommit": "215495f521ebba3044d058b80ef79a427c9a5e25",
+  "ciRun": 43247185562,
+  "packageVersion": "2.2.7+31",
+  "physicalAndroidTested": false,
+  "androidEmulatorTested": false,
+  "realWindowsTested": false,
+  "screenshots": [
+    {
+      "file": "catalog-search-en.png",
+      "sha256": "3a72dd5d1e121036426f6694bf5a1946bcb6804960432495ed41ff721e9b5549"
+    },
+    {
+      "file": "catalog-search-hu.png",
+      "sha256": "9ca8b16d38ddc245ae1f790f6c56c3cdc39e812284980e1bb27443ef076b6e6c"
+    },
+    {
+      "file": "journal-en-320.png",
+      "sha256": "5ac6de5bf1ca6bc47fe1cab926545505980d29f6c86b69b50a74e41420291753"
+    },
+    {
+      "file": "journal-en-360.png",
+      "sha256": "63db12a9506aa08d19583b9a62a3bc781e5829a73d20322f2a5ac6ef64fb3861"
+    },
+    {
+      "file": "journal-en-390.png",
+      "sha256": "a57390a2f49f49c1da9df3b3d2ee29071a4b8396372f24c65cc96fcbfee3e2f0"
+    },
+    {
+      "file": "journal-en-430.png",
+      "sha256": "a86d7da8e9cb45869994c790e00fc0f7b9a2c70d284955bb75657d39cc7f2ad4"
+    },
+    {
+      "file": "journal-hu-320.png",
+      "sha256": "c5a9c4df88642a89d58ab3d54371fdca094011085323128b68e2c28f6a2003ed"
+    },
+    {
+      "file": "journal-hu-360.png",
+      "sha256": "2e843ea9d63682f84f671fb70c66a276a2897eb40f3036f8fff21c591309a0e2"
+    },
+    {
+      "file": "journal-hu-390.png",
+      "sha256": "82c281dd03914410a0b10c2d649a6c9e230f3c67e9a406cecb593a32b4235fed"
+    },
+    {
+      "file": "journal-hu-430.png",
+      "sha256": "4a359b754d5135baeb536b917884b656b00fd025fb8fb250b02d7079340cbd10"
+    },
+    {
+      "file": "missing-price-en.png",
+      "sha256": "472463fa89d293e974b9660bae5342ff1a28be65bfc37e686fd43eef96673ab5"
+    },
+    {
+      "file": "missing-price-hu.png",
+      "sha256": "afab2b7ef5bb217be5a0357485137d8b38274b09e90383d021ac93bb14b602f2"
+    },
+    {
+      "file": "newest-sort-en.png",
+      "sha256": "a57390a2f49f49c1da9df3b3d2ee29071a4b8396372f24c65cc96fcbfee3e2f0"
+    },
+    {
+      "file": "newest-sort-hu.png",
+      "sha256": "82c281dd03914410a0b10c2d649a6c9e230f3c67e9a406cecb593a32b4235fed"
+    },
+    {
+      "file": "no-matches-en.png",
+      "sha256": "eeb38c4aa43b249775a1a32c686d2975dc890627b9e97ab825cc7becb50ef57c"
+    },
+    {
+      "file": "no-matches-hu.png",
+      "sha256": "fd061f5c137749d769483ee36e038fcaf4aaef59575a613e411aa521d19aa3eb"
+    },
+    {
+      "file": "oldest-sort-en.png",
+      "sha256": "2be47d70318b6b517bdbf5fc50a8b3f835a0cb491aba8ddfac6a6cd155e2aeac"
+    },
+    {
+      "file": "oldest-sort-hu.png",
+      "sha256": "5942bc25052f1158eaff3aaed3ae38ebe7e457166b5e184ed88d95be62d052a4"
+    },
+    {
+      "file": "previous-month-en.png",
+      "sha256": "01ae8036942170c578efdc6c781d768e22f41ab8716c626e7704b8ebd628cff9"
+    },
+    {
+      "file": "previous-month-hu.png",
+      "sha256": "8d5df46c3210849b90ef4420ea61760e8dedfd36f44001b18521dd4be183495b"
+    },
+    {
+      "file": "price-sort-en.png",
+      "sha256": "bf24f27f73c896125dc3ca9ff760be3ffc5176fdba28022ae91c88d4561acda6"
+    },
+    {
+      "file": "price-sort-hu.png",
+      "sha256": "cf6d2f431a8354eb9f55f90c7f5ea8e197362bf1991a638fa6cba8a14887368a"
+    },
+    {
+      "file": "reloaded-home-en.png",
+      "sha256": "037d4cdd0c1937ffe0cf4a8a25a96b5166e9c39f7225521d727fb225bea8b9c2"
+    },
+    {
+      "file": "reloaded-home-hu.png",
+      "sha256": "cd9bcc51f0622089174d7dcd6d30b255af9500dd6e0f926ccf8b0931845efb33"
+    },
+    {
+      "file": "search-en-320.png",
+      "sha256": "464a68aabbc668e0c4cd6a1733024322ec18bf0a972c50ad121844c265b2fd25"
+    },
+    {
+      "file": "search-en-360.png",
+      "sha256": "fa316f762bf5270ddcf82535c0e85b390a9acb0bf0481b80fd70150c2bdb50cd"
+    },
+    {
+      "file": "search-en-390.png",
+      "sha256": "cd8a5905fd0dd9f1bcada794cadfc9645aedf2f2d10e8e9e555acb81899af0e6"
+    },
+    {
+      "file": "search-en-430.png",
+      "sha256": "6ad93afecedd81b1e1bcfba34963f14bbb5223e6a504a0c7447b1ddd972a7efc"
+    },
+    {
+      "file": "search-hu-320.png",
+      "sha256": "14fac6711593d3ed561abde526fbecd23153238b5372e4eac1aeaa648259f1ce"
+    },
+    {
+      "file": "search-hu-360.png",
+      "sha256": "b71075a554390f44a1d4cbe950ef1dd48cad13ff30967d747e196d359661b2c9"
+    },
+    {
+      "file": "search-hu-390.png",
+      "sha256": "572a990b8a8ee2be496ca9437490fdcb712ae3b78be23fef34c04f13f2f2337c"
+    },
+    {
+      "file": "search-hu-430.png",
+      "sha256": "fd76eb231052ba733e504be25775ecaa01884f2479170e67c7f51f79c20c85bf"
+    }
+  ]
+}

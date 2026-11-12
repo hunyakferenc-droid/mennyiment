@@ -1,0 +1,13 @@
+{
+  "sourceCommit": "0960acda4fb44ac5754f1839b3d69450cd88a3d0",
+  "browser": "154.0.8037.57",
+  "checks": [
+    "Fresh 390px adult installation: HU to EN, onboarding Back retains age, chosen girl identity and name save",
+    "Real Studio choice, save and undo: draft stays private, selected eyes persist and undo does not write",
+    "Reload keeps language, saved character and completed onboarding",
+    "Actual drink entry saves fractional HUF price and original catalog name; feedback uses its English label",
+    "Existing-price editor opens with exact fractional value and English helper/title; saving does not round",
+    "Fresh 320px minor installation and reload retain restriction and expose no alcohol logging action"
+  ],
+  "runtimeErrors": []
+}

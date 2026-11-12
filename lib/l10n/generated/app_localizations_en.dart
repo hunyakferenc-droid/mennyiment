@@ -114,12 +114,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String drinkCount(int count) {
-    return '$count drinks';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count drinks',
+      one: '$count drink',
+    );
+    return '$_temp0';
   }
 
   @override
   String dayCount(int count) {
-    return '$count days';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '$count day',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -588,6 +600,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get restoreQuestion => 'Restore the reviewed backup?';
+
+  @override
+  String get restoreProfileRecovery =>
+      'The current Menti profile is unreadable or from an unsupported version. It stays untouched until you confirm replacement with the imported profile. Export the current data first if you need to keep it; its unlocks cannot be safely combined.';
 
   @override
   String get restoreWarning =>
@@ -1437,7 +1453,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get avatarReactionFocused => 'Focused';
 
   @override
-  String get avatarStudio => 'Menti Studio 2.2.5';
+  String get avatarStudio => 'Menti Studio 2.2.6';
 
   @override
   String get avatarSave => 'Save';
@@ -2515,4 +2531,109 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get avatarHairOptional =>
       'Hair is optional. Turn it off for the clean Menti base.';
+
+  @override
+  String get journalAllTime => 'All time';
+
+  @override
+  String get journalDay => 'Day';
+
+  @override
+  String get journalSearch => 'Search drinks';
+
+  @override
+  String get journalClearSearch => 'Clear search';
+
+  @override
+  String get journalAllPrices => 'All prices';
+
+  @override
+  String get journalMissingPrices => 'Missing price';
+
+  @override
+  String get journalKnownPrices => 'Known price';
+
+  @override
+  String get journalNewest => 'Newest first';
+
+  @override
+  String get journalOldest => 'Oldest first';
+
+  @override
+  String get journalHighestPrice => 'Highest price first';
+
+  @override
+  String get journalPriceFilter => 'Price filter';
+
+  @override
+  String get journalSort => 'Sort order';
+
+  @override
+  String get journalReset => 'Clear filters';
+
+  @override
+  String get journalNoMatches => 'No entries match these filters.';
+
+  @override
+  String get journalVolume => 'Recorded volume';
+
+  @override
+  String get journalKnownCost => 'Known cost';
+
+  @override
+  String get journalPriceCoverage => 'Entries with known prices';
+
+  @override
+  String get journalPartialCost =>
+      'Partial total: missing prices do not count as zero.';
+
+  @override
+  String get entryEdit => 'Edit entry';
+
+  @override
+  String get entryEditPrice => 'Add / edit price';
+
+  @override
+  String get entryDiscardTitle => 'Discard changes?';
+
+  @override
+  String get entryDiscardBody =>
+      'Your unsaved changes will be lost. The original entry will remain.';
+
+  @override
+  String get entryKeepEditing => 'Keep editing';
+
+  @override
+  String get entryDiscard => 'Discard changes';
+
+  @override
+  String get entryDate => 'Date';
+
+  @override
+  String get entryTime => 'Time';
+
+  @override
+  String get entryDateHint => 'YYYY-MM-DD, for example 2026-11-12';
+
+  @override
+  String get entryTimeHint => '24-hour time, for example 18:30';
+
+  @override
+  String get entryDateError =>
+      'Enter a valid local date and time that is not in the future. A time skipped by daylight saving cannot be saved.';
+
+  @override
+  String get entryFutureRule =>
+      'A new timestamp cannot be in the future. An existing future timestamp can be kept unchanged.';
+
+  @override
+  String get entrySaved => 'Entry saved.';
+
+  @override
+  String get entrySavedFiltered =>
+      'Entry saved. It no longer matches the current filters.';
+
+  @override
+  String get entryStale =>
+      'Journal changed or unavailable. Reload before editing.';
 }

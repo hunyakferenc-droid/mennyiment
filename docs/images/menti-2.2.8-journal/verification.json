@@ -1,0 +1,262 @@
+{
+  "sourceCommit": "ef4624d3b55179a4348d63f77b6fc7cc70c73c74",
+  "ciRun": 43294491890,
+  "webArtifactId": 13979257338,
+  "browser": "154.0.8037.57",
+  "method": "Two completed locale runs on the exact downloaded CI Web ZIP, synthetic local data, reduced motion, normal browser text. 200% and keyboard tested by Flutter widgets, not emulated by CSS zoom.",
+  "checks": [
+    "hu 320px: direct fractional price save affects one duplicate, preserves filters/unknown fields/profile/XP, updates missing-price results",
+    "hu 320px: application reload keeps the edited raw records, profile, XP and language; temporary filters reset",
+    "hu 360px: direct fractional price save affects one duplicate, preserves filters/unknown fields/profile/XP, updates missing-price results",
+    "hu 360px: application reload keeps the edited raw records, profile, XP and language; temporary filters reset",
+    "hu: all six fields persisted for only the selected duplicate; search/month/missing-price/order survive; filtered-out feedback is visible",
+    "hu: genuine zero is saved as known and leaves the missing-price view without changing filters",
+    "hu: an existing price can be modified and explicitly removed; totals/coverage/results refresh and the separate zero-price record stays known",
+    "hu: Back asks before discarding, keep-editing retains the draft, confirmed discard writes nothing",
+    "hu: another tab's real storage event marks the open journal stale; explicit reload retains filters and preserves the external data",
+    "hu: next statistics and finance views show the edited current-month cost and do not change journal/profile/XP",
+    "hu 390px: application reload keeps the edited raw records, profile, XP and language; temporary filters reset",
+    "hu 430px: direct fractional price save affects one duplicate, preserves filters/unknown fields/profile/XP, updates missing-price results",
+    "hu 430px: application reload keeps the edited raw records, profile, XP and language; temporary filters reset",
+    "en 320px: direct fractional price save affects one duplicate, preserves filters/unknown fields/profile/XP, updates missing-price results",
+    "en 320px: application reload keeps the edited raw records, profile, XP and language; temporary filters reset",
+    "en 360px: direct fractional price save affects one duplicate, preserves filters/unknown fields/profile/XP, updates missing-price results",
+    "en 360px: application reload keeps the edited raw records, profile, XP and language; temporary filters reset",
+    "en: all six fields persisted for only the selected duplicate; search/month/missing-price/order survive; filtered-out feedback is visible",
+    "en: genuine zero is saved as known and leaves the missing-price view without changing filters",
+    "en: an existing price can be modified and explicitly removed; totals/coverage/results refresh and the separate zero-price record stays known",
+    "en: Back asks before discarding, keep-editing retains the draft, confirmed discard writes nothing",
+    "en: another tab's real storage event marks the open journal stale; explicit reload retains filters and preserves the external data",
+    "en: next statistics and finance views show the edited current-month cost and do not change journal/profile/XP",
+    "en 390px: application reload keeps the edited raw records, profile, XP and language; temporary filters reset",
+    "en 430px: direct fractional price save affects one duplicate, preserves filters/unknown fields/profile/XP, updates missing-price results",
+    "en 430px: application reload keeps the edited raw records, profile, XP and language; temporary filters reset"
+  ],
+  "runtimeErrors": [],
+  "intentionalReloadCancellations": [
+    "http://127.0.0.1:7357/assets/FontManifest.json: net::ERR_ABORTED",
+    "http://127.0.0.1:7357/assets/FontManifest.json: net::ERR_ABORTED",
+    "http://127.0.0.1:7357/assets/FontManifest.json: net::ERR_ABORTED"
+  ],
+  "screenshots": [
+    {
+      "file": "discard-confirm-hu.png",
+      "sha256": "5890b791fddd95cfcaf4fdee9e7a42f0a256c1e1b75213534a06ef59b9fbac0e"
+    },
+    {
+      "file": "external-change-hu.png",
+      "sha256": "ab46bc27da5324cbfb26b520ac3e14f861fcf30ceef48ec4259b357a777530dd"
+    },
+    {
+      "file": "external-reloaded-hu.png",
+      "sha256": "227a85ecce2df6e8e1431b2148ed8743e2c435280fdfbb0fc6f11b82a27e5dcb"
+    },
+    {
+      "file": "finance-refreshed-hu.png",
+      "sha256": "c88c57c7af6053c5dbfd512e3a0ebb3bd1bdb87712ca8340e2ff42a60d652c39"
+    },
+    {
+      "file": "full-editor-hu.png",
+      "sha256": "ac560df6480c0c895b845aa05d44d857099addd375669b8865c0949c2137e89f"
+    },
+    {
+      "file": "full-saved-hu.png",
+      "sha256": "05c1955f69d4aadbff8d0b106f04070fa5ea61aae7cbe713a09eab1c3b6fc23d"
+    },
+    {
+      "file": "home-loaded-hu-320.png",
+      "sha256": "1104a96c817771ad6a575d4c1f7895c897167cd2a659183c1919e088fcf96fb4"
+    },
+    {
+      "file": "home-loaded-hu-360.png",
+      "sha256": "bbde2601e86900204756634b468b7cbfcc6c05d311f07d5b89cd9afdb5418bcf"
+    },
+    {
+      "file": "home-loaded-hu-390.png",
+      "sha256": "cd9bcc51f0622089174d7dcd6d30b255af9500dd6e0f926ccf8b0931845efb33"
+    },
+    {
+      "file": "home-loaded-hu-430.png",
+      "sha256": "24c88fcbe220514dfea58b6e6f6743bd0f7d621d1dfa6e1988be3af347fd4c01"
+    },
+    {
+      "file": "missing-hu-320.png",
+      "sha256": "e9e2b0e26bea5b5b4bf09c4ecea6c045fd3abc2c8984ee33e04e5f54355c150d"
+    },
+    {
+      "file": "missing-hu-360.png",
+      "sha256": "6960c49569e4afd66f0356718c6a0acfff615c497bd5f1171401ba0b9071ded2"
+    },
+    {
+      "file": "missing-hu-390.png",
+      "sha256": "43e4f9f8affeb544e04212f33f2543245ed4e1c1dc1cf5992f45bacebf2bfb6b"
+    },
+    {
+      "file": "missing-hu-430.png",
+      "sha256": "50b518a89d6caf46a46fbb8c1bd196d65d203a84e61a5b8f3776eeb4cd1bec9d"
+    },
+    {
+      "file": "price-editor-hu-320.png",
+      "sha256": "bb8e90d8b648d54e3d905f56cbf09a75969eaebdfbf87afa79de95c180e57444"
+    },
+    {
+      "file": "price-editor-hu-360.png",
+      "sha256": "9b8c1a1f72a4e6a27f1bef5889580df698e15a9be4481503e70692485e73646f"
+    },
+    {
+      "file": "price-editor-hu-430.png",
+      "sha256": "6b85f68ad1a9397b3b3ccc8e2e2c9a5718494e18d9b3d46234c5a8e3ad50f3aa"
+    },
+    {
+      "file": "price-removed-hu.png",
+      "sha256": "9549f99a95f517ce60ad3d8a0549a760e6580887658fbb56263f82a3f1401b66"
+    },
+    {
+      "file": "price-saved-hu-320.png",
+      "sha256": "560e9d3fa70161e675d1ea5133676a1c9f8b6883c5ae93f5cf93c78b88b05468"
+    },
+    {
+      "file": "price-saved-hu-360.png",
+      "sha256": "59814bf5b0d5639cdc66b028ef0d5b3918e638662f7e84a20ab19ae7691f6600"
+    },
+    {
+      "file": "price-saved-hu-430.png",
+      "sha256": "ac9af0a5436c46698c4a767291ef69fd37ac615f835c8e852c51e64cf670ef9b"
+    },
+    {
+      "file": "reloaded-hu-320.png",
+      "sha256": "5e5c826f483cbdbc17730747d1a7690a0987ce1ab7f74c46902472bdad53cd71"
+    },
+    {
+      "file": "reloaded-hu-360.png",
+      "sha256": "5df3aa6c07daa90fd191672abb93b895902f3b4993d8f7d11e726164d35631cd"
+    },
+    {
+      "file": "reloaded-hu-390.png",
+      "sha256": "600c2e44189105a4294ff499399573014fbd74e98a5f13162e79c2c254a83c9f"
+    },
+    {
+      "file": "reloaded-hu-430.png",
+      "sha256": "cc1da3a05373becb3b82272a0ecbdffa161ff3735eadb50d72d7a30004584413"
+    },
+    {
+      "file": "statistics-refreshed-hu.png",
+      "sha256": "7ea669ccab176638aa28d12e01add2cabc6cc97318a9d00a3dcfe0555723aada"
+    },
+    {
+      "file": "zero-saved-hu.png",
+      "sha256": "0a99d4d5660a1a39c49e03c0c83baf01df2b3d8e0b99b882cf6faab048a3005e"
+    },
+    {
+      "file": "discard-confirm-en.png",
+      "sha256": "056a0e1794957b4efc1286af9be129726e7e0b9679b2a1f99a4601bce22df043"
+    },
+    {
+      "file": "external-change-en.png",
+      "sha256": "eb736b851ef9e6cda85ecde5dc361fe8b81a904a27606c7cfa6d934e62bab22e"
+    },
+    {
+      "file": "external-reloaded-en.png",
+      "sha256": "13d3b24c6f6a67ef66531586d584e1b7d735375341b059337f7c81996e4903ba"
+    },
+    {
+      "file": "finance-refreshed-en.png",
+      "sha256": "0345cff529fe91b3e1a732a5278d1dbed09e104ed561af518c0cef1ff3280e62"
+    },
+    {
+      "file": "full-editor-en.png",
+      "sha256": "a523bce10184b400001d8c64a7622613ec5b6e86da855fc2994007e867b15a41"
+    },
+    {
+      "file": "full-saved-en.png",
+      "sha256": "53b6f72596cd55701a859ef032f1c011e8ec0a7e27a1e7e36426cb49f91e7fac"
+    },
+    {
+      "file": "home-loaded-en-320.png",
+      "sha256": "2b78836227460e46adce2ac8c6940d0fa6881e91ee35c0992691d4cb24035db6"
+    },
+    {
+      "file": "home-loaded-en-360.png",
+      "sha256": "88a57745e9f1ada6b231a157df66d350e87d0c71642fd3e43da01a1c7c8119fc"
+    },
+    {
+      "file": "home-loaded-en-390.png",
+      "sha256": "037d4cdd0c1937ffe0cf4a8a25a96b5166e9c39f7225521d727fb225bea8b9c2"
+    },
+    {
+      "file": "home-loaded-en-430.png",
+      "sha256": "36430391f17b9440dfdeea9a81d7a9aa0b97c6c53e7c599ce8d685804c97fb95"
+    },
+    {
+      "file": "missing-en-320.png",
+      "sha256": "d5de47d1d540b89a8e5b39d6e354b6652c066bc2f0ee0ee55a9f26c1695bc5b0"
+    },
+    {
+      "file": "missing-en-360.png",
+      "sha256": "93b973f929630a24dd310a7267a20049f5a2863a568e3ab8f72e28afc59e9ee9"
+    },
+    {
+      "file": "missing-en-390.png",
+      "sha256": "7b940ba3e8d50e88281f49a808fd70dd1a1a0ce7ebc92ceec91075f389348355"
+    },
+    {
+      "file": "missing-en-430.png",
+      "sha256": "2d8a4f74fb8bb919ab9b346027f8155bb020259f8515221758d3ff153162ee5b"
+    },
+    {
+      "file": "price-editor-en-320.png",
+      "sha256": "836ceec48e9d0e35ed215b26972d6e5ff7ba972c04a72e02f186a8b86d2da0a9"
+    },
+    {
+      "file": "price-editor-en-360.png",
+      "sha256": "d9a9c52cfd1d21a76bfd4b7e171a5f8ec4e05d7c5ac70d42c1430423dc5c1ea8"
+    },
+    {
+      "file": "price-editor-en-430.png",
+      "sha256": "75c1e7434ccf32174b703b075912ddb8edbf8bb9d6ec33ee494fb0f3b71e24ea"
+    },
+    {
+      "file": "price-removed-en.png",
+      "sha256": "7068a1a0e4dc514dcc58072cfbeb60bf51265eb7a81dea7cc6f1bc52a099a5d2"
+    },
+    {
+      "file": "price-saved-en-320.png",
+      "sha256": "90fdfd3d7020ab01e042c601aa1a8b9531c57ec5faec1a8e996c20689cf1b6b5"
+    },
+    {
+      "file": "price-saved-en-360.png",
+      "sha256": "af5c4c8ee152b2139287acc90e079987b661b70c486fb83d93ba10e4a81cfc08"
+    },
+    {
+      "file": "price-saved-en-430.png",
+      "sha256": "5a4392704e0e0efeecd0b897730ff314649a66b4caf055e37a7831012fca9d6e"
+    },
+    {
+      "file": "reloaded-en-320.png",
+      "sha256": "5c37dea50c11197a5bef018c194f98047f3757fd4ee2d6623d0e74516dc4e1e6"
+    },
+    {
+      "file": "reloaded-en-360.png",
+      "sha256": "c248dd1da5d3cec4846e45174d96362c0fb4e53b1386401e80670c18787a3773"
+    },
+    {
+      "file": "reloaded-en-390.png",
+      "sha256": "8c6a31738aa12054c3948d278801751eee58f3ce8ffb6219addf031f613e1737"
+    },
+    {
+      "file": "reloaded-en-430.png",
+      "sha256": "7f38ed714d9818313dd5198a1e2371fadd7da206bc19b0b473de4422fc91a1a9"
+    },
+    {
+      "file": "statistics-refreshed-en.png",
+      "sha256": "596a923e8ef684abb8a32a039cbe6ef778c47932b20436f11085556868ba100e"
+    },
+    {
+      "file": "zero-saved-en.png",
+      "sha256": "50fd2b7032e742d87b099c10b1f8ccac96c873547d4d1c25fb7d237e20d629f7"
+    }
+  ],
+  "realWindowsTested": false,
+  "androidEmulatorTested": false,
+  "physicalAndroidTested": false
+}

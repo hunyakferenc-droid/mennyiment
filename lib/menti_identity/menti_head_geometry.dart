@@ -24,6 +24,40 @@ class MentiHeadGeometry {
   Rect get scalp => rig.register(
     MentiFaceAnchors.values['${rig.family}-${rig.age}-clean']!['skull']!,
   );
+  // The skin masks include each original shirt's exposed neck. Remove that
+  // original neck along the measured curved jaw before wearing another collar.
+  static const _nativeNecks = <String, Rect>{
+    'boy-young': Rect.fromLTWH(350, 325, 90, 46),
+    'boy-adult': Rect.fromLTWH(918, 279, 96, 44),
+    'boy-veteran': Rect.fromLTWH(1522, 296, 90, 50),
+    'girl-young': Rect.fromLTWH(418, 273, 88, 55),
+    'girl-adult': Rect.fromLTWH(931, 251, 96, 68),
+    'girl-veteran': Rect.fromLTWH(1481, 269, 98, 62),
+    'neutral-young': Rect.fromLTWH(366, 267, 85, 35),
+    'neutral-adult': Rect.fromLTWH(920, 243, 97, 40),
+    'neutral-veteran': Rect.fromLTWH(1467, 262, 94, 39),
+  };
+  Path get skullSkin {
+    final n = rig.register(_nativeNecks['${rig.family}-${rig.age}']!);
+    final originalNeck = Path()
+      ..moveTo(n.left, n.top - 2)
+      ..quadraticBezierTo(n.center.dx, n.top + 8, n.right, n.top - 2)
+      ..lineTo(n.right, 400)
+      ..lineTo(n.left, 400)
+      ..close();
+    final skull = Path.combine(
+      PathOperation.intersect,
+      rig.mask('cleanHeadSkin'),
+      Path()..addRect(Rect.fromLTRB(0, 0, 320, scalp.bottom + 2)),
+    );
+    // Expressions remain exactly on the original face, including low smiles.
+    return Path.combine(
+      PathOperation.difference,
+      skull,
+      Path.combine(PathOperation.difference, originalNeck, guard()),
+    );
+  }
+
   // Crown centres were checked against the upper scalp (15–30% height),
   // not the ear-to-ear bounding box: ears bias that box to the left.
   // Each entry is (bare scalp, hair on), with (width, centre offset, seat).

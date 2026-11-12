@@ -54,36 +54,167 @@ class MentiWardrobeGeometry {
       return rig.mask(right ? 'rightHand' : 'leftHand').getBounds();
     }
     final g = garment;
+    final opening = cuff(right);
+    final original = rig.mask(right ? 'rightHand' : 'leftHand').getBounds();
+    final width = g.width * .155;
+    final height = width * original.height / original.width;
+    final wrist = sourceWrist(right);
+    // The wrist enters the actual sleeve opening. Preserve the original hand's
+    // aspect rather than stretching every age to one generic hand rectangle.
     return Rect.fromLTWH(
-      right ? g.right - g.width * .16 - 6 : g.left + 6,
-      g.top + g.height * (_cuffs[outfit] ?? .38),
-      g.width * .16,
-      g.width * .225,
+      opening.dx - width * wrist.dx,
+      opening.dy - height * wrist.dy,
+      width,
+      height,
     );
   }
 
-  // Sleeve openings in the retained 20 masters. Native basic uses its mask.
-  static const _cuffs = <String, double>{
-    'basic-alt': .38,
-    'party': .38,
-    'party-alt': .38,
-    'sport': .38,
-    'sport-alt': .31,
-    'business': .35,
-    'business-alt': .35,
-    'festival': .38,
-    'festival-alt': .38,
-    'legendary': .37,
-    'legendary-alt': .37,
-    'street': .38,
-    'street-alt': .38,
-    'cozy': .39,
-    'cozy-alt': .39,
-    'explorer': .36,
-    'explorer-alt': .36,
-    'creative': .38,
-    'creative-alt': .31,
+  static final _wristCache = <String, Offset>{};
+  Offset sourceWrist(bool right) =>
+      _wristCache.putIfAbsent('${rig.family}-${rig.age}-$right', () {
+        final path = rig.mask(right ? 'rightHand' : 'leftHand');
+        final b = path.getBounds();
+        final y = b.top + b.height * .20;
+        final samples = [
+          for (var i = 0; i <= 100; i++)
+            if (path.contains(Offset(b.left + b.width * i / 100, y))) i / 100,
+        ];
+        return Offset(
+          samples.isEmpty ? .5 : (samples.first + samples.last) / 2,
+          .20,
+        );
+      });
+
+  // Normalized centres of the two visible cuff openings in the retained atlas.
+  // These are independent: the asymmetric masters must not share one y-offset.
+  static const _cuffs = <String, (Offset, Offset)>{
+    'basic-alt': (Offset(.065, .423), Offset(.939, .423)),
+    'party': (Offset(.058, .413), Offset(.939, .413)),
+    'party-alt': (Offset(.055, .409), Offset(.940, .409)),
+    'sport': (Offset(.061, .425), Offset(.939, .425)),
+    'sport-alt': (Offset(.055, .315), Offset(.943, .315)),
+    'business': (Offset(.071, .413), Offset(.929, .413)),
+    'business-alt': (Offset(.067, .404), Offset(.929, .404)),
+    'festival': (Offset(.070, .416), Offset(.930, .416)),
+    'festival-alt': (Offset(.061, .420), Offset(.939, .420)),
+    'legendary': (Offset(.067, .418), Offset(.934, .418)),
+    'legendary-alt': (Offset(.069, .407), Offset(.927, .407)),
+    'street': (Offset(.068, .420), Offset(.935, .420)),
+    'street-alt': (Offset(.067, .430), Offset(.928, .430)),
+    'cozy': (Offset(.068, .417), Offset(.932, .417)),
+    'cozy-alt': (Offset(.067, .414), Offset(.934, .414)),
+    'explorer': (Offset(.065, .398), Offset(.937, .398)),
+    'explorer-alt': (Offset(.067, .401), Offset(.936, .401)),
+    'creative': (Offset(.067, .415), Offset(.932, .415)),
+    'creative-alt': (Offset(.045, .304), Offset(.955, .304)),
   };
+
+  Offset cuff(bool right) {
+    if (outfit == 'basic') return hand(right).topCenter;
+    final points = _cuffs[outfit]!;
+    final p = right ? points.$2 : points.$1;
+    final g = garment;
+    return Offset(g.left + g.width * p.dx, g.top + g.height * p.dy);
+  }
+
+  // Actual neck opening, not the atlas rectangle's upper edge (which can be a
+  // hood, lapel or raised collar). Kept in source coordinates so every rig and
+  // Studio crop uses the same garment-specific seat.
+  static const _collars = <String, Rect>{
+    'basic-alt': Rect.fromLTWH(.405, .020, .205, .100),
+    'party': Rect.fromLTWH(.410, .012, .180, .100),
+    'party-alt': Rect.fromLTWH(.410, .015, .180, .100),
+    'sport': Rect.fromLTWH(.390, .020, .220, .105),
+    'sport-alt': Rect.fromLTWH(.385, .010, .230, .075),
+    'business': Rect.fromLTWH(.405, .013, .190, .100),
+    'business-alt': Rect.fromLTWH(.400, .013, .200, .100),
+    'festival': Rect.fromLTWH(.410, .020, .180, .110),
+    'festival-alt': Rect.fromLTWH(.405, .010, .190, .105),
+    'legendary': Rect.fromLTWH(.405, .010, .190, .105),
+    'legendary-alt': Rect.fromLTWH(.410, .015, .180, .100),
+    'street': Rect.fromLTWH(.405, .015, .190, .105),
+    'street-alt': Rect.fromLTWH(.405, .020, .190, .110),
+    'cozy': Rect.fromLTWH(.390, .015, .220, .100),
+    'cozy-alt': Rect.fromLTWH(.390, .010, .220, .070),
+    'explorer': Rect.fromLTWH(.405, .015, .190, .110),
+    'explorer-alt': Rect.fromLTWH(.405, .020, .190, .100),
+    'creative': Rect.fromLTWH(.400, .015, .200, .100),
+    'creative-alt': Rect.fromLTWH(.380, .005, .240, .075),
+  };
+
+  Rect get collarOpening {
+    if (outfit == 'basic') {
+      return Rect.fromCenter(
+        center: Offset(head.mouth.center.dx, neck + 7),
+        width: head.scalp.width * .32,
+        height: head.scalp.width * .11,
+      );
+    }
+    final p = _collars[outfit]!, g = garment;
+    return Rect.fromLTWH(
+      g.left + g.width * p.left,
+      g.top + g.height * p.top,
+      g.width * p.width,
+      g.height * p.height,
+    );
+  }
+
+  static const openings = <String, Rect>{
+    'basic-alt': Rect.fromLTRB(354, 27, 399, 50),
+    'party': Rect.fromLTRB(607, 26, 649, 40),
+    'party-alt': Rect.fromLTRB(861, 26, 900, 40),
+    'sport': Rect.fromLTRB(1104, 27, 1147, 49),
+    'sport-alt': Rect.fromLTRB(112, 329, 161, 350),
+    'business': Rect.fromLTRB(359, 329, 402, 347),
+    'business-alt': Rect.fromLTRB(604, 332, 647, 355),
+    'festival': Rect.fromLTRB(860, 333, 904, 350),
+    'festival-alt': Rect.fromLTRB(1108, 334, 1153, 355),
+    'legendary': Rect.fromLTRB(120, 633, 163, 647),
+    'legendary-alt': Rect.fromLTRB(356, 635, 398, 650),
+    'street': Rect.fromLTRB(603, 635, 646, 656),
+    'street-alt': Rect.fromLTRB(854, 642, 899, 665),
+    'cozy': Rect.fromLTRB(1104, 637, 1145, 648),
+    'cozy-alt': Rect.fromLTRB(111, 943, 156, 960),
+    'explorer': Rect.fromLTRB(353, 939, 395, 960),
+    'explorer-alt': Rect.fromLTRB(605, 937, 647, 957),
+    'creative': Rect.fromLTRB(856, 938, 899, 955),
+    'creative-alt': Rect.fromLTRB(1107, 937, 1151, 955),
+  };
+
+  /// Front edge of each actual atlas opening, registered with the garment.
+  Rect get innerNeck {
+    if (outfit == 'basic') return collarOpening;
+    final src = MentiPremiumAtlas.rects['outfits/$outfit']!;
+    final opening = openings[outfit]!;
+    final g = garment, scale = g.width / src.width;
+    return Rect.fromLTWH(
+      g.left + (opening.left - src.left) * scale,
+      g.top + (opening.top - src.top) * scale,
+      opening.width * scale,
+      opening.height * scale,
+    );
+  }
+
+  Path get neckBridge {
+    final r = innerNeck;
+    final top = math.min(head.mouth.bottom + 1, r.top - 2);
+    // The jaw conceals the upper seam. The lower curve stops at the front
+    // collar rather than covering a rectangular patch of lapel or shirt.
+    return Path()
+      ..moveTo(r.left + r.width * .24, top)
+      ..lineTo(r.left, r.top)
+      ..cubicTo(
+        r.left + r.width * .05,
+        r.bottom,
+        r.right - r.width * .05,
+        r.bottom,
+        r.right,
+        r.top,
+      )
+      ..lineTo(r.right - r.width * .24, top)
+      ..close();
+  }
+
   Rect get shoulders => Rect.fromLTWH(
     garment.left + garment.width * .12,
     garment.top + garment.height * .06,

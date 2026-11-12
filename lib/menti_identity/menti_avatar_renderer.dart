@@ -269,6 +269,12 @@ class MentiPreviewRenderer extends StatelessWidget {
     MentiIdentityProfile base,
     MentiVisualOption option,
   ) {
+    // The selected family/style card represents the current character. Do not
+    // replace its saved hairstyle or independently chosen outfit for the card.
+    if ((option.field == 'family' || option.field == 'style') &&
+        base.visual.value(option.field) == option.id) {
+      return base;
+    }
     if (option.field == 'reaction') {
       return base.copyWith(
         reaction: MentiReactionProfile({

@@ -1,0 +1,119 @@
+{
+  "sourceCommit": "ef4624d3b55179a4348d63f77b6fc7cc70c73c74",
+  "run": 43294491890,
+  "job": 131449041476,
+  "url": "https://github.com/hunyakferenc-droid/mennyiment/actions/runs/43294491890",
+  "timezone": "Europe/Budapest",
+  "fullTests": {
+    "passed": 860,
+    "failed": 0,
+    "skipped": 0
+  },
+  "newTests": 90,
+  "additionalDstTests": {
+    "passed": 349,
+    "failed": 0,
+    "skipped": 0,
+    "overlapsFullSuite": true
+  },
+  "localizationKeys": 775,
+  "evidence": [
+    "2026-11-12T19:52:43.3831012Z HU/EN: 775 matching keys; no untranslated messages",
+    "2026-11-12T19:52:52.9228944Z No issues found! (ran in 8.9s)",
+    "2026-11-12T19:55:14.4891925Z 🎉 860 tests passed.",
+    "2026-11-12T19:55:45.3696375Z 🎉 349 tests passed.",
+    "2026-11-12T19:56:21.2553830Z ✓ Built build/web",
+    "2026-11-12T19:59:51.2435878Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk",
+    "2026-11-12T19:59:52.9493838Z source_commit=ef4624d3b55179a4348d63f77b6fc7cc70c73c74",
+    "2026-11-12T19:59:52.9497603Z V2 Signer: certificate SHA-256 digest: 81b09f4862de94438b97cf074b91901fa9ad68d87f979d783750badf6faf992c",
+    "2026-11-12T19:59:52.9500608Z package: name='com.example.mennyiment' versionCode='32' versionName='2.2.8' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+    "2026-11-12T19:59:52.9501033Z sdkVersion:'24'",
+    "2026-11-12T19:59:52.9501162Z targetSdkVersion:'36'"
+  ],
+  "steps": [
+    {
+      "name": "Set up job",
+      "conclusion": "success"
+    },
+    {
+      "name": "Checkout",
+      "conclusion": "success"
+    },
+    {
+      "name": "Set up Flutter 3.47.7 (Dart 3.13.5)",
+      "conclusion": "success"
+    },
+    {
+      "name": "Set up Java for debug Android builds",
+      "conclusion": "success"
+    },
+    {
+      "name": "SDK versions",
+      "conclusion": "success"
+    },
+    {
+      "name": "flutter pub get and gen-l10n",
+      "conclusion": "success"
+    },
+    {
+      "name": "Whitespace check",
+      "conclusion": "success"
+    },
+    {
+      "name": "flutter analyze",
+      "conclusion": "success"
+    },
+    {
+      "name": "flutter test --concurrency=2",
+      "conclusion": "success"
+    },
+    {
+      "name": "Backup, restore and 6.8 regressions in Europe/Budapest (including DST)",
+      "conclusion": "success"
+    },
+    {
+      "name": "flutter build web",
+      "conclusion": "success"
+    },
+    {
+      "name": "Include Python-free Windows launcher and build provenance",
+      "conclusion": "success"
+    },
+    {
+      "name": "Upload Chrome web build",
+      "conclusion": "success"
+    },
+    {
+      "name": "flutter build apk --debug",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify debug APK signature and package",
+      "conclusion": "success"
+    },
+    {
+      "name": "Upload installable debug APK",
+      "conclusion": "success"
+    },
+    {
+      "name": "CI summary",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Set up Java for debug Android builds",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Set up Flutter 3.47.7 (Dart 3.13.5)",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Checkout",
+      "conclusion": "success"
+    },
+    {
+      "name": "Complete job",
+      "conclusion": "success"
+    }
+  ]
+}

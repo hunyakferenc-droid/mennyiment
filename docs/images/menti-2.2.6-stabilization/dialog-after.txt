@@ -1,0 +1,6 @@
+00:00 +0: loading /workspace/mennyiment/test/stabilization_dialogs_test.dart
+00:00 +0: rapid preview activation opens one dialog and one close returns to Studio
+00:03 +1: rapid rename opens one input and preserves the saved identity
+00:04 +2: rapid back requests show one confirmation; cancel and discard remain usable
+00:07 +3: double save while storage is pending writes once without a false failure message
+00:08 +4: All tests passed!

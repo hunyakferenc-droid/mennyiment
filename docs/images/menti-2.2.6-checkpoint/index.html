@@ -1,0 +1,11 @@
+<!doctype html><html lang="hu"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MennyiMent? 2.2.6+29 – előtte / utána</title>
+<style>body{font:16px system-ui;background:#211b28;color:#fff;margin:24px}select,button{font:inherit;padding:8px;margin:4px}main{display:grid;grid-template-columns:1fr 1fr;gap:16px}img{width:100%;background:#302832}h2{font-size:18px}a{color:#dec9ff}@media(max-width:850px){main{grid-template-columns:1fr}}</style>
+<h1>MennyiMent? 2.2.6+29</h1><p>Azonos profil, kamera és Flutter-renderer. Előtte: <code>26c6016</code>. Utána: <code>a656797</code>. A PNG-k változatlan renderkimenetek.</p>
+<label>Nézet <select id="group"><option value="necks">20 nyak–gallér közelkép</option><option value="layered">20 összetett ruha és kiegészítő</option><option value="outfits">20 teljes ruha</option><option value="details">Szemüveg, masni és sál részletek</option></select></label>
+<label>Karakter <select id="rig"></select></label><p>Részletnézetben a család mindhárom kora együtt látható. A képre kattintva az eredeti méret nyílik meg.</p><main><section><h2>Előtte – 2.2.6+28</h2><a id="before-link"><img id="before" alt="Javítás előtti Flutter-render"></a></section><section><h2>Utána – 2.2.6+29</h2><a id="after-link"><img id="after" alt="Javítás utáni Flutter-render"></a></section></main>
+<script>
+const group=document.querySelector('#group'),rig=document.querySelector('#rig');
+for(const family of ['boy','girl','neutral'])for(const age of ['young','adult','veteran'])rig.add(new Option(`${family} / ${age}`,`${family}-${age}`));
+function update(){const g=group.value,r=rig.value;for(const stage of ['before','after']){let path=g==='outfits'?`${stage}/${r}-outfits.png`:g==='details'?`details-${stage}/${r.split('-')[0]}-details.png`:`${g}-${stage}/${r}-${g}.png`;document.getElementById(stage).src=path;document.getElementById(stage+'-link').href=path;}}
+group.onchange=rig.onchange=update;update();
+</script></html>

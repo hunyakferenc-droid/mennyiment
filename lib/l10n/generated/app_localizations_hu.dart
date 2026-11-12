@@ -590,6 +590,10 @@ class AppLocalizationsHu extends AppLocalizations {
   String get restoreQuestion => 'Visszaállítod az átnézett mentést?';
 
   @override
+  String get restoreProfileRecovery =>
+      'A jelenlegi Menti-profil sérült vagy nem támogatott verzióból származik. Változatlan marad, amíg meg nem erősíted az importált profilra cserélését. Ha meg szeretnéd őrizni, előbb exportáld a jelenlegi adatokat; a feloldásai nem egyesíthetők biztonságosan.';
+
+  @override
   String get restoreWarning =>
       'A felsorolt adatokat erre az eszközre írjuk. Az érintett kulcsok meglévő értékeit felülírjuk. Folytatod?';
 
@@ -1435,7 +1439,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get avatarReactionFocused => 'Fókuszált';
 
   @override
-  String get avatarStudio => 'Menti Studio 2.2.5';
+  String get avatarStudio => 'Menti Studio 2.2.6';
 
   @override
   String get avatarSave => 'Mentés';
@@ -2515,4 +2519,108 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get avatarHairOptional =>
       'A haj opcionális. Kikapcsolva a letisztult Menti-alap látható.';
+
+  @override
+  String get journalAllTime => 'Teljes időszak';
+
+  @override
+  String get journalDay => 'Nap';
+
+  @override
+  String get journalSearch => 'Keresés az italok között';
+
+  @override
+  String get journalClearSearch => 'Keresés törlése';
+
+  @override
+  String get journalAllPrices => 'Minden ár';
+
+  @override
+  String get journalMissingPrices => 'Hiányzó ár';
+
+  @override
+  String get journalKnownPrices => 'Ismert ár';
+
+  @override
+  String get journalNewest => 'Legújabb elöl';
+
+  @override
+  String get journalOldest => 'Legrégebbi elöl';
+
+  @override
+  String get journalHighestPrice => 'Legmagasabb ár elöl';
+
+  @override
+  String get journalPriceFilter => 'Árszűrő';
+
+  @override
+  String get journalSort => 'Rendezés';
+
+  @override
+  String get journalReset => 'Szűrők törlése';
+
+  @override
+  String get journalNoMatches => 'Nincs a szűrésnek megfelelő bejegyzés.';
+
+  @override
+  String get journalVolume => 'Rögzített mennyiség';
+
+  @override
+  String get journalKnownCost => 'Ismert költség';
+
+  @override
+  String get journalPriceCoverage => 'Ismert árú bejegyzések';
+
+  @override
+  String get journalPartialCost =>
+      'Részösszeg: a hiányzó árak nem számítanak 0 Ft-nak.';
+
+  @override
+  String get entryEdit => 'Bejegyzés szerkesztése';
+
+  @override
+  String get entryEditPrice => 'Ár megadása / módosítása';
+
+  @override
+  String get entryDiscardTitle => 'Elveted a módosításokat?';
+
+  @override
+  String get entryDiscardBody =>
+      'A nem mentett módosítások elvesznek. Az eredeti bejegyzés megmarad.';
+
+  @override
+  String get entryKeepEditing => 'Szerkesztés folytatása';
+
+  @override
+  String get entryDiscard => 'Módosítások elvetése';
+
+  @override
+  String get entryDate => 'Dátum';
+
+  @override
+  String get entryTime => 'Idő';
+
+  @override
+  String get entryDateHint => 'ÉÉÉÉ-HH-NN, például 2026-11-12';
+
+  @override
+  String get entryTimeHint => '24 órás idő, például 18:30';
+
+  @override
+  String get entryDateError =>
+      'Valós helyi dátumot és időt adj meg, amely nem későbbi a jelenleginél. Az óraátállítás miatt nem létező időpont nem menthető.';
+
+  @override
+  String get entryFutureRule =>
+      'Új időpont nem lehet jövőbeli. Régi jövőbeli időpont változtatás nélkül megőrizhető.';
+
+  @override
+  String get entrySaved => 'Bejegyzés mentve.';
+
+  @override
+  String get entrySavedFiltered =>
+      'Bejegyzés mentve. A módosítás után már nem felel meg a jelenlegi szűrőknek.';
+
+  @override
+  String get entryStale => 'A napló változott vagy nem olvasható. Töltsd újra.';
 }

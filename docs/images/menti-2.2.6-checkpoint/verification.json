@@ -1,0 +1,55 @@
+{
+  "applicationSourceCommit": "a656797a1d13f72d69bd4171be276703f5c5fac5",
+  "beforeCommit": "26c60161f37edffdff45b66cc725d4b29bc00e2b",
+  "version": "2.2.6+29",
+  "flutter": "3.47.7",
+  "dart": "3.13.5",
+  "fullSuite": {
+    "passed": 651,
+    "failed": 0,
+    "skipped": 0,
+    "timezone": "Europe/Budapest",
+    "command": "TZ=Europe/Budapest MENTI_AUDIT=1 MENTI_EVIDENCE_ROOT=docs/images/menti-2.2.6-checkpoint MENTI_STAGE=after flutter test --concurrency=2 --reporter expanded"
+  },
+  "analyze": "No issues found",
+  "webBuild": "success; --no-web-resources-cdn --no-wasm-dry-run",
+  "pairwise": {
+    "rows": 200,
+    "rigs": 9,
+    "renders": 1800,
+    "optionPairs": 1424
+  },
+  "comparisons": {
+    "necks": {
+      "profiles": 180,
+      "profilesAndCamerasIdentical": true,
+      "canvasSizesIdentical": true,
+      "manifestSha256": "0c9b308e6b4421f103e2792dc488d31aa28ad20a31f17d4474f1b5870e40a328"
+    },
+    "layered": {
+      "profiles": 180,
+      "profilesAndCamerasIdentical": true,
+      "canvasSizesIdentical": true,
+      "manifestSha256": "b1e4d8e63c8a454b2b54872c77145624eb317ececdb59f3e3f6cba4e4b128ccd"
+    },
+    "details": {
+      "profiles": 36,
+      "profilesAndCamerasIdentical": true,
+      "canvasSizesIdentical": true,
+      "manifestSha256": "0117274117cf35e0a61c18f9fe24c1ecdf6b3c02ee0bf9020baace0a8a1f2fd6"
+    }
+  },
+  "nativeBaseTilesRgbaIdentical": 9,
+  "nativeFamilyGoldensByteIdentical": 2,
+  "stableOptionIds": 115,
+  "assetsAndIdentityModelUnchanged": true,
+  "customGoldenChangedPixels": 1773,
+  "chrome": {
+    "browser": "154.0.8037.57",
+    "checks": 11,
+    "runtimeErrors": 0,
+    "navigationCancellations": 0
+  },
+  "published": false,
+  "merged": false
+}

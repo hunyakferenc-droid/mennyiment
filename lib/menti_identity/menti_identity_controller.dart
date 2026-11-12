@@ -94,6 +94,10 @@ class MentiIdentityController extends ChangeNotifier {
 
   void choose(MentiVisualOption option) {
     if (!writable || !unlocked(option)) return;
+    if ((option.field == 'family' || option.field == 'style') &&
+        draft.profile.visual.value(option.field) == option.id) {
+      return;
+    }
     draft = draft.copyWith(
       unlocks: draft.unlocks.grant(effectiveUnlocks).acknowledge([
         option.rewardId,
