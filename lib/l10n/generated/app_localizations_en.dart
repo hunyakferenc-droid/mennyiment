@@ -2571,6 +2571,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get journalPriceCoverage => "Entries with known prices";
 
   @override
-  String get journalPartialCost => "Partial total: missing prices do not count as zero.";
-
+  String get journalPartialCost =>
+      "Partial total: missing prices do not count as zero.";
 }

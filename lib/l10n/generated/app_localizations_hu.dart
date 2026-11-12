@@ -2571,6 +2571,6 @@ class AppLocalizationsHu extends AppLocalizations {
   String get journalPriceCoverage => "Ismert árú bejegyzések";
 
   @override
-  String get journalPartialCost => "Részösszeg: a hiányzó árak nem számítanak 0 Ft-nak.";
-
+  String get journalPartialCost =>
+      "Részösszeg: a hiányzó árak nem számítanak 0 Ft-nak.";
 }
