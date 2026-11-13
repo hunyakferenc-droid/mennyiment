@@ -103,6 +103,11 @@ void main() {
             final semantics = t.ensureSemantics();
             try {
               expect(find.bySemanticsLabel(s.journalSearch), findsOneWidget);
+              final search = find.byKey(const ValueKey('journal-search'));
+              expect(
+                t.getSemantics(search).rect.height,
+                lessThanOrEqualTo(t.getSize(search).height + 1),
+              );
             } finally {
               semantics.dispose();
             }

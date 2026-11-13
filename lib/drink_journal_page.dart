@@ -197,20 +197,23 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        TextField(
-                          key: const ValueKey('journal-search'),
-                          controller: _search,
-                          onChanged: (_) => setState(() {}),
-                          decoration: InputDecoration(
-                            labelText: s.journalSearch,
-                            prefixIcon: const Icon(Icons.search),
-                            suffixIcon: _search.text.isEmpty
-                                ? null
-                                : IconButton(
-                                    tooltip: s.journalClearSearch,
-                                    onPressed: () => setState(_search.clear),
-                                    icon: const Icon(Icons.clear),
-                                  ),
+                        Semantics(
+                          container: true,
+                          child: TextField(
+                            key: const ValueKey('journal-search'),
+                            controller: _search,
+                            onChanged: (_) => setState(() {}),
+                            decoration: InputDecoration(
+                              labelText: s.journalSearch,
+                              prefixIcon: const Icon(Icons.search),
+                              suffixIcon: _search.text.isEmpty
+                                  ? null
+                                  : IconButton(
+                                      tooltip: s.journalClearSearch,
+                                      onPressed: () => setState(_search.clear),
+                                      icon: const Icon(Icons.clear),
+                                    ),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 12),
