@@ -80,7 +80,7 @@ void main() {
             var y = (sample.top * 200 / 320).ceil();
             y < (sample.bottom * 200 / 320).floor();
             y++
-          )
+          ) {
             for (
               var x = (sample.left * 200 / 320).ceil();
               x < (sample.right * 200 / 320).floor();
@@ -89,6 +89,7 @@ void main() {
               final n = (y * 200 + x) * 4;
               result.addAll(rgba.sublist(n, n + 4));
             }
+          }
           return result;
         }
 

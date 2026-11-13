@@ -1,4 +1,5 @@
 import 'menti_neck_bridge.dart';
+import 'menti_braid_isolation.dart';
 import 'menti_expression.dart';
 
 import 'package:flutter/material.dart';
@@ -775,15 +776,7 @@ class MentiPremiumComposition extends StatelessWidget {
     }
 
     final hairSource = MentiPremiumAtlas.rects['hair/${id('hair')}']!;
-    final hairSeat = geometry.hairTarget;
-    final hairWidth = hairSeat.width;
-    final hairHeight = hairWidth * hairSource.height / hairSource.width;
-    final hairTarget = Rect.fromLTWH(
-      hairSeat.left,
-      geometry.eyes.center.dy - hairHeight * .68,
-      hairWidth,
-      hairHeight,
-    );
+    final hairTarget = geometry.materialHairTarget(hairSource);
     final hatSource = MentiPremiumAtlas.rects['headwear/${id('headwear')}'];
     final hat = switch (id('headwear')) {
       'headphones' => Rect.fromLTRB(
@@ -797,6 +790,13 @@ class MentiPremiumComposition extends StatelessWidget {
     };
     Path hairWindow() {
       var visible = geometry.window(hairTarget);
+      if (id('hair').endsWith('-braid')) {
+        visible = Path.combine(
+          PathOperation.difference,
+          visible,
+          MentiBraidIsolation.exclusions(id('hair')),
+        );
+      }
       if (id('headwear') == 'hood') {
         final inside = Path()
           ..addOval(

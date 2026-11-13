@@ -115,6 +115,22 @@ class MentiHeadGeometry {
     return Rect.fromLTWH(scalp.center.dx - width / 2, scalp.top - 5, width, 0);
   }
 
+  /// The long braid's face opening is at 45% of its material height. Short
+  /// styles retain their approved registration. Uniform scale keeps strands,
+  /// ribbon and plait proportions intact for every family and age.
+  Rect materialHairTarget(Rect source) {
+    final seat = hairTarget;
+    final braid = hair.endsWith('-braid');
+    final width = braid ? seat.width * 1.2 : seat.width;
+    final height = width * source.height / source.width;
+    return Rect.fromLTWH(
+      braid ? scalp.center.dx - width / 2 : seat.left,
+      eyes.center.dy - height * (braid ? .45 : .68),
+      width,
+      height,
+    );
+  }
+
   Path guard() {
     final face = eyes.expandToInclude(mouth).inflate(5);
     var path = Path()
