@@ -996,7 +996,7 @@ void updateMentiMessage(MentiMood mood) {
           PopupMenuButton<String>(key:const ValueKey('home-menu'),tooltip:strings.avatarMore,
             onSelected:(action) {
               if(action=='backup') _openDataBackup();
-              if(action=='settings') Navigator.of(context).push(MaterialPageRoute<void>(builder:(_)=>const MentiSettingsPage()));
+              if(action=='settings') Navigator.of(context).push(MaterialPageRoute<void>(builder:(_)=>MentiSettingsPage(onOpenBackup: _openDataBackup)));
               if(action=='profile') _openAvatar();
             },itemBuilder:(_)=>[
               PopupMenuItem(value:'profile',child:Text(strings.profile)),

@@ -2882,4 +2882,162 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adventureRetry => 'Reload adventures';
+
+  @override
+  String get infoDataTitle => 'Data and safety';
+
+  @override
+  String get infoHelpTitle => 'Help';
+
+  @override
+  String get infoAboutTitle => 'About';
+
+  @override
+  String get infoDataIntro =>
+      'Understand what the app saves before managing your data. This overview describes how the current app works.';
+
+  @override
+  String get infoBackupOpen => 'Open backup and restore';
+
+  @override
+  String get infoBackupError =>
+      'The backup screen could not open. Please retry from the main menu.';
+
+  @override
+  String get infoRecordsTitle => 'Journals and personal goals';
+
+  @override
+  String get infoRecordsBody =>
+      'If you enter them: item names, amounts, alcohol strength, optional prices and times; favourites and your own catalogue. The wellbeing journal may contain mood, sleep and symptom ratings and your notes. Goals may include budgets, check-in days and amounts you report setting aside.';
+
+  @override
+  String get infoProfileTitle => 'Menti, preferences and adventures';
+
+  @override
+  String get infoProfileBody =>
+      'Saved data may include your Menti’s name, appearance, presets, XP and unlocks; language, motion and reaction preferences and your voluntary age declaration. Daily answers and adventure commitments, completions, choice notes and badge dates are also local data.';
+
+  @override
+  String get infoDeviceTitle => 'On your device';
+
+  @override
+  String get infoDeviceBody =>
+      'The native app uses local app preferences; on Android these are the app’s own SharedPreferences. There is no in-app account or cloud sync. Separately, the operating system may make a device backup: this version does not disable Android’s default backup eligibility. Its behaviour depends on device and system settings and is not a guaranteed backup.';
+
+  @override
+  String get infoBrowserTitle => 'In your browser';
+
+  @override
+  String get infoBrowserBody =>
+      'On the web, data belongs to the browser’s local storage for that profile and web address. Another profile, private window or different host/port may use another store. Clearing browser or app data or uninstalling can lose data; make your own file backup beforehand.';
+
+  @override
+  String get infoProtectionTitle => 'Limits of local storage';
+
+  @override
+  String get infoProtectionBody =>
+      'The app implements no separate app-level data encryption, password lock or server recovery. Device and browser protection also matter. Local storage can be damaged or lost; the app does not guarantee protection against data loss.';
+
+  @override
+  String get infoBackupTitle => 'Your own file backup';
+
+  @override
+  String get infoBackupBody =>
+      'Use the existing backup screen to prepare a preview, then save the JSON file. It includes local app data, your character, XP, unlocks and adventures. The file is readable, has no password and is not encrypted by the app. Keep it somewhere safe. On the web, starting a download does not prove that the file reached disk.';
+
+  @override
+  String get infoRestoreTitle => 'Restore with a preview';
+
+  @override
+  String get infoRestoreBody =>
+      'Choose your own backup, review the preview and only then confirm restore. The app checks the file and current local state and may reject invalid or unsupported data. Restore can replace existing values. Back up your current state first as well. The file picker may also make a temporary local copy of an imported file.';
+
+  @override
+  String get infoInternetTitle => 'When is internet needed?';
+
+  @override
+  String get infoInternetBody =>
+      'Journals, calculations, characters and adventures work locally. Loading or updating the web app may need a network depending on its host; the local Web ZIP runs with its own server. A web host may see requests and IP addresses under its own logging practices. Core HU/EN fonts are bundled, but unusual characters may cause the web renderer to request an external font. Choosing a cloud file location may also use the provider’s internet connection.';
+
+  @override
+  String get infoPermissionsTitle => 'Permissions and transfers';
+
+  @override
+  String get infoPermissionsBody =>
+      'These features request no location, camera, microphone, notification or motion-sensor permission. Export/import uses the file you choose in the system picker. There are no built-in ads, analytics or app-operated data uploads. Android debug packages also contain network permission for Flutter development tools; permission alone does not mean data is sent.';
+
+  @override
+  String get infoSelfReportTitle => 'What the journal can tell you';
+
+  @override
+  String get infoSelfReportBody =>
+      'The journal is self-reported and calculates from your own entries. No entry does not prove a consumption-free day. The app provides no diagnosis or assessment of fitness to drive; consult a healthcare professional for health questions.';
+
+  @override
+  String get infoJournalTitle => 'Recording and searching';
+
+  @override
+  String get infoJournalBody =>
+      'In adult mode, add an item from Home. In Journal, search by name, choose a period and price filter, then sort. Summaries only know recorded data and do not fill gaps with assumptions.';
+
+  @override
+  String get infoEditorTitle => 'Editing with an explicit save';
+
+  @override
+  String get infoEditorBody =>
+      'Open the editor from an entry’s Home menu or the searchable journal. You can edit name, amount, strength, price, date and time. Until Save, only the form changes. Cancel and discard do not save; leaving a changed form asks for confirmation. A new timestamp cannot be in the future; old records are not automatically corrected.';
+
+  @override
+  String get infoPricesTitle => 'Missing price or HUF 0?';
+
+  @override
+  String get infoPricesBody =>
+      'A blank price means an unknown amount. An explicitly entered HUF 0 is a known price, for example a free item. Missing is not zero: summaries show a subtotal and price coverage. You can fill prices directly from the Missing price filter; there is no automatic price estimate.';
+
+  @override
+  String get infoGoalsTitle => 'Personal goals and wellbeing';
+
+  @override
+  String get infoGoalsBody =>
+      'Record ratings and notes for a chosen day in the wellbeing journal. You choose your own goals; reported savings are your own statement, not a bank transaction. Existing age restrictions apply throughout the app.';
+
+  @override
+  String get infoAdventuresTitle => 'Adventures at your own pace';
+
+  @override
+  String get infoAdventuresBody =>
+      'You can have up to three chosen or completed missions each day. The wellbeing mission checks today’s saved entry; other completions are your own reports. Cancelling has no penalty and missing a day takes no progress away. The map and badges reflect actual completions; adventures add no separate XP.';
+
+  @override
+  String get infoHelpBackupBody =>
+      'For backup, prepare a preview and save your own JSON file. To restore, choose a file, check the preview and separately confirm replacement. Do not treat a browser download request as a completed backup: check the file as well.';
+
+  @override
+  String get infoMinorTitle => 'Your current age mode';
+
+  @override
+  String get infoMinorBody =>
+      'This mode offers general wellbeing and Menti features while adult journal and finance actions are restricted. The age mode is a voluntary declaration, not identity verification. Earlier local data is not deleted by it.';
+
+  @override
+  String infoVersion(String version, String build) {
+    return 'Version: $version · build $build';
+  }
+
+  @override
+  String get infoVersionError =>
+      'The installed version information could not be read. It will not be replaced with a guessed version.';
+
+  @override
+  String get infoRetry => 'Retry';
+
+  @override
+  String get infoAboutSummaryTitle => 'Your Menti, your own records';
+
+  @override
+  String get infoAboutSummaryBody =>
+      'MennyiMent? offers local journals, wellbeing tracking, personal goals and optional Menti adventures. Your character, progress and rewards belong to your existing local data. You can reach the brief help and data-handling overview here.';
+
+  @override
+  String get infoLicenses => 'Open-source licences';
 }

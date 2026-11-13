@@ -1,0 +1,11 @@
+# Template only. No key is generated or supplied by this project.
+# Copy to ignored android/key.properties, or keep outside the repository and set
+# MENNYIMENT_RELEASE_PROPERTIES to its absolute path. Never commit filled values.
+# Use forward slashes on Windows. Relative storeFile is relative to this file.
+storeFile=
+storePassword=
+keyAlias=
+keyPassword=
+# Optional: storeType=PKCS12 (JKS is also supported by the installed Java provider).
+# Environment overrides: MENNYIMENT_STORE_FILE, MENNYIMENT_STORE_PASSWORD,
+# MENNYIMENT_KEY_ALIAS, MENNYIMENT_KEY_PASSWORD.
