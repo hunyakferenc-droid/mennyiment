@@ -793,8 +793,19 @@ class MentiPremiumComposition extends StatelessWidget {
       'hood' => geometry.scalp.inflate(12),
       _ => hatSource == null ? Rect.zero : geometry.cap(hatSource),
     };
+    final braid = id('hair').endsWith('-braid');
+    Widget protectBraidFace(Widget material) => !braid
+        ? material
+        : Positioned.fill(
+            child: ClipPath(
+              clipper: _FaceProtectionClipper(geometry.guard()),
+              child: Stack(children: [material]),
+            ),
+          );
     Path hairWindow() {
-      var visible = geometry.window(hairTarget);
+      var visible = braid
+          ? (Path()..addRect(const Rect.fromLTWH(0, 0, 1, 1)))
+          : geometry.window(hairTarget);
       if (id('headwear') == 'hood') {
         final inside = Path()
           ..addOval(
@@ -969,17 +980,21 @@ class MentiPremiumComposition extends StatelessWidget {
                 ),
               ),
             if (profile.visual.hairVisible)
-              sprite(
-                'hair/${id('hair')}',
-                hairTarget,
-                color: id('age') == 'veteran' ? const Color(0xFFE3DFE8) : null,
-                mask: hairWindow(),
-                // Keep atlas rect holes separate from curved face/hood paths.
-                // CanvasKit path intersections of the merged shape differed
-                // between Chromium 154 and Chrome 157 and leaked into the face.
-                isolation: id('hair').endsWith('-braid')
-                    ? MentiBraidIsolation.window(id('hair'))
-                    : null,
+              protectBraidFace(
+                sprite(
+                  'hair/${id('hair')}',
+                  hairTarget,
+                  color: id('age') == 'veteran'
+                      ? const Color(0xFFE3DFE8)
+                      : null,
+                  mask: hairWindow(),
+                  // Keep atlas rect holes separate from curved face/hood paths.
+                  // CanvasKit path intersections of the merged shape differed
+                  // between Chromium 154 and Chrome 157 and leaked into the face.
+                  isolation: braid
+                      ? MentiBraidIsolation.window(id('hair'))
+                      : null,
+                ),
               ),
             if (id('style') != 'classic')
               vector(
@@ -996,12 +1011,15 @@ class MentiPremiumComposition extends StatelessWidget {
                 ),
               ),
             if (id('headwear') != 'none')
-              sprite(
-                'headwear/${id('headwear')}',
-                hat,
-                mask: ['hood', 'headphones'].contains(id('headwear'))
-                    ? geometry.window(hat)
-                    : null,
+              protectBraidFace(
+                sprite(
+                  'headwear/${id('headwear')}',
+                  hat,
+                  mask:
+                      !braid && ['hood', 'headphones'].contains(id('headwear'))
+                      ? geometry.window(hat)
+                      : null,
+                ),
               ),
             if (id('glasses') != 'none')
               Positioned.fill(
@@ -1040,6 +1058,25 @@ class MentiPremiumComposition extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Clip in the original 320×400 frame, without normalized Boolean path ops.
+/// Keeps CanvasKit's subpixel path simplification away from the facial guard.
+class _FaceProtectionClipper extends CustomClipper<Path> {
+  const _FaceProtectionClipper(this.guard);
+  final Path guard;
+  @override
+  Path getClip(Size size) => Path()
+    ..fillType = PathFillType.evenOdd
+    ..addRect(Offset.zero & size)
+    ..addPath(
+      guard.transform(
+        Matrix4.diagonal3Values(size.width / 320, size.height / 400, 1).storage,
+      ),
+      Offset.zero,
+    );
+  @override
+  bool shouldReclip(_FaceProtectionClipper old) => old.guard != guard;
 }
 
 class _RegisteredClipper extends CustomClipper<Path> {
