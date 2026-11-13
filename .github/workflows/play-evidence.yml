@@ -21,8 +21,12 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
-      - name: Upload actual screenshots and draft dossier
+      - name: Check all declared image files before uploading
+        id: verify
         if: ${{ hashFiles('docs/images/menti-2.3.1-play/verification.json') != '' }}
+        run: python3 tool/check_play_evidence.py
+      - name: Upload actual screenshots and draft dossier
+        if: ${{ steps.verify.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
           name: mennyiment-2.3.1-34-play-evidence-${{ github.sha }}
