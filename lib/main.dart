@@ -29,6 +29,7 @@ import 'menti_profile_storage.dart';
 import 'statistics.dart';
 import 'dashboard_v2.dart';
 import 'home_widgets.dart';
+import 'home_adventure_summary.dart';
 import 'personal_hub.dart';
 import 'menti_experience_settings.dart';
 import 'menti_intro.dart';
@@ -1049,7 +1050,7 @@ void updateMentiMessage(MentiMood mood) {
                           visualReaction: mentiReaction == 0 ? null :
                             _mentiMood == MentiMood.drinkAdded ? 'focused' : 'personality',
                           level: _mentiLevel,
-                          size: width < 380 ? 170 : 190,
+                          size: width < 380 ? 120 : 140,
                         ),
                       ),
                       if (MentiIdentityScope.of(context) == null && _characterAccessory != 'Nincs')
@@ -1068,6 +1069,7 @@ void updateMentiMessage(MentiMood mood) {
                 onChoose: _openCharacterSetup,
                 onProgress: _openMentiProgress,
                 onCheckIn: _saveDailyReflection,
+                primaryCheckIn: !adult,
               ) else if (_progressLoading)
                 const Center(child: CircularProgressIndicator())
               else Card(child: Padding(padding: const EdgeInsets.all(18),
@@ -1078,22 +1080,22 @@ void updateMentiMessage(MentiMood mood) {
                 ]))),
               const SizedBox(height: 12),
               if (adult) FilledButton.icon(
+                key: const ValueKey('home-primary-log'),
                 onPressed: _canWriteJournal ? _openDrinkPicker : null,
                 icon: const Icon(Icons.add_circle_outline),
-                label: Text(appStrings(context).addDrink,
+                label: Text(strings.visualAdd,
                     style: TextStyle(fontWeight: FontWeight.w800)),
                 style: FilledButton.styleFrom(
-                    backgroundColor: _mint,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: const Color(0xFF150D1C),
                     minimumSize: const Size(double.infinity, 54)),
               ),
               const SizedBox(height: 12),
-              const SizedBox(height: 6),
-              Text(strings.homeGreeting, style: const TextStyle(
-                  fontSize: 26, fontWeight: FontWeight.w800)),
-              const SizedBox(height: 5),
-              Text(strings.homeIntro,
-                  style: TextStyle(color: _muted, fontSize: 13)),
+              if (adult && _journalReady && _journalSnapshot != null) ...[
+                MentiStatusBadge(label: strings.visualTodayEntries(today.length), icon: Icons.calendar_today_outlined),
+                const SizedBox(height: 12),
+              ],
+              HomeAdventureSummary(refreshToken: _dailyRevision, onOpen: _openAdventures),
               const SizedBox(height: 12),
               OutlinedButton.icon(
                 key: const ValueKey('open-personal-hub'),
@@ -1101,10 +1103,7 @@ void updateMentiMessage(MentiMood mood) {
                 icon: const Icon(Icons.dashboard_outlined),
                 label: Text(strings.hubTitle)),
               const SizedBox(height: 12),
-              FilledButton.icon(
-                key: const ValueKey('open-adventures'), onPressed: _openAdventures,
-                icon: const Icon(Icons.explore_outlined), label: Text(strings.adventureTitle)),
-              const SizedBox(height: 12),
+
               if (widget.offerIntro && experience != null && experience.ready && !experience.introSeen)
                 MentiPanel(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(strings.experienceIntroInvite),

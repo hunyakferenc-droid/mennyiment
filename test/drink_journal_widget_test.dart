@@ -43,8 +43,8 @@ Future<void> openHome(WidgetTester tester, Object? journal) async {
 }
 
 Future<void> details(WidgetTester tester) async {
-  await tester.ensureVisible(find.text('ITAL NAPLÓZÁSA'));
-  await tester.tap(find.text('ITAL NAPLÓZÁSA'));
+  await tester.ensureVisible(find.byKey(const ValueKey('home-primary-log')));
+  await tester.tap(find.byKey(const ValueKey('home-primary-log')));
   await frames(tester);
   await tester.tap(find.text('Sör (általános)'));
   await frames(tester);
@@ -73,7 +73,7 @@ void main() {
         final prefs = await SharedPreferences.getInstance();
         expect(find.byKey(const ValueKey('journal-error')), findsOneWidget);
         final button = tester.widget<FilledButton>(
-          find.widgetWithText(FilledButton, 'ITAL NAPLÓZÁSA'),
+          find.byKey(const ValueKey('home-primary-log')),
         );
         expect(button.onPressed, isNull);
         expect(prefs.get(key), corrupt);

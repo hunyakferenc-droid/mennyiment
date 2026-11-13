@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../app_language.dart';
 import '../menti_motion.dart';
+import '../menti_ui.dart';
 import '../l10n/generated/app_localizations.dart';
 import 'menti_avatar_renderer.dart';
 import 'menti_identity_controller.dart';
@@ -444,44 +445,53 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
     final avatarSize = math.min(400.0, math.max(220.0, maxWidth - 48));
     return SizedBox(
       height: math.max(100, math.min(maxHeight, avatarSize * 1.25 + 48)),
-      child: Column(
-        children: [
-          Expanded(
-            child: Stack(
-              children: [
-                Center(
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: MentiAvatarRenderer(
-                      key: const ValueKey('studio-live-preview'),
-                      profile: profile,
-                      animate: false,
-                      size: avatarSize,
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  Center(
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: MentiAvatarRenderer(
+                        key: const ValueKey('studio-live-preview'),
+                        profile: profile,
+                        animate: false,
+                        size: avatarSize,
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 0,
-                  right: 12,
-                  child: IconButton(
-                    key: const ValueKey('studio-enlarge-preview'),
-                    tooltip: s.avatarEnlargePreview,
-                    onPressed: _enlarge,
-                    icon: const Icon(Icons.zoom_in),
+                  Positioned(
+                    top: 0,
+                    right: 12,
+                    child: IconButton(
+                      key: const ValueKey('studio-enlarge-preview'),
+                      tooltip: s.avatarEnlargePreview,
+                      onPressed: _enlarge,
+                      icon: const Icon(Icons.zoom_in),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          TextButton(
-            onPressed: c.writable ? _rename : null,
-            child: Text(
-              profile.name,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium,
+            TextButton.icon(
+              icon: const Icon(Icons.edit_outlined, size: 18),
+              onPressed: c.writable ? _rename : null,
+              label: Text(
+                profile.name,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -503,11 +513,10 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
               if (c.dirty)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 6),
-                  child: Text(
-                    s.avatarDraft,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                  child: MentiStatusBadge(
+                    label: s.avatarDraft,
+                    icon: Icons.edit_outlined,
+                    highlight: true,
                   ),
                 ),
               Wrap(
@@ -520,7 +529,13 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                       key: const ValueKey('studio-revert'),
                       onPressed: c.writable && c.dirty ? c.revert : null,
                       icon: const Icon(Icons.undo),
-                      label: Text(s.avatarRevert),
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 12,
+                        ),
+                      ),
+                      label: Text(s.visualUndo),
                     ),
                   ),
                   SizedBox(
@@ -563,10 +578,9 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
           },
           child: Scaffold(
             appBar: AppBar(
-              title: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(s.avatarStudio),
-              ),
+              toolbarHeight:
+                  56 * MediaQuery.textScalerOf(context).scale(1).clamp(1, 2),
+              title: Text(s.avatarStudio, maxLines: 2),
               actions: [
                 IconButton(
                   key: const ValueKey('studio-preview-toggle'),
@@ -603,7 +617,14 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                 ),
               ],
             ),
-            bottomNavigationBar: c.ready ? _footer(s) : null,
+            bottomNavigationBar: c.ready
+                ? Padding(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.viewInsetsOf(context).bottom,
+                    ),
+                    child: _footer(s),
+                  )
+                : null,
             body: SafeArea(
               child: !c.ready
                   ? Center(
@@ -631,26 +652,39 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                             padding: const EdgeInsets.all(8),
                             child: Text(s.avatarXpUnavailable),
                           ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: Row(
-                            children: [
-                              for (var i = 0; i < tabs.length; i++)
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 4,
+                        if (MediaQuery.viewInsetsOf(context).bottom == 0)
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              children: [
+                                for (var i = 0; i < tabs.length; i++)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 4,
+                                    ),
+                                    child: ChoiceChip(
+                                      key: ValueKey('studio-tab-$i'),
+                                      avatar: Icon(
+                                        [
+                                          Icons.face_outlined,
+                                          Icons.visibility_outlined,
+                                          Icons.checkroom_outlined,
+                                          Icons.watch_outlined,
+                                          Icons.landscape_outlined,
+                                          Icons.bookmark_outline,
+                                        ][i],
+                                        size: 18,
+                                      ),
+                                      label: Text(tabs[i]),
+                                      selected: _tab == i,
+                                      onSelected: (_) =>
+                                          setState(() => _tab = i),
+                                    ),
                                   ),
-                                  child: ChoiceChip(
-                                    key: ValueKey('studio-tab-$i'),
-                                    label: Text(tabs[i]),
-                                    selected: _tab == i,
-                                    onSelected: (_) => setState(() => _tab = i),
-                                  ),
-                                ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
                         Expanded(
                           child: LayoutBuilder(
                             builder: (context, constraints) {
@@ -676,6 +710,16 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                                     ),
                                     Expanded(child: _editor(s)),
                                   ],
+                                );
+                              }
+                              if (constraints.maxHeight < 360 ||
+                                  MediaQuery.textScalerOf(context).scale(1) >
+                                      1.5) {
+                                return _editor(
+                                  s,
+                                  header: _showPreview
+                                      ? _preview(s, constraints.maxWidth, 240)
+                                      : null,
                                 );
                               }
                               return Column(

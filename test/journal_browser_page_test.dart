@@ -51,6 +51,8 @@ Future<void> open(
     ),
   );
   await tester.pumpAndSettle();
+  await tester.tap(find.byKey(const ValueKey('journal-filter-toggle')));
+  await tester.pumpAndSettle();
 }
 
 void main() {
@@ -99,6 +101,8 @@ void main() {
             await tester.pumpAndSettle();
             final menu = find.byType(DropdownButtonFormField<JournalPrice>);
             await tester.ensureVisible(menu);
+            await tester.pumpAndSettle();
+            expect(menu.hitTestable(), findsOneWidget);
             await tester.tap(menu);
             await tester.pumpAndSettle();
             await tester.tap(

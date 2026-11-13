@@ -115,7 +115,7 @@ void main() {
       final prefs = await SharedPreferences.getInstance();
       await tester.pumpWidget(const MennyiMentApp());
       await frames(tester);
-      await tester.tap(find.text('Saját Menti kiválasztása'));
+      await tester.tap(find.byKey(const ValueKey('home-studio')));
       await frames(tester);
       await tester.pumpAndSettle();
       final preview = tester.widget<MentiAvatarRenderer>(find.byKey(const ValueKey('studio-live-preview')));

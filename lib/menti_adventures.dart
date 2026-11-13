@@ -243,12 +243,29 @@ class _MentiAdventuresPageState extends State<MentiAdventuresPage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Semantics(
-              header: true,
-              child: Text(
-                _taskName(task),
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ExcludeSemantics(
+                  child: Icon(switch (task) {
+                    AdventureTask.wellbeing => Icons.favorite_border,
+                    AdventureTask.movement => Icons.directions_walk_outlined,
+                    AdventureTask.rest => Icons.self_improvement,
+                    AdventureTask.decision => Icons.edit_note_outlined,
+                    AdventureTask.goal => Icons.flag_outlined,
+                  }, color: Theme.of(context).colorScheme.primary),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Semantics(
+                    header: true,
+                    child: Text(
+                      _taskName(task),
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 8),
             Text(hint),
@@ -257,8 +274,14 @@ class _MentiAdventuresPageState extends State<MentiAdventuresPage>
             if (status != null)
               Padding(
                 padding: const EdgeInsets.only(top: 8),
-                child: Text(
-                  done
+                child: MentiStatusBadge(
+                  highlight: active || done,
+                  icon: done
+                      ? Icons.check_circle_outline
+                      : active
+                      ? Icons.radio_button_checked
+                      : Icons.pause_circle_outline,
+                  label: done
                       ? s.adventureDone
                       : active
                       ? s.adventureActive
@@ -338,14 +361,20 @@ class _MentiAdventuresPageState extends State<MentiAdventuresPage>
     final name = MentiIdentityScope.of(context)?.profile.name ?? s.menti;
     return MentiPageBody(
       children: [
-        Text(
-          s.adventureProgress(completed, adventureTargets.last),
-          style: Theme.of(context).textTheme.titleLarge,
+        MentiProgressSummary(
+          label: s.adventureProgress(completed, adventureTargets.last),
+          current: completed,
+          target: adventureTargets.last,
         ),
         Text(s.adventureNoPenalty),
         const SizedBox(height: 16),
-        for (var i = 0; i < adventureTargets.length; i++)
+        for (final i in [
+          if (current < adventureTargets.length) current,
+          for (var j = 0; j < adventureTargets.length; j++)
+            if (j != current) j,
+        ])
           MentiPanel(
+            highlighted: i == current,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -364,14 +393,38 @@ class _MentiAdventuresPageState extends State<MentiAdventuresPage>
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
-                Text(
-                  i < current
+                MentiStatusBadge(
+                  icon: i < current
+                      ? Icons.check_circle_outline
+                      : i == current
+                      ? Icons.near_me_outlined
+                      : Icons.lock_outline,
+                  highlight: i == current,
+                  label: i < current
                       ? s.adventureStationDone
                       : i == current
                       ? s.adventureStationCurrent
                       : s.adventureStationFuture,
                 ),
                 Text(s.adventureStationRule(adventureTargets[i])),
+                if (i == current) ...[
+                  const SizedBox(height: 8),
+                  MentiStatusBadge(
+                    label: s.visualToStation(adventureTargets[i] - completed),
+                    icon: Icons.route_outlined,
+                    highlight: true,
+                  ),
+                  const SizedBox(height: 8),
+                  Builder(
+                    builder: (tabContext) => OutlinedButton.icon(
+                      key: const ValueKey('map-open-activities'),
+                      onPressed: () =>
+                          DefaultTabController.of(tabContext).animateTo(0),
+                      icon: const Icon(Icons.arrow_forward),
+                      label: Text(s.visualChooseNext),
+                    ),
+                  ),
+                ],
                 if (i == current ||
                     (current == adventureTargets.length &&
                         i == adventureTargets.length - 1)) ...[
@@ -431,8 +484,13 @@ class _MentiAdventuresPageState extends State<MentiAdventuresPage>
                   ),
                 ),
                 Text(rules[i]),
-                Text(
-                  dates[adventureBadges[i]] == null
+                const SizedBox(height: 8),
+                MentiStatusBadge(
+                  icon: dates[adventureBadges[i]] == null
+                      ? Icons.lock_outline
+                      : Icons.check_circle_outline,
+                  highlight: dates[adventureBadges[i]] != null,
+                  label: dates[adventureBadges[i]] == null
                       ? s.adventureLocked
                       : s.adventureEarned(
                           format.format(dates[adventureBadges[i]]!.toLocal()),

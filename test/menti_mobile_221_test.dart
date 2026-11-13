@@ -143,6 +143,11 @@ void main() {
             expect(c.draft.profile.visual.hairVisible, isFalse);
             expect(c.profile.visual.hairVisible, isTrue);
             // Naming remains usable with the Android-sized keyboard inset.
+            // At 200% the preview shares the editor scroll instead of covering it.
+            await tester.drag(find.byKey(const ValueKey('studio-editor-1')), const Offset(0, 20000));
+            await tester.pumpAndSettle();
+            await tester.ensureVisible(find.widgetWithText(TextButton, 'Mira'));
+            await tester.pumpAndSettle();
             await tester.tap(find.widgetWithText(TextButton, 'Mira'));
             await tester.pumpAndSettle();
             tester.view.viewInsets = const FakeViewPadding(bottom: 260);

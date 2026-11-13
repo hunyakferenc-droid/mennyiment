@@ -956,7 +956,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get hubOverview => 'Áttekintés';
 
   @override
-  String get experienceSettings => 'Beállítások és súgó';
+  String get experienceSettings => 'Beállítások';
 
   @override
   String get experienceIntroTitle => 'Ismerd meg Mentit';
@@ -1439,7 +1439,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get avatarReactionFocused => 'Fókuszált';
 
   @override
-  String get avatarStudio => 'Menti Studio 2.2.6';
+  String get avatarStudio => 'Menti Studio';
 
   @override
   String get avatarSave => 'Mentés';
@@ -3027,4 +3027,60 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get infoLicenses => 'Nyílt forrású licencek';
+
+  @override
+  String get visualStudio => 'Studio';
+
+  @override
+  String get visualProgress => 'Fejlődés';
+
+  @override
+  String get visualAdd => 'Ital rögzítése';
+
+  @override
+  String get visualFilters => 'Szűrők és rendezés';
+
+  @override
+  String visualFiltersCount(int count) {
+    return 'Szűrők és rendezés · $count';
+  }
+
+  @override
+  String get visualTodayTitle => 'Ma, a saját tempódban';
+
+  @override
+  String get visualNextTask => 'Következő vállalásod';
+
+  @override
+  String get visualNoActive => 'Még nincs aktív mai vállalásod.';
+
+  @override
+  String get visualAdventureUnavailable =>
+      'A mai kalandállapot most nem olvasható.';
+
+  @override
+  String visualToStation(int count) {
+    return 'Még $count teljesítés az állomásig';
+  }
+
+  @override
+  String get visualChooseNext => 'Tovább a mai küldetésekhez';
+
+  @override
+  String get visualUndo => 'Visszavonás';
+
+  @override
+  String get visualSettingsInfo => 'Segítség és saját adatok';
+
+  @override
+  String get visualSettingsExperience => 'Menti-élmény';
+
+  @override
+  String visualTodayEntries(int count) {
+    return 'Mai bejegyzések: $count';
+  }
+
+  @override
+  String get visualJournalScope =>
+      'Önbevallás. A hiányzó bejegyzés nem igazolt fogyasztásmentes nap.';
 }

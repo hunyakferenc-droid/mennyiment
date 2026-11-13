@@ -89,8 +89,8 @@ void main() {
   }
 
   Future<void> details(WidgetTester tester) async {
-    await tester.ensureVisible(find.text('LOG A DRINK'));
-    await tester.tap(find.text('LOG A DRINK'));
+    await tester.ensureVisible(find.byKey(const ValueKey('home-primary-log')));
+    await tester.tap(find.byKey(const ValueKey('home-primary-log')));
     await frames(tester);
     await tester.tap(find.text('Beer (standard)'));
     await frames(tester);
@@ -171,7 +171,7 @@ void main() {
         await language(tester, locale);
         expect(find.byKey(const ValueKey('journal-error')), findsOneWidget);
         final label = appStrings(tester.element(find.byType(HomePage)))
-            .addDrink;
+            .visualAdd;
         expect(
           tester
               .widget<FilledButton>(find.widgetWithText(FilledButton, label))

@@ -54,7 +54,7 @@ void main() {
             of: find.byType(MentiEvolution), matching: find.byType(MentiAvatarRenderer)).first);
           expect(homeAvatar().profile.visual.value('family'), family.id);
           expect(homeAvatar().profile.visual.value('outfit'), outfit.id);
-          await tester.tap(find.text('Saját Menti kiválasztása'));
+          await tester.tap(find.byKey(const ValueKey('home-studio')));
           await tester.pumpAndSettle();
           final studio = tester.widget<MentiAvatarRenderer>(find.byKey(const ValueKey('studio-live-preview')));
           expect(studio.profile.visual.value('family'), family.id);
@@ -151,7 +151,7 @@ void main() {
     );
     expect(
       tester.widget<MentiEvolution>(find.byType(MentiEvolution)).size,
-      170,
+      120,
     );
     expect(tester.takeException(), isNull);
     await tester.pumpWidget(const SizedBox.shrink());

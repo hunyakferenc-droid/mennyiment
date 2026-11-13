@@ -45,6 +45,7 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
   late DateTime _anchor;
   late final DateTime _openedDay;
   bool _opening = false;
+  bool _filtersOpen = false;
 
   Future<void> _edit(int index, Drink drink, bool priceOnly) async {
     if (_opening || !widget.canEdit || widget.onEdit == null) return;
@@ -158,6 +159,11 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
       s.journalOldest,
       s.journalHighestPrice,
     ];
+    final activeCount =
+        (_search.text.trim().isNotEmpty ? 1 : 0) +
+        (_period != JournalPeriod.all ? 1 : 0) +
+        (_price != JournalPrice.all ? 1 : 0) +
+        (_order != JournalOrder.newest ? 1 : 0);
     return Scaffold(
       appBar: AppBar(title: Text(s.journal)),
       floatingActionButton: FloatingActionButton(
@@ -174,8 +180,17 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
             child: ListView.builder(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 112),
-              itemCount: drinks.length + 1,
+              itemCount: drinks.length + 2,
               itemBuilder: (context, index) {
+                if (index == drinks.length + 1) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text(
+                      s.statisticsCaution,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  );
+                }
                 if (index == 0) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
@@ -202,83 +217,163 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
                         Wrap(
                           spacing: 8,
                           runSpacing: 8,
+                          crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
-                            for (final value in JournalPeriod.values)
-                              ChoiceChip(
-                                label: Text(periodLabels[value.index]),
-                                selected: _period == value,
-                                onSelected: (_) =>
-                                    setState(() => _period = value),
-                              ),
-                          ],
-                        ),
-                        if (range != null)
-                          Row(
-                            children: [
-                              IconButton(
-                                tooltip: s.previousPeriod,
-                                onPressed: () => _move(-1),
-                                icon: const Icon(Icons.chevron_left),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  '${DateFormat.yMMMd(locale).format(range.start)} – '
-                                  '${DateFormat.yMMMd(locale).format(StatisticsRange.addDays(range.end, -1))}',
-                                  textAlign: TextAlign.center,
+                            Semantics(
+                              expanded: _filtersOpen,
+                              child: OutlinedButton.icon(
+                                key: const ValueKey('journal-filter-toggle'),
+                                onPressed: () => setState(
+                                  () => _filtersOpen = !_filtersOpen,
+                                ),
+                                icon: Icon(
+                                  _filtersOpen ? Icons.expand_less : Icons.tune,
+                                ),
+                                label: Text(
+                                  activeCount > 0
+                                      ? s.visualFiltersCount(activeCount)
+                                      : s.visualFilters,
                                 ),
                               ),
-                              IconButton(
-                                tooltip: s.nextPeriod,
-                                onPressed: () => _move(1),
-                                icon: const Icon(Icons.chevron_right),
+                            ),
+                            if (activeCount > 0)
+                              TextButton.icon(
+                                key: const ValueKey('journal-reset'),
+                                onPressed: _reset,
+                                icon: const Icon(Icons.filter_alt_off_outlined),
+                                label: Text(s.journalReset),
+                              ),
+                          ],
+                        ),
+                        if (activeCount > 0)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Wrap(
+                              spacing: 8,
+                              runSpacing: 4,
+                              children: [
+                                if (_search.text.trim().isNotEmpty)
+                                  InputChip(
+                                    label: Text(_search.text),
+                                    onDeleted: () => setState(_search.clear),
+                                    deleteButtonTooltipMessage:
+                                        s.journalClearSearch,
+                                  ),
+                                if (_period != JournalPeriod.all)
+                                  InputChip(
+                                    label: Text(periodLabels[_period.index]),
+                                    onDeleted: () => setState(() {
+                                      _period = JournalPeriod.all;
+                                      _anchor = _openedDay;
+                                    }),
+                                    deleteButtonTooltipMessage: s.journalReset,
+                                  ),
+                                if (_price != JournalPrice.all)
+                                  InputChip(
+                                    label: Text(priceLabels[_price.index]),
+                                    onDeleted: () => setState(
+                                      () => _price = JournalPrice.all,
+                                    ),
+                                    deleteButtonTooltipMessage: s.journalReset,
+                                  ),
+                                if (_order != JournalOrder.newest)
+                                  InputChip(
+                                    label: Text(orderLabels[_order.index]),
+                                    onDeleted: () => setState(
+                                      () => _order = JournalOrder.newest,
+                                    ),
+                                    deleteButtonTooltipMessage: s.journalReset,
+                                  ),
+                              ],
+                            ),
+                          ),
+                        const SizedBox(height: 12),
+                        Visibility(
+                          visible: _filtersOpen,
+                          maintainState: true,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                children: [
+                                  for (final value in JournalPeriod.values)
+                                    ChoiceChip(
+                                      label: Text(periodLabels[value.index]),
+                                      selected: _period == value,
+                                      onSelected: (_) =>
+                                          setState(() => _period = value),
+                                    ),
+                                ],
+                              ),
+                              if (range != null)
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      tooltip: s.previousPeriod,
+                                      onPressed: () => _move(-1),
+                                      icon: const Icon(Icons.chevron_left),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        '${DateFormat.yMMMd(locale).format(range.start)} – '
+                                        '${DateFormat.yMMMd(locale).format(StatisticsRange.addDays(range.end, -1))}',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      tooltip: s.nextPeriod,
+                                      onPressed: () => _move(1),
+                                      icon: const Icon(Icons.chevron_right),
+                                    ),
+                                  ],
+                                ),
+                              const SizedBox(height: 12),
+                              DropdownButtonFormField<JournalPrice>(
+                                key: ValueKey('journal-price-${_price.name}'),
+                                initialValue: _price,
+                                isExpanded: true,
+                                itemHeight: null,
+                                decoration: InputDecoration(
+                                  labelText: s.journalPriceFilter,
+                                ),
+                                items: [
+                                  for (final value in JournalPrice.values)
+                                    DropdownMenuItem(
+                                      value: value,
+                                      child: Text(priceLabels[value.index]),
+                                    ),
+                                ],
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    setState(() => _price = value);
+                                  }
+                                },
+                              ),
+                              const SizedBox(height: 12),
+                              DropdownButtonFormField<JournalOrder>(
+                                key: ValueKey('journal-order-${_order.name}'),
+                                initialValue: _order,
+                                isExpanded: true,
+                                itemHeight: null,
+                                decoration: InputDecoration(
+                                  labelText: s.journalSort,
+                                ),
+                                items: [
+                                  for (final value in JournalOrder.values)
+                                    DropdownMenuItem(
+                                      value: value,
+                                      child: Text(orderLabels[value.index]),
+                                    ),
+                                ],
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    setState(() => _order = value);
+                                  }
+                                },
                               ),
                             ],
-                          ),
-                        const SizedBox(height: 12),
-                        DropdownButtonFormField<JournalPrice>(
-                          key: ValueKey('journal-price-${_price.name}'),
-                          initialValue: _price,
-                          isExpanded: true,
-                          itemHeight: null,
-                          decoration: InputDecoration(
-                            labelText: s.journalPriceFilter,
-                          ),
-                          items: [
-                            for (final value in JournalPrice.values)
-                              DropdownMenuItem(
-                                value: value,
-                                child: Text(priceLabels[value.index]),
-                              ),
-                          ],
-                          onChanged: (value) {
-                            if (value != null) setState(() => _price = value);
-                          },
-                        ),
-                        const SizedBox(height: 12),
-                        DropdownButtonFormField<JournalOrder>(
-                          key: ValueKey('journal-order-${_order.name}'),
-                          initialValue: _order,
-                          isExpanded: true,
-                          itemHeight: null,
-                          decoration: InputDecoration(labelText: s.journalSort),
-                          items: [
-                            for (final value in JournalOrder.values)
-                              DropdownMenuItem(
-                                value: value,
-                                child: Text(orderLabels[value.index]),
-                              ),
-                          ],
-                          onChanged: (value) {
-                            if (value != null) setState(() => _order = value);
-                          },
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: TextButton.icon(
-                            key: const ValueKey('journal-reset'),
-                            onPressed: _reset,
-                            icon: const Icon(Icons.filter_alt_off),
-                            label: Text(s.journalReset),
                           ),
                         ),
                         if (widget.drinks.isEmpty)
@@ -324,7 +419,10 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
                             ),
                           ),
                         const SizedBox(height: 8),
-                        Text(s.statisticsCaution),
+                        Text(
+                          s.visualJournalScope,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
                       ],
                     ),
                   );

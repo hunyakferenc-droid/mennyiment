@@ -85,6 +85,8 @@ Future<void> journal(WidgetTester t) async {
   t.widget<NavigationBar>(find.byType(NavigationBar)).onDestinationSelected!(1);
   await t.pumpAndSettle();
   expect(find.byType(DrinkJournalPage), findsOneWidget);
+  await t.tap(find.byKey(const ValueKey('journal-filter-toggle')));
+  await t.pumpAndSettle();
 }
 
 Future<void> enter(WidgetTester t, int i, String text) async {
