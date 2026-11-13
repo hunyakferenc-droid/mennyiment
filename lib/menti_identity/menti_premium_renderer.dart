@@ -1,4 +1,5 @@
 import 'menti_neck_bridge.dart';
+import 'menti_expression.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -616,21 +617,26 @@ class MentiPremiumComposition extends StatelessWidget {
     }[id('accent')];
     final full = Path()..addRect(const Rect.fromLTWH(0, 0, 320, 400));
     final head = rig.mask('cleanHeadSkin');
-    Widget plate({Path? part, Color? tint, bool expression = false}) =>
-        Positioned.fill(
-          child: MentiReferencePlate(
-            rig: rig,
-            hairless: true,
-            part: part,
-            tint: tint,
-            eyeStyle: expression ? id('eyes') : 'round',
-            faceStyle: expression
-                ? (smile ? 'cheerful' : id('face'))
-                : 'cheerful',
-            blink: expression && blink,
-            wink: expression && wink,
-          ),
-        );
+    final expressionState = MentiExpression.forReaction(reaction);
+    Widget plate({
+      Path? part,
+      Color? tint,
+      bool expression = false,
+    }) => Positioned.fill(
+      child: MentiReferencePlate(
+        rig: rig,
+        hairless: true,
+        part: part,
+        tint: tint,
+        expressionIntensity: expression && expressionState != null ? 3.5 : 1,
+        eyeStyle: expression ? (expressionState?.eyes ?? id('eyes')) : 'round',
+        faceStyle: expression
+            ? (expressionState?.face ?? (smile ? 'cheerful' : id('face')))
+            : 'cheerful',
+        blink: expression && blink,
+        wink: expression && wink,
+      ),
+    );
     Widget sprite(
       String s,
       Rect target, {

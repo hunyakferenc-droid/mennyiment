@@ -171,6 +171,7 @@ class MentiReferencePlate extends StatefulWidget {
     this.part,
     this.exclude,
     this.tint,
+    this.expressionIntensity = 1,
     this.eyeStyle = 'round',
     this.faceStyle = 'cheerful',
     this.blink = false,
@@ -181,6 +182,7 @@ class MentiReferencePlate extends StatefulWidget {
   final Path? part, exclude;
   final Color? tint;
   final String eyeStyle, faceStyle;
+  final double expressionIntensity;
   final bool blink, wink, hairless;
   String get asset =>
       hairless ? rig.asset.replaceFirst('.png', '-hairless.png') : rig.asset;
@@ -274,6 +276,9 @@ class _PlatePainter extends CustomPainter {
         final baseSy = (spec.blink || (spec.wink && side == 1))
             ? .48
             : switch (spec.eyeStyle) {
+                'joyful' => .48,
+                'attentive' => 1.06,
+                'supportive' => .72,
                 'wide' => 1.055,
                 'relaxed' => .65,
                 'sharp' => .76,
@@ -292,6 +297,27 @@ class _PlatePainter extends CustomPainter {
           sx: spec.eyeStyle == 'sharp' ? .96 : 1,
           sy: sy,
           angle: 0,
+        );
+      }
+    }
+    if (spec.expressionIntensity > 1) {
+      for (var side = 0; side < 2; side++) {
+        final eye = features[side == 0 ? 'leftEye' : 'rightEye']!;
+        final brow = Rect.fromLTWH(
+          eye.left,
+          eye.top - eye.height * .40,
+          eye.width,
+          eye.height * .38,
+        );
+        final supportive = spec.eyeStyle == 'supportive';
+        _warp(
+          canvas,
+          rig,
+          brow,
+          sx: 1,
+          sy: 1,
+          angle: 0,
+          tilt: (side == 0 ? -1 : 1) * (supportive ? .16 : .08),
         );
       }
     }
@@ -327,8 +353,16 @@ class _PlatePainter extends CustomPainter {
     required double sx,
     required double sy,
     required double angle,
+    double tilt = 0,
   }) {
-    final mesh = MentiFeatureMesh(rig.register(region), region, sx: sx, sy: sy);
+    final mesh = MentiFeatureMesh(
+      rig.register(region),
+      region,
+      sx: sx,
+      sy: sy,
+      intensity: spec.expressionIntensity,
+      tilt: tilt,
+    );
     canvas.drawVertices(
       ui.Vertices(
         ui.VertexMode.triangles,
