@@ -230,10 +230,14 @@ class CompleteLookArtwork extends StatelessWidget {
     required this.look,
     this.size = 260,
     this.background = true,
-  });
+    this.decodeScale = 1,
+  }) : assert(decodeScale >= 1 && decodeScale <= 3);
   final CompleteLook look;
   final double size;
   final bool background;
+
+  /// Decode for the maximum zoom only in the magnifier, bounded by source size.
+  final double decodeScale;
   static const backgroundColor = Color(0xFFF2EFF6);
   @override
   Widget build(BuildContext context) => Semantics(
@@ -254,7 +258,9 @@ class CompleteLookArtwork extends StatelessWidget {
                   final width = look.sourceSize.width * scale;
                   final height = look.sourceSize.height * scale;
                   final cacheWidth =
-                      (width * MediaQuery.devicePixelRatioOf(context))
+                      (width *
+                              MediaQuery.devicePixelRatioOf(context) *
+                              decodeScale)
                           .ceil()
                           .clamp(1, look.sourceSize.width.toInt());
                   return Stack(
@@ -444,6 +450,7 @@ class _CompleteLooksPageState extends State<CompleteLooksPage> {
                             maxScale: 3,
                             child: CompleteLookArtwork(
                               look: look,
+                              decodeScale: 3,
                               size: (MediaQuery.sizeOf(ctx).width - 100).clamp(
                                 180,
                                 640,

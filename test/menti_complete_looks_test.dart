@@ -347,6 +347,18 @@ void main() {
             ),
           );
           expect(enlarged.look.id, 'neutral-base-v1');
+          final zoomImage = tester.widget<Image>(
+            find.descendant(
+              of: find.byType(AlertDialog),
+              matching: find.byType(Image),
+            ),
+          );
+          // At 320 px the magnifier must decode more than the low-res preview;
+          // otherwise actual 3x touch zoom blurs the face.
+          expect(
+            (zoomImage.image as ResizeImage).width,
+            greaterThanOrEqualTo(600),
+          );
           final strings = AppLocalizations.of(
             tester.element(find.byType(AlertDialog)),
           )!;
