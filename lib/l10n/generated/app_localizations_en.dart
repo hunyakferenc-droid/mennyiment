@@ -3096,4 +3096,36 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get visualJournalScope =>
       'Self-reported. No entry does not prove an alcohol-free day.';
+
+  @override
+  String get completeTitle => 'Complete Menti looks';
+
+  @override
+  String get completeInfo =>
+      'Experimental three-sample gallery. Each look is one complete character image. Your original outfit is preserved; only Save changes the display. These PNGs have no separate facial expressions.';
+
+  @override
+  String get completeBoy => 'Boy · base';
+
+  @override
+  String get completeGirl => 'Girl · base';
+
+  @override
+  String get completeNeutral => 'Neutral · base';
+
+  @override
+  String get completeLegacy => 'Use previous outfit';
+
+  @override
+  String get completeDiscard => 'Discard your unsaved selection?';
+
+  @override
+  String get completeLeave => 'Discard and go back';
+
+  @override
+  String get completeSaveError =>
+      'The selection could not be confirmed as saved. Data may have changed or cannot be read. Reload to check the stored state.';
+
+  @override
+  String get completeImageError => 'The character image could not be loaded.';
 }

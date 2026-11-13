@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../app_language.dart';
+import '../menti_complete_looks.dart';
 import '../menti_motion.dart';
 import '../menti_ui.dart';
 import '../l10n/generated/app_localizations.dart';
@@ -19,6 +20,7 @@ class MentiStudioPage extends StatefulWidget {
 class _MentiStudioPageState extends State<MentiStudioPage> {
   MentiIdentityController? _controller;
   bool _owned = false;
+  bool _completePage = false;
   bool _leave = false;
   int _tab = 0;
   bool _showPreview = true;
@@ -561,6 +563,14 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
 
   @override
   Widget build(BuildContext context) {
+    final complete = CompleteLookScope.of(context);
+    if (complete?.ready == true && complete!.selection.active) {
+      _completePage = true;
+    }
+    if (_completePage) {
+      return const CompleteLooksPage();
+    }
+
     final c = _controller!;
     return ListenableBuilder(
       listenable: c,
@@ -585,6 +595,19 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                   56 * MediaQuery.textScalerOf(context).scale(1).clamp(1, 2),
               title: Text(s.avatarStudio, maxLines: 2),
               actions: [
+                if (CompleteLookScope.of(context) != null)
+                  IconButton(
+                    tooltip: s.completeTitle,
+                    icon: const Icon(Icons.collections_outlined),
+                    onPressed: c.dirty || c.saving
+                        ? null
+                        : () => Navigator.push(
+                            context,
+                            MaterialPageRoute<void>(
+                              builder: (_) => const CompleteLooksPage(),
+                            ),
+                          ),
+                  ),
                 IconButton(
                   key: const ValueKey('studio-preview-toggle'),
                   tooltip: _showPreview

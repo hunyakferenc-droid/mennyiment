@@ -1,0 +1,50 @@
+[
+  {
+    "asset": "assets/images/menti_complete/girl-base.png",
+    "bytes": 1760755,
+    "sha256": "9eab420d5cb85843af7957f594440c2c83f09bcc8d54e8cdf88087bf45ebc955",
+    "size": [
+      1086,
+      1448
+    ],
+    "contentBounds": [
+      96,
+      5,
+      1011,
+      1412
+    ],
+    "decodedBytes": 6290112
+  },
+  {
+    "asset": "assets/images/menti_complete/boy-base.png",
+    "bytes": 1283066,
+    "sha256": "ec02e90c0d1c310ae008a56e8aa3e55cb9388eb0da280025b43b8f756ecb544c",
+    "size": [
+      1086,
+      1448
+    ],
+    "contentBounds": [
+      143,
+      80,
+      935,
+      1384
+    ],
+    "decodedBytes": 6290112
+  },
+  {
+    "asset": "assets/images/menti_complete/neutral-base.png",
+    "bytes": 1170499,
+    "sha256": "8e991e0fac06d52bf611a290093062da76a1efc924fe6c964a6c282dac1a8f8c",
+    "size": [
+      1254,
+      1254
+    ],
+    "contentBounds": [
+      230,
+      74,
+      995,
+      1186
+    ],
+    "decodedBytes": 6290064
+  }
+]

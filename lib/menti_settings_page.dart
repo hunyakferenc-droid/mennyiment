@@ -9,6 +9,7 @@ import 'menti_identity/menti_studio_page.dart';
 import 'menti_experience_settings.dart';
 import 'menti_intro.dart';
 import 'menti_motion.dart';
+import 'menti_complete_looks.dart';
 import 'menti_ui.dart';
 
 class MentiSettingsPage extends StatelessWidget {
@@ -32,6 +33,18 @@ class MentiSettingsPage extends StatelessWidget {
       ),
       body: MentiPageBody(
         children: [
+          ListTile(
+            key: const ValueKey('settings-complete-looks'),
+            leading: const Icon(Icons.collections_outlined),
+            title: Text(s.completeTitle),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute<void>(
+                builder: (_) => const CompleteLooksPage(),
+              ),
+            ),
+          ),
           Text(
             s.visualSettingsInfo,
             style: Theme.of(context).textTheme.titleMedium,

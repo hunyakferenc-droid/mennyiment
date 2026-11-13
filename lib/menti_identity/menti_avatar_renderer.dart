@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../app_language.dart';
+import '../menti_complete_looks.dart';
 import '../menti_experience_settings.dart';
 import 'menti_identity.dart';
 import 'menti_identity_controller.dart';
@@ -83,6 +84,14 @@ class MentiAvatarRenderer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final complete = CompleteLookScope.of(context);
+    if (complete?.ready == true && complete!.selection.active) {
+      return CompleteLookArtwork(
+        look: CompleteLook.find(complete.selection.lookId)!,
+        size: size,
+        background: showBackground,
+      );
+    }
     final activeReaction = MentiExperienceScope.reactionsOf(context)
         ? reaction
         : null;

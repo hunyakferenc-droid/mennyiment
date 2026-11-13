@@ -112,3 +112,7 @@ pubspec.yaml.bak
 # Owner-provided complete-look references; unmodified original graphics.
 !/docs/images/menti-complete-looks/originals/**/*.png
 !/docs/images/menti-complete-looks/contact-*.png
+
+# Complete character sample assets and synthetic comparison screenshots.
+!/assets/images/menti_complete/*.png
+!/docs/images/menti-complete-looks/screenshots/*.png

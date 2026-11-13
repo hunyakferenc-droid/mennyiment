@@ -3083,4 +3083,36 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get visualJournalScope =>
       'Önbevallás. A hiányzó bejegyzés nem igazolt fogyasztásmentes nap.';
+
+  @override
+  String get completeTitle => 'Teljes Menti-kinézetek';
+
+  @override
+  String get completeInfo =>
+      'Kísérleti hárommintás galéria. Egy kinézet egy teljes karakterkép. Az eredeti összeállításod megmarad; csak a Mentés vált megjelenítést. A PNG-khez nincs külön arcmimika.';
+
+  @override
+  String get completeBoy => 'Fiú · alap';
+
+  @override
+  String get completeGirl => 'Lány · alap';
+
+  @override
+  String get completeNeutral => 'Semleges · alap';
+
+  @override
+  String get completeLegacy => 'Korábbi összeállítás használata';
+
+  @override
+  String get completeDiscard => 'Elveted a nem mentett választást?';
+
+  @override
+  String get completeLeave => 'Elvetés és vissza';
+
+  @override
+  String get completeSaveError =>
+      'A választás mentése nem igazolható. Az adat megváltozhatott vagy nem olvasható. Újratöltéssel ellenőrizd a tárolt állapotot.';
+
+  @override
+  String get completeImageError => 'A karakterkép nem tölthető be.';
 }
