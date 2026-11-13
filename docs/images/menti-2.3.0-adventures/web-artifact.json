@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "7821f7818fef491cbf88797568364f8322f4e242",
+  "artifactId": 13984423627,
+  "zipSha256": "a8cb2a0bc3c0a55ae2ea45babdaa40dbea2189db9bc3b0b072b5665e2cb3699a",
+  "crc": "OK",
+  "fileCount": 347,
+  "commonFiles": 343,
+  "differentFiles": [
+    "flutter_bootstrap.js"
+  ],
+  "launcherMatchesSource": true,
+  "fontFamilies": [
+    "MaterialIcons",
+    "Roboto",
+    "MentiEmoji",
+    "packages/cupertino_icons/CupertinoIcons"
+  ],
+  "buildInfo": "source_commit=7821f7818fef491cbf88797568364f8322f4e242\nversion=2.3.0+33\nurl=http://127.0.0.1:7357\n"
+}

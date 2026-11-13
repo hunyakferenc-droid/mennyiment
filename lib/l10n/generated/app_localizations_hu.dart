@@ -2623,4 +2623,250 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get entryStale => 'A napló változott vagy nem olvasható. Töltsd újra.';
+
+  @override
+  String get adventureTitle => 'Menti-kalandok';
+
+  @override
+  String get adventureIntro =>
+      'Pár perc magadra, a saját tempódban. Válassz legfeljebb három mai küldetést.';
+
+  @override
+  String get adventureDaily => 'Mai küldetések';
+
+  @override
+  String get adventureMap => 'Térkép';
+
+  @override
+  String get adventureBadges => 'Jelvények';
+
+  @override
+  String adventureProgress(int count, int target) {
+    return 'Teljesített küldetések: $count / $target';
+  }
+
+  @override
+  String adventureToday(String date) {
+    return 'Mai nap: $date';
+  }
+
+  @override
+  String adventureSlots(int count) {
+    return 'Mai vállalások: $count / 3. A teljesített feladat is helyet foglal.';
+  }
+
+  @override
+  String get adventureNoPenalty =>
+      'A kihagyott nap nem vesz el semmit. Holnap újra választhatsz; a korábbi haladás megmarad.';
+
+  @override
+  String get adventureNoXp =>
+      'A kalandhaladás és a jelvény a jutalom. A kalandok nem adnak külön XP-t; a meglévő önellenőrzés saját XP-szabálya változatlan.';
+
+  @override
+  String get adventureChoose => 'Ezt vállalom';
+
+  @override
+  String get adventureResume => 'Újra vállalom';
+
+  @override
+  String get adventureCancel => 'Vállalás megszakítása';
+
+  @override
+  String get adventureComplete => 'Teljesítettem – saját jelzésem';
+
+  @override
+  String get adventureVerify => 'Mentett közérzet ellenőrzése';
+
+  @override
+  String get adventureOpenWellbeing => 'Közérzetnapló megnyitása';
+
+  @override
+  String get adventureOpenGoals => 'Saját célok megnyitása';
+
+  @override
+  String get adventureActive => 'Ma vállaltad';
+
+  @override
+  String get adventureDone => 'Teljesítve';
+
+  @override
+  String get adventureCancelled => 'Megszakítva – újra vállalható';
+
+  @override
+  String get adventureManual =>
+      'Önbevallás: a teljesítést te jelzed. Az alkalmazás ezt nem méri.';
+
+  @override
+  String get adventureVerified =>
+      'A mai napra mentett közérzetbejegyzés igazolja. A képernyő megnyitása önmagában nem teljesítés.';
+
+  @override
+  String get adventureWellbeing => 'Hogy vagy ma?';
+
+  @override
+  String get adventureWellbeingHint =>
+      'Rögzíts egy mai közérzetbejegyzést a meglévő naplóban, majd ellenőrizd itt.';
+
+  @override
+  String get adventureMovement => 'Egy rövid mozgásszünet';
+
+  @override
+  String get adventureMovementHint =>
+      'Ha jólesik, állj fel, nyújtózz vagy mozogj a számodra kényelmes módon. Te választod az időt és a formát.';
+
+  @override
+  String get adventureRest => 'Egy kis pihenő';
+
+  @override
+  String get adventureRestHint =>
+      'Tarts egy rövid, nyugodt szünetet. Nincs kötelező időtartam.';
+
+  @override
+  String get adventureDecision => 'Egy tudatos döntésem';
+
+  @override
+  String get adventureDecisionHelp =>
+      'Jegyezz fel egy apró döntést, amellyel ma figyeltél magadra. A saját szöveged helyben marad.';
+
+  @override
+  String get adventureGoal => 'Ránézek a saját célomra';
+
+  @override
+  String get adventureGoalHint =>
+      'Nyisd meg a meglévő céljaidat, és gondold át a következő kis lépést. Az áttekintést csak saját jelzésed igazolja.';
+
+  @override
+  String get adventureDecisionHint => 'Mai tudatos döntésem';
+
+  @override
+  String get adventureNoteMissing =>
+      'Írj néhány szót a döntésedről, vagy válaszd a Mégse gombot.';
+
+  @override
+  String get adventureConfirmTitle => 'Te jelzed a teljesítést';
+
+  @override
+  String get adventureConfirmBody =>
+      'Ezt a feladatot az alkalmazás nem tudja ellenőrizni. Most a saját jelzésedet mentjük.';
+
+  @override
+  String get adventureCancelTitle => 'Megszakítod a vállalást?';
+
+  @override
+  String get adventureCancelBody =>
+      'Nem jár érte levonás. A hely felszabadul, és ma később újra vállalhatod.';
+
+  @override
+  String get adventureLater => 'Mégse';
+
+  @override
+  String adventureMentiSays(String name, String message) {
+    return '$name: $message';
+  }
+
+  @override
+  String get adventureSupport0 => 'Egy kis lépés magadért. Ezt feljegyeztük!';
+
+  @override
+  String get adventureSupport1 =>
+      'A saját tempód számít. Ma is tettél magadért.';
+
+  @override
+  String get adventureSupport2 => 'Küldetés kész, képzeletbeli pacsi!';
+
+  @override
+  String get adventureStationCompleted =>
+      'Új állomás teljesült! A térképen látod a következő kis lépést.';
+
+  @override
+  String get adventureSkipFeedback => 'Rendben, tovább';
+
+  @override
+  String get adventureStation0 => 'Indulás';
+
+  @override
+  String get adventureStation1 => 'Felfedezés';
+
+  @override
+  String get adventureStation2 => 'Egyensúly';
+
+  @override
+  String get adventureStation3 => 'Lendület';
+
+  @override
+  String get adventureStation4 => 'Saját ritmus';
+
+  @override
+  String adventureStationRule(int count) {
+    return 'Feltétel: összesen $count teljesített küldetés, bármely napokról.';
+  }
+
+  @override
+  String get adventureStationDone => 'Teljesített állomás';
+
+  @override
+  String get adventureStationCurrent => 'Itt jársz most';
+
+  @override
+  String get adventureStationFuture => 'Későbbi állomás';
+
+  @override
+  String get adventureBadgeFirst => 'Első lépés';
+
+  @override
+  String get adventureBadgeFirstRule => 'Teljesíts egy kiválasztott küldetést.';
+
+  @override
+  String get adventureBadgeVariety => 'Sokszínű kaland';
+
+  @override
+  String get adventureBadgeVarietyRule =>
+      'Teljesíts három különböző típusú küldetést, akár több nap alatt.';
+
+  @override
+  String get adventureBadgeStation => 'Megérkeztem';
+
+  @override
+  String get adventureBadgeStationRule =>
+      'Teljesítsd az első állomást: összesen három küldetés.';
+
+  @override
+  String adventureEarned(String date) {
+    return 'Megszerzés napja: $date';
+  }
+
+  @override
+  String get adventureLocked => 'Még előtted áll';
+
+  @override
+  String get adventureLoadError =>
+      'A kalandállapot nem olvasható, vagy újabb verzióhoz tartozik. Érintetlenül megőrizzük; mentést készíthetsz róla az Adatok oldalon.';
+
+  @override
+  String get adventureSaveError =>
+      'A mentés nem igazolt. Nem jeleztünk teljesítést; próbáld újra, vagy töltsd újra az állapotot.';
+
+  @override
+  String get adventureStale =>
+      'A tárolt állapot megváltozott. A felülírás elkerüléséhez töltsd újra.';
+
+  @override
+  String get adventureDayChanged =>
+      'Közben új nap kezdődött. Betöltjük a mai vállalásokat; a tegnapi adat megmarad.';
+
+  @override
+  String get adventureCapacity =>
+      'Ma legfeljebb három vállalt vagy teljesített küldetésed lehet. Egy még nem teljesített vállalást megszakíthatsz.';
+
+  @override
+  String get adventureEvidence =>
+      'Még nincs igazolt mai közérzetbejegyzés. Nyisd meg a közérzetnaplót, ments a mai napra, majd ellenőrizd újra.';
+
+  @override
+  String get adventureAccess =>
+      'Ez a célfeladat ebben a korhatármódban nem érhető el. A jólléti feladatokat továbbra is választhatod.';
+
+  @override
+  String get adventureRetry => 'Kalandállapot újratöltése';
 }

@@ -1308,5 +1308,123 @@
   "entryFutureRule": "A new timestamp cannot be in the future. An existing future timestamp can be kept unchanged.",
   "entrySaved": "Entry saved.",
   "entrySavedFiltered": "Entry saved. It no longer matches the current filters.",
-  "entryStale": "Journal changed or unavailable. Reload before editing."
+  "entryStale": "Journal changed or unavailable. Reload before editing.",
+  "adventureTitle": "Menti adventures",
+  "adventureIntro": "A little time for yourself, at your own pace. Choose up to three missions today.",
+  "adventureDaily": "Today’s missions",
+  "adventureMap": "Map",
+  "adventureBadges": "Badges",
+  "adventureProgress": "Completed missions: {count} / {target}",
+  "@adventureProgress": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "target": {
+        "type": "int"
+      }
+    }
+  },
+  "adventureToday": "Today: {date}",
+  "@adventureToday": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "adventureSlots": "Today’s commitments: {count} / 3. Completed missions also use a slot.",
+  "@adventureSlots": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "adventureNoPenalty": "Missing a day takes nothing away. Choose again tomorrow; your earlier progress stays.",
+  "adventureNoXp": "Progress and badges are your adventure rewards. Adventures add no extra XP; the existing check-in keeps its own XP rules.",
+  "adventureChoose": "Choose mission",
+  "adventureResume": "Choose again",
+  "adventureCancel": "Cancel commitment",
+  "adventureComplete": "Done — my own report",
+  "adventureVerify": "Check saved wellbeing",
+  "adventureOpenWellbeing": "Open wellbeing journal",
+  "adventureOpenGoals": "Open personal goals",
+  "adventureActive": "Chosen for today",
+  "adventureDone": "Completed",
+  "adventureCancelled": "Cancelled — you can choose it again",
+  "adventureManual": "Self-reported: you confirm completion. The app does not measure this activity.",
+  "adventureVerified": "Verified using a wellbeing entry saved for today. Opening the screen alone does not complete it.",
+  "adventureWellbeing": "How are you today?",
+  "adventureWellbeingHint": "Save today’s wellbeing in the existing journal, then check it here.",
+  "adventureMovement": "A short movement break",
+  "adventureMovementHint": "If it feels right, stretch or move in a way that is comfortable for you. You choose how and for how long.",
+  "adventureRest": "A moment to rest",
+  "adventureRestHint": "Take a short, quiet break. There is no required duration.",
+  "adventureDecision": "One mindful choice",
+  "adventureDecisionHelp": "Note one small choice you made for your wellbeing today. Your words stay on this device.",
+  "adventureGoal": "Review my own goal",
+  "adventureGoalHint": "Open your existing goals and consider your next small step. Only your own report confirms the review.",
+  "adventureDecisionHint": "My mindful choice today",
+  "adventureNoteMissing": "Write a few words about your choice, or cancel.",
+  "adventureConfirmTitle": "Your own completion report",
+  "adventureConfirmBody": "The app cannot verify this activity. This saves your own report of completion.",
+  "adventureCancelTitle": "Cancel this commitment?",
+  "adventureCancelBody": "There is no penalty. The slot becomes available, and you can choose this mission again today.",
+  "adventureLater": "Cancel",
+  "adventureMentiSays": "{name}: {message}",
+  "@adventureMentiSays": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "adventureSupport0": "A small step for yourself. It’s recorded!",
+  "adventureSupport1": "Your own pace matters. You made time for yourself.",
+  "adventureSupport2": "Mission complete. Imaginary high five!",
+  "adventureStationCompleted": "Another station complete! Your map shows the next small step.",
+  "adventureSkipFeedback": "Continue",
+  "adventureStation0": "Setting out",
+  "adventureStation1": "Discovery",
+  "adventureStation2": "Balance",
+  "adventureStation3": "Momentum",
+  "adventureStation4": "Your own rhythm",
+  "adventureStationRule": "Requirement: {count} completed missions in total, across any days.",
+  "@adventureStationRule": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "adventureStationDone": "Completed station",
+  "adventureStationCurrent": "You are here",
+  "adventureStationFuture": "Later station",
+  "adventureBadgeFirst": "First step",
+  "adventureBadgeFirstRule": "Complete one chosen mission.",
+  "adventureBadgeVariety": "A varied adventure",
+  "adventureBadgeVarietyRule": "Complete three different types of mission, across any number of days.",
+  "adventureBadgeStation": "First arrival",
+  "adventureBadgeStationRule": "Complete the first station: three missions in total.",
+  "adventureEarned": "Earned on {date}",
+  "@adventureEarned": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "adventureLocked": "Still ahead of you",
+  "adventureLoadError": "The adventure state is unreadable or belongs to a newer version. It stays untouched; you can back it up from Data.",
+  "adventureSaveError": "The save was not confirmed. No completion was announced; retry or reload the state.",
+  "adventureStale": "The stored state has changed. Reload before editing to avoid overwriting it.",
+  "adventureDayChanged": "A new day has started. Today’s commitments will load; yesterday’s records stay.",
+  "adventureCapacity": "You can have up to three chosen or completed missions today. You can cancel an unfinished commitment.",
+  "adventureEvidence": "There is no verified wellbeing entry for today yet. Open the wellbeing journal, save for today, then check again.",
+  "adventureAccess": "This goal mission is unavailable in the current age mode. The general wellbeing missions are still available.",
+  "adventureRetry": "Reload adventures"
 }

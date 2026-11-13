@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_access.dart';
 import 'data_backup.dart';
+import 'menti_adventure_store.dart';
 import 'drink_journal.dart';
 import 'menti_identity/menti_identity.dart';
 import 'menti_identity/menti_identity_store.dart';
@@ -216,6 +217,7 @@ void validateRestoreValue(String key, Object value) {
   void require(bool condition) {
     if (!condition) { throw FormatException('Invalid restore value: $key'); }
   }
+  if (key == AdventureStore.key) { AdventureDocument.decode(value); return; }
   if (key == MentiAccessSettings.key) { MentiAccessSettings.decode(value); return; }
   if (key == MentiIdentityStore.key) { MentiIdentityDocument.decode(value); return; }
   const lists = {'mennyiment_favorites_v1', 'mennyiment_reflection_days_v1',

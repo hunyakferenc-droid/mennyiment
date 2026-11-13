@@ -2636,4 +2636,250 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get entryStale =>
       'Journal changed or unavailable. Reload before editing.';
+
+  @override
+  String get adventureTitle => 'Menti adventures';
+
+  @override
+  String get adventureIntro =>
+      'A little time for yourself, at your own pace. Choose up to three missions today.';
+
+  @override
+  String get adventureDaily => 'Today’s missions';
+
+  @override
+  String get adventureMap => 'Map';
+
+  @override
+  String get adventureBadges => 'Badges';
+
+  @override
+  String adventureProgress(int count, int target) {
+    return 'Completed missions: $count / $target';
+  }
+
+  @override
+  String adventureToday(String date) {
+    return 'Today: $date';
+  }
+
+  @override
+  String adventureSlots(int count) {
+    return 'Today’s commitments: $count / 3. Completed missions also use a slot.';
+  }
+
+  @override
+  String get adventureNoPenalty =>
+      'Missing a day takes nothing away. Choose again tomorrow; your earlier progress stays.';
+
+  @override
+  String get adventureNoXp =>
+      'Progress and badges are your adventure rewards. Adventures add no extra XP; the existing check-in keeps its own XP rules.';
+
+  @override
+  String get adventureChoose => 'Choose mission';
+
+  @override
+  String get adventureResume => 'Choose again';
+
+  @override
+  String get adventureCancel => 'Cancel commitment';
+
+  @override
+  String get adventureComplete => 'Done — my own report';
+
+  @override
+  String get adventureVerify => 'Check saved wellbeing';
+
+  @override
+  String get adventureOpenWellbeing => 'Open wellbeing journal';
+
+  @override
+  String get adventureOpenGoals => 'Open personal goals';
+
+  @override
+  String get adventureActive => 'Chosen for today';
+
+  @override
+  String get adventureDone => 'Completed';
+
+  @override
+  String get adventureCancelled => 'Cancelled — you can choose it again';
+
+  @override
+  String get adventureManual =>
+      'Self-reported: you confirm completion. The app does not measure this activity.';
+
+  @override
+  String get adventureVerified =>
+      'Verified using a wellbeing entry saved for today. Opening the screen alone does not complete it.';
+
+  @override
+  String get adventureWellbeing => 'How are you today?';
+
+  @override
+  String get adventureWellbeingHint =>
+      'Save today’s wellbeing in the existing journal, then check it here.';
+
+  @override
+  String get adventureMovement => 'A short movement break';
+
+  @override
+  String get adventureMovementHint =>
+      'If it feels right, stretch or move in a way that is comfortable for you. You choose how and for how long.';
+
+  @override
+  String get adventureRest => 'A moment to rest';
+
+  @override
+  String get adventureRestHint =>
+      'Take a short, quiet break. There is no required duration.';
+
+  @override
+  String get adventureDecision => 'One mindful choice';
+
+  @override
+  String get adventureDecisionHelp =>
+      'Note one small choice you made for your wellbeing today. Your words stay on this device.';
+
+  @override
+  String get adventureGoal => 'Review my own goal';
+
+  @override
+  String get adventureGoalHint =>
+      'Open your existing goals and consider your next small step. Only your own report confirms the review.';
+
+  @override
+  String get adventureDecisionHint => 'My mindful choice today';
+
+  @override
+  String get adventureNoteMissing =>
+      'Write a few words about your choice, or cancel.';
+
+  @override
+  String get adventureConfirmTitle => 'Your own completion report';
+
+  @override
+  String get adventureConfirmBody =>
+      'The app cannot verify this activity. This saves your own report of completion.';
+
+  @override
+  String get adventureCancelTitle => 'Cancel this commitment?';
+
+  @override
+  String get adventureCancelBody =>
+      'There is no penalty. The slot becomes available, and you can choose this mission again today.';
+
+  @override
+  String get adventureLater => 'Cancel';
+
+  @override
+  String adventureMentiSays(String name, String message) {
+    return '$name: $message';
+  }
+
+  @override
+  String get adventureSupport0 => 'A small step for yourself. It’s recorded!';
+
+  @override
+  String get adventureSupport1 =>
+      'Your own pace matters. You made time for yourself.';
+
+  @override
+  String get adventureSupport2 => 'Mission complete. Imaginary high five!';
+
+  @override
+  String get adventureStationCompleted =>
+      'Another station complete! Your map shows the next small step.';
+
+  @override
+  String get adventureSkipFeedback => 'Continue';
+
+  @override
+  String get adventureStation0 => 'Setting out';
+
+  @override
+  String get adventureStation1 => 'Discovery';
+
+  @override
+  String get adventureStation2 => 'Balance';
+
+  @override
+  String get adventureStation3 => 'Momentum';
+
+  @override
+  String get adventureStation4 => 'Your own rhythm';
+
+  @override
+  String adventureStationRule(int count) {
+    return 'Requirement: $count completed missions in total, across any days.';
+  }
+
+  @override
+  String get adventureStationDone => 'Completed station';
+
+  @override
+  String get adventureStationCurrent => 'You are here';
+
+  @override
+  String get adventureStationFuture => 'Later station';
+
+  @override
+  String get adventureBadgeFirst => 'First step';
+
+  @override
+  String get adventureBadgeFirstRule => 'Complete one chosen mission.';
+
+  @override
+  String get adventureBadgeVariety => 'A varied adventure';
+
+  @override
+  String get adventureBadgeVarietyRule =>
+      'Complete three different types of mission, across any number of days.';
+
+  @override
+  String get adventureBadgeStation => 'First arrival';
+
+  @override
+  String get adventureBadgeStationRule =>
+      'Complete the first station: three missions in total.';
+
+  @override
+  String adventureEarned(String date) {
+    return 'Earned on $date';
+  }
+
+  @override
+  String get adventureLocked => 'Still ahead of you';
+
+  @override
+  String get adventureLoadError =>
+      'The adventure state is unreadable or belongs to a newer version. It stays untouched; you can back it up from Data.';
+
+  @override
+  String get adventureSaveError =>
+      'The save was not confirmed. No completion was announced; retry or reload the state.';
+
+  @override
+  String get adventureStale =>
+      'The stored state has changed. Reload before editing to avoid overwriting it.';
+
+  @override
+  String get adventureDayChanged =>
+      'A new day has started. Today’s commitments will load; yesterday’s records stay.';
+
+  @override
+  String get adventureCapacity =>
+      'You can have up to three chosen or completed missions today. You can cancel an unfinished commitment.';
+
+  @override
+  String get adventureEvidence =>
+      'There is no verified wellbeing entry for today yet. Open the wellbeing journal, save for today, then check again.';
+
+  @override
+  String get adventureAccess =>
+      'This goal mission is unavailable in the current age mode. The general wellbeing missions are still available.';
+
+  @override
+  String get adventureRetry => 'Reload adventures';
 }

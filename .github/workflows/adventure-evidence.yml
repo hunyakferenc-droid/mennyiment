@@ -1,0 +1,36 @@
+name: Downloadable Menti adventure evidence
+
+on:
+  push:
+    branches: [feature/mennyiment-2-3-adventures]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: adventure-evidence-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout evidence source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Upload fresh adventure screenshots and Hungarian handoff
+        if: ${{ hashFiles('docs/images/menti-2.3.0-adventures/verification.json') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.3.0-33-adventure-evidence-${{ github.sha }}
+          path: |
+            docs/images/menti-2.3.0-adventures/
+            docs/2.3.0-adventures-hu.md
+            docs/2.2.6-windows-hu.md
+            docs/2.2.6-android-hu.md
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 1

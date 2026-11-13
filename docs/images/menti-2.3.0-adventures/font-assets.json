@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "7821f7818fef491cbf88797568364f8322f4e242",
+  "fonts": [
+    {
+      "file": "assets/fonts/menti_emoji/NotoColorEmoji.ttf",
+      "bytes": 10673480,
+      "sha256": "72a635cb3d2f3524c51620cdde406b217204e8a6a06c6a096ff8ed4b5fd6e27b"
+    },
+    {
+      "file": "assets/fonts/roboto/Roboto-Bold.ttf",
+      "bytes": 170760,
+      "sha256": "7d0b991ee3e0be7af01ad7ea8cd2beea6c00a25e679a0226b6737f079aafff86"
+    },
+    {
+      "file": "assets/fonts/roboto/Roboto-Italic.ttf",
+      "bytes": 173932,
+      "sha256": "5fce8b6f8ba9f4d19f0d535e241d56a2b8e72bb07e7df711d968d092ef7f9fca"
+    },
+    {
+      "file": "assets/fonts/roboto/Roboto-Medium.ttf",
+      "bytes": 172064,
+      "sha256": "f205cc511821ea56078a105557fcea6253129404d411c997e1866fbd006abb68"
+    },
+    {
+      "file": "assets/fonts/roboto/Roboto-Regular.ttf",
+      "bytes": 171676,
+      "sha256": "79e851404657dac2106b3d22ad256d47824a9a5765458edb72c9102a45816d95"
+    }
+  ],
+  "emojiLicense": "SIL OFL 1.1",
+  "robotoLicense": "Apache 2.0",
+  "characterImagesChanged": false
+}

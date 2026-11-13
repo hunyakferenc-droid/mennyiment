@@ -14,6 +14,7 @@ abstract final class MentiDesign {
   );
   static ThemeData get theme => ThemeData(
     brightness: Brightness.dark,
+    fontFamilyFallback: const ['MentiEmoji'],
     scaffoldBackgroundColor: canvas,
     colorScheme: ColorScheme.fromSeed(
       seedColor: orange,

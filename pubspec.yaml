@@ -2,7 +2,7 @@ name: mennyiment
 description: "MennyiMent? – személyes Menti és tudatos szokáskövetés."
 publish_to: 'none'
 
-version: 2.2.8+32
+version: 2.3.0+33
 
 environment:
   sdk: ^3.13.5
@@ -28,7 +28,28 @@ flutter:
   generate: true
   uses-material-design: true
 
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/roboto/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/roboto/Roboto-Italic.ttf
+          weight: 400
+          style: italic
+    - family: MentiEmoji
+      fonts:
+        - asset: assets/fonts/menti_emoji/NotoColorEmoji.ttf
+
   assets:
+    - assets/fonts/roboto/LICENSE.txt
+    - assets/fonts/roboto/README.md
+    - assets/fonts/roboto/SHA256SUMS
+    - assets/fonts/menti_emoji/OFL.txt
+    - assets/fonts/menti_emoji/README.md
     - assets/images/
     - assets/images/menti_outfits/
 
