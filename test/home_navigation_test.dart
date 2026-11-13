@@ -56,20 +56,22 @@ void main() {
           final s = appStrings(tester.element(find.byType(HomePage)));
           expect(find.byType(HomeMentiCard),findsOneWidget);
           // The own character is the first visual focus; the primary action follows it.
-          final add = find.widgetWithText(FilledButton, s.addDrink);
+          final add = find.widgetWithText(FilledButton, s.visualAdd);
           await tester.scrollUntilVisible(add,250,scrollable:find.byType(Scrollable).first,maxScrolls:40);
           await tester.pumpAndSettle(); await tester.ensureVisible(add); await tester.pumpAndSettle();
           expect(add.hitTestable(),findsOneWidget);
           final scrollable = find.byType(Scrollable).first;
           for(final text in [s.homeTodayDrinks,s.homeMonthSpending]) {
-            try { await tester.scrollUntilVisible(find.text(text),250,scrollable:scrollable,maxScrolls:80); } catch(e) { fail('Missing summary: $text: $e'); }
+            try { await tester.scrollUntilVisible(find.text(text),250,scrollable:scrollable,maxScrolls:80); await tester.pumpAndSettle(); } catch(e) { fail('Missing summary: $text: $e'); }
             expect(tester.takeException(),isNull);
           }
           await tester.scrollUntilVisible(find.byKey(const ValueKey('home-more-features')),250,scrollable:scrollable,maxScrolls:80);
+          await tester.pumpAndSettle();
+          expect(find.byKey(const ValueKey('home-more-features')).hitTestable(),findsOneWidget);
           await tester.tap(find.byKey(const ValueKey('home-more-features')));await tester.pumpAndSettle();
           for(final text in [s.personalGoals,s.recentEntries,s.statisticsCaution]) {
             try {
-              try { await tester.scrollUntilVisible(find.text(text),250,scrollable:scrollable,maxScrolls:80); } catch(e) { fail('Missing summary: $text: $e'); }
+              try { await tester.scrollUntilVisible(find.text(text),250,scrollable:scrollable,maxScrolls:80); await tester.pumpAndSettle(); } catch(e) { fail('Missing summary: $text: $e'); }
             } catch(error) { fail('Cannot reach $text: $error'); }
             expect(tester.takeException(),isNull);
           }

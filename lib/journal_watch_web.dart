@@ -10,10 +10,13 @@ extension type _StorageChange(JSObject object) implements JSObject {
 }
 
 /// Observe other tabs without writing, polling, or adding a persistence key.
-void Function() watchJournal(void Function() onChanged) {
+void Function() watchJournal(
+  void Function() onChanged, {
+  String storageKey = 'mennyiment_drinks_v1',
+}) {
   final storage = ((JSObject event) {
     final key = _StorageChange(event).key?.toDart;
-    if (key == null || key == 'flutter.mennyiment_drinks_v1') onChanged();
+    if (key == null || key == 'flutter.$storageKey') onChanged();
   }).toJS;
   final focus = ((JSObject event) => onChanged()).toJS;
   _listen('storage'.toJS, storage);

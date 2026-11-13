@@ -75,8 +75,8 @@ void main() {
       expect(prefs.getString(journalKey), saved);
       expectProfileAndXp(prefs);
 
-      await tester.ensureVisible(find.text('ITAL NAPLÓZÁSA'));
-      await tester.tap(find.text('ITAL NAPLÓZÁSA'));
+      await tester.ensureVisible(find.byKey(const ValueKey('home-primary-log')));
+      await tester.tap(find.byKey(const ValueKey('home-primary-log')));
       await frames(tester);
       await tester.tap(find.text('Sör (általános)'));
       await frames(tester);
@@ -131,7 +131,7 @@ void main() {
       expect(
         tester
             .widget<FilledButton>(
-              find.widgetWithText(FilledButton, 'ITAL NAPLÓZÁSA'),
+              find.byKey(const ValueKey('home-primary-log')),
             )
             .onPressed,
         isNull,

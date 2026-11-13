@@ -969,7 +969,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hubOverview => 'Overview';
 
   @override
-  String get experienceSettings => 'Settings and help';
+  String get experienceSettings => 'Settings';
 
   @override
   String get experienceIntroTitle => 'Meet Menti';
@@ -1453,7 +1453,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get avatarReactionFocused => 'Focused';
 
   @override
-  String get avatarStudio => 'Menti Studio 2.2.6';
+  String get avatarStudio => 'Menti Studio';
 
   @override
   String get avatarSave => 'Save';
@@ -3040,4 +3040,60 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get infoLicenses => 'Open-source licences';
+
+  @override
+  String get visualStudio => 'Studio';
+
+  @override
+  String get visualProgress => 'Progress';
+
+  @override
+  String get visualAdd => 'Log a drink';
+
+  @override
+  String get visualFilters => 'Filters and sort';
+
+  @override
+  String visualFiltersCount(int count) {
+    return 'Filters and sort · $count';
+  }
+
+  @override
+  String get visualTodayTitle => 'Today, at your pace';
+
+  @override
+  String get visualNextTask => 'Your next activity';
+
+  @override
+  String get visualNoActive => 'No active activity for today yet.';
+
+  @override
+  String get visualAdventureUnavailable =>
+      'Today’s adventure state is unavailable.';
+
+  @override
+  String visualToStation(int count) {
+    return '$count more completions to this station';
+  }
+
+  @override
+  String get visualChooseNext => 'Open today’s activities';
+
+  @override
+  String get visualUndo => 'Revert';
+
+  @override
+  String get visualSettingsInfo => 'Help and your data';
+
+  @override
+  String get visualSettingsExperience => 'Menti experience';
+
+  @override
+  String visualTodayEntries(int count) {
+    return 'Today’s entries: $count';
+  }
+
+  @override
+  String get visualJournalScope =>
+      'Self-reported. No entry does not prove an alcohol-free day.';
 }

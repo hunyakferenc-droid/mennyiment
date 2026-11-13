@@ -502,7 +502,7 @@
     }
   },
   "hubOverview": "Áttekintés",
-  "experienceSettings": "Beállítások és súgó",
+  "experienceSettings": "Beállítások",
   "experienceIntroTitle": "Ismerd meg Mentit",
   "experienceIntroInvite": "Új társ a naplód mellé. Megismered Mentit?",
   "experienceIntroOpen": "Menti bemutatkozása",
@@ -666,7 +666,7 @@
   "avatarReactionCalming": "Megnyugtató",
   "avatarReactionCelebrating": "Ünneplő",
   "avatarReactionFocused": "Fókuszált",
-  "avatarStudio": "Menti Studio 2.2.6",
+  "avatarStudio": "Menti Studio",
   "avatarSave": "Mentés",
   "avatarSaving": "Mentés…",
   "avatarSaved": "Az összeállítás elmentve.",
@@ -1481,5 +1481,42 @@
         "type": "String"
       }
     }
-  }
+  },
+  "visualStudio": "Studio",
+  "visualProgress": "Fejlődés",
+  "visualAdd": "Ital rögzítése",
+  "visualFilters": "Szűrők és rendezés",
+  "visualFiltersCount": "Szűrők és rendezés · {count}",
+  "visualTodayTitle": "Ma, a saját tempódban",
+  "visualNextTask": "Következő vállalásod",
+  "visualNoActive": "Még nincs aktív mai vállalásod.",
+  "visualAdventureUnavailable": "A mai kalandállapot most nem olvasható.",
+  "visualToStation": "Még {count} teljesítés az állomásig",
+  "visualChooseNext": "Tovább a mai küldetésekhez",
+  "visualUndo": "Visszavonás",
+  "visualSettingsInfo": "Segítség és saját adatok",
+  "visualSettingsExperience": "Menti-élmény",
+  "@visualFiltersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@visualToStation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visualTodayEntries": "Mai bejegyzések: {count}",
+  "@visualTodayEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visualJournalScope": "Önbevallás. A hiányzó bejegyzés nem igazolt fogyasztásmentes nap."
 }

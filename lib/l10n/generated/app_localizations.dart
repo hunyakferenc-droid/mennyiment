@@ -1757,7 +1757,7 @@ abstract class AppLocalizations {
   /// No description provided for @experienceSettings.
   ///
   /// In hu, this message translates to:
-  /// **'Beállítások és súgó'**
+  /// **'Beállítások'**
   String get experienceSettings;
 
   /// No description provided for @experienceIntroTitle.
@@ -2681,7 +2681,7 @@ abstract class AppLocalizations {
   /// No description provided for @avatarStudio.
   ///
   /// In hu, this message translates to:
-  /// **'Menti Studio 2.2.6'**
+  /// **'Menti Studio'**
   String get avatarStudio;
 
   /// No description provided for @avatarSave.
@@ -5443,6 +5443,102 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'Nyílt forrású licencek'**
   String get infoLicenses;
+
+  /// No description provided for @visualStudio.
+  ///
+  /// In hu, this message translates to:
+  /// **'Studio'**
+  String get visualStudio;
+
+  /// No description provided for @visualProgress.
+  ///
+  /// In hu, this message translates to:
+  /// **'Fejlődés'**
+  String get visualProgress;
+
+  /// No description provided for @visualAdd.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ital rögzítése'**
+  String get visualAdd;
+
+  /// No description provided for @visualFilters.
+  ///
+  /// In hu, this message translates to:
+  /// **'Szűrők és rendezés'**
+  String get visualFilters;
+
+  /// No description provided for @visualFiltersCount.
+  ///
+  /// In hu, this message translates to:
+  /// **'Szűrők és rendezés · {count}'**
+  String visualFiltersCount(int count);
+
+  /// No description provided for @visualTodayTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ma, a saját tempódban'**
+  String get visualTodayTitle;
+
+  /// No description provided for @visualNextTask.
+  ///
+  /// In hu, this message translates to:
+  /// **'Következő vállalásod'**
+  String get visualNextTask;
+
+  /// No description provided for @visualNoActive.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még nincs aktív mai vállalásod.'**
+  String get visualNoActive;
+
+  /// No description provided for @visualAdventureUnavailable.
+  ///
+  /// In hu, this message translates to:
+  /// **'A mai kalandállapot most nem olvasható.'**
+  String get visualAdventureUnavailable;
+
+  /// No description provided for @visualToStation.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még {count} teljesítés az állomásig'**
+  String visualToStation(int count);
+
+  /// No description provided for @visualChooseNext.
+  ///
+  /// In hu, this message translates to:
+  /// **'Tovább a mai küldetésekhez'**
+  String get visualChooseNext;
+
+  /// No description provided for @visualUndo.
+  ///
+  /// In hu, this message translates to:
+  /// **'Visszavonás'**
+  String get visualUndo;
+
+  /// No description provided for @visualSettingsInfo.
+  ///
+  /// In hu, this message translates to:
+  /// **'Segítség és saját adatok'**
+  String get visualSettingsInfo;
+
+  /// No description provided for @visualSettingsExperience.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti-élmény'**
+  String get visualSettingsExperience;
+
+  /// No description provided for @visualTodayEntries.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mai bejegyzések: {count}'**
+  String visualTodayEntries(int count);
+
+  /// No description provided for @visualJournalScope.
+  ///
+  /// In hu, this message translates to:
+  /// **'Önbevallás. A hiányzó bejegyzés nem igazolt fogyasztásmentes nap.'**
+  String get visualJournalScope;
 }
 
 class _AppLocalizationsDelegate

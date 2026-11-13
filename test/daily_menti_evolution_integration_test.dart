@@ -230,7 +230,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text(s.dailyOpenSaved), findsOneWidget);
       expect(tester.widget<MentiEvolution>(find.byType(MentiEvolution)).level, 2);
-      await tester.tap(find.text(s.mentiProgress).first);
+      await tester.tap(find.byKey(const ValueKey('home-progress')));
       await tester.pumpAndSettle();
       expect(find.byType(MentiProgressPage), findsOneWidget);
       expect(find.text(s.evolutionRemaining(50)), findsOneWidget);

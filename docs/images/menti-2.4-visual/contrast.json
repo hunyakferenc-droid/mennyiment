@@ -1,0 +1,55 @@
+{
+  "sourceCommit": "e2b95b16beb5ba7a105ae158e231b370b735f99f",
+  "scope": "Static core palette pairs only; not a complete device or WCAG audit",
+  "pairs": [
+    {
+      "name": "body on canvas",
+      "foreground": "F0E8F3",
+      "background": "0C0A10",
+      "contrastRatio": 16.45,
+      "minimumNormalText": 4.5
+    },
+    {
+      "name": "body on panel",
+      "foreground": "F0E8F3",
+      "background": "21182B",
+      "contrastRatio": 14.26,
+      "minimumNormalText": 4.5
+    },
+    {
+      "name": "primary link",
+      "foreground": "FFC477",
+      "background": "0C0A10",
+      "contrastRatio": 12.58,
+      "minimumNormalText": 4.5
+    },
+    {
+      "name": "primary button",
+      "foreground": "2C1A06",
+      "background": "FFC477",
+      "contrastRatio": 10.67,
+      "minimumNormalText": 4.5
+    },
+    {
+      "name": "home primary button",
+      "foreground": "150D1C",
+      "background": "FFC477",
+      "contrastRatio": 12.13,
+      "minimumNormalText": 4.5
+    },
+    {
+      "name": "status badge",
+      "foreground": "F0E8F3",
+      "background": "32253F",
+      "contrastRatio": 11.92,
+      "minimumNormalText": 4.5
+    },
+    {
+      "name": "highlighted status badge",
+      "foreground": "F0E8F3",
+      "background": "3A2A16",
+      "contrastRatio": 11.52,
+      "minimumNormalText": 4.5
+    }
+  ]
+}

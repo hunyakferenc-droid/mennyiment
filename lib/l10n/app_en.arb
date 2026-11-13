@@ -502,7 +502,7 @@
     }
   },
   "hubOverview": "Overview",
-  "experienceSettings": "Settings and help",
+  "experienceSettings": "Settings",
   "experienceIntroTitle": "Meet Menti",
   "experienceIntroInvite": "A new companion for your journal. Meet Menti?",
   "experienceIntroOpen": "Menti introduction",
@@ -666,7 +666,7 @@
   "avatarReactionCalming": "Calming",
   "avatarReactionCelebrating": "Celebrating",
   "avatarReactionFocused": "Focused",
-  "avatarStudio": "Menti Studio 2.2.6",
+  "avatarStudio": "Menti Studio",
   "avatarSave": "Save",
   "avatarSaving": "Saving…",
   "avatarSaved": "Your Menti has been saved.",
@@ -1481,5 +1481,42 @@
         "type": "String"
       }
     }
-  }
+  },
+  "visualStudio": "Studio",
+  "visualProgress": "Progress",
+  "visualAdd": "Log a drink",
+  "visualFilters": "Filters and sort",
+  "visualFiltersCount": "Filters and sort · {count}",
+  "visualTodayTitle": "Today, at your pace",
+  "visualNextTask": "Your next activity",
+  "visualNoActive": "No active activity for today yet.",
+  "visualAdventureUnavailable": "Today’s adventure state is unavailable.",
+  "visualToStation": "{count} more completions to this station",
+  "visualChooseNext": "Open today’s activities",
+  "visualUndo": "Revert",
+  "visualSettingsInfo": "Help and your data",
+  "visualSettingsExperience": "Menti experience",
+  "@visualFiltersCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@visualToStation": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visualTodayEntries": "Today’s entries: {count}",
+  "@visualTodayEntries": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "visualJournalScope": "Self-reported. No entry does not prove an alcohol-free day."
 }

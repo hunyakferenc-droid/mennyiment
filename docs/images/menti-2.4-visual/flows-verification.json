@@ -1,0 +1,153 @@
+{
+  "sourceCommit": "e2b95b16beb5ba7a105ae158e231b370b735f99f",
+  "version": "2.4.0+35",
+  "browser": "154.0.8037.57",
+  "checks": [
+    "hu 320px: real picker/details logging and double activation create one zero-price record; original records, profile, age and XP stay intact",
+    "hu 320px: search and collapsed missing-price/order filters survive six-field editing of one identical record; real zero leaves missing results and totals update to coverage 4/5",
+    "hu 320px: choose and explicitly complete Rest once; map returns to daily tasks; home re-reads the still-active Movement commitment, with one badge and unchanged XP",
+    "hu 320px: Studio draft writes nothing, Revert restores it, double Save persists one name with the same visual IDs/unlocks; Back cancel/discard protects unsaved edits",
+    "hu 320px: real JSON download, file picker, restore preview/cancel/confirm, root refresh and full app reload preserve the edited journal, saved Menti, activity, XP and unknown data",
+    "hu 360px: real picker/details logging and double activation create one zero-price record; original records, profile, age and XP stay intact",
+    "hu 360px: search and collapsed missing-price/order filters survive six-field editing of one identical record; real zero leaves missing results and totals update to coverage 4/5",
+    "hu 360px: choose and explicitly complete Rest once; map returns to daily tasks; home re-reads the still-active Movement commitment, with one badge and unchanged XP",
+    "hu 360px: Studio draft writes nothing, Revert restores it, double Save persists one name with the same visual IDs/unlocks; Back cancel/discard protects unsaved edits",
+    "hu 360px: real JSON download, file picker, restore preview/cancel/confirm, root refresh and full app reload preserve the edited journal, saved Menti, activity, XP and unknown data",
+    "hu 390px: real picker/details logging and double activation create one zero-price record; original records, profile, age and XP stay intact",
+    "hu 390px: search and collapsed missing-price/order filters survive six-field editing of one identical record; real zero leaves missing results and totals update to coverage 4/5",
+    "hu 390px: choose and explicitly complete Rest once; map returns to daily tasks; home re-reads the still-active Movement commitment, with one badge and unchanged XP",
+    "hu 390px: Studio draft writes nothing, Revert restores it, double Save persists one name with the same visual IDs/unlocks; Back cancel/discard protects unsaved edits",
+    "hu 390px: real JSON download, file picker, restore preview/cancel/confirm, root refresh and full app reload preserve the edited journal, saved Menti, activity, XP and unknown data",
+    "hu 430px: real picker/details logging and double activation create one zero-price record; original records, profile, age and XP stay intact",
+    "hu 430px: search and collapsed missing-price/order filters survive six-field editing of one identical record; real zero leaves missing results and totals update to coverage 4/5",
+    "hu 430px: choose and explicitly complete Rest once; map returns to daily tasks; home re-reads the still-active Movement commitment, with one badge and unchanged XP",
+    "hu 430px: Studio draft writes nothing, Revert restores it, double Save persists one name with the same visual IDs/unlocks; Back cancel/discard protects unsaved edits",
+    "hu 430px: real JSON download, file picker, restore preview/cancel/confirm, root refresh and full app reload preserve the edited journal, saved Menti, activity, XP and unknown data",
+    "en 320px: real picker/details logging and double activation create one zero-price record; original records, profile, age and XP stay intact",
+    "en 320px: search and collapsed missing-price/order filters survive six-field editing of one identical record; real zero leaves missing results and totals update to coverage 4/5",
+    "en 320px: choose and explicitly complete Rest once; map returns to daily tasks; home re-reads the still-active Movement commitment, with one badge and unchanged XP",
+    "en 320px: Studio draft writes nothing, Revert restores it, double Save persists one name with the same visual IDs/unlocks; Back cancel/discard protects unsaved edits",
+    "en 320px: real JSON download, file picker, restore preview/cancel/confirm, root refresh and full app reload preserve the edited journal, saved Menti, activity, XP and unknown data",
+    "en 360px: real picker/details logging and double activation create one zero-price record; original records, profile, age and XP stay intact",
+    "en 360px: search and collapsed missing-price/order filters survive six-field editing of one identical record; real zero leaves missing results and totals update to coverage 4/5",
+    "en 360px: choose and explicitly complete Rest once; map returns to daily tasks; home re-reads the still-active Movement commitment, with one badge and unchanged XP",
+    "en 360px: Studio draft writes nothing, Revert restores it, double Save persists one name with the same visual IDs/unlocks; Back cancel/discard protects unsaved edits",
+    "en 360px: real JSON download, file picker, restore preview/cancel/confirm, root refresh and full app reload preserve the edited journal, saved Menti, activity, XP and unknown data",
+    "en 390px: real picker/details logging and double activation create one zero-price record; original records, profile, age and XP stay intact",
+    "en 390px: search and collapsed missing-price/order filters survive six-field editing of one identical record; real zero leaves missing results and totals update to coverage 4/5",
+    "en 390px: choose and explicitly complete Rest once; map returns to daily tasks; home re-reads the still-active Movement commitment, with one badge and unchanged XP",
+    "en 390px: Studio draft writes nothing, Revert restores it, double Save persists one name with the same visual IDs/unlocks; Back cancel/discard protects unsaved edits",
+    "en 390px: real JSON download, file picker, restore preview/cancel/confirm, root refresh and full app reload preserve the edited journal, saved Menti, activity, XP and unknown data",
+    "en 430px: real picker/details logging and double activation create one zero-price record; original records, profile, age and XP stay intact",
+    "en 430px: search and collapsed missing-price/order filters survive six-field editing of one identical record; real zero leaves missing results and totals update to coverage 4/5",
+    "en 430px: choose and explicitly complete Rest once; map returns to daily tasks; home re-reads the still-active Movement commitment, with one badge and unchanged XP",
+    "en 430px: Studio draft writes nothing, Revert restores it, double Save persists one name with the same visual IDs/unlocks; Back cancel/discard protects unsaved edits",
+    "en 430px: real JSON download, file picker, restore preview/cancel/confirm, root refresh and full app reload preserve the edited journal, saved Menti, activity, XP and unknown data"
+  ],
+  "runtimeErrors": [],
+  "externalRequests": [],
+  "failedRequests": [],
+  "fontTransfers": [
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "hu 320 opening",
+      "at": "2026-11-13T10:00:55.962Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "hu 320 files",
+      "at": "2026-11-13T10:01:41.032Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "hu 360 opening",
+      "at": "2026-11-13T10:01:46.779Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "hu 360 files",
+      "at": "2026-11-13T10:02:31.997Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "hu 390 opening",
+      "at": "2026-11-13T10:02:37.094Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "hu 390 files",
+      "at": "2026-11-13T10:03:21.083Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "hu 430 opening",
+      "at": "2026-11-13T10:03:26.022Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "hu 430 files",
+      "at": "2026-11-13T10:04:08.608Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "en 320 opening",
+      "at": "2026-11-13T10:04:13.521Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "en 320 files",
+      "at": "2026-11-13T10:04:55.885Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "en 360 opening",
+      "at": "2026-11-13T10:05:00.918Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "en 360 files",
+      "at": "2026-11-13T10:05:44.314Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "en 390 opening",
+      "at": "2026-11-13T10:05:49.025Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "en 390 files",
+      "at": "2026-11-13T10:06:30.918Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "en 430 opening",
+      "at": "2026-11-13T10:06:35.611Z"
+    },
+    {
+      "url": "http://127.0.0.1:7357/assets/FontManifest.json",
+      "status": 200,
+      "phase": "en 430 files",
+      "at": "2026-11-13T10:07:24.908Z"
+    }
+  ],
+  "intentionalReloadCancellations": [],
+  "intentionalContextCloseCancellations": [],
+  "physicalAndroid": false,
+  "emulator": false,
+  "textScale": "Chrome normal; true 200% text and keyboard in the Flutter widget matrix."
+}

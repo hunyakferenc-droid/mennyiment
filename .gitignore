@@ -102,3 +102,6 @@ pubspec.yaml.bak
 
 # Local Flutter golden comparison diagnostics
 /test/failures/
+
+# Matched synthetic visual verification screenshots, never user exports.
+!/docs/images/menti-2.4-visual/*.png
