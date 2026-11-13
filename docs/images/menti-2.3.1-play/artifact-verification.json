@@ -1,0 +1,29 @@
+{
+  "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+  "runId": 43371544481,
+  "artifacts": [
+    {
+      "name": "web",
+      "artifactId": 14012708324,
+      "bytes": 89117212,
+      "sha256": "f06a1b4b69668128721f8ad8cd95a110c9467aead267f6a549de98dda3f34adc",
+      "crcVerified": true
+    },
+    {
+      "name": "debug-apk",
+      "artifactId": 14012937378,
+      "bytes": 156009678,
+      "sha256": "da85a8d83e419046e3dfb769eef285d82731a8466643f45d0cef5db0f7c74e6d",
+      "crcVerified": true
+    },
+    {
+      "name": "release-checks",
+      "artifactId": 14013086939,
+      "bytes": 444,
+      "sha256": "d303b217cef835f14052598bd44b19239aaa1375fc8ec851d8e0b681309de658",
+      "crcVerified": true
+    }
+  ],
+  "webIdenticalLocalFiles": 345,
+  "webOnlyDifferingLocalFile": "flutter_bootstrap.js (WASM hash object ordering and service-worker version)"
+}

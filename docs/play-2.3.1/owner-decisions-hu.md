@@ -25,7 +25,7 @@ A jóváhagyott márkairány elsődlegesen 18–30 éves felnőtteket céloz. A 
 - [ ] Webes host, naplózás, megőrzés és szolgáltatók: külön a natív app helyi működésétől.
 - [ ] Jogalapok, megőrzési idők, kérelmek és adatvédelmi eljárás a tényleges célországokhoz. Nincs nem létező törlési portál.
 - [ ] Leírástervezet, képek és Menti-grafikák felhasználási jogának tulajdonosi jóváhagyása.
-- [ ] Google Play nagyfelbontású ikon és feature graphic; a képernyőkép-jelöltek nem helyettesítik ezeket.
+- [ ] Saját, jóváhagyott Google Play-ikon és feature graphic. A megvizsgált `web/icons/Icon-512.png` és Android `mipmap-*/ic_launcher.png` még Flutter-alapjelet mutat; ezek nem kész MennyiMent? áruházi anyagok. 512×512-es saját Play-ikon és 1024×500-as feature graphic szükséges; a képernyőkép-jelöltek nem helyettesítik ezeket.
 - [ ] Valódi tesztelői kör és saját Console-jelentkezési link. Nem készült kitalált kapcsolatlista, meghívó vagy fizetett tesztelés.
 
 A fenti lista nem állítja, hogy a Play vagy jogi felülvizsgálat már megtörtént. Main merge, Play-feltöltés, szerződéselfogadás és publikálás ebben a feladatban nem engedélyezett.

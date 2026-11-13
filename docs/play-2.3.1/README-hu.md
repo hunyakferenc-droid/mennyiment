@@ -10,6 +10,8 @@ Alap: eb445a770916320c7092715d5152a3ae86784938, a lezárt #37 Menti-kalandok. A 
 - [Android release és aláírás](android-release-hu.md)
 - [Zárt tesztelés kezdőknek](closed-test-hu.md)
 - [Hiányzó tulajdonosi döntések](owner-decisions-hu.md)
+- [Tényleges képek offline galériája](../images/menti-2.3.1-play/index.html)
+- [10 áruházi képjelölt HU/EN képleírással](../images/menti-2.3.1-play/store-candidates.json)
 
 ## Mi javult a felhasználónak?
 

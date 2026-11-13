@@ -26,6 +26,8 @@ A `tool/check_release_signing.py` tényleges `:app:bundleRelease` kísérleteket
 
 Az átadott 2.2.8+32 APK tanúsítványának SHA-256 értéke `81b09f4862de94438b97cf074b91901fa9ad68d87f979d783750badf6faf992c`; a 2.3.0+33-é `90bb6f1a99998d754f6936a64b2c434cb0d636edfdd5ffb7fb5a554e396ea59b`. Ezek eltérnek, mert a CI debug-aláírása nem jelent megőrzött kiadási identitást. A +34 tényleges ujjlenyomata a friss build jegyzőkönyvében található.
 
+Az összehasonlítás alapja a [2.2.8 átadási jegyzőkönyve](../2.2.8-journal-management-hu.md) és a [2.3.0 jegyzőkönyve](../2.3.0-adventures-hu.md); ezek a konkrét korábbi artifactokat is azonosítják. Nem a készülékre ténylegesen telepített példány tanúsítványát állítják.
+
 Az adatmegőrző normál frissítéshez a csomagazonosítónak és az elfogadott aláírási identitásnak is illeszkednie kell, megfelelő verziókóddal. **Meglévő alkalmazás eltávolítása nem javasolt aláírásütközés megkerülésére.** Használj webes próbát vagy külön tesztkészüléket; meglévő app frissítéséhez azonos korábbi kulcs vagy a platform által támogatott, megfelelő aláírási lánc szükséges. A tanúsítványból nem állítható elő a magánkulcs.
 
 Play App Signingnál a feltöltőkulcs és a terjesztett app aláírókulcsa eltérő szerepű; a Playről települő build ezért nem automatikusan frissíti az ettől eltérő debug-kulcsú példányt. A kulcskezelési és App Signing-döntést a kiadó hozza meg, szerződéselfogadás és feltöltés nélkülünk. [Android: alkalmazásaláírás](https://developer.android.com/studio/publish/app-signing).
@@ -35,3 +37,5 @@ Play App Signingnál a feltöltőkulcs és a terjesztett app aláírókulcsa elt
 Az aktuális hivatalos cél-API követelmény a szokásos telefonos új appokhoz/frissítésekhez API 36. A projekt Flutter-verziója és a tényleges APK badging eredménye ellenőrizendő; nem elég a tervezett érték. [Google: target API követelmény](https://support.google.com/googleplay/android-developer/answer/11926878).
 
 A natív könyvtárakat tartalmazó csomagnál 16 KB lapméretet is vizsgálni kell. A debug APK ZIP/ELF ellenőrzése hasznos előkészítés, de nem helyettesíti a későbbi release AAB, az abból készülő APK-k és egy valódi 16 KB-os Android-környezet próbáját. [Android: 16 KB lapméret](https://developer.android.com/guide/practices/page-sizes).
+
+A friss debug APK statikus ellenőrzését a `tool/check_apk_layout.py` reprodukálja Android build-tools mellett; a konkrét eredmény az [Android-jegyzőkönyvben](../images/menti-2.3.1-play/android-verification.json) van. A ZIP-igazítás és arm64/x86_64 ELF-igazítás sikeres; a JSON külön `false` értékkel jelöli a még nem futott 16 KB-runtime-, fizikai telefonos, emulátoros és release AAB próbát.

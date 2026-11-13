@@ -1,0 +1,56 @@
+{
+  "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+  "apkSha256": "17aaa25ca1f7ab952e952f2cb6396c3179eef192f6448bc186a072d49a92ba6f",
+  "apkBytes": 238229916,
+  "certificateSha256": "dcada9df080208a0422d7424a1ce85ae13cc0f894997e94e393412a95f2323b6",
+  "signatureVerification": "Verifies\nVerified using v1 scheme (JAR signing): false\nVerified using v2 scheme (APK Signature Scheme v2): true\nVerified using v3 scheme (APK Signature Scheme v3): false\nVerified using v3.1 scheme (APK Signature Scheme v3.1): false\nVerified using v4 scheme (APK Signature Scheme v4): false\nVerified for SourceStamp: false\nNumber of signers: 1\nSigner #1 certificate DN: C=US, O=Android, CN=Android Debug\nSigner #1 certificate SHA-256 digest: dcada9df080208a0422d7424a1ce85ae13cc0f894997e94e393412a95f2323b6\nSigner #1 certificate SHA-1 digest: 102e76685a77a6b5b9d0b4c4cc90d273b010195f\nSigner #1 certificate MD5 digest: 29edb48293dbe0c1bf317d7201f20b8b\nSigner #1 key algorithm: RSA\nSigner #1 key size (bits): 2048\nSigner #1 public key SHA-256 digest: 3176592a330f2fd54c3e16df3113578277cbf81622dbb855b6e9bac76594c91c\nSigner #1 public key SHA-1 digest: cf5604e37e723981453473c9c4e8dde50c804b58\nSigner #1 public key MD5 digest: 6626cf9a00d9c387fd68968e5312c10f\n",
+  "badging": [
+    "package: name='com.example.mennyiment' versionCode='34' versionName='2.3.1' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'",
+    "sdkVersion:'24'",
+    "targetSdkVersion:'36'",
+    "uses-permission: name='android.permission.INTERNET'",
+    "uses-permission: name='com.example.mennyiment.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'",
+    "application-label:'MennyiMent?'"
+  ],
+  "permissions": [
+    "package: com.example.mennyiment",
+    "uses-permission: name='android.permission.INTERNET'",
+    "permission: com.example.mennyiment.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+    "uses-permission: name='com.example.mennyiment.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'"
+  ],
+  "zipAlignment16Kb": true,
+  "nativeLibraries": [
+    {
+      "file": "lib/arm64-v8a/libVkLayer_khronos_validation.so",
+      "minimumPtLoadAlignment": 65536
+    },
+    {
+      "file": "lib/arm64-v8a/libdatastore_shared_counter.so",
+      "minimumPtLoadAlignment": 16384
+    },
+    {
+      "file": "lib/arm64-v8a/libflutter.so",
+      "minimumPtLoadAlignment": 65536
+    },
+    {
+      "file": "lib/armeabi-v7a/libdatastore_shared_counter.so",
+      "minimumPtLoadAlignment": 16384
+    },
+    {
+      "file": "lib/armeabi-v7a/libflutter.so",
+      "minimumPtLoadAlignment": 65536
+    },
+    {
+      "file": "lib/x86_64/libdatastore_shared_counter.so",
+      "minimumPtLoadAlignment": 16384
+    },
+    {
+      "file": "lib/x86_64/libflutter.so",
+      "minimumPtLoadAlignment": 65536
+    }
+  ],
+  "runtime16KbTested": false,
+  "physicalAndroid": false,
+  "emulator": false,
+  "signedReleaseAabBuilt": false
+}

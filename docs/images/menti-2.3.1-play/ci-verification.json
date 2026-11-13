@@ -1,0 +1,24 @@
+{
+  "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+  "runId": 43371544481,
+  "jobId": 131708209937,
+  "conclusion": "success",
+  "fullSuite": 953,
+  "additionalBudapestDstSuite": 349,
+  "newTests": 26,
+  "matchingHuEnKeys": 890,
+  "analyzer": "No issues found",
+  "webBuild": true,
+  "debugApkBuild": true,
+  "releaseRejections": 3,
+  "signedReleaseAabBuilt": false,
+  "logEvidence": [
+    "2026-11-13T05:23:31.7814486Z HU/EN: 890 matching keys; no untranslated messages",
+    "2026-11-13T05:23:47.4294373Z No issues found! (ran in 14.9s)",
+    "2026-11-13T05:26:57.8757028Z 🎉 953 tests passed.",
+    "2026-11-13T05:27:32.1996784Z 🎉 349 tests passed.",
+    "2026-11-13T05:28:14.4256764Z ✓ Built build/web",
+    "2026-11-13T05:32:17.1745686Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk",
+    "2026-11-13T05:32:30.8510108Z 3 release-signing rejection checks passed. No release key was created."
+  ]
+}

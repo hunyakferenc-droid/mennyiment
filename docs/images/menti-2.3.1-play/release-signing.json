@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+  "cases": [
+    {
+      "case": "missing credentials",
+      "expectedMarker": "MENNYIMENT_RELEASE_SIGNING[MISSING]",
+      "nonzeroExit": true,
+      "secretSentinelsAbsent": true,
+      "aabUnchanged": true
+    },
+    {
+      "case": "nonexistent external keystore",
+      "expectedMarker": "MENNYIMENT_RELEASE_SIGNING[FILE]",
+      "nonzeroExit": true,
+      "secretSentinelsAbsent": true,
+      "aabUnchanged": true
+    },
+    {
+      "case": "debug alias refused",
+      "expectedMarker": "MENNYIMENT_RELEASE_SIGNING[DEBUG]",
+      "nonzeroExit": true,
+      "secretSentinelsAbsent": true,
+      "aabUnchanged": true
+    }
+  ],
+  "passed": 3,
+  "signedReleaseAabBuilt": false
+}
