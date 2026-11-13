@@ -1,0 +1,29 @@
+{
+  "sourceCommit": "e2b95b16beb5ba7a105ae158e231b370b735f99f",
+  "runId": 43403723825,
+  "artifacts": [
+    {
+      "name": "web",
+      "artifactId": 14026183834,
+      "bytes": 89121808,
+      "sha256": "9f9162e695a6d2ae98e136f1f2463736561ee2801cf50b9f32b0c37da58732c4",
+      "crcVerified": true
+    },
+    {
+      "name": "debug-apk",
+      "artifactId": 14026069783,
+      "bytes": 156020039,
+      "sha256": "1536035e188e020b16823c96a6195dd473aa32cd0f79782c9f0a802060a3c0c2",
+      "crcVerified": true
+    },
+    {
+      "name": "release-guard",
+      "artifactId": 14026434149,
+      "bytes": 444,
+      "sha256": "6f7aee7b21a35eca3157ba504213e0ddee798fcaca0d7d227df5b2d3194b5457",
+      "crcVerified": true
+    }
+  ],
+  "webIdenticalLocalFiles": 345,
+  "webOnlyDifferentLocalFile": "flutter_bootstrap.js: generated map order and service-worker version"
+}

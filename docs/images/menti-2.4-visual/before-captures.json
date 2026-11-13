@@ -1,0 +1,554 @@
+{
+  "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+  "stage": "before",
+  "preferences": [
+    {
+      "locale": "hu",
+      "width": 320,
+      "values": {
+        "flutter.mennyiment_menti_xp_v2": "\"{\\\"xp\\\":150,\\\"days\\\":[],\\\"completed\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_identity_v22": "\"{\\\"version\\\":1,\\\"profile\\\":{\\\"name\\\":\\\"Mira\\\",\\\"visual\\\":{\\\"family\\\":\\\"girl\\\",\\\"age\\\":\\\"adult\\\",\\\"style\\\":\\\"classic\\\",\\\"hair\\\":\\\"girl-curls\\\",\\\"hairVisible\\\":true,\\\"outfit\\\":\\\"business\\\",\\\"headwear\\\":\\\"beanie\\\",\\\"glasses\\\":\\\"round-glasses\\\",\\\"neck\\\":\\\"scarf\\\",\\\"held\\\":\\\"notebook\\\",\\\"future\\\":\\\"preserve\\\"},\\\"reaction\\\":{\\\"style\\\":\\\"motivating\\\"}},\\\"unlocks\\\":{\\\"unlocked\\\":[\\\"outfit:business\\\",\\\"headwear:beanie\\\"],\\\"seen\\\":[]},\\\"presets\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_reduce_motion_v1": "true",
+        "flutter.mennyiment_adventures_v1": "\"{\\\"version\\\":1,\\\"days\\\":{\\\"2026-11-13\\\":{\\\"movement\\\":{\\\"status\\\":\\\"active\\\",\\\"selectedAt\\\":\\\"2026-11-13T04:00:00.000Z\\\"}}},\\\"badges\\\":{}}\"",
+        "flutter.mennyiment_access_v1": "\"{\\\"version\\\":1,\\\"audience\\\":\\\"adult\\\",\\\"complete\\\":true}\"",
+        "flutter.mennyiment_locale_v1": "\"hu\"",
+        "flutter.mennyiment_drinks_v1": "\"[{\\\"name\\\":\\\"Citromos víz\\\",\\\"ml\\\":300,\\\"percent\\\":0,\\\"priceFt\\\":0,\\\"time\\\":\\\"2026-11-13T04:10:00.000\\\",\\\"future\\\":\\\"preserve\\\"},{\\\"name\\\":\\\"Fruit tea\\\",\\\"ml\\\":250,\\\"percent\\\":0,\\\"time\\\":\\\"2026-11-13T04:20:00.000\\\",\\\"future\\\":\\\"preserve\\\"}]\""
+      }
+    },
+    {
+      "locale": "hu",
+      "width": 360,
+      "values": {
+        "flutter.mennyiment_menti_xp_v2": "\"{\\\"xp\\\":150,\\\"days\\\":[],\\\"completed\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_identity_v22": "\"{\\\"version\\\":1,\\\"profile\\\":{\\\"name\\\":\\\"Mira\\\",\\\"visual\\\":{\\\"family\\\":\\\"girl\\\",\\\"age\\\":\\\"adult\\\",\\\"style\\\":\\\"classic\\\",\\\"hair\\\":\\\"girl-curls\\\",\\\"hairVisible\\\":true,\\\"outfit\\\":\\\"business\\\",\\\"headwear\\\":\\\"beanie\\\",\\\"glasses\\\":\\\"round-glasses\\\",\\\"neck\\\":\\\"scarf\\\",\\\"held\\\":\\\"notebook\\\",\\\"future\\\":\\\"preserve\\\"},\\\"reaction\\\":{\\\"style\\\":\\\"motivating\\\"}},\\\"unlocks\\\":{\\\"unlocked\\\":[\\\"outfit:business\\\",\\\"headwear:beanie\\\"],\\\"seen\\\":[]},\\\"presets\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_reduce_motion_v1": "true",
+        "flutter.mennyiment_adventures_v1": "\"{\\\"version\\\":1,\\\"days\\\":{\\\"2026-11-13\\\":{\\\"movement\\\":{\\\"status\\\":\\\"active\\\",\\\"selectedAt\\\":\\\"2026-11-13T04:00:00.000Z\\\"}}},\\\"badges\\\":{}}\"",
+        "flutter.mennyiment_access_v1": "\"{\\\"version\\\":1,\\\"audience\\\":\\\"adult\\\",\\\"complete\\\":true}\"",
+        "flutter.mennyiment_locale_v1": "\"hu\"",
+        "flutter.mennyiment_drinks_v1": "\"[{\\\"name\\\":\\\"Citromos víz\\\",\\\"ml\\\":300,\\\"percent\\\":0,\\\"priceFt\\\":0,\\\"time\\\":\\\"2026-11-13T04:10:00.000\\\",\\\"future\\\":\\\"preserve\\\"},{\\\"name\\\":\\\"Fruit tea\\\",\\\"ml\\\":250,\\\"percent\\\":0,\\\"time\\\":\\\"2026-11-13T04:20:00.000\\\",\\\"future\\\":\\\"preserve\\\"}]\""
+      }
+    },
+    {
+      "locale": "hu",
+      "width": 390,
+      "values": {
+        "flutter.mennyiment_menti_xp_v2": "\"{\\\"xp\\\":150,\\\"days\\\":[],\\\"completed\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_identity_v22": "\"{\\\"version\\\":1,\\\"profile\\\":{\\\"name\\\":\\\"Mira\\\",\\\"visual\\\":{\\\"family\\\":\\\"girl\\\",\\\"age\\\":\\\"adult\\\",\\\"style\\\":\\\"classic\\\",\\\"hair\\\":\\\"girl-curls\\\",\\\"hairVisible\\\":true,\\\"outfit\\\":\\\"business\\\",\\\"headwear\\\":\\\"beanie\\\",\\\"glasses\\\":\\\"round-glasses\\\",\\\"neck\\\":\\\"scarf\\\",\\\"held\\\":\\\"notebook\\\",\\\"future\\\":\\\"preserve\\\"},\\\"reaction\\\":{\\\"style\\\":\\\"motivating\\\"}},\\\"unlocks\\\":{\\\"unlocked\\\":[\\\"outfit:business\\\",\\\"headwear:beanie\\\"],\\\"seen\\\":[]},\\\"presets\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_reduce_motion_v1": "true",
+        "flutter.mennyiment_adventures_v1": "\"{\\\"version\\\":1,\\\"days\\\":{\\\"2026-11-13\\\":{\\\"movement\\\":{\\\"status\\\":\\\"active\\\",\\\"selectedAt\\\":\\\"2026-11-13T04:00:00.000Z\\\"}}},\\\"badges\\\":{}}\"",
+        "flutter.mennyiment_access_v1": "\"{\\\"version\\\":1,\\\"audience\\\":\\\"adult\\\",\\\"complete\\\":true}\"",
+        "flutter.mennyiment_locale_v1": "\"hu\"",
+        "flutter.mennyiment_drinks_v1": "\"[{\\\"name\\\":\\\"Citromos víz\\\",\\\"ml\\\":300,\\\"percent\\\":0,\\\"priceFt\\\":0,\\\"time\\\":\\\"2026-11-13T04:10:00.000\\\",\\\"future\\\":\\\"preserve\\\"},{\\\"name\\\":\\\"Fruit tea\\\",\\\"ml\\\":250,\\\"percent\\\":0,\\\"time\\\":\\\"2026-11-13T04:20:00.000\\\",\\\"future\\\":\\\"preserve\\\"}]\""
+      }
+    },
+    {
+      "locale": "hu",
+      "width": 430,
+      "values": {
+        "flutter.mennyiment_menti_xp_v2": "\"{\\\"xp\\\":150,\\\"days\\\":[],\\\"completed\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_identity_v22": "\"{\\\"version\\\":1,\\\"profile\\\":{\\\"name\\\":\\\"Mira\\\",\\\"visual\\\":{\\\"family\\\":\\\"girl\\\",\\\"age\\\":\\\"adult\\\",\\\"style\\\":\\\"classic\\\",\\\"hair\\\":\\\"girl-curls\\\",\\\"hairVisible\\\":true,\\\"outfit\\\":\\\"business\\\",\\\"headwear\\\":\\\"beanie\\\",\\\"glasses\\\":\\\"round-glasses\\\",\\\"neck\\\":\\\"scarf\\\",\\\"held\\\":\\\"notebook\\\",\\\"future\\\":\\\"preserve\\\"},\\\"reaction\\\":{\\\"style\\\":\\\"motivating\\\"}},\\\"unlocks\\\":{\\\"unlocked\\\":[\\\"outfit:business\\\",\\\"headwear:beanie\\\"],\\\"seen\\\":[]},\\\"presets\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_reduce_motion_v1": "true",
+        "flutter.mennyiment_adventures_v1": "\"{\\\"version\\\":1,\\\"days\\\":{\\\"2026-11-13\\\":{\\\"movement\\\":{\\\"status\\\":\\\"active\\\",\\\"selectedAt\\\":\\\"2026-11-13T04:00:00.000Z\\\"}}},\\\"badges\\\":{}}\"",
+        "flutter.mennyiment_access_v1": "\"{\\\"version\\\":1,\\\"audience\\\":\\\"adult\\\",\\\"complete\\\":true}\"",
+        "flutter.mennyiment_locale_v1": "\"hu\"",
+        "flutter.mennyiment_drinks_v1": "\"[{\\\"name\\\":\\\"Citromos víz\\\",\\\"ml\\\":300,\\\"percent\\\":0,\\\"priceFt\\\":0,\\\"time\\\":\\\"2026-11-13T04:10:00.000\\\",\\\"future\\\":\\\"preserve\\\"},{\\\"name\\\":\\\"Fruit tea\\\",\\\"ml\\\":250,\\\"percent\\\":0,\\\"time\\\":\\\"2026-11-13T04:20:00.000\\\",\\\"future\\\":\\\"preserve\\\"}]\""
+      }
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "values": {
+        "flutter.mennyiment_menti_xp_v2": "\"{\\\"xp\\\":150,\\\"days\\\":[],\\\"completed\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_identity_v22": "\"{\\\"version\\\":1,\\\"profile\\\":{\\\"name\\\":\\\"Mira\\\",\\\"visual\\\":{\\\"family\\\":\\\"girl\\\",\\\"age\\\":\\\"adult\\\",\\\"style\\\":\\\"classic\\\",\\\"hair\\\":\\\"girl-curls\\\",\\\"hairVisible\\\":true,\\\"outfit\\\":\\\"business\\\",\\\"headwear\\\":\\\"beanie\\\",\\\"glasses\\\":\\\"round-glasses\\\",\\\"neck\\\":\\\"scarf\\\",\\\"held\\\":\\\"notebook\\\",\\\"future\\\":\\\"preserve\\\"},\\\"reaction\\\":{\\\"style\\\":\\\"motivating\\\"}},\\\"unlocks\\\":{\\\"unlocked\\\":[\\\"outfit:business\\\",\\\"headwear:beanie\\\"],\\\"seen\\\":[]},\\\"presets\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_reduce_motion_v1": "true",
+        "flutter.mennyiment_adventures_v1": "\"{\\\"version\\\":1,\\\"days\\\":{\\\"2026-11-13\\\":{\\\"movement\\\":{\\\"status\\\":\\\"active\\\",\\\"selectedAt\\\":\\\"2026-11-13T04:00:00.000Z\\\"}}},\\\"badges\\\":{}}\"",
+        "flutter.mennyiment_access_v1": "\"{\\\"version\\\":1,\\\"audience\\\":\\\"adult\\\",\\\"complete\\\":true}\"",
+        "flutter.mennyiment_locale_v1": "\"en\"",
+        "flutter.mennyiment_drinks_v1": "\"[{\\\"name\\\":\\\"Citromos víz\\\",\\\"ml\\\":300,\\\"percent\\\":0,\\\"priceFt\\\":0,\\\"time\\\":\\\"2026-11-13T04:10:00.000\\\",\\\"future\\\":\\\"preserve\\\"},{\\\"name\\\":\\\"Fruit tea\\\",\\\"ml\\\":250,\\\"percent\\\":0,\\\"time\\\":\\\"2026-11-13T04:20:00.000\\\",\\\"future\\\":\\\"preserve\\\"}]\""
+      }
+    },
+    {
+      "locale": "en",
+      "width": 360,
+      "values": {
+        "flutter.mennyiment_menti_xp_v2": "\"{\\\"xp\\\":150,\\\"days\\\":[],\\\"completed\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_identity_v22": "\"{\\\"version\\\":1,\\\"profile\\\":{\\\"name\\\":\\\"Mira\\\",\\\"visual\\\":{\\\"family\\\":\\\"girl\\\",\\\"age\\\":\\\"adult\\\",\\\"style\\\":\\\"classic\\\",\\\"hair\\\":\\\"girl-curls\\\",\\\"hairVisible\\\":true,\\\"outfit\\\":\\\"business\\\",\\\"headwear\\\":\\\"beanie\\\",\\\"glasses\\\":\\\"round-glasses\\\",\\\"neck\\\":\\\"scarf\\\",\\\"held\\\":\\\"notebook\\\",\\\"future\\\":\\\"preserve\\\"},\\\"reaction\\\":{\\\"style\\\":\\\"motivating\\\"}},\\\"unlocks\\\":{\\\"unlocked\\\":[\\\"outfit:business\\\",\\\"headwear:beanie\\\"],\\\"seen\\\":[]},\\\"presets\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_reduce_motion_v1": "true",
+        "flutter.mennyiment_adventures_v1": "\"{\\\"version\\\":1,\\\"days\\\":{\\\"2026-11-13\\\":{\\\"movement\\\":{\\\"status\\\":\\\"active\\\",\\\"selectedAt\\\":\\\"2026-11-13T04:00:00.000Z\\\"}}},\\\"badges\\\":{}}\"",
+        "flutter.mennyiment_access_v1": "\"{\\\"version\\\":1,\\\"audience\\\":\\\"adult\\\",\\\"complete\\\":true}\"",
+        "flutter.mennyiment_locale_v1": "\"en\"",
+        "flutter.mennyiment_drinks_v1": "\"[{\\\"name\\\":\\\"Citromos víz\\\",\\\"ml\\\":300,\\\"percent\\\":0,\\\"priceFt\\\":0,\\\"time\\\":\\\"2026-11-13T04:10:00.000\\\",\\\"future\\\":\\\"preserve\\\"},{\\\"name\\\":\\\"Fruit tea\\\",\\\"ml\\\":250,\\\"percent\\\":0,\\\"time\\\":\\\"2026-11-13T04:20:00.000\\\",\\\"future\\\":\\\"preserve\\\"}]\""
+      }
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "values": {
+        "flutter.mennyiment_menti_xp_v2": "\"{\\\"xp\\\":150,\\\"days\\\":[],\\\"completed\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_identity_v22": "\"{\\\"version\\\":1,\\\"profile\\\":{\\\"name\\\":\\\"Mira\\\",\\\"visual\\\":{\\\"family\\\":\\\"girl\\\",\\\"age\\\":\\\"adult\\\",\\\"style\\\":\\\"classic\\\",\\\"hair\\\":\\\"girl-curls\\\",\\\"hairVisible\\\":true,\\\"outfit\\\":\\\"business\\\",\\\"headwear\\\":\\\"beanie\\\",\\\"glasses\\\":\\\"round-glasses\\\",\\\"neck\\\":\\\"scarf\\\",\\\"held\\\":\\\"notebook\\\",\\\"future\\\":\\\"preserve\\\"},\\\"reaction\\\":{\\\"style\\\":\\\"motivating\\\"}},\\\"unlocks\\\":{\\\"unlocked\\\":[\\\"outfit:business\\\",\\\"headwear:beanie\\\"],\\\"seen\\\":[]},\\\"presets\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_reduce_motion_v1": "true",
+        "flutter.mennyiment_adventures_v1": "\"{\\\"version\\\":1,\\\"days\\\":{\\\"2026-11-13\\\":{\\\"movement\\\":{\\\"status\\\":\\\"active\\\",\\\"selectedAt\\\":\\\"2026-11-13T04:00:00.000Z\\\"}}},\\\"badges\\\":{}}\"",
+        "flutter.mennyiment_access_v1": "\"{\\\"version\\\":1,\\\"audience\\\":\\\"adult\\\",\\\"complete\\\":true}\"",
+        "flutter.mennyiment_locale_v1": "\"en\"",
+        "flutter.mennyiment_drinks_v1": "\"[{\\\"name\\\":\\\"Citromos víz\\\",\\\"ml\\\":300,\\\"percent\\\":0,\\\"priceFt\\\":0,\\\"time\\\":\\\"2026-11-13T04:10:00.000\\\",\\\"future\\\":\\\"preserve\\\"},{\\\"name\\\":\\\"Fruit tea\\\",\\\"ml\\\":250,\\\"percent\\\":0,\\\"time\\\":\\\"2026-11-13T04:20:00.000\\\",\\\"future\\\":\\\"preserve\\\"}]\""
+      }
+    },
+    {
+      "locale": "en",
+      "width": 430,
+      "values": {
+        "flutter.mennyiment_menti_xp_v2": "\"{\\\"xp\\\":150,\\\"days\\\":[],\\\"completed\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_identity_v22": "\"{\\\"version\\\":1,\\\"profile\\\":{\\\"name\\\":\\\"Mira\\\",\\\"visual\\\":{\\\"family\\\":\\\"girl\\\",\\\"age\\\":\\\"adult\\\",\\\"style\\\":\\\"classic\\\",\\\"hair\\\":\\\"girl-curls\\\",\\\"hairVisible\\\":true,\\\"outfit\\\":\\\"business\\\",\\\"headwear\\\":\\\"beanie\\\",\\\"glasses\\\":\\\"round-glasses\\\",\\\"neck\\\":\\\"scarf\\\",\\\"held\\\":\\\"notebook\\\",\\\"future\\\":\\\"preserve\\\"},\\\"reaction\\\":{\\\"style\\\":\\\"motivating\\\"}},\\\"unlocks\\\":{\\\"unlocked\\\":[\\\"outfit:business\\\",\\\"headwear:beanie\\\"],\\\"seen\\\":[]},\\\"presets\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+        "flutter.mennyiment_reduce_motion_v1": "true",
+        "flutter.mennyiment_adventures_v1": "\"{\\\"version\\\":1,\\\"days\\\":{\\\"2026-11-13\\\":{\\\"movement\\\":{\\\"status\\\":\\\"active\\\",\\\"selectedAt\\\":\\\"2026-11-13T04:00:00.000Z\\\"}}},\\\"badges\\\":{}}\"",
+        "flutter.mennyiment_access_v1": "\"{\\\"version\\\":1,\\\"audience\\\":\\\"adult\\\",\\\"complete\\\":true}\"",
+        "flutter.mennyiment_locale_v1": "\"en\"",
+        "flutter.mennyiment_drinks_v1": "\"[{\\\"name\\\":\\\"Citromos víz\\\",\\\"ml\\\":300,\\\"percent\\\":0,\\\"priceFt\\\":0,\\\"time\\\":\\\"2026-11-13T04:10:00.000\\\",\\\"future\\\":\\\"preserve\\\"},{\\\"name\\\":\\\"Fruit tea\\\",\\\"ml\\\":250,\\\"percent\\\":0,\\\"time\\\":\\\"2026-11-13T04:20:00.000\\\",\\\"future\\\":\\\"preserve\\\"}]\""
+      }
+    }
+  ],
+  "fixture": {
+    "flutter.mennyiment_locale_v1": "\"hu\"",
+    "flutter.mennyiment_access_v1": "\"{\\\"version\\\":1,\\\"audience\\\":\\\"adult\\\",\\\"complete\\\":true}\"",
+    "flutter.mennyiment_reduce_motion_v1": "true",
+    "flutter.mennyiment_identity_v22": "\"{\\\"version\\\":1,\\\"profile\\\":{\\\"name\\\":\\\"Mira\\\",\\\"visual\\\":{\\\"family\\\":\\\"girl\\\",\\\"age\\\":\\\"adult\\\",\\\"style\\\":\\\"classic\\\",\\\"hair\\\":\\\"girl-curls\\\",\\\"hairVisible\\\":true,\\\"outfit\\\":\\\"business\\\",\\\"headwear\\\":\\\"beanie\\\",\\\"glasses\\\":\\\"round-glasses\\\",\\\"neck\\\":\\\"scarf\\\",\\\"held\\\":\\\"notebook\\\",\\\"future\\\":\\\"preserve\\\"},\\\"reaction\\\":{\\\"style\\\":\\\"motivating\\\"}},\\\"unlocks\\\":{\\\"unlocked\\\":[\\\"outfit:business\\\",\\\"headwear:beanie\\\"],\\\"seen\\\":[]},\\\"presets\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+    "flutter.mennyiment_drinks_v1": "\"[{\\\"name\\\":\\\"Citromos víz\\\",\\\"ml\\\":300,\\\"percent\\\":0,\\\"priceFt\\\":0,\\\"time\\\":\\\"2026-11-13T04:10:00.000\\\",\\\"future\\\":\\\"preserve\\\"},{\\\"name\\\":\\\"Fruit tea\\\",\\\"ml\\\":250,\\\"percent\\\":0,\\\"time\\\":\\\"2026-11-13T04:20:00.000\\\",\\\"future\\\":\\\"preserve\\\"}]\"",
+    "flutter.mennyiment_menti_xp_v2": "\"{\\\"xp\\\":150,\\\"days\\\":[],\\\"completed\\\":[],\\\"future\\\":\\\"preserve\\\"}\"",
+    "flutter.mennyiment_adventures_v1": "\"{\\\"version\\\":1,\\\"days\\\":{\\\"2026-11-13\\\":{\\\"movement\\\":{\\\"status\\\":\\\"active\\\",\\\"selectedAt\\\":\\\"2026-11-13T04:00:00.000Z\\\"}}},\\\"badges\\\":{}}\""
+  },
+  "captures": [
+    {
+      "stage": "before",
+      "screen": "home",
+      "locale": "hu",
+      "width": 320,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-home-hu-320.png"
+    },
+    {
+      "stage": "before",
+      "screen": "journal",
+      "locale": "hu",
+      "width": 320,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-journal-hu-320.png"
+    },
+    {
+      "stage": "before",
+      "screen": "missions",
+      "locale": "hu",
+      "width": 320,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-missions-hu-320.png"
+    },
+    {
+      "stage": "before",
+      "screen": "map",
+      "locale": "hu",
+      "width": 320,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-map-hu-320.png"
+    },
+    {
+      "stage": "before",
+      "screen": "studio",
+      "locale": "hu",
+      "width": 320,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-studio-hu-320.png"
+    },
+    {
+      "stage": "before",
+      "screen": "settings",
+      "locale": "hu",
+      "width": 320,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-settings-hu-320.png"
+    },
+    {
+      "stage": "before",
+      "screen": "home",
+      "locale": "hu",
+      "width": 360,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-home-hu-360.png"
+    },
+    {
+      "stage": "before",
+      "screen": "journal",
+      "locale": "hu",
+      "width": 360,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-journal-hu-360.png"
+    },
+    {
+      "stage": "before",
+      "screen": "missions",
+      "locale": "hu",
+      "width": 360,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-missions-hu-360.png"
+    },
+    {
+      "stage": "before",
+      "screen": "map",
+      "locale": "hu",
+      "width": 360,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-map-hu-360.png"
+    },
+    {
+      "stage": "before",
+      "screen": "studio",
+      "locale": "hu",
+      "width": 360,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-studio-hu-360.png"
+    },
+    {
+      "stage": "before",
+      "screen": "settings",
+      "locale": "hu",
+      "width": 360,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-settings-hu-360.png"
+    },
+    {
+      "stage": "before",
+      "screen": "home",
+      "locale": "hu",
+      "width": 390,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-home-hu-390.png"
+    },
+    {
+      "stage": "before",
+      "screen": "journal",
+      "locale": "hu",
+      "width": 390,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-journal-hu-390.png"
+    },
+    {
+      "stage": "before",
+      "screen": "missions",
+      "locale": "hu",
+      "width": 390,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-missions-hu-390.png"
+    },
+    {
+      "stage": "before",
+      "screen": "map",
+      "locale": "hu",
+      "width": 390,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-map-hu-390.png"
+    },
+    {
+      "stage": "before",
+      "screen": "studio",
+      "locale": "hu",
+      "width": 390,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-studio-hu-390.png"
+    },
+    {
+      "stage": "before",
+      "screen": "settings",
+      "locale": "hu",
+      "width": 390,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-settings-hu-390.png"
+    },
+    {
+      "stage": "before",
+      "screen": "home",
+      "locale": "hu",
+      "width": 430,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-home-hu-430.png"
+    },
+    {
+      "stage": "before",
+      "screen": "journal",
+      "locale": "hu",
+      "width": 430,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-journal-hu-430.png"
+    },
+    {
+      "stage": "before",
+      "screen": "missions",
+      "locale": "hu",
+      "width": 430,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-missions-hu-430.png"
+    },
+    {
+      "stage": "before",
+      "screen": "map",
+      "locale": "hu",
+      "width": 430,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-map-hu-430.png"
+    },
+    {
+      "stage": "before",
+      "screen": "studio",
+      "locale": "hu",
+      "width": 430,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-studio-hu-430.png"
+    },
+    {
+      "stage": "before",
+      "screen": "settings",
+      "locale": "hu",
+      "width": 430,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-settings-hu-430.png"
+    },
+    {
+      "stage": "before",
+      "screen": "home",
+      "locale": "en",
+      "width": 320,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-home-en-320.png"
+    },
+    {
+      "stage": "before",
+      "screen": "journal",
+      "locale": "en",
+      "width": 320,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-journal-en-320.png"
+    },
+    {
+      "stage": "before",
+      "screen": "missions",
+      "locale": "en",
+      "width": 320,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-missions-en-320.png"
+    },
+    {
+      "stage": "before",
+      "screen": "map",
+      "locale": "en",
+      "width": 320,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-map-en-320.png"
+    },
+    {
+      "stage": "before",
+      "screen": "studio",
+      "locale": "en",
+      "width": 320,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-studio-en-320.png"
+    },
+    {
+      "stage": "before",
+      "screen": "settings",
+      "locale": "en",
+      "width": 320,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-settings-en-320.png"
+    },
+    {
+      "stage": "before",
+      "screen": "home",
+      "locale": "en",
+      "width": 360,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-home-en-360.png"
+    },
+    {
+      "stage": "before",
+      "screen": "journal",
+      "locale": "en",
+      "width": 360,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-journal-en-360.png"
+    },
+    {
+      "stage": "before",
+      "screen": "missions",
+      "locale": "en",
+      "width": 360,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-missions-en-360.png"
+    },
+    {
+      "stage": "before",
+      "screen": "map",
+      "locale": "en",
+      "width": 360,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-map-en-360.png"
+    },
+    {
+      "stage": "before",
+      "screen": "studio",
+      "locale": "en",
+      "width": 360,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-studio-en-360.png"
+    },
+    {
+      "stage": "before",
+      "screen": "settings",
+      "locale": "en",
+      "width": 360,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-settings-en-360.png"
+    },
+    {
+      "stage": "before",
+      "screen": "home",
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-home-en-390.png"
+    },
+    {
+      "stage": "before",
+      "screen": "journal",
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-journal-en-390.png"
+    },
+    {
+      "stage": "before",
+      "screen": "missions",
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-missions-en-390.png"
+    },
+    {
+      "stage": "before",
+      "screen": "map",
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-map-en-390.png"
+    },
+    {
+      "stage": "before",
+      "screen": "studio",
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-studio-en-390.png"
+    },
+    {
+      "stage": "before",
+      "screen": "settings",
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-settings-en-390.png"
+    },
+    {
+      "stage": "before",
+      "screen": "home",
+      "locale": "en",
+      "width": 430,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-home-en-430.png"
+    },
+    {
+      "stage": "before",
+      "screen": "journal",
+      "locale": "en",
+      "width": 430,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-journal-en-430.png"
+    },
+    {
+      "stage": "before",
+      "screen": "missions",
+      "locale": "en",
+      "width": 430,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-missions-en-430.png"
+    },
+    {
+      "stage": "before",
+      "screen": "map",
+      "locale": "en",
+      "width": 430,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-map-en-430.png"
+    },
+    {
+      "stage": "before",
+      "screen": "studio",
+      "locale": "en",
+      "width": 430,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-studio-en-430.png"
+    },
+    {
+      "stage": "before",
+      "screen": "settings",
+      "locale": "en",
+      "width": 430,
+      "height": 844,
+      "sourceCommit": "d5b345a0493d3442a8a6438d075c4621c1577795",
+      "file": "before-settings-en-430.png"
+    }
+  ],
+  "errors": []
+}

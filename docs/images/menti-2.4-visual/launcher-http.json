@@ -1,0 +1,18 @@
+{
+  "checks": [
+    "Normal GET returns the exact version document",
+    "Valid headers arriving one second after TCP connect still receive a complete 200 response",
+    "An idle preconnect does not block another client's request",
+    "Twelve complete WASM downloads on six concurrent clients match the file SHA-256",
+    "HEAD sends the correct WASM length without a response body",
+    "Encoded traversal is forbidden",
+    "Missing files return 404",
+    "Unsupported write methods return 405"
+  ],
+  "passed": 8,
+  "idleRequestSeconds": 0.008088741000392474,
+  "wasmBytes": 5428806,
+  "wasmSha256": "ae8ff1d858140f7b1300ced3fa89fb8c9dce0a400a0f4f1e11f6dcfb3315fdcf",
+  "parallelDownloads": 12,
+  "server": "127.0.0.1:7357"
+}
