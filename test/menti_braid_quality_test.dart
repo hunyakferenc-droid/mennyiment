@@ -16,7 +16,7 @@ import 'package:mennyiment/menti_identity/menti_braid_isolation.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  test('braid cleanup preserves every main-component pixel and excludes every detached atlas fragment', () async {
+  test('braid cleanup preserves the opaque hair and its antialias halo, excluding neighbouring atlas cores', () async {
     final bytes = await rootBundle.load('${MentiPremiumAtlas.root}hair.png');
     final codec = await ui.instantiateImageCodec(bytes.buffer.asUint8List());
     final frame = await codec.getNextFrame();
@@ -39,9 +39,9 @@ void main() {
                   3];
         }
       }
-      var largest = <int>[];
+      final cores = <List<int>>[];
       for (var first = 0; first < alpha.length; first++) {
-        if (seen[first] != 0 || alpha[first] == 0) continue;
+        if (seen[first] != 0 || alpha[first] <= 16) continue;
         final pending = [first], component = <int>[];
         seen[first] = 1;
         while (pending.isNotEmpty) {
@@ -53,16 +53,54 @@ void main() {
               final xx = x + dx, yy = y + dy;
               if (xx < 0 || xx >= w || yy < 0 || yy >= h) continue;
               final q = yy * w + xx;
-              if (seen[q] == 0 && alpha[q] > 0) {
+              if (seen[q] == 0 && alpha[q] > 16) {
                 seen[q] = 1;
                 pending.add(q);
               }
             }
           }
         }
-        if (component.length > largest.length) largest = component;
+        if (component.length >= 64) cores.add(component);
       }
-      final main = largest.toSet(), mask = MentiBraidIsolation.exclusions(name);
+      cores.sort((a, b) => b.length.compareTo(a.length));
+      final labels = List.filled(w * h, 0), queue = <int>[];
+      for (var c = 0; c < cores.length; c++) {
+        cores[c].sort();
+        for (final n in cores[c]) {
+          labels[n] = c == 0 ? 1 : 2;
+          queue.add(n);
+        }
+      }
+      for (var i = 0; i < queue.length; i++) {
+        final n = queue[i], x = n % w, y = n ~/ w;
+        for (
+          var yy = (y - 1).clamp(0, h - 1);
+          yy <= (y + 1).clamp(0, h - 1);
+          yy++
+        ) {
+          for (
+            var xx = (x - 1).clamp(0, w - 1);
+            xx <= (x + 1).clamp(0, w - 1);
+            xx++
+          ) {
+            final q = yy * w + xx;
+            if (alpha[q] > 0 && labels[q] == 0) {
+              labels[q] = labels[n];
+              queue.add(q);
+            }
+          }
+        }
+      }
+      final main = {
+        for (var n = 0; n < labels.length; n++)
+          if (labels[n] == 1) n,
+      };
+      final mask = MentiBraidIsolation.exclusions(name);
+      // The neutral tile includes the previous girl's plait tip, joined only
+      // by a faint alpha halo. It must be excluded even though alpha>0 connects it.
+      if (name == 'neutral-braid') {
+        expect(mask.contains(Offset(220 / w, 12 / h)), isTrue);
+      }
       expect(main.length, greaterThan(37000));
       var removedMain = 0, remainingFragments = 0;
       for (var n = 0; n < alpha.length; n++) {
