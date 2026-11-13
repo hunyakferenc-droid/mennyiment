@@ -643,18 +643,23 @@ class MentiPremiumComposition extends StatelessWidget {
       Rect target, {
       Color? color,
       Path? mask,
+      Path? isolation,
       Rect? sourcePart,
-    }) => Positioned.fromRect(
-      rect: target,
-      child: ClipPath(
-        clipper: _RegisteredClipper(mask),
-        child: MentiPremiumSprite(
-          sprite: s,
-          color: color,
-          sourcePart: sourcePart,
-        ),
-      ),
-    );
+    }) {
+      Widget image = MentiPremiumSprite(
+        sprite: s,
+        color: color,
+        sourcePart: sourcePart,
+      );
+      if (isolation != null) {
+        image = ClipPath(clipper: _RegisteredClipper(isolation), child: image);
+      }
+      return Positioned.fromRect(
+        rect: target,
+        child: ClipPath(clipper: _RegisteredClipper(mask), child: image),
+      );
+    }
+
     Widget vector(String field, {Rect? target, List<double>? sourceCrop}) {
       final path = MentiVisualCatalog.root + resolve(profile, field).asset;
       if (target == null) {
@@ -790,13 +795,6 @@ class MentiPremiumComposition extends StatelessWidget {
     };
     Path hairWindow() {
       var visible = geometry.window(hairTarget);
-      if (id('hair').endsWith('-braid')) {
-        visible = Path.combine(
-          PathOperation.difference,
-          visible,
-          MentiBraidIsolation.exclusions(id('hair')),
-        );
-      }
       if (id('headwear') == 'hood') {
         final inside = Path()
           ..addOval(
@@ -976,6 +974,12 @@ class MentiPremiumComposition extends StatelessWidget {
                 hairTarget,
                 color: id('age') == 'veteran' ? const Color(0xFFE3DFE8) : null,
                 mask: hairWindow(),
+                // Keep atlas rect holes separate from curved face/hood paths.
+                // CanvasKit path intersections of the merged shape differed
+                // between Chromium 154 and Chrome 157 and leaked into the face.
+                isolation: id('hair').endsWith('-braid')
+                    ? MentiBraidIsolation.window(id('hair'))
+                    : null,
               ),
             if (id('style') != 'classic')
               vector(

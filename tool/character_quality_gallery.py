@@ -35,6 +35,10 @@ for name, b in stages['before'].items():
     assert b['query'] == stages['after'][name]['query']
 pairs = json.loads((f / 'after/pairwise.json').read_text())
 assert pairs['rows'] == 529 and pairs['identities'] == 9
+face_guard = json.loads((f / 'after/face-guard.json').read_text())
+assert face_guard['mismatches'] == [] and face_guard['identityHeadwearPairs'] == 81
+assert face_guard['protectedRegions'] == 243 and face_guard['checkedPixels'] > 0
+assert face_guard['sourceCommit'] == next(iter(stages['after'].values()))['sourceCommit']
 summary = {'beforeCommit': next(iter(stages['before'].values()))['sourceCommit'],
            'afterCommit': next(iter(stages['after'].values()))['sourceCommit'],
            'matchedSheets': len(stages['before']), 'afterSheets': len(stages['after']),
@@ -42,7 +46,7 @@ summary = {'beforeCommit': next(iter(stages['before'].values()))['sourceCommit']
            'renderedAfterConfigurations': len(stages['after']) * 9,
            'distinctResolvedBeforeConfigurations': len({json.dumps(p, sort_keys=True) for c in stages['before'].values() for p in c['profiles']}),
            'distinctResolvedAfterConfigurations': len({json.dumps(p, sort_keys=True) for c in stages['after'].values() for p in c['profiles']}),
-           'targetedPairwise': pairs, 'images': manifest,
+           'targetedPairwise': pairs, 'faceGuard': face_guard, 'images': manifest,
            'visualApproval': 'Rendering and pair coverage are verified; human-reviewed configuration IDs are listed separately in the handoff.'}
 if a.check:
     assert json.loads((f / 'manifest.json').read_text()) == summary

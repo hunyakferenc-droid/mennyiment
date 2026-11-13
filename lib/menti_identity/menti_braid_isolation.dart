@@ -549,6 +549,16 @@ class MentiBraidIsolation {
     ],
   };
   static final _cache = <String, Path>{};
+  static final _windows = <String, Path>{};
+  static Path window(String hair) => _windows.putIfAbsent(
+    hair,
+    () => Path.combine(
+      PathOperation.difference,
+      Path()..addRect(const Rect.fromLTWH(0, 0, 1, 1)),
+      exclusions(hair),
+    ),
+  );
+
   static Path exclusions(String hair) => _cache.putIfAbsent(hair, () {
     final size = sourceSizes[hair]!;
     final path = Path();

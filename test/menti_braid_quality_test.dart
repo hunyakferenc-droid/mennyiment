@@ -102,15 +102,19 @@ void main() {
         expect(mask.contains(Offset(220 / w, 12 / h)), isTrue);
       }
       expect(main.length, greaterThan(37000));
-      var removedMain = 0, remainingFragments = 0;
+      var removedMain = 0, remainingFragments = 0, incorrectWindowPixels = 0;
       for (var n = 0; n < alpha.length; n++) {
         if (alpha[n] == 0) continue;
         final removed = mask.contains(
           Offset((n % w + .5) / w, (n ~/ w + .5) / h),
         );
+        final kept = MentiBraidIsolation.window(name)
+            .contains(Offset((n % w + .5) / w, (n ~/ w + .5) / h));
+        if (kept == removed) incorrectWindowPixels++;
         if (main.contains(n) && removed) removedMain++;
         if (!main.contains(n) && !removed) remainingFragments++;
       }
+      expect(incorrectWindowPixels, 0, reason: name);
       expect(removedMain, 0, reason: name);
       expect(remainingFragments, 0, reason: name);
     }

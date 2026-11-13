@@ -8,6 +8,7 @@ on:
       - 'pubspec.*'
       - 'tool/character_quality_preview.dart'
       - 'tool/capture_character_quality.cjs'
+      - 'tool/check_character_face_guard.cjs'
       - 'tool/prepare_character_preview.py'
       - 'tool/character_quality_gallery.py'
       - 'docs/character-quality/render-configurations.json'
