@@ -8,6 +8,7 @@ import 'menti_identity_controller.dart';
 import 'menti_visual_catalog.dart';
 import 'menti_family_layout.dart';
 import 'menti_premium_renderer.dart';
+import 'menti_premium_atlas.dart';
 import 'menti_reference_rig.dart';
 import 'menti_head_geometry.dart';
 import 'menti_wardrobe_geometry.dart';
@@ -340,7 +341,16 @@ class MentiPreviewRenderer extends StatelessWidget {
         face.width + 70,
         geometry.eyes.bottom,
       ),
-      'hair' => Rect.fromLTWH(face.left - 40, 0, face.width + 80, neck + 25),
+      'hair' =>
+        p.visual.value('hair').endsWith('-braid')
+            ? geometry
+                  .materialHairTarget(
+                    MentiPremiumAtlas
+                        .rects['hair/${MentiPremiumComposition.resolve(p, 'hair').id}']!,
+                  )
+                  .expandToInclude(face)
+                  .inflate(8)
+            : Rect.fromLTWH(face.left - 40, 0, face.width + 80, neck + 25),
       'outfit' || 'accent' =>
         p.visual.value('outfit') == 'basic'
             ? Rect.fromLTWH(30, neck - 12, 260, 412 - neck)

@@ -1,4 +1,6 @@
 import 'menti_neck_bridge.dart';
+import 'menti_braid_isolation.dart';
+import 'menti_expression.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -616,38 +618,48 @@ class MentiPremiumComposition extends StatelessWidget {
     }[id('accent')];
     final full = Path()..addRect(const Rect.fromLTWH(0, 0, 320, 400));
     final head = rig.mask('cleanHeadSkin');
-    Widget plate({Path? part, Color? tint, bool expression = false}) =>
-        Positioned.fill(
-          child: MentiReferencePlate(
-            rig: rig,
-            hairless: true,
-            part: part,
-            tint: tint,
-            eyeStyle: expression ? id('eyes') : 'round',
-            faceStyle: expression
-                ? (smile ? 'cheerful' : id('face'))
-                : 'cheerful',
-            blink: expression && blink,
-            wink: expression && wink,
-          ),
-        );
+    final expressionState = MentiExpression.forReaction(reaction);
+    Widget plate({
+      Path? part,
+      Color? tint,
+      bool expression = false,
+    }) => Positioned.fill(
+      child: MentiReferencePlate(
+        rig: rig,
+        hairless: true,
+        part: part,
+        tint: tint,
+        expressionIntensity: expression && expressionState != null ? 3.5 : 1,
+        eyeStyle: expression ? (expressionState?.eyes ?? id('eyes')) : 'round',
+        faceStyle: expression
+            ? (expressionState?.face ?? (smile ? 'cheerful' : id('face')))
+            : 'cheerful',
+        blink: expression && blink,
+        wink: expression && wink,
+      ),
+    );
     Widget sprite(
       String s,
       Rect target, {
       Color? color,
       Path? mask,
+      Path? isolation,
       Rect? sourcePart,
-    }) => Positioned.fromRect(
-      rect: target,
-      child: ClipPath(
-        clipper: _RegisteredClipper(mask),
-        child: MentiPremiumSprite(
-          sprite: s,
-          color: color,
-          sourcePart: sourcePart,
-        ),
-      ),
-    );
+    }) {
+      Widget image = MentiPremiumSprite(
+        sprite: s,
+        color: color,
+        sourcePart: sourcePart,
+      );
+      if (isolation != null) {
+        image = ClipPath(clipper: _RegisteredClipper(isolation), child: image);
+      }
+      return Positioned.fromRect(
+        rect: target,
+        child: ClipPath(clipper: _RegisteredClipper(mask), child: image),
+      );
+    }
+
     Widget vector(String field, {Rect? target, List<double>? sourceCrop}) {
       final path = MentiVisualCatalog.root + resolve(profile, field).asset;
       if (target == null) {
@@ -769,15 +781,7 @@ class MentiPremiumComposition extends StatelessWidget {
     }
 
     final hairSource = MentiPremiumAtlas.rects['hair/${id('hair')}']!;
-    final hairSeat = geometry.hairTarget;
-    final hairWidth = hairSeat.width;
-    final hairHeight = hairWidth * hairSource.height / hairSource.width;
-    final hairTarget = Rect.fromLTWH(
-      hairSeat.left,
-      geometry.eyes.center.dy - hairHeight * .68,
-      hairWidth,
-      hairHeight,
-    );
+    final hairTarget = geometry.materialHairTarget(hairSource);
     final hatSource = MentiPremiumAtlas.rects['headwear/${id('headwear')}'];
     final hat = switch (id('headwear')) {
       'headphones' => Rect.fromLTRB(
@@ -789,8 +793,19 @@ class MentiPremiumComposition extends StatelessWidget {
       'hood' => geometry.scalp.inflate(12),
       _ => hatSource == null ? Rect.zero : geometry.cap(hatSource),
     };
+    final braid = id('hair').endsWith('-braid');
+    Widget protectBraidFace(Widget material) => !braid
+        ? material
+        : Positioned.fill(
+            child: ClipPath(
+              clipper: _FaceProtectionClipper(geometry.guard()),
+              child: Stack(children: [material]),
+            ),
+          );
     Path hairWindow() {
-      var visible = geometry.window(hairTarget);
+      var visible = braid
+          ? (Path()..addRect(const Rect.fromLTWH(0, 0, 1, 1)))
+          : geometry.window(hairTarget);
       if (id('headwear') == 'hood') {
         final inside = Path()
           ..addOval(
@@ -965,11 +980,21 @@ class MentiPremiumComposition extends StatelessWidget {
                 ),
               ),
             if (profile.visual.hairVisible)
-              sprite(
-                'hair/${id('hair')}',
-                hairTarget,
-                color: id('age') == 'veteran' ? const Color(0xFFE3DFE8) : null,
-                mask: hairWindow(),
+              protectBraidFace(
+                sprite(
+                  'hair/${id('hair')}',
+                  hairTarget,
+                  color: id('age') == 'veteran'
+                      ? const Color(0xFFE3DFE8)
+                      : null,
+                  mask: hairWindow(),
+                  // Keep atlas rect holes separate from curved face/hood paths.
+                  // CanvasKit path intersections of the merged shape differed
+                  // between Chromium 154 and Chrome 157 and leaked into the face.
+                  isolation: braid
+                      ? MentiBraidIsolation.window(id('hair'))
+                      : null,
+                ),
               ),
             if (id('style') != 'classic')
               vector(
@@ -986,12 +1011,15 @@ class MentiPremiumComposition extends StatelessWidget {
                 ),
               ),
             if (id('headwear') != 'none')
-              sprite(
-                'headwear/${id('headwear')}',
-                hat,
-                mask: ['hood', 'headphones'].contains(id('headwear'))
-                    ? geometry.window(hat)
-                    : null,
+              protectBraidFace(
+                sprite(
+                  'headwear/${id('headwear')}',
+                  hat,
+                  mask:
+                      !braid && ['hood', 'headphones'].contains(id('headwear'))
+                      ? geometry.window(hat)
+                      : null,
+                ),
               ),
             if (id('glasses') != 'none')
               Positioned.fill(
@@ -1030,6 +1058,25 @@ class MentiPremiumComposition extends StatelessWidget {
       ),
     );
   }
+}
+
+/// Clip in the original 320×400 frame, without normalized Boolean path ops.
+/// Keeps CanvasKit's subpixel path simplification away from the facial guard.
+class _FaceProtectionClipper extends CustomClipper<Path> {
+  const _FaceProtectionClipper(this.guard);
+  final Path guard;
+  @override
+  Path getClip(Size size) => Path()
+    ..fillType = PathFillType.evenOdd
+    ..addRect(Offset.zero & size)
+    ..addPath(
+      guard.transform(
+        Matrix4.diagonal3Values(size.width / 320, size.height / 400, 1).storage,
+      ),
+      Offset.zero,
+    );
+  @override
+  bool shouldReclip(_FaceProtectionClipper old) => old.guard != guard;
 }
 
 class _RegisteredClipper extends CustomClipper<Path> {

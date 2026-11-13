@@ -214,6 +214,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                   child: SizedBox(
                     width: 176,
                     child: Semantics(
+                      identifier: 'option-$field-${o.id}',
                       selected: selected == o.id,
                       child: Card(
                         clipBehavior: Clip.antiAlias,
@@ -421,6 +422,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                       child: MentiAvatarRenderer(
                         key: const ValueKey('studio-large-preview'),
                         profile: profile,
+                        reaction: _tab == 4 ? profile.reaction.style : null,
                         size: math.min(
                           box.maxWidth - 32,
                           (box.maxHeight - 32) / 1.25,
@@ -463,6 +465,7 @@ class _MentiStudioPageState extends State<MentiStudioPage> {
                       child: MentiAvatarRenderer(
                         key: const ValueKey('studio-live-preview'),
                         profile: profile,
+                        reaction: _tab == 4 ? profile.reaction.style : null,
                         animate: false,
                         size: avatarSize,
                       ),

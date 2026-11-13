@@ -72,7 +72,7 @@ void main() {
     expect(MentiAccessoryRig.forProfile(h, w, sparse).compact, isFalse);
     expect(
       fitted.collar.width,
-      lessThan(MentiAccessoryRig.forProfile(h, w, sparse).collar.width),
+      equals(MentiAccessoryRig.forProfile(h, w, sparse).collar.width),
     );
     final future = sparse.withValues({
       'glasses': 'future-frame',

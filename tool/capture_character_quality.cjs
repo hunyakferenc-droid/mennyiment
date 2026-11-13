@@ -1,0 +1,34 @@
+/* Real browser renders, no image editing, no user storage or application routes. */
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH||'playwright');
+const source=process.env.MENTI_SOURCE_COMMIT;assert(/^[a-f0-9]{40}$/.test(source||''));
+const out=process.env.MENTI_EVIDENCE_DIR;assert(out);fs.mkdirSync(out,{recursive:true});
+const configurations=JSON.parse(fs.readFileSync(path.join(__dirname,'../docs/character-quality/render-configurations.json')));
+const configs=new Map(Object.entries(configurations));
+const identitySource=fs.readFileSync(path.join(__dirname,'../lib/menti_identity/menti_identity.dart'),'utf8');
+const defaultBlock=identitySource.match(/static const defaults = <String,\s*String>\{([\s\S]*?)\};/)[1];
+const defaults=Object.fromEntries([...defaultBlock.matchAll(/'([^']+)': '([^']+)'/g)].map(m=>[m[1],m[2]]));assert.equal(Object.keys(defaults).length,16);
+function profiles(query){const result=[];for(const family of ['boy','girl','neutral'])for(const age of ['young','adult','veteran']){const overrides={...query};delete overrides.reaction;delete overrides.hair;delete overrides.hairVisible;result.push({visual:{...defaults,family,age,...overrides,hair:family+'-'+(query.hair||'crop'),hairVisible:query.hairVisible!=='false'},renderReaction:query.reaction||null});}return result;}
+for(const r of ['proud','calming','focused'])configs.set('sunglasses-reaction-'+r+'.png',{glasses:'sunglasses',reaction:r});
+for(const held of ['none','notebook','flower','spark-wand'])configs.set('ensemble-'+held+'.png',{outfit:'business',neck:'scarf',glasses:'sunglasses',held});
+for(const hat of ['none','crown-cap','sport-cap','beanie','headphones','party-crown','hood','party-hat','beret','cowboy'])configs.set('hair-hidden-'+hat+'.png',{headwear:hat,hairVisible:'false'});
+if(process.env.MENTI_PAIRWISE==='1'){
+  const raw=fs.readFileSync(path.join(__dirname,'../lib/menti_identity/menti_visual_catalog.dart'),'utf8'),options={};
+  for(const [,f,id]of raw.matchAll(/MentiVisualOption\('([^']+)', '([^']+)'/g))(options[f]??=[]).push(id);
+  options.hair=['crop','waves','curls','braid','bob','crest'];
+  const fields=['face','eyes','hair','headwear','outfit','style','glasses','neck','held','detail','back'];
+  const rows=[];for(let a=0;a<23;a++)for(let b=0;b<23;b++){const row={};fields.forEach((f,i)=>row[f]=options[f][((a+i*b)%23)%options[f].length]);rows.push(row);configs.set(`pair-${a}-${b}.png`,row);}
+  let required=0;for(let i=0;i<fields.length;i++)for(let j=i+1;j<fields.length;j++)for(const a of options[fields[i]])for(const b of options[fields[j]]){required++;assert(rows.some(r=>r[fields[i]]===a&&r[fields[j]]===b),'Missing pair');}
+  fs.writeFileSync(path.join(out,'pairwise.json'),JSON.stringify({fields,rows:rows.length,requiredPairs:required,identities:9,algorithm:'GF(23): value index=(a+i*b mod 23) mod domain size; every pair asserted, not all combinations.'},null,2));
+}
+(async()=>{const browser=await chromium.launch({executablePath:process.env.CHROME_BIN||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});const context=await browser.newContext({viewport:{width:720,height:960},reducedMotion:'reduce'}),p=await context.newPage();const errors=[],external=[],captures=[];let pending=new Set(),last=Date.now();
+p.on('pageerror',e=>errors.push(String(e)));p.on('console',m=>{if(m.type()==='error')errors.push(m.text())});p.on('request',r=>{pending.add(r);last=Date.now();if(new URL(r.url()).origin!=='http://127.0.0.1:7357')external.push(r.url())});p.on('requestfinished',r=>{pending.delete(r);last=Date.now()});p.on('requestfailed',r=>{pending.delete(r);errors.push(r.url()+': '+r.failure()?.errorText)});p.on('response',r=>{if(r.status()>=400)errors.push(r.status()+' '+r.url())});
+async function quiet(ms){const end=Date.now()+60000;while(pending.size||Date.now()-last<ms){if(Date.now()>end)throw Error('Assets did not settle');await p.waitForTimeout(60)}}
+try{await p.goto('http://127.0.0.1:7357/',{waitUntil:'networkidle'});const placeholder=p.locator('flt-semantics-placeholder');if(await placeholder.count())await placeholder.evaluate(e=>e.click());await quiet(1500);await p.locator('body').ariaSnapshot();
+for(const [file,query]of configs){if(process.env.MENTI_FILTER&&!new RegExp(process.env.MENTI_FILTER).test(file))continue;await p.evaluate(q=>{history.replaceState(null,'','/?'+new URLSearchParams(q));window.dispatchEvent(new Event('menti-preview-config'));},query);await p.waitForTimeout(250);await p.locator('body').ariaSnapshot();await quiet(300);let previous=await p.screenshot(),stable=false;for(let n=0;n<8;n++){await p.waitForTimeout(100);const next=await p.screenshot();if(previous.equals(next)){stable=true;break}previous=next;}assert(stable,'Unstable render '+file);assert.equal(errors.length,0,errors.join('\n'));fs.writeFileSync(path.join(out,file),previous);captures.push({file,query,profiles:profiles(query),sourceCommit:source,identities:['boy/young','boy/adult','boy/veteran','girl/young','girl/adult','girl/veteran','neutral/young','neutral/adult','neutral/veteran'],width:720,height:960,avatarLogicalWidth:224,sha256:crypto.createHash('sha256').update(previous).digest('hex')});if(captures.length%25===0)console.log('Captured '+captures.length);}
+if(process.env.MENTI_PAIRWISE==='1'){
+ const regions=await p.evaluate(()=>JSON.parse(window.mentiGuardSamples));
+ fs.writeFileSync(path.join(out,'guard-regions.json'),JSON.stringify(regions,null,2)+'\n');
+ await require('./check_character_face_guard.cjs').checkFaceGuard(context,out,regions,source,browser.version());
+}
+assert.deepEqual(external,[]);fs.writeFileSync(path.join(out,'captures.json'),JSON.stringify({sourceCommit:source,browser:browser.version(),captures,errors,externalRequests:external,renderedConfigurations:captures.length*9,visualReviewIsSeparate:true},null,2));console.log('Captured '+captures.length+' stable Chrome sheets / '+captures.length*9+' configurations.');}finally{await browser.close()}})().catch(e=>{console.error(e);process.exitCode=1});

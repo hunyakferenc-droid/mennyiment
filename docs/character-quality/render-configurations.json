@@ -1,0 +1,1009 @@
+{
+  "baseline.png": {
+    "hair": "crop"
+  },
+  "face-cheerful.png": {
+    "hair": "crop",
+    "face": "cheerful"
+  },
+  "face-calm.png": {
+    "hair": "crop",
+    "face": "calm"
+  },
+  "face-playful.png": {
+    "hair": "crop",
+    "face": "playful"
+  },
+  "face-confident.png": {
+    "hair": "crop",
+    "face": "confident"
+  },
+  "face-sleepy.png": {
+    "hair": "crop",
+    "face": "sleepy"
+  },
+  "face-determined.png": {
+    "hair": "crop",
+    "face": "determined"
+  },
+  "eyes-round.png": {
+    "hair": "crop",
+    "eyes": "round"
+  },
+  "eyes-wide.png": {
+    "hair": "crop",
+    "eyes": "wide"
+  },
+  "eyes-relaxed.png": {
+    "hair": "crop",
+    "eyes": "relaxed"
+  },
+  "eyes-sharp.png": {
+    "hair": "crop",
+    "eyes": "sharp"
+  },
+  "headwear-crown-cap.png": {
+    "hair": "crop",
+    "headwear": "crown-cap"
+  },
+  "headwear-sport-cap.png": {
+    "hair": "crop",
+    "headwear": "sport-cap"
+  },
+  "headwear-beanie.png": {
+    "hair": "crop",
+    "headwear": "beanie"
+  },
+  "headwear-headphones.png": {
+    "hair": "crop",
+    "headwear": "headphones"
+  },
+  "headwear-party-crown.png": {
+    "hair": "crop",
+    "headwear": "party-crown"
+  },
+  "headwear-hood.png": {
+    "hair": "crop",
+    "headwear": "hood"
+  },
+  "headwear-none.png": {
+    "hair": "crop",
+    "headwear": "none"
+  },
+  "headwear-party-hat.png": {
+    "hair": "crop",
+    "headwear": "party-hat"
+  },
+  "headwear-beret.png": {
+    "hair": "crop",
+    "headwear": "beret"
+  },
+  "headwear-cowboy.png": {
+    "hair": "crop",
+    "headwear": "cowboy"
+  },
+  "outfit-basic.png": {
+    "hair": "crop",
+    "outfit": "basic"
+  },
+  "outfit-basic-alt.png": {
+    "hair": "crop",
+    "outfit": "basic-alt"
+  },
+  "outfit-party.png": {
+    "hair": "crop",
+    "outfit": "party"
+  },
+  "outfit-party-alt.png": {
+    "hair": "crop",
+    "outfit": "party-alt"
+  },
+  "outfit-sport.png": {
+    "hair": "crop",
+    "outfit": "sport"
+  },
+  "outfit-sport-alt.png": {
+    "hair": "crop",
+    "outfit": "sport-alt"
+  },
+  "outfit-business.png": {
+    "hair": "crop",
+    "outfit": "business"
+  },
+  "outfit-business-alt.png": {
+    "hair": "crop",
+    "outfit": "business-alt"
+  },
+  "outfit-festival.png": {
+    "hair": "crop",
+    "outfit": "festival"
+  },
+  "outfit-festival-alt.png": {
+    "hair": "crop",
+    "outfit": "festival-alt"
+  },
+  "outfit-legendary.png": {
+    "hair": "crop",
+    "outfit": "legendary"
+  },
+  "outfit-legendary-alt.png": {
+    "hair": "crop",
+    "outfit": "legendary-alt"
+  },
+  "outfit-street.png": {
+    "hair": "crop",
+    "outfit": "street"
+  },
+  "outfit-street-alt.png": {
+    "hair": "crop",
+    "outfit": "street-alt"
+  },
+  "outfit-cozy.png": {
+    "hair": "crop",
+    "outfit": "cozy"
+  },
+  "outfit-cozy-alt.png": {
+    "hair": "crop",
+    "outfit": "cozy-alt"
+  },
+  "outfit-explorer.png": {
+    "hair": "crop",
+    "outfit": "explorer"
+  },
+  "outfit-explorer-alt.png": {
+    "hair": "crop",
+    "outfit": "explorer-alt"
+  },
+  "outfit-creative.png": {
+    "hair": "crop",
+    "outfit": "creative"
+  },
+  "outfit-creative-alt.png": {
+    "hair": "crop",
+    "outfit": "creative-alt"
+  },
+  "style-classic.png": {
+    "hair": "crop",
+    "style": "classic"
+  },
+  "style-street.png": {
+    "hair": "crop",
+    "style": "street"
+  },
+  "style-sporty.png": {
+    "hair": "crop",
+    "style": "sporty"
+  },
+  "style-business.png": {
+    "hair": "crop",
+    "style": "business"
+  },
+  "style-party.png": {
+    "hair": "crop",
+    "style": "party"
+  },
+  "style-festival.png": {
+    "hair": "crop",
+    "style": "festival"
+  },
+  "style-cozy.png": {
+    "hair": "crop",
+    "style": "cozy"
+  },
+  "style-legendary.png": {
+    "hair": "crop",
+    "style": "legendary"
+  },
+  "glasses-none.png": {
+    "hair": "crop",
+    "glasses": "none"
+  },
+  "glasses-round-glasses.png": {
+    "hair": "crop",
+    "glasses": "round-glasses"
+  },
+  "glasses-sunglasses.png": {
+    "hair": "crop",
+    "glasses": "sunglasses"
+  },
+  "neck-none.png": {
+    "hair": "crop",
+    "neck": "none"
+  },
+  "neck-chain.png": {
+    "hair": "crop",
+    "neck": "chain"
+  },
+  "neck-scarf.png": {
+    "hair": "crop",
+    "neck": "scarf"
+  },
+  "neck-bow.png": {
+    "hair": "crop",
+    "neck": "bow"
+  },
+  "held-none.png": {
+    "hair": "crop",
+    "held": "none"
+  },
+  "held-notebook.png": {
+    "hair": "crop",
+    "held": "notebook"
+  },
+  "held-flower.png": {
+    "hair": "crop",
+    "held": "flower"
+  },
+  "held-spark-wand.png": {
+    "hair": "crop",
+    "held": "spark-wand"
+  },
+  "detail-none.png": {
+    "hair": "crop",
+    "detail": "none"
+  },
+  "detail-freckles.png": {
+    "hair": "crop",
+    "detail": "freckles"
+  },
+  "detail-star.png": {
+    "hair": "crop",
+    "detail": "star"
+  },
+  "detail-moon.png": {
+    "hair": "crop",
+    "detail": "moon"
+  },
+  "back-none.png": {
+    "hair": "crop",
+    "back": "none"
+  },
+  "back-backpack.png": {
+    "hair": "crop",
+    "back": "backpack"
+  },
+  "back-cape.png": {
+    "hair": "crop",
+    "back": "cape"
+  },
+  "accent-gold.png": {
+    "hair": "crop",
+    "accent": "gold"
+  },
+  "accent-violet.png": {
+    "hair": "crop",
+    "accent": "violet"
+  },
+  "accent-blue.png": {
+    "hair": "crop",
+    "accent": "blue"
+  },
+  "accent-mint.png": {
+    "hair": "crop",
+    "accent": "mint"
+  },
+  "accent-rose.png": {
+    "hair": "crop",
+    "accent": "rose"
+  },
+  "accent-orange.png": {
+    "hair": "crop",
+    "accent": "orange"
+  },
+  "background-amber.png": {
+    "hair": "crop",
+    "background": "amber"
+  },
+  "background-violet.png": {
+    "hair": "crop",
+    "background": "violet"
+  },
+  "background-ocean.png": {
+    "hair": "crop",
+    "background": "ocean"
+  },
+  "background-forest.png": {
+    "hair": "crop",
+    "background": "forest"
+  },
+  "background-rose.png": {
+    "hair": "crop",
+    "background": "rose"
+  },
+  "background-midnight.png": {
+    "hair": "crop",
+    "background": "midnight"
+  },
+  "aura-sunrise.png": {
+    "hair": "crop",
+    "aura": "sunrise"
+  },
+  "aura-violet.png": {
+    "hair": "crop",
+    "aura": "violet"
+  },
+  "aura-ocean.png": {
+    "hair": "crop",
+    "aura": "ocean"
+  },
+  "aura-forest.png": {
+    "hair": "crop",
+    "aura": "forest"
+  },
+  "aura-starlight.png": {
+    "hair": "crop",
+    "aura": "starlight"
+  },
+  "aura-rose.png": {
+    "hair": "crop",
+    "aura": "rose"
+  },
+  "reaction-proud.png": {
+    "hair": "crop",
+    "reaction": "proud"
+  },
+  "reaction-motivating.png": {
+    "hair": "crop",
+    "reaction": "motivating"
+  },
+  "reaction-funny.png": {
+    "hair": "crop",
+    "reaction": "funny"
+  },
+  "reaction-sleepy.png": {
+    "hair": "crop",
+    "reaction": "sleepy"
+  },
+  "reaction-calming.png": {
+    "hair": "crop",
+    "reaction": "calming"
+  },
+  "reaction-celebrating.png": {
+    "hair": "crop",
+    "reaction": "celebrating"
+  },
+  "reaction-focused.png": {
+    "hair": "crop",
+    "reaction": "focused"
+  },
+  "hair-crop--headwear-crown-cap.png": {
+    "hair": "crop",
+    "headwear": "crown-cap"
+  },
+  "hair-crop--headwear-sport-cap.png": {
+    "hair": "crop",
+    "headwear": "sport-cap"
+  },
+  "hair-crop--headwear-beanie.png": {
+    "hair": "crop",
+    "headwear": "beanie"
+  },
+  "hair-crop--headwear-headphones.png": {
+    "hair": "crop",
+    "headwear": "headphones"
+  },
+  "hair-crop--headwear-party-crown.png": {
+    "hair": "crop",
+    "headwear": "party-crown"
+  },
+  "hair-crop--headwear-hood.png": {
+    "hair": "crop",
+    "headwear": "hood"
+  },
+  "hair-crop--headwear-none.png": {
+    "hair": "crop",
+    "headwear": "none"
+  },
+  "hair-crop--headwear-party-hat.png": {
+    "hair": "crop",
+    "headwear": "party-hat"
+  },
+  "hair-crop--headwear-beret.png": {
+    "hair": "crop",
+    "headwear": "beret"
+  },
+  "hair-crop--headwear-cowboy.png": {
+    "hair": "crop",
+    "headwear": "cowboy"
+  },
+  "hair-waves--headwear-crown-cap.png": {
+    "hair": "waves",
+    "headwear": "crown-cap"
+  },
+  "hair-waves--headwear-sport-cap.png": {
+    "hair": "waves",
+    "headwear": "sport-cap"
+  },
+  "hair-waves--headwear-beanie.png": {
+    "hair": "waves",
+    "headwear": "beanie"
+  },
+  "hair-waves--headwear-headphones.png": {
+    "hair": "waves",
+    "headwear": "headphones"
+  },
+  "hair-waves--headwear-party-crown.png": {
+    "hair": "waves",
+    "headwear": "party-crown"
+  },
+  "hair-waves--headwear-hood.png": {
+    "hair": "waves",
+    "headwear": "hood"
+  },
+  "hair-waves--headwear-none.png": {
+    "hair": "waves",
+    "headwear": "none"
+  },
+  "hair-waves--headwear-party-hat.png": {
+    "hair": "waves",
+    "headwear": "party-hat"
+  },
+  "hair-waves--headwear-beret.png": {
+    "hair": "waves",
+    "headwear": "beret"
+  },
+  "hair-waves--headwear-cowboy.png": {
+    "hair": "waves",
+    "headwear": "cowboy"
+  },
+  "hair-curls--headwear-crown-cap.png": {
+    "hair": "curls",
+    "headwear": "crown-cap"
+  },
+  "hair-curls--headwear-sport-cap.png": {
+    "hair": "curls",
+    "headwear": "sport-cap"
+  },
+  "hair-curls--headwear-beanie.png": {
+    "hair": "curls",
+    "headwear": "beanie"
+  },
+  "hair-curls--headwear-headphones.png": {
+    "hair": "curls",
+    "headwear": "headphones"
+  },
+  "hair-curls--headwear-party-crown.png": {
+    "hair": "curls",
+    "headwear": "party-crown"
+  },
+  "hair-curls--headwear-hood.png": {
+    "hair": "curls",
+    "headwear": "hood"
+  },
+  "hair-curls--headwear-none.png": {
+    "hair": "curls",
+    "headwear": "none"
+  },
+  "hair-curls--headwear-party-hat.png": {
+    "hair": "curls",
+    "headwear": "party-hat"
+  },
+  "hair-curls--headwear-beret.png": {
+    "hair": "curls",
+    "headwear": "beret"
+  },
+  "hair-curls--headwear-cowboy.png": {
+    "hair": "curls",
+    "headwear": "cowboy"
+  },
+  "hair-braid--headwear-crown-cap.png": {
+    "hair": "braid",
+    "headwear": "crown-cap"
+  },
+  "hair-braid--headwear-sport-cap.png": {
+    "hair": "braid",
+    "headwear": "sport-cap"
+  },
+  "hair-braid--headwear-beanie.png": {
+    "hair": "braid",
+    "headwear": "beanie"
+  },
+  "hair-braid--headwear-headphones.png": {
+    "hair": "braid",
+    "headwear": "headphones"
+  },
+  "hair-braid--headwear-party-crown.png": {
+    "hair": "braid",
+    "headwear": "party-crown"
+  },
+  "hair-braid--headwear-hood.png": {
+    "hair": "braid",
+    "headwear": "hood"
+  },
+  "hair-braid--headwear-none.png": {
+    "hair": "braid",
+    "headwear": "none"
+  },
+  "hair-braid--headwear-party-hat.png": {
+    "hair": "braid",
+    "headwear": "party-hat"
+  },
+  "hair-braid--headwear-beret.png": {
+    "hair": "braid",
+    "headwear": "beret"
+  },
+  "hair-braid--headwear-cowboy.png": {
+    "hair": "braid",
+    "headwear": "cowboy"
+  },
+  "hair-bob--headwear-crown-cap.png": {
+    "hair": "bob",
+    "headwear": "crown-cap"
+  },
+  "hair-bob--headwear-sport-cap.png": {
+    "hair": "bob",
+    "headwear": "sport-cap"
+  },
+  "hair-bob--headwear-beanie.png": {
+    "hair": "bob",
+    "headwear": "beanie"
+  },
+  "hair-bob--headwear-headphones.png": {
+    "hair": "bob",
+    "headwear": "headphones"
+  },
+  "hair-bob--headwear-party-crown.png": {
+    "hair": "bob",
+    "headwear": "party-crown"
+  },
+  "hair-bob--headwear-hood.png": {
+    "hair": "bob",
+    "headwear": "hood"
+  },
+  "hair-bob--headwear-none.png": {
+    "hair": "bob",
+    "headwear": "none"
+  },
+  "hair-bob--headwear-party-hat.png": {
+    "hair": "bob",
+    "headwear": "party-hat"
+  },
+  "hair-bob--headwear-beret.png": {
+    "hair": "bob",
+    "headwear": "beret"
+  },
+  "hair-bob--headwear-cowboy.png": {
+    "hair": "bob",
+    "headwear": "cowboy"
+  },
+  "hair-crest--headwear-crown-cap.png": {
+    "hair": "crest",
+    "headwear": "crown-cap"
+  },
+  "hair-crest--headwear-sport-cap.png": {
+    "hair": "crest",
+    "headwear": "sport-cap"
+  },
+  "hair-crest--headwear-beanie.png": {
+    "hair": "crest",
+    "headwear": "beanie"
+  },
+  "hair-crest--headwear-headphones.png": {
+    "hair": "crest",
+    "headwear": "headphones"
+  },
+  "hair-crest--headwear-party-crown.png": {
+    "hair": "crest",
+    "headwear": "party-crown"
+  },
+  "hair-crest--headwear-hood.png": {
+    "hair": "crest",
+    "headwear": "hood"
+  },
+  "hair-crest--headwear-none.png": {
+    "hair": "crest",
+    "headwear": "none"
+  },
+  "hair-crest--headwear-party-hat.png": {
+    "hair": "crest",
+    "headwear": "party-hat"
+  },
+  "hair-crest--headwear-beret.png": {
+    "hair": "crest",
+    "headwear": "beret"
+  },
+  "hair-crest--headwear-cowboy.png": {
+    "hair": "crest",
+    "headwear": "cowboy"
+  },
+  "outfit-basic--neck-none.png": {
+    "hair": "crop",
+    "outfit": "basic",
+    "neck": "none"
+  },
+  "outfit-basic--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "basic",
+    "neck": "chain"
+  },
+  "outfit-basic--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "basic",
+    "neck": "scarf"
+  },
+  "outfit-basic--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "basic",
+    "neck": "bow"
+  },
+  "outfit-basic-alt--neck-none.png": {
+    "hair": "crop",
+    "outfit": "basic-alt",
+    "neck": "none"
+  },
+  "outfit-basic-alt--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "basic-alt",
+    "neck": "chain"
+  },
+  "outfit-basic-alt--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "basic-alt",
+    "neck": "scarf"
+  },
+  "outfit-basic-alt--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "basic-alt",
+    "neck": "bow"
+  },
+  "outfit-party--neck-none.png": {
+    "hair": "crop",
+    "outfit": "party",
+    "neck": "none"
+  },
+  "outfit-party--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "party",
+    "neck": "chain"
+  },
+  "outfit-party--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "party",
+    "neck": "scarf"
+  },
+  "outfit-party--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "party",
+    "neck": "bow"
+  },
+  "outfit-party-alt--neck-none.png": {
+    "hair": "crop",
+    "outfit": "party-alt",
+    "neck": "none"
+  },
+  "outfit-party-alt--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "party-alt",
+    "neck": "chain"
+  },
+  "outfit-party-alt--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "party-alt",
+    "neck": "scarf"
+  },
+  "outfit-party-alt--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "party-alt",
+    "neck": "bow"
+  },
+  "outfit-sport--neck-none.png": {
+    "hair": "crop",
+    "outfit": "sport",
+    "neck": "none"
+  },
+  "outfit-sport--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "sport",
+    "neck": "chain"
+  },
+  "outfit-sport--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "sport",
+    "neck": "scarf"
+  },
+  "outfit-sport--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "sport",
+    "neck": "bow"
+  },
+  "outfit-sport-alt--neck-none.png": {
+    "hair": "crop",
+    "outfit": "sport-alt",
+    "neck": "none"
+  },
+  "outfit-sport-alt--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "sport-alt",
+    "neck": "chain"
+  },
+  "outfit-sport-alt--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "sport-alt",
+    "neck": "scarf"
+  },
+  "outfit-sport-alt--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "sport-alt",
+    "neck": "bow"
+  },
+  "outfit-business--neck-none.png": {
+    "hair": "crop",
+    "outfit": "business",
+    "neck": "none"
+  },
+  "outfit-business--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "business",
+    "neck": "chain"
+  },
+  "outfit-business--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "business",
+    "neck": "scarf"
+  },
+  "outfit-business--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "business",
+    "neck": "bow"
+  },
+  "outfit-business-alt--neck-none.png": {
+    "hair": "crop",
+    "outfit": "business-alt",
+    "neck": "none"
+  },
+  "outfit-business-alt--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "business-alt",
+    "neck": "chain"
+  },
+  "outfit-business-alt--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "business-alt",
+    "neck": "scarf"
+  },
+  "outfit-business-alt--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "business-alt",
+    "neck": "bow"
+  },
+  "outfit-festival--neck-none.png": {
+    "hair": "crop",
+    "outfit": "festival",
+    "neck": "none"
+  },
+  "outfit-festival--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "festival",
+    "neck": "chain"
+  },
+  "outfit-festival--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "festival",
+    "neck": "scarf"
+  },
+  "outfit-festival--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "festival",
+    "neck": "bow"
+  },
+  "outfit-festival-alt--neck-none.png": {
+    "hair": "crop",
+    "outfit": "festival-alt",
+    "neck": "none"
+  },
+  "outfit-festival-alt--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "festival-alt",
+    "neck": "chain"
+  },
+  "outfit-festival-alt--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "festival-alt",
+    "neck": "scarf"
+  },
+  "outfit-festival-alt--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "festival-alt",
+    "neck": "bow"
+  },
+  "outfit-legendary--neck-none.png": {
+    "hair": "crop",
+    "outfit": "legendary",
+    "neck": "none"
+  },
+  "outfit-legendary--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "legendary",
+    "neck": "chain"
+  },
+  "outfit-legendary--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "legendary",
+    "neck": "scarf"
+  },
+  "outfit-legendary--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "legendary",
+    "neck": "bow"
+  },
+  "outfit-legendary-alt--neck-none.png": {
+    "hair": "crop",
+    "outfit": "legendary-alt",
+    "neck": "none"
+  },
+  "outfit-legendary-alt--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "legendary-alt",
+    "neck": "chain"
+  },
+  "outfit-legendary-alt--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "legendary-alt",
+    "neck": "scarf"
+  },
+  "outfit-legendary-alt--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "legendary-alt",
+    "neck": "bow"
+  },
+  "outfit-street--neck-none.png": {
+    "hair": "crop",
+    "outfit": "street",
+    "neck": "none"
+  },
+  "outfit-street--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "street",
+    "neck": "chain"
+  },
+  "outfit-street--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "street",
+    "neck": "scarf"
+  },
+  "outfit-street--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "street",
+    "neck": "bow"
+  },
+  "outfit-street-alt--neck-none.png": {
+    "hair": "crop",
+    "outfit": "street-alt",
+    "neck": "none"
+  },
+  "outfit-street-alt--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "street-alt",
+    "neck": "chain"
+  },
+  "outfit-street-alt--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "street-alt",
+    "neck": "scarf"
+  },
+  "outfit-street-alt--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "street-alt",
+    "neck": "bow"
+  },
+  "outfit-cozy--neck-none.png": {
+    "hair": "crop",
+    "outfit": "cozy",
+    "neck": "none"
+  },
+  "outfit-cozy--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "cozy",
+    "neck": "chain"
+  },
+  "outfit-cozy--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "cozy",
+    "neck": "scarf"
+  },
+  "outfit-cozy--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "cozy",
+    "neck": "bow"
+  },
+  "outfit-cozy-alt--neck-none.png": {
+    "hair": "crop",
+    "outfit": "cozy-alt",
+    "neck": "none"
+  },
+  "outfit-cozy-alt--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "cozy-alt",
+    "neck": "chain"
+  },
+  "outfit-cozy-alt--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "cozy-alt",
+    "neck": "scarf"
+  },
+  "outfit-cozy-alt--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "cozy-alt",
+    "neck": "bow"
+  },
+  "outfit-explorer--neck-none.png": {
+    "hair": "crop",
+    "outfit": "explorer",
+    "neck": "none"
+  },
+  "outfit-explorer--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "explorer",
+    "neck": "chain"
+  },
+  "outfit-explorer--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "explorer",
+    "neck": "scarf"
+  },
+  "outfit-explorer--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "explorer",
+    "neck": "bow"
+  },
+  "outfit-explorer-alt--neck-none.png": {
+    "hair": "crop",
+    "outfit": "explorer-alt",
+    "neck": "none"
+  },
+  "outfit-explorer-alt--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "explorer-alt",
+    "neck": "chain"
+  },
+  "outfit-explorer-alt--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "explorer-alt",
+    "neck": "scarf"
+  },
+  "outfit-explorer-alt--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "explorer-alt",
+    "neck": "bow"
+  },
+  "outfit-creative--neck-none.png": {
+    "hair": "crop",
+    "outfit": "creative",
+    "neck": "none"
+  },
+  "outfit-creative--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "creative",
+    "neck": "chain"
+  },
+  "outfit-creative--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "creative",
+    "neck": "scarf"
+  },
+  "outfit-creative--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "creative",
+    "neck": "bow"
+  },
+  "outfit-creative-alt--neck-none.png": {
+    "hair": "crop",
+    "outfit": "creative-alt",
+    "neck": "none"
+  },
+  "outfit-creative-alt--neck-chain.png": {
+    "hair": "crop",
+    "outfit": "creative-alt",
+    "neck": "chain"
+  },
+  "outfit-creative-alt--neck-scarf.png": {
+    "hair": "crop",
+    "outfit": "creative-alt",
+    "neck": "scarf"
+  },
+  "outfit-creative-alt--neck-bow.png": {
+    "hair": "crop",
+    "outfit": "creative-alt",
+    "neck": "bow"
+  }
+}

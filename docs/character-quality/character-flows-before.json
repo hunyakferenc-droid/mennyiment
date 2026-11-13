@@ -1,0 +1,12 @@
+{
+  "sourceCommit": "e2b95b16beb5ba7a105ae158e231b370b735f99f",
+  "stage": "before",
+  "browser": "157.0.8103.78",
+  "checks": [
+    "hu: matching draft reaction and enlarged view captured without writing profile/XP/journal",
+    "en: matching draft reaction and enlarged view captured without writing profile/XP/journal"
+  ],
+  "runtimeErrors": [],
+  "physicalAndroid": false,
+  "emulator": false
+}

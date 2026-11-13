@@ -87,10 +87,19 @@ class MentiHeadGeometry {
     final (volume, dy) = hairVisible
         ? _hairFit[hair.split('-').last]!
         : (1.0, 0.0);
-    final width = scalp.width * scale * volume;
-    final height = width * source.height / source.width;
+    var width = scalp.width * scale * volume;
+    var height = width * source.height / source.width;
     final natural = scalp.top + scalp.height * (seat + dy);
     final bottom = natural.clamp(1, eyes.top - 2).toDouble();
+    // Fit the accessory itself, not the face or body. A tall cone may exceed
+    // the available crown space on an adult head. Keep its aspect and seat,
+    // with a one-pixel top margin, while pupils stay at their original pixels.
+    final available = (bottom - 1).clamp(1, double.infinity).toDouble();
+    if (height > available) {
+      final fit = available / height;
+      width *= fit;
+      height *= fit;
+    }
     return Rect.fromLTWH(
       scalp.center.dx + scalp.width * x - width / 2,
       bottom - height,
@@ -104,6 +113,22 @@ class MentiHeadGeometry {
     final long = ['waves', 'curls', 'braid', 'bob'].contains(style);
     final width = scalp.width * (long ? 1.14 : 1.04);
     return Rect.fromLTWH(scalp.center.dx - width / 2, scalp.top - 5, width, 0);
+  }
+
+  /// The long braid's face opening is at 45% of its material height. Short
+  /// styles retain their approved registration. Uniform scale keeps strands,
+  /// ribbon and plait proportions intact for every family and age.
+  Rect materialHairTarget(Rect source) {
+    final seat = hairTarget;
+    final braid = hair.endsWith('-braid');
+    final width = braid ? seat.width * 1.2 : seat.width;
+    final height = width * source.height / source.width;
+    return Rect.fromLTWH(
+      braid ? scalp.center.dx - width / 2 : seat.left,
+      eyes.center.dy - height * (braid ? .45 : .68),
+      width,
+      height,
+    );
   }
 
   Path guard() {

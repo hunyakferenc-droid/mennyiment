@@ -1,0 +1,69 @@
+name: Menti character handoff
+
+on:
+  push:
+    branches: [fix/menti-character-quality]
+    paths:
+      - 'docs/images/menti-character-quality/**'
+      - 'docs/character-quality/**'
+      - '.github/workflows/character-quality-handoff.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  handoff:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Verify committed original image hashes and source links
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          root = Path('docs/images/menti-character-quality')
+          manifest = json.loads((root / 'comparison.json').read_text())
+          assert manifest['afterCommit'] == '3df8f66c7be59a92314694f738753ce9cc8755e7'
+          tracked = set(subprocess.check_output(['git', 'ls-files'], text=True).splitlines())
+          for image in manifest['images']:
+              path = root / image['file']
+              assert path.as_posix() in tracked, path
+              assert hashlib.sha256(path.read_bytes()).hexdigest() == image['sha256'], path
+          report = json.loads(Path('docs/character-quality/browser-flows.json').read_text())
+          assert report['sourceCommit'] == manifest['afterCommit']
+          assert len(report['checks']) == 40 and report['runtimeErrors'] == report['externalRequests'] == []
+          review = json.loads(Path('docs/character-quality/reviewed-configurations.json').read_text())
+          assert review['sourceCommit'] == manifest['afterCommit']
+          assert review['visuallyReviewedSheets'] == len(review['entries'])
+          assert all(e['identicalReviewedRgb'] for e in review['entries'])
+          character = json.loads(Path('docs/character-quality/character-flows.json').read_text())
+          assert character['sourceCommit'] == manifest['afterCommit']
+          assert len(character['checks']) == 6 and character['runtimeErrors'] == []
+          guard = json.loads(Path('docs/character-quality/face-guard.json').read_text())
+          assert guard['sourceCommit'] == manifest['afterCommit']
+          assert guard['identityHeadwearPairs'] == 81 and guard['mismatches'] == []
+          apk = json.loads(Path('docs/character-quality/apk-verification.json').read_text())
+          assert apk['sourceCommit'] == manifest['afterCommit']
+          assert apk['zipAlignment16Kb'] is True and len(apk['certificateSha256']) == 64
+          print('Verified', len(manifest['images']), 'committed PNGs, 40 UI checks and', len(review['entries']), 'reviewed sheets')
+          PY
+      - name: Assemble a directly openable offline package
+        run: |
+          python3 - <<'PY'
+          import os, shutil
+          from pathlib import Path
+          target = Path(os.environ['RUNNER_TEMP']) / 'menti-handoff'
+          shutil.copytree('docs/images/menti-character-quality', target)
+          shutil.copytree('docs/character-quality', target / 'jelentes')
+          (target / 'OLVASDEL.txt').write_text('Menti 2.4.1+36: nyisd meg az index.html fájlt a képgalériához. A jelentes mappában a javitasok-hu.md a magyar átadás, a kiprobalas-hu.md az ellenőrzőlista. Ez képgaléria, nem az alkalmazás Web ZIP-je.\n', encoding='utf-8')
+          PY
+      - name: Upload compact offline gallery and Hungarian handoff
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.4.1-kepek-es-jelentes-${{ github.sha }}
+          path: ${{ runner.temp }}/menti-handoff/
+          if-no-files-found: error
+          retention-days: 14

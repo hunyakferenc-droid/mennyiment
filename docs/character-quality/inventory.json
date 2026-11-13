@@ -1,0 +1,162 @@
+{
+  "baseCommit": "193ab29a17ac9d7eccd9f8930d3dedaf19b51bf8",
+  "inventory": {
+    "family": [
+      "boy",
+      "girl",
+      "neutral"
+    ],
+    "age": [
+      "young",
+      "adult",
+      "veteran"
+    ],
+    "face": [
+      "cheerful",
+      "calm",
+      "playful",
+      "confident",
+      "sleepy",
+      "determined"
+    ],
+    "eyes": [
+      "round",
+      "wide",
+      "relaxed",
+      "sharp"
+    ],
+    "hair": [
+      "boy-crop",
+      "boy-waves",
+      "boy-curls",
+      "boy-braid",
+      "boy-bob",
+      "boy-crest",
+      "girl-crop",
+      "girl-waves",
+      "girl-curls",
+      "girl-braid",
+      "girl-bob",
+      "girl-crest",
+      "neutral-crop",
+      "neutral-waves",
+      "neutral-curls",
+      "neutral-braid",
+      "neutral-bob",
+      "neutral-crest"
+    ],
+    "headwear": [
+      "crown-cap",
+      "sport-cap",
+      "beanie",
+      "headphones",
+      "party-crown",
+      "hood",
+      "none",
+      "party-hat",
+      "beret",
+      "cowboy"
+    ],
+    "outfit": [
+      "basic",
+      "basic-alt",
+      "party",
+      "party-alt",
+      "sport",
+      "sport-alt",
+      "business",
+      "business-alt",
+      "festival",
+      "festival-alt",
+      "legendary",
+      "legendary-alt",
+      "street",
+      "street-alt",
+      "cozy",
+      "cozy-alt",
+      "explorer",
+      "explorer-alt",
+      "creative",
+      "creative-alt"
+    ],
+    "style": [
+      "classic",
+      "street",
+      "sporty",
+      "business",
+      "party",
+      "festival",
+      "cozy",
+      "legendary"
+    ],
+    "glasses": [
+      "none",
+      "round-glasses",
+      "sunglasses"
+    ],
+    "neck": [
+      "none",
+      "chain",
+      "scarf",
+      "bow"
+    ],
+    "held": [
+      "none",
+      "notebook",
+      "flower",
+      "spark-wand"
+    ],
+    "detail": [
+      "none",
+      "freckles",
+      "star",
+      "moon"
+    ],
+    "back": [
+      "none",
+      "backpack",
+      "cape"
+    ],
+    "accent": [
+      "gold",
+      "violet",
+      "blue",
+      "mint",
+      "rose",
+      "orange"
+    ],
+    "background": [
+      "amber",
+      "violet",
+      "ocean",
+      "forest",
+      "rose",
+      "midnight"
+    ],
+    "aura": [
+      "sunrise",
+      "violet",
+      "ocean",
+      "forest",
+      "starlight",
+      "rose"
+    ],
+    "reaction": [
+      "proud",
+      "motivating",
+      "funny",
+      "sleepy",
+      "calming",
+      "celebrating",
+      "focused"
+    ]
+  },
+  "generatedSheets": 778,
+  "generatedConfigurations": 7002,
+  "persistentConfigurationSpace": 515978035200,
+  "configurationSpaceIncludingNullAndSevenReactions": 4127824281600,
+  "renderScope": "All single options over nine identities, hair/headwear and outfit/neck pairs; 529 GF(23) rows covering 2233 required pairs across 11 geometry/expression fields. Colors and hair visibility additionally have single/targeted coverage. Not every combination is rendered.",
+  "visualApproval": "72 original contact sheets / 648 occurrences / 630 distinct resolved profiles actually viewed; see reviewed-configurations.json. Rendered configurations are not automatically visually approved.",
+  "matchedBeforeAfterSheets": 249,
+  "distinctResolvedAfterConfigurations": 6579
+}

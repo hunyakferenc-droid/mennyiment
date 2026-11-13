@@ -1,0 +1,121 @@
+name: Menti character render evidence
+
+on:
+  push:
+    branches: [fix/menti-character-quality]
+    paths:
+      - 'lib/**'
+      - 'pubspec.*'
+      - 'tool/character_quality_preview.dart'
+      - 'tool/capture_character_quality.cjs'
+      - 'tool/check_character_face_guard.cjs'
+      - 'tool/prepare_character_preview.py'
+      - 'tool/character_quality_gallery.py'
+      - 'docs/character-quality/render-configurations.json'
+      - '.github/workflows/character-quality-evidence.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: character-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gallery:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      TZ: Europe/Budapest
+      BASE_SHA: 193ab29a17ac9d7eccd9f8930d3dedaf19b51bf8
+      CHROME_BIN: /usr/bin/google-chrome
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        with:
+          flutter-version: '3.47.7'
+          channel: stable
+          cache: true
+          pub-cache: true
+      - name: Install isolated browser test dependency
+        run: |
+          npm install --prefix "$RUNNER_TEMP/menti-browser" playwright@1.57.0
+          echo "PLAYWRIGHT_MODULE_PATH=$RUNNER_TEMP/menti-browser/node_modules/playwright" >> "$GITHUB_ENV"
+      - name: Verify preserved graphics, models and storage
+        run: |
+          git fetch --depth=1 origin "$BASE_SHA"
+          git diff --exit-code "$BASE_SHA" HEAD -- assets android pubspec.lock lib/drink_journal.dart lib/journal_query.dart lib/menti_identity/menti_identity.dart lib/menti_identity/menti_identity_store.dart lib/menti_identity/menti_visual_catalog.dart lib/menti_adventure_store.dart lib/menti_xp_store.dart lib/data_backup.dart lib/data_restore.dart
+      - name: Build immutable baseline with the identical isolated harness
+        run: |
+          git worktree add --detach "$RUNNER_TEMP/menti-baseline" "$BASE_SHA"
+          cp tool/character_quality_preview.dart "$RUNNER_TEMP/menti-baseline/tool/character_quality_preview.dart"
+          cd "$RUNNER_TEMP/menti-baseline"
+          flutter pub get
+          flutter build web --target tool/character_quality_preview.dart --no-web-resources-cdn
+      - name: Capture stable before images
+        env:
+          MENTI_SOURCE_COMMIT: ${{ env.BASE_SHA }}
+          MENTI_EVIDENCE_DIR: ${{ runner.temp }}/menti-evidence/before
+        run: |
+          python3 tool/prepare_character_preview.py "$RUNNER_TEMP/menti-baseline/build/web"
+          python3 -m http.server 7357 --bind 127.0.0.1 --directory "$RUNNER_TEMP/menti-baseline/build/web" > "$RUNNER_TEMP/menti-before-server.log" 2>&1 &
+          MENTI_SERVER_PID=$!
+          trap 'kill "$MENTI_SERVER_PID"' EXIT
+          for attempt in {1..50}; do curl --silent --fail http://127.0.0.1:7357/ > /dev/null && break; sleep .2; done
+          node tool/capture_character_quality.cjs
+      - name: Build final renderer harness
+        run: flutter build web --target tool/character_quality_preview.dart --no-web-resources-cdn
+      - name: Capture after images and assert targeted pair coverage
+        env:
+          MENTI_SOURCE_COMMIT: ${{ github.sha }}
+          MENTI_EVIDENCE_DIR: ${{ runner.temp }}/menti-evidence/after
+          MENTI_PAIRWISE: '1'
+        run: |
+          python3 tool/prepare_character_preview.py build/web
+          python3 -m http.server 7357 --bind 127.0.0.1 --directory build/web > "$RUNNER_TEMP/menti-after-server.log" 2>&1 &
+          MENTI_SERVER_PID=$!
+          trap 'kill "$MENTI_SERVER_PID"' EXIT
+          for attempt in {1..50}; do curl --silent --fail http://127.0.0.1:7357/ > /dev/null && break; sleep .2; done
+          node tool/capture_character_quality.cjs
+      - name: Assemble and verify offline comparison gallery
+        run: |
+          python3 tool/character_quality_gallery.py "$RUNNER_TEMP/menti-evidence"
+          python3 tool/character_quality_gallery.py "$RUNNER_TEMP/menti-evidence" --check
+          cp docs/character-quality/kiprobalas-hu.md "$RUNNER_TEMP/menti-evidence/KIPROBALAS-HU.md"
+      - name: Split the original gallery below the connector download limit
+        run: |
+          python3 - <<'PYGALLERY'
+          from pathlib import Path
+          import shutil
+          root = Path("${{ runner.temp }}")
+          evidence = root / 'menti-evidence'
+          before = root / 'menti-gallery-before'
+          after = root / 'menti-gallery-after'
+          before.mkdir(); after.mkdir()
+          shutil.move(str(evidence / 'before'), before / 'before')
+          shutil.move(str(evidence / 'after'), after / 'after')
+          for name in ['index.html', 'manifest.json', 'KIPROBALAS-HU.md']:
+              shutil.copyfile(evidence / name, after / name)
+          for folder in [before, after]:
+              print(folder.name, sum(p.stat().st_size for p in folder.rglob('*') if p.is_file()), 'uncompressed bytes')
+          PYGALLERY
+      - name: Upload original before renders
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.4.1-gallery-before-${{ github.sha }}
+          path: ${{ runner.temp }}/menti-gallery-before/
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 1
+      - name: Upload original after renders and offline gallery
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.4.1-gallery-after-${{ github.sha }}
+          path: ${{ runner.temp }}/menti-gallery-after/
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 1
