@@ -1,0 +1,167 @@
+{
+  "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+  "candidates": [
+    {
+      "file": "store-candidates/home-hu.jpg",
+      "locale": "hu",
+      "screen": "home",
+      "width": 1080,
+      "height": 1920,
+      "logicalViewport": "360x640",
+      "deviceScaleFactor": 3,
+      "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+      "sha256": "f25a5f96f0616e47d0a6d189fce1aabfcbf9f40abd90ed69cc9b1ed47c125fc0",
+      "alt": {
+        "hu": "Mira Mentije a kezdőlapon, helyi próbaadatokkal.",
+        "en": "Mira’s Menti on the home screen with local sample data."
+      },
+      "capture": "Unedited actual Flutter web in Chrome; synthetic data; not a physical Android capture"
+    },
+    {
+      "file": "store-candidates/adventures-hu.jpg",
+      "locale": "hu",
+      "screen": "adventures",
+      "width": 1080,
+      "height": 1920,
+      "logicalViewport": "360x640",
+      "deviceScaleFactor": 3,
+      "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+      "sha256": "a44d218810e5a5a70deb32bcdfdeb83d69d2c1e357021da8a359018bdd306ec4",
+      "alt": {
+        "hu": "Önkéntes Menti-kalandok térképe és állomásai.",
+        "en": "The map and stations of voluntary Menti adventures."
+      },
+      "capture": "Unedited actual Flutter web in Chrome; synthetic data; not a physical Android capture"
+    },
+    {
+      "file": "store-candidates/journal-hu.jpg",
+      "locale": "hu",
+      "screen": "journal",
+      "width": 1080,
+      "height": 1920,
+      "logicalViewport": "360x640",
+      "deviceScaleFactor": 3,
+      "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+      "sha256": "c9ad10e79cbdc0b86afdb530119f71641f61001886acc3cd6e089872db802dee",
+      "alt": {
+        "hu": "Kereshető napló ismert nulla forintos és hiányzó árral.",
+        "en": "Searchable journal with a known zero price and a missing price."
+      },
+      "capture": "Unedited actual Flutter web in Chrome; synthetic data; not a physical Android capture"
+    },
+    {
+      "file": "store-candidates/journal-entries-hu.jpg",
+      "locale": "hu",
+      "screen": "journal-entries",
+      "width": 1080,
+      "height": 1920,
+      "logicalViewport": "360x640",
+      "deviceScaleFactor": 3,
+      "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+      "sha256": "53785a5a24eb6942c2f636012c649dd08446aaa95af26cdfa91271ca3d065f5c",
+      "alt": {
+        "hu": "Külön naplóbejegyzések: egy hiányzó és egy ismert nulla forintos ár.",
+        "en": "Separate journal entries: a missing price and a known zero price."
+      },
+      "capture": "Unedited actual Flutter web in Chrome; synthetic data; not a physical Android capture"
+    },
+    {
+      "file": "store-candidates/data-hu.jpg",
+      "locale": "hu",
+      "screen": "data",
+      "width": 1080,
+      "height": 1920,
+      "logicalViewport": "360x640",
+      "deviceScaleFactor": 3,
+      "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+      "sha256": "702e2b5567fe4a1a80264c6f2153dc3b74b8f9191dff162a02d2452e29cda684",
+      "alt": {
+        "hu": "Adatok és biztonság: helyi tárolás és a meglévő fájlos mentés.",
+        "en": "Data and safety: local storage and the existing file backup."
+      },
+      "capture": "Unedited actual Flutter web in Chrome; synthetic data; not a physical Android capture"
+    },
+    {
+      "file": "store-candidates/home-en.jpg",
+      "locale": "en",
+      "screen": "home",
+      "width": 1080,
+      "height": 1920,
+      "logicalViewport": "360x640",
+      "deviceScaleFactor": 3,
+      "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+      "sha256": "0b4231234427784c0229a475497b9dde3025a25dc715919134caee159c41079e",
+      "alt": {
+        "hu": "Mira Mentije a kezdőlapon, helyi próbaadatokkal.",
+        "en": "Mira’s Menti on the home screen with local sample data."
+      },
+      "capture": "Unedited actual Flutter web in Chrome; synthetic data; not a physical Android capture"
+    },
+    {
+      "file": "store-candidates/adventures-en.jpg",
+      "locale": "en",
+      "screen": "adventures",
+      "width": 1080,
+      "height": 1920,
+      "logicalViewport": "360x640",
+      "deviceScaleFactor": 3,
+      "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+      "sha256": "54592255a5fb0607f688fdaeee005a03c33b6c808ca3645645f32e0296d4f754",
+      "alt": {
+        "hu": "Önkéntes Menti-kalandok térképe és állomásai.",
+        "en": "The map and stations of voluntary Menti adventures."
+      },
+      "capture": "Unedited actual Flutter web in Chrome; synthetic data; not a physical Android capture"
+    },
+    {
+      "file": "store-candidates/journal-en.jpg",
+      "locale": "en",
+      "screen": "journal",
+      "width": 1080,
+      "height": 1920,
+      "logicalViewport": "360x640",
+      "deviceScaleFactor": 3,
+      "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+      "sha256": "ae6820f18280fe3feefb53926b9d73cac0a4762cc0792ae7ede9d4bde2515e9a",
+      "alt": {
+        "hu": "Kereshető napló ismert nulla forintos és hiányzó árral.",
+        "en": "Searchable journal with a known zero price and a missing price."
+      },
+      "capture": "Unedited actual Flutter web in Chrome; synthetic data; not a physical Android capture"
+    },
+    {
+      "file": "store-candidates/journal-entries-en.jpg",
+      "locale": "en",
+      "screen": "journal-entries",
+      "width": 1080,
+      "height": 1920,
+      "logicalViewport": "360x640",
+      "deviceScaleFactor": 3,
+      "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+      "sha256": "f58f647b101634f5ea1f152a2a07319473b89d8f3cbd6c79526c3e858b3cc673",
+      "alt": {
+        "hu": "Külön naplóbejegyzések: egy hiányzó és egy ismert nulla forintos ár.",
+        "en": "Separate journal entries: a missing price and a known zero price."
+      },
+      "capture": "Unedited actual Flutter web in Chrome; synthetic data; not a physical Android capture"
+    },
+    {
+      "file": "store-candidates/data-en.jpg",
+      "locale": "en",
+      "screen": "data",
+      "width": 1080,
+      "height": 1920,
+      "logicalViewport": "360x640",
+      "deviceScaleFactor": 3,
+      "sourceCommit": "5d5f3942775417c35fc42a4c3aa3d05e307dda01",
+      "sha256": "effd813ffdb11de85ea2ba94a3da723e26458b72dd9d637ba69fdf66af8874bd",
+      "alt": {
+        "hu": "Adatok és biztonság: helyi tárolás és a meglévő fájlos mentés.",
+        "en": "Data and safety: local storage and the existing file backup."
+      },
+      "capture": "Unedited actual Flutter web in Chrome; synthetic data; not a physical Android capture"
+    }
+  ],
+  "physicalAndroid": false,
+  "edited": false
+}

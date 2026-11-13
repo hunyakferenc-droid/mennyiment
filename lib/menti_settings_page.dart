@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_language.dart';
+import 'app_information.dart';
 import 'menti_access.dart';
 import 'menti_identity/menti_avatar_renderer.dart';
 import 'menti_identity/menti_identity_controller.dart';
@@ -11,7 +12,8 @@ import 'menti_motion.dart';
 import 'menti_ui.dart';
 
 class MentiSettingsPage extends StatelessWidget {
-  const MentiSettingsPage({super.key});
+  const MentiSettingsPage({super.key, this.onOpenBackup});
+  final OpenLocalBackup? onOpenBackup;
   @override
   Widget build(BuildContext context) {
     final s = appStrings(context);
@@ -23,6 +25,18 @@ class MentiSettingsPage extends StatelessWidget {
         actions: const [LanguageMenu()],
       ),
       body: MentiPageBody(children: [
+        OutlinedButton.icon(key: const ValueKey('settings-open-data'),
+          onPressed: () => Navigator.push(context, MaterialPageRoute<void>(
+            builder: (_) => DataSafetyPage(onOpenBackup: onOpenBackup))),
+          icon: const Icon(Icons.privacy_tip_outlined), label: Text(s.infoDataTitle)),
+        OutlinedButton.icon(key: const ValueKey('settings-open-help'),
+          onPressed: () => Navigator.push(context, MaterialPageRoute<void>(
+            builder: (_) => MentiHelpPage(onOpenBackup: onOpenBackup))),
+          icon: const Icon(Icons.help_outline), label: Text(s.infoHelpTitle)),
+        OutlinedButton.icon(key: const ValueKey('settings-open-about'),
+          onPressed: () => Navigator.push(context, MaterialPageRoute<void>(
+            builder: (_) => MentiAboutPage(onOpenBackup: onOpenBackup))),
+          icon: const Icon(Icons.info_outline), label: Text(s.infoAboutTitle)),
         if (settings != null) MentiPanel(child: Column(children: [
           SwitchListTile.adaptive(
             key: const ValueKey('experience-reactions'),

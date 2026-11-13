@@ -1,0 +1,40 @@
+name: Downloadable Google Play preparation evidence
+
+on:
+  push:
+    branches: [feature/mennyiment-2-3-1-play-preparation]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: play-evidence-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout evidence source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Check all declared image files before uploading
+        id: verify
+        if: ${{ hashFiles('docs/images/menti-2.3.1-play/verification.json') != '' }}
+        run: python3 tool/check_play_evidence.py
+      - name: Upload actual screenshots and draft dossier
+        if: ${{ steps.verify.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.3.1-34-play-evidence-${{ github.sha }}
+          path: |
+            docs/images/menti-2.3.1-play/
+            docs/play-2.3.1/
+            docs/2.3.1-play-preparation-hu.md
+            docs/2.2.6-windows-hu.md
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 1

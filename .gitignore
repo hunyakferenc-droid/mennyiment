@@ -31,6 +31,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+/android/build/
 /coverage/
 
 # Symbolication related
@@ -94,6 +95,10 @@ pubspec.yaml.bak
 !test/backup_file_test.dart
 !test/data_backup_page_test.dart
 !docs/6.7-data-backup.md
+
+# Synthetic UI evidence only, never an exported user backup.
+!/docs/images/menti-2.3.1-play/backup-existing-*.png
+!/docs/images/menti-2.3.1-play/help-backup-*.png
 
 # Local Flutter golden comparison diagnostics
 /test/failures/

@@ -5173,6 +5173,276 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'Kalandállapot újratöltése'**
   String get adventureRetry;
+
+  /// No description provided for @infoDataTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Adatok és biztonság'**
+  String get infoDataTitle;
+
+  /// No description provided for @infoHelpTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Súgó'**
+  String get infoHelpTitle;
+
+  /// No description provided for @infoAboutTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Névjegy'**
+  String get infoAboutTitle;
+
+  /// No description provided for @infoDataIntro.
+  ///
+  /// In hu, this message translates to:
+  /// **'A saját adataid kezeléséhez először ismerd meg, mit ment az alkalmazás. Az alábbi tájékoztató a jelenlegi működést írja le.'**
+  String get infoDataIntro;
+
+  /// No description provided for @infoBackupOpen.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mentés és visszaállítás megnyitása'**
+  String get infoBackupOpen;
+
+  /// No description provided for @infoBackupError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A mentési nézet nem nyitható meg. Próbáld újra a főmenüből.'**
+  String get infoBackupError;
+
+  /// No description provided for @infoRecordsTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Naplók és saját célok'**
+  String get infoRecordsTitle;
+
+  /// No description provided for @infoRecordsBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ha rögzítetted: tételek neve, mennyisége, alkoholfoka, opcionális ára és időpontja; kedvencek és saját katalógus. A közérzetnapló hangulatot, alvásértékelést, tünetértékelést és saját megjegyzést tárolhat. A célokhoz keretek, önellenőrzési napok és általad félretett összegek tartozhatnak.'**
+  String get infoRecordsBody;
+
+  /// No description provided for @infoProfileTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti, beállítások és kalandok'**
+  String get infoProfileTitle;
+
+  /// No description provided for @infoProfileBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menthető a Menti neve, megjelenése, saját szettjei, XP-je és feloldásai; a nyelv, mozgás- és reakcióbeállítások, valamint az önkéntes korhatárnyilatkozat. A napi válaszok és kalandok vállalásai, teljesítései, döntésfeljegyzései és jelvénydátumai is helyi adatok.'**
+  String get infoProfileBody;
+
+  /// No description provided for @infoDeviceTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'A készüléken'**
+  String get infoDeviceTitle;
+
+  /// No description provided for @infoDeviceBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'A natív app az alkalmazás helyi beállítástárolóját használja; Androidon ez az app saját SharedPreferences-tárolója. Nem működtetünk alkalmazáson belüli fiókot vagy felhőszinkront. Az operációs rendszer ettől függetlenül készíthet rendszermentést: az Android alapértelmezett mentési lehetőségét ez a változat nem tiltja le. Ennek működése a készülék és a rendszer beállításaitól függ, nem garantált mentés.'**
+  String get infoDeviceBody;
+
+  /// No description provided for @infoBrowserTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'A böngészőben'**
+  String get infoBrowserTitle;
+
+  /// No description provided for @infoBrowserBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Weben az adatok a böngésző helyi tárolójában, az adott profilhoz és webcímhez tartoznak. Másik profil, privát ablak vagy eltérő host/port más tárolót jelenthet. Böngészőadat-törlés, appadat-visszaállítás vagy eltávolítás adatvesztést okozhat; ezek előtt készíts saját fájlos mentést.'**
+  String get infoBrowserBody;
+
+  /// No description provided for @infoProtectionTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'A helyi tárolás korlátai'**
+  String get infoProtectionTitle;
+
+  /// No description provided for @infoProtectionBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Az app nem valósít meg külön alkalmazásszintű adattitkosítást, jelszavas zárat vagy szerveres helyreállítást. A készülék és a böngésző védelme is számít. A helyi tároló sérülhet vagy elveszhet; az alkalmazás nem ígér adatvesztés elleni garanciát.'**
+  String get infoProtectionBody;
+
+  /// No description provided for @infoBackupTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Saját fájlos mentés'**
+  String get infoBackupTitle;
+
+  /// No description provided for @infoBackupBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'A meglévő mentési oldalon készíts előnézetet, majd mentsd a JSON-fájlt. A mentés a helyi alkalmazásadatokat, a karaktert, XP-t, feloldásokat és kalandokat is tartalmazza. A fájl olvasható, nem jelszavas és nem titkosított az app által. Őrizd biztonságos helyen. Weben a letöltés elindítása még nem bizonyítja, hogy a fájl lemezre került.'**
+  String get infoBackupBody;
+
+  /// No description provided for @infoRestoreTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Visszaállítás előnézettel'**
+  String get infoRestoreTitle;
+
+  /// No description provided for @infoRestoreBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Válaszd ki a saját mentésedet, ellenőrizd az előnézetet, és csak utána erősítsd meg a visszaállítást. A rendszer ellenőrzi a fájlt és a helyi állapotot; hibás vagy nem támogatott adatot elutasíthat. A visszaállítás meglévő értékeket cserélhet le. Előtte a jelenlegi állapotról is készíts mentést. A fájlválasztó átmeneti helyi másolatot is készíthet az importált fájlról.'**
+  String get infoRestoreBody;
+
+  /// No description provided for @infoInternetTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mikor kell internet?'**
+  String get infoInternetTitle;
+
+  /// No description provided for @infoInternetBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'A naplók, számítások, karakterek és kalandok helyben működnek. A webes app első betöltése vagy frissítése a kiszolgálótól függően hálózatot igényelhet; a helyi Web ZIP saját kiszolgálóval indítható. A webkiszolgáló kéréseket és IP-címet láthat a saját naplózása szerint. A HU/EN alapbetűk csomagoltak, de szokatlan betűkhöz a webes megjelenítő külső betűkészletet kérhet. Felhős fájlhely kiválasztásakor a szolgáltató is használhat internetet.'**
+  String get infoInternetBody;
+
+  /// No description provided for @infoPermissionsTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Engedélyek és adattovábbítás'**
+  String get infoPermissionsTitle;
+
+  /// No description provided for @infoPermissionsBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ezekhez a funkciókhoz az app nem kér hely-, kamera-, mikrofon-, értesítési vagy mozgásérzékelő-engedélyt. Export/import esetén a rendszer fájlválasztójában általad megadott fájlt használja. Nincs beépített reklám, analitika vagy saját adatfeltöltő funkció. Az Android debug-csomag hálózati engedélyt is tartalmaz a Flutter fejlesztői eszközeihez; az engedély önmagában nem jelent adatküldést.'**
+  String get infoPermissionsBody;
+
+  /// No description provided for @infoSelfReportTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Amit a napló meg tud mutatni'**
+  String get infoSelfReportTitle;
+
+  /// No description provided for @infoSelfReportBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'A napló önbevalláson alapul: a saját bejegyzéseidből számol. A hiányzó bejegyzés nem igazol fogyasztásmentes napot. Az app nem diagnózis és nem vezetési alkalmassági vizsgálat; egészségügyi kérdéssel fordulj szakemberhez.'**
+  String get infoSelfReportBody;
+
+  /// No description provided for @infoJournalTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Naplózás és keresés'**
+  String get infoJournalTitle;
+
+  /// No description provided for @infoJournalBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Felnőtt módban a főoldalon adhatsz hozzá tételt. A Naplóban névre kereshetsz, időszakot és árszűrőt választhatsz, majd rendezhetsz. Az összesítések csak a rögzített adatokat ismerik; a hiányt nem töltik ki feltételezéssel.'**
+  String get infoJournalBody;
+
+  /// No description provided for @infoEditorTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Szerkesztés mentéssel'**
+  String get infoEditorTitle;
+
+  /// No description provided for @infoEditorBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'A főoldali bejegyzés menüjéből vagy a kereshető naplóból nyisd a szerkesztőt. Név, mennyiség, alkoholfok, ár, dátum és idő módosítható. Mentésig csak az űrlap változik. Mégse és elvetés nem ment; módosított űrlap elhagyásakor megerősítést kérünk. Új időpont nem lehet jövőbeli, régi rekordot nem javítunk át automatikusan.'**
+  String get infoEditorBody;
+
+  /// No description provided for @infoPricesTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hiányzó ár vagy 0 Ft?'**
+  String get infoPricesTitle;
+
+  /// No description provided for @infoPricesBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Az üres ár ismeretlen összeget jelent. A ténylegesen megadott 0 Ft ismert ár, például egy ingyenes tételnél. A hiányzó ár nem nulla: a kimutatás részösszeget és árlefedettséget jelez. A Hiányzó ár szűrőből közvetlenül pótolhatsz árat; nincs automatikus árbecslés.'**
+  String get infoPricesBody;
+
+  /// No description provided for @infoGoalsTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Saját célok és közérzet'**
+  String get infoGoalsTitle;
+
+  /// No description provided for @infoGoalsBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'A közérzetnaplóban a kiválasztott naphoz rögzíthetsz értékelést és megjegyzést. A saját céljaidat te választod; a félretett összeg saját jelzés, nem banki tranzakció. A meglévő korhatárkorlátok minden nézetben érvényesek.'**
+  String get infoGoalsBody;
+
+  /// No description provided for @infoAdventuresTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kalandok a saját tempódban'**
+  String get infoAdventuresTitle;
+
+  /// No description provided for @infoAdventuresBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Naponta legfeljebb három vállalt vagy teljesített küldetésed lehet. A közérzetfeladat a mai mentést ellenőrzi, a többi teljesítést saját jelzésed igazolja. A megszakítás nem büntet, a kihagyott nap nem vesz el haladást. A térkép és a jelvények valódi teljesítésekből épülnek; nincs külön kaland-XP.'**
+  String get infoAdventuresBody;
+
+  /// No description provided for @infoHelpBackupBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mentéshez előnézetet készítesz és saját JSON-fájlt mentesz. Visszaállításkor fájlt választasz, ellenőrzöd az előnézetet, majd külön megerősíted a cserét. Ne tekintsd a böngésző letöltési kérését kész mentésnek: ellenőrizd a fájlt is.'**
+  String get infoHelpBackupBody;
+
+  /// No description provided for @infoMinorTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'A jelenlegi korhatármód'**
+  String get infoMinorTitle;
+
+  /// No description provided for @infoMinorBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ebben a módban az általános jólléti és Menti-funkciók használhatók; a felnőtt napló- és pénzügyi műveletek korlátozottak. A korhatár önkéntes nyilatkozat, nem személyazonosság-ellenőrzés. A korábbi helyi adatok ettől nem törlődnek.'**
+  String get infoMinorBody;
+
+  /// No description provided for @infoVersion.
+  ///
+  /// In hu, this message translates to:
+  /// **'Verzió: {version} · build {build}'**
+  String infoVersion(String version, String build);
+
+  /// No description provided for @infoVersionError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A telepített változat verzióadata most nem olvasható. Nem helyettesítjük becsült verziószámmal.'**
+  String get infoVersionError;
+
+  /// No description provided for @infoRetry.
+  ///
+  /// In hu, this message translates to:
+  /// **'Újrapróbálás'**
+  String get infoRetry;
+
+  /// No description provided for @infoAboutSummaryTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Saját Menti, saját feljegyzések'**
+  String get infoAboutSummaryTitle;
+
+  /// No description provided for @infoAboutSummaryBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'A MennyiMent? helyi naplókat, közérzetkövetést, személyes célokat és önkéntes Menti-kalandokat kínál. A karakter, a haladás és a jutalmak a meglévő helyi adataidhoz kapcsolódnak. A rövid használati útmutatót és az adatkezelés tényeit innen is eléred.'**
+  String get infoAboutSummaryBody;
+
+  /// No description provided for @infoLicenses.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nyílt forrású licencek'**
+  String get infoLicenses;
 }
 
 class _AppLocalizationsDelegate

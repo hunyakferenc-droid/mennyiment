@@ -2,7 +2,7 @@ name: Flutter CI
 
 on:
   pull_request:
-    branches: [main, feature/mennyiment-2-2-6-naturalization, feature/mennyiment-2-2-5-customization-rebuild, feature/mennyiment-2-2-4-premium-polish, feature/mennyiment-2-2-1-visual-ux, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families, feature/mennyiment-2-2-concept-redesign, feature/mennyiment-2-2-final-playable]
+    branches: [main, feature/mennyiment-2-3-adventures, feature/mennyiment-2-2-6-naturalization, feature/mennyiment-2-2-5-customization-rebuild, feature/mennyiment-2-2-4-premium-polish, feature/mennyiment-2-2-1-visual-ux, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families, feature/mennyiment-2-2-concept-redesign, feature/mennyiment-2-2-final-playable]
   push:
     branches: [main]
 
@@ -58,6 +58,7 @@ jobs:
           flutter gen-l10n
           git diff --exit-code -- pubspec.lock lib/l10n/generated
           python3 tool/check_localizations.py
+          python3 tool/check_play_dossier.py
 
       - name: Whitespace check
         run: git diff --check HEAD^ HEAD
@@ -104,7 +105,7 @@ jobs:
         if: ${{ !cancelled() && steps.web.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.3.0-web-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.3.1-web-${{ env.SOURCE_SHA }}
           path: build/web/
           if-no-files-found: error
           retention-days: 14
@@ -130,19 +131,33 @@ jobs:
             "$APK_SIGNER" verify --verbose --print-certs build/app/outputs/flutter-apk/app-debug.apk
             "$APK_AAPT" dump badging build/app/outputs/flutter-apk/app-debug.apk
           } > build/app/outputs/flutter-apk/build-info.txt
-          cp docs/2.2.6-android-hu.md build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
+          cp docs/play-2.3.1/android-release-hu.md build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
           cat build/app/outputs/flutter-apk/build-info.txt
 
       - name: Upload installable debug APK
         if: ${{ !cancelled() && steps.apk.outcome == 'success' && steps.verify_apk.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.3.0-debug-apk-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.3.1-debug-apk-${{ env.SOURCE_SHA }}
           path: |
             build/app/outputs/flutter-apk/app-debug.apk
             build/app/outputs/flutter-apk/app-debug.apk.sha256
             build/app/outputs/flutter-apk/build-info.txt
             build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Reject unsigned and debug-signed release configurations
+        id: release_guard
+        if: ${{ !cancelled() && steps.apk.outcome == 'success' }}
+        run: python3 tool/check_release_signing.py --output build/verification/release-signing.json
+
+      - name: Upload release-signing verification
+        if: ${{ !cancelled() && steps.release_guard.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.3.1-release-guard-${{ env.SOURCE_SHA }}
+          path: build/verification/release-signing.json
           if-no-files-found: error
           retention-days: 14
 
@@ -157,6 +172,7 @@ jobs:
           WEB: ${{ steps.web.outcome }}
           APK: ${{ steps.apk.outcome }}
           APK_SIGNATURE: ${{ steps.verify_apk.outcome }}
+          RELEASE_GUARD: ${{ steps.release_guard.outcome }}
         run: |
           {
             echo "## MennyiMent? Flutter CI"
@@ -172,6 +188,7 @@ jobs:
             echo "| flutter build web | $WEB |"
             echo "| flutter build apk --debug | $APK |"
             echo "| Android APK signature + package | $APK_SIGNATURE |"
+            echo "| Release signing rejection checks | $RELEASE_GUARD |"
             echo
             echo "Hibánál nyisd meg a piros lépés naplóját. A skipped lépés nem sikeres ellenőrzés."
           } >> "$GITHUB_STEP_SUMMARY"

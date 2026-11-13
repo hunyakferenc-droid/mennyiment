@@ -2869,4 +2869,162 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get adventureRetry => 'Kalandállapot újratöltése';
+
+  @override
+  String get infoDataTitle => 'Adatok és biztonság';
+
+  @override
+  String get infoHelpTitle => 'Súgó';
+
+  @override
+  String get infoAboutTitle => 'Névjegy';
+
+  @override
+  String get infoDataIntro =>
+      'A saját adataid kezeléséhez először ismerd meg, mit ment az alkalmazás. Az alábbi tájékoztató a jelenlegi működést írja le.';
+
+  @override
+  String get infoBackupOpen => 'Mentés és visszaállítás megnyitása';
+
+  @override
+  String get infoBackupError =>
+      'A mentési nézet nem nyitható meg. Próbáld újra a főmenüből.';
+
+  @override
+  String get infoRecordsTitle => 'Naplók és saját célok';
+
+  @override
+  String get infoRecordsBody =>
+      'Ha rögzítetted: tételek neve, mennyisége, alkoholfoka, opcionális ára és időpontja; kedvencek és saját katalógus. A közérzetnapló hangulatot, alvásértékelést, tünetértékelést és saját megjegyzést tárolhat. A célokhoz keretek, önellenőrzési napok és általad félretett összegek tartozhatnak.';
+
+  @override
+  String get infoProfileTitle => 'Menti, beállítások és kalandok';
+
+  @override
+  String get infoProfileBody =>
+      'Menthető a Menti neve, megjelenése, saját szettjei, XP-je és feloldásai; a nyelv, mozgás- és reakcióbeállítások, valamint az önkéntes korhatárnyilatkozat. A napi válaszok és kalandok vállalásai, teljesítései, döntésfeljegyzései és jelvénydátumai is helyi adatok.';
+
+  @override
+  String get infoDeviceTitle => 'A készüléken';
+
+  @override
+  String get infoDeviceBody =>
+      'A natív app az alkalmazás helyi beállítástárolóját használja; Androidon ez az app saját SharedPreferences-tárolója. Nem működtetünk alkalmazáson belüli fiókot vagy felhőszinkront. Az operációs rendszer ettől függetlenül készíthet rendszermentést: az Android alapértelmezett mentési lehetőségét ez a változat nem tiltja le. Ennek működése a készülék és a rendszer beállításaitól függ, nem garantált mentés.';
+
+  @override
+  String get infoBrowserTitle => 'A böngészőben';
+
+  @override
+  String get infoBrowserBody =>
+      'Weben az adatok a böngésző helyi tárolójában, az adott profilhoz és webcímhez tartoznak. Másik profil, privát ablak vagy eltérő host/port más tárolót jelenthet. Böngészőadat-törlés, appadat-visszaállítás vagy eltávolítás adatvesztést okozhat; ezek előtt készíts saját fájlos mentést.';
+
+  @override
+  String get infoProtectionTitle => 'A helyi tárolás korlátai';
+
+  @override
+  String get infoProtectionBody =>
+      'Az app nem valósít meg külön alkalmazásszintű adattitkosítást, jelszavas zárat vagy szerveres helyreállítást. A készülék és a böngésző védelme is számít. A helyi tároló sérülhet vagy elveszhet; az alkalmazás nem ígér adatvesztés elleni garanciát.';
+
+  @override
+  String get infoBackupTitle => 'Saját fájlos mentés';
+
+  @override
+  String get infoBackupBody =>
+      'A meglévő mentési oldalon készíts előnézetet, majd mentsd a JSON-fájlt. A mentés a helyi alkalmazásadatokat, a karaktert, XP-t, feloldásokat és kalandokat is tartalmazza. A fájl olvasható, nem jelszavas és nem titkosított az app által. Őrizd biztonságos helyen. Weben a letöltés elindítása még nem bizonyítja, hogy a fájl lemezre került.';
+
+  @override
+  String get infoRestoreTitle => 'Visszaállítás előnézettel';
+
+  @override
+  String get infoRestoreBody =>
+      'Válaszd ki a saját mentésedet, ellenőrizd az előnézetet, és csak utána erősítsd meg a visszaállítást. A rendszer ellenőrzi a fájlt és a helyi állapotot; hibás vagy nem támogatott adatot elutasíthat. A visszaállítás meglévő értékeket cserélhet le. Előtte a jelenlegi állapotról is készíts mentést. A fájlválasztó átmeneti helyi másolatot is készíthet az importált fájlról.';
+
+  @override
+  String get infoInternetTitle => 'Mikor kell internet?';
+
+  @override
+  String get infoInternetBody =>
+      'A naplók, számítások, karakterek és kalandok helyben működnek. A webes app első betöltése vagy frissítése a kiszolgálótól függően hálózatot igényelhet; a helyi Web ZIP saját kiszolgálóval indítható. A webkiszolgáló kéréseket és IP-címet láthat a saját naplózása szerint. A HU/EN alapbetűk csomagoltak, de szokatlan betűkhöz a webes megjelenítő külső betűkészletet kérhet. Felhős fájlhely kiválasztásakor a szolgáltató is használhat internetet.';
+
+  @override
+  String get infoPermissionsTitle => 'Engedélyek és adattovábbítás';
+
+  @override
+  String get infoPermissionsBody =>
+      'Ezekhez a funkciókhoz az app nem kér hely-, kamera-, mikrofon-, értesítési vagy mozgásérzékelő-engedélyt. Export/import esetén a rendszer fájlválasztójában általad megadott fájlt használja. Nincs beépített reklám, analitika vagy saját adatfeltöltő funkció. Az Android debug-csomag hálózati engedélyt is tartalmaz a Flutter fejlesztői eszközeihez; az engedély önmagában nem jelent adatküldést.';
+
+  @override
+  String get infoSelfReportTitle => 'Amit a napló meg tud mutatni';
+
+  @override
+  String get infoSelfReportBody =>
+      'A napló önbevalláson alapul: a saját bejegyzéseidből számol. A hiányzó bejegyzés nem igazol fogyasztásmentes napot. Az app nem diagnózis és nem vezetési alkalmassági vizsgálat; egészségügyi kérdéssel fordulj szakemberhez.';
+
+  @override
+  String get infoJournalTitle => 'Naplózás és keresés';
+
+  @override
+  String get infoJournalBody =>
+      'Felnőtt módban a főoldalon adhatsz hozzá tételt. A Naplóban névre kereshetsz, időszakot és árszűrőt választhatsz, majd rendezhetsz. Az összesítések csak a rögzített adatokat ismerik; a hiányt nem töltik ki feltételezéssel.';
+
+  @override
+  String get infoEditorTitle => 'Szerkesztés mentéssel';
+
+  @override
+  String get infoEditorBody =>
+      'A főoldali bejegyzés menüjéből vagy a kereshető naplóból nyisd a szerkesztőt. Név, mennyiség, alkoholfok, ár, dátum és idő módosítható. Mentésig csak az űrlap változik. Mégse és elvetés nem ment; módosított űrlap elhagyásakor megerősítést kérünk. Új időpont nem lehet jövőbeli, régi rekordot nem javítunk át automatikusan.';
+
+  @override
+  String get infoPricesTitle => 'Hiányzó ár vagy 0 Ft?';
+
+  @override
+  String get infoPricesBody =>
+      'Az üres ár ismeretlen összeget jelent. A ténylegesen megadott 0 Ft ismert ár, például egy ingyenes tételnél. A hiányzó ár nem nulla: a kimutatás részösszeget és árlefedettséget jelez. A Hiányzó ár szűrőből közvetlenül pótolhatsz árat; nincs automatikus árbecslés.';
+
+  @override
+  String get infoGoalsTitle => 'Saját célok és közérzet';
+
+  @override
+  String get infoGoalsBody =>
+      'A közérzetnaplóban a kiválasztott naphoz rögzíthetsz értékelést és megjegyzést. A saját céljaidat te választod; a félretett összeg saját jelzés, nem banki tranzakció. A meglévő korhatárkorlátok minden nézetben érvényesek.';
+
+  @override
+  String get infoAdventuresTitle => 'Kalandok a saját tempódban';
+
+  @override
+  String get infoAdventuresBody =>
+      'Naponta legfeljebb három vállalt vagy teljesített küldetésed lehet. A közérzetfeladat a mai mentést ellenőrzi, a többi teljesítést saját jelzésed igazolja. A megszakítás nem büntet, a kihagyott nap nem vesz el haladást. A térkép és a jelvények valódi teljesítésekből épülnek; nincs külön kaland-XP.';
+
+  @override
+  String get infoHelpBackupBody =>
+      'Mentéshez előnézetet készítesz és saját JSON-fájlt mentesz. Visszaállításkor fájlt választasz, ellenőrzöd az előnézetet, majd külön megerősíted a cserét. Ne tekintsd a böngésző letöltési kérését kész mentésnek: ellenőrizd a fájlt is.';
+
+  @override
+  String get infoMinorTitle => 'A jelenlegi korhatármód';
+
+  @override
+  String get infoMinorBody =>
+      'Ebben a módban az általános jólléti és Menti-funkciók használhatók; a felnőtt napló- és pénzügyi műveletek korlátozottak. A korhatár önkéntes nyilatkozat, nem személyazonosság-ellenőrzés. A korábbi helyi adatok ettől nem törlődnek.';
+
+  @override
+  String infoVersion(String version, String build) {
+    return 'Verzió: $version · build $build';
+  }
+
+  @override
+  String get infoVersionError =>
+      'A telepített változat verzióadata most nem olvasható. Nem helyettesítjük becsült verziószámmal.';
+
+  @override
+  String get infoRetry => 'Újrapróbálás';
+
+  @override
+  String get infoAboutSummaryTitle => 'Saját Menti, saját feljegyzések';
+
+  @override
+  String get infoAboutSummaryBody =>
+      'A MennyiMent? helyi naplókat, közérzetkövetést, személyes célokat és önkéntes Menti-kalandokat kínál. A karakter, a haladás és a jutalmak a meglévő helyi adataidhoz kapcsolódnak. A rövid használati útmutatót és az adatkezelés tényeit innen is eléred.';
+
+  @override
+  String get infoLicenses => 'Nyílt forrású licencek';
 }
