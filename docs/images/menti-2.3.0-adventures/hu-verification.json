@@ -1,0 +1,22 @@
+{
+  "sourceCommit": "7821f7818fef491cbf88797568364f8322f4e242",
+  "completedAt": "2026-11-13T03:59:57.616Z",
+  "browser": "154.0.8037.57",
+  "checks": [
+    "hu 320px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data",
+    "hu 320px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported",
+    "hu 320px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request",
+    "hu 360px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data",
+    "hu 360px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported",
+    "hu 360px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request",
+    "hu 390px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data",
+    "hu 390px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported",
+    "hu 390px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request",
+    "hu 430px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data",
+    "hu 430px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported",
+    "hu 430px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request"
+  ],
+  "runtimeErrors": [],
+  "intentionalReloadCancellations": [],
+  "intentionalContextCloseCancellations": []
+}

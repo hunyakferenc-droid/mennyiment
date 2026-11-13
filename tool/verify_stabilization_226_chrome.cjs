@@ -8,7 +8,7 @@ const strings = Object.fromEntries(['hu', 'en'].map(l => [l, JSON.parse(fs.readF
 const url = process.env.MENTI_WEB_URL || 'http://127.0.0.1:7357';
 const out = process.env.MENTI_EVIDENCE_DIR || path.join(root, '.agent-workspace/stabilization-chrome');
 fs.mkdirSync(out, { recursive: true });
-const checks = [], errors = [], cancelled = [];
+const checks = [], errors = [], cancelled = [], closedCancelled = [];
 const pref = (key) => `flutter.mennyiment_${key}`;
 const encode = value => JSON.stringify(typeof value === 'object' ? JSON.stringify(value) : value);
 function seed(locale, family = 'girl', age = 'adult') {
@@ -36,8 +36,9 @@ function observe(page) {
   page.on('response', r => { if(r.status()>=400) errors.push(`${r.status()} ${r.url()}`); });
   page.on('requestfailed', r => {
     page.pendingRequests.delete(r); page.lastNetworkActivity=Date.now();
-    const message=`${r.url()}: ${r.failure()?.errorText}`;
-    if(page.reloading && r.failure()?.errorText==='net::ERR_ABORTED') cancelled.push(message);
+    const message=`${r.url()}: ${r.failure()?.errorText}${page.harnessPhase ? ' [phase: '+page.harnessPhase+']' : ''}`;
+    if(page.closing && r.failure()?.errorText==='net::ERR_ABORTED') closedCancelled.push(message);
+    else if(page.reloading && r.failure()?.errorText==='net::ERR_ABORTED') cancelled.push(message);
     else errors.push(message);
   });
 }
@@ -107,7 +108,7 @@ async function semanticTap(locator) {
   await locator.waitFor({state:'visible'});
   await locator.evaluate(element=>element.click());
 }
-module.exports={chromium,open,seed,screenshot,snapshot,reach,semantics,observe,strings,out,errors,cancelled};
+module.exports={chromium,open,seed,screenshot,snapshot,reach,semantics,observe,strings,out,errors,cancelled,closedCancelled};
 if(require.main===module) (async()=>{
   const browser=await chromium.launch({executablePath:process.env.CHROME_BIN||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
   let active;

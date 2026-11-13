@@ -1,0 +1,70 @@
+00:00 +0: loading /workspace/mennyiment-adventures/test/menti_adventure_store_test.dart
+00:00 +0: /workspace/mennyiment-adventures/test/menti_adventure_store_test.dart: Opening an old profile creates no state and does not infer past rewards
+00:00 +1: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +2: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +3: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +4: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +5: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +6: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +7: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +8: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +9: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +10: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +11: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +12: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +13: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +14: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:00 +15: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +16: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +17: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +18: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +19: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +20: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +21: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +22: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +23: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +24: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +25: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +26: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +27: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +28: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +29: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +30: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +31: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +32: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +33: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +34: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +35: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +36: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +37: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +38: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:01 +39: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 320.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:08 +40: /workspace/mennyiment-adventures/test/menti_adventures_integration_test.dart: hu: home links real wellbeing, verifies saved data, preserves own Menti and XP
+00:12 +41: /workspace/mennyiment-adventures/test/menti_adventures_integration_test.dart: hu: home links real wellbeing, verifies saved data, preserves own Menti and XP
+00:14 +42: /workspace/mennyiment-adventures/test/menti_adventures_integration_test.dart: hu: home links real wellbeing, verifies saved data, preserves own Menti and XP
+00:17 +43: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 360.0/2.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:18 +44: /workspace/mennyiment-adventures/test/menti_adventures_integration_test.dart: en: home links real wellbeing, verifies saved data, preserves own Menti and XP
+00:21 +45: /workspace/mennyiment-adventures/test/menti_adventures_integration_test.dart: en: home links real wellbeing, verifies saved data, preserves own Menti and XP
+00:22 +46: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 390.0/2.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:23 +47: /workspace/mennyiment-adventures/test/menti_adventures_integration_test.dart: A minor can reach adventures and real wellbeing without adult controls
+00:26 +48: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 430.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:26 +49: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: hu 430.0/2.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:28 +50: /workspace/mennyiment-adventures/test/menti_adventure_dialog_test.dart: Rapid activation: repeated open=false, confirmation resolves once
+00:29 +51: /workspace/mennyiment-adventures/test/menti_adventure_dialog_test.dart: Rapid activation: repeated open=false, confirmation resolves once
+00:31 +52: /workspace/mennyiment-adventures/test/menti_adventure_dialog_test.dart: Rapid activation: repeated open=false, confirmation resolves once
+00:32 +53: /workspace/mennyiment-adventures/test/menti_adventure_dialog_test.dart: Rapid activation: repeated open=false, confirmation resolves once
+00:32 +54: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: en 360.0/2.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:33 +55: /workspace/mennyiment-adventures/test/menti_adventure_dialog_test.dart: Rapid activation: repeated open=true, confirmation resolves once
+00:33 +56: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: en 390.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:34 +57: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: en 390.0/2.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:36 +58: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: en 430.0/1.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:37 +59: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: en 430.0/2.0: choose, cancel dialog, complete three, map and badges with keyboard
+00:38 +60: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: Cancel a commitment frees a slot; dismissing confirmation does not cancel it
+00:38 +61: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: Opening wellbeing alone never completes; a real saved today entry is verified
+00:39 +62: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: Minor sees only general wellbeing tasks, with no adult goal route
+00:39 +63: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: Live local midnight reloads today without changing yesterday
+00:40 +64: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: Corrupt state has a readable recovery message and no writable controls
+00:40 +65: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: Reopen and reduced motion do not replay completed celebrations
+00:40 +66: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: Normal motion feedback can be skipped and does not write another reward
+00:41 +67: /workspace/mennyiment-adventures/test/menti_adventures_page_test.dart: (tearDownAll)
+00:41 +67: All tests passed!

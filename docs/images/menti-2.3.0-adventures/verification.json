@@ -1,0 +1,232 @@
+{
+  "sourceCommit": "7821f7818fef491cbf88797568364f8322f4e242",
+  "ciRun": 43308254113,
+  "browser": "154.0.8037.57",
+  "method": "Separate completed HU/EN runs on the exact downloaded CI Web ZIP. Synthetic local data only. 320/360/390/430 px, normal browser text, reduced motion. 200% and keyboard covered by Flutter widget tests.",
+  "checks": [
+    "hu 320px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data",
+    "hu 320px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported",
+    "hu 320px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request",
+    "hu 360px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data",
+    "hu 360px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported",
+    "hu 360px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request",
+    "hu 390px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data",
+    "hu 390px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported",
+    "hu 390px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request",
+    "hu 430px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data",
+    "hu 430px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported",
+    "hu 430px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request",
+    "en 320px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data",
+    "en 320px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported",
+    "en 320px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request",
+    "en 360px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data",
+    "en 360px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported",
+    "en 360px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request",
+    "en 390px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data",
+    "en 390px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported",
+    "en 390px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request",
+    "en 430px: choose, cancel, resume, cancel completion dialog, then one confirmed self-report; one badge and protected existing data",
+    "en 430px: three actual completions grant first station and three dated badges; wellbeing is data-verified in 390px cases, manual activities are explicitly self-reported",
+    "en 430px: application reload preserves selected/completed state and badges, never replays a celebration, and makes no external request"
+  ],
+  "runtimeErrors": [],
+  "intentionalReloadCancellations": [],
+  "intentionalContextCloseCancellations": [],
+  "screenshots": [
+    {
+      "file": "badges-hu-320.png",
+      "sha256": "5b91ebeb2bf40894e7b588913b20ece44880432d9150bc81cf353e71c937195f"
+    },
+    {
+      "file": "badges-hu-360.png",
+      "sha256": "4ca82259c4ae75ee133ed15abbf14881c35d4d1a9dd97aa65c1e4abc6fc709f7"
+    },
+    {
+      "file": "badges-hu-390.png",
+      "sha256": "8d0406d2dcea50f1b9f10cfbb6f4c7250efdb45d1a94f3d7c1361523660767be"
+    },
+    {
+      "file": "badges-hu-430.png",
+      "sha256": "234961008c44c71f285db3fc5b0fd94ed949d47ee5895afaf0f8196fc14b0a4a"
+    },
+    {
+      "file": "celebration-hu-320.png",
+      "sha256": "7b7157d4f2de76f94fb922d69202608667461b71bfa656494bdcf36affcaaa70"
+    },
+    {
+      "file": "celebration-hu-360.png",
+      "sha256": "787da940e4c2c9ea7bdfa666f6a9d769785cb1dd7ab8dcd709a37e960c1033ac"
+    },
+    {
+      "file": "celebration-hu-390.png",
+      "sha256": "95437ea4114c4254a68a3a0896ca76301948e3ff3ebeb6ae47f28a4bdbd519a9"
+    },
+    {
+      "file": "celebration-hu-430.png",
+      "sha256": "c951bb096ed85e3f4f792a8ce74daf112f073b5b9ae6bfb3c1ce4fd8a4b3e667"
+    },
+    {
+      "file": "decision-hu-320.png",
+      "sha256": "e7d60b199556aeb3a567b9721292dc0738bdf107134dbd3492c8b3422106a9e5"
+    },
+    {
+      "file": "decision-hu-360.png",
+      "sha256": "dac8a1959a1c7ab643cf21d6c231dd6d9499a06460edcffd0a3d9d8b9937909d"
+    },
+    {
+      "file": "decision-hu-390.png",
+      "sha256": "5f15e26667d115a46da4d95ec18a243b4c72ea3df5122dff25c981c0ef3e2de7"
+    },
+    {
+      "file": "decision-hu-430.png",
+      "sha256": "ff77d392491602e1b60167748eca146d4da1216b7cd886a7a3840a81e610e321"
+    },
+    {
+      "file": "map-hu-320.png",
+      "sha256": "bf54b422e60f3bb9ad08124b4494d9157c3d2ded7a180cf7cd9d3d543df0d9c8"
+    },
+    {
+      "file": "map-hu-360.png",
+      "sha256": "1a2d39d660c159ba9c465fc338e0b2a78713df9aea0e963b27642f403bc8f1f6"
+    },
+    {
+      "file": "map-hu-390.png",
+      "sha256": "9fff792f7afca5f69314bacc712cdcd7796b20baa5abf51ee01ff840ee775447"
+    },
+    {
+      "file": "map-hu-430.png",
+      "sha256": "1f388df1417a03e31d9a66397e8ef23ece440981db248b08e5e181c4b0d3225a"
+    },
+    {
+      "file": "missions-hu-320.png",
+      "sha256": "4d119c00ba489ccb0b60b0ce537e6c5263e94bfc42cfef7a51a56efaeeeb25ea"
+    },
+    {
+      "file": "missions-hu-360.png",
+      "sha256": "7e635349369f621be2c1a6b35a5e1df9ab5b9c2499919e143d807bd95d66fd80"
+    },
+    {
+      "file": "missions-hu-390.png",
+      "sha256": "a9cc350cb9d26615906b3833e746ce64ad8f84fab92ea22010b6851a79338351"
+    },
+    {
+      "file": "missions-hu-430.png",
+      "sha256": "da93ee9eaa83d396711b6e8edb2f6ed52beb28b539453b291eb00f01e7c35b31"
+    },
+    {
+      "file": "reloaded-hu-320.png",
+      "sha256": "dc7e44f7448783feb23c8189f3f1c72acf04610bafbc6812ef90c2807596fee3"
+    },
+    {
+      "file": "reloaded-hu-360.png",
+      "sha256": "211a99408357b153e29bff1c7d570a22a9fd5f622905dc5b4f63824adeab52b5"
+    },
+    {
+      "file": "reloaded-hu-390.png",
+      "sha256": "62c9635a31763fcb9c132e4af4647e49d93abd2433547e03fa1e33a857a2756c"
+    },
+    {
+      "file": "reloaded-hu-430.png",
+      "sha256": "0eceaa5597f939e5bcee7e11edf97532754c1eff266b985143823103aa25c83e"
+    },
+    {
+      "file": "badges-en-320.png",
+      "sha256": "b8e1acb8f471c33c7a049cb1c129baa6005f4bdcb00f20dfca2e79fc8920fd8b"
+    },
+    {
+      "file": "badges-en-360.png",
+      "sha256": "e2af700cc469be2bf0b69af4880569dccc0088c5ad8ccd3d3b8746731cada061"
+    },
+    {
+      "file": "badges-en-390.png",
+      "sha256": "48cc47390feca97fa9709c8939ffe111a67a8da64becd1a154f53577aa2aa47d"
+    },
+    {
+      "file": "badges-en-430.png",
+      "sha256": "c01e0b043e26a0b00410d93a6fd2e66cf882e4e5c697580ba9459d8b4187f757"
+    },
+    {
+      "file": "celebration-en-320.png",
+      "sha256": "bf8493c1e2904c6264d4c61cfe62b31cde099316f670da40e300e889faa35ebe"
+    },
+    {
+      "file": "celebration-en-360.png",
+      "sha256": "76a0135d44f35ae3f1f0ad30f3fd5bd2328f70b5a754f72964520d6687305272"
+    },
+    {
+      "file": "celebration-en-390.png",
+      "sha256": "866d1d87f22e113d10af9fa0a9bf45485c8488c741152c0d7f347a36e8da5fd7"
+    },
+    {
+      "file": "celebration-en-430.png",
+      "sha256": "1e684deaee1fd9a5265926d221fc38fc483cc43e4d92f90b0a8a341facd259b4"
+    },
+    {
+      "file": "decision-en-320.png",
+      "sha256": "986d07881b2b18bc81405c43dff3188e366a6a58767a7b76175f47aee806a215"
+    },
+    {
+      "file": "decision-en-360.png",
+      "sha256": "53cc55ae258e17f0b0ad4e1352ac7bee78b04a70460bad467258fef866baa1ad"
+    },
+    {
+      "file": "decision-en-390.png",
+      "sha256": "155632c16667d2f99efc09a88761829e26e7d26b5b116fb2a4f5713550911a89"
+    },
+    {
+      "file": "decision-en-430.png",
+      "sha256": "3ac8844b682b55fecd513cf42a78aa2e712ad50d52996876783998a8c1c06a19"
+    },
+    {
+      "file": "map-en-320.png",
+      "sha256": "840982a909e335e319e187450eac29afee24f3b9b3fa6bc580576ad88e01ab9a"
+    },
+    {
+      "file": "map-en-360.png",
+      "sha256": "04adaaa42187ff86344da4f56f165f76d6636b1bce59f85714cf8fd572affb06"
+    },
+    {
+      "file": "map-en-390.png",
+      "sha256": "cec3434905bd4cf7cb61792c4d3663a3014e4a19535451883e34efe4e58da3c1"
+    },
+    {
+      "file": "map-en-430.png",
+      "sha256": "10fa30b3b359c62557c56ae96dca67ea6165ef732ddc9cf9013ed204778d7b68"
+    },
+    {
+      "file": "missions-en-320.png",
+      "sha256": "77996614f7333526a50e9b556f8a696dcc85ba53977379b8e7eebbacf9bbd9ee"
+    },
+    {
+      "file": "missions-en-360.png",
+      "sha256": "408aff1e3c737bb51f3ada0435a63feb972cabef0941139320359af1965c0dd7"
+    },
+    {
+      "file": "missions-en-390.png",
+      "sha256": "dec0f29eccbc89bc0953701b84f1ce3a9b26473830a23fc6d72a3c867fd2dcca"
+    },
+    {
+      "file": "missions-en-430.png",
+      "sha256": "79bd84a0e5a0bac174ab12e0a7ce905a3384403938f5d7eb1a67b85aef161479"
+    },
+    {
+      "file": "reloaded-en-320.png",
+      "sha256": "4b8866490d961f5d267bd080223c947c59c55744f0e2b36f64c9532633fac9d1"
+    },
+    {
+      "file": "reloaded-en-360.png",
+      "sha256": "fe339b723ffed0a27247c88e6d57d6b9f6509ffb1aae65e186eeddc1eb1c3d89"
+    },
+    {
+      "file": "reloaded-en-390.png",
+      "sha256": "b167c0af324e43a6881ddcaec70ad6386a4e68ecb55182be870a9af965efff17"
+    },
+    {
+      "file": "reloaded-en-430.png",
+      "sha256": "fda258cfab20539ee5139b7de50f6e13163ba8089290b2498fa37c8cd8774c51"
+    }
+  ],
+  "realWindowsTested": false,
+  "androidEmulatorTested": false,
+  "physicalAndroidTested": false
+}

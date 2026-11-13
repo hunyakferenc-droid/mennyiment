@@ -1,0 +1,159 @@
+{
+  "sourceCommit": "7821f7818fef491cbf88797568364f8322f4e242",
+  "run": 43308254113,
+  "job": 131497296149,
+  "url": "https://github.com/hunyakferenc-droid/mennyiment/actions/runs/43308254113",
+  "timezone": "Europe/Budapest",
+  "fullTests": {
+    "passed": 927,
+    "failed": 0,
+    "skipped": 0
+  },
+  "newTests": 67,
+  "additionalDstTests": {
+    "passed": 349,
+    "failed": 0,
+    "skipped": 0,
+    "overlapsFullSuite": true
+  },
+  "localizationKeys": 845,
+  "evidence": [
+    "2026-11-12T21:16:13.0849961Z HU/EN: 845 matching keys; no untranslated messages",
+    "2026-11-12T21:16:23.4788551Z No issues found! (ran in 9.8s)",
+    "2026-11-12T21:18:51.3248053Z 🎉 927 tests passed.",
+    "2026-11-12T21:19:18.6989987Z 🎉 349 tests passed.",
+    "2026-11-12T21:19:53.5651937Z ✓ Built build/web",
+    "2026-11-12T21:23:09.6628712Z ✓ Built build/app/outputs/flutter-apk/app-debug.apk",
+    "2026-11-12T21:23:11.4095147Z source_commit=7821f7818fef491cbf88797568364f8322f4e242",
+    "2026-11-12T21:23:11.4099056Z V2 Signer: certificate SHA-256 digest: 90bb6f1a99998d754f6936a64b2c434cb0d636edfdd5ffb7fb5a554e396ea59b",
+    "2026-11-12T21:23:11.4103406Z package: name='com.example.mennyiment' versionCode='33' versionName='2.3.0' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'"
+  ],
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1
+    },
+    {
+      "name": "Checkout",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 2
+    },
+    {
+      "name": "Set up Flutter 3.47.7 (Dart 3.13.5)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3
+    },
+    {
+      "name": "Set up Java for debug Android builds",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4
+    },
+    {
+      "name": "SDK versions",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5
+    },
+    {
+      "name": "flutter pub get and gen-l10n",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6
+    },
+    {
+      "name": "Whitespace check",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7
+    },
+    {
+      "name": "flutter analyze",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8
+    },
+    {
+      "name": "flutter test --concurrency=2",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9
+    },
+    {
+      "name": "Backup, restore and 6.8 regressions in Europe/Budapest (including DST)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 10
+    },
+    {
+      "name": "flutter build web",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 11
+    },
+    {
+      "name": "Include Python-free Windows launcher and build provenance",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 12
+    },
+    {
+      "name": "Upload Chrome web build",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13
+    },
+    {
+      "name": "flutter build apk --debug",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14
+    },
+    {
+      "name": "Verify debug APK signature and package",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 15
+    },
+    {
+      "name": "Upload installable debug APK",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 16
+    },
+    {
+      "name": "CI summary",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 17
+    },
+    {
+      "name": "Post Set up Java for debug Android builds",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 32
+    },
+    {
+      "name": "Post Set up Flutter 3.47.7 (Dart 3.13.5)",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 33
+    },
+    {
+      "name": "Post Checkout",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 34
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 35
+    }
+  ]
+}
