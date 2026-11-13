@@ -427,11 +427,28 @@ class _CompleteLooksPageState extends State<CompleteLooksPage> {
                       builder: (ctx) => AlertDialog(
                         scrollable: true,
                         title: Text(look.name(context)),
-                        content: CompleteLookArtwork(
-                          look: look,
-                          size: (MediaQuery.sizeOf(ctx).width - 100).clamp(
+                        content: SizedBox(
+                          width: (MediaQuery.sizeOf(ctx).width - 100).clamp(
                             180,
                             640,
+                          ),
+                          height:
+                              (MediaQuery.sizeOf(ctx).width - 100).clamp(
+                                180,
+                                640,
+                              ) *
+                              4 /
+                              3,
+                          child: InteractiveViewer(
+                            minScale: 1,
+                            maxScale: 3,
+                            child: CompleteLookArtwork(
+                              look: look,
+                              size: (MediaQuery.sizeOf(ctx).width - 100).clamp(
+                                180,
+                                640,
+                              ),
+                            ),
                           ),
                         ),
                         actions: [
@@ -468,7 +485,12 @@ class _CompleteLooksPageState extends State<CompleteLooksPage> {
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             child: Row(
                               children: [
-                                CompleteLookArtwork(look: item, size: 64),
+                                ExcludeSemantics(
+                                  child: CompleteLookArtwork(
+                                    look: item,
+                                    size: 64,
+                                  ),
+                                ),
                                 const SizedBox(width: 12),
                                 Expanded(child: Text(item.name(context))),
                                 const SizedBox(width: 8),

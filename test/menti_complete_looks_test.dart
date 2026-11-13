@@ -327,6 +327,32 @@ void main() {
             await tapKey('complete-${look.id}');
             expect(tester.takeException(), isNull);
           }
+          final scroll = tester.state<ScrollableState>(
+            find.byType(Scrollable).last,
+          );
+          scroll.position.jumpTo(0);
+          await tester.pumpAndSettle();
+          await tapKey('complete-enlarge');
+          expect(find.byType(InteractiveViewer), findsOneWidget);
+          expect(
+            tester
+                .widget<InteractiveViewer>(find.byType(InteractiveViewer))
+                .maxScale,
+            3,
+          );
+          final enlarged = tester.widget<CompleteLookArtwork>(
+            find.descendant(
+              of: find.byType(AlertDialog),
+              matching: find.byType(CompleteLookArtwork),
+            ),
+          );
+          expect(enlarged.look.id, 'neutral-base-v1');
+          final strings = AppLocalizations.of(
+            tester.element(find.byType(AlertDialog)),
+          )!;
+          await tester.ensureVisible(find.text(strings.avatarClosePreview));
+          await tester.tap(find.text(strings.avatarClosePreview));
+          await tester.pumpAndSettle();
           await tapKey('complete-girl-base-v1');
           // Keyboard/inset cannot hide scrollable Save/Cancel.
           tester.view.viewInsets = const FakeViewPadding(bottom: 300);
