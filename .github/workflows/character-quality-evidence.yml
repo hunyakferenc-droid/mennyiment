@@ -28,7 +28,6 @@ jobs:
     env:
       TZ: Europe/Budapest
       BASE_SHA: 193ab29a17ac9d7eccd9f8930d3dedaf19b51bf8
-      PLAYWRIGHT_MODULE_PATH: ${{ runner.temp }}/menti-browser/node_modules/playwright
       CHROME_BIN: /usr/bin/google-chrome
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -42,7 +41,9 @@ jobs:
           cache: true
           pub-cache: true
       - name: Install isolated browser test dependency
-        run: npm install --prefix "$RUNNER_TEMP/menti-browser" playwright@1.57.0
+        run: |
+          npm install --prefix "$RUNNER_TEMP/menti-browser" playwright@1.57.0
+          echo "PLAYWRIGHT_MODULE_PATH=$RUNNER_TEMP/menti-browser/node_modules/playwright" >> "$GITHUB_ENV"
       - name: Verify preserved graphics, models and storage
         run: |
           git fetch --depth=1 origin "$BASE_SHA"
