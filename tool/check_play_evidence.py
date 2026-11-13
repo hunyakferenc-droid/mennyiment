@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import re
 import struct
+import subprocess
 
 p = argparse.ArgumentParser()
 p.add_argument('--folder', type=Path, default=Path(__file__).resolve().parents[1] / 'docs/images/menti-2.3.1-play')
@@ -48,4 +49,10 @@ for c in candidates['candidates']:
     assert c['sha256'] == hashlib.sha256((folder / c['file']).read_bytes()).hexdigest()
     assert all(0 < len(c['alt'][lang]) <= 140 for lang in ('hu', 'en'))
 assert (folder / 'index.html').is_file()
+root = Path(__file__).resolve().parents[1]
+if folder.resolve() == (root / 'docs/images/menti-2.3.1-play').resolve():
+    tracked = subprocess.check_output(['git', 'ls-files', '--', 'docs/images/menti-2.3.1-play'], cwd=root, text=True)
+    missing = [name for name in names if 'docs/images/menti-2.3.1-play/' + name not in tracked.splitlines()]
+    if missing:
+        raise SystemExit('Evidence image is not tracked by Git: ' + ', '.join(sorted(missing)))
 print('Play evidence verified: all 60 image hashes, 50 mobile PNGs, 10 native 1080x1920 JPEGs, 34 checks and HU/EN alt text.')

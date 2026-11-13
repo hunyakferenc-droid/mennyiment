@@ -98,6 +98,7 @@ pubspec.yaml.bak
 
 # Synthetic UI evidence only, never an exported user backup.
 !/docs/images/menti-2.3.1-play/backup-existing-*.png
+!/docs/images/menti-2.3.1-play/help-backup-*.png
 
 # Local Flutter golden comparison diagnostics
 /test/failures/
