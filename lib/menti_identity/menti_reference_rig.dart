@@ -276,9 +276,9 @@ class _PlatePainter extends CustomPainter {
         final baseSy = (spec.blink || (spec.wink && side == 1))
             ? .48
             : switch (spec.eyeStyle) {
-                'joyful' => .48,
+                'joyful' => .64,
                 'attentive' => 1.06,
-                'supportive' => .72,
+                'supportive' => .82,
                 'wide' => 1.055,
                 'relaxed' => .65,
                 'sharp' => .76,

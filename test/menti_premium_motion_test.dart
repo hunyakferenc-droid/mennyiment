@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mennyiment/menti_identity/menti_identity.dart';
 import 'package:mennyiment/menti_identity/menti_premium_motion.dart';
 import 'package:mennyiment/menti_identity/menti_premium_renderer.dart';
+import 'package:mennyiment/menti_identity/menti_reference_rig.dart';
 
 void main() {
   testWidgets(
@@ -92,11 +93,25 @@ void main() {
       reaction = 'focused';
       await tester.pumpWidget(host());
       expect(current().smile, false);
+      expect(
+        tester
+            .widgetList<MentiReferencePlate>(find.byType(MentiReferencePlate))
+            .first
+            .eyeStyle,
+        'attentive',
+      );
       reduced = true;
       await tester.pumpWidget(host());
       await tester.pump(const Duration(seconds: 20));
       expect(current().blink, false);
       expect(current().wink, false);
+      expect(
+        tester
+            .widgetList<MentiReferencePlate>(find.byType(MentiReferencePlate))
+            .first
+            .eyeStyle,
+        'attentive',
+      );
       reduced = false;
       visible = false;
       await tester.pumpWidget(host());
@@ -110,6 +125,14 @@ void main() {
       tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
       await tester.pump(const Duration(seconds: 7));
       expect(current().blink, true);
+      await tester.pump(const Duration(milliseconds: 150));
+      expect(
+        tester
+            .widgetList<MentiReferencePlate>(find.byType(MentiReferencePlate))
+            .first
+            .eyeStyle,
+        'attentive',
+      );
       expect(jsonEncode(profile.toJson()), before);
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump();

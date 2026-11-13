@@ -35,7 +35,7 @@ class MentiAccessoryRig {
     final e = right ? head.rightEye : head.leftEye;
     return Rect.fromCenter(
       center: e.center,
-      width: e.width * (style == 'sunglasses' ? (compact ? .98 : 1.01) : 1.10),
+      width: e.width * (style == 'sunglasses' ? 1.01 : 1.10),
       height: e.height * (style == 'sunglasses' ? .82 : .92),
     );
   }
@@ -61,8 +61,7 @@ class MentiAccessoryRig {
   Rect get collar {
     final chin = head.mouth.bottom + head.scalp.height * .045;
     final opening = wardrobe.collarOpening;
-    final width =
-        math.min(opening.width, head.scalp.width * .32) * (compact ? .92 : 1);
+    final width = math.min(opening.width, head.scalp.width * .32);
     return Rect.fromCenter(
       center: Offset(
         opening.center.dx,
@@ -83,7 +82,7 @@ class MentiAccessoryRig {
       );
     }
     if (id == 'scarf') {
-      final width = r.width * (compact ? 1.05 : 1.12);
+      final width = r.width * 1.12;
       final height = width * 888 / 928;
       final jaw = head.scalp.bottom;
       return Rect.fromLTWH(
@@ -354,7 +353,7 @@ class MentiFittedAccessories extends CustomPainter {
       );
       c.drawRRect(
         shape,
-        stroke(frame, dark ? (rig.compact ? 1.2 : 1.4) : 1.15),
+        stroke(frame, dark ? 1.4 : 1.15),
       );
       // Fine reflected bevel and inner lip give the frame material thickness
       // without restoring the old heavy outline.
@@ -452,7 +451,7 @@ class MentiFittedAccessories extends CustomPainter {
           r.bottom,
         )
         ..close();
-      final fall = rig.compact ? .30 : .44;
+      final fall = .44;
       final tail = Path()
         ..moveTo(r.center.dx + w * .06, r.bottom - 2)
         ..lineTo(r.right - w * .18, r.bottom - 3)
