@@ -14,3 +14,7 @@ Kész Web ZIP: bontsd ki az egész csomagot, indítsd az INDITAS.cmd fájlt, maj
 A debug APK technikai próba, nem Play-kiadás. Az alkalmazásazonosító változatlan: com.example.mennyiment. A CI debug-aláírása futásonként eltérhet. Adatmegőrző normál frissítéshez megfelelő verziókód és azonos elfogadott aláírási identitás kell; a konkrét csomag ujjlenyomata a build-info.txt fájlban és a jelentésben szerepel. Aláírásütközés miatt meglévő appot ne távolíts el; weben vagy külön tesztkészüléken próbálj, és őrizd meg a fájlos mentésedet.
 
 A telefonos rendszerbillentyűzet, TalkBack és fizikai teljesítmény csak tényleges telefonos próbával igazolható. A jelentés külön jelzi, mi futott és mi nem.
+
+## Teljes offline képgaléria
+
+Az Előtte és Utána galéria-ZIP-et ugyanabba az üres mappába bontsd ki. Az eredményben a before és after almappa, illetve az index.html egymás mellett legyen. Az index.html a galéria belépője; külső internetes erőforrás nem kell. Ez külön képgaléria, nem az alkalmazás Web ZIP-je.

@@ -85,11 +85,36 @@ jobs:
           python3 tool/character_quality_gallery.py "$RUNNER_TEMP/menti-evidence"
           python3 tool/character_quality_gallery.py "$RUNNER_TEMP/menti-evidence" --check
           cp docs/character-quality/kiprobalas-hu.md "$RUNNER_TEMP/menti-evidence/KIPROBALAS-HU.md"
-      - name: Upload original renders, configuration manifests and offline gallery
+      - name: Split the original gallery below the connector download limit
+        run: |
+          python3 - <<'PYGALLERY'
+          from pathlib import Path
+          import shutil
+          root = Path("${{ runner.temp }}")
+          evidence = root / 'menti-evidence'
+          before = root / 'menti-gallery-before'
+          after = root / 'menti-gallery-after'
+          before.mkdir(); after.mkdir()
+          shutil.move(str(evidence / 'before'), before / 'before')
+          shutil.move(str(evidence / 'after'), after / 'after')
+          for name in ['index.html', 'manifest.json', 'KIPROBALAS-HU.md']:
+              shutil.copyfile(evidence / name, after / name)
+          for folder in [before, after]:
+              print(folder.name, sum(p.stat().st_size for p in folder.rglob('*') if p.is_file()), 'uncompressed bytes')
+          PYGALLERY
+      - name: Upload original before renders
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.4.1-character-gallery-${{ github.sha }}
-          path: ${{ runner.temp }}/menti-evidence/
+          name: mennyiment-2.4.1-gallery-before-${{ github.sha }}
+          path: ${{ runner.temp }}/menti-gallery-before/
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 1
+      - name: Upload original after renders and offline gallery
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.4.1-gallery-after-${{ github.sha }}
+          path: ${{ runner.temp }}/menti-gallery-after/
           if-no-files-found: error
           retention-days: 14
           compression-level: 1
