@@ -169,7 +169,7 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
       floatingActionButton: FloatingActionButton(
         key: const ValueKey('journal-add-drink'),
         onPressed: () => Navigator.of(context).pop(true),
-        tooltip: s.addDrink,
+        tooltip: s.visualAdd,
         child: const Icon(Icons.add),
       ),
       body: SafeArea(
@@ -419,9 +419,12 @@ class _DrinkJournalPageState extends State<DrinkJournalPage> {
                             ),
                           ),
                         const SizedBox(height: 8),
-                        Text(
-                          s.visualJournalScope,
-                          style: Theme.of(context).textTheme.bodySmall,
+                        Semantics(
+                          container: true,
+                          child: Text(
+                            s.visualJournalScope,
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
                         ),
                       ],
                     ),

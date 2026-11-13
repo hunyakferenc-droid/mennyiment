@@ -100,6 +100,12 @@ void main() {
               width,
               scale,
             );
+            final semantics = t.ensureSemantics();
+            try {
+              expect(find.bySemanticsLabel(s.journalSearch), findsOneWidget);
+            } finally {
+              semantics.dispose();
+            }
             expect(
               find.byType(DropdownButtonFormField<JournalPrice>),
               findsNothing,
