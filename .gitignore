@@ -108,3 +108,7 @@ pubspec.yaml.bak
 
 # Original synthetic character evidence only; never user images or backups.
 !/docs/images/menti-character-quality/*.png
+
+# Owner-provided complete-look references; unmodified original graphics.
+!/docs/images/menti-complete-looks/originals/**/*.png
+!/docs/images/menti-complete-looks/contact-*.png

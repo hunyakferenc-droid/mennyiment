@@ -29,13 +29,27 @@ A beillesztések számozása a beszélgetés sorrendjét követi: kezdeti három
 | S05 | 19 | Semleges | Fekete–zöld sapka, fekete–fehér sportos felső, gördeszka zöld kerekekkel, V-jel. |
 | S06 | 20 | Semleges | Színes foltos kalap és ing, fehér felső, rövidnadrág, V-jel és színes pohár. |
 
-## Pontos fájlhozzáférési hiány
+## Eredeti fájlok és számozott képes leltár
 
-A képek vizuálisan láthatók a beszélgetésben. Az eredeti PNG/JPG-fájlok, nevük és letölthető fájlhivatkozásuk viszont nem jelentek meg a végrehajtási környezet csatolmányai között. F01–F06, L01–L06 és S01–S06 eredeti képfájljai ezért jelenleg hiányoznak a munkakönyvtárból. A külön szöveges feladatcsatolmány elérhető és elolvasva.
+A három RAR megérkezett és hibamentesen kibomlott: mindegyikben hat eredeti PNG van, összesen **28 216 526 byte**. Az eredeti útvonalak és fájlnevek megmaradtak. Nem használtunk korábbi alkalmazásrenderből kivágott vagy újragenerált helyettesítő képet.
 
-Emiatt még nem készült valódi, az eredeti képpontokat tartalmazó számozott kontaktlap. Nincs kitalált fájlnév, felbontás, bájtméret, alfaellenőrzés vagy SHA-256. A lányképeknél látható egyszínű környezetből nem következtetünk ellenőrzött átlátszóságra. A poharak tartalmát nem minősítjük alkoholosnak.
+- Fiú: 1086×1448 px, RGB, nincs alfa; a díszlet a forráskép része.
+- Lány: 1086×1448 px, RGBA, tényleges 0–255 alfával.
+- Semleges: 512×512 px, RGB, nincs alfa; a háttér a forráskép része.
 
-A szükséges következő bemenet: a 18 eredeti kép egy ZIP-ben, az eredeti fájlnevekkel. Nem kell újrarajzolni vagy újra előállítani őket. Ezután az eredetik változtatás nélküli bélyegképeiből készül a valódi számozott képes lap és a fájlszintű leltár; az esetleges ismétléseket ellenőrzőösszeggel is megvizsgáljuk.
+[Offline megnyitható képes leltár](../images/menti-complete-looks/index.html) · [Eredeti fájlok, archívum- és képenkénti SHA-256, méretek, alfaadatok](../images/menti-complete-looks/reference-files.json)
+
+![Fiú eredeti referenciák F01–F06](../images/menti-complete-looks/contact-boy.png)
+
+![Lány eredeti referenciák L01–L06](../images/menti-complete-looks/contact-girl.png)
+
+![Semleges eredeti referenciák S01–S06](../images/menti-complete-looks/contact-neutral.png)
+
+A fenti kontaktlapok az eredeti PNG-k böngészős elrendezéséről készült képernyőképek, kívül elhelyezett sorszámokkal. Az eredeti fájlok képpontjai változatlanok. A 18 eredetit ténylegesen átnéztük: a tulajdonosi családmegjelölésekkel és az inline képekkel egyeznek. A böngészős leltárban mind a 18 kép betöltött, nincs futási hiba vagy külső kérés.
+
+## Egységes alapháttér – új tulajdonosi pontosítás
+
+F01, L01 és S01 alkalmazásbeli mintája **azonos, egyszerű háttéren** jelenjen meg. Egyedi hátterek és háttérválasztás most nem készülnek; ezek későbbi fejlesztések. Az eredeti leltár a forrásokat saját hátterükkel őrzi meg. A fiú és semleges alapkép hátterének eltávolítása külön származtatott fájlon történik, az arc és az arányok megőrzésével, megfelelő grafikai eszközzel; nincs régi renderes helyettesítés.
 
 ## Első három integrációs minta
 
