@@ -151,10 +151,12 @@
       "focused"
     ]
   },
-  "generatedSheets": 232,
-  "generatedConfigurations": 2088,
+  "generatedSheets": 778,
+  "generatedConfigurations": 7002,
   "persistentConfigurationSpace": 515978035200,
   "configurationSpaceIncludingNullAndSevenReactions": 4127824281600,
-  "renderScope": "All single options across nine identities, hair/headwear and outfit/neck pairs. Other pair combinations are not yet covered.",
-  "visualApproval": "NOT COMPLETE: widget contact-sheet artifacts must be distinguished from Chrome renders."
+  "renderScope": "All single options over nine identities, hair/headwear and outfit/neck pairs; 529 GF(23) rows covering 2233 required pairs across 11 geometry/expression fields. Colors and hair visibility additionally have single/targeted coverage. Not every combination is rendered.",
+  "visualApproval": "72 original contact sheets / 648 occurrences / 630 distinct resolved profiles actually viewed; see reviewed-configurations.json. Rendered configurations are not automatically visually approved.",
+  "matchedBeforeAfterSheets": 249,
+  "distinctResolvedAfterConfigurations": 6579
 }

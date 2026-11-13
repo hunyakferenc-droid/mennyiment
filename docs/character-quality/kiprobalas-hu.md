@@ -4,7 +4,7 @@ Kész Web ZIP: bontsd ki az egész csomagot, indítsd az INDITAS.cmd fájlt, maj
 
 1. Nyisd meg a Studiót. A meglévő karaktered, ruhád és feloldásaid maradjanak meg.
 2. Próbáld a három karaktercsaládot és életkort, különösen a felnőtt karakter ünnepi kalapját: a csúcs is férjen a képbe.
-3. Válassz sálat vagy láncot, majd kézi tárgyat. A nyakban viselt kiegészítő mérete és illesztése ne változzon a kézi tárgy miatt.
+3. Próbáld a fonott hajat fejfedő nélkül, sapkával és kapucnival is: a fonat legyen látható, a semleges karakter feje fölött ne lebegjen idegen hajdarab. Válassz sálat vagy láncot, majd kézi tárgyat. A nyakban viselt kiegészítő mérete és illesztése ne változzon a kézi tárgy miatt.
 4. A Hangulat kategóriában válts reakciót. A kártya, élő előnézet és nagyító ugyanazt az aktív reakciót mutassa. A hét régi azonosító három arckifejezéscsoportot használ: örömteli, figyelmes, támogató. A jelképek megmaradnak.
 5. Az Arc és fej kategóriában ismét a saját arc-/szembeállítást szerkeszted; a reakció nem írja felül ezeket. Próbáld szemüveggel és napszemüveggel is.
 6. Mentés előtt a draft ne változtassa meg a főoldali karaktert. Próbáld a Visszavonást, a mentetlen visszalépés megerősítését, majd a Mentést és az alkalmazás újranyitását.

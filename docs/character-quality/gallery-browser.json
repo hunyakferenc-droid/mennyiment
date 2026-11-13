@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "3df8f66c7be59a92314694f738753ce9cc8755e7",
+  "browser": "157.0.8103.78",
+  "matchedPair": "reaction-proud.png",
+  "sizes": [
+    {
+      "sheetWidth": 386,
+      "avatarLogicalWidth": 120.08888888888889
+    },
+    {
+      "sheetWidth": 720,
+      "avatarLogicalWidth": 224
+    }
+  ],
+  "runtimeErrors": [],
+  "externalRequests": [],
+  "originalImages": 1027
+}

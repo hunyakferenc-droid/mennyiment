@@ -1,0 +1,38 @@
+{
+  "beforeCommit": "193ab29a17ac9d7eccd9f8930d3dedaf19b51bf8",
+  "afterCommit": "3df8f66c7be59a92314694f738753ce9cc8755e7",
+  "matchedSheets": 249,
+  "afterSheets": 778,
+  "renderedBeforeConfigurations": 2241,
+  "renderedAfterConfigurations": 7002,
+  "distinctResolvedBeforeConfigurations": 1827,
+  "distinctResolvedAfterConfigurations": 6579,
+  "targetedPairwise": {
+    "fields": [
+      "face",
+      "eyes",
+      "hair",
+      "headwear",
+      "outfit",
+      "style",
+      "glasses",
+      "neck",
+      "held",
+      "detail",
+      "back"
+    ],
+    "rows": 529,
+    "requiredPairs": 2233,
+    "identities": 9,
+    "algorithm": "GF(23): value index=(a+i*b mod 23) mod domain size; every pair asserted, not all combinations."
+  },
+  "faceGuard": {
+    "sourceCommit": "3df8f66c7be59a92314694f738753ce9cc8755e7",
+    "browser": "157.0.8103.50",
+    "identityHeadwearPairs": 81,
+    "protectedRegions": 243,
+    "checkedPixels": 41769,
+    "mismatches": []
+  },
+  "visualApproval": "Rendering and pair coverage are verified; human-reviewed configuration IDs are listed separately in the handoff."
+}

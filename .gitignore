@@ -105,3 +105,6 @@ pubspec.yaml.bak
 
 # Matched synthetic visual verification screenshots, never user exports.
 !/docs/images/menti-2.4-visual/*.png
+
+# Original synthetic character evidence only; never user images or backups.
+!/docs/images/menti-character-quality/*.png

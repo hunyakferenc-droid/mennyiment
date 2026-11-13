@@ -1,0 +1,174 @@
+{
+  "sourceCommit": "f95247898ab77b403f804d8529a8d0467e196178",
+  "browser": "157.0.8103.50",
+  "identityHeadwearPairs": 81,
+  "protectedRegions": 243,
+  "checkedPixels": 41769,
+  "mismatches": [
+    {
+      "hat": 6,
+      "identity": "boy/young",
+      "rect": [
+        104,
+        107,
+        123,
+        123
+      ],
+      "changed": 214
+    },
+    {
+      "hat": 6,
+      "identity": "boy/young",
+      "rect": [
+        137,
+        115,
+        151,
+        129
+      ],
+      "changed": 28
+    },
+    {
+      "hat": 6,
+      "identity": "boy/young",
+      "rect": [
+        110,
+        129,
+        136,
+        144
+      ],
+      "changed": 16
+    },
+    {
+      "hat": 6,
+      "identity": "boy/adult",
+      "rect": [
+        344,
+        93,
+        363,
+        109
+      ],
+      "changed": 202
+    },
+    {
+      "hat": 6,
+      "identity": "boy/adult",
+      "rect": [
+        377,
+        98,
+        391,
+        113
+      ],
+      "changed": 45
+    },
+    {
+      "hat": 6,
+      "identity": "boy/adult",
+      "rect": [
+        350,
+        115,
+        377,
+        129
+      ],
+      "changed": 9
+    },
+    {
+      "hat": 6,
+      "identity": "boy/veteran",
+      "rect": [
+        586,
+        96,
+        604,
+        111
+      ],
+      "changed": 167
+    },
+    {
+      "hat": 6,
+      "identity": "boy/veteran",
+      "rect": [
+        618,
+        103,
+        631,
+        116
+      ],
+      "changed": 34
+    },
+    {
+      "hat": 6,
+      "identity": "boy/veteran",
+      "rect": [
+        590,
+        118,
+        618,
+        133
+      ],
+      "changed": 9
+    },
+    {
+      "hat": 6,
+      "identity": "girl/young",
+      "rect": [
+        108,
+        396,
+        125,
+        410
+      ],
+      "changed": 200
+    },
+    {
+      "hat": 6,
+      "identity": "girl/young",
+      "rect": [
+        142,
+        404,
+        152,
+        416
+      ],
+      "changed": 87
+    },
+    {
+      "hat": 6,
+      "identity": "girl/adult",
+      "rect": [
+        345,
+        391,
+        362,
+        404
+      ],
+      "changed": 215
+    },
+    {
+      "hat": 6,
+      "identity": "girl/adult",
+      "rect": [
+        381,
+        395,
+        390,
+        408
+      ],
+      "changed": 87
+    },
+    {
+      "hat": 6,
+      "identity": "girl/veteran",
+      "rect": [
+        589,
+        394,
+        605,
+        406
+      ],
+      "changed": 183
+    },
+    {
+      "hat": 6,
+      "identity": "girl/veteran",
+      "rect": [
+        624,
+        399,
+        634,
+        410
+      ],
+      "changed": 50
+    }
+  ]
+}

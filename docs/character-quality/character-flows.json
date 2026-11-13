@@ -1,0 +1,16 @@
+{
+  "sourceCommit": "3df8f66c7be59a92314694f738753ce9cc8755e7",
+  "stage": "after",
+  "browser": "157.0.8103.78",
+  "checks": [
+    "hu: matching draft reaction and enlarged view captured without writing profile/XP/journal",
+    "hu: actual family/age/outfit/hat/glasses/held-object/reaction selection, Save, full reload and Studio reopen retain selected IDs, unknown fields, unlocks and exact XP/journal",
+    "hu: saved selected character also rendered on the adventure map and completion feedback; profile and XP stay byte-identical",
+    "en: matching draft reaction and enlarged view captured without writing profile/XP/journal",
+    "en: actual family/age/outfit/hat/glasses/held-object/reaction selection, Save, full reload and Studio reopen retain selected IDs, unknown fields, unlocks and exact XP/journal",
+    "en: saved selected character also rendered on the adventure map and completion feedback; profile and XP stay byte-identical"
+  ],
+  "runtimeErrors": [],
+  "physicalAndroid": false,
+  "emulator": false
+}
