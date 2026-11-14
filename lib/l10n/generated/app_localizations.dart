@@ -5543,13 +5543,13 @@ abstract class AppLocalizations {
   /// No description provided for @completeTitle.
   ///
   /// In hu, this message translates to:
-  /// **'Teljes Menti-kinézetek'**
+  /// **'Menti-gyűjtemény'**
   String get completeTitle;
 
   /// No description provided for @completeInfo.
   ///
   /// In hu, this message translates to:
-  /// **'Kísérleti hárommintás galéria. Egy kinézet egy teljes karakterkép. Az eredeti összeállításod megmarad; csak a Mentés vált megjelenítést. A PNG-khez nincs külön arcmimika.'**
+  /// **'Válassz egy teljes kinézetet. A korábbi összeállításod megmarad, és bármikor visszaválthatsz rá.'**
   String get completeInfo;
 
   /// No description provided for @completeBoy.
@@ -5599,6 +5599,222 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'A karakterkép nem tölthető be.'**
   String get completeImageError;
+
+  /// No description provided for @collectionTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti-gyűjtemény'**
+  String get collectionTitle;
+
+  /// No description provided for @collectionIntro.
+  ///
+  /// In hu, this message translates to:
+  /// **'Válassz egy teljes kinézetet. A korábbi összeállításod megmarad, és bármikor visszaválthatsz rá.'**
+  String get collectionIntro;
+
+  /// No description provided for @collectionBoy.
+  ///
+  /// In hu, this message translates to:
+  /// **'Fiú'**
+  String get collectionBoy;
+
+  /// No description provided for @collectionGirl.
+  ///
+  /// In hu, this message translates to:
+  /// **'Lány'**
+  String get collectionGirl;
+
+  /// No description provided for @collectionNeutral.
+  ///
+  /// In hu, this message translates to:
+  /// **'Semleges'**
+  String get collectionNeutral;
+
+  /// No description provided for @collectionParty.
+  ///
+  /// In hu, this message translates to:
+  /// **'Buli'**
+  String get collectionParty;
+
+  /// No description provided for @collectionFestival.
+  ///
+  /// In hu, this message translates to:
+  /// **'Fesztivál'**
+  String get collectionFestival;
+
+  /// No description provided for @collectionSport.
+  ///
+  /// In hu, this message translates to:
+  /// **'Sport'**
+  String get collectionSport;
+
+  /// No description provided for @collectionBusiness.
+  ///
+  /// In hu, this message translates to:
+  /// **'Üzleti'**
+  String get collectionBusiness;
+
+  /// No description provided for @collectionLegendary.
+  ///
+  /// In hu, this message translates to:
+  /// **'Legendás'**
+  String get collectionLegendary;
+
+  /// No description provided for @collectionLookName.
+  ///
+  /// In hu, this message translates to:
+  /// **'{family} · {style}'**
+  String collectionLookName(String family, String style);
+
+  /// No description provided for @collectionAllFamilies.
+  ///
+  /// In hu, this message translates to:
+  /// **'Minden család'**
+  String get collectionAllFamilies;
+
+  /// No description provided for @collectionAll.
+  ///
+  /// In hu, this message translates to:
+  /// **'Összes'**
+  String get collectionAll;
+
+  /// No description provided for @collectionOwned.
+  ///
+  /// In hu, this message translates to:
+  /// **'Megszerezve'**
+  String get collectionOwned;
+
+  /// No description provided for @collectionUnlockable.
+  ///
+  /// In hu, this message translates to:
+  /// **'Feloldható'**
+  String get collectionUnlockable;
+
+  /// No description provided for @collectionStarter.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kezdettől elérhető'**
+  String get collectionStarter;
+
+  /// No description provided for @collectionRequiredXp.
+  ///
+  /// In hu, this message translates to:
+  /// **'Feloldás: {xp} XP'**
+  String collectionRequiredXp(int xp);
+
+  /// No description provided for @collectionXpProgress.
+  ///
+  /// In hu, this message translates to:
+  /// **'{current} / {target} XP'**
+  String collectionXpProgress(int current, int target);
+
+  /// No description provided for @collectionXpUnavailable.
+  ///
+  /// In hu, this message translates to:
+  /// **'Az XP most nem olvasható. A már megszerzett kinézeteid továbbra is elérhetők.'**
+  String get collectionXpUnavailable;
+
+  /// No description provided for @collectionSelect.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kiválasztom'**
+  String get collectionSelect;
+
+  /// No description provided for @collectionSelected.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kiválasztva'**
+  String get collectionSelected;
+
+  /// No description provided for @collectionCurrentSelection.
+  ///
+  /// In hu, this message translates to:
+  /// **'Választásod: {name}'**
+  String collectionCurrentSelection(String name);
+
+  /// No description provided for @collectionNoMatches.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ebben a nézetben nincs megjeleníthető kinézet.'**
+  String get collectionNoMatches;
+
+  /// No description provided for @collectionResetFilters.
+  ///
+  /// In hu, this message translates to:
+  /// **'Összes kinézet mutatása'**
+  String get collectionResetFilters;
+
+  /// No description provided for @collectionUseLegacy.
+  ///
+  /// In hu, this message translates to:
+  /// **'A korábbi összeállítást választom'**
+  String get collectionUseLegacy;
+
+  /// No description provided for @collectionLegacyStudio.
+  ///
+  /// In hu, this message translates to:
+  /// **'Korábbi Menti Studio'**
+  String get collectionLegacyStudio;
+
+  /// No description provided for @collectionSwitchLegacyTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Megnyitod a korábbi Studiót?'**
+  String get collectionSwitchLegacyTitle;
+
+  /// No description provided for @collectionSwitchLegacyBody.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ehhez a korábbi megjelenítésre váltunk. A gyűjteményben mentett választásod és kinézeteid megmaradnak.'**
+  String get collectionSwitchLegacyBody;
+
+  /// No description provided for @collectionSwitchLegacyConfirm.
+  ///
+  /// In hu, this message translates to:
+  /// **'Váltás és megnyitás'**
+  String get collectionSwitchLegacyConfirm;
+
+  /// No description provided for @collectionUnlockNotice.
+  ///
+  /// In hu, this message translates to:
+  /// **'Új Menti-kinézet: {names}'**
+  String collectionUnlockNotice(String names);
+
+  /// No description provided for @collectionOnboardInfo.
+  ///
+  /// In hu, this message translates to:
+  /// **'Válassz egy kezdő Mentit. A teljes kinézet együtt tartalmazza a ruhát és kiegészítőket; később a gyűjteményben válthatsz.'**
+  String get collectionOnboardInfo;
+
+  /// No description provided for @collectionOpen.
+  ///
+  /// In hu, this message translates to:
+  /// **'Gyűjtemény megnyitása'**
+  String get collectionOpen;
+
+  /// No description provided for @collectionXpDurableInfo.
+  ///
+  /// In hu, this message translates to:
+  /// **'A küszöb elérése feloldja a kinézetet, nem von le XP-t. Amit megszereztél, megmarad.'**
+  String get collectionXpDurableInfo;
+
+  /// No description provided for @collectionLockedLabel.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még nem elérhető'**
+  String get collectionLockedLabel;
+
+  /// No description provided for @collectionStarterCount.
+  ///
+  /// In hu, this message translates to:
+  /// **'{count} kezdő kinézet'**
+  String collectionStarterCount(int count);
+
+  /// No description provided for @collectionChanged.
+  ///
+  /// In hu, this message translates to:
+  /// **'A mentett Menti közben megváltozott. Töltsd be újra a választást a folytatáshoz.'**
+  String get collectionChanged;
 }
 
 class _AppLocalizationsDelegate

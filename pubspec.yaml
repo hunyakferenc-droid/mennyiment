@@ -2,7 +2,7 @@ name: mennyiment
 description: "MennyiMent? – személyes Menti és tudatos szokáskövetés."
 publish_to: 'none'
 
-version: 2.5.0+37
+version: 2.6.0+38
 
 environment:
   sdk: ^3.13.5
@@ -47,6 +47,7 @@ flutter:
 
   assets:
     - assets/images/menti_complete/
+    - assets/images/menti_complete/thumbs/
     - assets/fonts/roboto/LICENSE.txt
     - assets/fonts/roboto/README.md
     - assets/fonts/roboto/SHA256SUMS

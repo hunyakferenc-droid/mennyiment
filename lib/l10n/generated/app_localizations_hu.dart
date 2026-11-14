@@ -3085,11 +3085,11 @@ class AppLocalizationsHu extends AppLocalizations {
       'Önbevallás. A hiányzó bejegyzés nem igazolt fogyasztásmentes nap.';
 
   @override
-  String get completeTitle => 'Teljes Menti-kinézetek';
+  String get completeTitle => 'Menti-gyűjtemény';
 
   @override
   String get completeInfo =>
-      'Kísérleti hárommintás galéria. Egy kinézet egy teljes karakterkép. Az eredeti összeállításod megmarad; csak a Mentés vált megjelenítést. A PNG-khez nincs külön arcmimika.';
+      'Válassz egy teljes kinézetet. A korábbi összeállításod megmarad, és bármikor visszaválthatsz rá.';
 
   @override
   String get completeBoy => 'Fiú · alap';
@@ -3115,4 +3115,147 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get completeImageError => 'A karakterkép nem tölthető be.';
+
+  @override
+  String get collectionTitle => 'Menti-gyűjtemény';
+
+  @override
+  String get collectionIntro =>
+      'Válassz egy teljes kinézetet. A korábbi összeállításod megmarad, és bármikor visszaválthatsz rá.';
+
+  @override
+  String get collectionBoy => 'Fiú';
+
+  @override
+  String get collectionGirl => 'Lány';
+
+  @override
+  String get collectionNeutral => 'Semleges';
+
+  @override
+  String get collectionParty => 'Buli';
+
+  @override
+  String get collectionFestival => 'Fesztivál';
+
+  @override
+  String get collectionSport => 'Sport';
+
+  @override
+  String get collectionBusiness => 'Üzleti';
+
+  @override
+  String get collectionLegendary => 'Legendás';
+
+  @override
+  String collectionLookName(String family, String style) {
+    return '$family · $style';
+  }
+
+  @override
+  String get collectionAllFamilies => 'Minden család';
+
+  @override
+  String get collectionAll => 'Összes';
+
+  @override
+  String get collectionOwned => 'Megszerezve';
+
+  @override
+  String get collectionUnlockable => 'Feloldható';
+
+  @override
+  String get collectionStarter => 'Kezdettől elérhető';
+
+  @override
+  String collectionRequiredXp(int xp) {
+    final intl.NumberFormat xpNumberFormat = intl.NumberFormat.decimalPattern(
+      localeName,
+    );
+    final String xpString = xpNumberFormat.format(xp);
+
+    return 'Feloldás: $xpString XP';
+  }
+
+  @override
+  String collectionXpProgress(int current, int target) {
+    final intl.NumberFormat currentNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String currentString = currentNumberFormat.format(current);
+    final intl.NumberFormat targetNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String targetString = targetNumberFormat.format(target);
+
+    return '$currentString / $targetString XP';
+  }
+
+  @override
+  String get collectionXpUnavailable =>
+      'Az XP most nem olvasható. A már megszerzett kinézeteid továbbra is elérhetők.';
+
+  @override
+  String get collectionSelect => 'Kiválasztom';
+
+  @override
+  String get collectionSelected => 'Kiválasztva';
+
+  @override
+  String collectionCurrentSelection(String name) {
+    return 'Választásod: $name';
+  }
+
+  @override
+  String get collectionNoMatches =>
+      'Ebben a nézetben nincs megjeleníthető kinézet.';
+
+  @override
+  String get collectionResetFilters => 'Összes kinézet mutatása';
+
+  @override
+  String get collectionUseLegacy => 'A korábbi összeállítást választom';
+
+  @override
+  String get collectionLegacyStudio => 'Korábbi Menti Studio';
+
+  @override
+  String get collectionSwitchLegacyTitle => 'Megnyitod a korábbi Studiót?';
+
+  @override
+  String get collectionSwitchLegacyBody =>
+      'Ehhez a korábbi megjelenítésre váltunk. A gyűjteményben mentett választásod és kinézeteid megmaradnak.';
+
+  @override
+  String get collectionSwitchLegacyConfirm => 'Váltás és megnyitás';
+
+  @override
+  String collectionUnlockNotice(String names) {
+    return 'Új Menti-kinézet: $names';
+  }
+
+  @override
+  String get collectionOnboardInfo =>
+      'Válassz egy kezdő Mentit. A teljes kinézet együtt tartalmazza a ruhát és kiegészítőket; később a gyűjteményben válthatsz.';
+
+  @override
+  String get collectionOpen => 'Gyűjtemény megnyitása';
+
+  @override
+  String get collectionXpDurableInfo =>
+      'A küszöb elérése feloldja a kinézetet, nem von le XP-t. Amit megszereztél, megmarad.';
+
+  @override
+  String get collectionLockedLabel => 'Még nem elérhető';
+
+  @override
+  String collectionStarterCount(int count) {
+    final intl.NumberFormat countNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String countString = countNumberFormat.format(count);
+
+    return '$countString kezdő kinézet';
+  }
+
+  @override
+  String get collectionChanged =>
+      'A mentett Menti közben megváltozott. Töltsd be újra a választást a folytatáshoz.';
 }

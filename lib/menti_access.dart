@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'data_backup.dart';
 
 /// Local age declaration, not verified identity or authentication. Unknown,
@@ -58,6 +59,7 @@ class MentiAccessSettings extends ChangeNotifier {
       if (_loaded != null) {
         final d = decode(_loaded!);
         complete = d['complete'] as bool;
+        if (!complete && d['creation'] == 'collection-v1') existing = false;
         adult = complete && d['audience'] == 'adult';
       }
       failed = false;
@@ -71,6 +73,47 @@ class MentiAccessSettings extends ChangeNotifier {
       ready = true;
     }
     _notify();
+  }
+
+  /// Durable incomplete marker before multi-document first-character saves.
+  /// A failed later write must resume creation after restart, not appear complete.
+  Future<bool> prepareCreation() async {
+    if (!ready || existing || complete || saving || !writable || _disposed) {
+      return false;
+    }
+    saving = true;
+    _notify();
+    try {
+      final p = await open();
+      await p.reload();
+      if (p.get(key) != _loaded) throw StateError('Concurrent access change');
+      final encoded = jsonEncode({
+        if (_loaded != null) ...decode(_loaded!),
+        'version': 1,
+        'audience': 'minor',
+        'complete': false,
+        'creation': 'collection-v1',
+      });
+      if (!await p.setString(key, encoded)) {
+        throw StateError('Creation write failed');
+      }
+      await p.reload();
+      if (p.get(key) != encoded) throw StateError('Creation snapshot changed');
+      _loaded = encoded;
+      failed = false;
+      return true;
+    } catch (_) {
+      failed = true;
+      try {
+        await (await open()).reload();
+      } catch (_) {
+        writable = false;
+      }
+      return false;
+    } finally {
+      saving = false;
+      _notify();
+    }
   }
 
   Future<bool> finish({required bool isAdult}) async {
@@ -92,6 +135,8 @@ class MentiAccessSettings extends ChangeNotifier {
       if (!await p.setString(key, encoded)) {
         throw StateError('Access write failed');
       }
+      await p.reload();
+      if (p.get(key) != encoded) throw StateError('Access snapshot changed');
       _loaded = encoded;
       complete = true;
       adult = isAdult;

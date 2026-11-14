@@ -3,6 +3,9 @@
 Flutter alkalmazás helyi italnaplóval, közérzetkövetéssel és személyre szabható
 Menti karakterrel. Magyar és angol felület; a profil és a naplók helyben maradnak.
 
+- [2.6.0+38: Menti-gyűjtemény – képes leltár és valódi kezdő/XP-s katalógus](docs/collection/kepes-leltar-hu.md).
+- [Gyűjtemény kipróbálása: kész Web ZIP, ékezetmentes Flutter-útvonalak, Android-frissítés](docs/collection/kiprobalas-hu.md).
+- [Gyűjtemény adatmegőrzése, XP és bővítési határok](docs/collection/adat-es-xp-szerzodes-hu.md).
 - [2.3.0+33: Menti-kalandok, jelvények és reggeli kipróbálás](docs/2.3.0-adventures-hu.md).
 - [Korábbi 2.2.8+32: bejegyzésszerkesztés, árpótlás, ellenőrzések és kipróbálás](docs/2.2.8-journal-management-hu.md).
 - [Korábbi 2.2.7+31: kereshető és szűrhető napló](docs/2.2.7-journal-hu.md).
@@ -24,5 +27,5 @@ flutter build web --no-web-resources-cdn
 flutter build apk --debug
 ```
 
-Ez fejlesztési változat. A debug APK és a jelenlegi debug-aláírásos release
-konfiguráció nem jelent publikálásra kész kiadást.
+Ez fejlesztési változat. A debug APK nem publikálásra kész kiadás. A release
+build külső kiadási aláírást követel; hiányzó konfigurációnál hibával megáll.

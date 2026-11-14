@@ -158,6 +158,8 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
                   if (completeLook != null) Text(completeLook.name(context))
                   else if (currentIdentity == null) Text('$family • $outfit')
                   else Text('${MentiVisualCatalog.resolve('family', currentIdentity.visual.value('family')).label(s)} • ${MentiVisualCatalog.resolve('outfit', currentIdentity.visual.value('outfit')).label(s)}'),
+                  const SizedBox(height: 12),
+                  FilledButton.tonalIcon(key: const ValueKey('profile-collection'), onPressed: () => Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const CompleteLooksPage())), icon: const Icon(Icons.collections_outlined), label: Text(s.collectionTitle)),
                 ]);
               }),
               _section('xp', s.hubXp, data.xp, (xp) => Column(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'app_language.dart';
 import 'data_backup_page.dart';
+import 'menti_complete_looks.dart';
 import 'menti_access.dart';
 import 'menti_identity/menti_avatar_renderer.dart';
 import 'menti_identity/menti_reference_rig.dart';
@@ -22,6 +23,7 @@ class MentiStartGate extends StatefulWidget {
 
 class _MentiStartGateState extends State<MentiStartGate> {
   int _step = 0;
+  String _lookId = 'boy-base-v1';
   bool? _adult;
   bool _busy = false, _failed = false;
   final _name = TextEditingController(text: 'Menti');
@@ -44,8 +46,19 @@ class _MentiStartGateState extends State<MentiStartGate> {
     });
     var ok = true;
     if (!access.existing) {
-      identity.rename(_name.text);
-      ok = await identity.save();
+      ok = await access.prepareCreation();
+      if (ok) {
+        identity.rename(_name.text);
+        ok = await identity.save();
+      }
+      if (ok && mounted) {
+        final collection = CompleteLookScope.of(context);
+        if (collection != null) {
+          ok = await collection.save(
+            collection.selection.copyWith(active: true, lookId: _lookId),
+          );
+        }
+      }
     }
     if (ok) ok = await access.finish(isAdult: _adult!);
     if (!mounted) return;
@@ -69,6 +82,9 @@ class _MentiStartGateState extends State<MentiStartGate> {
     final access = MentiAccessScope.of(context)!;
     final identity = MentiIdentityScope.of(context)!;
     final s = appStrings(context);
+    final collection = CompleteLookScope.of(context);
+    final fullLooks = !access.existing && collection != null;
+    final selectedLook = CompleteLook.find(_lookId)!;
     if (!access.ready || !identity.ready) {
       return Scaffold(
         body: Center(
@@ -86,7 +102,8 @@ class _MentiStartGateState extends State<MentiStartGate> {
         access.writable &&
         (_step != 1 || _adult != null) &&
         (_step != 3 || _name.text.trim().isNotEmpty) &&
-        identity.writable;
+        identity.writable &&
+        (!fullLooks || collection.ready);
     final titles = [
       s.startLanguage,
       s.startAgeTitle,
@@ -244,11 +261,13 @@ class _MentiStartGateState extends State<MentiStartGate> {
                       ],
                     ),
                     Center(
-                      child: MentiAvatarRenderer(
-                        profile: identity.draft.profile,
-                        size: 140,
-                        showBackground: false,
-                      ),
+                      child: fullLooks
+                          ? CompleteLookArtwork(look: selectedLook, size: 140)
+                          : MentiAvatarRenderer(
+                              profile: identity.draft.profile,
+                              size: 140,
+                              showBackground: false,
+                            ),
                     ),
                   ],
                   if (_step == 1) ...[
@@ -281,25 +300,101 @@ class _MentiStartGateState extends State<MentiStartGate> {
                   ],
                   if (_step >= 2) ...[
                     Center(
-                      child: MentiAvatarRenderer(
-                        profile: identity.draft.profile,
-                        size: math.min(
-                          260,
-                          math.max(120, MediaQuery.sizeOf(context).width - 80),
-                        ),
-                      ),
+                      child: fullLooks
+                          ? CompleteLookArtwork(
+                              look: selectedLook,
+                              size: math.min(
+                                260,
+                                math.max(
+                                  120,
+                                  MediaQuery.sizeOf(context).width - 80,
+                                ),
+                              ),
+                            )
+                          : MentiAvatarRenderer(
+                              profile: identity.draft.profile,
+                              size: math.min(
+                                260,
+                                math.max(
+                                  120,
+                                  MediaQuery.sizeOf(context).width - 80,
+                                ),
+                              ),
+                            ),
                     ),
                     const SizedBox(height: 16),
                   ],
                   if (_step == 2) ...[
-                    Text(s.avatarFieldFamily),
-                    choices('family'),
-                    const SizedBox(height: 16),
-                    Text(s.avatarFieldAge),
-                    choices('age'),
-                    const SizedBox(height: 16),
-                    Text(s.avatarFieldAccent),
-                    choices('accent'),
+                    if (fullLooks) ...[
+                      Text(s.collectionOnboardInfo),
+                      const SizedBox(height: 12),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: [
+                          for (final family in ['boy', 'girl', 'neutral'])
+                            ChoiceChip(
+                              key: ValueKey('start-family-$family'),
+                              selected: selectedLook.family == family,
+                              label: Text(switch (family) {
+                                'boy' => s.collectionBoy,
+                                'girl' => s.collectionGirl,
+                                _ => s.collectionNeutral,
+                              }),
+                              onSelected: _busy
+                                  ? null
+                                  : (_) => setState(() {
+                                      _lookId = '$family-base-v1';
+                                      identity.choose(
+                                        MentiVisualCatalog.resolve(
+                                          'family',
+                                          family,
+                                        ),
+                                      );
+                                    }),
+                            ),
+                        ],
+                      ),
+                      for (final look in collection.catalog.where(
+                        (l) => l.family == selectedLook.family && l.minXp == 0,
+                      ))
+                        Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              children: [
+                                CollectionLookThumbnail(look: look, size: 150),
+                                Text(look.name(context)),
+                                FilledButton.tonalIcon(
+                                  key: ValueKey('start-look-${look.id}'),
+                                  onPressed: _busy
+                                      ? null
+                                      : () => setState(() => _lookId = look.id),
+                                  icon: Icon(
+                                    _lookId == look.id
+                                        ? Icons.check_circle
+                                        : Icons.person_outline,
+                                  ),
+                                  label: Text(
+                                    _lookId == look.id
+                                        ? s.collectionSelected
+                                        : s.collectionSelect,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                    ] else ...[
+                      Text(s.avatarFieldFamily),
+                      choices('family'),
+                      const SizedBox(height: 16),
+                      Text(s.avatarFieldAge),
+                      choices('age'),
+                      const SizedBox(height: 16),
+                      Text(s.avatarFieldAccent),
+                      choices('accent'),
+                    ],
                   ],
                   if (_step == 3) ...[
                     Text(s.startNameBody),

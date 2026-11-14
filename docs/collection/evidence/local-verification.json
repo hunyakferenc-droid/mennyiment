@@ -1,0 +1,34 @@
+{
+  "applicationSource": "5fbcafdffebcc34e280bb9b03ca4d4babb9a83db",
+  "version": "2.6.0+38",
+  "localAnalyzer": "passed",
+  "localizationKeys": 952,
+  "localFullRegression": {
+    "passed": 1110,
+    "failed": 1,
+    "failure": "menti_application_compatibility_test.dart / Home reloads the profile after saving stable IDs in the selector",
+    "cause": "Old test expected the home entry to open legacy Studio directly; new route opens collection first.",
+    "correction": "All original data assertions retained; explicit collection-to-legacy navigation and return added.",
+    "correctedFileTargetedRun": {
+      "passed": 9,
+      "failed": 0
+    },
+    "notClaimedAsFullPassingRun": true
+  },
+  "chromeFlowChecks": 10,
+  "chromeOnboardingAndXpChecks": 4,
+  "chromeViewportCases": 16,
+  "chromeViewportScreens": 32,
+  "graphicsOriginalLightDarkConfigurations": 18,
+  "screenshots": {
+    "flow": 36,
+    "journey": 14,
+    "matrix": 32
+  },
+  "newOwnerApprovalOfDerivedGraphics": false,
+  "physicalAndroid": false,
+  "androidEmulator": false,
+  "realWindows": false,
+  "talkBackOnPhone": false,
+  "finalCiAndBuildDownloads": "https://github.com/hunyakferenc-droid/mennyiment/pull/42"
+}

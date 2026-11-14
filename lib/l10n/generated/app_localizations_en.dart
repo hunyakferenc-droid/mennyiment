@@ -3098,11 +3098,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Self-reported. No entry does not prove an alcohol-free day.';
 
   @override
-  String get completeTitle => 'Complete Menti looks';
+  String get completeTitle => 'Menti collection';
 
   @override
   String get completeInfo =>
-      'Experimental three-sample gallery. Each look is one complete character image. Your original outfit is preserved; only Save changes the display. These PNGs have no separate facial expressions.';
+      'Choose a complete look. Your previous outfit is preserved and you can switch back any time.';
 
   @override
   String get completeBoy => 'Boy · base';
@@ -3128,4 +3128,146 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get completeImageError => 'The character image could not be loaded.';
+
+  @override
+  String get collectionTitle => 'Menti collection';
+
+  @override
+  String get collectionIntro =>
+      'Choose a complete look. Your previous outfit is preserved and you can switch back any time.';
+
+  @override
+  String get collectionBoy => 'Boy';
+
+  @override
+  String get collectionGirl => 'Girl';
+
+  @override
+  String get collectionNeutral => 'Neutral';
+
+  @override
+  String get collectionParty => 'Party';
+
+  @override
+  String get collectionFestival => 'Festival';
+
+  @override
+  String get collectionSport => 'Sport';
+
+  @override
+  String get collectionBusiness => 'Business';
+
+  @override
+  String get collectionLegendary => 'Legendary';
+
+  @override
+  String collectionLookName(String family, String style) {
+    return '$family · $style';
+  }
+
+  @override
+  String get collectionAllFamilies => 'All families';
+
+  @override
+  String get collectionAll => 'All';
+
+  @override
+  String get collectionOwned => 'Acquired';
+
+  @override
+  String get collectionUnlockable => 'To unlock';
+
+  @override
+  String get collectionStarter => 'Available from the start';
+
+  @override
+  String collectionRequiredXp(int xp) {
+    final intl.NumberFormat xpNumberFormat = intl.NumberFormat.decimalPattern(
+      localeName,
+    );
+    final String xpString = xpNumberFormat.format(xp);
+
+    return 'Unlock at $xpString XP';
+  }
+
+  @override
+  String collectionXpProgress(int current, int target) {
+    final intl.NumberFormat currentNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String currentString = currentNumberFormat.format(current);
+    final intl.NumberFormat targetNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String targetString = targetNumberFormat.format(target);
+
+    return '$currentString / $targetString XP';
+  }
+
+  @override
+  String get collectionXpUnavailable =>
+      'XP cannot be read right now. Your acquired looks remain available.';
+
+  @override
+  String get collectionSelect => 'Select';
+
+  @override
+  String get collectionSelected => 'Selected';
+
+  @override
+  String collectionCurrentSelection(String name) {
+    return 'Your selection: $name';
+  }
+
+  @override
+  String get collectionNoMatches => 'There are no looks in this view.';
+
+  @override
+  String get collectionResetFilters => 'Show all looks';
+
+  @override
+  String get collectionUseLegacy => 'Select my previous outfit';
+
+  @override
+  String get collectionLegacyStudio => 'Previous Menti Studio';
+
+  @override
+  String get collectionSwitchLegacyTitle => 'Open the previous Studio?';
+
+  @override
+  String get collectionSwitchLegacyBody =>
+      'This switches to your previous appearance. Your saved collection selection and acquired looks are preserved.';
+
+  @override
+  String get collectionSwitchLegacyConfirm => 'Switch and open';
+
+  @override
+  String collectionUnlockNotice(String names) {
+    return 'New Menti look: $names';
+  }
+
+  @override
+  String get collectionOnboardInfo =>
+      'Choose your first Menti. Each complete look includes its outfit and accessories; you can change it later in your collection.';
+
+  @override
+  String get collectionOpen => 'Open collection';
+
+  @override
+  String get collectionXpDurableInfo =>
+      'Reaching the threshold unlocks a look without spending XP. Acquired looks stay yours.';
+
+  @override
+  String get collectionLockedLabel => 'Not yet available';
+
+  @override
+  String collectionStarterCount(int count) {
+    final intl.NumberFormat countNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String countString = countNumberFormat.format(count);
+
+    return '$countString starter looks';
+  }
+
+  @override
+  String get collectionChanged =>
+      'Your saved Menti changed elsewhere. Reload the selection to continue.';
 }

@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_access.dart';
 import 'data_backup.dart';
-import 'menti_complete_looks.dart';
+import 'menti_collection_model.dart';
+import 'menti_collection_store.dart';
 import 'menti_adventure_store.dart';
 import 'drink_journal.dart';
 import 'menti_identity/menti_identity.dart';
@@ -63,7 +64,9 @@ class BackupRestorer {
     final before = _snapshot(p);
     // Unknown experimental state requires a compatible app; do not replace it.
     if (values.containsKey(CompleteLookStore.key) && before.containsKey(CompleteLookStore.key)) {
-      CompleteLookSelection.decode(before[CompleteLookStore.key]);
+      final current = CompleteLookSelection.decode(before[CompleteLookStore.key]);
+      final incoming = CompleteLookSelection.decode(values[CompleteLookStore.key]);
+      values[CompleteLookStore.key] = CompleteLookSelection.restored(current, incoming).encode();
     }
     // Permanent unlocks survive restoring an older, lower-XP backup.
     const rewards = 'mennyiment_menti_rewards_v1';

@@ -51,16 +51,18 @@ Future<Map<String, Object?>> snapshot() async {
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUp(() => SharedPreferences.setMockInitialValues({}));
-  test('Only three distinct free samples; all assets exist and have alpha', () {
-    expect(CompleteLook.all.length, 3);
-    expect(CompleteLook.all.map((e) => e.id).toSet().length, 3);
+  test('Collection has 15 distinct free starters and 3 real XP looks, with RGBA assets', () {
+    expect(CompleteLook.all.length, 18);
+    expect(CompleteLook.all.where((e) => e.minXp == 0).length, 15);
+    expect(CompleteLook.all.where((e) => e.minXp > 0).length, 3);
+    expect(CompleteLook.all.map((e) => e.id).toSet().length, 18);
     expect(CompleteLook.all.map((e) => e.family).toSet(), {
       'boy',
       'girl',
       'neutral',
     });
     for (final e in CompleteLook.all) {
-      expect(e.unlock, 'free');
+      expect(e.unlock, e.style == 'legendary' ? 'xp:200' : 'free');
       final bytes = File(e.asset).readAsBytesSync();
       expect(bytes.sublist(0, 8), [137, 80, 78, 71, 13, 10, 26, 10]);
       expect(bytes[25], 6); // PNG RGBA
@@ -73,7 +75,7 @@ void main() {
     await store.load();
     expect(store.selection.active, false);
     expect(await snapshot(), original);
-    for (final look in CompleteLook.all) {
+    for (final look in CompleteLook.all.where((l) => l.minXp == 0)) {
       expect(
         await store.save(CompleteLookSelection(active: true, lookId: look.id)),
         true,
@@ -95,30 +97,27 @@ void main() {
     expect(after, original);
     store.dispose();
   });
-  test(
-    'Malformed, future, extra-field and unknown IDs never become writable',
-    () async {
-      for (final raw in [
+  test('Malformed, future, ambiguous extension and unknown IDs never become writable', () async {
+    for (final raw in [
+      false,
+      '{',
+      '{"version":2,"active":true,"look":"girl-base-v1"}',
+      '{"version":1,"active":true,"look":"future"}',
+      '{"version":1,"active":true,"look":"girl-base-v1","acquired":[]}',
+      '{"version":1,"version":1,"active":true,"look":"girl-base-v1"}',
+    ]) {
+      SharedPreferences.setMockInitialValues({CompleteLookStore.key: raw});
+      final store = CompleteLookStore();
+      await store.load();
+      expect(store.ready, false);
+      expect(
+        await store.save(const CompleteLookSelection(active: true)),
         false,
-        '{',
-        '{"version":2,"active":true,"look":"girl-base-v1"}',
-        '{"version":1,"active":true,"look":"future"}',
-        '{"version":1,"active":true,"look":"girl-base-v1","future":1}',
-        '{"version":1,"version":1,"active":true,"look":"girl-base-v1"}',
-      ]) {
-        SharedPreferences.setMockInitialValues({CompleteLookStore.key: raw});
-        final store = CompleteLookStore();
-        await store.load();
-        expect(store.ready, false);
-        expect(
-          await store.save(const CompleteLookSelection(active: true)),
-          false,
-        );
-        expect((await snapshot())[CompleteLookStore.key], raw);
-        store.dispose();
-      }
-    },
-  );
+      );
+      expect((await snapshot())[CompleteLookStore.key], raw);
+      store.dispose();
+    }
+  });
   test(
     'Stale store cannot overwrite newer selection, even for idempotent save',
     () async {
@@ -245,7 +244,7 @@ void main() {
   });
 
   for (final locale in ['hu', 'en']) {
-    for (final look in CompleteLook.all) {
+    for (final look in CompleteLook.all.where((l) => l.minXp == 0)) {
       testWidgets(
         '$locale actual personal hub displays ${look.id} without changing the legacy profile',
         (tester) async {
@@ -403,9 +402,17 @@ void main() {
           Future<void> tapKey(String key) async {
             final finder = find.byKey(ValueKey(key));
             if (finder.evaluate().isEmpty) {
+              tester
+                  .state<ScrollableState>(find.byType(Scrollable).last)
+                  .position
+                  .jumpTo(0);
+              await tester.pumpAndSettle();
+            }
+            if (finder.evaluate().isEmpty) {
               await tester.scrollUntilVisible(
                 finder,
                 220,
+                maxScrolls: 150,
                 scrollable: find.byType(Scrollable).last,
               );
             }
@@ -429,7 +436,12 @@ void main() {
           expect(await snapshot(), original);
           await tester.tap(find.text('open'));
           await tester.pumpAndSettle();
-          for (final look in CompleteLook.all) {
+          for (final look in [
+            ...CompleteLook.all.where(
+              (l) => l.minXp == 0 && l.id != 'neutral-base-v1',
+            ),
+            CompleteLook.find('neutral-base-v1')!,
+          ]) {
             await tapKey('complete-${look.id}');
             expect(tester.takeException(), isNull);
           }

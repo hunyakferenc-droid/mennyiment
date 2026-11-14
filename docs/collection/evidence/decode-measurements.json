@@ -1,0 +1,726 @@
+{
+  "sourceCommit": "5fbcafdffebcc34e280bb9b03ca4d4babb9a83db",
+  "environment": "Linux Flutter test software decoder; one cold pass per width; no physical phone",
+  "rows": [
+    {
+      "id": "boy-base-v1",
+      "sourceBytes": 1283066,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 240,
+      "rgbaBytes": 172800,
+      "fileReadMicroseconds": 195975,
+      "codecAndFrameMicroseconds": 220774
+    },
+    {
+      "id": "boy-base-v1",
+      "sourceBytes": 1283066,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 480,
+      "rgbaBytes": 691200,
+      "fileReadMicroseconds": 6283,
+      "codecAndFrameMicroseconds": 157763
+    },
+    {
+      "id": "boy-base-v1",
+      "sourceBytes": 1283066,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 960,
+      "rgbaBytes": 2764800,
+      "fileReadMicroseconds": 7210,
+      "codecAndFrameMicroseconds": 213235
+    },
+    {
+      "id": "boy-base-v1",
+      "sourceBytes": 1283066,
+      "requestedWidth": 1254,
+      "decodedWidth": 1086,
+      "decodedHeight": 1448,
+      "rgbaBytes": 6290112,
+      "fileReadMicroseconds": 10480,
+      "codecAndFrameMicroseconds": 157408
+    },
+    {
+      "id": "boy-party-v1",
+      "sourceBytes": 1549076,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 240,
+      "rgbaBytes": 172800,
+      "fileReadMicroseconds": 32446,
+      "codecAndFrameMicroseconds": 181545
+    },
+    {
+      "id": "boy-party-v1",
+      "sourceBytes": 1549076,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 480,
+      "rgbaBytes": 691200,
+      "fileReadMicroseconds": 27727,
+      "codecAndFrameMicroseconds": 190384
+    },
+    {
+      "id": "boy-party-v1",
+      "sourceBytes": 1549076,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 960,
+      "rgbaBytes": 2764800,
+      "fileReadMicroseconds": 19453,
+      "codecAndFrameMicroseconds": 185893
+    },
+    {
+      "id": "boy-party-v1",
+      "sourceBytes": 1549076,
+      "requestedWidth": 1254,
+      "decodedWidth": 1086,
+      "decodedHeight": 1448,
+      "rgbaBytes": 6290112,
+      "fileReadMicroseconds": 9809,
+      "codecAndFrameMicroseconds": 151665
+    },
+    {
+      "id": "boy-festival-v1",
+      "sourceBytes": 1367287,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 240,
+      "rgbaBytes": 172800,
+      "fileReadMicroseconds": 7488,
+      "codecAndFrameMicroseconds": 231803
+    },
+    {
+      "id": "boy-festival-v1",
+      "sourceBytes": 1367287,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 480,
+      "rgbaBytes": 691200,
+      "fileReadMicroseconds": 60736,
+      "codecAndFrameMicroseconds": 260212
+    },
+    {
+      "id": "boy-festival-v1",
+      "sourceBytes": 1367287,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 960,
+      "rgbaBytes": 2764800,
+      "fileReadMicroseconds": 37456,
+      "codecAndFrameMicroseconds": 112843
+    },
+    {
+      "id": "boy-festival-v1",
+      "sourceBytes": 1367287,
+      "requestedWidth": 1254,
+      "decodedWidth": 1086,
+      "decodedHeight": 1448,
+      "rgbaBytes": 6290112,
+      "fileReadMicroseconds": 12230,
+      "codecAndFrameMicroseconds": 78740
+    },
+    {
+      "id": "boy-sport-v1",
+      "sourceBytes": 1461610,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 240,
+      "rgbaBytes": 172800,
+      "fileReadMicroseconds": 14510,
+      "codecAndFrameMicroseconds": 102729
+    },
+    {
+      "id": "boy-sport-v1",
+      "sourceBytes": 1461610,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 480,
+      "rgbaBytes": 691200,
+      "fileReadMicroseconds": 4391,
+      "codecAndFrameMicroseconds": 100907
+    },
+    {
+      "id": "boy-sport-v1",
+      "sourceBytes": 1461610,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 960,
+      "rgbaBytes": 2764800,
+      "fileReadMicroseconds": 6321,
+      "codecAndFrameMicroseconds": 183496
+    },
+    {
+      "id": "boy-sport-v1",
+      "sourceBytes": 1461610,
+      "requestedWidth": 1254,
+      "decodedWidth": 1086,
+      "decodedHeight": 1448,
+      "rgbaBytes": 6290112,
+      "fileReadMicroseconds": 11967,
+      "codecAndFrameMicroseconds": 176089
+    },
+    {
+      "id": "boy-business-v1",
+      "sourceBytes": 1260649,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 240,
+      "rgbaBytes": 172800,
+      "fileReadMicroseconds": 9809,
+      "codecAndFrameMicroseconds": 87653
+    },
+    {
+      "id": "boy-business-v1",
+      "sourceBytes": 1260649,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 480,
+      "rgbaBytes": 691200,
+      "fileReadMicroseconds": 3192,
+      "codecAndFrameMicroseconds": 103207
+    },
+    {
+      "id": "boy-business-v1",
+      "sourceBytes": 1260649,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 960,
+      "rgbaBytes": 2764800,
+      "fileReadMicroseconds": 11313,
+      "codecAndFrameMicroseconds": 105056
+    },
+    {
+      "id": "boy-business-v1",
+      "sourceBytes": 1260649,
+      "requestedWidth": 1254,
+      "decodedWidth": 1086,
+      "decodedHeight": 1448,
+      "rgbaBytes": 6290112,
+      "fileReadMicroseconds": 8807,
+      "codecAndFrameMicroseconds": 172842
+    },
+    {
+      "id": "boy-legendary-v1",
+      "sourceBytes": 1796169,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 240,
+      "rgbaBytes": 172800,
+      "fileReadMicroseconds": 98845,
+      "codecAndFrameMicroseconds": 211775
+    },
+    {
+      "id": "boy-legendary-v1",
+      "sourceBytes": 1796169,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 480,
+      "rgbaBytes": 691200,
+      "fileReadMicroseconds": 69382,
+      "codecAndFrameMicroseconds": 131997
+    },
+    {
+      "id": "boy-legendary-v1",
+      "sourceBytes": 1796169,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 960,
+      "rgbaBytes": 2764800,
+      "fileReadMicroseconds": 23623,
+      "codecAndFrameMicroseconds": 251173
+    },
+    {
+      "id": "boy-legendary-v1",
+      "sourceBytes": 1796169,
+      "requestedWidth": 1254,
+      "decodedWidth": 1086,
+      "decodedHeight": 1448,
+      "rgbaBytes": 6290112,
+      "fileReadMicroseconds": 15356,
+      "codecAndFrameMicroseconds": 111877
+    },
+    {
+      "id": "girl-base-v1",
+      "sourceBytes": 1760755,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 240,
+      "rgbaBytes": 172800,
+      "fileReadMicroseconds": 14651,
+      "codecAndFrameMicroseconds": 100353
+    },
+    {
+      "id": "girl-base-v1",
+      "sourceBytes": 1760755,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 480,
+      "rgbaBytes": 691200,
+      "fileReadMicroseconds": 68535,
+      "codecAndFrameMicroseconds": 129457
+    },
+    {
+      "id": "girl-base-v1",
+      "sourceBytes": 1760755,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 960,
+      "rgbaBytes": 2764800,
+      "fileReadMicroseconds": 5260,
+      "codecAndFrameMicroseconds": 178836
+    },
+    {
+      "id": "girl-base-v1",
+      "sourceBytes": 1760755,
+      "requestedWidth": 1254,
+      "decodedWidth": 1086,
+      "decodedHeight": 1448,
+      "rgbaBytes": 6290112,
+      "fileReadMicroseconds": 29019,
+      "codecAndFrameMicroseconds": 171763
+    },
+    {
+      "id": "girl-party-v1",
+      "sourceBytes": 1908315,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 240,
+      "rgbaBytes": 172800,
+      "fileReadMicroseconds": 8429,
+      "codecAndFrameMicroseconds": 114191
+    },
+    {
+      "id": "girl-party-v1",
+      "sourceBytes": 1908315,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 480,
+      "rgbaBytes": 691200,
+      "fileReadMicroseconds": 43879,
+      "codecAndFrameMicroseconds": 124794
+    },
+    {
+      "id": "girl-party-v1",
+      "sourceBytes": 1908315,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 960,
+      "rgbaBytes": 2764800,
+      "fileReadMicroseconds": 13563,
+      "codecAndFrameMicroseconds": 188643
+    },
+    {
+      "id": "girl-party-v1",
+      "sourceBytes": 1908315,
+      "requestedWidth": 1254,
+      "decodedWidth": 1086,
+      "decodedHeight": 1448,
+      "rgbaBytes": 6290112,
+      "fileReadMicroseconds": 11153,
+      "codecAndFrameMicroseconds": 122093
+    },
+    {
+      "id": "girl-festival-v1",
+      "sourceBytes": 1980368,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 240,
+      "rgbaBytes": 172800,
+      "fileReadMicroseconds": 41835,
+      "codecAndFrameMicroseconds": 128116
+    },
+    {
+      "id": "girl-festival-v1",
+      "sourceBytes": 1980368,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 480,
+      "rgbaBytes": 691200,
+      "fileReadMicroseconds": 11772,
+      "codecAndFrameMicroseconds": 169190
+    },
+    {
+      "id": "girl-festival-v1",
+      "sourceBytes": 1980368,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 960,
+      "rgbaBytes": 2764800,
+      "fileReadMicroseconds": 10479,
+      "codecAndFrameMicroseconds": 198845
+    },
+    {
+      "id": "girl-festival-v1",
+      "sourceBytes": 1980368,
+      "requestedWidth": 1254,
+      "decodedWidth": 1086,
+      "decodedHeight": 1448,
+      "rgbaBytes": 6290112,
+      "fileReadMicroseconds": 78481,
+      "codecAndFrameMicroseconds": 100095
+    },
+    {
+      "id": "girl-sport-v1",
+      "sourceBytes": 1705560,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 240,
+      "rgbaBytes": 172800,
+      "fileReadMicroseconds": 6660,
+      "codecAndFrameMicroseconds": 56297
+    },
+    {
+      "id": "girl-sport-v1",
+      "sourceBytes": 1705560,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 480,
+      "rgbaBytes": 691200,
+      "fileReadMicroseconds": 38338,
+      "codecAndFrameMicroseconds": 65580
+    },
+    {
+      "id": "girl-sport-v1",
+      "sourceBytes": 1705560,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 960,
+      "rgbaBytes": 2764800,
+      "fileReadMicroseconds": 36237,
+      "codecAndFrameMicroseconds": 159600
+    },
+    {
+      "id": "girl-sport-v1",
+      "sourceBytes": 1705560,
+      "requestedWidth": 1254,
+      "decodedWidth": 1086,
+      "decodedHeight": 1448,
+      "rgbaBytes": 6290112,
+      "fileReadMicroseconds": 74575,
+      "codecAndFrameMicroseconds": 194149
+    },
+    {
+      "id": "girl-business-v1",
+      "sourceBytes": 1815072,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 240,
+      "rgbaBytes": 172800,
+      "fileReadMicroseconds": 5694,
+      "codecAndFrameMicroseconds": 92629
+    },
+    {
+      "id": "girl-business-v1",
+      "sourceBytes": 1815072,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 480,
+      "rgbaBytes": 691200,
+      "fileReadMicroseconds": 11068,
+      "codecAndFrameMicroseconds": 169816
+    },
+    {
+      "id": "girl-business-v1",
+      "sourceBytes": 1815072,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 960,
+      "rgbaBytes": 2764800,
+      "fileReadMicroseconds": 15914,
+      "codecAndFrameMicroseconds": 122172
+    },
+    {
+      "id": "girl-business-v1",
+      "sourceBytes": 1815072,
+      "requestedWidth": 1254,
+      "decodedWidth": 1086,
+      "decodedHeight": 1448,
+      "rgbaBytes": 6290112,
+      "fileReadMicroseconds": 4063,
+      "codecAndFrameMicroseconds": 85011
+    },
+    {
+      "id": "girl-legendary-v1",
+      "sourceBytes": 2405386,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 240,
+      "rgbaBytes": 172800,
+      "fileReadMicroseconds": 9401,
+      "codecAndFrameMicroseconds": 208264
+    },
+    {
+      "id": "girl-legendary-v1",
+      "sourceBytes": 2405386,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 480,
+      "rgbaBytes": 691200,
+      "fileReadMicroseconds": 56465,
+      "codecAndFrameMicroseconds": 106185
+    },
+    {
+      "id": "girl-legendary-v1",
+      "sourceBytes": 2405386,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 960,
+      "rgbaBytes": 2764800,
+      "fileReadMicroseconds": 14899,
+      "codecAndFrameMicroseconds": 201370
+    },
+    {
+      "id": "girl-legendary-v1",
+      "sourceBytes": 2405386,
+      "requestedWidth": 1254,
+      "decodedWidth": 1086,
+      "decodedHeight": 1448,
+      "rgbaBytes": 6290112,
+      "fileReadMicroseconds": 12938,
+      "codecAndFrameMicroseconds": 169136
+    },
+    {
+      "id": "neutral-base-v1",
+      "sourceBytes": 1170499,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 180,
+      "rgbaBytes": 129600,
+      "fileReadMicroseconds": 12436,
+      "codecAndFrameMicroseconds": 171616
+    },
+    {
+      "id": "neutral-base-v1",
+      "sourceBytes": 1170499,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 360,
+      "rgbaBytes": 518400,
+      "fileReadMicroseconds": 12606,
+      "codecAndFrameMicroseconds": 140137
+    },
+    {
+      "id": "neutral-base-v1",
+      "sourceBytes": 1170499,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 720,
+      "rgbaBytes": 2073600,
+      "fileReadMicroseconds": 47173,
+      "codecAndFrameMicroseconds": 133784
+    },
+    {
+      "id": "neutral-base-v1",
+      "sourceBytes": 1170499,
+      "requestedWidth": 1254,
+      "decodedWidth": 1254,
+      "decodedHeight": 1254,
+      "rgbaBytes": 6290064,
+      "fileReadMicroseconds": 17720,
+      "codecAndFrameMicroseconds": 190226
+    },
+    {
+      "id": "neutral-party-v1",
+      "sourceBytes": 1780864,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 180,
+      "rgbaBytes": 129600,
+      "fileReadMicroseconds": 11643,
+      "codecAndFrameMicroseconds": 97626
+    },
+    {
+      "id": "neutral-party-v1",
+      "sourceBytes": 1780864,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 360,
+      "rgbaBytes": 518400,
+      "fileReadMicroseconds": 52557,
+      "codecAndFrameMicroseconds": 128593
+    },
+    {
+      "id": "neutral-party-v1",
+      "sourceBytes": 1780864,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 720,
+      "rgbaBytes": 2073600,
+      "fileReadMicroseconds": 9878,
+      "codecAndFrameMicroseconds": 112774
+    },
+    {
+      "id": "neutral-party-v1",
+      "sourceBytes": 1780864,
+      "requestedWidth": 1254,
+      "decodedWidth": 1254,
+      "decodedHeight": 1254,
+      "rgbaBytes": 6290064,
+      "fileReadMicroseconds": 40214,
+      "codecAndFrameMicroseconds": 36009
+    },
+    {
+      "id": "neutral-festival-v1",
+      "sourceBytes": 1714186,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 180,
+      "rgbaBytes": 129600,
+      "fileReadMicroseconds": 4535,
+      "codecAndFrameMicroseconds": 62441
+    },
+    {
+      "id": "neutral-festival-v1",
+      "sourceBytes": 1714186,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 360,
+      "rgbaBytes": 518400,
+      "fileReadMicroseconds": 3363,
+      "codecAndFrameMicroseconds": 30953
+    },
+    {
+      "id": "neutral-festival-v1",
+      "sourceBytes": 1714186,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 720,
+      "rgbaBytes": 2073600,
+      "fileReadMicroseconds": 2822,
+      "codecAndFrameMicroseconds": 81238
+    },
+    {
+      "id": "neutral-festival-v1",
+      "sourceBytes": 1714186,
+      "requestedWidth": 1254,
+      "decodedWidth": 1254,
+      "decodedHeight": 1254,
+      "rgbaBytes": 6290064,
+      "fileReadMicroseconds": 10313,
+      "codecAndFrameMicroseconds": 68000
+    },
+    {
+      "id": "neutral-sport-v1",
+      "sourceBytes": 1648324,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 180,
+      "rgbaBytes": 129600,
+      "fileReadMicroseconds": 22075,
+      "codecAndFrameMicroseconds": 33547
+    },
+    {
+      "id": "neutral-sport-v1",
+      "sourceBytes": 1648324,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 360,
+      "rgbaBytes": 518400,
+      "fileReadMicroseconds": 2709,
+      "codecAndFrameMicroseconds": 62443
+    },
+    {
+      "id": "neutral-sport-v1",
+      "sourceBytes": 1648324,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 720,
+      "rgbaBytes": 2073600,
+      "fileReadMicroseconds": 2551,
+      "codecAndFrameMicroseconds": 37972
+    },
+    {
+      "id": "neutral-sport-v1",
+      "sourceBytes": 1648324,
+      "requestedWidth": 1254,
+      "decodedWidth": 1254,
+      "decodedHeight": 1254,
+      "rgbaBytes": 6290064,
+      "fileReadMicroseconds": 36480,
+      "codecAndFrameMicroseconds": 31759
+    },
+    {
+      "id": "neutral-business-v1",
+      "sourceBytes": 1610562,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 180,
+      "rgbaBytes": 129600,
+      "fileReadMicroseconds": 2860,
+      "codecAndFrameMicroseconds": 28037
+    },
+    {
+      "id": "neutral-business-v1",
+      "sourceBytes": 1610562,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 360,
+      "rgbaBytes": 518400,
+      "fileReadMicroseconds": 36129,
+      "codecAndFrameMicroseconds": 28327
+    },
+    {
+      "id": "neutral-business-v1",
+      "sourceBytes": 1610562,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 720,
+      "rgbaBytes": 2073600,
+      "fileReadMicroseconds": 2994,
+      "codecAndFrameMicroseconds": 67975
+    },
+    {
+      "id": "neutral-business-v1",
+      "sourceBytes": 1610562,
+      "requestedWidth": 1254,
+      "decodedWidth": 1254,
+      "decodedHeight": 1254,
+      "rgbaBytes": 6290064,
+      "fileReadMicroseconds": 3706,
+      "codecAndFrameMicroseconds": 27537
+    },
+    {
+      "id": "neutral-legendary-v1",
+      "sourceBytes": 2406192,
+      "requestedWidth": 180,
+      "decodedWidth": 180,
+      "decodedHeight": 180,
+      "rgbaBytes": 129600,
+      "fileReadMicroseconds": 4050,
+      "codecAndFrameMicroseconds": 64482
+    },
+    {
+      "id": "neutral-legendary-v1",
+      "sourceBytes": 2406192,
+      "requestedWidth": 360,
+      "decodedWidth": 360,
+      "decodedHeight": 360,
+      "rgbaBytes": 518400,
+      "fileReadMicroseconds": 3718,
+      "codecAndFrameMicroseconds": 40626
+    },
+    {
+      "id": "neutral-legendary-v1",
+      "sourceBytes": 2406192,
+      "requestedWidth": 720,
+      "decodedWidth": 720,
+      "decodedHeight": 720,
+      "rgbaBytes": 2073600,
+      "fileReadMicroseconds": 4350,
+      "codecAndFrameMicroseconds": 79890
+    },
+    {
+      "id": "neutral-legendary-v1",
+      "sourceBytes": 2406192,
+      "requestedWidth": 1254,
+      "decodedWidth": 1254,
+      "decodedHeight": 1254,
+      "rgbaBytes": 6290064,
+      "fileReadMicroseconds": 14108,
+      "codecAndFrameMicroseconds": 84444
+    }
+  ]
+}
