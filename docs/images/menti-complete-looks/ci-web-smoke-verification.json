@@ -1,0 +1,10 @@
+{
+  "sourceCommit": "592d49a9a66c32ae1a10c60f66899bb4fa767636",
+  "artifactId": 14101538615,
+  "browser": "157.0.8103.78",
+  "checks": [
+    "Exact downloaded CI web ZIP: start, change to girl, save, reload, actual personal overview and unrelated-data preservation"
+  ],
+  "runtimeErrors": [],
+  "physicalPhone": false
+}

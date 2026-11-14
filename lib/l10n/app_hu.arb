@@ -1518,5 +1518,15 @@
       }
     }
   },
-  "visualJournalScope": "Önbevallás. A hiányzó bejegyzés nem igazolt fogyasztásmentes nap."
+  "visualJournalScope": "Önbevallás. A hiányzó bejegyzés nem igazolt fogyasztásmentes nap.",
+  "completeTitle": "Teljes Menti-kinézetek",
+  "completeInfo": "Kísérleti hárommintás galéria. Egy kinézet egy teljes karakterkép. Az eredeti összeállításod megmarad; csak a Mentés vált megjelenítést. A PNG-khez nincs külön arcmimika.",
+  "completeBoy": "Fiú · alap",
+  "completeGirl": "Lány · alap",
+  "completeNeutral": "Semleges · alap",
+  "completeLegacy": "Korábbi összeállítás használata",
+  "completeDiscard": "Elveted a nem mentett választást?",
+  "completeLeave": "Elvetés és vissza",
+  "completeSaveError": "A választás mentése nem igazolható. Az adat megváltozhatott vagy nem olvasható. Újratöltéssel ellenőrizd a tárolt állapotot.",
+  "completeImageError": "A karakterkép nem tölthető be."
 }

@@ -5539,6 +5539,66 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'Önbevallás. A hiányzó bejegyzés nem igazolt fogyasztásmentes nap.'**
   String get visualJournalScope;
+
+  /// No description provided for @completeTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Teljes Menti-kinézetek'**
+  String get completeTitle;
+
+  /// No description provided for @completeInfo.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kísérleti hárommintás galéria. Egy kinézet egy teljes karakterkép. Az eredeti összeállításod megmarad; csak a Mentés vált megjelenítést. A PNG-khez nincs külön arcmimika.'**
+  String get completeInfo;
+
+  /// No description provided for @completeBoy.
+  ///
+  /// In hu, this message translates to:
+  /// **'Fiú · alap'**
+  String get completeBoy;
+
+  /// No description provided for @completeGirl.
+  ///
+  /// In hu, this message translates to:
+  /// **'Lány · alap'**
+  String get completeGirl;
+
+  /// No description provided for @completeNeutral.
+  ///
+  /// In hu, this message translates to:
+  /// **'Semleges · alap'**
+  String get completeNeutral;
+
+  /// No description provided for @completeLegacy.
+  ///
+  /// In hu, this message translates to:
+  /// **'Korábbi összeállítás használata'**
+  String get completeLegacy;
+
+  /// No description provided for @completeDiscard.
+  ///
+  /// In hu, this message translates to:
+  /// **'Elveted a nem mentett választást?'**
+  String get completeDiscard;
+
+  /// No description provided for @completeLeave.
+  ///
+  /// In hu, this message translates to:
+  /// **'Elvetés és vissza'**
+  String get completeLeave;
+
+  /// No description provided for @completeSaveError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A választás mentése nem igazolható. Az adat megváltozhatott vagy nem olvasható. Újratöltéssel ellenőrizd a tárolt állapotot.'**
+  String get completeSaveError;
+
+  /// No description provided for @completeImageError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A karakterkép nem tölthető be.'**
+  String get completeImageError;
 }
 
 class _AppLocalizationsDelegate

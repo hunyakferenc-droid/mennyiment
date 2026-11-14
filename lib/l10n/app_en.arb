@@ -1518,5 +1518,15 @@
       }
     }
   },
-  "visualJournalScope": "Self-reported. No entry does not prove an alcohol-free day."
+  "visualJournalScope": "Self-reported. No entry does not prove an alcohol-free day.",
+  "completeTitle": "Complete Menti looks",
+  "completeInfo": "Experimental three-sample gallery. Each look is one complete character image. Your original outfit is preserved; only Save changes the display. These PNGs have no separate facial expressions.",
+  "completeBoy": "Boy · base",
+  "completeGirl": "Girl · base",
+  "completeNeutral": "Neutral · base",
+  "completeLegacy": "Use previous outfit",
+  "completeDiscard": "Discard your unsaved selection?",
+  "completeLeave": "Discard and go back",
+  "completeSaveError": "The selection could not be confirmed as saved. Data may have changed or cannot be read. Reload to check the stored state.",
+  "completeImageError": "The character image could not be loaded."
 }

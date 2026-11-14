@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import 'app_language.dart';
 import 'menti_access.dart';
+import 'menti_complete_looks.dart';
 import 'menti_experience_settings.dart';
 import 'home_widgets.dart';
 import 'menti_character_catalog.dart';
@@ -128,6 +129,9 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
                 bubbleKey: const ValueKey('hub-reaction'), eventToken: _reactionSequence),
               _section('profile', s.hubProfile, data.profile, (profile) {
                 final currentIdentity = profile.identity ?? MentiIdentityScope.of(context)?.profile;
+                final complete = CompleteLookScope.of(context);
+                final completeLook = complete?.ready == true && complete!.selection.active
+                    ? CompleteLook.find(complete.selection.lookId) : null;
                 final family = switch (profile.family) {
                   MentiCharacterFamily.boy => s.hubFamilyBoy,
                   MentiCharacterFamily.girl => s.hubFamilyGirl,
@@ -142,7 +146,7 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
                   MentiOutfit.legendary => s.hubOutfitLegendary,
                 };
                 return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Center(child: Semantics(label: '${profile.name} • $family • $outfit',
+                  Center(child: Semantics(label: '${currentIdentity?.name ?? profile.name} • ${completeLook?.name(context) ?? '$family • $outfit'}',
                     child: ExcludeSemantics(child: currentIdentity != null
                       ? MentiAvatarRenderer(profile: currentIdentity, size: 130)
                       : data.xp.value == null
@@ -151,7 +155,8 @@ class _PersonalHubPageState extends State<PersonalHubPage> with WidgetsBindingOb
                       : MentiEvolution(assetPath: profile.asset, size: 130,
                           level: data.xp.value!.state.level)))),
                   Text(currentIdentity?.name ?? profile.name, style: Theme.of(context).textTheme.titleMedium),
-                  if (currentIdentity == null) Text('$family • $outfit')
+                  if (completeLook != null) Text(completeLook.name(context))
+                  else if (currentIdentity == null) Text('$family • $outfit')
                   else Text('${MentiVisualCatalog.resolve('family', currentIdentity.visual.value('family')).label(s)} • ${MentiVisualCatalog.resolve('outfit', currentIdentity.visual.value('outfit')).label(s)}'),
                 ]);
               }),

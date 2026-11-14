@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_access.dart';
 import 'data_backup.dart';
+import 'menti_complete_looks.dart';
 import 'menti_adventure_store.dart';
 import 'drink_journal.dart';
 import 'menti_identity/menti_identity.dart';
@@ -60,6 +61,10 @@ class BackupRestorer {
     await p.reload();
     if (p.containsKey(recoveryKey)) { throw const RestoreFailure(recoveryRequired: true); }
     final before = _snapshot(p);
+    // Unknown experimental state requires a compatible app; do not replace it.
+    if (values.containsKey(CompleteLookStore.key) && before.containsKey(CompleteLookStore.key)) {
+      CompleteLookSelection.decode(before[CompleteLookStore.key]);
+    }
     // Permanent unlocks survive restoring an older, lower-XP backup.
     const rewards = 'mennyiment_menti_rewards_v1';
     if (values.containsKey(rewards) && before[rewards] is List<String>) {
@@ -217,6 +222,7 @@ void validateRestoreValue(String key, Object value) {
   void require(bool condition) {
     if (!condition) { throw FormatException('Invalid restore value: $key'); }
   }
+  if (key == CompleteLookStore.key) { CompleteLookSelection.decode(value); return; }
   if (key == AdventureStore.key) { AdventureDocument.decode(value); return; }
   if (key == MentiAccessSettings.key) { MentiAccessSettings.decode(value); return; }
   if (key == MentiIdentityStore.key) { MentiIdentityDocument.decode(value); return; }
