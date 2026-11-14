@@ -125,9 +125,9 @@ class MentiAnimationController extends ChangeNotifier {
   final Future<void> Function(MentiAnimationClip) verify;
   final DateTime Function() clock;
   final MentiReactionEngine _engine = MentiReactionEngine();
-  static Future<void> _decoderTail = Future.value();
+  static Future<void>? _decoderTail;
   static MentiAnimationController? _decoderOwner;
-  Future<void> get settled => _decoderTail;
+  Future<void> get settled => _decoderTail ?? Future<void>.value();
   final Map<Object, ({String look, double size})> _hosts = {};
   Object? _host;
   String? lookId;
@@ -340,7 +340,7 @@ class MentiAnimationController extends ChangeNotifier {
       _host != null &&
       active != null;
   void _enqueue(Future<void> Function() work) {
-    _decoderTail = _decoderTail
+    final next = (_decoderTail ?? Future<void>.value())
         .catchError((Object _) {})
         .then((_) => work())
         .catchError((Object _) {
@@ -350,6 +350,11 @@ class MentiAnimationController extends ChangeNotifier {
             _notify();
           }
         });
+    _decoderTail = next;
+    // Do not retain a completed future (or its old Zone) between sessions.
+    next.whenComplete(() {
+      if (identical(_decoderTail, next)) _decoderTail = null;
+    });
   }
 
   void _invalidate() {

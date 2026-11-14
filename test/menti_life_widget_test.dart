@@ -244,4 +244,62 @@ void main() {
       expect(t.takeException(), isNull);
     },
   );
+  testWidgets(
+    'Available reaction below the fold brings saved character into view before playback',
+    (t) async {
+      SharedPreferences.setMockInitialValues({
+        CompleteLookStore.key: const CompleteLookSelection(active: true)
+            .encode(),
+      });
+      final store = CompleteLookStore();
+      await store.load();
+      final c = MentiAnimationController(
+        catalog: MentiAnimationCatalog([fixture(id: 'wink', reaction: 'wink')]),
+        verify: (_) async {},
+        factory: (_) => FakeMentiVideo(),
+      );
+      await t.pumpWidget(
+        MaterialApp(
+          locale: const Locale('en'),
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          builder: (ctx, child) => MediaQuery(
+            data: MediaQuery.of(
+              ctx,
+            ).copyWith(disableAnimations: false, accessibleNavigation: false),
+            child: CompleteLookScope(
+              store: store,
+              child: MentiMotionScope(
+                child: MentiAnimationScope(controller: c, child: child!),
+              ),
+            ),
+          ),
+          home: const MentiAnimationPreviewPage(),
+        ),
+      );
+      await t.pumpAndSettle();
+      final play = find.byKey(const ValueKey('life-reaction-wink'));
+      await t.scrollUntilVisible(play, 180, maxScrolls: 30);
+      await t.pumpAndSettle();
+      expect(c.hasVisibleHost, false);
+      expect(t.widget<OutlinedButton>(play).onPressed, isNotNull);
+      await t.tap(play);
+      await t.pumpAndSettle();
+      await t.runAsync(() => c.settled);
+      await t.pump();
+      expect(c.hasVisibleHost, true);
+      expect(c.active?.reaction, MentiLifeReaction.wink);
+      expect(
+        find.byKey(const ValueKey('real-video-test-surface')),
+        findsOneWidget,
+      );
+      await t.pumpWidget(const SizedBox.shrink());
+      await t.pumpAndSettle();
+      c.dispose();
+      await t.pump();
+      await t.runAsync(() => c.settled);
+      store.dispose();
+      expect(t.takeException(), isNull);
+    },
+  );
 }

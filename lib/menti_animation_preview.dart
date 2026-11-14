@@ -29,8 +29,41 @@ String mentiLifeReactionLabel(AppLocalizations s, MentiLifeReaction r) =>
       MentiLifeReaction.milestone => s.lifeMilestone,
     };
 
-class MentiAnimationPreviewPage extends StatelessWidget {
+class MentiAnimationPreviewPage extends StatefulWidget {
   const MentiAnimationPreviewPage({super.key});
+  @override
+  State<MentiAnimationPreviewPage> createState() =>
+      _MentiAnimationPreviewPageState();
+}
+
+class _MentiAnimationPreviewPageState extends State<MentiAnimationPreviewPage> {
+  final _scroll = ScrollController();
+  Future<void> _tryReaction(
+    MentiAnimationController c,
+    MentiLifeReaction r,
+  ) async {
+    // Reaction controls may be below the character on a narrow screen.
+    // Bring the actual saved character back into view before requesting video.
+    if (_scroll.hasClients) {
+      await _scroll.animateTo(
+        0,
+        duration: MentiMotionScope.reducedOf(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 240),
+        curve: Curves.easeOut,
+      );
+    }
+    if (!mounted) return;
+    await WidgetsBinding.instance.endOfFrame;
+    if (mounted) c.request(r, token: 'preview-${r.name}', manual: true);
+  }
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final s = appStrings(context), session = MentiAnimationScope.of(context);
@@ -68,6 +101,7 @@ class MentiAnimationPreviewPage extends StatelessWidget {
           ),
           body: SafeArea(
             child: ListView(
+              controller: _scroll,
               padding: const EdgeInsets.all(16),
               children: [
                 Text(s.lifeIntro),
@@ -173,11 +207,7 @@ class MentiAnimationPreviewPage extends StatelessWidget {
                                       prefs.ready &&
                                       prefs.value.enabled &&
                                       c.catalog.find(look.id, r) != null
-                                  ? () => c.request(
-                                      r,
-                                      token: 'preview-${r.name}',
-                                      manual: true,
-                                    )
+                                  ? () => _tryReaction(c, r)
                                   : null,
                               icon: const Icon(Icons.play_arrow),
                               label: Text(s.lifeTry),
