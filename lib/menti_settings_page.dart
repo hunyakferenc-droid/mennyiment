@@ -5,7 +5,6 @@ import 'app_information.dart';
 import 'menti_access.dart';
 import 'menti_identity/menti_avatar_renderer.dart';
 import 'menti_identity/menti_identity_controller.dart';
-import 'menti_identity/menti_studio_page.dart';
 import 'menti_experience_settings.dart';
 import 'menti_intro.dart';
 import 'menti_motion.dart';
@@ -165,13 +164,9 @@ class MentiSettingsPage extends StatelessWidget {
                 Text(s.startLocalOnly),
                 const SizedBox(height: 12),
                 FilledButton.tonalIcon(
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => const MentiStudioPage(),
-                    ),
-                  ),
+                  onPressed: () => openLegacyStudio(context),
                   icon: const Icon(Icons.palette_outlined),
-                  label: Text(s.avatarStudio),
+                  label: Text(s.collectionLegacyStudio),
                 ),
               ],
             ),

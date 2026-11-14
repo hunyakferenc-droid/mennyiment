@@ -189,7 +189,7 @@ class HomeMentiCard extends StatelessWidget {
                   key: const ValueKey('home-studio'),
                   onPressed: onChoose,
                   icon: const Icon(Icons.palette_outlined),
-                  label: Text(s.visualStudio),
+                  label: Text(s.collectionTitle),
                 ),
                 TextButton.icon(
                   key: const ValueKey('home-progress'),

@@ -1519,8 +1519,8 @@
     }
   },
   "visualJournalScope": "Self-reported. No entry does not prove an alcohol-free day.",
-  "completeTitle": "Complete Menti looks",
-  "completeInfo": "Experimental three-sample gallery. Each look is one complete character image. Your original outfit is preserved; only Save changes the display. These PNGs have no separate facial expressions.",
+  "completeTitle": "Menti collection",
+  "completeInfo": "Choose a complete look. Your previous outfit is preserved and you can switch back any time.",
   "completeBoy": "Boy · base",
   "completeGirl": "Girl · base",
   "completeNeutral": "Neutral · base",
@@ -1528,5 +1528,93 @@
   "completeDiscard": "Discard your unsaved selection?",
   "completeLeave": "Discard and go back",
   "completeSaveError": "The selection could not be confirmed as saved. Data may have changed or cannot be read. Reload to check the stored state.",
-  "completeImageError": "The character image could not be loaded."
+  "completeImageError": "The character image could not be loaded.",
+  "collectionTitle": "Menti collection",
+  "collectionIntro": "Choose a complete look. Your previous outfit is preserved and you can switch back any time.",
+  "collectionBoy": "Boy",
+  "collectionGirl": "Girl",
+  "collectionNeutral": "Neutral",
+  "collectionParty": "Party",
+  "collectionFestival": "Festival",
+  "collectionSport": "Sport",
+  "collectionBusiness": "Business",
+  "collectionLegendary": "Legendary",
+  "collectionLookName": "{family} · {style}",
+  "@collectionLookName": {
+    "placeholders": {
+      "family": {
+        "type": "String"
+      },
+      "style": {
+        "type": "String"
+      }
+    }
+  },
+  "collectionAllFamilies": "All families",
+  "collectionAll": "All",
+  "collectionOwned": "Acquired",
+  "collectionUnlockable": "To unlock",
+  "collectionStarter": "Available from the start",
+  "collectionRequiredXp": "Unlock at {xp} XP",
+  "@collectionRequiredXp": {
+    "placeholders": {
+      "xp": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "collectionXpProgress": "{current} / {target} XP",
+  "@collectionXpProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int",
+        "format": "decimalPattern"
+      },
+      "target": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "collectionXpUnavailable": "XP cannot be read right now. Your acquired looks remain available.",
+  "collectionSelect": "Select",
+  "collectionSelected": "Selected",
+  "collectionCurrentSelection": "Your selection: {name}",
+  "@collectionCurrentSelection": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "collectionNoMatches": "There are no looks in this view.",
+  "collectionResetFilters": "Show all looks",
+  "collectionUseLegacy": "Select my previous outfit",
+  "collectionLegacyStudio": "Previous Menti Studio",
+  "collectionSwitchLegacyTitle": "Open the previous Studio?",
+  "collectionSwitchLegacyBody": "This switches to your previous appearance. Your saved collection selection and acquired looks are preserved.",
+  "collectionSwitchLegacyConfirm": "Switch and open",
+  "collectionUnlockNotice": "New Menti look: {names}",
+  "@collectionUnlockNotice": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "collectionOnboardInfo": "Choose your first Menti. Each complete look includes its outfit and accessories; you can change it later in your collection.",
+  "collectionOpen": "Open collection",
+  "collectionXpDurableInfo": "Reaching the threshold unlocks a look without spending XP. Acquired looks stay yours.",
+  "collectionLockedLabel": "Not yet available",
+  "collectionStarterCount": "{count} starter looks",
+  "@collectionStarterCount": {
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "collectionChanged": "Your saved Menti changed elsewhere. Reload the selection to continue."
 }
