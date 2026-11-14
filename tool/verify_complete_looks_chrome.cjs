@@ -8,10 +8,10 @@ const button=(p,name)=>p.getByRole('button',{name,exact:true});
 const decode=x=>JSON.parse(JSON.parse(x));
 async function ready(p){const until=Date.now()+60000;while(p.pendingRequests.size||Date.now()-p.lastNetworkActivity<500){if(Date.now()>until)throw Error('Assets did not settle');await p.waitForTimeout(100);}}
 async function top(p){await p.mouse.move(p.viewportSize().width*.7,250);await p.mouse.wheel(0,-30000);await p.waitForTimeout(150);}
-async function act(p,l){await semantics(p);for(let n=0;n<80;n++){const b=await l.boundingBox();const h=p.viewportSize().height;if(b&&b.y+b.height/2>115&&b.y+b.height/2<h-10){await l.evaluate(e=>e.click());await p.waitForTimeout(180);await semantics(p);return;}await p.mouse.move(p.viewportSize().width*.7,h*.6);await p.mouse.wheel(0,b&&b.y<115?-250:250);await p.waitForTimeout(75);}throw Error('Unreachable '+await l.count());}
+async function act(p,l){await semantics(p);for(let n=0;n<80;n++){const boxes=await l.evaluateAll(ns=>ns.map(n=>{const r=n.getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height};}));const b=boxes.find(r=>r.width>0&&r.height>0);const h=p.viewportSize().height;const nav=await p.getByRole('tablist').evaluateAll(ns=>ns.map(n=>n.getBoundingClientRect().top));const lower=nav.find(y=>y>h*.5)||h;if(b&&b.y+b.height/2>115&&b.y+b.height/2<lower-8){await l.evaluate(e=>e.click());await p.waitForTimeout(180);await semantics(p);return;}await p.mouse.move(p.viewportSize().width*.7,h*.6);await p.mouse.wheel(0,b&&b.y<115?-250:250);await p.waitForTimeout(75);}throw Error('Unreachable '+await l.count());}
 async function fixed(p,l){await l.waitFor();await l.evaluate(e=>e.click());await p.waitForTimeout(200);await semantics(p);}
 async function back(p,locale){await fixed(p,button(p,locale==='hu'?'Vissza':'Back'));}
-async function home(p,locale,s){for(let n=0;n<4;n++){if(await button(p,s.visualStudio).count()){await top(p);return;}await back(p,locale);}throw Error('Home route missing');}
+async function home(p,locale,s){for(let n=0;n<4;n++){await top(p);if(await button(p,s.visualStudio).count()){await top(p);return;}await back(p,locale);}throw Error('Home route missing');}
 async function gallery(p,s){await top(p);await act(p,button(p,s.visualStudio));await ready(p);if(await button(p,s.completeTitle).count())await fixed(p,button(p,s.completeTitle));await p.getByRole('heading',{name:s.completeTitle,exact:true}).waitFor();}
 async function choose(p,name){const rx=new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));await act(p,p.getByRole('button',{name:rx}).last());}
 (async()=>{const browser=await chromium.launch({executablePath:process.env.CHROME_BIN||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});let active;
@@ -27,7 +27,7 @@ for(const [id,name]of [['boy-base-v1',s.completeBoy],['girl-base-v1',s.completeG
  const saved=await snapshot(p);for(const[k,v]of Object.entries(before))assert.equal(saved[k],v,`Unrelated data changed: ${k}`);
  p.reloading=true;await p.reload({waitUntil:'networkidle'});await semantics(p);await button(p,s.visualStudio).waitFor();await ready(p);p.reloading=false;assert.deepEqual(await snapshot(p),saved);
  await act(p,button(p,s.adventureTitle));await fixed(p,p.getByRole('tab',{name:s.adventureMap,exact:true}));await screenshot(p,`adventure-${id}-${locale}-${width}`);await back(p,locale);await home(p,locale,s);
- await act(p,button(p,s.hubTitle));await p.getByRole('heading',{name:s.hubOverview,exact:true}).waitFor();await p.getByText(name,{exact:true}).waitFor();await screenshot(p,`profile-${id}-${locale}-${width}`);await back(p,locale);await home(p,locale,s);
+ await act(p,button(p,s.hubTitle));await p.getByRole('heading',{name:s.hubOverview,exact:true}).waitFor();for(let n=0;n<50;n++){const tree=await p.locator('body').ariaSnapshot();if(tree.includes('girl adult • '+name))break;if(n===49)throw Error('Active look missing in actual profile label: '+name);await p.waitForTimeout(100);}await screenshot(p,`profile-${id}-${locale}-${width}`);await back(p,locale);await home(p,locale,s);
  checks.push(`${locale} ${id}: select/save/reload and gallery/enlarged/home/profile/adventure use the persisted choice; old data byte-identical`);
 }
 // Real file download, state change, file picker, preview and confirmed restore.

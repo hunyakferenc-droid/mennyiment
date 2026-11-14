@@ -1,0 +1,54 @@
+{
+  "sourceCommit": "592d49a9a66c32ae1a10c60f66899bb4fa767636",
+  "version": "2.5.0+37",
+  "browser": "157.0.8103.78",
+  "checks": [
+    "hu: preview and both cancel/back confirmation paths write nothing",
+    "hu boy-base-v1: select/save/reload and gallery/enlarged/home/profile/adventure use the persisted choice; old data byte-identical",
+    "hu girl-base-v1: select/save/reload and gallery/enlarged/home/profile/adventure use the persisted choice; old data byte-identical",
+    "hu neutral-base-v1: select/save/reload and gallery/enlarged/home/profile/adventure use the persisted choice; old data byte-identical",
+    "hu: actual backup file download, choice change, file import/preview/restore returns the saved sample; legacy switch preserves old outfit/XP/unlocks",
+    "en: preview and both cancel/back confirmation paths write nothing",
+    "en boy-base-v1: select/save/reload and gallery/enlarged/home/profile/adventure use the persisted choice; old data byte-identical",
+    "en girl-base-v1: select/save/reload and gallery/enlarged/home/profile/adventure use the persisted choice; old data byte-identical",
+    "en neutral-base-v1: select/save/reload and gallery/enlarged/home/profile/adventure use the persisted choice; old data byte-identical",
+    "en: actual backup file download, choice change, file import/preview/restore returns the saved sample; legacy switch preserves old outfit/XP/unlocks"
+  ],
+  "metrics": [
+    {
+      "locale": "hu",
+      "id": "boy-base-v1",
+      "enlargeAndSettleMs": 2683
+    },
+    {
+      "locale": "hu",
+      "id": "girl-base-v1",
+      "enlargeAndSettleMs": 2713
+    },
+    {
+      "locale": "hu",
+      "id": "neutral-base-v1",
+      "enlargeAndSettleMs": 2720
+    },
+    {
+      "locale": "en",
+      "id": "boy-base-v1",
+      "enlargeAndSettleMs": 2685
+    },
+    {
+      "locale": "en",
+      "id": "girl-base-v1",
+      "enlargeAndSettleMs": 2698
+    },
+    {
+      "locale": "en",
+      "id": "neutral-base-v1",
+      "enlargeAndSettleMs": 2686
+    }
+  ],
+  "runtimeErrors": [],
+  "physicalAndroid": false,
+  "emulator": false,
+  "realWindows": false,
+  "textScale": "Chrome normal; 200% text and keyboard independently tested by Flutter widgets."
+}

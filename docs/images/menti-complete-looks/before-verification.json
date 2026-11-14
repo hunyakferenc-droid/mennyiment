@@ -1,0 +1,23 @@
+{
+  "sourceCommit": "3df8f66c7be59a92314694f738753ce9cc8755e7",
+  "version": "2.4.1+36",
+  "browser": "157.0.8103.78",
+  "width": 390,
+  "height": 844,
+  "capturedDate": "2026-11-14",
+  "screenshots": [
+    {
+      "family": "boy",
+      "fixture": "seed(hu, family, adult); business/beanie/scarf"
+    },
+    {
+      "family": "girl",
+      "fixture": "seed(hu, family, adult); business/beanie/scarf"
+    },
+    {
+      "family": "neutral",
+      "fixture": "seed(hu, family, adult); business/beanie/scarf"
+    }
+  ],
+  "runtimeErrors": []
+}

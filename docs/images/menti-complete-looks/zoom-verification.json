@@ -1,0 +1,38 @@
+{
+  "sourceCommit": "592d49a9a66c32ae1a10c60f66899bb4fa767636",
+  "browser": "157.0.8103.78",
+  "records": [
+    {
+      "id": "boy",
+      "gesture": "CDP two touch points, spread from 36 to 116 CSS pixels, maximum scale 3 in renderer",
+      "imageBox": {
+        "x": 64,
+        "y": 219.6666717529297,
+        "width": 262,
+        "height": 386.65626525878906
+      }
+    },
+    {
+      "id": "girl",
+      "gesture": "CDP two touch points, spread from 36 to 116 CSS pixels, maximum scale 3 in renderer",
+      "imageBox": {
+        "x": 64,
+        "y": 219.6666717529297,
+        "width": 262,
+        "height": 386.65626525878906
+      }
+    },
+    {
+      "id": "neutral",
+      "gesture": "CDP two touch points, spread from 36 to 116 CSS pixels, maximum scale 3 in renderer",
+      "imageBox": {
+        "x": 64,
+        "y": 219.6666717529297,
+        "width": 262,
+        "height": 386.65626525878906
+      }
+    }
+  ],
+  "physicalPhone": false,
+  "runtimeErrors": []
+}

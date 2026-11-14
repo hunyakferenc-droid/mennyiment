@@ -119,3 +119,6 @@ pubspec.yaml.bak
 
 # Kotlin local incremental compiler cache.
 /android/.kotlin/
+
+# Self-contained synthetic comparison gallery; never an application/user backup.
+!/docs/images/menti-complete-looks/comparison-592d49a.zip

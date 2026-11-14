@@ -1,0 +1,417 @@
+{
+  "sourceCommit": "592d49a9a66c32ae1a10c60f66899bb4fa767636",
+  "browser": "157.0.8103.78",
+  "textScale": 1,
+  "records": [
+    {
+      "locale": "hu",
+      "width": 320,
+      "height": 844,
+      "family": "boy",
+      "look": "boy-base-v1",
+      "file": "matrix-boy-hu-320.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "durationMs": 43,
+          "transferSize": 1283366,
+          "encodedBodySize": 1283066,
+          "decodedBodySize": 1283066
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 320,
+      "height": 844,
+      "family": "girl",
+      "look": "girl-base-v1",
+      "file": "matrix-girl-hu-320.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "durationMs": 29.899999991059303,
+          "transferSize": 1761055,
+          "encodedBodySize": 1760755,
+          "decodedBodySize": 1760755
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 320,
+      "height": 844,
+      "family": "neutral",
+      "look": "neutral-base-v1",
+      "file": "matrix-neutral-hu-320.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "durationMs": 55.400000005960464,
+          "transferSize": 1170799,
+          "encodedBodySize": 1170499,
+          "decodedBodySize": 1170499
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 360,
+      "height": 844,
+      "family": "boy",
+      "look": "boy-base-v1",
+      "file": "matrix-boy-hu-360.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "durationMs": 37.29999999701977,
+          "transferSize": 1283366,
+          "encodedBodySize": 1283066,
+          "decodedBodySize": 1283066
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 360,
+      "height": 844,
+      "family": "girl",
+      "look": "girl-base-v1",
+      "file": "matrix-girl-hu-360.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "durationMs": 42.80000001192093,
+          "transferSize": 1761055,
+          "encodedBodySize": 1760755,
+          "decodedBodySize": 1760755
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 360,
+      "height": 844,
+      "family": "neutral",
+      "look": "neutral-base-v1",
+      "file": "matrix-neutral-hu-360.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "durationMs": 32.20000000298023,
+          "transferSize": 1170799,
+          "encodedBodySize": 1170499,
+          "decodedBodySize": 1170499
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 390,
+      "height": 844,
+      "family": "boy",
+      "look": "boy-base-v1",
+      "file": "matrix-boy-hu-390.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "durationMs": 46,
+          "transferSize": 1283366,
+          "encodedBodySize": 1283066,
+          "decodedBodySize": 1283066
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 390,
+      "height": 844,
+      "family": "girl",
+      "look": "girl-base-v1",
+      "file": "matrix-girl-hu-390.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "durationMs": 38.099999994039536,
+          "transferSize": 1761055,
+          "encodedBodySize": 1760755,
+          "decodedBodySize": 1760755
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 390,
+      "height": 844,
+      "family": "neutral",
+      "look": "neutral-base-v1",
+      "file": "matrix-neutral-hu-390.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "durationMs": 30,
+          "transferSize": 1170799,
+          "encodedBodySize": 1170499,
+          "decodedBodySize": 1170499
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 430,
+      "height": 844,
+      "family": "boy",
+      "look": "boy-base-v1",
+      "file": "matrix-boy-hu-430.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "durationMs": 21.700000002980232,
+          "transferSize": 1283366,
+          "encodedBodySize": 1283066,
+          "decodedBodySize": 1283066
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 430,
+      "height": 844,
+      "family": "girl",
+      "look": "girl-base-v1",
+      "file": "matrix-girl-hu-430.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "durationMs": 41.79999999701977,
+          "transferSize": 1761055,
+          "encodedBodySize": 1760755,
+          "decodedBodySize": 1760755
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 430,
+      "height": 844,
+      "family": "neutral",
+      "look": "neutral-base-v1",
+      "file": "matrix-neutral-hu-430.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "durationMs": 34.79999999701977,
+          "transferSize": 1170799,
+          "encodedBodySize": 1170499,
+          "decodedBodySize": 1170499
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "height": 844,
+      "family": "boy",
+      "look": "boy-base-v1",
+      "file": "matrix-boy-en-320.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "durationMs": 18.099999994039536,
+          "transferSize": 1283366,
+          "encodedBodySize": 1283066,
+          "decodedBodySize": 1283066
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "height": 844,
+      "family": "girl",
+      "look": "girl-base-v1",
+      "file": "matrix-girl-en-320.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "durationMs": 16.799999997019768,
+          "transferSize": 1761055,
+          "encodedBodySize": 1760755,
+          "decodedBodySize": 1760755
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "height": 844,
+      "family": "neutral",
+      "look": "neutral-base-v1",
+      "file": "matrix-neutral-en-320.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "durationMs": 56.29999999701977,
+          "transferSize": 1170799,
+          "encodedBodySize": 1170499,
+          "decodedBodySize": 1170499
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 360,
+      "height": 844,
+      "family": "boy",
+      "look": "boy-base-v1",
+      "file": "matrix-boy-en-360.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "durationMs": 13.400000005960464,
+          "transferSize": 1283366,
+          "encodedBodySize": 1283066,
+          "decodedBodySize": 1283066
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 360,
+      "height": 844,
+      "family": "girl",
+      "look": "girl-base-v1",
+      "file": "matrix-girl-en-360.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "durationMs": 47.20000000298023,
+          "transferSize": 1761055,
+          "encodedBodySize": 1760755,
+          "decodedBodySize": 1760755
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 360,
+      "height": 844,
+      "family": "neutral",
+      "look": "neutral-base-v1",
+      "file": "matrix-neutral-en-360.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "durationMs": 18.600000008940697,
+          "transferSize": 1170799,
+          "encodedBodySize": 1170499,
+          "decodedBodySize": 1170499
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "family": "boy",
+      "look": "boy-base-v1",
+      "file": "matrix-boy-en-390.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "durationMs": 61.20000000298023,
+          "transferSize": 1283366,
+          "encodedBodySize": 1283066,
+          "decodedBodySize": 1283066
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "family": "girl",
+      "look": "girl-base-v1",
+      "file": "matrix-girl-en-390.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "durationMs": 35.20000000298023,
+          "transferSize": 1761055,
+          "encodedBodySize": 1760755,
+          "decodedBodySize": 1760755
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "family": "neutral",
+      "look": "neutral-base-v1",
+      "file": "matrix-neutral-en-390.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "durationMs": 27,
+          "transferSize": 1170799,
+          "encodedBodySize": 1170499,
+          "decodedBodySize": 1170499
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 430,
+      "height": 844,
+      "family": "boy",
+      "look": "boy-base-v1",
+      "file": "matrix-boy-en-430.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "durationMs": 40.6000000089407,
+          "transferSize": 1283366,
+          "encodedBodySize": 1283066,
+          "decodedBodySize": 1283066
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 430,
+      "height": 844,
+      "family": "girl",
+      "look": "girl-base-v1",
+      "file": "matrix-girl-en-430.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "durationMs": 18.200000002980232,
+          "transferSize": 1761055,
+          "encodedBodySize": 1760755,
+          "decodedBodySize": 1760755
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 430,
+      "height": 844,
+      "family": "neutral",
+      "look": "neutral-base-v1",
+      "file": "matrix-neutral-en-430.png",
+      "timings": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "durationMs": 29.799999997019768,
+          "transferSize": 1170799,
+          "encodedBodySize": 1170499,
+          "decodedBodySize": 1170499
+        }
+      ]
+    }
+  ],
+  "runtimeErrors": [],
+  "physicalPhone": false
+}
