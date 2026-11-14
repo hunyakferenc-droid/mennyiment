@@ -1,3 +1,4 @@
+import 'menti_life_events.dart';
 import 'dart:async';
 import 'dart:convert';
 
@@ -328,6 +329,7 @@ class AdventureStore {
             candidate.completedStations(now) > document.completedStations(now);
         document = candidate;
         _raw = encoded;
+        if (status == 'completed') MentiLifeEvents.instance.emit(station ? MentiLifeEvent.goalReached : MentiLifeEvent.taskCompleted, token:'${adventureDay(day)}:${task.name}');
         return AdventureResult(
           completed: status == 'completed',
           station: station,

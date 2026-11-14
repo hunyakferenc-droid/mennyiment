@@ -54,6 +54,7 @@ class MentiAccessSettings extends ChangeNotifier {
               'mennyiment_reduce_motion_v1',
               'mennyiment_reactions_enabled_v1',
               'mennyiment_intro_seen_v1',
+              'mennyiment_life_settings_v1',
             }.contains(k),
       );
       if (_loaded != null) {

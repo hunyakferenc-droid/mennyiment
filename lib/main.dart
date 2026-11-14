@@ -32,6 +32,8 @@ import 'home_adventure_summary.dart';
 import 'personal_hub.dart';
 import 'menti_experience_settings.dart';
 import 'menti_complete_looks.dart';
+import 'menti_animation_player.dart';
+import 'menti_life_events.dart';
 import 'menti_intro.dart';
 import 'menti_access.dart';
 import 'menti_onboarding.dart';
@@ -109,7 +111,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
       }
     return ListenableBuilder(listenable: language, builder: (context, _) => AppLanguageScope(language: language, child: MaterialApp(
       key: ValueKey(_epoch),
-      builder: (context, child) => MentiAccessScope(settings: access, child: MentiIdentityScope(child: MentiExperienceScope(child: MentiMotionScope(child: CompleteLookScope(child: child!))))),
+      builder: (context, child) => MentiAccessScope(settings: access, child: MentiIdentityScope(child: MentiExperienceScope(child: MentiMotionScope(child: CompleteLookScope(child: MentiAnimationScope(child: child!)))))),
       locale: language.locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -193,6 +195,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 int mentiMessageIndex = 0;
 int mentiReaction = 0;
 void updateMentiMessage(MentiMood mood) {
+  if (mood == MentiMood.drinkAdded || mood == MentiMood.alcoholFreeEntry) {
+    MentiLifeEvents.instance.emit(MentiLifeEvent.journalSaved);
+  }
   if (!MentiExperienceScope.reactionsOf(context)) return;
   setState(() {
     _mentiMood = mood;

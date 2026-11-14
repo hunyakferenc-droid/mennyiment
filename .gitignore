@@ -127,3 +127,7 @@ pubspec.yaml.bak
 !/assets/images/menti_complete/thumbs/*.png
 !/docs/images/menti-collection/*.png
 !/docs/images/menti-collection/*.zip
+
+# Geometric decoder fixture only; not a character or production video asset.
+!/tool/fixtures/menti-life-decoder-probe.mp4
+!/docs/images/menti-life/*.png

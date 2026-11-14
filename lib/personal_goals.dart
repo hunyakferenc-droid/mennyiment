@@ -1,3 +1,4 @@
+import 'menti_life_events.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -108,6 +109,7 @@ class _PersonalGoalsPageState extends State<PersonalGoalsPage>
     final after = recordedGoalDays(_store.reflectionDays, week, _now);
     if (MentiExperienceScope.reactionsOf(context) && crossedRecordedGoal(before: before, after: after,
         previousTarget: target, target: _store.reflectionGoal)) {
+      MentiLifeEvents.instance.emit(MentiLifeEvent.goalReached);
       setState(() { _reaction = MentiMood.personalGoalCompleted; _reactionSequence++; });
     }
   }

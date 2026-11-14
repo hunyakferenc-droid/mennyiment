@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "clips": [],
+  "note": "No owner/rights/background-approved local video is available yet. Candidate sources are documented in docs/menti-life/media-inventory.json. Never substitute another look.",
+  "lookIds": [
+    "boy-base-v1",
+    "boy-party-v1",
+    "boy-festival-v1",
+    "boy-sport-v1",
+    "boy-business-v1",
+    "boy-legendary-v1",
+    "girl-base-v1",
+    "girl-party-v1",
+    "girl-festival-v1",
+    "girl-sport-v1",
+    "girl-business-v1",
+    "girl-legendary-v1",
+    "neutral-base-v1",
+    "neutral-party-v1",
+    "neutral-festival-v1",
+    "neutral-sport-v1",
+    "neutral-business-v1",
+    "neutral-legendary-v1"
+  ],
+  "reactionIds": [
+    "welcome",
+    "blink",
+    "wink",
+    "smile",
+    "joy",
+    "congratulation",
+    "victoryDance",
+    "thinking",
+    "surprise",
+    "encouragement",
+    "empathy",
+    "breathing",
+    "rest",
+    "milestone"
+  ]
+}

@@ -1616,5 +1616,44 @@
       }
     }
   },
-  "collectionChanged": "A mentett Menti közben megváltozott. Töltsd be újra a választást a folytatáshoz."
+  "collectionChanged": "A mentett Menti közben megváltozott. Töltsd be újra a választást a folytatáshoz.",
+  "lifeTitle": "Menti Life",
+  "lifeIntro": "A saját Mentid rövid, néma reakciói. Csak az adott kinézethez jóváhagyott, helyben tárolt videó indulhat el.",
+  "lifeEnabled": "Videós reakciók engedélyezése",
+  "lifeFrequency": "Automatikus reakciók gyakorisága",
+  "lifeLow": "Ritkán",
+  "lifeNormal": "Normál",
+  "lifeFrequent": "Gyakrabban",
+  "lifeFrequencyHint": "Ritkán: legalább 2 perc; normál: 30 másodperc; gyakrabban: 10 másodperc két automatikus reakció között. Nincs folyamatos ismétlés. Fontosabb reakció megszakíthatja az éppen futót.",
+  "lifeStatic": "Vissza az állóképhez",
+  "lifeNoClip": "Ehhez a kinézethez még nincs jóváhagyott videó. Az eredeti képed látható.",
+  "lifeUnavailable": "Még nincs jóváhagyott videó",
+  "lifeLegacy": "Most a korábbi Studio-összeállításod látható. Teljes kinézetet a Menti-gyűjteményben választhatsz; itt nem változtatjuk meg.",
+  "lifeSettingsError": "A beállítás nem tölthető be vagy a mentése nem igazolható. Újratöltéssel ellenőrizd; addig az állókép marad.",
+  "lifeReduced": "A rendszer vagy a meglévő mozgás-/reakcióbeállítás letiltja a lejátszást.",
+  "lifeLoading": "A videó betöltődik; addig az eredeti kép látható.",
+  "lifePlaybackError": "A videó nem játszható le. Biztonságosan visszatértünk az eredeti képhez.",
+  "lifeTry": "Reakció kipróbálása",
+  "lifeApprovedCount": "Jóváhagyott videók ehhez a kinézethez: {count}",
+  "lifeWelcome": "Üdvözlés",
+  "lifeBlink": "Pislogás",
+  "lifeWink": "Kacsintás",
+  "lifeSmile": "Mosoly",
+  "lifeJoy": "Öröm",
+  "lifeCongratulation": "Gratuláció",
+  "lifeVictoryDance": "Győzelmi tánc",
+  "lifeThinking": "Gondolkodás",
+  "lifeSurprise": "Meglepetés",
+  "lifeEncouragement": "Bátorítás",
+  "lifeEmpathy": "Együttérzés",
+  "lifeBreathing": "Nyugodt légzés",
+  "lifeRest": "Pihenés",
+  "lifeMilestone": "Mérföldkő-ünneplés",
+  "@lifeApprovedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
