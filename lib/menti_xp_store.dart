@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
 
 /// MennyiMent? 7.2 – egyetlen XP-forrás a kezdőlap és a fejlődési oldal számára.
 /// A migráció konzervatív: a két régi számláló maximumát őrzi meg,
@@ -31,6 +32,8 @@ class MentiXpState {
 }
 
 class MentiXpStore {
+  /// Presentation observers only; no new XP event or earning rule.
+  static final changes = ValueNotifier<int>(0);
   static const _key = 'mennyiment_menti_xp_v2';
   static const currentKey = _key;
 
@@ -38,12 +41,15 @@ class MentiXpStore {
   static MentiXpState readCurrent(Object raw) {
     if (raw is! String) throw const FormatException('Invalid XP document type');
     final decoded = jsonDecode(raw);
-    if (decoded is! Map<String, dynamic> || decoded['xp'] is! int || decoded['xp'] < 0) {
+    if (decoded is! Map<String, dynamic> ||
+        decoded['xp'] is! int ||
+        decoded['xp'] < 0) {
       throw const FormatException('Invalid XP document');
     }
     for (final field in ['days', 'completed']) {
       final value = decoded[field];
-      if (value != null && (value is! List || !value.every((v) => v is String))) {
+      if (value != null &&
+          (value is! List || !value.every((v) => v is String))) {
         throw const FormatException('Invalid XP events');
       }
     }
@@ -83,15 +89,14 @@ class MentiXpStore {
     return {};
   }
 
-  static Set<String> _strings(dynamic value) => value is List
-      ? value.whereType<String>().toSet()
-      : <String>{};
+  static Set<String> _strings(dynamic value) =>
+      value is List ? value.whereType<String>().toSet() : <String>{};
 
   static MentiXpState _fromData(Map<String, dynamic> data) => MentiXpState(
-        xp: math.max(0, (data['xp'] as num?)?.toInt() ?? 0),
-        days: _strings(data['days']),
-        completed: _strings(data['completed']),
-      );
+    xp: math.max(0, (data['xp'] as num?)?.toInt() ?? 0),
+    days: _strings(data['days']),
+    completed: _strings(data['completed']),
+  );
 
   // Serialize every read/mutation in this isolate, including legacy migration.
   // A failed write must not block later retries.
@@ -121,7 +126,8 @@ class MentiXpStore {
     final current = _decode(raw as String?);
     if (current.containsKey('xp')) return _fromData(current);
 
-    final reflectionDays = (prefs.getStringList(_reflectionKey) ?? <String>[]).toSet();
+    final reflectionDays = (prefs.getStringList(_reflectionKey) ?? <String>[])
+        .toSet();
     final old = _decode(prefs.getString(_legacyProgressKey));
     final oldLastCheckin = old['lastCheckin'];
     if (oldLastCheckin is String && oldLastCheckin.isNotEmpty) {
@@ -143,12 +149,15 @@ class MentiXpStore {
     final prefs = await SharedPreferences.getInstance();
     late final bool result;
     try {
-      result = await prefs.setString(_key, jsonEncode({
-        ..._decode(prefs.getString(_key)),
-        'xp': state.xp,
-        'days': state.days.toList()..sort(),
-        'completed': state.completed.toList()..sort(),
-      }));
+      result = await prefs.setString(
+        _key,
+        jsonEncode({
+          ..._decode(prefs.getString(_key)),
+          'xp': state.xp,
+          'days': state.days.toList()..sort(),
+          'completed': state.completed.toList()..sort(),
+        }),
+      );
     } catch (_) {
       await prefs.reload();
       rethrow;
@@ -158,6 +167,7 @@ class MentiXpStore {
       await prefs.reload();
       throw StateError('A Menti XP mentése sikertelen.');
     }
+    changes.value++;
     // Megtartjuk a korábbi napi önellenőrzés kulcsát is az átmenethez.
     await prefs.setStringList(_reflectionKey, state.days.toList()..sort());
   }
@@ -181,7 +191,9 @@ class MentiXpStore {
 
   static Future<MentiXpState> completeWeekly(String id) => _serial(() async {
     final points = weeklyPoints[id];
-    if (points == null) throw ArgumentError.value(id, 'id', 'Ismeretlen kihívás');
+    if (points == null) {
+      throw ArgumentError.value(id, 'id', 'Ismeretlen kihívás');
+    }
     final current = await _load();
     final event = '${weekKey(DateTime.now())}:$id';
     if (current.completed.contains(event)) return current;
@@ -194,4 +206,3 @@ class MentiXpStore {
     return updated;
   });
 }
-

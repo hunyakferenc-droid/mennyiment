@@ -23,7 +23,6 @@ import 'menti_reactions.dart';
 import 'drink_catalog.dart';
 import 'avatar.dart';
 import 'menti_identity/menti_identity_controller.dart';
-import 'menti_identity/menti_studio_page.dart';
 import 'menti_character_setup.dart';
 import 'menti_profile_storage.dart';
 import 'statistics.dart';
@@ -800,7 +799,7 @@ void updateMentiMessage(MentiMood mood) {
 
   Future<void> _openCharacterSetup() async {
     await Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (_) => const MentiStudioPage()));
+      builder: (_) => const CompleteLooksPage()));
     if (mounted) await _loadReflections();
   }
 

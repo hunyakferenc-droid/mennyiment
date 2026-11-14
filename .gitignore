@@ -122,3 +122,8 @@ pubspec.yaml.bak
 
 # Self-contained synthetic comparison gallery; never an application/user backup.
 !/docs/images/menti-complete-looks/comparison-592d49a.zip
+
+# Collection assets and synthetic UI evidence.
+!/assets/images/menti_complete/thumbs/*.png
+!/docs/images/menti-collection/*.png
+!/docs/images/menti-collection/*.zip

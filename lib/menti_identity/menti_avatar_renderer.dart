@@ -89,7 +89,7 @@ class MentiAvatarRenderer extends StatelessWidget {
       return CompleteLookArtwork(
         look: CompleteLook.find(complete.selection.lookId)!,
         size: size,
-        background: showBackground,
+        background: false,
       );
     }
     final activeReaction = MentiExperienceScope.reactionsOf(context)

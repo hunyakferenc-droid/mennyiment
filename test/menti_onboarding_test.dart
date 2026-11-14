@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/main.dart';
 import 'package:mennyiment/menti_access.dart';
 import 'package:mennyiment/menti_onboarding.dart';
+import 'package:mennyiment/menti_complete_looks.dart';
 import 'package:mennyiment/menti_identity/menti_identity.dart';
 import 'package:mennyiment/menti_identity/menti_identity_store.dart';
 import 'package:mennyiment/drink_journal_page.dart';
@@ -99,17 +100,19 @@ void main() {
             await tester.pumpAndSettle();
             await tester.tap(girl);
             await tester.pumpAndSettle();
-            final veteran = find.byKey(const ValueKey('start-age-veteran'));
+            final party = find.byKey(
+              const ValueKey('start-look-girl-party-v1'),
+            );
             await tester.scrollUntilVisible(
-              veteran,
+              party,
               100,
               scrollable: find.byType(Scrollable).first,
               maxScrolls: 40,
             );
             await tester.pumpAndSettle();
-            await tester.ensureVisible(veteran);
+            await tester.ensureVisible(party);
             await tester.pumpAndSettle();
-            await tester.tap(veteran);
+            await tester.tap(party);
             await tester.pumpAndSettle();
             await next(tester);
             await tester.scrollUntilVisible(
@@ -137,8 +140,13 @@ void main() {
             );
             expect(identity.profile.name, 'Teszt Menti');
             expect(identity.profile.visual.value('family'), 'girl');
-            expect(identity.profile.visual.value('age'), 'veteran');
             expect(identity.profile.visual.hairVisible, isTrue);
+            expect(identity.profile.visual.value('age'), 'young');
+            final choice = CompleteLookSelection.decode(
+              p.getString(CompleteLookStore.key),
+            );
+            expect(choice.active, true);
+            expect(choice.lookId, 'girl-party-v1');
             final navigation = tester.widget<NavigationBar>(
               find.byType(NavigationBar),
             );
