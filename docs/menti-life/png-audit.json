@@ -1,0 +1,236 @@
+[
+  {
+    "id": "boy-base-v1",
+    "asset": "assets/images/menti_complete/boy-base.png",
+    "mode": "RGBA",
+    "width": 1086,
+    "height": 1448,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "ec02e90c0d1c310ae008a56e8aa3e55cb9388eb0da280025b43b8f756ecb544c",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "boy-party-v1",
+    "asset": "assets/images/menti_complete/boy-party.png",
+    "mode": "RGBA",
+    "width": 1086,
+    "height": 1448,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "203b55b9436ed5282c0831f2d8794aec7f0974d4d240ec33670f19eff26417de",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "boy-festival-v1",
+    "asset": "assets/images/menti_complete/boy-festival.png",
+    "mode": "RGBA",
+    "width": 1086,
+    "height": 1448,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "bf01cf1b57fc72681ebe34c4428ed4869332661c8801fa29a2be8fbe1e906251",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "boy-sport-v1",
+    "asset": "assets/images/menti_complete/boy-sport.png",
+    "mode": "RGBA",
+    "width": 1086,
+    "height": 1448,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "96bdf2c28490335630932582d95725a5d7141552d97d3857526caf530f54119b",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "boy-business-v1",
+    "asset": "assets/images/menti_complete/boy-business.png",
+    "mode": "RGBA",
+    "width": 1086,
+    "height": 1448,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "15125a40781537accdcbc48b670f567e51df233c0fe379e78d87fdef7e8d24f9",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "boy-legendary-v1",
+    "asset": "assets/images/menti_complete/boy-legendary.png",
+    "mode": "RGBA",
+    "width": 1086,
+    "height": 1448,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "28bcf404a4d732d5b66d06520e8fc59e73f6e068368adb1896f23e3b5287554f",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "girl-base-v1",
+    "asset": "assets/images/menti_complete/girl-base.png",
+    "mode": "RGBA",
+    "width": 1086,
+    "height": 1448,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "9eab420d5cb85843af7957f594440c2c83f09bcc8d54e8cdf88087bf45ebc955",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "girl-party-v1",
+    "asset": "assets/images/menti_complete/girl-party.png",
+    "mode": "RGBA",
+    "width": 1086,
+    "height": 1448,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "f4cf37ec8e18caeee08836791deea94c94ed5097b228bcdf91846a2919e75159",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "girl-festival-v1",
+    "asset": "assets/images/menti_complete/girl-festival.png",
+    "mode": "RGBA",
+    "width": 1086,
+    "height": 1448,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "2e741eba6cd021b9375d02c87375c9d9df8d8a386f94d58c0471a2f376d5041b",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "girl-sport-v1",
+    "asset": "assets/images/menti_complete/girl-sport.png",
+    "mode": "RGBA",
+    "width": 1086,
+    "height": 1448,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "cc7d03c8c9476bc339bb7d894a5e0c5cbff8ad090c6363961549cfb5d6031f60",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "girl-business-v1",
+    "asset": "assets/images/menti_complete/girl-business.png",
+    "mode": "RGBA",
+    "width": 1086,
+    "height": 1448,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "bdcee0a69cf210e692af7ba945be2f9ceeb16b2f34dc6922a9d1fd48da18add6",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "girl-legendary-v1",
+    "asset": "assets/images/menti_complete/girl-legendary.png",
+    "mode": "RGBA",
+    "width": 1086,
+    "height": 1448,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "d98dededb4590ef72843289fd0b400c81e026262cad0588b0cd89e3db43ef387",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "neutral-base-v1",
+    "asset": "assets/images/menti_complete/neutral-base.png",
+    "mode": "RGBA",
+    "width": 1254,
+    "height": 1254,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "8e991e0fac06d52bf611a290093062da76a1efc924fe6c964a6c282dac1a8f8c",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "neutral-party-v1",
+    "asset": "assets/images/menti_complete/neutral-party.png",
+    "mode": "RGBA",
+    "width": 1254,
+    "height": 1254,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "4a3e940b3b1ec5cd42e5e33053477e968c1bd7d0f8237666f96c7ebd80d160f9",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "neutral-festival-v1",
+    "asset": "assets/images/menti_complete/neutral-festival.png",
+    "mode": "RGBA",
+    "width": 1254,
+    "height": 1254,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "0c8c88539ee2c7b7f583fb9d4e1c7ddb100481c597750cb6ea09b6905b4a50d9",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "neutral-sport-v1",
+    "asset": "assets/images/menti_complete/neutral-sport.png",
+    "mode": "RGBA",
+    "width": 1254,
+    "height": 1254,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "299dd7e4a327ed96b7a60e105d55b8b13aec5cdee1f747263a689b799e2b8036",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "neutral-business-v1",
+    "asset": "assets/images/menti_complete/neutral-business.png",
+    "mode": "RGBA",
+    "width": 1254,
+    "height": 1254,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "229ea9080caa3010b6ca753bda32d461a7af5c254409a921ff33a7b337c88cbe",
+    "unchangedFromCollection": true
+  },
+  {
+    "id": "neutral-legendary-v1",
+    "asset": "assets/images/menti_complete/neutral-legendary.png",
+    "mode": "RGBA",
+    "width": 1254,
+    "height": 1254,
+    "alphaMinMax": [
+      0,
+      255
+    ],
+    "sha256": "1dd6e65674be704e84f5b0338786117e1f41d0679f4f097d99a93b97e0281697",
+    "unchangedFromCollection": true
+  }
+]

@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 
 import 'app_language.dart';
 import 'menti_motion.dart';
+import 'menti_animation_preview.dart';
+import 'menti_animation_player.dart';
 import 'menti_collection_model.dart';
 import 'menti_collection_store.dart';
 import 'menti_collection_widgets.dart';
@@ -431,6 +433,9 @@ class _CompleteLooksPageState extends State<CompleteLooksPage> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(s.collectionIntro),
+                          OutlinedButton.icon(key: const ValueKey('collection-life-preview'),
+                            onPressed: store.saving || _dirty ? null : () => Navigator.push(context, MaterialPageRoute<void>(builder: (_) => const MentiAnimationPreviewPage())),
+                            icon: const Icon(Icons.slow_motion_video),label:Text(s.lifeTitle)),
                           const SizedBox(height: 12),
                           if (_preview) ...[
                             Center(
@@ -438,12 +443,7 @@ class _CompleteLooksPageState extends State<CompleteLooksPage> {
                                 duration: MentiMotionScope.reducedOf(context)
                                     ? Duration.zero
                                     : const Duration(milliseconds: 140),
-                                child: CompleteLookArtwork(
-                                  key: ValueKey(selected.id),
-                                  look: selected,
-                                  size: 210,
-                                  background: false,
-                                ),
+                                child: MentiAnimationPlayer(key: ValueKey(selected.id), look: selected, size: 210),
                               ),
                             ),
                             TextButton.icon(

@@ -1,3 +1,4 @@
+import 'menti_life_events.dart';
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -92,6 +93,7 @@ class _DailyMentiPageState extends State<DailyMentiPage>
       );
       if (!mounted) return;
       setState(() => _checked = true);
+      MentiLifeEvents.instance.emit(_mood != null && _mood! <= 2 ? MentiLifeEvent.difficultDay : _evening.text.trim().isNotEmpty ? MentiLifeEvent.eveningSaved : MentiLifeEvent.checkInSaved, token: '${_date.year}-${_date.month}-${_date.day}');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(appStrings(context).dailySaved)),
       );

@@ -3258,4 +3258,109 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get collectionChanged =>
       'A mentett Menti közben megváltozott. Töltsd be újra a választást a folytatáshoz.';
+
+  @override
+  String get lifeTitle => 'Menti Life';
+
+  @override
+  String get lifeIntro =>
+      'A saját Mentid rövid, néma reakciói. Csak az adott kinézethez jóváhagyott, helyben tárolt videó indulhat el.';
+
+  @override
+  String get lifeEnabled => 'Videós reakciók engedélyezése';
+
+  @override
+  String get lifeFrequency => 'Automatikus reakciók gyakorisága';
+
+  @override
+  String get lifeLow => 'Ritkán';
+
+  @override
+  String get lifeNormal => 'Normál';
+
+  @override
+  String get lifeFrequent => 'Gyakrabban';
+
+  @override
+  String get lifeFrequencyHint =>
+      'Ritkán: legalább 2 perc; normál: 30 másodperc; gyakrabban: 10 másodperc két automatikus reakció között. Nincs folyamatos ismétlés. Fontosabb reakció megszakíthatja az éppen futót.';
+
+  @override
+  String get lifeStatic => 'Vissza az állóképhez';
+
+  @override
+  String get lifeNoClip =>
+      'Ehhez a kinézethez még nincs jóváhagyott videó. Az eredeti képed látható.';
+
+  @override
+  String get lifeUnavailable => 'Még nincs jóváhagyott videó';
+
+  @override
+  String get lifeLegacy =>
+      'Most a korábbi Studio-összeállításod látható. Teljes kinézetet a Menti-gyűjteményben választhatsz; itt nem változtatjuk meg.';
+
+  @override
+  String get lifeSettingsError =>
+      'A beállítás nem tölthető be vagy a mentése nem igazolható. Újratöltéssel ellenőrizd; addig az állókép marad.';
+
+  @override
+  String get lifeReduced =>
+      'A rendszer vagy a meglévő mozgás-/reakcióbeállítás letiltja a lejátszást.';
+
+  @override
+  String get lifeLoading => 'A videó betöltődik; addig az eredeti kép látható.';
+
+  @override
+  String get lifePlaybackError =>
+      'A videó nem játszható le. Biztonságosan visszatértünk az eredeti képhez.';
+
+  @override
+  String get lifeTry => 'Reakció kipróbálása';
+
+  @override
+  String lifeApprovedCount(int count) {
+    return 'Jóváhagyott videók ehhez a kinézethez: $count';
+  }
+
+  @override
+  String get lifeWelcome => 'Üdvözlés';
+
+  @override
+  String get lifeBlink => 'Pislogás';
+
+  @override
+  String get lifeWink => 'Kacsintás';
+
+  @override
+  String get lifeSmile => 'Mosoly';
+
+  @override
+  String get lifeJoy => 'Öröm';
+
+  @override
+  String get lifeCongratulation => 'Gratuláció';
+
+  @override
+  String get lifeVictoryDance => 'Győzelmi tánc';
+
+  @override
+  String get lifeThinking => 'Gondolkodás';
+
+  @override
+  String get lifeSurprise => 'Meglepetés';
+
+  @override
+  String get lifeEncouragement => 'Bátorítás';
+
+  @override
+  String get lifeEmpathy => 'Együttérzés';
+
+  @override
+  String get lifeBreathing => 'Nyugodt légzés';
+
+  @override
+  String get lifeRest => 'Pihenés';
+
+  @override
+  String get lifeMilestone => 'Mérföldkő-ünneplés';
 }

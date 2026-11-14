@@ -5815,6 +5815,198 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'A mentett Menti közben megváltozott. Töltsd be újra a választást a folytatáshoz.'**
   String get collectionChanged;
+
+  /// No description provided for @lifeTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti Life'**
+  String get lifeTitle;
+
+  /// No description provided for @lifeIntro.
+  ///
+  /// In hu, this message translates to:
+  /// **'A saját Mentid rövid, néma reakciói. Csak az adott kinézethez jóváhagyott, helyben tárolt videó indulhat el.'**
+  String get lifeIntro;
+
+  /// No description provided for @lifeEnabled.
+  ///
+  /// In hu, this message translates to:
+  /// **'Videós reakciók engedélyezése'**
+  String get lifeEnabled;
+
+  /// No description provided for @lifeFrequency.
+  ///
+  /// In hu, this message translates to:
+  /// **'Automatikus reakciók gyakorisága'**
+  String get lifeFrequency;
+
+  /// No description provided for @lifeLow.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ritkán'**
+  String get lifeLow;
+
+  /// No description provided for @lifeNormal.
+  ///
+  /// In hu, this message translates to:
+  /// **'Normál'**
+  String get lifeNormal;
+
+  /// No description provided for @lifeFrequent.
+  ///
+  /// In hu, this message translates to:
+  /// **'Gyakrabban'**
+  String get lifeFrequent;
+
+  /// No description provided for @lifeFrequencyHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ritkán: legalább 2 perc; normál: 30 másodperc; gyakrabban: 10 másodperc két automatikus reakció között. Nincs folyamatos ismétlés. Fontosabb reakció megszakíthatja az éppen futót.'**
+  String get lifeFrequencyHint;
+
+  /// No description provided for @lifeStatic.
+  ///
+  /// In hu, this message translates to:
+  /// **'Vissza az állóképhez'**
+  String get lifeStatic;
+
+  /// No description provided for @lifeNoClip.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ehhez a kinézethez még nincs jóváhagyott videó. Az eredeti képed látható.'**
+  String get lifeNoClip;
+
+  /// No description provided for @lifeUnavailable.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még nincs jóváhagyott videó'**
+  String get lifeUnavailable;
+
+  /// No description provided for @lifeLegacy.
+  ///
+  /// In hu, this message translates to:
+  /// **'Most a korábbi Studio-összeállításod látható. Teljes kinézetet a Menti-gyűjteményben választhatsz; itt nem változtatjuk meg.'**
+  String get lifeLegacy;
+
+  /// No description provided for @lifeSettingsError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A beállítás nem tölthető be vagy a mentése nem igazolható. Újratöltéssel ellenőrizd; addig az állókép marad.'**
+  String get lifeSettingsError;
+
+  /// No description provided for @lifeReduced.
+  ///
+  /// In hu, this message translates to:
+  /// **'A rendszer vagy a meglévő mozgás-/reakcióbeállítás letiltja a lejátszást.'**
+  String get lifeReduced;
+
+  /// No description provided for @lifeLoading.
+  ///
+  /// In hu, this message translates to:
+  /// **'A videó betöltődik; addig az eredeti kép látható.'**
+  String get lifeLoading;
+
+  /// No description provided for @lifePlaybackError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A videó nem játszható le. Biztonságosan visszatértünk az eredeti képhez.'**
+  String get lifePlaybackError;
+
+  /// No description provided for @lifeTry.
+  ///
+  /// In hu, this message translates to:
+  /// **'Reakció kipróbálása'**
+  String get lifeTry;
+
+  /// No description provided for @lifeApprovedCount.
+  ///
+  /// In hu, this message translates to:
+  /// **'Jóváhagyott videók ehhez a kinézethez: {count}'**
+  String lifeApprovedCount(int count);
+
+  /// No description provided for @lifeWelcome.
+  ///
+  /// In hu, this message translates to:
+  /// **'Üdvözlés'**
+  String get lifeWelcome;
+
+  /// No description provided for @lifeBlink.
+  ///
+  /// In hu, this message translates to:
+  /// **'Pislogás'**
+  String get lifeBlink;
+
+  /// No description provided for @lifeWink.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kacsintás'**
+  String get lifeWink;
+
+  /// No description provided for @lifeSmile.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mosoly'**
+  String get lifeSmile;
+
+  /// No description provided for @lifeJoy.
+  ///
+  /// In hu, this message translates to:
+  /// **'Öröm'**
+  String get lifeJoy;
+
+  /// No description provided for @lifeCongratulation.
+  ///
+  /// In hu, this message translates to:
+  /// **'Gratuláció'**
+  String get lifeCongratulation;
+
+  /// No description provided for @lifeVictoryDance.
+  ///
+  /// In hu, this message translates to:
+  /// **'Győzelmi tánc'**
+  String get lifeVictoryDance;
+
+  /// No description provided for @lifeThinking.
+  ///
+  /// In hu, this message translates to:
+  /// **'Gondolkodás'**
+  String get lifeThinking;
+
+  /// No description provided for @lifeSurprise.
+  ///
+  /// In hu, this message translates to:
+  /// **'Meglepetés'**
+  String get lifeSurprise;
+
+  /// No description provided for @lifeEncouragement.
+  ///
+  /// In hu, this message translates to:
+  /// **'Bátorítás'**
+  String get lifeEncouragement;
+
+  /// No description provided for @lifeEmpathy.
+  ///
+  /// In hu, this message translates to:
+  /// **'Együttérzés'**
+  String get lifeEmpathy;
+
+  /// No description provided for @lifeBreathing.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nyugodt légzés'**
+  String get lifeBreathing;
+
+  /// No description provided for @lifeRest.
+  ///
+  /// In hu, this message translates to:
+  /// **'Pihenés'**
+  String get lifeRest;
+
+  /// No description provided for @lifeMilestone.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mérföldkő-ünneplés'**
+  String get lifeMilestone;
 }
 
 class _AppLocalizationsDelegate

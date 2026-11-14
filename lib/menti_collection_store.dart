@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'menti_collection_model.dart';
 import 'data_backup.dart';
 import 'menti_xp_store.dart';
+import 'menti_life_events.dart';
 
 /// The existing complete-look preference, extended with durable acquisition.
 /// Reads XP through its existing adapter; never awards, migrates or spends XP.
@@ -97,6 +98,7 @@ class CompleteLookStore extends ChangeNotifier {
     );
     if (await _write(next, guardXp: true)) {
       _newUnlocks.addAll(notices.toList()..sort());
+      if (notices.isNotEmpty) MentiLifeEvents.instance.emit(MentiLifeEvent.lookUnlocked, token:(notices.toList()..sort()).join(','));
       _notify();
     }
   }

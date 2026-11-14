@@ -1616,5 +1616,44 @@
       }
     }
   },
-  "collectionChanged": "Your saved Menti changed elsewhere. Reload the selection to continue."
+  "collectionChanged": "Your saved Menti changed elsewhere. Reload the selection to continue.",
+  "lifeTitle": "Menti Life",
+  "lifeIntro": "Short, silent reactions from your own Menti. Only reviewed local videos for this exact look can play.",
+  "lifeEnabled": "Enable video reactions",
+  "lifeFrequency": "Automatic reaction frequency",
+  "lifeLow": "Occasionally",
+  "lifeNormal": "Normal",
+  "lifeFrequent": "More often",
+  "lifeFrequencyHint": "Occasionally: at least 2 minutes; normal: 30 seconds; more often: 10 seconds between automatic reactions. No continuous looping. A higher-priority reaction may replace one that is playing.",
+  "lifeStatic": "Return to still image",
+  "lifeNoClip": "There is no approved video for this look yet. Your original image remains visible.",
+  "lifeUnavailable": "No approved video yet",
+  "lifeLegacy": "Your previous Studio outfit is shown. You can choose a complete look in the Menti collection; this page does not change it.",
+  "lifeSettingsError": "The setting cannot be read or confirmed as saved. Reload to check it; the still image remains in use.",
+  "lifeReduced": "Playback is disabled by the system or your existing motion/reaction settings.",
+  "lifeLoading": "Loading video; your original image stays visible until it is ready.",
+  "lifePlaybackError": "The video could not play. Your original image is shown instead.",
+  "lifeTry": "Try reaction",
+  "lifeApprovedCount": "Approved videos for this look: {count}",
+  "lifeWelcome": "Welcome",
+  "lifeBlink": "Blink",
+  "lifeWink": "Wink",
+  "lifeSmile": "Smile",
+  "lifeJoy": "Joy",
+  "lifeCongratulation": "Congratulations",
+  "lifeVictoryDance": "Victory dance",
+  "lifeThinking": "Thinking",
+  "lifeSurprise": "Surprise",
+  "lifeEncouragement": "Encouragement",
+  "lifeEmpathy": "Empathy",
+  "lifeBreathing": "Calm breathing",
+  "lifeRest": "Rest",
+  "lifeMilestone": "Milestone celebration",
+  "@lifeApprovedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

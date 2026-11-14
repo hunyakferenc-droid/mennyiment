@@ -3270,4 +3270,110 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get collectionChanged =>
       'Your saved Menti changed elsewhere. Reload the selection to continue.';
+
+  @override
+  String get lifeTitle => 'Menti Life';
+
+  @override
+  String get lifeIntro =>
+      'Short, silent reactions from your own Menti. Only reviewed local videos for this exact look can play.';
+
+  @override
+  String get lifeEnabled => 'Enable video reactions';
+
+  @override
+  String get lifeFrequency => 'Automatic reaction frequency';
+
+  @override
+  String get lifeLow => 'Occasionally';
+
+  @override
+  String get lifeNormal => 'Normal';
+
+  @override
+  String get lifeFrequent => 'More often';
+
+  @override
+  String get lifeFrequencyHint =>
+      'Occasionally: at least 2 minutes; normal: 30 seconds; more often: 10 seconds between automatic reactions. No continuous looping. A higher-priority reaction may replace one that is playing.';
+
+  @override
+  String get lifeStatic => 'Return to still image';
+
+  @override
+  String get lifeNoClip =>
+      'There is no approved video for this look yet. Your original image remains visible.';
+
+  @override
+  String get lifeUnavailable => 'No approved video yet';
+
+  @override
+  String get lifeLegacy =>
+      'Your previous Studio outfit is shown. You can choose a complete look in the Menti collection; this page does not change it.';
+
+  @override
+  String get lifeSettingsError =>
+      'The setting cannot be read or confirmed as saved. Reload to check it; the still image remains in use.';
+
+  @override
+  String get lifeReduced =>
+      'Playback is disabled by the system or your existing motion/reaction settings.';
+
+  @override
+  String get lifeLoading =>
+      'Loading video; your original image stays visible until it is ready.';
+
+  @override
+  String get lifePlaybackError =>
+      'The video could not play. Your original image is shown instead.';
+
+  @override
+  String get lifeTry => 'Try reaction';
+
+  @override
+  String lifeApprovedCount(int count) {
+    return 'Approved videos for this look: $count';
+  }
+
+  @override
+  String get lifeWelcome => 'Welcome';
+
+  @override
+  String get lifeBlink => 'Blink';
+
+  @override
+  String get lifeWink => 'Wink';
+
+  @override
+  String get lifeSmile => 'Smile';
+
+  @override
+  String get lifeJoy => 'Joy';
+
+  @override
+  String get lifeCongratulation => 'Congratulations';
+
+  @override
+  String get lifeVictoryDance => 'Victory dance';
+
+  @override
+  String get lifeThinking => 'Thinking';
+
+  @override
+  String get lifeSurprise => 'Surprise';
+
+  @override
+  String get lifeEncouragement => 'Encouragement';
+
+  @override
+  String get lifeEmpathy => 'Empathy';
+
+  @override
+  String get lifeBreathing => 'Calm breathing';
+
+  @override
+  String get lifeRest => 'Rest';
+
+  @override
+  String get lifeMilestone => 'Milestone celebration';
 }
