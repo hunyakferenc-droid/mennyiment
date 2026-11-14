@@ -25,3 +25,5 @@ A galériában a korábbi mód kiválasztása és mentése visszakapcsolja a ré
 ## Későbbi katalógus
 
 A hosszú távú 30/30/30, induló 5/5/5 választás nincs legyártva. A katalógus azonosító/család/asset/feloldási feltétel szerkezetű; most mindhárom feltétel `free`. XP/prémium később külön termék- és jogosultsági megvalósítás. Nincs pontlevonás, fizetés vagy ál-vásárlási gomb. A három működő minta átadása után további karaktergyártás nem folytatódik tulajdonosi értékelésig.
+
+A profiláttekintés az aktív teljes kinézet nevét és hozzá tartozó akadálymentes feliratát mutatja, a régi profilmezők átírása nélkül. A CI az első kötelező `flutter pub get` után ugyanazokat a feloldott függőségeket használja (`--no-pub`); a teljes tesztlistát és buildlépéseket ez nem csökkenti. Ezzel a bizonyítottan hibázó ismételt advisory-hálózati lekérést elkerüljük.

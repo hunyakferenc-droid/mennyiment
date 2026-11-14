@@ -16,6 +16,9 @@ import 'package:mennyiment/menti_identity/menti_identity.dart';
 
 import 'personal_hub_fixtures.dart';
 
+import 'package:mennyiment/personal_hub.dart';
+import 'package:mennyiment/menti_identity/menti_identity_controller.dart';
+
 class LookFaults extends InMemorySharedPreferencesStore {
   LookFaults(
     super.data, {
@@ -240,6 +243,109 @@ void main() {
     expect((await snapshot()).containsKey(CompleteLookStore.key), false);
     store.dispose();
   });
+
+  for (final locale in ['hu', 'en']) {
+    for (final look in CompleteLook.all) {
+      testWidgets(
+        '$locale actual personal hub displays ${look.id} without changing the legacy profile',
+        (tester) async {
+          tester.view.physicalSize = const Size(320, 900);
+          tester.view.devicePixelRatio = 1;
+          addTearDown(tester.view.resetPhysicalSize);
+          addTearDown(tester.view.resetDevicePixelRatio);
+          final now = DateTime(2026, 11, 13);
+          final original = hubValues(now);
+          SharedPreferences.setMockInitialValues(original);
+          final store = CompleteLookStore();
+          await store.load();
+          await tester.pumpWidget(
+            MentiIdentityScope(
+              child: CompleteLookScope(
+                store: store,
+                child: MaterialApp(
+                  locale: Locale(locale),
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  localizationsDelegates:
+                      AppLocalizations.localizationsDelegates,
+                  builder: (context, child) => MediaQuery(
+                    data: MediaQuery.of(context).copyWith(
+                      textScaler: const TextScaler.linear(2),
+                      disableAnimations: true,
+                    ),
+                    child: child!,
+                  ),
+                  home: PersonalHubPage(clock: () => now),
+                ),
+              ),
+            ),
+          );
+          await tester.pumpAndSettle();
+          final panel = find.byKey(const ValueKey('hub-profile'));
+          await tester.scrollUntilVisible(
+            panel,
+            200,
+            scrollable: find.byType(Scrollable).first,
+            maxScrolls: 50,
+          );
+          await tester.pumpAndSettle();
+          final legacyTexts = tester
+              .widgetList<Text>(
+                find.descendant(of: panel, matching: find.byType(Text)),
+              )
+              .map((t) => t.data)
+              .toList();
+          expect(legacyTexts, isNotEmpty);
+          expect(await snapshot(), original);
+          expect(
+            await store.save(
+              CompleteLookSelection(active: true, lookId: look.id),
+            ),
+            true,
+          );
+          await tester.pumpAndSettle();
+          final name = look.name(tester.element(panel));
+          expect(
+            find.descendant(of: panel, matching: find.text(name)),
+            findsOneWidget,
+          );
+          expect(
+            tester
+                .widget<CompleteLookArtwork>(
+                  find.descendant(
+                    of: panel,
+                    matching: find.byType(CompleteLookArtwork),
+                  ),
+                )
+                .look
+                .id,
+            look.id,
+          );
+          final after = await snapshot();
+          after.remove(CompleteLookStore.key);
+          expect(after, original);
+          expect(
+            await store.save(
+              CompleteLookSelection(active: false, lookId: look.id),
+            ),
+            true,
+          );
+          await tester.pumpAndSettle();
+          expect(
+            tester
+                .widgetList<Text>(
+                  find.descendant(of: panel, matching: find.byType(Text)),
+                )
+                .map((t) => t.data)
+                .toList(),
+            legacyTexts,
+          );
+          expect(tester.takeException(), isNull);
+          await tester.pumpWidget(const SizedBox.shrink());
+          store.dispose();
+        },
+      );
+    }
+  }
   for (final locale in ['hu', 'en']) {
     for (final width in [320.0, 360.0, 390.0, 430.0]) {
       testWidgets(

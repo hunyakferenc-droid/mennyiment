@@ -27,7 +27,7 @@ for(const [id,name]of [['boy-base-v1',s.completeBoy],['girl-base-v1',s.completeG
  const saved=await snapshot(p);for(const[k,v]of Object.entries(before))assert.equal(saved[k],v,`Unrelated data changed: ${k}`);
  p.reloading=true;await p.reload({waitUntil:'networkidle'});await semantics(p);await button(p,s.visualStudio).waitFor();await ready(p);p.reloading=false;assert.deepEqual(await snapshot(p),saved);
  await act(p,button(p,s.adventureTitle));await fixed(p,p.getByRole('tab',{name:s.adventureMap,exact:true}));await screenshot(p,`adventure-${id}-${locale}-${width}`);await back(p,locale);await home(p,locale,s);
- await fixed(p,button(p,s.avatarMore));await fixed(p,p.getByRole('menuitem',{name:s.profile,exact:true}));await screenshot(p,`profile-${id}-${locale}-${width}`);await back(p,locale);await home(p,locale,s);
+ await act(p,button(p,s.hubTitle));await p.getByRole('heading',{name:s.hubOverview,exact:true}).waitFor();await p.getByText(name,{exact:true}).waitFor();await screenshot(p,`profile-${id}-${locale}-${width}`);await back(p,locale);await home(p,locale,s);
  checks.push(`${locale} ${id}: select/save/reload and gallery/enlarged/home/profile/adventure use the persisted choice; old data byte-identical`);
 }
 // Real file download, state change, file picker, preview and confirmed restore.

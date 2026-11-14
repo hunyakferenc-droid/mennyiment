@@ -65,24 +65,24 @@ jobs:
 
       - name: flutter analyze
         id: analyze
-        run: flutter analyze
+        run: flutter analyze --no-pub
 
       - name: flutter test --concurrency=2
         id: test
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: flutter test --concurrency=2
+        run: flutter test --concurrency=2 --no-pub
 
       - name: Backup, restore and 6.8 regressions in Europe/Budapest (including DST)
         id: budapest
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
         env:
           TZ: Europe/Budapest
-        run: flutter test test/menti_family_system_test.dart test/menti_brand_rework_test.dart test/menti_identity_test.dart test/menti_visual_system_test.dart test/menti_identity_integration_test.dart test/daily_experience_test.dart test/experience_preferences_test.dart test/personal_hub_data_test.dart test/personal_hub_test.dart test/menti_completion_test.dart test/goal_reactions_test.dart test/personal_goal_store_test.dart test/menti_2_foundations_test.dart test/daily_menti_test.dart test/data_backup_test.dart test/data_restore_test.dart test/weekly_challenges_test.dart test/weekly_challenges_integration_test.dart test/daily_menti_evolution_integration_test.dart test/menti_evolution_rewards_test.dart --concurrency=2
+        run: flutter test test/menti_family_system_test.dart test/menti_brand_rework_test.dart test/menti_identity_test.dart test/menti_visual_system_test.dart test/menti_identity_integration_test.dart test/daily_experience_test.dart test/experience_preferences_test.dart test/personal_hub_data_test.dart test/personal_hub_test.dart test/menti_completion_test.dart test/goal_reactions_test.dart test/personal_goal_store_test.dart test/menti_2_foundations_test.dart test/daily_menti_test.dart test/data_backup_test.dart test/data_restore_test.dart test/weekly_challenges_test.dart test/weekly_challenges_integration_test.dart test/daily_menti_evolution_integration_test.dart test/menti_evolution_rewards_test.dart --concurrency=2 --no-pub
 
       - name: flutter build web
         id: web
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: flutter build web --no-web-resources-cdn
+        run: flutter build web --no-web-resources-cdn --no-pub
 
       - name: Include Python-free Windows launcher and build provenance
         if: ${{ !cancelled() && steps.web.outcome == 'success' }}
@@ -113,7 +113,7 @@ jobs:
       - name: flutter build apk --debug
         id: apk
         if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
-        run: flutter build apk --debug
+        run: flutter build apk --debug --no-pub
 
       - name: Verify debug APK signature and package
         id: verify_apk

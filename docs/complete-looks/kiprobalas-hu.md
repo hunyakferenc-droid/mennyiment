@@ -6,7 +6,7 @@ Ez külön kísérlet, nem tulajdonosilag jóváhagyott új látvány. Csak hár
 
 1. A ZIP teljes tartalmát bontsd ki egy új mappába. A benne levő fájlokat együtt tartsd.
 2. Kattints duplán az `INDITAS.cmd` fájlra. A mellékelt PowerShell-indító helyi kiszolgálót indít; **Python nem szükséges**. A kiszolgáló ablakát hagyd nyitva.
-3. Mindig a `http://127.0.0.1:7357` címet használd ugyanabban a böngészőben/profilban. Más host vagy port külön helyi tárolást jelent. Az indító nem töröl böngészőadatot. Foglalt portnál érthető hibával megáll; ne indíts két példányt egyszerre.
+3. Mindig a `http://127.0.0.1:7357` címet használd ugyanabban a böngészőben/profilban. Más host vagy port külön helyi tárolást jelent. Ha a csomag cseréje után régi felület marad, Ctrl+F5-tel töltsd újra az oldalt; böngészőadat-törlés nem szükséges. Az indító nem töröl böngészőadatot. Foglalt portnál érthető hibával megáll; ne indíts két példányt egyszerre.
 4. Bezáráshoz a kiszolgáló ablakában Ctrl+C. A ZIP megnyitása `file://` címen nem támogatott indítás.
 
 ## Windows – Flutter-forrás
