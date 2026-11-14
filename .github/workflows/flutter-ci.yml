@@ -134,6 +134,7 @@ jobs:
           } > build/app/outputs/flutter-apk/build-info.txt
           cp docs/menti-life/kiprobalas-hu.md build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
           cat build/app/outputs/flutter-apk/build-info.txt
+          python3 tool/check_apk_layout.py build/app/outputs/flutter-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 2.7.0 --build 39 --output build/app/outputs/flutter-apk/apk-layout.json
 
       - name: Upload installable debug APK
         if: ${{ !cancelled() && steps.apk.outcome == 'success' && steps.verify_apk.outcome == 'success' }}
@@ -143,6 +144,7 @@ jobs:
           path: |
             build/app/outputs/flutter-apk/app-debug.apk
             build/app/outputs/flutter-apk/app-debug.apk.sha256
+            build/app/outputs/flutter-apk/apk-layout.json
             build/app/outputs/flutter-apk/build-info.txt
             build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
           if-no-files-found: error

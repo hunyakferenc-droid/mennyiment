@@ -6,7 +6,7 @@ Alap: #42 draft PR, `93f298b80c5f5ae7fb31f557663e5d00dcd431b5`. A gyűjtemény, 
 
 A Flutter-motor 18 változatlan CompleteLook.id × 14 reakció párosítását támogatja. A gyártási katalógusban jelenleg **0 jóváhagyott klip** található. Emiatt a kiadott csomag minden karaktert saját eredeti PNG-jével jelenít meg, a reakciópróbák pedig inaktívak. Másik kinézet videójára nincs helyettesítés, mesterséges pislogás vagy újragenerált karakterkép.
 
-A `media-inventory.json` a ténylegesen elért 13 Higgsfield-generálás pontos azonosítóját, forrás-URL-jét, referenciaazonosítóját, lenyomatát és formátumát rögzíti. Mindegyik ugyanahhoz a fiú fesztivál-referenciához kapcsolódik; a másik 17 kinézethez nem találtunk klipet. A referencia vizuális egyezése jelöltbesorolás, nem tulajdonosi jóváhagyás. Kezdő/középső/záró képkockák technikai átnézése történt mind a 13 klipnél. Ez nem teljes mozgásminőség-jóváhagyás.
+A [magyar tételes médialeltár](media-leltar-hu.md) és a `media-inventory.json` a ténylegesen elért 13 Higgsfield-generálás pontos azonosítóját, forrás-URL-jét, referenciaazonosítóját, lenyomatát és formátumát rögzíti. Mindegyik ugyanahhoz a fiú fesztivál-referenciához kapcsolódik; a másik 17 kinézethez nem találtunk klipet. A referencia vizuális egyezése jelöltbesorolás, nem tulajdonosi jóváhagyás. Kezdő/középső/záró képkockák technikai átnézése történt mind a 13 klipnél. Ez nem teljes mozgásminőség-jóváhagyás.
 
 A videók tényleges mérete 834×1112, H.264/yuv420p, kb. 5,04 másodperc, átlátszóság nélkül. Lilás stúdióhátterük nem az alkalmazás jóváhagyott háttere. A `61454a63-00e0-4145-8b96-77a3a0b2bfed` légzésjelölt AAC hangsávot is tartalmaz. A motor helyi médiakerete legfeljebb 720×960, 8 másodperc és 6 MiB; a jelöltek jelenleg felbontásban is meghaladják a keretet. Nem alakítottuk át őket jóváhagyott assetté.
 
@@ -46,6 +46,10 @@ Automatikus gyakoriság: ritka 120 s, normál 30 s, gyakori 10 s. Magasabb prior
 Az egyetlen új tartós kulcs a megjelenítési beállítás: `mennyiment_life_settings_v1` (version 1, enabled, frequency). Nem második napló, nem profil- vagy XP-migráció. Ismeretlen mezők megmaradnak; hibás/ismeretlen verzió írásvédett. Mentés: pillanatkép-ellenőrzés → perzisztálás → visszaolvasás → felület. Sikertelen vagy párhuzamos írás nem mutat hamis sikert. A meglévő fájlos export/import ezt a kulcsot is kezeli, régi mentés nem törli.
 
 A Beállításokból és a mentett gyűjteményből elérhető HU/EN Menti Life nézet a tényleges karaktert és a tényleges médiakészletet mutatja. A Studio és a korábbi összeállításra visszaváltás megmarad. Kiskorú mód és jutalmazás nem változik.
+
+## Android-engedélyek
+
+A tényleges összevont debug APK első ellenőrzése a Media3 tranzitív függőségéből ACCESS_NETWORK_STATE és WAKE_LOCK engedélyt talált. Ezek nem szükségesek a helyi, előtérben lejátszott klipekhez; a fő manifest kifejezetten eltávolítja őket. A lejátszó nem állít be Android wake mode-ot. A CI APK-ellenőrzése a tényleges APK engedélykészletét is összeveti a korábbival: csak a már meglévő debug INTERNET és a csomag saját signature receiver engedélye maradhat. Az alkalmazásazonosító és az aláírási konfiguráció változatlan.
 
 ## Fejlesztői dekóderpróba
 

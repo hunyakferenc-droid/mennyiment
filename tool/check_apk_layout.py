@@ -32,12 +32,18 @@ def run(tool, *args):
 signature = run('apksigner', 'verify', '--verbose', '--print-certs', a.apk)
 badging = run('aapt', 'dump', 'badging', a.apk)
 permissions = run('aapt', 'dump', 'permissions', a.apk)
+actual_permissions = set(re.findall(r"uses-permission: name='([^']+)'", permissions))
+expected_permissions = {'android.permission.INTERNET',
+                        'com.example.mennyiment.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'}
+assert actual_permissions == expected_permissions, (
+    f'Unexpected merged debug APK permissions: {sorted(actual_permissions ^ expected_permissions)}')
 run('zipalign', '-c', '-P', '16', '4', a.apk)
 assert "name='com.example.mennyiment'" in badging.splitlines()[0]
 assert f"versionName='{a.version}'" in badging.splitlines()[0]
 assert f"versionCode='{a.build}'" in badging.splitlines()[0]
 assert "targetSdkVersion:'36'" in badging
-cert = re.search(r'Signer #1 certificate SHA-256 digest: (\w+)', signature).group(1)
+assert 'Number of signers: 1' in signature
+cert = re.search(r'(?:Signer #1|V\d+(?:\.\d+)? Signer:) certificate SHA-256 digest: ([0-9a-f]{64})', signature).group(1)
 rows = []
 with zipfile.ZipFile(a.apk) as archive:
     assert archive.testzip() is None
