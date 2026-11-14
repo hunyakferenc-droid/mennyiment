@@ -1,4 +1,5 @@
 import 'support/adult_access_fixture.dart';
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/avatar.dart';
 import 'package:mennyiment/menti_identity/menti_avatar_renderer.dart';
 import 'package:mennyiment/main.dart';
+import 'package:mennyiment/menti_complete_looks.dart';
 import 'package:mennyiment/menti_character_catalog.dart';
 import 'package:mennyiment/menti_character_setup.dart';
 import 'package:mennyiment/menti_evolution.dart';
@@ -38,7 +40,8 @@ void main() {
       (tester) async {
         largeView(tester);
         for (final outfit in MentiOutfit.values) {
-          SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
+          SharedPreferences.setMockInitialValues({
+            adultAccessKey: adultAccessValue,
             familyKey: family.id,
             outfitKey: outfit.id,
             MentiCharacterProfile.completedKey: true,
@@ -74,7 +77,9 @@ void main() {
 
           await tester.pumpWidget(const MaterialApp(home: AvatarPage()));
           await frames(tester);
-          final studio = tester.widget<MentiAvatarRenderer>(find.byKey(const ValueKey('studio-live-preview')));
+          final studio = tester.widget<MentiAvatarRenderer>(
+            find.byKey(const ValueKey('studio-live-preview')),
+          );
           expect(studio.profile.visual.value('background'), 'forest');
           expect(studio.profile.visual.value('family'), family.id);
           expect(studio.profile.visual.value('outfit'), outfit.id);
@@ -106,7 +111,8 @@ void main() {
     'Home reloads the profile after saving stable IDs in the selector',
     (tester) async {
       largeView(tester);
-      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
+      SharedPreferences.setMockInitialValues({
+        adultAccessKey: adultAccessValue,
         familyKey: 'girl',
         outfitKey: 'legendary',
         MentiCharacterProfile.completedKey: true,
@@ -118,14 +124,45 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('home-studio')));
       await frames(tester);
       await tester.pumpAndSettle();
-      final preview = tester.widget<MentiAvatarRenderer>(find.byKey(const ValueKey('studio-live-preview')));
+      expect(find.byType(CompleteLooksPage), findsOneWidget);
+      final legacyStudio = find.byKey(
+        const ValueKey('collection-open-legacy-studio'),
+      );
+      await tester.scrollUntilVisible(
+        legacyStudio,
+        1000,
+        maxScrolls: 30,
+        scrollable: find.byType(Scrollable).last,
+      );
+      await tester.ensureVisible(legacyStudio);
+      await tester.pumpAndSettle();
+      await tester.tap(legacyStudio);
+      await tester.pumpAndSettle();
+      final preview = tester.widget<MentiAvatarRenderer>(
+        find.byKey(const ValueKey('studio-live-preview')),
+      );
       expect(preview.profile.visual.value('family'), 'girl');
       expect(preview.profile.visual.value('outfit'), 'legendary');
-      await tester.tap(find.text(preview.profile.name)); await tester.pumpAndSettle();
-      await tester.enterText(find.byKey(const ValueKey('preset-name')), 'Friss név');
-      await tester.tap(find.descendant(of:find.byType(AlertDialog),matching:find.widgetWithText(FilledButton, 'Mentés'))); await tester.pumpAndSettle();
-      await tester.tap(find.byKey(const ValueKey('studio-save'))); await tester.pumpAndSettle();
-      await tester.tap(find.byType(BackButton)); await tester.pumpAndSettle();
+      await tester.tap(find.text(preview.profile.name));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(const ValueKey('preset-name')),
+        'Friss név',
+      );
+      await tester.tap(
+        find.descendant(
+          of: find.byType(AlertDialog),
+          matching: find.widgetWithText(FilledButton, 'Mentés'),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('studio-save')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
+      expect(find.byType(CompleteLooksPage), findsOneWidget);
+      await tester.tap(find.byType(BackButton));
+      await tester.pumpAndSettle();
       expect(find.byType(MentiCharacterSetupPage), findsNothing);
       expect(find.text('Friss név • 1. szint'), findsOneWidget);
       expect(prefs.get(familyKey), 'girl');
@@ -141,7 +178,8 @@ void main() {
     () async {
       for (final family in MentiCharacterFamily.values) {
         for (final outfit in MentiOutfit.values) {
-          SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
+          SharedPreferences.setMockInitialValues({
+            adultAccessKey: adultAccessValue,
             familyKey: family.id,
             outfitKey: outfit.id,
           });
@@ -164,7 +202,8 @@ void main() {
       tester,
     ) async {
       largeView(tester);
-      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
+      SharedPreferences.setMockInitialValues({
+        adultAccessKey: adultAccessValue,
         familyKey: value,
         outfitKey: value,
       });
@@ -200,7 +239,8 @@ void main() {
     'Explicit selections replace only their own unrecognized preference',
     (tester) async {
       largeView(tester);
-      SharedPreferences.setMockInitialValues({adultAccessKey: adultAccessValue,
+      SharedPreferences.setMockInitialValues({
+        adultAccessKey: adultAccessValue,
         familyKey: 'future-family',
         outfitKey: 'future-outfit',
       });

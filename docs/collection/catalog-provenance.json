@@ -19,7 +19,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "technical AI-assisted background cutout; derived candidate, not new owner approval",
-    "thumbnail": "assets/images/menti_complete/thumbs/boy-base.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/boy-base.png",
+    "thumbnail_sha256": "13af7526ff6b7b7b7be3ac1618885bd1ee1f16071d0c8f8593e9cd584b957168",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "boy-party-v1",
@@ -41,7 +43,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "technical AI-assisted background cutout; derived candidate, not new owner approval",
-    "thumbnail": "assets/images/menti_complete/thumbs/boy-party.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/boy-party.png",
+    "thumbnail_sha256": "fdd9f9d84527005ee5bffb46b7329741f20060349bca5ba6ce7756ca47dc6f1f",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "boy-festival-v1",
@@ -63,7 +67,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "technical AI-assisted background cutout; derived candidate, not new owner approval",
-    "thumbnail": "assets/images/menti_complete/thumbs/boy-festival.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/boy-festival.png",
+    "thumbnail_sha256": "f082962f2530ba1c6ba8754fdde2a655e74095e280893447d53194a94373c48d",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "boy-sport-v1",
@@ -85,7 +91,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "technical AI-assisted background cutout; derived candidate, not new owner approval",
-    "thumbnail": "assets/images/menti_complete/thumbs/boy-sport.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/boy-sport.png",
+    "thumbnail_sha256": "a4bd9c1af1dfa0de655acd73a79665397544695d39a1a3d70fcf39bb3559e23d",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "boy-business-v1",
@@ -107,7 +115,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "technical AI-assisted background cutout; derived candidate, not new owner approval",
-    "thumbnail": "assets/images/menti_complete/thumbs/boy-business.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/boy-business.png",
+    "thumbnail_sha256": "faf39b748681bfa24a4126541a00c669bef9b67757098498e6b870aee1a656fa",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "boy-legendary-v1",
@@ -129,7 +139,9 @@
     "minXp": 200,
     "corner_opaque": false,
     "procedure": "technical AI-assisted background cutout; derived candidate, not new owner approval",
-    "thumbnail": "assets/images/menti_complete/thumbs/boy-legendary.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/boy-legendary.png",
+    "thumbnail_sha256": "4f32a3dce46ebd5fb47b78abbc39be541323ef52549cf47ab6244f4fb9ccc2c0",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "girl-base-v1",
@@ -151,7 +163,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "unchanged approved RGBA source",
-    "thumbnail": "assets/images/menti_complete/thumbs/girl-base.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/girl-base.png",
+    "thumbnail_sha256": "3bc9b179b989a2d7d5853928419ad3b9fd544461bedf4102de52331764c37564",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "girl-party-v1",
@@ -173,7 +187,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "unchanged approved RGBA source",
-    "thumbnail": "assets/images/menti_complete/thumbs/girl-party.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/girl-party.png",
+    "thumbnail_sha256": "9a103d855fa9dea7f9fe851b1311f57245591637ebbebbaca6c87c7e38a4d39b",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "girl-festival-v1",
@@ -195,7 +211,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "unchanged approved RGBA source",
-    "thumbnail": "assets/images/menti_complete/thumbs/girl-festival.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/girl-festival.png",
+    "thumbnail_sha256": "c4727f0a4dcd1f009ce6a681271b56bc45419513a275d8a74718aaceade0632d",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "girl-sport-v1",
@@ -217,7 +235,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "unchanged approved RGBA source",
-    "thumbnail": "assets/images/menti_complete/thumbs/girl-sport.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/girl-sport.png",
+    "thumbnail_sha256": "3ce6489b473dd669cee3f8649e15cc701057a1ddc06652e90165a1eefff9623f",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "girl-business-v1",
@@ -239,7 +259,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "unchanged approved RGBA source",
-    "thumbnail": "assets/images/menti_complete/thumbs/girl-business.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/girl-business.png",
+    "thumbnail_sha256": "14cd0f91236be1bb81d04a3245e8db6dadfea1df93517ff7a87dc63e5ca314ac",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "girl-legendary-v1",
@@ -261,7 +283,9 @@
     "minXp": 200,
     "corner_opaque": false,
     "procedure": "unchanged approved RGBA source",
-    "thumbnail": "assets/images/menti_complete/thumbs/girl-legendary.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/girl-legendary.png",
+    "thumbnail_sha256": "fcadc91e60a3f54af9af98cd05c885f4a18ea1d5c597c1873d6a4cd0afd487f6",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "neutral-base-v1",
@@ -283,7 +307,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "technical AI-assisted background cutout; derived candidate, not new owner approval",
-    "thumbnail": "assets/images/menti_complete/thumbs/neutral-base.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/neutral-base.png",
+    "thumbnail_sha256": "a1b24c908ebe4432e9ef2be4f0dcc0363b0147ab2b03e9eaf86918dd7a99e58b",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "neutral-party-v1",
@@ -305,7 +331,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "technical AI-assisted background cutout; derived candidate, not new owner approval",
-    "thumbnail": "assets/images/menti_complete/thumbs/neutral-party.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/neutral-party.png",
+    "thumbnail_sha256": "6ec0b3b8fc7e1f1cf6066f2e8d444cd664616150888f52974575b79e2a5795f3",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "neutral-festival-v1",
@@ -327,7 +355,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "technical AI-assisted background cutout; derived candidate, not new owner approval",
-    "thumbnail": "assets/images/menti_complete/thumbs/neutral-festival.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/neutral-festival.png",
+    "thumbnail_sha256": "7333a79430e6ade684695f1dbff35552a9f589cce8828fce3d9fb95720809cd9",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "neutral-sport-v1",
@@ -349,7 +379,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "technical AI-assisted background cutout; derived candidate, not new owner approval",
-    "thumbnail": "assets/images/menti_complete/thumbs/neutral-sport.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/neutral-sport.png",
+    "thumbnail_sha256": "e195b01007213ed11b94efd9393a943a11631617032c9828b5809d98bdb4abd7",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "neutral-business-v1",
@@ -371,7 +403,9 @@
     "minXp": 0,
     "corner_opaque": false,
     "procedure": "technical AI-assisted background cutout; derived candidate, not new owner approval",
-    "thumbnail": "assets/images/menti_complete/thumbs/neutral-business.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/neutral-business.png",
+    "thumbnail_sha256": "faced25f0c4ee4acdb23aec28f7e305737492287c080ff995bc39b3162e592fc",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   },
   {
     "id": "neutral-legendary-v1",
@@ -393,6 +427,8 @@
     "minXp": 200,
     "corner_opaque": false,
     "procedure": "technical AI-assisted background cutout; derived candidate, not new owner approval",
-    "thumbnail": "assets/images/menti_complete/thumbs/neutral-legendary.png"
+    "thumbnail": "assets/images/menti_complete/thumbs/neutral-legendary.png",
+    "thumbnail_sha256": "a374f76b2f8ddca84b34388312bfafce6ddee177bfe9cc1a980067a61ceef48b",
+    "thumbnail_procedure": "Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart"
   }
 ]

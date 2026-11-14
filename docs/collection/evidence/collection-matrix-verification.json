@@ -1,0 +1,458 @@
+{
+  "sourceCommit": "5fbcafdffebcc34e280bb9b03ca4d4babb9a83db",
+  "version": "2.6.0+38",
+  "browser": "157.0.8103.78",
+  "scaling": "HTML root 16/32px, read by Flutter web findBrowserTextScaleFactor; browser test, not physical OS accessibility settings",
+  "records": [
+    {
+      "locale": "hu",
+      "width": 320,
+      "height": 844,
+      "textScale": 1,
+      "look": "girl-base-v1",
+      "screens": [
+        "collection-home-hu-320-1x.png",
+        "collection-gallery-hu-320-1x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "transferBytes": 1761055,
+          "durationMs": 80.1000000089407
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "transferBytes": 1761055,
+          "durationMs": 82.6000000089407
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 50.70000000298023
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 320,
+      "height": 844,
+      "textScale": 2,
+      "look": "girl-base-v1",
+      "screens": [
+        "collection-home-hu-320-2x.png",
+        "collection-gallery-hu-320-2x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "transferBytes": 1761055,
+          "durationMs": 143.09999999403954
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "transferBytes": 1761055,
+          "durationMs": 57.20000000298023
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 20.5
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "look": "boy-base-v1",
+      "screens": [
+        "collection-home-hu-360-1x.png",
+        "collection-gallery-hu-360-1x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "transferBytes": 1283366,
+          "durationMs": 67
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "transferBytes": 1283366,
+          "durationMs": 48.1000000089407
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 43.1000000089407
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 360,
+      "height": 844,
+      "textScale": 2,
+      "look": "boy-base-v1",
+      "screens": [
+        "collection-home-hu-360-2x.png",
+        "collection-gallery-hu-360-2x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "transferBytes": 1283366,
+          "durationMs": 49.80000001192093
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "transferBytes": 1283366,
+          "durationMs": 50.80000001192093
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 14.799999997019768
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "look": "neutral-base-v1",
+      "screens": [
+        "collection-home-hu-390-1x.png",
+        "collection-gallery-hu-390-1x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "transferBytes": 1170799,
+          "durationMs": 41.599999994039536
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "transferBytes": 1170799,
+          "durationMs": 44.3999999910593
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 51.29999999701977
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 390,
+      "height": 844,
+      "textScale": 2,
+      "look": "neutral-base-v1",
+      "screens": [
+        "collection-home-hu-390-2x.png",
+        "collection-gallery-hu-390-2x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "transferBytes": 1170799,
+          "durationMs": 34.400000005960464
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "transferBytes": 1170799,
+          "durationMs": 55.5
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 78.69999998807907
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "look": "neutral-business-v1",
+      "screens": [
+        "collection-home-hu-430-1x.png",
+        "collection-gallery-hu-430-1x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-business.png",
+          "transferBytes": 1610862,
+          "durationMs": 76.79999999701977
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-business.png",
+          "transferBytes": 1610862,
+          "durationMs": 32.30000001192093
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 46.79999999701977
+        }
+      ]
+    },
+    {
+      "locale": "hu",
+      "width": 430,
+      "height": 844,
+      "textScale": 2,
+      "look": "neutral-business-v1",
+      "screens": [
+        "collection-home-hu-430-2x.png",
+        "collection-gallery-hu-430-2x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-business.png",
+          "transferBytes": 1610862,
+          "durationMs": 71.20000000298023
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-business.png",
+          "transferBytes": 1610862,
+          "durationMs": 75.70000000298023
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 70.70000000298023
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "height": 844,
+      "textScale": 1,
+      "look": "girl-base-v1",
+      "screens": [
+        "collection-home-en-320-1x.png",
+        "collection-gallery-en-320-1x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "transferBytes": 1761055,
+          "durationMs": 54
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "transferBytes": 1761055,
+          "durationMs": 26
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 65.20000000298023
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 320,
+      "height": 844,
+      "textScale": 2,
+      "look": "girl-base-v1",
+      "screens": [
+        "collection-home-en-320-2x.png",
+        "collection-gallery-en-320-2x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "transferBytes": 1761055,
+          "durationMs": 51.20000000298023
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/girl-base.png",
+          "transferBytes": 1761055,
+          "durationMs": 96
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 15.700000002980232
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 360,
+      "height": 844,
+      "textScale": 1,
+      "look": "boy-base-v1",
+      "screens": [
+        "collection-home-en-360-1x.png",
+        "collection-gallery-en-360-1x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "transferBytes": 1283366,
+          "durationMs": 14.400000005960464
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "transferBytes": 1283366,
+          "durationMs": 85.1000000089407
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 45
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 360,
+      "height": 844,
+      "textScale": 2,
+      "look": "boy-base-v1",
+      "screens": [
+        "collection-home-en-360-2x.png",
+        "collection-gallery-en-360-2x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "transferBytes": 1283366,
+          "durationMs": 21.5
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/boy-base.png",
+          "transferBytes": 1283366,
+          "durationMs": 70.79999999701977
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 28.299999997019768
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "textScale": 1,
+      "look": "neutral-base-v1",
+      "screens": [
+        "collection-home-en-390-1x.png",
+        "collection-gallery-en-390-1x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "transferBytes": 1170799,
+          "durationMs": 14.899999991059303
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "transferBytes": 1170799,
+          "durationMs": 69.19999998807907
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 18
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "height": 844,
+      "textScale": 2,
+      "look": "neutral-base-v1",
+      "screens": [
+        "collection-home-en-390-2x.png",
+        "collection-gallery-en-390-2x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "transferBytes": 1170799,
+          "durationMs": 51
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-base.png",
+          "transferBytes": 1170799,
+          "durationMs": 167.70000000298023
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 20.400000005960464
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 430,
+      "height": 844,
+      "textScale": 1,
+      "look": "neutral-business-v1",
+      "screens": [
+        "collection-home-en-430-1x.png",
+        "collection-gallery-en-430-1x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-business.png",
+          "transferBytes": 1610862,
+          "durationMs": 85.40000000596046
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-business.png",
+          "transferBytes": 1610862,
+          "durationMs": 41.5
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 47.70000000298023
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "width": 430,
+      "height": 844,
+      "textScale": 2,
+      "look": "neutral-business-v1",
+      "screens": [
+        "collection-home-en-430-2x.png",
+        "collection-gallery-en-430-2x.png"
+      ],
+      "resources": [
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-business.png",
+          "transferBytes": 1610862,
+          "durationMs": 20.700000002980232
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/neutral-business.png",
+          "transferBytes": 1610862,
+          "durationMs": 78.79999999701977
+        },
+        {
+          "file": "/assets/assets/images/menti_complete/thumbs/boy-base.png",
+          "transferBytes": 154139,
+          "durationMs": 89.80000001192093
+        }
+      ]
+    }
+  ],
+  "runtimeErrors": [],
+  "physicalPhone": false
+}

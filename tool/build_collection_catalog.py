@@ -31,5 +31,11 @@ for r in records:
     lines.extend(["  CompleteLook(",f"    '{r['id']}', '{r['family']}', '{r['asset']}',",f"    Size({r['width']}, {r['height']}), Rect.fromLTRB({', '.join(map(str,r['bounds']))}),",f"    style: '{r['style']}', minXp: {r['minXp']}, reference: '{r['reference']}',",f"    thumbnail: '{r['thumbnail']}',",'  ),'])
 lines.append('];')
 (ROOT/'lib/menti_collection_catalog.dart').write_text('\n'.join(lines)+'\n')
+for r in records:
+    thumbnail = ROOT / r['thumbnail']
+    if thumbnail.exists():
+        r['thumbnail_sha256'] = sha(thumbnail)
+        r['thumbnail_procedure'] = 'Unmodified PNG asset rendered by CompleteLookArtwork on the common transparent 360x480 Flutter canvas; tool/capture_collection_assets_test.dart'
+
 (ROOT/'docs/collection/catalog-provenance.json').write_text(json.dumps(records, ensure_ascii=False, indent=2)+'\n')
 print(f'{len(records)} real assets; {sum(r["minXp"]==0 for r in records)} free, {sum(r["minXp"]>0 for r in records)} XP')

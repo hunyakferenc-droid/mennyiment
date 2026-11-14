@@ -18,7 +18,7 @@ try{
   await click(p,button(p,s.experienceIntroBack));await p.getByText(s.startLanguage,{exact:true}).waitFor();
   await click(p,button(p,s.experienceIntroNext));await click(p,button(p,s.experienceIntroNext));
   await click(p,p.getByRole('checkbox',{name:s.collectionGirl,exact:true}));
-  const girlName=s.collectionLookName.replace('{family}',s.collectionGirl).replace('{style}',s.collectionParty);
+
   // The card's name precedes its Select control in the same accessible group.
   await click(p,button(p,s.collectionSelect).first());
   await screenshot(p,`onboarding-girl-${locale}-390`);
@@ -26,7 +26,7 @@ try{
   await click(p,button(p,s.startFinish));await button(p,s.collectionTitle).waitFor();
   let saved=await snapshot(p);assert.equal(doc(saved,'access_v1').audience,'minor');assert.equal(doc(saved,'identity_v22').profile.name,'Új Menti');assert.equal(doc(saved,'complete_look_v1').look,'girl-party-v1');assert.equal(doc(saved,'complete_look_v1').active,true);
   assert(!Object.keys(saved).some(k=>k.endsWith('drinks_v1')));await screenshot(p,`fresh-collection-home-${locale}-390`);
-  await click(p,button(p,s.adventureTitle));await screenshot(p,`fresh-collection-adventure-${locale}-390`);await click(p,button(p,locale==='hu'?'Vissza':'Back'));await top(p);
+  await click(p,button(p,s.adventureTitle));await screenshot(p,`fresh-collection-adventure-${locale}-390`);await button(p,locale==='hu'?'Vissza':'Back').evaluate(e=>e.click());await p.waitForTimeout(200);await semantics(p);await top(p);
   await click(p,button(p,s.collectionTitle));await p.getByRole('heading',{name:s.collectionTitle,exact:true}).waitFor();await screenshot(p,`fresh-collection-gallery-${locale}-390`);
   await click(p,button(p,s.avatarEnlargePreview).first());await screenshot(p,`fresh-collection-zoom-${locale}-390`);await click(p,button(p,s.avatarClosePreview));await click(p,button(p,s.avatarCancel));
   p.reloading=true;await p.reload({waitUntil:'networkidle'});await semantics(p);p.reloading=false;await button(p,s.collectionTitle).waitFor();saved=await snapshot(p);assert.equal(doc(saved,'complete_look_v1').look,'girl-party-v1');assert.equal(doc(saved,'access_v1').audience,'minor');
@@ -39,7 +39,7 @@ try{
   let earned=await snapshot(q);assert.equal(doc(earned,'menti_xp_v2').xp,200);assert.equal(doc(earned,'complete_look_v1').announced.length,3);assert.equal(doc(earned,'complete_look_v1').active,false);
   await screenshot(q,`xp-unlock-${locale}-390`);
   q.reloading=true;await q.reload({waitUntil:'networkidle'});await semantics(q);q.reloading=false;await button(q,s.collectionTitle).waitFor();await click(q,button(q,s.collectionTitle));
-  await click(q,q.getByRole('checkbox',{name:s.collectionUnlockable,exact:true}));await screenshot(q,`xp-empty-unlockable-${locale}-390`);assert((await q.locator('body').ariaSnapshot()).includes(s.collectionNoMatches));
+  await click(q,q.getByRole('checkbox',{name:s.collectionUnlockable,exact:true}));await click(q,q.getByText(s.collectionNoMatches,{exact:true}));await screenshot(q,`xp-empty-unlockable-${locale}-390`);assert((await q.locator('body').ariaSnapshot()).includes(s.collectionNoMatches));
   earned=await snapshot(q);assert.equal(doc(earned,'menti_xp_v2').xp,200);assert.equal(doc(earned,'complete_look_v1').acquired.length,3);checks.push(`${locale}: actual daily check-in crosses 190 to 200 XP, owns/announces all three real legendary looks without spending or converting legacy mode; reload and unlockable filter stay coherent`);
   q.closing=true;await opened.context.close();active=null;
  }

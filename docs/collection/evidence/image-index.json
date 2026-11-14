@@ -1,0 +1,433 @@
+{
+  "applicationSource": "5fbcafdffebcc34e280bb9b03ca4d4babb9a83db",
+  "version": "2.6.0+38",
+  "images": [
+    {
+      "file": "comparison-boy.png",
+      "sha256": "7d7b0ea4adbad0ad0c15da210ed2de1efd23585fc0ba2a4a290d3f3e43363004",
+      "bytes": 2450142
+    },
+    {
+      "file": "comparison-girl.png",
+      "sha256": "37ede12366ba59d90ca85b558776172f141de5d0b9d96a07cfe8c7d7a23a788d",
+      "bytes": 2127260
+    },
+    {
+      "file": "comparison-neutral.png",
+      "sha256": "55720c9b52845e2a4537278c3a35aa3b7b9669ad7249f55ba63c69cab1265480",
+      "bytes": 2194143
+    },
+    {
+      "file": "flow-adventure-boy-base-v1-en-390.png",
+      "sha256": "8de48006d8f22473ea91322cd7c78a8287758d57f6361b0f464750d2c29c8313",
+      "bytes": 72750
+    },
+    {
+      "file": "flow-adventure-boy-base-v1-hu-390.png",
+      "sha256": "b9b0355552176c161f6dd3978be41cf75d9ea0eece035098f7de5c8263744626",
+      "bytes": 71572
+    },
+    {
+      "file": "flow-adventure-girl-base-v1-en-390.png",
+      "sha256": "074888b3d3a6f01f42f6bef71811a0dd12628b623cd54056589429cf915b5dd7",
+      "bytes": 77910
+    },
+    {
+      "file": "flow-adventure-girl-base-v1-hu-390.png",
+      "sha256": "95f0b798697934295d718a42f489472fceef00e4cae5db2fb998100be8487b6f",
+      "bytes": 76733
+    },
+    {
+      "file": "flow-adventure-neutral-base-v1-en-390.png",
+      "sha256": "7b60e95a5286a4ab53f885f5ce933d8e169e03ec5c28530e8117f816a8e3d3be",
+      "bytes": 78998
+    },
+    {
+      "file": "flow-adventure-neutral-base-v1-hu-390.png",
+      "sha256": "7d6aed543f93cbd36f086fe74b9fe39d6b7fe11636624f7801811a084338b81f",
+      "bytes": 77827
+    },
+    {
+      "file": "flow-complete-home-boy-base-v1-en-390.png",
+      "sha256": "ef3f49bea5fae211ee14b52b063cb5a689d2b4ea84ea16551653e5d5377dc086",
+      "bytes": 77422
+    },
+    {
+      "file": "flow-complete-home-boy-base-v1-hu-390.png",
+      "sha256": "7439a8cbebb2714e44f248c82470220dc367d3eded029f6228e9b3c6dcf08557",
+      "bytes": 78336
+    },
+    {
+      "file": "flow-complete-home-girl-base-v1-en-390.png",
+      "sha256": "5a99f9fd1adb68dd30237f6ae5445df5e46ccb7e14b1e6ee43b11078a94c7563",
+      "bytes": 81007
+    },
+    {
+      "file": "flow-complete-home-girl-base-v1-hu-390.png",
+      "sha256": "9dc888b2eac0df002e207f7ababe4a49ef7bf1767512db6c276d3d9d2d6b697a",
+      "bytes": 81858
+    },
+    {
+      "file": "flow-complete-home-neutral-base-v1-en-390.png",
+      "sha256": "fc9ad72ae134b78315ca795038b8b83529a156e6cd7f4a1e43424ba43f3fb681",
+      "bytes": 81284
+    },
+    {
+      "file": "flow-complete-home-neutral-base-v1-hu-390.png",
+      "sha256": "5eec95de77ee79f996718763be691cdd38390dfad0e135543ad231a5e7db37eb",
+      "bytes": 82202
+    },
+    {
+      "file": "flow-enlarged-boy-base-v1-en-390.png",
+      "sha256": "b401898944e1817648a2aa553390bbcd0bf3ce1cd5d55e31e6d09f03786d1225",
+      "bytes": 127980
+    },
+    {
+      "file": "flow-enlarged-boy-base-v1-hu-390.png",
+      "sha256": "01f354273b04119fb1e765956fe7ceeb8880753aeefd20973dee88ee2149dd8b",
+      "bytes": 128354
+    },
+    {
+      "file": "flow-enlarged-girl-base-v1-en-390.png",
+      "sha256": "c822a31002b02cab71c0e4c9398683d433ec15cfd51231e7fb8199427e4c55fb",
+      "bytes": 147028
+    },
+    {
+      "file": "flow-enlarged-girl-base-v1-hu-390.png",
+      "sha256": "7037e2b449d887a5aaad8337619977979cb97d9d6881965a3c2593108681aa71",
+      "bytes": 148649
+    },
+    {
+      "file": "flow-enlarged-neutral-base-v1-en-390.png",
+      "sha256": "a45c7ed6915b813b7b859d05c4ce1ae6b1b46d5c1521148651e101d098122135",
+      "bytes": 151951
+    },
+    {
+      "file": "flow-enlarged-neutral-base-v1-hu-390.png",
+      "sha256": "25dd22b05d96121fff8cfb56697499473fccd1065786906378a830585d2d1f42",
+      "bytes": 155190
+    },
+    {
+      "file": "flow-gallery-boy-base-v1-en-390.png",
+      "sha256": "9bcbd55f22bced6aaaf5f0c4d35f63e429e709b5211a6e384abf81d9c2f6888c",
+      "bytes": 99995
+    },
+    {
+      "file": "flow-gallery-boy-base-v1-hu-390.png",
+      "sha256": "411f7f29c8fc67be3df914249c4110488536cdf09d6fe6558ebc0f3f80256d80",
+      "bytes": 103722
+    },
+    {
+      "file": "flow-gallery-girl-base-v1-en-390.png",
+      "sha256": "01a360837fa0d9665bfd68e16c9f67a5f0daf3a3621dc734858b63a143e82d7c",
+      "bytes": 109583
+    },
+    {
+      "file": "flow-gallery-girl-base-v1-hu-390.png",
+      "sha256": "d643374ce15bea2397dd82e4857c19fdb515b54577682e418cf99646db9f749b",
+      "bytes": 113501
+    },
+    {
+      "file": "flow-gallery-neutral-base-v1-en-390.png",
+      "sha256": "daeef28244b807bd0f8670bb0293ab055cd3930609d69611edb1d7f26964aa91",
+      "bytes": 112294
+    },
+    {
+      "file": "flow-gallery-neutral-base-v1-hu-390.png",
+      "sha256": "f1601154851ea7ec6250b78ddc56b2d0b3c2d7b983e5f971c5df5cc714ed270d",
+      "bytes": 116716
+    },
+    {
+      "file": "flow-legacy-home-en-390.png",
+      "sha256": "460085bd8ba9f9c6b82960e6400713ccdeee5a0b33446fad753939d677be73ab",
+      "bytes": 84626
+    },
+    {
+      "file": "flow-legacy-home-hu-390.png",
+      "sha256": "304ecabd244c5bc60da8d190bee9243b8ee767c82e12b32f4d75290d6c8a4fbb",
+      "bytes": 87569
+    },
+    {
+      "file": "flow-legacy-return-en-390.png",
+      "sha256": "460085bd8ba9f9c6b82960e6400713ccdeee5a0b33446fad753939d677be73ab",
+      "bytes": 84626
+    },
+    {
+      "file": "flow-legacy-return-hu-390.png",
+      "sha256": "304ecabd244c5bc60da8d190bee9243b8ee767c82e12b32f4d75290d6c8a4fbb",
+      "bytes": 87569
+    },
+    {
+      "file": "flow-profile-boy-base-v1-en-390.png",
+      "sha256": "8c49d4183343c77df053e6bcaab2a85a7bcae41e8f5d40c2a9852d5e5ad7bc2c",
+      "bytes": 68535
+    },
+    {
+      "file": "flow-profile-boy-base-v1-hu-390.png",
+      "sha256": "ebba9a769495008fddbcb78554d70ce51157618e6e2d0fe95d2d9fa58b929d92",
+      "bytes": 70859
+    },
+    {
+      "file": "flow-profile-girl-base-v1-en-390.png",
+      "sha256": "d4cf8efb874474826a257f0f64b99d877297788d25890d4b5b714a1b7258bcd8",
+      "bytes": 72921
+    },
+    {
+      "file": "flow-profile-girl-base-v1-hu-390.png",
+      "sha256": "44c094236f0befdbbd629a2e10dd967c30df463a3799df83fa247727b5e917ff",
+      "bytes": 75658
+    },
+    {
+      "file": "flow-profile-neutral-base-v1-en-390.png",
+      "sha256": "8636aaa48ba4e3b8c5c940248274bb427f53e59625f6276d00a37321fec86e7d",
+      "bytes": 73967
+    },
+    {
+      "file": "flow-profile-neutral-base-v1-hu-390.png",
+      "sha256": "78bf26225b46de86df7b05ae82abe2820aa9f3b04484a595033e7d1046c93e9e",
+      "bytes": 77298
+    },
+    {
+      "file": "flow-restored-home-en-390.png",
+      "sha256": "5294ef9416a3f4c35d53ca5537e17931be3a1000c1e4381469e3196788e50ce7",
+      "bytes": 79683
+    },
+    {
+      "file": "flow-restored-home-hu-390.png",
+      "sha256": "0da511bc61171a3a26f30e20e96a7af12f37225dc5f1b057f10f1499219ed3f1",
+      "bytes": 82785
+    },
+    {
+      "file": "journey-fresh-collection-adventure-en-390.png",
+      "sha256": "c712828b230492837ca0606a351543e8017edc884ed25ea30e98a53360f5f887",
+      "bytes": 70323
+    },
+    {
+      "file": "journey-fresh-collection-adventure-hu-390.png",
+      "sha256": "9a09da6c82b428e11798bfa3c0e613e6c56f644273f22c5aa778d8529682c071",
+      "bytes": 72405
+    },
+    {
+      "file": "journey-fresh-collection-gallery-en-390.png",
+      "sha256": "320cec58ad3fc2e962b8d6e8004f5cbdb4abcb02e759ffea36fee61a40d606f3",
+      "bytes": 114097
+    },
+    {
+      "file": "journey-fresh-collection-gallery-hu-390.png",
+      "sha256": "a6ad1e49b9ecc3a65f1c7e31aa4c87a9b55193b6ce1657042bb90d09da53f360",
+      "bytes": 117948
+    },
+    {
+      "file": "journey-fresh-collection-home-en-390.png",
+      "sha256": "50b12fe6da862b37498e0ecd4e8fd3f2249a1874d93821789660d5ffb4fd5b10",
+      "bytes": 79948
+    },
+    {
+      "file": "journey-fresh-collection-home-hu-390.png",
+      "sha256": "9cd12be4f2901f9ad432366731c65fe70b5ac26c70cef1d3291173ed9a39ff7a",
+      "bytes": 82024
+    },
+    {
+      "file": "journey-fresh-collection-zoom-en-390.png",
+      "sha256": "93749d32a6a9241e55c78452d303d627ec1222c04e3c0071abd328a2097d3da9",
+      "bytes": 154914
+    },
+    {
+      "file": "journey-fresh-collection-zoom-hu-390.png",
+      "sha256": "41f9c0be7b6c0046d3267b42cb2c313e4bbcff1aef624b83769b9b49a8057791",
+      "bytes": 156374
+    },
+    {
+      "file": "journey-onboarding-girl-en-390.png",
+      "sha256": "c4ac4ce3a34138b9e4265d41cd4e8ac695d0c8cf4b84f5b6f01862eaf2e5324b",
+      "bytes": 96500
+    },
+    {
+      "file": "journey-onboarding-girl-hu-390.png",
+      "sha256": "b1f065cf726f20c17c7d07e4e1e3e8cb5c79a1e0518adf03968172d588c4f025",
+      "bytes": 98346
+    },
+    {
+      "file": "journey-xp-empty-unlockable-en-390.png",
+      "sha256": "e5ceca59a8348edc64a7eced4ffe8c9d708aebc754ebf5d12015bef654283c31",
+      "bytes": 90734
+    },
+    {
+      "file": "journey-xp-empty-unlockable-hu-390.png",
+      "sha256": "3e9f56eb0a83f68c0525aeacbedd6982eb63763e550ecc2ae60ed7b2c82d0e18",
+      "bytes": 97327
+    },
+    {
+      "file": "journey-xp-unlock-en-390.png",
+      "sha256": "599f0a0a3a2e11ea1fe8c9e5b610dcdf621d9ba98b932f852dfbe50889a75967",
+      "bytes": 70899
+    },
+    {
+      "file": "journey-xp-unlock-hu-390.png",
+      "sha256": "c2947b11eabc517d84003041d3fe100f7d9b5dd736bd2703fa76264ea8a12e61",
+      "bytes": 77500
+    },
+    {
+      "file": "matrix-collection-gallery-en-320-1x.png",
+      "sha256": "39f2e74da2b44e78132a523a7f19c5bbe6c6fcc1f9bbec3c82c4ae524661dd7e",
+      "bytes": 104184
+    },
+    {
+      "file": "matrix-collection-gallery-en-320-2x.png",
+      "sha256": "5a49c5a72131899278743a5bb27affc8f4b7a2b21742d7f166edef32316b230d",
+      "bytes": 100835
+    },
+    {
+      "file": "matrix-collection-gallery-en-360-1x.png",
+      "sha256": "5ddd5eed3e0505d50ed749170f1d8d6cb70c2a9fce90625cd082d1fa5de74d4a",
+      "bytes": 99790
+    },
+    {
+      "file": "matrix-collection-gallery-en-360-2x.png",
+      "sha256": "4002384b74a20222028349c5962aa544ee81f4f9e4e161e82b8c898bed9ebb0e",
+      "bytes": 96497
+    },
+    {
+      "file": "matrix-collection-gallery-en-390-1x.png",
+      "sha256": "daeef28244b807bd0f8670bb0293ab055cd3930609d69611edb1d7f26964aa91",
+      "bytes": 112294
+    },
+    {
+      "file": "matrix-collection-gallery-en-390-2x.png",
+      "sha256": "01a246d1706950f616db509e0444823d27145c1f9cf4a8548e086a9548a59731",
+      "bytes": 109434
+    },
+    {
+      "file": "matrix-collection-gallery-en-430-1x.png",
+      "sha256": "90cfd2ae65593dfa1c64ede154d794a57072053f04e4d46cc86541b1f447d1ba",
+      "bytes": 123620
+    },
+    {
+      "file": "matrix-collection-gallery-en-430-2x.png",
+      "sha256": "886f3e751a980a48a8982c8274493fd8aecabff65066c43d232b73363bc73bcc",
+      "bytes": 113073
+    },
+    {
+      "file": "matrix-collection-gallery-hu-320-1x.png",
+      "sha256": "6cdc3649529c8c853ad45990cb7e47288a9528aa1e9eb54b829090cbf2c93828",
+      "bytes": 99516
+    },
+    {
+      "file": "matrix-collection-gallery-hu-320-2x.png",
+      "sha256": "bb50cabb682f0417fdbfa139d3fc212bc00e9abe687fca81132a3439f6417aeb",
+      "bytes": 101242
+    },
+    {
+      "file": "matrix-collection-gallery-hu-360-1x.png",
+      "sha256": "b3ca0a581cbebbb0ab4adfdfa2157961724612365da8e38c62fd431e0d43bfd6",
+      "bytes": 90991
+    },
+    {
+      "file": "matrix-collection-gallery-hu-360-2x.png",
+      "sha256": "470845f241f225e1f2d97bf9ef3bc3dd48aadf1f3bc60605c3703257229ceca0",
+      "bytes": 98775
+    },
+    {
+      "file": "matrix-collection-gallery-hu-390-1x.png",
+      "sha256": "f1601154851ea7ec6250b78ddc56b2d0b3c2d7b983e5f971c5df5cc714ed270d",
+      "bytes": 116716
+    },
+    {
+      "file": "matrix-collection-gallery-hu-390-2x.png",
+      "sha256": "f4af792f5fa9c15abc45274e098ff46983a72dadc1e705b5c3d183ddf64f2269",
+      "bytes": 112019
+    },
+    {
+      "file": "matrix-collection-gallery-hu-430-1x.png",
+      "sha256": "e8e72f82ddfd174b02ca8e078d8b2925e3262e6f729e7b507540969b00054f1a",
+      "bytes": 119724
+    },
+    {
+      "file": "matrix-collection-gallery-hu-430-2x.png",
+      "sha256": "8d3a800314e588d8930b8082a5452b483340ac93776c13fd363414f32c855205",
+      "bytes": 117557
+    },
+    {
+      "file": "matrix-collection-home-en-320-1x.png",
+      "sha256": "53926a648cc0907b5226295dc23952abd15a36ef3b858d11ce36692eb5819ac8",
+      "bytes": 71209
+    },
+    {
+      "file": "matrix-collection-home-en-320-2x.png",
+      "sha256": "52de22773c03887bfd753c21590a0a9ddb9b7b729ce6ff41c7f6136b29c52890",
+      "bytes": 57548
+    },
+    {
+      "file": "matrix-collection-home-en-360-1x.png",
+      "sha256": "4b08e523da1aa780380c4cb4c0c61247baca1e9ed7d1a6c96f0f5398a67611bc",
+      "bytes": 71547
+    },
+    {
+      "file": "matrix-collection-home-en-360-2x.png",
+      "sha256": "1c0cab0d722f9dd90132acf7ccd4d014cbb995be3a13f34a9b2c9f99aa0426e1",
+      "bytes": 63589
+    },
+    {
+      "file": "matrix-collection-home-en-390-1x.png",
+      "sha256": "f433d363ece45a3ac4e136f664a985cd1c7cf69fd5c5b488c1e2327a21c55c93",
+      "bytes": 79895
+    },
+    {
+      "file": "matrix-collection-home-en-390-2x.png",
+      "sha256": "ba2d8ef8829f02aba1ecddb58b15729cd5be2812d5cdfaee950012dc744f97e5",
+      "bytes": 73241
+    },
+    {
+      "file": "matrix-collection-home-en-430-1x.png",
+      "sha256": "b63c4a5e364c7de3fd279d17f83f73529cf25e38c964037983518a8e399d792f",
+      "bytes": 79770
+    },
+    {
+      "file": "matrix-collection-home-en-430-2x.png",
+      "sha256": "adb53b33928e6bb3d7686cab9aa8a291315bc728fd39509f9722292a71ceff73",
+      "bytes": 72544
+    },
+    {
+      "file": "matrix-collection-home-hu-320-1x.png",
+      "sha256": "3d1c1c75b6a0f67248951a162c278b87db035fd55c94d1a5ca2de18e782de628",
+      "bytes": 73380
+    },
+    {
+      "file": "matrix-collection-home-hu-320-2x.png",
+      "sha256": "ac9ccf6084926eb3e3b4c8ee0702e8935ff7e06f2e17ad9d73b4ff64f3abec7d",
+      "bytes": 63265
+    },
+    {
+      "file": "matrix-collection-home-hu-360-1x.png",
+      "sha256": "77bfa6e677c9e83753fea7f657cf9cd8dd0a6ce800df91daad9629f8df86ff2a",
+      "bytes": 72011
+    },
+    {
+      "file": "matrix-collection-home-hu-360-2x.png",
+      "sha256": "3484f18092f2ac9dfae4bd6464acc621fac827cc8ad46fee194d4d9518a67246",
+      "bytes": 62962
+    },
+    {
+      "file": "matrix-collection-home-hu-390-1x.png",
+      "sha256": "880b0ed8bfc34694e79c5259acb560687e257458ed3255b44a5590b3b6e82844",
+      "bytes": 83014
+    },
+    {
+      "file": "matrix-collection-home-hu-390-2x.png",
+      "sha256": "c8b67eb4e6f051cd46d9ee819a06bb744a42ab3dce4a2f9bca435f2a747e9043",
+      "bytes": 72513
+    },
+    {
+      "file": "matrix-collection-home-hu-430-1x.png",
+      "sha256": "5a11458a9f4d32d8b9f528b9e280b8ea3f9c14c2ccbbffe0e5d3371a37bb815d",
+      "bytes": 82320
+    },
+    {
+      "file": "matrix-collection-home-hu-430-2x.png",
+      "sha256": "e0560e4e1b6478c5a9d5e1a27f42de966c9c81e631ffdfb320e716b4b537982e",
+      "bytes": 76513
+    }
+  ],
+  "physicalPhone": false,
+  "newGraphicOwnerApproval": false
+}
