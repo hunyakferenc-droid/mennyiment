@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'menti_collection_model.dart';
+import 'data_backup.dart';
 import 'menti_xp_store.dart';
 
 /// The existing complete-look preference, extended with durable acquisition.
@@ -46,6 +47,16 @@ class CompleteLookStore extends ChangeNotifier {
       final decoded = CompleteLookSelection.decode(raw, catalog: catalog);
       _xpSnapshot = p.get(MentiXpStore.currentKey);
       try {
+        if (_xpSnapshot != null) {
+          final rawXp = _xpSnapshot;
+          if (rawXp is! String) throw const FormatException('Invalid XP type');
+          final document = decodeBackupJson(rawXp);
+          // The existing current XP document is unversioned. Never interpret
+          // a future version or ambiguous duplicate-key JSON as a new reward.
+          if (document is! Map || document.containsKey('version')) {
+            throw const FormatException('Unknown XP schema');
+          }
+        }
         xp = _xpSnapshot == null
             ? 0
             : MentiXpStore.readCurrent(_xpSnapshot!).xp;

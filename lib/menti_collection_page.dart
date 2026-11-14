@@ -596,6 +596,9 @@ class _CompleteLooksPageState extends State<CompleteLooksPage> {
                             icon: const Icon(Icons.tune),
                             label: Text(s.collectionLegacyStudio),
                           ),
+                          // Allow the last control to scroll above a visible
+                          // unlock/save snackbar, including at large text sizes.
+                          const SizedBox(height: 96),
                         ],
                       ),
                     ),

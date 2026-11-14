@@ -115,6 +115,8 @@ void main() {
   for (final invalid in [
     '{',
     '{"xp":200.5}',
+    '{"xp":0,"xp":200}',
+    '{"xp":200,"version":99}',
     '{"xp":-1}',
     '{"xp":200,"days":false}',
     'null',
