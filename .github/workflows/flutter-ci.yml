@@ -276,7 +276,8 @@ jobs:
 
   windows_beta:
     name: Real Windows CMD and Chrome beta gate
-    if: github.head_ref == 'feature/menti-beta'
+    # Continue the independent Windows gate even if native emulator testing fails.
+    if: always() && github.head_ref == 'feature/menti-beta' && needs.flutter.result != 'cancelled'
     needs: flutter
     runs-on: windows-2025
     timeout-minutes: 30
