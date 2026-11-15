@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 # Disposable CI emulator only. No uninstall, clear-data or signature bypass.
 set -euo pipefail
+[[ "${GITHUB_ACTIONS:-}" == "true" ]] || { echo "Only run on a disposable GitHub CI emulator."; exit 1; }
+export ANDROID_SERIAL=emulator-5554
 OUT=build/android-beta
 mkdir -p "$OUT"
 exec > >(tee "$OUT/device.log") 2>&1
-trap 'adb logcat -d > "$OUT/logcat.txt" || true; adb shell dumpsys meminfo com.example.mennyiment.review > "$OUT/final-memory.txt" || true' EXIT
+trap 'adb exec-out screencap -p > "$OUT/last-screen.png" || true; adb logcat -d > "$OUT/logcat.txt" || true; adb shell dumpsys meminfo com.example.mennyiment.review > "$OUT/final-memory.txt" || true' EXIT
 adb wait-for-device
+[[ "$(adb shell getprop ro.kernel.qemu | tr -d '\r')" == "1" ]] || { echo "Refusing a non-emulator device."; exit 1; }
 adb shell getprop ro.build.version.release > "$OUT/android-version.txt"
 adb install -r artifacts/normal/app-debug.apk
 adb install -r artifacts/review/app-debug.apk

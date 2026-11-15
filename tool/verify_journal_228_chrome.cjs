@@ -31,9 +31,21 @@ async function action(page,locator) {
   await semantics(page);await reach(page,locator);
   await locator.evaluate(element=>element.click());await page.waitForTimeout(200);await semantics(page);
 }
+async function pointerFocus(page,control) {
+  const box=await control.boundingBox();assert(box && box.width>0 && box.height>0);
+  const x=box.x+box.width/2,y=box.y+box.height/2;
+  assert(x>0 && x<page.viewportSize().width && y>0 && y<page.viewportSize().height);
+  // Real pointer input reaches Flutter's canvas hit-test even when its
+  // transparent accessibility parent intercepts the mirrored DOM input.
+  await page.mouse.click(x,y);
+}
 async function input(page,label,value) {
   const control=page.getByRole('textbox',{name:label,exact:false}).first();
-  await semantics(page);await reach(page,control);await control.click({noWaitAfter:true});
+  await semantics(page);await reach(page,control);await pointerFocus(page,control);
+  // Flutter attaches/hydrates its native editing bridge on the next frame.
+  // Select-all before that can select an empty mirror and append to old text.
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  await page.waitForTimeout(100);
   await page.keyboard.press('Control+A');
   if(value)await page.keyboard.type(value);else await page.keyboard.press('Backspace');
   await page.keyboard.press('Tab');await page.waitForTimeout(160);
@@ -70,7 +82,10 @@ async function filters(page,s,{searchValue='Twin',missing=true,oldest=false,mont
   const searchControl=page.getByRole('textbox',{name:s.journalSearch,exact:true});
   // Flutter synchronizes its shared DOM editing value when the field receives
   // focus; an unfocused semantics input may have an empty DOM value.
-  await searchControl.click({noWaitAfter:true});
+  await pointerFocus(page,searchControl);
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  const synchronizedBy=Date.now()+5000;
+  while(await searchControl.inputValue()!==searchValue && Date.now()<synchronizedBy) await page.waitForTimeout(50);
   assert.equal(await searchControl.inputValue(),searchValue);await page.keyboard.press('Tab');
   const price=labeledButton(page,s.journalPriceFilter);
   assert((await price.ariaSnapshot()).includes(missing?s.journalMissingPrices:s.journalAllPrices));
@@ -111,7 +126,7 @@ async function save(page,s,filtered) {
         if(width===390)await menu(page,s.journalSort,s.journalOldest);
         await count(page,s,2);await screenshot(page,`missing-${locale}-${width}`);
         if(width!==390) {
-          await editor(page,s,true);await input(page,s.journalPrice,locale==='hu'?'1234,75':'1234.75');
+          await editor(page,s,true);await screenshot(page,`price-editor-empty-${locale}-${width}`);await input(page,s.journalPrice,locale==='hu'?'1234,75':'1234.75');
           await screenshot(page,`price-editor-${locale}-${width}`);await save(page,s,true);
           records[0].priceFt=1234.75;
           assert.deepEqual(await assertProtected(page,before),records);
@@ -143,8 +158,12 @@ async function save(page,s,filtered) {
           await editor(page,s);await input(page,s.journalDrinkName,'Unsaved draft');await back(page,locale);
           await button(page,s.entryKeepEditing).waitFor();await screenshot(page,`discard-confirm-${locale}`);
           await action(page,button(page,s.entryKeepEditing));
-          await page.getByRole('textbox',{name:s.journalDrinkName,exact:false}).click({noWaitAfter:true});
-          assert.equal(await page.getByRole('textbox',{name:s.journalDrinkName,exact:false}).inputValue(),'Unsaved draft');
+          const retainedName=page.getByRole('textbox',{name:s.journalDrinkName,exact:false});
+          await pointerFocus(page,retainedName);
+          await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+          const retainedBy=Date.now()+5000;
+          while(await retainedName.inputValue()!=='Unsaved draft' && Date.now()<retainedBy) await page.waitForTimeout(50);
+          assert.equal(await retainedName.inputValue(),'Unsaved draft');
           await back(page,locale);await action(page,button(page,s.entryDiscard));
           assert.deepEqual(await assertProtected(page,before),records);
           checks.push(`${locale}: Back asks before discarding, keep-editing retains the draft, confirmed discard writes nothing`);

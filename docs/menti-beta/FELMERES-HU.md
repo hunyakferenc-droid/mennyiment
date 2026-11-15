@@ -20,6 +20,7 @@ Alap: #44 `624228aa21e774ab457084c2329e422025309173`, 2.8.0+40. #42/#43/#44 nyit
 | P1 | A jelöltek gomb változtatja a karaktert, de a dropdown FormField megtarthatja régi belső értékét | A formmező kulcsa a kiválasztott stabil kinézetazonosítóhoz kötött; váltás-visszatérés tesztelve |
 | P1 | Nincs valódi Windows/Android CI-lefedés | Kész artifactből CMD/PowerShell 5.1 + Chrome Windows-futó; API 35 x86_64 emulátor, natív integration_test és párhuzamos telepítésellenőrzés |
 | P2 | Onboarding a teljes karakter átöltöztetéséhez a régi Studióra irányít | HU/EN szöveg a teljes Menti-gyűjteményre, XP önreflexiós szerepére és nem költő feloldására pontosítva |
+| P1 | Windows alapértelmezett Segoe UI nincs a webes fontcsomagban; a valódi Windows-képen hibás térközök látszanak | A már meglévő, licencelt offline Roboto explicit közös család. A Windows-regresszió a javítás előtt Segoe UI-val elbukott; Android/Linux is ellenőrzött |
 | P2 | Offline indító MP4-et általános binárisként szolgál ki, nosniff mellett | Szabályos video/mp4 MIME; Windows-próba HEAD ellenőrzéssel |
 
 ## Kockázatok és ellenőrzés

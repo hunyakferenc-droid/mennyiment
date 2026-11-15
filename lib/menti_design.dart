@@ -14,6 +14,9 @@ abstract final class MentiDesign {
   );
   static ThemeData get theme => ThemeData(
     brightness: Brightness.dark,
+    // Windows defaults to Segoe UI, which is not bundled in the offline web app.
+    // Use the existing licensed font consistently; emoji remains fallback only.
+    fontFamily: 'Roboto',
     fontFamilyFallback: const ['MentiEmoji'],
     scaffoldBackgroundColor: canvas,
     colorScheme:

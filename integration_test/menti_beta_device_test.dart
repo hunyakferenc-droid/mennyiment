@@ -12,6 +12,7 @@ import 'package:mennyiment/data_backup.dart';
 import 'package:mennyiment/data_restore.dart';
 import 'package:mennyiment/menti_collection_store.dart';
 import 'package:mennyiment/menti_xp_store.dart';
+import 'package:mennyiment/menti_identity/menti_identity_store.dart';
 
 Future<void> reach(WidgetTester t, Finder f) async {
   for (var i = 0; i < 60; i++) {
@@ -31,6 +32,15 @@ Future<void> tap(WidgetTester t, String key) async {
   await reach(t, f);
   await t.tap(f);
   await t.pumpAndSettle();
+}
+
+Future<void> until(WidgetTester t, Finder f) async {
+  final deadline = DateTime.now().add(const Duration(seconds: 20));
+  while (f.evaluate().isEmpty && DateTime.now().isBefore(deadline)) {
+    await t.pump(const Duration(milliseconds: 100));
+  }
+  if (f.evaluate().isEmpty) debugDumpApp();
+  expect(f, findsOneWidget);
 }
 
 void main() {
@@ -54,8 +64,16 @@ void main() {
       final name = find.byKey(const ValueKey('start-name'));
       await reach(t, name);
       await t.enterText(name, 'Android Beta');
+      await t.testTextInput.receiveAction(TextInputAction.done);
+      await t.pumpAndSettle();
+      expect(t.widget<TextField>(name).controller!.text, 'Android Beta');
       await tap(t, 'start-next');
-      expect(find.byType(HomePage), findsOneWidget);
+      await until(t, find.byType(HomePage));
+      await p.reload();
+      expect(
+        jsonDecode(p.getString(MentiIdentityStore.key)!)['profile']['name'],
+        'Android Beta',
+      );
       expect(
         jsonDecode(p.getString(CompleteLookStore.key)!)['look'],
         'girl-party-v1',
@@ -87,6 +105,7 @@ void main() {
       await t.testTextInput.receiveAction(TextInputAction.done);
       await t.pumpAndSettle();
       await tap(t, 'entry-save');
+      await until(t, find.byKey(const ValueKey('journal-search')));
       await p.reload();
       expect(
         jsonDecode(p.getString('mennyiment_drinks_v1')!)[0]['name'],
