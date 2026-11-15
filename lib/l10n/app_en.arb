@@ -1655,5 +1655,31 @@
         "type": "int"
       }
     }
-  }
+  },
+  "aliveTitle": "Menti Alive – developer preview",
+  "aliveGate": "This target requires a separate developer build. The normal app contains no unapproved videos.",
+  "alivePending": "Media awaiting approval · not production app media",
+  "aliveIntro": "Separate test preview. Look selection, language and switches stay in this preview; profile, XP and journal remain unchanged.",
+  "aliveSaved": "Full look saved in the app",
+  "aliveNoSaved": "No active saved full look. This preview does not modify the previous Studio outfit.",
+  "aliveSavedError": "The saved look cannot be read. It remains unchanged; its contents are not guessed.",
+  "aliveSelection": "Temporary preview look",
+  "aliveCandidateChoice": "View the three boy festival candidates",
+  "aliveBackground": "Studio frame: the original baked background is retained. No automatic masking or recoloring. Background approval is pending.",
+  "aliveStatic": "Original static PNG",
+  "aliveAnimated": "Video preview",
+  "aliveEnabled": "Enable videos in this preview",
+  "alivePlay": "Play",
+  "aliveRestart": "Restart",
+  "aliveStop": "Stop and show original",
+  "aliveNoMedia": "No preview video matches this look and reaction. Its own original PNG is shown.",
+  "aliveLoadError": "The preview media package is missing or invalid. Use the separate developer package.",
+  "aliveXpDemo": "Test: XP milestone – no XP awarded",
+  "aliveSelfControlDemo": "Test: self-control event – no data written",
+  "aliveDemoHint": "These test engine inputs, not real achievements. A missing reaction is never replaced with another video.",
+  "aliveReadOnly": "Read-only trial · no profile or XP writes",
+  "aliveReady": "Ready · static image",
+  "aliveReviewReference": "Video identity has not been approved. The candidate classification is based on the source reference and visual inspection.",
+  "aliveDisabled": "Preview disabled. The original PNG is shown.",
+  "alivePlaying": "Playing silent video"
 }

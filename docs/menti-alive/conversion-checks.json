@@ -1,0 +1,23 @@
+[
+  {
+    "reaction": "welcome",
+    "sourceJobId": "f4285f42-f007-4682-9e33-80596995e5ec",
+    "processedSha256": "cab5518e6d50eba16ce1a2143c41d5eb3a7f50d2bd05e0f1b46009b8191029a0",
+    "fullVideoSsimAgainstSameScaledSource": 0.993405,
+    "scope": "compression fidelity only; not identity or owner approval"
+  },
+  {
+    "reaction": "wink",
+    "sourceJobId": "b67e7b8f-cb74-4293-9783-8acd0cd95102",
+    "processedSha256": "9dd80a57cbcdceb50b88ed6db68bde8d3a60d660dc7109fd98db35bc63720d1b",
+    "fullVideoSsimAgainstSameScaledSource": 0.993665,
+    "scope": "compression fidelity only; not identity or owner approval"
+  },
+  {
+    "reaction": "congratulation",
+    "sourceJobId": "19e7b417-b349-41c8-aaaf-04aea914fe4f",
+    "processedSha256": "9c215e3b9ffc428d6418ce595db24bb19e850b6442142881fb653546c33662d0",
+    "fullVideoSsimAgainstSameScaledSource": 0.992982,
+    "scope": "compression fidelity only; not identity or owner approval"
+  }
+]

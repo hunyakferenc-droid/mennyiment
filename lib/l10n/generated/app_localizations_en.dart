@@ -3376,4 +3376,93 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lifeMilestone => 'Milestone celebration';
+
+  @override
+  String get aliveTitle => 'Menti Alive – developer preview';
+
+  @override
+  String get aliveGate =>
+      'This target requires a separate developer build. The normal app contains no unapproved videos.';
+
+  @override
+  String get alivePending =>
+      'Media awaiting approval · not production app media';
+
+  @override
+  String get aliveIntro =>
+      'Separate test preview. Look selection, language and switches stay in this preview; profile, XP and journal remain unchanged.';
+
+  @override
+  String get aliveSaved => 'Full look saved in the app';
+
+  @override
+  String get aliveNoSaved =>
+      'No active saved full look. This preview does not modify the previous Studio outfit.';
+
+  @override
+  String get aliveSavedError =>
+      'The saved look cannot be read. It remains unchanged; its contents are not guessed.';
+
+  @override
+  String get aliveSelection => 'Temporary preview look';
+
+  @override
+  String get aliveCandidateChoice => 'View the three boy festival candidates';
+
+  @override
+  String get aliveBackground =>
+      'Studio frame: the original baked background is retained. No automatic masking or recoloring. Background approval is pending.';
+
+  @override
+  String get aliveStatic => 'Original static PNG';
+
+  @override
+  String get aliveAnimated => 'Video preview';
+
+  @override
+  String get aliveEnabled => 'Enable videos in this preview';
+
+  @override
+  String get alivePlay => 'Play';
+
+  @override
+  String get aliveRestart => 'Restart';
+
+  @override
+  String get aliveStop => 'Stop and show original';
+
+  @override
+  String get aliveNoMedia =>
+      'No preview video matches this look and reaction. Its own original PNG is shown.';
+
+  @override
+  String get aliveLoadError =>
+      'The preview media package is missing or invalid. Use the separate developer package.';
+
+  @override
+  String get aliveXpDemo => 'Test: XP milestone – no XP awarded';
+
+  @override
+  String get aliveSelfControlDemo =>
+      'Test: self-control event – no data written';
+
+  @override
+  String get aliveDemoHint =>
+      'These test engine inputs, not real achievements. A missing reaction is never replaced with another video.';
+
+  @override
+  String get aliveReadOnly => 'Read-only trial · no profile or XP writes';
+
+  @override
+  String get aliveReady => 'Ready · static image';
+
+  @override
+  String get aliveReviewReference =>
+      'Video identity has not been approved. The candidate classification is based on the source reference and visual inspection.';
+
+  @override
+  String get aliveDisabled => 'Preview disabled. The original PNG is shown.';
+
+  @override
+  String get alivePlaying => 'Playing silent video';
 }
