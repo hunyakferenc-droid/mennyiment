@@ -17,7 +17,7 @@ jobs:
   flutter:
     name: Flutter analyze, test, web
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    timeout-minutes: 60
     env:
       CI: "true"
       FLUTTER_SUPPRESS_ANALYTICS: "true"
@@ -204,6 +204,41 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+      - name: Prepare real KVM emulator and same-key APK integration
+        if: github.head_ref == 'feature/menti-beta'
+        run: |
+          mkdir -p build/android-beta
+          test -e /dev/kvm || { echo 'Android emulator blocked: /dev/kvm is absent'; exit 1; }
+          sudo chmod 666 /dev/kvm
+          df -h
+          mkdir -p artifacts/normal artifacts/review
+          cp build/app/outputs/flutter-apk/app-debug.apk artifacts/normal/app-debug.apk
+          cp build/menti-alive-review-apk/app-debug.apk artifacts/review/app-debug.apk
+          flutter pub get
+      - name: Real Android API 35 x86_64 device flows
+        if: github.head_ref == 'feature/menti-beta'
+        env:
+          MENTI_SOURCE_COMMIT: ${{ env.SOURCE_SHA }}
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          # Keep OS animation policy enabled: REVIEW must honor reduced motion,
+          # not bypass it for tests. Normal test uses its own explicit preference.
+          disable-animations: false
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none -no-snapshot
+          script: bash tool/test_menti_beta_android.sh
+      - name: Upload actual Android evidence including failures
+        if: always() && github.head_ref == 'feature/menti-beta'
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.9.0-Android-evidence-${{ env.SOURCE_SHA }}
+          path: build/android-beta/
+          if-no-files-found: warn
+          retention-days: 14
+
       - name: CI summary
         if: ${{ always() }}
         env:
@@ -282,66 +317,5 @@ jobs:
             build/windows-beta/normal/*.txt
             build/windows-beta/review/*.json
             build/windows-beta/review/*.png
-          if-no-files-found: warn
-          retention-days: 14
-
-  android_beta:
-    name: Android emulator beta gate
-    if: github.head_ref == 'feature/menti-beta'
-    needs: flutter
-    runs-on: ubuntu-24.04
-    timeout-minutes: 45
-    env:
-      MENTI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
-      FLUTTER_SUPPRESS_ANALYTICS: 'true'
-      DART_SUPPRESS_ANALYTICS: 'true'
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          persist-credentials: false
-      - uses: actions/download-artifact@v4
-        with:
-          name: mennyiment-2.9.0-debug-apk-${{ env.MENTI_SOURCE_COMMIT }}
-          path: artifacts/normal
-      - uses: actions/download-artifact@v4
-        with:
-          name: mennyiment-2.9.0-REVIEW-debug-apk-${{ env.MENTI_SOURCE_COMMIT }}
-          path: artifacts/review
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
-        with:
-          channel: stable
-          flutter-version: '3.47.7'
-          cache: true
-          pub-cache: true
-      - name: Prepare real KVM emulator and dependencies
-        run: |
-          mkdir -p build/android-beta
-          test -e /dev/kvm || { echo 'Android emulator blocked: /dev/kvm is absent'; exit 1; }
-          sudo chmod 666 /dev/kvm
-          df -h
-          flutter pub get
-      - name: Real Android API 35 x86_64 device flows
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 35
-          target: google_apis
-          arch: x86_64
-          profile: pixel_4
-          # Keep OS animation policy enabled: REVIEW must honor reduced motion,
-          # not bypass it for tests. Normal test uses its own explicit preference.
-          disable-animations: false
-          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none -no-snapshot
-          script: bash tool/test_menti_beta_android.sh
-      - name: Upload actual Android evidence including failures
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: mennyiment-2.9.0-Android-evidence-${{ env.MENTI_SOURCE_COMMIT }}
-          path: build/android-beta/
           if-no-files-found: warn
           retention-days: 14
