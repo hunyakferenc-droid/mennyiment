@@ -1655,5 +1655,31 @@
         "type": "int"
       }
     }
-  }
+  },
+  "aliveTitle": "Menti Alive – fejlesztői előnézet",
+  "aliveGate": "Ez a célpont csak külön fejlesztői buildben nyitható meg. A normál alkalmazásban nincs jóváhagyatlan videó.",
+  "alivePending": "Jóváhagyásra váró média · nem éles alkalmazásmédia",
+  "aliveIntro": "Külön tesztelőnézet. A kinézetválasztás, nyelv és kapcsolók csak itt élnek; profil, XP és napló nem módosul.",
+  "aliveSaved": "Az alkalmazásban mentett teljes kinézet",
+  "aliveNoSaved": "Nincs aktív mentett teljes kinézet. A korábbi Studio-összeállítást ez az előnézet nem módosítja.",
+  "aliveSavedError": "A mentett kinézet nem értelmezhető. Nem írjuk át és nem találgatjuk a tartalmát.",
+  "aliveSelection": "Ideiglenes előnézeti kinézet",
+  "aliveCandidateChoice": "A három fiú fesztiváljelölt megtekintése",
+  "aliveBackground": "Stúdiókeret: az eredeti beégetett háttér megmaradt. Nincs automatikus maszkolás vagy átszínezés. A háttér jóváhagyásra vár.",
+  "aliveStatic": "Eredeti statikus PNG",
+  "aliveAnimated": "Videós előnézet",
+  "aliveEnabled": "Videók engedélyezése ebben az előnézetben",
+  "alivePlay": "Lejátszás",
+  "aliveRestart": "Újraindítás",
+  "aliveStop": "Leállítás és eredeti kép",
+  "aliveNoMedia": "Ehhez a kinézethez és reakcióhoz nincs előnézeti videó. A saját eredeti PNG látható.",
+  "aliveLoadError": "Az előnézeti médiacsomag hiányzik vagy hibás. Használd a külön fejlesztői csomagot.",
+  "aliveXpDemo": "Próba: XP-mérföldkő – XP-jóváírás nélkül",
+  "aliveSelfControlDemo": "Próba: önkontroll-esemény – adatírás nélkül",
+  "aliveDemoHint": "Ezek motorbemeneti próbák, nem valódi teljesítések. Hiányzó reakcióhoz nem helyettesítünk más videót.",
+  "aliveReadOnly": "Csak olvasható próba · nincs profil- vagy XP-mentés",
+  "aliveReady": "Készen áll · statikus kép",
+  "aliveReviewReference": "A videó karakterazonossága még nincs jóváhagyva. A jelölt besorolást a forrásreferencia és képi vizsgálat indokolja.",
+  "aliveDisabled": "Az előnézet kikapcsolva. A saját eredeti PNG látható.",
+  "alivePlaying": "Néma videó lejátszása"
 }

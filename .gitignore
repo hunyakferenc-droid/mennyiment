@@ -131,3 +131,7 @@ pubspec.yaml.bak
 # Geometric decoder fixture only; not a character or production video asset.
 !/tool/fixtures/menti-life-decoder-probe.mp4
 !/docs/images/menti-life/*.png
+
+# Explicit developer-review media. Never included by the normal pubspec.
+!/tool/menti_alive/review_assets/*.mp4
+!/docs/images/menti-alive/*.png

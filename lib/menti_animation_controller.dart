@@ -222,12 +222,13 @@ class MentiAnimationController extends ChangeNotifier {
   }
 
   bool owns(Object id) => _host == id && active != null;
-  bool react(MentiLifeSignal signal) {
+  bool react(MentiLifeSignal signal, {bool manual = false}) {
     final p = MentiReactionEngine.plan(signal.event);
     return request(
       p.reaction,
       token: '${signal.event.name}:${signal.token}',
       priority: p.priority,
+      manual: manual,
     );
   }
 
@@ -330,6 +331,20 @@ class MentiAnimationController extends ChangeNotifier {
       }
     });
     return true;
+  }
+
+  /// Explicit restart waits for the old decoder to close. A newer selection,
+  /// stop, policy or lifecycle change cancels the pending restart.
+  Future<bool> restart(
+    MentiLifeReaction reaction, {
+    required String token,
+  }) async {
+    if (_disposed) return false;
+    stop();
+    final generation = _generation;
+    await settled;
+    if (_disposed || generation != _generation) return false;
+    return request(reaction, token: token, manual: true);
   }
 
   bool _valid(int generation) =>

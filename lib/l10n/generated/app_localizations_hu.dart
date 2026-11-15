@@ -3363,4 +3363,95 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get lifeMilestone => 'Mérföldkő-ünneplés';
+
+  @override
+  String get aliveTitle => 'Menti Alive – fejlesztői előnézet';
+
+  @override
+  String get aliveGate =>
+      'Ez a célpont csak külön fejlesztői buildben nyitható meg. A normál alkalmazásban nincs jóváhagyatlan videó.';
+
+  @override
+  String get alivePending =>
+      'Jóváhagyásra váró média · nem éles alkalmazásmédia';
+
+  @override
+  String get aliveIntro =>
+      'Külön tesztelőnézet. A kinézetválasztás, nyelv és kapcsolók csak itt élnek; profil, XP és napló nem módosul.';
+
+  @override
+  String get aliveSaved => 'Az alkalmazásban mentett teljes kinézet';
+
+  @override
+  String get aliveNoSaved =>
+      'Nincs aktív mentett teljes kinézet. A korábbi Studio-összeállítást ez az előnézet nem módosítja.';
+
+  @override
+  String get aliveSavedError =>
+      'A mentett kinézet nem értelmezhető. Nem írjuk át és nem találgatjuk a tartalmát.';
+
+  @override
+  String get aliveSelection => 'Ideiglenes előnézeti kinézet';
+
+  @override
+  String get aliveCandidateChoice => 'A három fiú fesztiváljelölt megtekintése';
+
+  @override
+  String get aliveBackground =>
+      'Stúdiókeret: az eredeti beégetett háttér megmaradt. Nincs automatikus maszkolás vagy átszínezés. A háttér jóváhagyásra vár.';
+
+  @override
+  String get aliveStatic => 'Eredeti statikus PNG';
+
+  @override
+  String get aliveAnimated => 'Videós előnézet';
+
+  @override
+  String get aliveEnabled => 'Videók engedélyezése ebben az előnézetben';
+
+  @override
+  String get alivePlay => 'Lejátszás';
+
+  @override
+  String get aliveRestart => 'Újraindítás';
+
+  @override
+  String get aliveStop => 'Leállítás és eredeti kép';
+
+  @override
+  String get aliveNoMedia =>
+      'Ehhez a kinézethez és reakcióhoz nincs előnézeti videó. A saját eredeti PNG látható.';
+
+  @override
+  String get aliveLoadError =>
+      'Az előnézeti médiacsomag hiányzik vagy hibás. Használd a külön fejlesztői csomagot.';
+
+  @override
+  String get aliveXpDemo => 'Próba: XP-mérföldkő – XP-jóváírás nélkül';
+
+  @override
+  String get aliveSelfControlDemo =>
+      'Próba: önkontroll-esemény – adatírás nélkül';
+
+  @override
+  String get aliveDemoHint =>
+      'Ezek motorbemeneti próbák, nem valódi teljesítések. Hiányzó reakcióhoz nem helyettesítünk más videót.';
+
+  @override
+  String get aliveReadOnly =>
+      'Csak olvasható próba · nincs profil- vagy XP-mentés';
+
+  @override
+  String get aliveReady => 'Készen áll · statikus kép';
+
+  @override
+  String get aliveReviewReference =>
+      'A videó karakterazonossága még nincs jóváhagyva. A jelölt besorolást a forrásreferencia és képi vizsgálat indokolja.';
+
+  @override
+  String get aliveDisabled =>
+      'Az előnézet kikapcsolva. A saját eredeti PNG látható.';
+
+  @override
+  String get alivePlaying => 'Néma videó lejátszása';
 }

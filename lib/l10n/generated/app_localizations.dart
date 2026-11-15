@@ -6007,6 +6007,162 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'Mérföldkő-ünneplés'**
   String get lifeMilestone;
+
+  /// No description provided for @aliveTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti Alive – fejlesztői előnézet'**
+  String get aliveTitle;
+
+  /// No description provided for @aliveGate.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ez a célpont csak külön fejlesztői buildben nyitható meg. A normál alkalmazásban nincs jóváhagyatlan videó.'**
+  String get aliveGate;
+
+  /// No description provided for @alivePending.
+  ///
+  /// In hu, this message translates to:
+  /// **'Jóváhagyásra váró média · nem éles alkalmazásmédia'**
+  String get alivePending;
+
+  /// No description provided for @aliveIntro.
+  ///
+  /// In hu, this message translates to:
+  /// **'Külön tesztelőnézet. A kinézetválasztás, nyelv és kapcsolók csak itt élnek; profil, XP és napló nem módosul.'**
+  String get aliveIntro;
+
+  /// No description provided for @aliveSaved.
+  ///
+  /// In hu, this message translates to:
+  /// **'Az alkalmazásban mentett teljes kinézet'**
+  String get aliveSaved;
+
+  /// No description provided for @aliveNoSaved.
+  ///
+  /// In hu, this message translates to:
+  /// **'Nincs aktív mentett teljes kinézet. A korábbi Studio-összeállítást ez az előnézet nem módosítja.'**
+  String get aliveNoSaved;
+
+  /// No description provided for @aliveSavedError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A mentett kinézet nem értelmezhető. Nem írjuk át és nem találgatjuk a tartalmát.'**
+  String get aliveSavedError;
+
+  /// No description provided for @aliveSelection.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ideiglenes előnézeti kinézet'**
+  String get aliveSelection;
+
+  /// No description provided for @aliveCandidateChoice.
+  ///
+  /// In hu, this message translates to:
+  /// **'A három fiú fesztiváljelölt megtekintése'**
+  String get aliveCandidateChoice;
+
+  /// No description provided for @aliveBackground.
+  ///
+  /// In hu, this message translates to:
+  /// **'Stúdiókeret: az eredeti beégetett háttér megmaradt. Nincs automatikus maszkolás vagy átszínezés. A háttér jóváhagyásra vár.'**
+  String get aliveBackground;
+
+  /// No description provided for @aliveStatic.
+  ///
+  /// In hu, this message translates to:
+  /// **'Eredeti statikus PNG'**
+  String get aliveStatic;
+
+  /// No description provided for @aliveAnimated.
+  ///
+  /// In hu, this message translates to:
+  /// **'Videós előnézet'**
+  String get aliveAnimated;
+
+  /// No description provided for @aliveEnabled.
+  ///
+  /// In hu, this message translates to:
+  /// **'Videók engedélyezése ebben az előnézetben'**
+  String get aliveEnabled;
+
+  /// No description provided for @alivePlay.
+  ///
+  /// In hu, this message translates to:
+  /// **'Lejátszás'**
+  String get alivePlay;
+
+  /// No description provided for @aliveRestart.
+  ///
+  /// In hu, this message translates to:
+  /// **'Újraindítás'**
+  String get aliveRestart;
+
+  /// No description provided for @aliveStop.
+  ///
+  /// In hu, this message translates to:
+  /// **'Leállítás és eredeti kép'**
+  String get aliveStop;
+
+  /// No description provided for @aliveNoMedia.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ehhez a kinézethez és reakcióhoz nincs előnézeti videó. A saját eredeti PNG látható.'**
+  String get aliveNoMedia;
+
+  /// No description provided for @aliveLoadError.
+  ///
+  /// In hu, this message translates to:
+  /// **'Az előnézeti médiacsomag hiányzik vagy hibás. Használd a külön fejlesztői csomagot.'**
+  String get aliveLoadError;
+
+  /// No description provided for @aliveXpDemo.
+  ///
+  /// In hu, this message translates to:
+  /// **'Próba: XP-mérföldkő – XP-jóváírás nélkül'**
+  String get aliveXpDemo;
+
+  /// No description provided for @aliveSelfControlDemo.
+  ///
+  /// In hu, this message translates to:
+  /// **'Próba: önkontroll-esemény – adatírás nélkül'**
+  String get aliveSelfControlDemo;
+
+  /// No description provided for @aliveDemoHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ezek motorbemeneti próbák, nem valódi teljesítések. Hiányzó reakcióhoz nem helyettesítünk más videót.'**
+  String get aliveDemoHint;
+
+  /// No description provided for @aliveReadOnly.
+  ///
+  /// In hu, this message translates to:
+  /// **'Csak olvasható próba · nincs profil- vagy XP-mentés'**
+  String get aliveReadOnly;
+
+  /// No description provided for @aliveReady.
+  ///
+  /// In hu, this message translates to:
+  /// **'Készen áll · statikus kép'**
+  String get aliveReady;
+
+  /// No description provided for @aliveReviewReference.
+  ///
+  /// In hu, this message translates to:
+  /// **'A videó karakterazonossága még nincs jóváhagyva. A jelölt besorolást a forrásreferencia és képi vizsgálat indokolja.'**
+  String get aliveReviewReference;
+
+  /// No description provided for @aliveDisabled.
+  ///
+  /// In hu, this message translates to:
+  /// **'Az előnézet kikapcsolva. A saját eredeti PNG látható.'**
+  String get aliveDisabled;
+
+  /// No description provided for @alivePlaying.
+  ///
+  /// In hu, this message translates to:
+  /// **'Néma videó lejátszása'**
+  String get alivePlaying;
 }
 
 class _AppLocalizationsDelegate

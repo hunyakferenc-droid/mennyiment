@@ -1,3 +1,5 @@
+> Menti Alive 2.8.0+40: [külön REVIEW videóelőnézet és médialeltár](docs/menti-alive/README.md), [magyar indítás](docs/menti-alive/kiprobalas-hu.md). Három tényleges, optimalizált videójelölt külön fejlesztői csomagban; a normál alkalmazás továbbra is 0 jóváhagyott videót tartalmaz.
+
 > Menti Life 2.7.0+39: [műszaki és médialeltár](docs/menti-life/README.md), [magyar kipróbálás](docs/menti-life/kiprobalas-hu.md). A motor 18 kinézetet és 14 reakciót kezel; a jelenlegi csomagban 0 jóváhagyott karaktervideó van, ezért az eredeti PNG-k jelennek meg.
 
 # MennyiMent?

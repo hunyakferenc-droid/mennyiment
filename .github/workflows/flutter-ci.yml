@@ -2,7 +2,7 @@ name: Flutter CI
 
 on:
   pull_request:
-    branches: [main, feature/menti-collection, experiment/menti-complete-looks, fix/menti-character-quality, feature/mennyiment-2-4-visual-ux, feature/mennyiment-2-3-1-play-preparation, feature/mennyiment-2-3-adventures, feature/mennyiment-2-2-6-naturalization, feature/mennyiment-2-2-5-customization-rebuild, feature/mennyiment-2-2-4-premium-polish, feature/mennyiment-2-2-1-visual-ux, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families, feature/mennyiment-2-2-concept-redesign, feature/mennyiment-2-2-final-playable]
+    branches: [main, feature/menti-life, feature/menti-collection, experiment/menti-complete-looks, fix/menti-character-quality, feature/mennyiment-2-4-visual-ux, feature/mennyiment-2-3-1-play-preparation, feature/mennyiment-2-3-adventures, feature/mennyiment-2-2-6-naturalization, feature/mennyiment-2-2-5-customization-rebuild, feature/mennyiment-2-2-4-premium-polish, feature/mennyiment-2-2-1-visual-ux, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families, feature/mennyiment-2-2-concept-redesign, feature/mennyiment-2-2-final-playable]
   push:
     branches: [main]
 
@@ -59,6 +59,7 @@ jobs:
           git diff --exit-code -- pubspec.lock lib/l10n/generated
           python3 tool/check_localizations.py
           python3 tool/check_menti_life_media.py
+          python3 tool/check_menti_alive_media.py
           python3 tool/check_play_dossier.py
 
       - name: Whitespace check
@@ -94,7 +95,7 @@ jobs:
           target = Path('build/web')
           for name in ['INDITAS.cmd', 'INDITAS.ps1']:
               shutil.copyfile(Path('tool/windows') / name, target / name)
-          shutil.copyfile('docs/menti-life/kiprobalas-hu.md', target / 'OLVASDEL-WINDOWS.txt')
+          shutil.copyfile('docs/menti-alive/kiprobalas-hu.md', target / 'OLVASDEL-WINDOWS.txt')
           metadata = json.loads((target / 'version.json').read_text())
           (target / 'build-info.txt').write_text(
               f"source_commit={os.environ['SOURCE_SHA']}\n"
@@ -106,7 +107,7 @@ jobs:
         if: ${{ !cancelled() && steps.web.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.7.0-web-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.8.0-web-${{ env.SOURCE_SHA }}
           path: build/web/
           if-no-files-found: error
           retention-days: 14
@@ -132,15 +133,15 @@ jobs:
             "$APK_SIGNER" verify --verbose --print-certs build/app/outputs/flutter-apk/app-debug.apk
             "$APK_AAPT" dump badging build/app/outputs/flutter-apk/app-debug.apk
           } > build/app/outputs/flutter-apk/build-info.txt
-          cp docs/menti-life/kiprobalas-hu.md build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
+          cp docs/menti-alive/kiprobalas-hu.md build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
           cat build/app/outputs/flutter-apk/build-info.txt
-          python3 tool/check_apk_layout.py build/app/outputs/flutter-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 2.7.0 --build 39 --output build/app/outputs/flutter-apk/apk-layout.json
+          python3 tool/check_apk_layout.py build/app/outputs/flutter-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 2.8.0 --build 40 --output build/app/outputs/flutter-apk/apk-layout.json
 
       - name: Upload installable debug APK
         if: ${{ !cancelled() && steps.apk.outcome == 'success' && steps.verify_apk.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.7.0-debug-apk-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.8.0-debug-apk-${{ env.SOURCE_SHA }}
           path: |
             build/app/outputs/flutter-apk/app-debug.apk
             build/app/outputs/flutter-apk/app-debug.apk.sha256
@@ -159,8 +160,39 @@ jobs:
         if: ${{ !cancelled() && steps.release_guard.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.7.0-release-guard-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.8.0-release-guard-${{ env.SOURCE_SHA }}
           path: build/verification/release-signing.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Build isolated developer REVIEW web
+        id: review_web
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: python3 tool/build_menti_alive_preview.py --platform web --output build/menti-alive-review-web
+
+      - name: Upload developer REVIEW web
+        if: ${{ !cancelled() && steps.review_web.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.8.0-REVIEW-web-${{ env.SOURCE_SHA }}
+          path: build/menti-alive-review-web/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Build isolated developer REVIEW debug APK
+        id: review_apk
+        if: ${{ !cancelled() && steps.dependencies.outcome == 'success' }}
+        run: |
+          python3 tool/build_menti_alive_preview.py --platform apk --output build/menti-alive-review-apk
+          APK_SIGNER="$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)"
+          python3 tool/check_apk_layout.py build/menti-alive-review-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 2.8.0 --build 40 --output build/menti-alive-review-apk/apk-layout.json
+
+      - name: Upload developer REVIEW debug APK
+        if: ${{ !cancelled() && steps.review_apk.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.8.0-REVIEW-debug-apk-${{ env.SOURCE_SHA }}
+          path: build/menti-alive-review-apk/
           if-no-files-found: error
           retention-days: 14
 
