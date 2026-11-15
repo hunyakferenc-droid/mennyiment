@@ -91,8 +91,9 @@ class _MentiEvolutionState extends State<MentiEvolution>
       button: _animate || widget.onTap != null,
       child: GestureDetector(
         onTap: () {
-          if (_animate && MentiExperienceScope.reactionsOf(context))
+          if (_animate && MentiExperienceScope.reactionsOf(context)) {
             _celebrate.forward(from: 0);
+          }
           widget.onTap?.call();
         },
         child: Column(
