@@ -1,5 +1,6 @@
 """Regress the temporary manifest/Gradle patch, not just source text matching."""
 import tempfile, unittest, shutil
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from menti_beta_android import prepare_review_android
 
@@ -16,6 +17,11 @@ class ReviewIsolationTest(unittest.TestCase):
    self.assertIn('Menti Beta REVIEW',manifest)
    self.assertIn('@drawable/menti_review_launcher',manifest)
    self.assertIn('@drawable/menti_launcher',(w/'android/app/src/main/res/drawable/menti_review_launcher.xml').read_text())
+   layers=ET.parse(w/'android/app/src/main/res/drawable/menti_review_launcher.xml').getroot()
+   width='{http://schemas.android.com/apk/res/android}width'
+   # The original nodpi PNG is 1254 px: dp-sized badge must not shrink against it.
+   self.assertEqual(layers[0].get(width),'48dp')
+   self.assertEqual(layers[1].get(width),'20dp')
    self.assertNotIn('menti_review_launcher',(ROOT/'android/app/src/main/AndroidManifest.xml').read_text())
  def test_unexpected_id_fails_without_rewriting(self):
   with tempfile.TemporaryDirectory() as d:

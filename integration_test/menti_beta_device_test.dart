@@ -92,7 +92,14 @@ void main() {
         'girl-party-v1',
       );
       await tap(t, 'home-primary-log');
-      await t.tap(find.byType(ListTile).first);
+      await t.tap(
+        find
+            .descendant(
+              of: find.byType(BottomSheet),
+              matching: find.byType(ListTile),
+            )
+            .first,
+      );
       await t.pumpAndSettle();
       final ctx = t.element(find.byType(HomePage));
       final s = appStrings(ctx);
