@@ -109,6 +109,36 @@ void main() {
       await expectLater(restorer.prepare('{broken'), throwsFormatException);
       await p.reload();
       expect(p.getString('mennyiment_drinks_v1'), before);
+      // A synthetic older XP snapshot on this disposable device exercises durable unlocks.
+      await p.setString(
+        MentiXpStore.currentKey,
+        jsonEncode({'xp': 190, 'days': [], 'completed': []}),
+      );
+      final older = await BackupExporter().capture();
+      expect((await MentiXpStore.checkInToday()).xp, 200);
+      expect((await MentiXpStore.checkInToday()).xp, 200);
+      await t.pumpAndSettle();
+      final collection = CompleteLookStore();
+      await collection.load();
+      for (final id in [
+        'boy-legendary-v1',
+        'girl-legendary-v1',
+        'neutral-legendary-v1',
+      ]) {
+        expect(collection.selection.acquired, contains(id));
+      }
+      final olderPlan = await restorer.prepare(older.json);
+      await restorer.restore(olderPlan, confirmed: true);
+      await collection.load();
+      expect((await MentiXpStore.load()).xp, 190);
+      for (final id in [
+        'boy-legendary-v1',
+        'girl-legendary-v1',
+        'neutral-legendary-v1',
+      ]) {
+        expect(collection.selection.acquired, contains(id));
+      }
+      collection.dispose();
       // Reload the real app from persisted state; do not reseed preferences.
       await t.pumpWidget(const SizedBox.shrink());
       await t.pumpAndSettle();
@@ -119,7 +149,7 @@ void main() {
       expect(t.takeException(), isNull);
       // ignore: avoid_print
       print(
-        'MENTI_BETA_NATIVE: onboarding/girl/journal/create-edit-zero/native-file-restore/corrupt-rejection/XP-once/reload passed; file picker and physical phone still manual.',
+        'MENTI_BETA_NATIVE: onboarding/girl/journal/create-edit-zero/native-file-restore/corrupt-rejection/XP-once/190-to-200/all-three-legendary/older-restore/reload passed; file picker and physical phone still manual.',
       );
     },
   );

@@ -36,8 +36,8 @@ foreach ($variant in @('normal','review')) {
         } else {
             node tool/verify_menti_alive_chrome.cjs
             if ($LASTEXITCODE -ne 0) {throw 'Windows native video regression failed.'}
-            $clip=Get-ChildItem (Join-Path $web 'assets/assets/menti_alive_review/*.mp4') | Select-Object -First 1
-            $media=Invoke-WebRequest -Method Head -UseBasicParsing ("http://127.0.0.1:7357/assets/assets/menti_alive_review/"+$clip.Name)
+            $clip=Get-ChildItem (Join-Path $web 'assets/assets/menti_life/clips/*.mp4') | Select-Object -First 1
+            $media=Invoke-WebRequest -Method Head -UseBasicParsing ("http://127.0.0.1:7357/assets/assets/menti_life/clips/"+$clip.Name)
             if ($media.Headers['Content-Type'] -ne 'video/mp4') {throw 'Wrong MP4 MIME type.'}
         }
         $results+=@{variant=$variant;zipExtracted=$true;cmdLauncher=$true;host='127.0.0.1:7357';realWindows=$true;chrome=$chrome;sourceCommit=$env:MENTI_SOURCE_COMMIT}

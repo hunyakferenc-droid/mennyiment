@@ -39,8 +39,12 @@ async function input(page,label,value) {
   await page.keyboard.press('Tab');await page.waitForTimeout(160);
 }
 async function search(page,s,value) {await top(page);await input(page,s.journalSearch,value);}
+function labeledButton(page,label) {
+  const escaped=label.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return page.getByRole('button',{name:new RegExp('^'+escaped+'(?:\\s|$)')});
+}
 async function menu(page,label,choice) {
-  await top(page);await action(page,page.getByRole('button',{name:label,exact:false}));
+  await top(page);await action(page,labeledButton(page,label));
   await semantics(page);
   await page.getByRole('menuitem',{name:choice,exact:true}).evaluate(element=>element.click());
   await page.waitForTimeout(200);await semantics(page);
@@ -50,6 +54,7 @@ async function openJournal(page,s) {
   await tab.waitFor();assert(await tab.isEnabled());
   await tab.evaluate(element=>element.click());
   await page.getByRole('textbox',{name:s.journalSearch,exact:true}).waitFor();
+  await action(page,page.getByRole('button',{name:s.visualFilters,exact:false}).first());
 }
 async function back(page,locale) {
   await ready(page);const control=button(page,locale==='hu'?'Vissza':'Back');
@@ -67,9 +72,9 @@ async function filters(page,s,{searchValue='Twin',missing=true,oldest=false,mont
   // focus; an unfocused semantics input may have an empty DOM value.
   await searchControl.click({noWaitAfter:true});
   assert.equal(await searchControl.inputValue(),searchValue);await page.keyboard.press('Tab');
-  const price=page.getByRole('button',{name:s.journalPriceFilter,exact:false});
+  const price=labeledButton(page,s.journalPriceFilter);
   assert((await price.ariaSnapshot()).includes(missing?s.journalMissingPrices:s.journalAllPrices));
-  if(oldest)assert((await page.getByRole('button',{name:s.journalSort,exact:false}).ariaSnapshot()).includes(s.journalOldest));
+  if(oldest)assert((await labeledButton(page,s.journalSort).ariaSnapshot()).includes(s.journalOldest));
   if(month)await page.getByRole('checkbox',{name:s.month,exact:true,checked:true}).waitFor();
 }
 async function count(page,s,n) {
@@ -98,7 +103,7 @@ async function save(page,s,filtered) {
         const s=strings[locale];process.stdout.write(`Checking ${locale} ${width}px\n`);
         const metadata=await (await page.request.get(`${url}/version.json`)).json();
         const [version,build]=(process.env.MENTI_APP_VERSION||'2.2.8+32').split('+');assert.equal(metadata.version,version);assert.equal(metadata.build_number,build);
-        await button(page,s.chooseMenti).waitFor();const before=await snapshot(page);
+        await button(page,s.collectionTitle).waitFor();const before=await snapshot(page);
         await screenshot(page,`home-loaded-${locale}-${width}`);
         await openJournal(page,s);await search(page,s,'Twin');
         if(width===390) {await top(page);await action(page,page.getByLabel(s.month,{exact:true}));}
@@ -167,7 +172,7 @@ async function save(page,s,filtered) {
           checks.push(`${locale}: next statistics and finance views show the edited current-month cost and do not change journal/profile/XP`);
         }
         await ready(page);page.reloading=true;
-        await page.reload({waitUntil:'networkidle'});await semantics(page);await button(page,s.chooseMenti).waitFor();
+        await page.reload({waitUntil:'networkidle'});await semantics(page);await button(page,s.collectionTitle).waitFor();
         await ready(page);page.reloading=false;
         await openJournal(page,s);await screenshot(page,`reloaded-${locale}-${width}`);
         assert.deepEqual(await assertProtected(page,before),records);
