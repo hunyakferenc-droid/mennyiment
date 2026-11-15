@@ -15,7 +15,7 @@ Alap: #44 `624228aa21e774ab457084c2329e422025309173`, 2.8.0+40. #42/#43/#44 nyit
 
 | Szint | Bizonyított probléma / rés | Intézkedés |
 |---|---|---|
-| P0 | A 2.8 REVIEW a normál app csomagnevét használja, lecserélheti a felületét | Csak az izolált REVIEW munkafában `com.example.mennyiment.review`, explicit eredeti MainActivity, külön címke és R ikonjelzés; APK-ellenőrző paraméterezett, normál ID/aláírás változatlan |
+| P0 | A 2.8 REVIEW a normál app csomagnevét használja, lecserélheti a felületét | Csak az izolált REVIEW munkafában `com.example.mennyiment.review`, külön namespace, explicit eredeti MainActivity, külön címke és R ikonjelzés; APK-ellenőrző paraméterezett, normál ID/aláírás változatlan |
 | P1 | A lejátszás előtti aszinkron görgetés után a Leállítás/karakterváltás/tiltás ellenére elindulhatott egy kérés | Előnézeti műveleti sorszám; leállítás, kapcsoló, választás és háttér érvényteleníti; 6 HU/EN regresszió |
 | P1 | A jelöltek gomb változtatja a karaktert, de a dropdown FormField megtarthatja régi belső értékét | A formmező kulcsa a kiválasztott stabil kinézetazonosítóhoz kötött; váltás-visszatérés tesztelve |
 | P1 | Nincs valódi Windows/Android CI-lefedés | Kész artifactből CMD/PowerShell 5.1 + Chrome Windows-futó; API 35 x86_64 emulátor, natív integration_test és párhuzamos telepítésellenőrzés |
@@ -30,3 +30,5 @@ A REVIEW új Android-ID-je szándékosan külön, üres helyi adattár; nem migr
 Az integrációs teszt kizárólag frissen létrehozott CI-emulátoron futhat; nem clear-eli a tárat. A teszt saját szintetikus bejegyzéseket hoz létre a valódi natív plugineken át. Az Android-fájl round-trip a valódi fájlrendszert és az export/import szolgáltatást ellenőrzi; a rendszer fájlválasztó párbeszédét nem helyettesíti készülékes kézi ellenőrzésként.
 
 Helyben nincs `/dev/kvm`, Android-emulátor bináris vagy csatlakoztatott adb-eszköz. A távoli CI-emulátor eredményét kizárólag tényleges futás alapján jelentjük. Fizikai telefon és kézi Windows-próba nincs. A végső jelentés pontos commitot és minden CI-gate eredményét külön tartalmazza.
+
+A natív integrációs tesztek a dokumentált `--no-uninstall` kapcsolóval tartják meg a telepítést és a szintetikus adatokat. A Flutter alapértelmezett teszteltávolítását nem használjuk. A REVIEW külön namespace-e biztosítja, hogy a Flutter eszközei is a REVIEW-t azonosítsák, miközben az eredeti MainActivity teljes neve explicit marad. API 35-ön a codec-erőforrásokhoz a tényleges `media.resource_manager` dumpsys szolgáltatást használjuk.

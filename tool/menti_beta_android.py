@@ -1,4 +1,10 @@
 """Isolated REVIEW Android configuration; normal checkout is never modified."""
+import subprocess
+
+def ensure_committed_source(root):
+ if subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=root).strip():
+  raise ValueError('Commit tracked changes before a source-bound REVIEW build. Existing work is preserved.')
+
 REVIEW_APPLICATION_ID = 'com.example.mennyiment.review'
 
 def prepare_review_android(work):
@@ -6,7 +12,10 @@ def prepare_review_android(work):
  text=gradle.read_text(encoding='utf-8')
  old='applicationId = "com.example.mennyiment"'
  if text.count(old)!=1: raise ValueError('Unexpected application ID configuration; preserve the normal app.')
- gradle.write_text(text.replace(old, 'applicationId = "'+REVIEW_APPLICATION_ID+'"'),encoding='utf-8')
+ old_namespace='namespace = "com.example.mennyiment"'
+ if text.count(old_namespace)!=1: raise ValueError('Unexpected Android namespace; preserve the normal app.')
+ text=text.replace(old, 'applicationId = "'+REVIEW_APPLICATION_ID+'"').replace(old_namespace, 'namespace = "'+REVIEW_APPLICATION_ID+'"')
+ gradle.write_text(text,encoding='utf-8')
  manifest=work/'android/app/src/main/AndroidManifest.xml'
  text=manifest.read_text(encoding='utf-8').replace('android:label="MennyiMent?"','android:label="Menti Beta REVIEW"').replace('android:name=".MainActivity"','android:name="com.example.mennyiment.MainActivity"').replace('@drawable/menti_launcher','@drawable/menti_review_launcher')
  manifest.write_text(text,encoding='utf-8')

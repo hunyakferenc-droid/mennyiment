@@ -70,8 +70,8 @@ async function openJournal(page,s) {
 }
 async function back(page,locale) {
   await ready(page);const control=button(page,locale==='hu'?'Vissza':'Back');
-  await control.waitFor();await control.evaluate(element=>element.click());
-  await page.waitForTimeout(200);await semantics(page);
+  await control.waitFor();await pointerFocus(page,control);
+  await page.waitForTimeout(300);await semantics(page);
 }
 async function assertProtected(page,before) {
   const current=await snapshot(page),left={...before},right={...current};delete left[key];delete right[key];
@@ -158,6 +158,8 @@ async function save(page,s,filtered) {
           await editor(page,s);await input(page,s.journalDrinkName,'Unsaved draft');await back(page,locale);
           await button(page,s.entryKeepEditing).waitFor();await screenshot(page,`discard-confirm-${locale}`);
           await action(page,button(page,s.entryKeepEditing));
+          // Wait for the closing modal route before another native pointer/back.
+          await page.waitForTimeout(300);
           const retainedName=page.getByRole('textbox',{name:s.journalDrinkName,exact:false});
           await pointerFocus(page,retainedName);
           await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));

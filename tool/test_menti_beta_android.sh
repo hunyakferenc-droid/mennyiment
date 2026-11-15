@@ -25,13 +25,14 @@ assert len(set(uids))==2, 'Normal and REVIEW must have distinct Android UIDs'
 print('Separate Android sandbox UIDs verified:', uids)
 CHECK_UIDS
 # Both apps are installed simultaneously. Integration tests use native plugins.
-flutter test integration_test/menti_beta_device_test.dart -d emulator-5554 --no-pub
+flutter test integration_test/menti_beta_device_test.dart -d emulator-5554 --no-pub --no-uninstall
 # Sample actual process memory while the native review test runs.
 (while true; do date -u +%FT%TZ; adb shell dumpsys meminfo com.example.mennyiment.review; sleep 4; done) > "$OUT/review-memory-samples.txt" 2>&1 &
 SAMPLER=$!
 python3 tool/build_menti_alive_preview.py --platform apk --device emulator-5554 --output build/unused-device-output || { kill "$SAMPLER"; exit 1; }
 kill "$SAMPLER"
-adb shell dumpsys media.codec > "$OUT/codec-after-tests.txt"
+adb shell dumpsys -l > "$OUT/dumpsys-services.txt"
+adb shell dumpsys media.resource_manager > "$OUT/codec-after-tests.txt"
 adb shell run-as com.example.mennyiment cat shared_prefs/FlutterSharedPreferences.xml | sha256sum > "$OUT/normal-pre-update.sha256"
 # Return to the exact delivered APKs; same signing key and data-preserving update.
 adb install -r artifacts/normal/app-debug.apk

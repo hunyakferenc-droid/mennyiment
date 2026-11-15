@@ -5,10 +5,15 @@ import argparse,hashlib,json,os,shutil,subprocess,tarfile,tempfile
 from pathlib import Path
 
 
-from menti_beta_android import prepare_review_android
+from menti_beta_android import prepare_review_android, ensure_committed_source
 
 root=Path(__file__).resolve().parents[1]
 p=argparse.ArgumentParser();p.add_argument('--platform',choices=['web','apk'],required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--device', help='Run native REVIEW integration tests instead of producing a distributable');p.add_argument('--flutter',default='flutter');a=p.parse_args()
+try:ensure_committed_source(root)
+except ValueError as error:raise SystemExit(str(error))
+resolved_flutter=shutil.which(a.flutter)
+if resolved_flutter is None:raise SystemExit('Flutter SDK not found. Add Flutter bin to PATH or use --flutter; the ready Web ZIP needs no SDK or Python.')
+a.flutter=resolved_flutter
 a.output=a.output.resolve()
 if a.output.exists() and any(a.output.iterdir()):raise SystemExit('Output must be empty; existing files are preserved.')
 source=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
@@ -35,12 +40,12 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
                 'assets/fonts/roboto/LICENSE.txt','assets/fonts/roboto/README.md',
                 'assets/fonts/menti_emoji/OFL.txt']+additions
  text=text.split('  assets:\n',1)[0]+'  assets:\n'+''.join('    - '+x+'\n'for x in review_assets)
- pubspec.write_text(text)
+ pubspec.write_text(text,encoding='utf-8')
  prepare_review_android(work)
  subprocess.run([a.flutter,'pub','get'],cwd=work,check=True)
  if a.device:
   if a.platform!='apk': raise SystemExit('Device integration requires apk platform')
-  subprocess.run([a.flutter,'test','integration_test/menti_beta_review_test.dart','-d',a.device,'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub'],cwd=work,check=True)
+  subprocess.run([a.flutter,'test','integration_test/menti_beta_review_test.dart','-d',a.device,'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub','--no-uninstall'],cwd=work,check=True)
   raise SystemExit(0)
  command=[a.flutter,'build',a.platform,'--target','tool/menti_alive_preview.dart','--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub']
  command+=['--no-web-resources-cdn','--no-wasm-dry-run']if a.platform=='web'else['--debug']
