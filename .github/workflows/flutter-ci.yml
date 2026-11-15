@@ -332,7 +332,9 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel_4
-          disable-animations: true
+          # Keep OS animation policy enabled: REVIEW must honor reduced motion,
+          # not bypass it for tests. Normal test uses its own explicit preference.
+          disable-animations: false
           emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none -no-snapshot
           script: bash tool/test_menti_beta_android.sh
       - name: Upload actual Android evidence including failures
