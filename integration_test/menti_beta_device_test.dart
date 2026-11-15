@@ -19,11 +19,15 @@ Future<void> reach(WidgetTester t, Finder f) async {
     if (f.evaluate().isNotEmpty) {
       await t.ensureVisible(f);
       await t.pumpAndSettle();
-      return;
+      // Keyboard dismissal can resize a lazy ListView during ensureVisible.
+      // Re-find after layout; an element in the cache is not yet tappable.
+      if (f.hitTestable().evaluate().isNotEmpty) return;
+      continue;
     }
     await t.drag(find.byType(Scrollable).first, const Offset(0, -200));
     await t.pumpAndSettle();
   }
+  debugDumpApp();
   fail('Unreachable native control: $f');
 }
 
