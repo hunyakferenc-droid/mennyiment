@@ -44,7 +44,7 @@ python tool/build_menti_alive_preview.py --platform web --output C:\dev\menti-al
 
 ## Android – előbb mentés és aláírás-ellenőrzés
 
-A normál és a REVIEW debug APK alkalmazásazonosítója változatlan: `com.example.mennyiment`. A REVIEW csak fejlesztői előnézet, nem helyettesíti a teljes alkalmazást. Elsősorban weben vagy elkülönített tesztkészüléken próbáld. Ne telepíts inkompatibilis APK-t a telefonod meglévő alkalmazására.
+A normál és a REVIEW debug APK alkalmazásazonosítója változatlan: `com.example.mennyiment`. A REVIEW csak fejlesztői előnézet. **Azonos alkalmazásazonosítója miatt ugyanazon készüléken a normál alkalmazás felületét lecserélné; nem települ mellé külön appként.** Ezért elsősorban a kész webes REVIEW-csomagot vagy elkülönített tesztkészüléket használj. A normál apphoz visszatéréshez megfelelő verziójú, azonos aláírású normál APK szükséges. Ne telepíts inkompatibilis APK-t a telefonod meglévő alkalmazására.
 
 Frissítés előtt készíts fájlos mentést a normál alkalmazásban. Közvetlen frissítéshez azonos tanúsítvány kell; külön CI-futások debugkulcsa eltérhet. A jelentés és a csomag build-info.txt fájlja közli a konkrét aláírót. Eltérésnél ne töröld a régi appot: a korábbi privát kulccsal fordítás vagy külön tesztkészülék szükséges. Kiadási kulcs nem készült; ezek nem Play-kiadások.
 

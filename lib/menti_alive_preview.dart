@@ -330,7 +330,7 @@ class _MentiAlivePreviewPageState extends State<MentiAlivePreviewPage>
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Wrap(
-                    spacing: 16,
+                    spacing: 12,
                     runSpacing: 12,
                     alignment: WrapAlignment.center,
                     children: [

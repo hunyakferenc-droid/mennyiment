@@ -51,6 +51,12 @@ jobs:
           flutter --version
           dart --version
 
+      - name: Install FFmpeg media verification tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          ffprobe -version
+
       - name: flutter pub get and gen-l10n
         id: dependencies
         run: |
