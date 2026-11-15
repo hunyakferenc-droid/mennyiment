@@ -30,6 +30,19 @@ Future<void> reach(WidgetTester t, Finder f) async {
 Future<void> tap(WidgetTester t, String key) async {
   final f = find.byKey(ValueKey(key));
   await reach(t, f);
+  final deadline = DateTime.now().add(const Duration(seconds: 20));
+  bool enabled() {
+    final w = t.widget(f);
+    if (w is ButtonStyleButton) return w.onPressed != null;
+    if (w is IconButton) return w.onPressed != null;
+    if (w is ChoiceChip) return w.onSelected != null;
+    return true;
+  }
+
+  while (!enabled() && DateTime.now().isBefore(deadline)) {
+    await t.pump(const Duration(milliseconds: 100));
+  }
+  expect(enabled(), isTrue, reason: 'Native control never became ready: $key');
   await t.tap(f);
   await t.pumpAndSettle();
 }

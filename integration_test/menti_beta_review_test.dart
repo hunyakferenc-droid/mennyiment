@@ -35,6 +35,16 @@ void main() {
         for (final reaction in ['welcome', 'wink', 'congratulation']) {
           final play = find.byKey(ValueKey('alive-play-$reaction'));
           await reach(t, play);
+          final readyBy = DateTime.now().add(const Duration(seconds: 20));
+          while (t.widget<FilledButton>(play).onPressed == null &&
+              DateTime.now().isBefore(readyBy)) {
+            await t.pump(const Duration(milliseconds: 100));
+          }
+          expect(
+            t.widget<FilledButton>(play).onPressed,
+            isNotNull,
+            reason: 'Native media did not become ready; system motion policy is not overridden',
+          );
           await t.tap(play);
           final deadline = DateTime.now().add(const Duration(seconds: 20));
           LocalMentiVideo? video;
