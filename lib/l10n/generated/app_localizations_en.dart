@@ -1644,7 +1644,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get startNameBody =>
-      'What should I call you? You can restyle your Menti in the Studio anytime.';
+      'What should we call you? You can switch your complete Menti later in the Menti collection. Earn XP for check-ins and thoughtful steps; unlocking a look does not spend XP.';
 
   @override
   String get startFinish => 'Save and let’s go';

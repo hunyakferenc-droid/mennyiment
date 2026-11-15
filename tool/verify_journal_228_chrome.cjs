@@ -31,16 +31,32 @@ async function action(page,locator) {
   await semantics(page);await reach(page,locator);
   await locator.evaluate(element=>element.click());await page.waitForTimeout(200);await semantics(page);
 }
+async function pointerFocus(page,control) {
+  const box=await control.boundingBox();assert(box && box.width>0 && box.height>0);
+  const x=box.x+box.width/2,y=box.y+box.height/2;
+  assert(x>0 && x<page.viewportSize().width && y>0 && y<page.viewportSize().height);
+  // Real pointer input reaches Flutter's canvas hit-test even when its
+  // transparent accessibility parent intercepts the mirrored DOM input.
+  await page.mouse.click(x,y);
+}
 async function input(page,label,value) {
   const control=page.getByRole('textbox',{name:label,exact:false}).first();
-  await semantics(page);await reach(page,control);await control.click({noWaitAfter:true});
+  await semantics(page);await reach(page,control);await pointerFocus(page,control);
+  // Flutter attaches/hydrates its native editing bridge on the next frame.
+  // Select-all before that can select an empty mirror and append to old text.
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  await page.waitForTimeout(100);
   await page.keyboard.press('Control+A');
   if(value)await page.keyboard.type(value);else await page.keyboard.press('Backspace');
   await page.keyboard.press('Tab');await page.waitForTimeout(160);
 }
 async function search(page,s,value) {await top(page);await input(page,s.journalSearch,value);}
+function labeledButton(page,label) {
+  const escaped=label.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return page.getByRole('button',{name:new RegExp('^'+escaped+'(?:\\s|$)')});
+}
 async function menu(page,label,choice) {
-  await top(page);await action(page,page.getByRole('button',{name:label,exact:false}));
+  await top(page);await action(page,labeledButton(page,label));
   await semantics(page);
   await page.getByRole('menuitem',{name:choice,exact:true}).evaluate(element=>element.click());
   await page.waitForTimeout(200);await semantics(page);
@@ -50,11 +66,12 @@ async function openJournal(page,s) {
   await tab.waitFor();assert(await tab.isEnabled());
   await tab.evaluate(element=>element.click());
   await page.getByRole('textbox',{name:s.journalSearch,exact:true}).waitFor();
+  await action(page,page.getByRole('button',{name:s.visualFilters,exact:false}).first());
 }
 async function back(page,locale) {
   await ready(page);const control=button(page,locale==='hu'?'Vissza':'Back');
-  await control.waitFor();await control.evaluate(element=>element.click());
-  await page.waitForTimeout(200);await semantics(page);
+  await control.waitFor();await pointerFocus(page,control);
+  await page.waitForTimeout(300);await semantics(page);
 }
 async function assertProtected(page,before) {
   const current=await snapshot(page),left={...before},right={...current};delete left[key];delete right[key];
@@ -65,11 +82,14 @@ async function filters(page,s,{searchValue='Twin',missing=true,oldest=false,mont
   const searchControl=page.getByRole('textbox',{name:s.journalSearch,exact:true});
   // Flutter synchronizes its shared DOM editing value when the field receives
   // focus; an unfocused semantics input may have an empty DOM value.
-  await searchControl.click({noWaitAfter:true});
+  await pointerFocus(page,searchControl);
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  const synchronizedBy=Date.now()+5000;
+  while(await searchControl.inputValue()!==searchValue && Date.now()<synchronizedBy) await page.waitForTimeout(50);
   assert.equal(await searchControl.inputValue(),searchValue);await page.keyboard.press('Tab');
-  const price=page.getByRole('button',{name:s.journalPriceFilter,exact:false});
+  const price=labeledButton(page,s.journalPriceFilter);
   assert((await price.ariaSnapshot()).includes(missing?s.journalMissingPrices:s.journalAllPrices));
-  if(oldest)assert((await page.getByRole('button',{name:s.journalSort,exact:false}).ariaSnapshot()).includes(s.journalOldest));
+  if(oldest)assert((await labeledButton(page,s.journalSort).ariaSnapshot()).includes(s.journalOldest));
   if(month)await page.getByRole('checkbox',{name:s.month,exact:true,checked:true}).waitFor();
 }
 async function count(page,s,n) {
@@ -97,8 +117,8 @@ async function save(page,s,filtered) {
         const {context,page}=await open(browser,width,values,page=>{active=page;});active=page;
         const s=strings[locale];process.stdout.write(`Checking ${locale} ${width}px\n`);
         const metadata=await (await page.request.get(`${url}/version.json`)).json();
-        assert.equal(metadata.version,'2.2.8');assert.equal(metadata.build_number,'32');
-        await button(page,s.chooseMenti).waitFor();const before=await snapshot(page);
+        const [version,build]=(process.env.MENTI_APP_VERSION||'2.2.8+32').split('+');assert.equal(metadata.version,version);assert.equal(metadata.build_number,build);
+        await button(page,s.collectionTitle).waitFor();const before=await snapshot(page);
         await screenshot(page,`home-loaded-${locale}-${width}`);
         await openJournal(page,s);await search(page,s,'Twin');
         if(width===390) {await top(page);await action(page,page.getByLabel(s.month,{exact:true}));}
@@ -106,7 +126,7 @@ async function save(page,s,filtered) {
         if(width===390)await menu(page,s.journalSort,s.journalOldest);
         await count(page,s,2);await screenshot(page,`missing-${locale}-${width}`);
         if(width!==390) {
-          await editor(page,s,true);await input(page,s.journalPrice,locale==='hu'?'1234,75':'1234.75');
+          await editor(page,s,true);await screenshot(page,`price-editor-empty-${locale}-${width}`);await input(page,s.journalPrice,locale==='hu'?'1234,75':'1234.75');
           await screenshot(page,`price-editor-${locale}-${width}`);await save(page,s,true);
           records[0].priceFt=1234.75;
           assert.deepEqual(await assertProtected(page,before),records);
@@ -138,8 +158,14 @@ async function save(page,s,filtered) {
           await editor(page,s);await input(page,s.journalDrinkName,'Unsaved draft');await back(page,locale);
           await button(page,s.entryKeepEditing).waitFor();await screenshot(page,`discard-confirm-${locale}`);
           await action(page,button(page,s.entryKeepEditing));
-          await page.getByRole('textbox',{name:s.journalDrinkName,exact:false}).click({noWaitAfter:true});
-          assert.equal(await page.getByRole('textbox',{name:s.journalDrinkName,exact:false}).inputValue(),'Unsaved draft');
+          // Wait for the closing modal route before another native pointer/back.
+          await page.waitForTimeout(300);
+          const retainedName=page.getByRole('textbox',{name:s.journalDrinkName,exact:false});
+          await pointerFocus(page,retainedName);
+          await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+          const retainedBy=Date.now()+5000;
+          while(await retainedName.inputValue()!=='Unsaved draft' && Date.now()<retainedBy) await page.waitForTimeout(50);
+          assert.equal(await retainedName.inputValue(),'Unsaved draft');
           await back(page,locale);await action(page,button(page,s.entryDiscard));
           assert.deepEqual(await assertProtected(page,before),records);
           checks.push(`${locale}: Back asks before discarding, keep-editing retains the draft, confirmed discard writes nothing`);
@@ -167,7 +193,7 @@ async function save(page,s,filtered) {
           checks.push(`${locale}: next statistics and finance views show the edited current-month cost and do not change journal/profile/XP`);
         }
         await ready(page);page.reloading=true;
-        await page.reload({waitUntil:'networkidle'});await semantics(page);await button(page,s.chooseMenti).waitFor();
+        await page.reload({waitUntil:'networkidle'});await semantics(page);await button(page,s.collectionTitle).waitFor();
         await ready(page);page.reloading=false;
         await openJournal(page,s);await screenshot(page,`reloaded-${locale}-${width}`);
         assert.deepEqual(await assertProtected(page,before),records);
@@ -177,7 +203,7 @@ async function save(page,s,filtered) {
       }
     }
     assert.deepEqual(errors,[]);
-    fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify({completedAt:new Date().toISOString(),browser:browser.version(),checks,runtimeErrors:errors,intentionalReloadCancellations:cancelled},null,2));
+    fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify({sourceCommit:process.env.MENTI_SOURCE_COMMIT,realWindows:process.platform==='win32',completedAt:new Date().toISOString(),browser:browser.version(),checks,runtimeErrors:errors,intentionalReloadCancellations:cancelled},null,2));
     process.stdout.write(`${checks.length} browser checks passed\n`);
   } catch(e) {
     if(active) {

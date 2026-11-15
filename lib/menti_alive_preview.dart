@@ -76,6 +76,13 @@ class _MentiAlivePreviewPageState extends State<MentiAlivePreviewPage>
       _busy = false;
   bool _scheduled = false;
   int _sequence = 0;
+  int _intent = 0;
+
+  void _stop() {
+    _intent++;
+    c.stop();
+  }
+
   MentiLifeReaction _lastReaction = MentiLifeReaction.welcome;
   @override
   void initState() {
@@ -147,6 +154,7 @@ class _MentiAlivePreviewPageState extends State<MentiAlivePreviewPage>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) _intent++;
     c.foreground(state == AppLifecycleState.resumed);
   }
 
@@ -156,6 +164,7 @@ class _MentiAlivePreviewPageState extends State<MentiAlivePreviewPage>
     bool event = false,
   }) async {
     if (_busy) return;
+    final intent = ++_intent;
     setState(() {
       _busy = true;
       _lastReaction = reaction;
@@ -171,9 +180,9 @@ class _MentiAlivePreviewPageState extends State<MentiAlivePreviewPage>
               : const Duration(milliseconds: 180),
         );
       }
-      if (!mounted) return;
+      if (!mounted || intent != _intent) return;
       await WidgetsBinding.instance.endOfFrame;
-      if (!mounted) return;
+      if (!mounted || intent != _intent) return;
       final token = 'review-${_sequence++}';
       if (event) {
         c.react(
@@ -276,7 +285,7 @@ class _MentiAlivePreviewPageState extends State<MentiAlivePreviewPage>
                   Text(_savedError ? s.aliveSavedError : s.aliveNoSaved),
                 const SizedBox(height: 12),
                 DropdownButtonFormField<String>(
-                  key: const ValueKey('alive-look'),
+                  key: ValueKey('alive-look-${_selected.id}'),
                   initialValue: _selected.id,
                   isExpanded: true,
                   decoration: InputDecoration(labelText: s.aliveSelection),
@@ -293,7 +302,7 @@ class _MentiAlivePreviewPageState extends State<MentiAlivePreviewPage>
                   ],
                   onChanged: (id) {
                     if (id == null) return;
-                    c.stop();
+                    _stop();
                     setState(() => _selected = CompleteLook.find(id)!);
                     _configure();
                   },
@@ -301,7 +310,7 @@ class _MentiAlivePreviewPageState extends State<MentiAlivePreviewPage>
                 TextButton(
                   key: const ValueKey('alive-candidates'),
                   onPressed: () {
-                    c.stop();
+                    _stop();
                     setState(
                       () => _selected = CompleteLook.find('boy-festival-v1')!,
                     );
@@ -315,6 +324,7 @@ class _MentiAlivePreviewPageState extends State<MentiAlivePreviewPage>
                   title: Text(s.aliveEnabled),
                   value: _enabled,
                   onChanged: (v) {
+                    _stop();
                     setState(() => _enabled = v);
                     _configure();
                   },
@@ -375,7 +385,7 @@ class _MentiAlivePreviewPageState extends State<MentiAlivePreviewPage>
                 Text(mentiLifeReactionLabel(s, _lastReaction)),
                 OutlinedButton.icon(
                   key: const ValueKey('alive-stop'),
-                  onPressed: c.stop,
+                  onPressed: _stop,
                   icon: const Icon(Icons.stop_circle_outlined),
                   label: Text(s.aliveStop),
                 ),

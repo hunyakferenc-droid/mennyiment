@@ -3041,7 +3041,7 @@ abstract class AppLocalizations {
   /// No description provided for @startNameBody.
   ///
   /// In hu, this message translates to:
-  /// **'Hogy szólíthatlak? A Mentidet később is átöltöztetheted a Studióban.'**
+  /// **'Hogy szólíthatlak? A teljes Mentidet később a Menti-gyűjteményben válthatod. Az XP önellenőrzésért és tudatos lépésekért jár; a feloldás nem von le XP-t.'**
   String get startNameBody;
 
   /// No description provided for @startFinish.

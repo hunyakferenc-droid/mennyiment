@@ -740,7 +740,7 @@
   "startLocalOnly": "This is a local age declaration, not identity verification. Your profile stays on this device; no account registration is required.",
   "startCharacter": "Meet your own Menti!",
   "startName": "Nickname",
-  "startNameBody": "What should I call you? You can restyle your Menti in the Studio anytime.",
+  "startNameBody": "What should we call you? You can switch your complete Menti later in the Menti collection. Earn XP for check-ins and thoughtful steps; unlocking a look does not spend XP.",
   "startFinish": "Save and let’s go",
   "startSaveError": "We couldn’t finish safely. Your data is preserved; please retry. If the profile is damaged, restore a backup.",
   "wellbeingQuestion": "How are you feeling?",
