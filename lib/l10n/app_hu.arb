@@ -740,7 +740,7 @@
   "startLocalOnly": "Ez helyi életkori nyilatkozat, nem személyazonosítás. A profil ezen az eszközön tárolódik; nincs fiókregisztráció.",
   "startCharacter": "Jöhet a saját Mentid!",
   "startName": "Becenév",
-  "startNameBody": "Hogy szólíthatlak? A Mentidet később is átöltöztetheted a Studióban.",
+  "startNameBody": "Hogy szólíthatlak? A teljes Mentidet később a Menti-gyűjteményben válthatod. Az XP önellenőrzésért és tudatos lépésekért jár; a feloldás nem von le XP-t.",
   "startFinish": "Mentés és indulás",
   "startSaveError": "Nem sikerült biztonságosan befejezni. Az adataid megmaradtak; próbáld újra. Sérült profil esetén állítsd helyre a mentést.",
   "wellbeingQuestion": "Hogy érzed magad?",

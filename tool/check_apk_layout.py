@@ -17,6 +17,7 @@ p.add_argument('--build-tools', type=Path, required=True)
 p.add_argument('--source', required=True)
 p.add_argument('--version', required=True)
 p.add_argument('--build', required=True)
+p.add_argument('--application-id', default='com.example.mennyiment')
 p.add_argument('--output', type=Path, required=True)
 a = p.parse_args()
 assert re.fullmatch(r'[0-9a-f]{40}', a.source)
@@ -34,11 +35,11 @@ badging = run('aapt', 'dump', 'badging', a.apk)
 permissions = run('aapt', 'dump', 'permissions', a.apk)
 actual_permissions = set(re.findall(r"uses-permission: name='([^']+)'", permissions))
 expected_permissions = {'android.permission.INTERNET',
-                        'com.example.mennyiment.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'}
+                        a.application_id + '.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION'}
 assert actual_permissions == expected_permissions, (
     f'Unexpected merged debug APK permissions: {sorted(actual_permissions ^ expected_permissions)}')
 run('zipalign', '-c', '-P', '16', '4', a.apk)
-assert "name='com.example.mennyiment'" in badging.splitlines()[0]
+assert f"name='{a.application_id}'" in badging.splitlines()[0]
 assert f"versionName='{a.version}'" in badging.splitlines()[0]
 assert f"versionCode='{a.build}'" in badging.splitlines()[0]
 assert "targetSdkVersion:'36'" in badging
@@ -74,7 +75,7 @@ with zipfile.ZipFile(a.apk) as archive:
 assert any('/arm64-v8a/' in r['file'] for r in rows)
 a.output.parent.mkdir(parents=True, exist_ok=True)
 a.output.write_text(json.dumps({'sourceCommit': a.source, 'apkSha256': digest,
-    'apkBytes': len(raw), 'certificateSha256': cert, 'signatureVerification': signature,
+    'applicationId': a.application_id, 'apkBytes': len(raw), 'certificateSha256': cert, 'signatureVerification': signature,
     'badging': badging.splitlines()[:6], 'permissions': permissions.splitlines(),
     'zipAlignment16Kb': True, 'nativeLibraries': rows, 'runtime16KbTested': False,
     'physicalAndroid': False, 'emulator': False, 'signedReleaseAabBuilt': False}, indent=2) + '\n', encoding='utf-8')

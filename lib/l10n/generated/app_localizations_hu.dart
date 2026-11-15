@@ -1632,7 +1632,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get startNameBody =>
-      'Hogy szólíthatlak? A Mentidet később is átöltöztetheted a Studióban.';
+      'Hogy szólíthatlak? A teljes Mentidet később a Menti-gyűjteményben válthatod. Az XP önellenőrzésért és tudatos lépésekért jár; a feloldás nem von le XP-t.';
 
   @override
   String get startFinish => 'Mentés és indulás';

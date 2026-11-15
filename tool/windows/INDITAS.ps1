@@ -56,6 +56,7 @@ public static class MennyiMentLocalWebServer {
     }
     private static string Mime(string path) {
         switch (Path.GetExtension(path).ToLowerInvariant()) {
+            case ".mp4": return "video/mp4";
             case ".html": return "text/html; charset=utf-8";
             case ".js": return "text/javascript; charset=utf-8";
             case ".json": return "application/json";

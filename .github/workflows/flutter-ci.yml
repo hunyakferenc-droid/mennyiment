@@ -2,7 +2,7 @@ name: Flutter CI
 
 on:
   pull_request:
-    branches: [main, feature/menti-life, feature/menti-collection, experiment/menti-complete-looks, fix/menti-character-quality, feature/mennyiment-2-4-visual-ux, feature/mennyiment-2-3-1-play-preparation, feature/mennyiment-2-3-adventures, feature/mennyiment-2-2-6-naturalization, feature/mennyiment-2-2-5-customization-rebuild, feature/mennyiment-2-2-4-premium-polish, feature/mennyiment-2-2-1-visual-ux, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families, feature/mennyiment-2-2-concept-redesign, feature/mennyiment-2-2-final-playable]
+    branches: [main, feature/menti-alive, feature/menti-life, feature/menti-collection, experiment/menti-complete-looks, fix/menti-character-quality, feature/mennyiment-2-4-visual-ux, feature/mennyiment-2-3-1-play-preparation, feature/mennyiment-2-3-adventures, feature/mennyiment-2-2-6-naturalization, feature/mennyiment-2-2-5-customization-rebuild, feature/mennyiment-2-2-4-premium-polish, feature/mennyiment-2-2-1-visual-ux, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families, feature/mennyiment-2-2-concept-redesign, feature/mennyiment-2-2-final-playable]
   push:
     branches: [main]
 
@@ -66,6 +66,8 @@ jobs:
           python3 tool/check_localizations.py
           python3 tool/check_menti_life_media.py
           python3 tool/check_menti_alive_media.py
+          python3 tool/test_menti_beta_android.py
+          python3 tool/test_android_update.py
           python3 tool/check_play_dossier.py
 
       - name: Whitespace check
@@ -101,7 +103,7 @@ jobs:
           target = Path('build/web')
           for name in ['INDITAS.cmd', 'INDITAS.ps1']:
               shutil.copyfile(Path('tool/windows') / name, target / name)
-          shutil.copyfile('docs/menti-alive/kiprobalas-hu.md', target / 'OLVASDEL-WINDOWS.txt')
+          shutil.copyfile('docs/menti-beta/kiprobalas-hu.md', target / 'OLVASDEL-WINDOWS.txt')
           metadata = json.loads((target / 'version.json').read_text())
           (target / 'build-info.txt').write_text(
               f"source_commit={os.environ['SOURCE_SHA']}\n"
@@ -113,7 +115,7 @@ jobs:
         if: ${{ !cancelled() && steps.web.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.8.0-web-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.9.0-web-${{ env.SOURCE_SHA }}
           path: build/web/
           if-no-files-found: error
           retention-days: 14
@@ -139,15 +141,15 @@ jobs:
             "$APK_SIGNER" verify --verbose --print-certs build/app/outputs/flutter-apk/app-debug.apk
             "$APK_AAPT" dump badging build/app/outputs/flutter-apk/app-debug.apk
           } > build/app/outputs/flutter-apk/build-info.txt
-          cp docs/menti-alive/kiprobalas-hu.md build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
+          cp docs/menti-beta/kiprobalas-hu.md build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
           cat build/app/outputs/flutter-apk/build-info.txt
-          python3 tool/check_apk_layout.py build/app/outputs/flutter-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 2.8.0 --build 40 --output build/app/outputs/flutter-apk/apk-layout.json
+          python3 tool/check_apk_layout.py build/app/outputs/flutter-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 2.9.0 --build 41 --output build/app/outputs/flutter-apk/apk-layout.json
 
       - name: Upload installable debug APK
         if: ${{ !cancelled() && steps.apk.outcome == 'success' && steps.verify_apk.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.8.0-debug-apk-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.9.0-debug-apk-${{ env.SOURCE_SHA }}
           path: |
             build/app/outputs/flutter-apk/app-debug.apk
             build/app/outputs/flutter-apk/app-debug.apk.sha256
@@ -166,7 +168,7 @@ jobs:
         if: ${{ !cancelled() && steps.release_guard.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.8.0-release-guard-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.9.0-release-guard-${{ env.SOURCE_SHA }}
           path: build/verification/release-signing.json
           if-no-files-found: error
           retention-days: 14
@@ -180,7 +182,7 @@ jobs:
         if: ${{ !cancelled() && steps.review_web.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.8.0-REVIEW-web-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.9.0-REVIEW-web-${{ env.SOURCE_SHA }}
           path: build/menti-alive-review-web/
           if-no-files-found: error
           retention-days: 14
@@ -191,13 +193,13 @@ jobs:
         run: |
           python3 tool/build_menti_alive_preview.py --platform apk --output build/menti-alive-review-apk
           APK_SIGNER="$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)"
-          python3 tool/check_apk_layout.py build/menti-alive-review-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 2.8.0 --build 40 --output build/menti-alive-review-apk/apk-layout.json
+          python3 tool/check_apk_layout.py build/menti-alive-review-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 2.9.0 --build 41 --application-id com.example.mennyiment.review --output build/menti-alive-review-apk/apk-layout.json
 
       - name: Upload developer REVIEW debug APK
         if: ${{ !cancelled() && steps.review_apk.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-2.8.0-REVIEW-debug-apk-${{ env.SOURCE_SHA }}
+          name: mennyiment-2.9.0-REVIEW-debug-apk-${{ env.SOURCE_SHA }}
           path: build/menti-alive-review-apk/
           if-no-files-found: error
           retention-days: 14
@@ -236,3 +238,108 @@ jobs:
           if [ "$JOB_STATUS" = "failure" ]; then
             echo "::error title=Flutter CI sikertelen::Egy vagy több CI-lépés hibás. A részletek a piros lépés naplójában és a futás összefoglalójában láthatók."
           fi
+
+  windows_beta:
+    name: Real Windows CMD and Chrome beta gate
+    if: github.head_ref == 'feature/menti-beta'
+    needs: flutter
+    runs-on: windows-2025
+    timeout-minutes: 30
+    env:
+      MENTI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: mennyiment-2.9.0-web-${{ env.MENTI_SOURCE_COMMIT }}
+          path: artifacts/normal
+      - uses: actions/download-artifact@v4
+        with:
+          name: mennyiment-2.9.0-REVIEW-web-${{ env.MENTI_SOURCE_COMMIT }}
+          path: artifacts/review
+      - name: Install browser automation only for this CI test
+        shell: pwsh
+        run: |
+          npm install --prefix "$env:RUNNER_TEMP/menti-playwright" playwright@1.58.2
+          if ($LASTEXITCODE -ne 0) {throw 'Playwright installation failed'}
+          "PLAYWRIGHT_MODULE_PATH=$env:RUNNER_TEMP/menti-playwright/node_modules/playwright" >> $env:GITHUB_ENV
+      - name: Extract ZIP, launch CMD, real Windows Chrome HU/EN and persisted data
+        shell: powershell
+        run: ./tool/test_menti_beta_windows.ps1 -Normal artifacts/normal -Review artifacts/review -Evidence build/windows-beta
+      - name: Upload actual Windows evidence including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.9.0-Windows-evidence-${{ env.MENTI_SOURCE_COMMIT }}
+          path: |
+            build/windows-beta/*.log
+            build/windows-beta/*.json
+            build/windows-beta/normal/*.json
+            build/windows-beta/normal/*.png
+            build/windows-beta/normal/*.txt
+            build/windows-beta/review/*.json
+            build/windows-beta/review/*.png
+          if-no-files-found: warn
+          retention-days: 14
+
+  android_beta:
+    name: Android emulator beta gate
+    if: github.head_ref == 'feature/menti-beta'
+    needs: flutter
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      MENTI_SOURCE_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+      FLUTTER_SUPPRESS_ANALYTICS: 'true'
+      DART_SUPPRESS_ANALYTICS: 'true'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: mennyiment-2.9.0-debug-apk-${{ env.MENTI_SOURCE_COMMIT }}
+          path: artifacts/normal
+      - uses: actions/download-artifact@v4
+        with:
+          name: mennyiment-2.9.0-REVIEW-debug-apk-${{ env.MENTI_SOURCE_COMMIT }}
+          path: artifacts/review
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        with:
+          channel: stable
+          flutter-version: '3.47.7'
+          cache: true
+          pub-cache: true
+      - name: Prepare real KVM emulator and dependencies
+        run: |
+          mkdir -p build/android-beta
+          test -e /dev/kvm || { echo 'Android emulator blocked: /dev/kvm is absent'; exit 1; }
+          sudo chmod 666 /dev/kvm
+          df -h
+          flutter pub get
+      - name: Real Android API 35 x86_64 device flows
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          disable-animations: true
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none -no-snapshot
+          script: bash tool/test_menti_beta_android.sh
+      - name: Upload actual Android evidence including failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-2.9.0-Android-evidence-${{ env.MENTI_SOURCE_COMMIT }}
+          path: build/android-beta/
+          if-no-files-found: warn
+          retention-days: 14

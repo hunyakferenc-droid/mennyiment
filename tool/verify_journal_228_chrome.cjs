@@ -97,7 +97,7 @@ async function save(page,s,filtered) {
         const {context,page}=await open(browser,width,values,page=>{active=page;});active=page;
         const s=strings[locale];process.stdout.write(`Checking ${locale} ${width}px\n`);
         const metadata=await (await page.request.get(`${url}/version.json`)).json();
-        assert.equal(metadata.version,'2.2.8');assert.equal(metadata.build_number,'32');
+        const [version,build]=(process.env.MENTI_APP_VERSION||'2.2.8+32').split('+');assert.equal(metadata.version,version);assert.equal(metadata.build_number,build);
         await button(page,s.chooseMenti).waitFor();const before=await snapshot(page);
         await screenshot(page,`home-loaded-${locale}-${width}`);
         await openJournal(page,s);await search(page,s,'Twin');
@@ -177,7 +177,7 @@ async function save(page,s,filtered) {
       }
     }
     assert.deepEqual(errors,[]);
-    fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify({completedAt:new Date().toISOString(),browser:browser.version(),checks,runtimeErrors:errors,intentionalReloadCancellations:cancelled},null,2));
+    fs.writeFileSync(path.join(out,'verification.json'),JSON.stringify({sourceCommit:process.env.MENTI_SOURCE_COMMIT,realWindows:process.platform==='win32',completedAt:new Date().toISOString(),browser:browser.version(),checks,runtimeErrors:errors,intentionalReloadCancellations:cancelled},null,2));
     process.stdout.write(`${checks.length} browser checks passed\n`);
   } catch(e) {
     if(active) {
