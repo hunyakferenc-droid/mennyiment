@@ -78,6 +78,37 @@ void main() {
           expect(c.handle, isNull);
         }
       }
+      await t.pumpWidget(const SizedBox.shrink());
+      await t.pumpAndSettle();
+      await t.pumpWidget(
+        const MentiAliveReviewApp(reviewEnabled: true, studioMode: true),
+      );
+      await t.pumpAndSettle();
+      expect(find.byKey(const ValueKey('studio-family-girl')), findsOneWidget);
+      for (final family in ['girl', 'neutral']) {
+        final chip = find.byKey(ValueKey('studio-family-$family'));
+        await reach(t, chip);
+        await t.tap(chip);
+        await t.pumpAndSettle();
+        for (final reaction in MentiLifeReaction.values) {
+          expect(
+            find.byKey(ValueKey('studio-slot-${reaction.name}')),
+            findsOneWidget,
+          );
+          expect(
+            t
+                .widget<FilledButton>(
+                  find.byKey(ValueKey('alive-play-${reaction.name}')),
+                )
+                .onPressed,
+            isNull,
+          );
+        }
+      }
+      // ignore: avoid_print
+      print(
+        'MENTI_STUDIO_NATIVE: girl/neutral inventory and 14 missing slots remain PNG-only',
+      );
       final dynamic state = t.state(find.byType(MentiAlivePreviewPage));
       final MentiAnimationController c = state.c;
       c.configure(

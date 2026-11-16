@@ -3454,4 +3454,70 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get alivePlaying => 'Néma videó lejátszása';
+
+  @override
+  String get studioTitle => 'Menti Animation Studio';
+
+  @override
+  String get studioInventory => 'Animációs leltár · 18 Menti × 14 reakció';
+
+  @override
+  String get studioMissing => 'Hiányzik · eredeti PNG';
+
+  @override
+  String get studioReview => 'Elkészült · jóváhagyásra vár';
+
+  @override
+  String get studioApproved => 'Jóváhagyott média';
+
+  @override
+  String get studioFamily => 'Karaktercsalád';
+
+  @override
+  String get studioEvents => 'Események kipróbálása';
+
+  @override
+  String get studioEventHint =>
+      'Szimuláció: nem rögzít naplót, XP-t vagy feloldást. A hiányzó reakció saját PNG-t mutat.';
+
+  @override
+  String get studioJournal => 'Bejegyzés sikeresen mentve';
+
+  @override
+  String get studioXp => 'XP megszerezve';
+
+  @override
+  String get studioLevel => 'Szintlépés';
+
+  @override
+  String get studioLook => 'Karakter feloldva';
+
+  @override
+  String get studioAccessory => 'Kiegészítő feloldva';
+
+  @override
+  String get studioChallenge => 'Kihívás teljesítve';
+
+  @override
+  String get studioEncourage => 'Bátorítás';
+
+  @override
+  String get studioPerformance => 'Helyi lejátszási mérések';
+
+  @override
+  String get studioNoMeasurement =>
+      'Még nincs lejátszási mérés. Ezek nem teljes készülék-RAM vagy sebességmérések.';
+
+  @override
+  String get studioPosterHint =>
+      'Gyengébb készüléken kapcsold ki a videóelőnézetet: az eredeti PNG marad, videódekóder nem indul.';
+
+  @override
+  String get studioReadyCount => 'Jóváhagyott';
+
+  @override
+  String get studioReviewCount => 'Jóváhagyásra vár';
+
+  @override
+  String get studioMissingCount => 'Hiányzik';
 }

@@ -12,6 +12,9 @@ enum MentiLifeEvent {
   difficultDay,
   eveningSaved,
   taskCompleted,
+  xpEarned,
+  accessoryUnlocked,
+  encouragementRequested,
 }
 
 class MentiLifeSignal {

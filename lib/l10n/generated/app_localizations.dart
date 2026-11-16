@@ -6163,6 +6163,132 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'Néma videó lejátszása'**
   String get alivePlaying;
+
+  /// No description provided for @studioTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti Animation Studio'**
+  String get studioTitle;
+
+  /// No description provided for @studioInventory.
+  ///
+  /// In hu, this message translates to:
+  /// **'Animációs leltár · 18 Menti × 14 reakció'**
+  String get studioInventory;
+
+  /// No description provided for @studioMissing.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hiányzik · eredeti PNG'**
+  String get studioMissing;
+
+  /// No description provided for @studioReview.
+  ///
+  /// In hu, this message translates to:
+  /// **'Elkészült · jóváhagyásra vár'**
+  String get studioReview;
+
+  /// No description provided for @studioApproved.
+  ///
+  /// In hu, this message translates to:
+  /// **'Jóváhagyott média'**
+  String get studioApproved;
+
+  /// No description provided for @studioFamily.
+  ///
+  /// In hu, this message translates to:
+  /// **'Karaktercsalád'**
+  String get studioFamily;
+
+  /// No description provided for @studioEvents.
+  ///
+  /// In hu, this message translates to:
+  /// **'Események kipróbálása'**
+  String get studioEvents;
+
+  /// No description provided for @studioEventHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Szimuláció: nem rögzít naplót, XP-t vagy feloldást. A hiányzó reakció saját PNG-t mutat.'**
+  String get studioEventHint;
+
+  /// No description provided for @studioJournal.
+  ///
+  /// In hu, this message translates to:
+  /// **'Bejegyzés sikeresen mentve'**
+  String get studioJournal;
+
+  /// No description provided for @studioXp.
+  ///
+  /// In hu, this message translates to:
+  /// **'XP megszerezve'**
+  String get studioXp;
+
+  /// No description provided for @studioLevel.
+  ///
+  /// In hu, this message translates to:
+  /// **'Szintlépés'**
+  String get studioLevel;
+
+  /// No description provided for @studioLook.
+  ///
+  /// In hu, this message translates to:
+  /// **'Karakter feloldva'**
+  String get studioLook;
+
+  /// No description provided for @studioAccessory.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kiegészítő feloldva'**
+  String get studioAccessory;
+
+  /// No description provided for @studioChallenge.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kihívás teljesítve'**
+  String get studioChallenge;
+
+  /// No description provided for @studioEncourage.
+  ///
+  /// In hu, this message translates to:
+  /// **'Bátorítás'**
+  String get studioEncourage;
+
+  /// No description provided for @studioPerformance.
+  ///
+  /// In hu, this message translates to:
+  /// **'Helyi lejátszási mérések'**
+  String get studioPerformance;
+
+  /// No description provided for @studioNoMeasurement.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még nincs lejátszási mérés. Ezek nem teljes készülék-RAM vagy sebességmérések.'**
+  String get studioNoMeasurement;
+
+  /// No description provided for @studioPosterHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Gyengébb készüléken kapcsold ki a videóelőnézetet: az eredeti PNG marad, videódekóder nem indul.'**
+  String get studioPosterHint;
+
+  /// No description provided for @studioReadyCount.
+  ///
+  /// In hu, this message translates to:
+  /// **'Jóváhagyott'**
+  String get studioReadyCount;
+
+  /// No description provided for @studioReviewCount.
+  ///
+  /// In hu, this message translates to:
+  /// **'Jóváhagyásra vár'**
+  String get studioReviewCount;
+
+  /// No description provided for @studioMissingCount.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hiányzik'**
+  String get studioMissingCount;
 }
 
 class _AppLocalizationsDelegate

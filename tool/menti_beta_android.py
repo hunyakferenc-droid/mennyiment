@@ -7,7 +7,7 @@ def ensure_committed_source(root):
 
 REVIEW_APPLICATION_ID = 'com.example.mennyiment.review'
 
-def prepare_review_android(work):
+def prepare_review_android(work, studio=False):
  gradle=work/'android/app/build.gradle.kts'
  text=gradle.read_text(encoding='utf-8')
  old='applicationId = "com.example.mennyiment"'
@@ -17,7 +17,7 @@ def prepare_review_android(work):
  text=text.replace(old, 'applicationId = "'+REVIEW_APPLICATION_ID+'"').replace(old_namespace, 'namespace = "'+REVIEW_APPLICATION_ID+'"')
  gradle.write_text(text,encoding='utf-8')
  manifest=work/'android/app/src/main/AndroidManifest.xml'
- text=manifest.read_text(encoding='utf-8').replace('android:label="MennyiMent?"','android:label="Menti Beta REVIEW"').replace('android:name=".MainActivity"','android:name="com.example.mennyiment.MainActivity"').replace('@drawable/menti_launcher','@drawable/menti_review_launcher')
+ text=manifest.read_text(encoding='utf-8').replace('android:label="MennyiMent?"','android:label="'+('Menti Studio REVIEW' if studio else 'Menti Beta REVIEW')+'"').replace('android:name=".MainActivity"','android:name="com.example.mennyiment.MainActivity"').replace('@drawable/menti_launcher','@drawable/menti_review_launcher')
  manifest.write_text(text,encoding='utf-8')
  # Existing Menti artwork, with a persistent purple/gold R badge. No character edit.
  icon=work/'android/app/src/main/res/drawable/menti_review_launcher.xml'
