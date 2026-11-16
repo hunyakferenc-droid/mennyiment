@@ -197,6 +197,10 @@ async function save(page,s,filtered) {
           checks.push(`${locale}: another tab's real storage event marks the open journal stale; explicit reload retains filters and preserves the external data`);
           await back(page,locale);await top(page);await action(page,button(page,s.homeMore));
           await action(page,text(page,s.statisticsNav));await reach(page,text(page,s.knownSpending));
+          // Statistics defaults to the current week, but the fixture's edited
+          // November 10 entry belongs to the current month, not this week.
+          // Select the month explicitly rather than weakening the amount check.
+          await action(page,button(page,s.month));
           await assertKnownSpending(page);
           await screenshot(page,`statistics-refreshed-${locale}`);await back(page,locale);await top(page);
           await action(page,button(page,s.financeCenter));
