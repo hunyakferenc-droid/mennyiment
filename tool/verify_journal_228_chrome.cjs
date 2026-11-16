@@ -21,7 +21,7 @@ async function assertKnownSpending(page) {
   const deadline=Date.now()+10000;
   do {
     await semantics(page);
-    observed=(await page.locator('body').ariaSnapshot()).replace(/[\\s,]/g,'');
+    observed=(await page.locator('body').ariaSnapshot()).replace(/[\s,]/g,'');
     if(observed.includes('1235')) return;
     await page.waitForTimeout(150);
   } while(Date.now()<deadline);
