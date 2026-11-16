@@ -27,7 +27,17 @@ CHECK_UIDS
 # Both apps are installed simultaneously. Integration tests use native plugins.
 # DDS is not needed by headless integration tests and can fail to bind on CI
 # emulators even after both APKs install correctly.
-flutter test integration_test/menti_beta_device_test.dart -d emulator-5554 --no-pub --no-uninstall --no-dds
+# Retry with DDS only for the Flutter VM-service stream incompatibility seen on
+# hosted API 35 emulators. Keep the same full integration suite as a hard gate.
+if ! flutter test integration_test/menti_beta_device_test.dart -d emulator-5554 --no-pub --no-uninstall --no-dds 2>&1 | tee "$OUT/flutter-integration-first.log"; then
+  if grep -Eq "VmServiceProxyGoldenFileComparator|invalid 'streamId' parameter" "$OUT/flutter-integration-first.log"; then
+    echo "VM-service stream incompatibility with --no-dds; retrying full suite with DDS."
+    flutter test integration_test/menti_beta_device_test.dart -d emulator-5554 --no-pub --no-uninstall 2>&1 | tee "$OUT/flutter-integration-dds.log"
+  else
+    echo "Integration failure is not the known VM-service transport issue."
+    exit 1
+  fi
+fi
 # Sample actual process memory while the native review test runs.
 (while true; do date -u +%FT%TZ; adb shell dumpsys meminfo com.example.mennyiment.review; sleep 4; done) > "$OUT/review-memory-samples.txt" 2>&1 &
 SAMPLER=$!
