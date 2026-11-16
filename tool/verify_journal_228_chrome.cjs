@@ -14,6 +14,19 @@ function fixture() {
     {name:'Zero',ml:500,percent:0,priceFt:0,time:'2026-11-11T10:00:00.000'},
     {name:'Earlier',ml:100,percent:0,priceFt:12.5,time:'2026-10-31T10:00:00.000'}];
 }
+async function assertKnownSpending(page) {
+  // Navigation can finish before Flutter has rebuilt the statistics semantics.
+  // Keep the same exact expected amount; only wait for the observable update.
+  let observed='';
+  const deadline=Date.now()+10000;
+  do {
+    await semantics(page);
+    observed=(await page.locator('body').ariaSnapshot()).replace(/[\\s,]/g,'');
+    if(observed.includes('1235')) return;
+    await page.waitForTimeout(150);
+  } while(Date.now()<deadline);
+  assert.fail('Expected known spending 1235 after refresh; actual semantics: '+observed.slice(0,2000));
+}
 async function top(page) {
   await page.mouse.move(page.viewportSize().width*.8,300);
   await page.mouse.wheel(0,-20000);await page.waitForTimeout(180);await semantics(page);
@@ -184,10 +197,10 @@ async function save(page,s,filtered) {
           checks.push(`${locale}: another tab's real storage event marks the open journal stale; explicit reload retains filters and preserves the external data`);
           await back(page,locale);await top(page);await action(page,button(page,s.homeMore));
           await action(page,text(page,s.statisticsNav));await reach(page,text(page,s.knownSpending));
-          assert((await page.locator('body').ariaSnapshot()).replace(/[\s,]/g,'').includes('1235'));
+          await assertKnownSpending(page);
           await screenshot(page,`statistics-refreshed-${locale}`);await back(page,locale);await top(page);
           await action(page,button(page,s.financeCenter));
-          assert((await page.locator('body').ariaSnapshot()).replace(/[\s,]/g,'').includes('1235'));
+          await assertKnownSpending(page);
           await screenshot(page,`finance-refreshed-${locale}`);await back(page,locale);
           assert.deepEqual(await assertProtected(page,before),records);
           checks.push(`${locale}: next statistics and finance views show the edited current-month cost and do not change journal/profile/XP`);
