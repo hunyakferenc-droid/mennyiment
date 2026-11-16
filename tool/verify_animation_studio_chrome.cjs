@@ -19,8 +19,8 @@ try{for(const lang of ['hu','en']){
  assert((await(await p.request.get('http://127.0.0.1:7357/build-info.txt')).text()).includes(source));
  const before=await snapshot(p);const s=strings[lang];await p.getByText(s.studioInventory,{exact:true}).waitFor();
  for(const [family,label] of [['girl',s.collectionGirl],['neutral',s.collectionNeutral],['boy',s.collectionBoy]]){
-  const chip=p.getByRole('button',{name:label,exact:true});await studioReach(p,chip,`${lang}/${family} family chip`);await chip.evaluate(e=>e.click());await p.waitForTimeout(150);await semantics(p);
-  const selector=p.getByRole('combobox');await studioReach(p,selector,`${lang}/${family} selector`);await selector.evaluate(e=>e.click());await p.waitForTimeout(150);await semantics(p);
+  const chip=p.getByRole('checkbox',{name:label,exact:true});await studioReach(p,chip,`${lang}/${family} family chip`);await chip.evaluate(e=>e.click());await p.waitForTimeout(150);await semantics(p);
+  const selector=p.getByRole('button',{name:new RegExp('^'+s.aliveSelection)});await studioReach(p,selector,`${lang}/${family} selector`);await selector.evaluate(e=>e.click());await p.waitForTimeout(150);await semantics(p);
   // All six choices are present in the Flutter dropdown, independent of XP.
   const body=await p.locator('body').ariaSnapshot();assert(body.includes(s.collectionLegendary));
   await p.keyboard.press('Escape');await p.waitForTimeout(150);await semantics(p);
@@ -28,7 +28,7 @@ try{for(const lang of ['hu','en']){
   await p.screenshot({path:path.join(out,`studio-${family}-${lang}-390.png`)});
   assert.deepEqual(await snapshot(p),before);checks.push(`${lang}/${family}: all six choices, inventory and unchanged saved data`);
  }
- const events=p.getByText(s.studioEvents,{exact:true});await studioReach(p,events,`${lang} events`);await events.evaluate(e=>e.click());await p.waitForTimeout(150);await semantics(p);
+ const events=p.getByRole('button',{name:s.studioEvents,exact:true});await studioReach(p,events,`${lang} events`);await events.evaluate(e=>e.click());await p.waitForTimeout(150);await semantics(p);
  await p.getByText(s.studioEventHint,{exact:true}).waitFor();assert.deepEqual(await snapshot(p),before);
  checks.push(`${lang}: event simulation is clearly marked and read-only`);
  assert.deepEqual(errors,[]);p.closing=true;await context.close();active=null;
