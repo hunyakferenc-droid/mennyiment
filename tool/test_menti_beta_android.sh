@@ -25,7 +25,9 @@ assert len(set(uids))==2, 'Normal and REVIEW must have distinct Android UIDs'
 print('Separate Android sandbox UIDs verified:', uids)
 CHECK_UIDS
 # Both apps are installed simultaneously. Integration tests use native plugins.
-flutter test integration_test/menti_beta_device_test.dart -d emulator-5554 --no-pub --no-uninstall
+# DDS is not needed by headless integration tests and can fail to bind on CI
+# emulators even after both APKs install correctly.
+flutter test integration_test/menti_beta_device_test.dart -d emulator-5554 --no-pub --no-uninstall --no-dds
 # Sample actual process memory while the native review test runs.
 (while true; do date -u +%FT%TZ; adb shell dumpsys meminfo com.example.mennyiment.review; sleep 4; done) > "$OUT/review-memory-samples.txt" 2>&1 &
 SAMPLER=$!
