@@ -10,7 +10,7 @@ Read-only Higgsfield history snapshot. Source media IDs group candidates, but **
 | girl-base | applause | `6bffec42-14ed-4751-8c57-9f05e2cff2d5` | completed | `4a40d43f-664c-4cfc-92e8-7eebd8d1f9ad` | Candidate only |
 | neutral-base | breathing | `6d4ce078-4f57-4f79-8a05-5e6926cdde5f` | completed | `4843d295-6c2b-42dc-877b-3f9e7eb71cdb` | Candidate only |
 | girl-base | breathing | `cb62d02d-6142-464b-beca-9c938e2634d1` | completed | `4a40d43f-664c-4cfc-92e8-7eebd8d1f9ad` | Candidate only |
-| neutral-base | manual classification needed | `1846e7eb-74a7-4cd0-a0fd-5eb0bbe57c3e` | completed | `4843d295-6c2b-42dc-877b-3f9e7eb71cdb` | Candidate only |
+| neutral-base | thinking (prompt-confirmed) | `1846e7eb-74a7-4cd0-a0fd-5eb0bbe57c3e` | completed | `4843d295-6c2b-42dc-877b-3f9e7eb71cdb` | Candidate only |
 | girl-base | thinking | `2ce3052d-63b1-411d-bf31-b5ec7d87218f` | completed | `4a40d43f-664c-4cfc-92e8-7eebd8d1f9ad` | Candidate only |
 | neutral-base | surprise | `5ab6fd6d-69ba-4175-ba7c-409a99a08584` | completed | `4843d295-6c2b-42dc-877b-3f9e7eb71cdb` | Candidate only |
 | girl-base | surprise | `cf12b79e-5df8-46de-83e2-1dda07d0c251` | completed | `4a40d43f-664c-4cfc-92e8-7eebd8d1f9ad` | Candidate only |
@@ -35,3 +35,7 @@ Totals: 18 completed candidates; 2 rejected/blocked; 10 girl attempts; 10 neutra
 4. Run full CI (Flutter regressions, Chrome/Windows, Android builds and emulator) after any code changes. Physical-device codec/RAM/upgrade checks remain pending.
 
 No generation or credit spend performed in this inventory pass. Normal app: 0 approved videos.
+
+## Direct prompt verification — 2026-11-17
+
+Higgsfield `show_generation_by_ids` returned both original jobs as `completed`. The neutral job `1846e7eb-74a7-4cd0-a0fd-5eb0bbe57c3e` explicitly requests a thoughtful head tilt, upward glance and hand-to-chin movement; the girl job `2ce3052d-63b1-411d-bf31-b5ec7d87218f` explicitly requests `THINKING`, a slight upward look, head tilt and blink. Thus both can be **classified as thinking by prompt**, but neither has passed video-frame inspection, source-PNG identity validation, or media integration. No approval flag changes; no generation or credit spending.
