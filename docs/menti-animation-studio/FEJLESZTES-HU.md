@@ -19,7 +19,7 @@ Alap: #45 draft PR, `171adf46c124bc3a48da150ae1fccd075399209f`, 2.9.0+41. #44: `
 
 ## Médiakorlát
 
-Jelenleg **0 jóváhagyott**, **3 fiú-fesztivál REVIEW-jelölt**, **249 hiányzó hozzárendelés**. Lány/semleges kész videó nincs. A 18 kinézet támogatása nem 18 elkészült animáció állítása. A hiányokat saját PNG kezeli; másik karakter klipjét nem helyettesítjük be. Új generálás, karakter-újrarajzolás vagy Higgsfield-kreditköltés nem történt.
+A kódba jelenleg **0 jóváhagyott** és **3 fiú-fesztivál REVIEW-jelölt** van bekötve, tehát **249 hozzárendelés nincs bekötve**. Ez nem a Higgsfield-fiók teljes médiakészletének leltára. Korábbi ellenőrzésben 15 elkészült lány/semleges alapkarakteres generálást jelentettek (7 lány, 8 semleges); ezeket **nem tekintjük minőségileg vagy karakterazonosság szerint jóváhagyottnak**, és nem állítjuk, hogy az alkalmazásba integrálva lennének. A semleges örömreakció egyik próbálkozása elutasított volt. A végleges reakciónkénti leltárhoz minden job azonosítója, forrás-PNG-je, eredményvideója, ellenőrzött karakterazonossága, képkockaminősége és licenc-/háttérjóváhagyása szükséges. A 18 kinézet támogatása nem 18 elkészült animáció állítása. A hiányokat saját PNG kezeli; másik karakter klipjét nem helyettesítjük be. Új generálás, karakter-újrarajzolás vagy Higgsfield-kreditköltés nem történt.
 
 ## Tesztelési kapu
 
@@ -28,3 +28,11 @@ Jelenleg **0 jóváhagyott**, **3 fiú-fesztivál REVIEW-jelölt**, **249 hiány
 A CI teljes analyzert/regressziót/gen-l10n-egyezést, normál és Studio web/APK-t, API 35 x86_64 natív és valódi Windows Chrome-kaput futtat. A korábbi 52 böngészős állítás megmarad; az eredeti háromvideós teszt a régi előnézeti nézetet külön URL-paraméterrel éri el, és új Studio UI-kapu is fut. Natív oldalon a három valódi dekódolás HU/EN mellett lány/semleges Studio-állapotpróba is van. Végső darabszámok/commitok/csomagok kizárólag a tényleges friss futás alapján kerülnek a végső átadási jelentésbe.
 
 Fizikai telefon, OEM-billentyűzet/fájlválasztó, gyenge telefon RAM/codec és tényleges régi verziófrissítés külön kézi ellenőrzés. Nem futott ellenőrzést nem nevezünk sikeresnek. Nincs schema/migráció, appadattörlés, új engedély, analitika, main merge, Play-feltöltés, publikálás vagy új release-kulcs. Médiaaktiváláshoz továbbra is tulajdonosi/azonossági/háttér/jogi jóváhagyás szükséges.
+
+## 2026-11-17: biztonságos média-átadási kapu
+
+- Higgsfield balance ellenőrizve: 10 normál kredit, Ultra `free_trial.unlim_available=true`, lejárat 2026-11-17 08:37:29 UTC. A jogosultság önmagában **nem** engedély a normál kreditek használatára; generálás csak lejárat előtt, `use_unlim:true` paraméterrel, egyszerre egy jobbal, előző függő job lekérdezése után.
+- A `neutral-base/thinking` korábban függő `1846e7eb-74a7-4cd0-a0fd-5eb0bbe57c3e` jobot a korábbi futások elkészültként jelentették; eredményét és vizuális azonosságát az aktiválás előtt ismét ellenőrizni kell.
+- A 15 korábban jelzett lány/semleges generálás **Higgsfield-előzmény**, nem 15 alkalmazásbeli klip, és nem 15 jóváhagyott videó. Külön ellenőrzés nélkül semmilyen idegen kinézethez nem rendelhető.
+- REVIEW-be csak az eredeti, pontosan egyező karakter-PNG-hez visszaellenőrzött, letöltött és ellenőrzött videó kerülhet; HU/EN és a saját PNG fallback kötelező. Normál app: 0 jóváhagyott videó.
+- Fizikai Android-készülék, gyenge telefonon RAM/codec és valódi frissítési próba: **függő**, CI-emulátor nem helyettesíti.
