@@ -40,3 +40,10 @@ Fizikai telefon, OEM-billentyűzet/fájlválasztó, gyenge telefon RAM/codec és
 ## 2026-11-17: friss CI visszaellenőrzés
 
 A `83197480b36820577a8f803cbd331fab5e8e7091` commit GitHub Actions `Flutter CI` futása (`44006778330`, #187) **completed/success**: https://github.com/hunyakferenc-droid/mennyiment/actions/runs/44006778330 . Ez a commit szintű CI-státusz; nem jelent fizikai telefonon végzett ellenőrzést, és nem igazolja a Higgsfield-videók vizuális minőségét vagy a lány/semleges klipek integrációját. A #44, #45 és #46 PR ellenőrzéskor nyitott draft volt. A 15 előzménybeli videó továbbra sem jóváhagyott vagy beépített médiakészlet.
+
+## 2026-11-17: ismételt job- és HEAD-CI ellenőrzés
+
+- Higgsfield balance: 10 normál kredit, `mcp_ultra_unlim` aktív, `unlim_available=true`, lejárat `2026-11-17T08:37:29Z`. Nem történt új generálás vagy normálkredit-felhasználás.
+- `neutral-base/thinking` job `1846e7eb-74a7-4cd0-a0fd-5eb0bbe57c3e`: `jobs_wait` közvetlen lekérdezés szerint **completed**, Seedance 2.5, MP4-eredmény rendelkezésre áll. Ez kizárólag technikai elkészültség: forrás-PNG-azonosság, teljes képkockasor, háttér, jog és tulajdonosi jóváhagyás továbbra is **nem igazolt**. Nem került REVIEW-katalógusba.
+- A #46 ág előző HEAD commitja `46235d5442e76f9689ea80d22e97b9c7f29cf0e9`: GitHub Actions `44014278720` **completed/success**. Ez az előző commit ellenőrzése, nem a jelen dokumentációfrissítés utáni új CI eredménye.
+- A #44, #45 és #46 nyitott draft. Normál app: 0 jóváhagyott klip. Fizikai Android/codec/RAM/valódi frissítés továbbra is függő.
