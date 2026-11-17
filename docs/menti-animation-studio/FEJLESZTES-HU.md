@@ -36,3 +36,7 @@ Fizikai telefon, OEM-billentyűzet/fájlválasztó, gyenge telefon RAM/codec és
 - A 15 korábban jelzett lány/semleges generálás **Higgsfield-előzmény**, nem 15 alkalmazásbeli klip, és nem 15 jóváhagyott videó. Külön ellenőrzés nélkül semmilyen idegen kinézethez nem rendelhető.
 - REVIEW-be csak az eredeti, pontosan egyező karakter-PNG-hez visszaellenőrzött, letöltött és ellenőrzött videó kerülhet; HU/EN és a saját PNG fallback kötelező. Normál app: 0 jóváhagyott videó.
 - Fizikai Android-készülék, gyenge telefonon RAM/codec és valódi frissítési próba: **függő**, CI-emulátor nem helyettesíti.
+
+## 2026-11-17: friss CI visszaellenőrzés
+
+A `83197480b36820577a8f803cbd331fab5e8e7091` commit GitHub Actions `Flutter CI` futása (`44006778330`, #187) **completed/success**: https://github.com/hunyakferenc-droid/mennyiment/actions/runs/44006778330 . Ez a commit szintű CI-státusz; nem jelent fizikai telefonon végzett ellenőrzést, és nem igazolja a Higgsfield-videók vizuális minőségét vagy a lány/semleges klipek integrációját. A #44, #45 és #46 PR ellenőrzéskor nyitott draft volt. A 15 előzménybeli videó továbbra sem jóváhagyott vagy beépített médiakészlet.
