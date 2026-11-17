@@ -138,6 +138,25 @@ void main() {
       0,
     );
   });
+  test('A source Higgsfield job cannot be reused for another Menti look', () {
+    final data = jsonDecode(
+      File('tool/menti_alive/review_assets/catalog.json').readAsStringSync(),
+    ) as Map<String, dynamic>;
+    final original = Map<String, dynamic>.from(data['clips'][0] as Map);
+    final other = Map<String, dynamic>.from(original)
+      ..['id'] = 'cross-look-job-reuse'
+      ..['lookId'] = 'girl-base-v1'
+      ..['asset'] = 'assets/menti_life/clips/alive-review-other-v1.mp4'
+      ..['sha256'] = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
+    (data['clips'] as List).add(other);
+    expect(
+      () => MentiAliveReviewCatalog.decode(
+        jsonEncode(data),
+        developerPreview: true,
+      ),
+      throwsFormatException,
+    );
+  });
   for (final lang in ['hu', 'en']) {
     for (final width in [320.0, 360.0, 390.0, 430.0]) {
       testWidgets(
