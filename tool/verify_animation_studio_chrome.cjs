@@ -22,8 +22,8 @@ try{for(const lang of ['hu','en']){
  assert.equal(bundled.clips.length,5);
  assert(bundled.clips.some(c=>c.lookId==='girl-base-v1'&&c.reaction==='thinking'));
  assert(bundled.clips.some(c=>c.lookId==='neutral-base-v1'&&c.reaction==='welcome'));
- await p.getByText(lang==='hu'?'Jóváhagyásra vár: 5':'Awaiting approval: 5',{exact:true}).waitFor();
- await p.getByText(lang==='hu'?'Hiányzik: 247':'Missing: 247',{exact:true}).waitFor();
+ await p.getByRole('checkbox',{name:lang==='hu'?'Jóváhagyásra vár: 5':'Awaiting approval: 5',exact:true}).waitFor();
+ await p.getByRole('checkbox',{name:lang==='hu'?'Hiányzik: 247':'Missing: 247',exact:true}).waitFor();
  for(const [family,label] of [['girl',s.collectionGirl],['neutral',s.collectionNeutral],['boy',s.collectionBoy]]){
   const chip=p.getByRole('checkbox',{name:label,exact:true});await studioReach(p,chip,`${lang}/${family} family chip`);await chip.evaluate(e=>e.click());await p.waitForTimeout(150);await semantics(p);
   const selector=p.getByRole('button',{name:new RegExp('^'+s.aliveSelection)});await studioReach(p,selector,`${lang}/${family} selector`);await selector.evaluate(e=>e.click());await p.waitForTimeout(150);await semantics(p);
