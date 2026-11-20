@@ -6,7 +6,7 @@ $Evidence=[IO.Path]::GetFullPath($Evidence)
 $chrome=Join-Path $env:ProgramFiles 'Google/Chrome/Application/chrome.exe'
 if (-not (Test-Path $chrome)) { throw 'Real Google Chrome was not found.' }
 $env:CHROME_BIN=$chrome
-$env:MENTI_APP_VERSION='2.9.0+41'
+$env:MENTI_APP_VERSION='3.0.0+42'
 $results=@()
 foreach ($variant in @('normal','review')) {
     $download=if ($variant -eq 'normal') {$Normal} else {$Review}
@@ -36,6 +36,8 @@ foreach ($variant in @('normal','review')) {
         } else {
             node tool/verify_menti_alive_chrome.cjs
             if ($LASTEXITCODE -ne 0) {throw 'Windows native video regression failed.'}
+            node tool/verify_animation_studio_chrome.cjs
+            if ($LASTEXITCODE -ne 0) {throw 'Windows Animation Studio regression failed.'}
             $clip=Get-ChildItem (Join-Path $web 'assets/assets/menti_life/clips/*.mp4') | Select-Object -First 1
             $media=Invoke-WebRequest -Method Head -UseBasicParsing ("http://127.0.0.1:7357/assets/assets/menti_life/clips/"+$clip.Name)
             if ($media.Headers['Content-Type'] -ne 'video/mp4') {throw 'Wrong MP4 MIME type.'}

@@ -30,6 +30,9 @@ class MentiAliveReviewCatalog extends MentiAnimationCatalog {
     );
     final clips = <MentiAnimationClip>[];
     final ids = <String>{};
+    final assetOwners = <String, String>{};
+    final hashOwners = <String, String>{};
+    final jobOwners = <String, String>{};
     for (final x in j['clips']) {
       need(x is Map<String, dynamic>);
       for (final key in [
@@ -53,7 +56,16 @@ class MentiAliveReviewCatalog extends MentiAnimationCatalog {
             .hasMatch(x['asset']),
       );
       need(RegExp(r'^[0-9a-f]{64}$').hasMatch(x['sha256']));
+      final owner = x['lookId'] as String;
+      final asset = x['asset'] as String, hash = x['sha256'] as String;
+      need(!assetOwners.containsKey(asset) || assetOwners[asset] == owner);
+      need(!hashOwners.containsKey(hash) || hashOwners[hash] == owner);
+      assetOwners[asset] = owner;
+      hashOwners[hash] = owner;
       need(RegExp(r'^[0-9a-f-]{36}$').hasMatch(x['sourceJobId']));
+      final jobId = x['sourceJobId'] as String;
+      need(!jobOwners.containsKey(jobId) || jobOwners[jobId] == owner);
+      jobOwners[jobId] = owner;
       need(
         x['width'] <= 720 &&
             x['height'] <= 960 &&

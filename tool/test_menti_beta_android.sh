@@ -25,11 +25,16 @@ assert len(set(uids))==2, 'Normal and REVIEW must have distinct Android UIDs'
 print('Separate Android sandbox UIDs verified:', uids)
 CHECK_UIDS
 # Both apps are installed simultaneously. Integration tests use native plugins.
-flutter test integration_test/menti_beta_device_test.dart -d emulator-5554 --no-pub --no-uninstall
+# Run the full native integration suite once with the default DDS transport.
+# On hosted API 35, --no-dds can finish the test successfully yet return a
+# VM-service streamListen error after completion. Retrying then encounters
+# legitimate persisted onboarding data and creates a false failure.
+# Never clear app data or weaken the first-launch / persistence assertions.
+flutter test integration_test/menti_beta_device_test.dart -d emulator-5554 --no-pub --no-uninstall 2>&1 | tee "$OUT/flutter-integration.log"
 # Sample actual process memory while the native review test runs.
 (while true; do date -u +%FT%TZ; adb shell dumpsys meminfo com.example.mennyiment.review; sleep 4; done) > "$OUT/review-memory-samples.txt" 2>&1 &
 SAMPLER=$!
-python3 tool/build_menti_alive_preview.py --platform apk --device emulator-5554 --output build/unused-device-output || { kill "$SAMPLER"; exit 1; }
+python3 tool/build_menti_alive_preview.py --studio --platform apk --device emulator-5554 --output build/unused-device-output || { kill "$SAMPLER"; exit 1; }
 kill "$SAMPLER"
 adb shell dumpsys -l > "$OUT/dumpsys-services.txt"
 adb shell dumpsys media.resource_manager > "$OUT/codec-after-tests.txt"

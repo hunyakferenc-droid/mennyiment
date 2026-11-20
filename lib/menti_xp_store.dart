@@ -1,4 +1,5 @@
 import 'menti_life_events.dart';
+
 import 'dart:convert';
 import 'dart:async';
 import 'dart:math' as math;
@@ -171,7 +172,20 @@ class MentiXpStore {
     changes.value++;
     // Megtartjuk a korábbi napi önellenőrzés kulcsát is az átmenethez.
     await prefs.setStringList(_reflectionKey, state.days.toList()..sort());
-    if(milestoneFrom != null && MentiXpState.levelFor(state.xp)>MentiXpState.levelFor(milestoneFrom)) MentiLifeEvents.instance.emit(MentiLifeEvent.xpMilestone, token:'level-${state.level}');
+    if (milestoneFrom != null && state.xp > milestoneFrom) {
+      if (MentiXpState.levelFor(state.xp) >
+          MentiXpState.levelFor(milestoneFrom)) {
+        MentiLifeEvents.instance.emit(
+          MentiLifeEvent.xpMilestone,
+          token: 'level-${state.level}',
+        );
+      } else {
+        MentiLifeEvents.instance.emit(
+          MentiLifeEvent.xpEarned,
+          token: 'xp-${state.xp}',
+        );
+      }
+    }
   }
 
   /// Mindkét képernyő ugyanazt a napi eseményt használja.

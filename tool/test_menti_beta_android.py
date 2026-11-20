@@ -3,9 +3,32 @@ import tempfile, unittest, shutil, subprocess
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from menti_beta_android import prepare_review_android, ensure_committed_source
+from menti_review_media import prepare_review_media
 
 ROOT=Path(__file__).resolve().parents[1]
 class ReviewIsolationTest(unittest.TestCase):
+ def check_media_package(self,studio,expected):
+  import json,hashlib
+  with tempfile.TemporaryDirectory() as d:
+   w=Path(d)
+   for relative in ['tool/menti_alive/review_assets','tool/menti_animation_studio/review_assets']:
+    shutil.copytree(ROOT/relative,w/relative)
+   normal=w/'assets/menti_life/catalog.json';normal.parent.mkdir(parents=True)
+   shutil.copyfile(ROOT/'assets/menti_life/catalog.json',normal);before=normal.read_bytes()
+   manifest,assets=prepare_review_media(w,studio=studio)
+   loaded=json.loads((w/'assets/menti_alive_review/catalog.json').read_text())
+   self.assertEqual(loaded,manifest)
+   self.assertEqual({(c['lookId'],c['reaction']) for c in loaded['clips']},expected)
+   self.assertEqual(len(assets),len(expected)+1)
+   for clip in loaded['clips']:
+    self.assertIn(clip['asset'],assets)
+    self.assertEqual(hashlib.sha256((w/clip['asset']).read_bytes()).hexdigest(),clip['sha256'])
+    self.assertTrue(all(clip[k] is False for k in ['rightsVerified','identityVerified','backgroundApproved','ownerApproved']))
+   self.assertEqual(normal.read_bytes(),before)
+ def test_studio_loaded_catalog_contains_all_five_own_character_clips(self):
+  self.check_media_package(True,{('boy-festival-v1',r) for r in ['welcome','wink','congratulation']}|{('girl-base-v1','thinking'),('neutral-base-v1','welcome')})
+ def test_legacy_loaded_catalog_preserves_only_its_three_clips(self):
+  self.check_media_package(False,{('boy-festival-v1',r) for r in ['welcome','wink','congratulation']})
  def test_isolated_id_activity_badge_without_signing_changes(self):
   with tempfile.TemporaryDirectory() as d:
    w=Path(d); shutil.copytree(ROOT/'android/app',w/'android/app',ignore=shutil.ignore_patterns('build'))

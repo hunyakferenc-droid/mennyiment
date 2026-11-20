@@ -3465,4 +3465,71 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get alivePlaying => 'Playing silent video';
+
+  @override
+  String get studioTitle => 'Menti Animation Studio';
+
+  @override
+  String get studioInventory =>
+      'Animation inventory · 18 Mentis × 14 reactions';
+
+  @override
+  String get studioMissing => 'Missing · original PNG';
+
+  @override
+  String get studioReview => 'Available · awaiting approval';
+
+  @override
+  String get studioApproved => 'Approved media';
+
+  @override
+  String get studioFamily => 'Character family';
+
+  @override
+  String get studioEvents => 'Try events';
+
+  @override
+  String get studioEventHint =>
+      'Simulation: no journal, XP or unlock is recorded. Missing reactions show the character’s own PNG.';
+
+  @override
+  String get studioJournal => 'Journal entry saved';
+
+  @override
+  String get studioXp => 'XP earned';
+
+  @override
+  String get studioLevel => 'Level up';
+
+  @override
+  String get studioLook => 'Character unlocked';
+
+  @override
+  String get studioAccessory => 'Accessory unlocked';
+
+  @override
+  String get studioChallenge => 'Challenge completed';
+
+  @override
+  String get studioEncourage => 'Encouragement';
+
+  @override
+  String get studioPerformance => 'Local playback measurements';
+
+  @override
+  String get studioNoMeasurement =>
+      'No playback measurement yet. These are not total device RAM or speed benchmarks.';
+
+  @override
+  String get studioPosterHint =>
+      'On a slower device, turn video preview off: the original PNG remains and no video decoder starts.';
+
+  @override
+  String get studioReadyCount => 'Approved';
+
+  @override
+  String get studioReviewCount => 'Awaiting approval';
+
+  @override
+  String get studioMissingCount => 'Missing';
 }

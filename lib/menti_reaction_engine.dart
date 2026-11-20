@@ -29,6 +29,18 @@ class MentiReactionEngine {
   final Set<String> _seen = {};
   DateTime? _lastAutomatic;
   static MentiReactionPlan plan(MentiLifeEvent event) => switch (event) {
+    MentiLifeEvent.xpEarned => const MentiReactionPlan(
+      MentiLifeReaction.joy,
+      25,
+    ),
+    MentiLifeEvent.accessoryUnlocked => const MentiReactionPlan(
+      MentiLifeReaction.surprise,
+      65,
+    ),
+    MentiLifeEvent.encouragementRequested => const MentiReactionPlan(
+      MentiLifeReaction.encouragement,
+      30,
+    ),
     MentiLifeEvent.appOpened => const MentiReactionPlan(
       MentiLifeReaction.welcome,
       10,
