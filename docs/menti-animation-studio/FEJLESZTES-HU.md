@@ -47,3 +47,7 @@ A `83197480b36820577a8f803cbd331fab5e8e7091` commit GitHub Actions `Flutter CI` 
 - `neutral-base/thinking` job `1846e7eb-74a7-4cd0-a0fd-5eb0bbe57c3e`: `jobs_wait` közvetlen lekérdezés szerint **completed**, Seedance 2.5, MP4-eredmény rendelkezésre áll. Ez kizárólag technikai elkészültség: forrás-PNG-azonosság, teljes képkockasor, háttér, jog és tulajdonosi jóváhagyás továbbra is **nem igazolt**. Nem került REVIEW-katalógusba.
 - A #46 ág előző HEAD commitja `46235d5442e76f9689ea80d22e97b9c7f29cf0e9`: GitHub Actions `44014278720` **completed/success**. Ez az előző commit ellenőrzése, nem a jelen dokumentációfrissítés utáni új CI eredménye.
 - A #44, #45 és #46 nyitott draft. Normál app: 0 jóváhagyott klip. Fizikai Android/codec/RAM/valódi frissítés továbbra is függő.
+
+## 2026-11-20: fordítási hiba javítása, munka megőrzése
+
+A friss távoli `11c467c` állapotban a sourceJobId-tulajdonosi ellenőrzés beillesztése félbeszakított egy Dart reguláris kifejezést és megduplázta a fájl végét. A sérült szerkezet helyreállítva; az asset-, hash- és sourceJobId-alapú másik karakterhez rendelési tilalom és az új regressziós állítás megmaradt. A távoli újabb munkát előbb átvettük, a korábbi helyi böngészőpatch külön megőrzött. Analyzer: tiszta. Kapcsolódó modell/widget/előnézeti részhalmaz: 60 sikeres teszt. Ez nem az új teljes CI eredménye; a teljes kaput újra kell futtatni. A #44 és #45 változatlan marad.
