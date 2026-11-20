@@ -6,6 +6,7 @@ from pathlib import Path
 
 
 from menti_beta_android import prepare_review_android, ensure_committed_source
+from menti_review_media import prepare_review_media
 
 root=Path(__file__).resolve().parents[1]
 p=argparse.ArgumentParser();p.add_argument('--platform',choices=['web','apk'],required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--studio',action='store_true',help='Build the 18-look Animation Studio');p.add_argument('--device', help='Run native REVIEW integration tests instead of producing a distributable');p.add_argument('--flutter',default='flutter');a=p.parse_args()
@@ -22,22 +23,7 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
  process=subprocess.Popen(['git','archive','HEAD'],cwd=root,stdout=subprocess.PIPE)
  with tarfile.open(fileobj=process.stdout,mode='r|')as archive:archive.extractall(work,filter='data')
  if process.wait()!=0:raise SystemExit('Could not archive source')
- catalog=json.loads((work/'tool/menti_alive/review_assets/catalog.json').read_text(encoding='utf-8'))
- if a.studio:
-  extra=json.loads((work/'tool/menti_animation_studio/review_assets/catalog.json').read_text(encoding='utf-8'))
-  assert extra['previewOnly'] is True and extra['status']=='reviewRequired'
-  catalog={**catalog,'clips':catalog['clips']+extra['clips']}
- assert catalog['previewOnly'] is True and catalog['status']=='reviewRequired'
- assert json.loads((work/'assets/menti_life/catalog.json').read_text(encoding='utf-8'))['clips']==[]
- additions=[]
- for clip in catalog['clips']:
-  assert all(clip[k] is False for k in ['rightsVerified','identityVerified','backgroundApproved','ownerApproved'])
-  candidate=work/'tool/menti_alive/review_assets'/Path(clip['asset']).name
-  if a.studio and not candidate.exists():candidate=work/'tool/menti_animation_studio/review_assets'/Path(clip['asset']).name
-  assert hashlib.sha256(candidate.read_bytes()).hexdigest()==clip['sha256'] and candidate.stat().st_size==clip['bytes']
-  target=work/clip['asset'];target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(candidate,target);additions.append(clip['asset'])
- target=work/'assets/menti_alive_review/catalog.json';target.parent.mkdir(parents=True);shutil.copyfile(work/'tool/menti_alive/review_assets/catalog.json',target)
- additions.append('assets/menti_alive_review/catalog.json')
+ catalog,additions=prepare_review_media(work,studio=a.studio)
  pubspec=work/'pubspec.yaml';text=pubspec.read_text(encoding='utf-8')
  # Only full-look posters and existing offline font licenses are needed here.
  # The normal application's full asset manifest remains untouched.
