@@ -23,12 +23,17 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
  with tarfile.open(fileobj=process.stdout,mode='r|')as archive:archive.extractall(work,filter='data')
  if process.wait()!=0:raise SystemExit('Could not archive source')
  catalog=json.loads((work/'tool/menti_alive/review_assets/catalog.json').read_text(encoding='utf-8'))
+ if a.studio:
+  extra=json.loads((work/'tool/menti_animation_studio/review_assets/catalog.json').read_text(encoding='utf-8'))
+  assert extra['previewOnly'] is True and extra['status']=='reviewRequired'
+  catalog={**catalog,'clips':catalog['clips']+extra['clips']}
  assert catalog['previewOnly'] is True and catalog['status']=='reviewRequired'
  assert json.loads((work/'assets/menti_life/catalog.json').read_text(encoding='utf-8'))['clips']==[]
  additions=[]
  for clip in catalog['clips']:
   assert all(clip[k] is False for k in ['rightsVerified','identityVerified','backgroundApproved','ownerApproved'])
   candidate=work/'tool/menti_alive/review_assets'/Path(clip['asset']).name
+  if a.studio and not candidate.exists():candidate=work/'tool/menti_animation_studio/review_assets'/Path(clip['asset']).name
   assert hashlib.sha256(candidate.read_bytes()).hexdigest()==clip['sha256'] and candidate.stat().st_size==clip['bytes']
   target=work/clip['asset'];target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(candidate,target);additions.append(clip['asset'])
  target=work/'assets/menti_alive_review/catalog.json';target.parent.mkdir(parents=True);shutil.copyfile(work/'tool/menti_alive/review_assets/catalog.json',target)
@@ -59,5 +64,5 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
   shutil.copyfile(built/'app-debug.apk',a.output/'app-debug.apk')
   (a.output/'app-debug.apk.sha256').write_text(hashlib.sha256((a.output/'app-debug.apk').read_bytes()).hexdigest()+'  app-debug.apk\n')
  shutil.copyfile(work/('docs/menti-animation-studio/kiprobalas-hu.md' if a.studio else 'docs/menti-beta/kiprobalas-hu.md'),a.output/'OLVASDEL-REVIEW.txt')
- (a.output/'build-info.txt').write_text(f'source_commit={source}\nversion=3.0.0+42\nvariant=developer-preview\napplication_id=com.example.mennyiment.review\napproved_media=0\nreview_media=3\nurl=http://127.0.0.1:7357\n')
+ (a.output/'build-info.txt').write_text(f'source_commit={source}\nversion=3.0.0+42\nvariant=developer-preview\napplication_id=com.example.mennyiment.review\napproved_media=0\nreview_media={len(catalog["clips"])}\nurl=http://127.0.0.1:7357\n')
 print('Isolated developer preview built:',a.output)

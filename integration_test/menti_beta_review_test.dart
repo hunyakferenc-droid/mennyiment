@@ -9,7 +9,7 @@ import 'package:mennyiment/menti_alive_preview.dart';
 import 'package:mennyiment/menti_animation_controller.dart';
 import 'package:mennyiment/menti_reaction_engine.dart';
 
-import 'menti_beta_device_test.dart' show reach;
+import 'menti_beta_device_test.dart' show reach, until;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -84,35 +84,82 @@ void main() {
         const MentiAliveReviewApp(reviewEnabled: true, studioMode: true),
       );
       await t.pumpAndSettle();
+      await until(t, find.byKey(const ValueKey('studio-inventory-ready')));
       expect(find.byKey(const ValueKey('studio-family-girl')), findsOneWidget);
-      for (final family in ['girl', 'neutral']) {
-        final chip = find.byKey(ValueKey('studio-family-$family'));
-        await reach(t, chip);
-        await t.tap(chip);
-        await t.pumpAndSettle();
-        for (final reaction in MentiLifeReaction.values) {
-          expect(
-            find.byKey(ValueKey('studio-slot-${reaction.name}')),
-            findsOneWidget,
+      for (final lang in ['HU', 'EN']) {
+        for (final family in ['girl', 'neutral']) {
+          // Bring the fixed language controls into view independently of scroll.
+          await t.tap(find.widgetWithText(TextButton, lang));
+          await t.pumpAndSettle();
+          final chip = find.byKey(ValueKey('studio-family-$family'));
+          await reach(t, chip);
+          await t.tap(chip);
+          await t.pumpAndSettle();
+          final available = family == 'girl'
+              ? MentiLifeReaction.thinking
+              : MentiLifeReaction.welcome;
+          for (final reaction in MentiLifeReaction.values) {
+            expect(
+              find.byKey(ValueKey('studio-slot-${reaction.name}')),
+              findsOneWidget,
+            );
+            expect(
+              t
+                      .widget<FilledButton>(
+                        find.byKey(ValueKey('alive-play-${reaction.name}')),
+                      )
+                      .onPressed !=
+                  null,
+              reaction == available,
+            );
+          }
+          final play = find.byKey(ValueKey('alive-play-${available.name}'));
+          await reach(t, play);
+          await t.tap(play);
+          final untilDecoded = DateTime.now().add(const Duration(seconds: 20));
+          LocalMentiVideo? actual;
+          while (DateTime.now().isBefore(untilDecoded)) {
+            await t.pump(const Duration(milliseconds: 100));
+            final dynamic owner = t.state(find.byType(MentiAlivePreviewPage));
+            final MentiAnimationController engine = owner.c;
+            if (engine.status == MentiPlaybackStatus.error) {
+              fail('Studio native decoder failed: $family/$lang');
+            }
+            if (engine.handle is LocalMentiVideo &&
+                engine.handle!.frameVisible) {
+              actual = engine.handle! as LocalMentiVideo;
+              break;
+            }
+          }
+          expect(actual, isNotNull);
+          expect(actual!.video.value.size, const Size(540, 720));
+          expect(actual.video.value.volume, 0);
+          final dynamic owner = t.state(find.byType(MentiAlivePreviewPage));
+          final MentiAnimationController engine = owner.c;
+          expect(engine.active?.lookId, '$family-base-v1');
+          expect(engine.active?.reaction, available);
+          // ignore: avoid_print
+          print(
+            'MENTI_STUDIO_DECODER: ${jsonEncode({'locale': lang, 'lookId': engine.active!.lookId, 'reaction': available.name, 'positionMs': actual.video.value.position.inMilliseconds, 'measurements': engine.measurements.last})}',
           );
+          engine.stop();
+          await engine.settled;
+          await t.pumpAndSettle();
+          await p.reload();
           expect(
-            t
-                .widget<FilledButton>(
-                  find.byKey(ValueKey('alive-play-${reaction.name}')),
-                )
-                .onPressed,
-            isNull,
+            p.getKeys().where((k) => k.startsWith('mennyiment_')),
+            isEmpty,
           );
         }
       }
       // ignore: avoid_print
       print(
-        'MENTI_STUDIO_NATIVE: girl/neutral inventory and 14 missing slots remain PNG-only',
+        'MENTI_STUDIO_NATIVE: all fourteen exact slots; own girl/neutral videos decoded HU/EN; no data writes',
       );
       final dynamic state = t.state(find.byType(MentiAlivePreviewPage));
       final MentiAnimationController c = state.c;
       c.configure(
-        look: 'girl-base-v1',
+        look: 'girl-party-v1',
         allowed: true,
         frequency: MentiAnimationFrequency.normal,
       );

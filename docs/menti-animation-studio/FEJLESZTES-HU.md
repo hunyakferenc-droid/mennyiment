@@ -51,3 +51,16 @@ A `83197480b36820577a8f803cbd331fab5e8e7091` commit GitHub Actions `Flutter CI` 
 ## 2026-11-20: fordítási hiba javítása, munka megőrzése
 
 A friss távoli `11c467c` állapotban a sourceJobId-tulajdonosi ellenőrzés beillesztése félbeszakított egy Dart reguláris kifejezést és megduplázta a fájl végét. A sérült szerkezet helyreállítva; az asset-, hash- és sourceJobId-alapú másik karakterhez rendelési tilalom és az új regressziós állítás megmaradt. A távoli újabb munkát előbb átvettük, a korábbi helyi böngészőpatch külön megőrzött. Analyzer: tiszta. Kapcsolódó modell/widget/előnézeti részhalmaz: 60 sikeres teszt. Ez nem az új teljes CI eredménye; a teljes kaput újra kell futtatni. A #44 és #45 változatlan marad.
+
+
+## 2026-11-20: saját lány és semleges REVIEW-jelölt
+
+Kizárólag korábban elkészült jobok olvasása/letöltése történt; új generálás és kreditköltés nem. A lány thinking forrásjob `2ce3052d-63b1-411d-bf31-b5ec7d87218f`, a semleges welcome `79e32807-6863-468c-bd92-63e03c7cbf4c`. A bemeneti PNG-k teljes bájtsorozata és SHA-256 értéke pontosan egyezik a repó eredeti `girl-base.png` / `neutral-base.png` állományával. Mindkét videó 20, egyenletesen mintavett képkockája és utolsó képkockája átnézett: a teljes alak, ruházat és saját karakter megmarad. Ez technikai REVIEW-feltétel, nem tulajdonosi, végleges mozgás-/hátterezési vagy jogi jóváhagyás.
+
+A semleges thinking `1846e7eb-74a7-4cd0-a0fd-5eb0bbe57c3e` és breathing `6d4ce078-4f57-4f79-8a05-5e6926cdde5f` képkockái levágják a lábakat, ezért nem csomagolhatók teljeskinézetes jelöltként. Ezek kizárt források maradnak; más videóval nem helyettesítjük őket.
+
+A két kiválasztott jelölt külön `tool/menti_animation_studio/review_assets` katalógusba került. Csak `--studio` csomagoláskor egyesülnek a három meglévő REVIEW-klippel. Néma H.264 Main 3.1, 24 fps, 540×720, kb. 5,04 s. Képaránytartó kicsinyítés, a semleges négyzetes képnél fekete levélszegély, hang eltávolítása; nincs képkivágás, karakterrajzolás, maszkolás vagy új jelenetháttér. A meglévő fekete/szürke forrásháttér megmarad, jóváhagyásra vár. Ez nem az alap-Mentik új háttérfejlesztése; a normál PNG-k változatlanok.
+
+Tényleges leltár: **5 REVIEW, 247 hiányzó, 0 jóváhagyott** a 252 párból. Mind az 18 kinézet választható, 15 kinézetnek még nincs videója. SourceJobId/asset/hash másik karakterhez rendelése tiltott. A feldolgozott klip- és forrás-PNG-hash, méret és approval-kapuk új statikus ellenőrzést kapnak. Négy új regresszió igazolja az eredeti PNG-ket, a teljes 5-ös leltárt, valamint mindkét új saját klip betöltési hibája utáni újraindítást, egy dekódert és idegen szett tiltását.
+
+A natív Studio-próba HU/EN nyelven a lány thinking és semleges welcome tényleges dekódolását is ellenőrzi; a régi hat fiú lejátszási állítás megmarad. A Windows Studio UI-kapu mellett a két új, pontos hashű fájlra külön natív böngészős codec-smoke fut; ezt nem állítjuk a Studio gombútvonal teljes böngészős tesztjének. Fizikai Android és végleges médiás jóváhagyás továbbra is külön feladat.

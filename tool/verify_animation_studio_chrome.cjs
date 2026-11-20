@@ -33,5 +33,13 @@ try{for(const lang of ['hu','en']){
  checks.push(`${lang}: event simulation is clearly marked and read-only`);
  assert.deepEqual(errors,[]);p.closing=true;await context.close();active=null;
 }
+// Separate codec smoke on actual bundled girl/neutral MP4 bytes. The native
+// integration suite checks the full Studio button -> shared player route.
+const clips=JSON.parse(fs.readFileSync(path.join(__dirname,'menti_animation_studio/review_assets/catalog.json'))).clips;
+const codecPage=await browser.newPage();await codecPage.goto('http://127.0.0.1:7357');
+for(const clip of clips){const url='http://127.0.0.1:7357/assets/'+clip.asset;const body=await(await codecPage.request.get(url)).body();assert.equal(require('node:crypto').createHash('sha256').update(body).digest('hex'),clip.sha256);
+ const result=await codecPage.evaluate(async url=>{const v=document.createElement('video');v.muted=true;v.playsInline=true;v.src=url;document.body.append(v);try{await v.play();await new Promise((resolve,reject)=>{const started=performance.now();const tick=()=>{if(v.currentTime>.2)resolve();else if(performance.now()-started>10000)reject(Error('decoder timeout'));else setTimeout(tick,30)};tick()});return {width:v.videoWidth,height:v.videoHeight,muted:v.muted};}finally{v.pause();v.remove();}},url);
+ assert.deepEqual(result,{width:540,height:720,muted:true});checks.push(clip.lookId+': exact bundled bytes decode in native browser codec (separate smoke)');}
+await codecPage.close();
 fs.writeFileSync(path.join(out,'studio-chrome-verification.json'),JSON.stringify({sourceCommit:source,version:'3.0.0+42',realWindows:process.platform==='win32',browser:browser.version(),checks,runtimeErrors:errors},null,2)+'\n');console.log(checks.length+' Studio checks passed');
 }catch(e){if(active&&!active.isClosed()){await active.screenshot({path:path.join(out,'studio-failure.png')}).catch(()=>{});fs.writeFileSync(path.join(out,'studio-failure-dom.txt'),await active.locator('body').ariaSnapshot().catch(()=>''));}throw e;}finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

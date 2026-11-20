@@ -66,6 +66,7 @@ jobs:
           python3 tool/check_localizations.py
           python3 tool/check_menti_life_media.py
           python3 tool/check_menti_alive_media.py
+          python3 tool/check_menti_animation_studio_media.py
           python3 tool/test_menti_beta_android.py
           python3 tool/test_android_update.py
           python3 tool/check_play_dossier.py
