@@ -62,63 +62,7 @@ class MentiAliveReviewCatalog extends MentiAnimationCatalog {
       need(!hashOwners.containsKey(hash) || hashOwners[hash] == owner);
       assetOwners[asset] = owner;
       hashOwners[hash] = owner;
-      need(RegExp(r'^[0-9a-f-]{36}
-      need(
-        x['width'] <= 720 &&
-            x['height'] <= 960 &&
-            (x['width'] / x['height'] - .75).abs() < .01,
-      );
-      need(x['bytes'] <= 6 * 1024 * 1024 && x['durationMs'] <= 8000);
-      need(
-        x['audio'] == false &&
-            x['previewOnly'] == true &&
-            x['status'] == 'reviewRequired',
-      );
-      for (final key in [
-        'rightsVerified',
-        'identityVerified',
-        'backgroundApproved',
-        'ownerApproved',
-      ]) {
-        need(x[key] == false);
-      }
-      need(x['approvedBy'] == '' && x['approvedAt'] == '');
-      clips.add(
-        MentiAnimationClip(
-          id: x['id'],
-          lookId: x['lookId'],
-          reaction: MentiLifeReaction.values.byName(x['reaction']),
-          asset: x['asset'],
-          sha256: x['sha256'],
-          bytes: x['bytes'],
-          durationMs: x['durationMs'],
-          width: x['width'],
-          height: x['height'],
-          version: x['version'],
-          approvedBy: '',
-          approvedAt: '',
-          rightsVerified: false,
-          identityVerified: false,
-          backgroundApproved: false,
-        ),
-      );
-    }
-    return MentiAliveReviewCatalog(
-      List.unmodifiable(clips),
-      developerPreview: developerPreview,
-    );
-  }
-
-  @override
-  MentiAnimationClip? find(String look, MentiLifeReaction reaction) {
-    if (!developerPreview) return null;
-    final matches =
-        clips.where((c) => c.lookId == look && c.reaction == reaction).toList()
-          ..sort((a, b) => b.version.compareTo(a.version));
-    return matches.isEmpty ? null : matches.first;
-  }
-}
-).hasMatch(x['sourceJobId']));
+      need(RegExp(r'^[0-9a-f-]{36}$').hasMatch(x['sourceJobId']));
       final jobId = x['sourceJobId'] as String;
       need(!jobOwners.containsKey(jobId) || jobOwners[jobId] == owner);
       jobOwners[jobId] = owner;
