@@ -25,8 +25,8 @@ class ReviewIsolationTest(unittest.TestCase):
     self.assertEqual(hashlib.sha256((w/clip['asset']).read_bytes()).hexdigest(),clip['sha256'])
     self.assertTrue(all(clip[k] is False for k in ['rightsVerified','identityVerified','backgroundApproved','ownerApproved']))
    self.assertEqual(normal.read_bytes(),before)
- def test_studio_loaded_catalog_contains_all_five_own_character_clips(self):
-  self.check_media_package(True,{('boy-festival-v1',r) for r in ['welcome','wink','congratulation']}|{('girl-base-v1','thinking'),('neutral-base-v1','welcome')})
+ def test_studio_loaded_catalog_contains_all_eight_own_character_clips(self):
+  self.check_media_package(True,{('boy-festival-v1',r) for r in ['welcome','wink','congratulation']}|{('girl-base-v1','thinking'),('girl-base-v1','welcome'),('girl-base-v1','wink'),('neutral-base-v1','welcome'),('neutral-base-v1','wink')})
  def test_legacy_loaded_catalog_preserves_only_its_three_clips(self):
   self.check_media_package(False,{('boy-festival-v1',r) for r in ['welcome','wink','congratulation']})
  def test_isolated_id_activity_badge_without_signing_changes(self):

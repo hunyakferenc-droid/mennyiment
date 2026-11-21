@@ -4,8 +4,8 @@ from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 folder=root/'tool/menti_animation_studio/review_assets'
 j=json.loads((folder/'catalog.json').read_text());assert j['previewOnly'] is True and j['status']=='reviewRequired'
-assert len(j['clips'])==2
-assert {(c['lookId'],c['reaction']) for c in j['clips']}=={('girl-base-v1','thinking'),('neutral-base-v1','welcome')}
+assert len(j['clips'])==5
+assert {(c['lookId'],c['reaction']) for c in j['clips']}=={('girl-base-v1','thinking'),('girl-base-v1','welcome'),('girl-base-v1','wink'),('neutral-base-v1','welcome'),('neutral-base-v1','wink')}
 for c in j['clips']:
  assert all(c[k] is False for k in ['rightsVerified','identityVerified','backgroundApproved','ownerApproved'])
  assert c['approvedBy']=='' and c['approvedAt']=='' and c['audio'] is False
@@ -18,4 +18,4 @@ for c in j['clips']:
  assert abs(float(v['format']['duration'])*1000-c['durationMs'])<100 and c['durationMs']<=8000
 assert json.loads((root/'assets/menti_life/catalog.json').read_text())['clips']==[]
 assert 'tool/menti_animation_studio' not in (root/'pubspec.yaml').read_text()
-print('2 source-PNG hash-matched own-character Studio candidates; 5 combined REVIEW; 0 approved/production; no new generation')
+print('5 source-PNG hash-matched own-character Studio candidates; 8 combined REVIEW; 0 approved/production; no new generation')

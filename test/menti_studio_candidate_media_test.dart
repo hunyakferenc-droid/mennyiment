@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -39,7 +40,7 @@ void main() {
         File('tool/menti_animation_studio/review_assets/catalog.json')
             .readAsStringSync(),
       );
-      expect(data['clips'].length, 2);
+      expect(data['clips'].length, 5);
       for (final c in data['clips']) {
         final look = CompleteLook.find(c['lookId'])!;
         expect(c['sourcePng'], look.asset);
@@ -63,12 +64,12 @@ void main() {
       }
     },
   );
-  test('Actual combined inventory has 5 REVIEW and 247 missing, never a production clip', () {
+  test('Actual combined inventory has 8 REVIEW and 244 missing, never a production clip', () {
     final c = studio();
     final i = MentiStudioInventory(review: c);
     expect(i.slots.length, 252);
-    expect(i.count(MentiStudioStatus.reviewRequired), 5);
-    expect(i.count(MentiStudioStatus.missing), 247);
+    expect(i.count(MentiStudioStatus.reviewRequired), 8);
+    expect(i.count(MentiStudioStatus.missing), 244);
     expect(i.count(MentiStudioStatus.approved), 0);
     final prod = MentiAnimationCatalog(c.clips);
     for (final look in CompleteLook.all) {
@@ -88,9 +89,12 @@ void main() {
       }
     }
   });
-  for (final family in ['girl', 'neutral']) {
+  for (final clip in studio().clips.where(
+    (c) => c.lookId != 'boy-festival-v1',
+  )) {
+    final family = clip.lookId.split('-').first;
     test(
-      '$family own clip initialization error recovers by explicit restart, one decoder',
+      '$family ${clip.reaction.name} own clip initialization error recovers by explicit restart, one decoder',
       () async {
         var allocations = 0, live = 0, maxLive = 0;
         final c = MentiAnimationController(
@@ -115,9 +119,7 @@ void main() {
           frequency: MentiAnimationFrequency.normal,
         );
         c.host(host, look: '$family-base-v1', size: 180, visible: true);
-        final reaction = family == 'girl'
-            ? MentiLifeReaction.thinking
-            : MentiLifeReaction.welcome;
+        final reaction = clip.reaction;
         expect(c.request(reaction, token: 'first', manual: true), true);
         await c.settled;
         expect(c.status, MentiPlaybackStatus.error);
@@ -147,5 +149,72 @@ void main() {
         expect(live, 0);
       },
     );
+  }
+  for (final from in ['girl', 'neutral']) {
+    for (final pending in [false, true]) {
+      test(
+        '$from wink switches family while ${pending ? 'loading' : 'playing'} without resurrection or double decoder',
+        () async {
+          final gate = Completer<void>();
+          var allocations = 0, live = 0, maximum = 0;
+          final c = MentiAnimationController(
+            catalog: studio(),
+            verify: (_) async {},
+            factory: (_) {
+              allocations++;
+              return FakeMentiVideo(
+                initializeGate: pending && allocations == 1 ? gate : null,
+                onOpen: () {
+                  live++;
+                  if (live > maximum) maximum = live;
+                },
+                onClose: () => live--,
+              );
+            },
+          );
+          final host = Object();
+          void select(String family) {
+            c.configure(
+              look: '$family-base-v1',
+              allowed: true,
+              frequency: MentiAnimationFrequency.normal,
+            );
+            c.host(host, look: '$family-base-v1', size: 180, visible: true);
+          }
+
+          select(from);
+          expect(
+            c.request(MentiLifeReaction.wink, token: 'old', manual: true),
+            true,
+          );
+          if (pending) {
+            await Future<void>.delayed(Duration.zero);
+          } else {
+            await c.settled;
+            expect(c.active?.lookId, '$from-base-v1');
+          }
+          final to = from == 'girl' ? 'neutral' : 'girl';
+          select(to);
+          expect(c.active, isNull);
+          expect(
+            c.request(MentiLifeReaction.wink, token: 'new', manual: true),
+            true,
+          );
+          gate.complete();
+          await c.settled;
+          expect(c.active?.lookId, '$to-base-v1');
+          expect(c.active?.reaction, MentiLifeReaction.wink);
+          expect(maximum, 1);
+          c.stop();
+          await c.settled;
+          expect(c.handle, isNull);
+          expect(live, 0);
+          select(to);
+          expect(c.active, isNull);
+          c.dispose();
+          await c.settled;
+        },
+      );
+    }
   }
 }

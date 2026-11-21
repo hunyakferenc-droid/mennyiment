@@ -6,7 +6,7 @@ $Evidence=[IO.Path]::GetFullPath($Evidence)
 $chrome=Join-Path $env:ProgramFiles 'Google/Chrome/Application/chrome.exe'
 if (-not (Test-Path $chrome)) { throw 'Real Google Chrome was not found.' }
 $env:CHROME_BIN=$chrome
-$env:MENTI_APP_VERSION='3.0.0+42'
+$env:MENTI_APP_VERSION='3.0.1+43'
 $results=@()
 foreach ($variant in @('normal','review')) {
     $download=if ($variant -eq 'normal') {$Normal} else {$Review}
