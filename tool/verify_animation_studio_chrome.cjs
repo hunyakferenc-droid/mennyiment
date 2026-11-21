@@ -19,11 +19,11 @@ try{for(const lang of ['hu','en']){
  assert((await(await p.request.get('http://127.0.0.1:7357/build-info.txt')).text()).includes(source));
  const before=await snapshot(p);const s=strings[lang];await p.getByText(s.studioInventory,{exact:true}).waitFor();
  const bundled=await(await p.request.get('http://127.0.0.1:7357/assets/assets/menti_alive_review/catalog.json')).json();
- assert.equal(bundled.clips.length,5);
+ assert.equal(bundled.clips.length,8);
  assert(bundled.clips.some(c=>c.lookId==='girl-base-v1'&&c.reaction==='thinking'));
  assert(bundled.clips.some(c=>c.lookId==='neutral-base-v1'&&c.reaction==='welcome'));
- await p.getByRole('checkbox',{name:lang==='hu'?'Jóváhagyásra vár: 5':'Awaiting approval: 5',exact:true}).waitFor();
- await p.getByRole('checkbox',{name:lang==='hu'?'Hiányzik: 247':'Missing: 247',exact:true}).waitFor();
+ await p.getByRole('checkbox',{name:lang==='hu'?'Jóváhagyásra vár: 8':'Awaiting approval: 8',exact:true}).waitFor();
+ await p.getByRole('checkbox',{name:lang==='hu'?'Hiányzik: 244':'Missing: 244',exact:true}).waitFor();
  for(const [family,label] of [['girl',s.collectionGirl],['neutral',s.collectionNeutral],['boy',s.collectionBoy]]){
   const chip=p.getByRole('checkbox',{name:label,exact:true});await studioReach(p,chip,`${lang}/${family} family chip`);await chip.evaluate(e=>e.click());await p.waitForTimeout(150);await semantics(p);
   const selector=p.getByRole('button',{name:new RegExp('^'+s.aliveSelection)});await studioReach(p,selector,`${lang}/${family} selector`);await selector.evaluate(e=>e.click());await p.waitForTimeout(150);await semantics(p);
@@ -47,5 +47,5 @@ for(const clip of clips){const url='http://127.0.0.1:7357/assets/'+clip.asset;co
  const result=await codecPage.evaluate(async url=>{const v=document.createElement('video');v.muted=true;v.playsInline=true;v.src=url;document.body.append(v);try{await v.play();await new Promise((resolve,reject)=>{const started=performance.now();const tick=()=>{if(v.currentTime>.2)resolve();else if(performance.now()-started>10000)reject(Error('decoder timeout'));else setTimeout(tick,30)};tick()});return {width:v.videoWidth,height:v.videoHeight,muted:v.muted};}finally{v.pause();v.remove();}},url);
  assert.deepEqual(result,{width:540,height:720,muted:true});checks.push(clip.lookId+': exact bundled bytes decode in native browser codec (separate smoke)');}
 await codecPage.close();
-fs.writeFileSync(path.join(out,'studio-chrome-verification.json'),JSON.stringify({sourceCommit:source,version:'3.0.0+42',realWindows:process.platform==='win32',browser:browser.version(),checks,runtimeErrors:errors},null,2)+'\n');console.log(checks.length+' Studio checks passed');
+fs.writeFileSync(path.join(out,'studio-chrome-verification.json'),JSON.stringify({sourceCommit:source,version:'3.0.1+43',realWindows:process.platform==='win32',browser:browser.version(),checks,runtimeErrors:errors},null,2)+'\n');console.log(checks.length+' Studio checks passed');
 }catch(e){if(active&&!active.isClosed()){await active.screenshot({path:path.join(out,'studio-failure.png')}).catch(()=>{});fs.writeFileSync(path.join(out,'studio-failure-dom.txt'),await active.locator('body').ariaSnapshot().catch(()=>''));}throw e;}finally{await browser.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

@@ -135,3 +135,7 @@ pubspec.yaml.bak
 # Explicit developer-review media. Never included by the normal pubspec.
 !/tool/menti_alive/review_assets/*.mp4
 !/docs/images/menti-alive/*.png
+
+# Explicit base-character REVIEW evidence and candidates; never normal assets.
+!/tool/menti_animation_studio/review_assets/*.mp4
+!/docs/menti-base-animation-review/frames/*.jpg
