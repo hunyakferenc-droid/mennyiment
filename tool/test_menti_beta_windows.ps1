@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$Normal, [Parameter(Mandatory=$true)][string]$Review, [Parameter(Mandatory=$true)][string]$Evidence)
+param([Parameter(Mandatory=$true)][string]$Normal, [Parameter(Mandatory=$true)][string]$Review, [string]$Home, [Parameter(Mandatory=$true)][string]$Evidence)
 $ErrorActionPreference='Stop'
 if ($env:OS -ne 'Windows_NT') { throw 'This gate requires real Windows, not Linux PowerShell.' }
 New-Item -ItemType Directory -Force $Evidence | Out-Null
@@ -6,10 +6,10 @@ $Evidence=[IO.Path]::GetFullPath($Evidence)
 $chrome=Join-Path $env:ProgramFiles 'Google/Chrome/Application/chrome.exe'
 if (-not (Test-Path $chrome)) { throw 'Real Google Chrome was not found.' }
 $env:CHROME_BIN=$chrome
-$env:MENTI_APP_VERSION='3.0.1+43'
+$env:MENTI_APP_VERSION='3.1.0+44'
 $results=@()
-foreach ($variant in @('normal','review')) {
-    $download=if ($variant -eq 'normal') {$Normal} else {$Review}
+foreach ($variant in @('normal','review','home')) {
+    $download=if ($variant -eq 'normal') {$Normal} elseif ($variant -eq 'home') {$Home} else {$Review}
     $zip=Join-Path $Evidence "$variant-web.zip"
     Compress-Archive -Path (Join-Path $download '*') -DestinationPath $zip
     $web=Join-Path $Evidence "$variant-unpacked"
@@ -33,6 +33,9 @@ foreach ($variant in @('normal','review')) {
             if ($LASTEXITCODE -ne 0) {throw 'Windows fresh onboarding/XP regression failed.'}
             node tool/verify_journal_228_chrome.cjs
             if ($LASTEXITCODE -ne 0) {throw 'Windows journal editing regression failed.'}
+        } elseif ($variant -eq 'home') {
+            node tool/verify_menti_home_chrome.cjs
+            if ($LASTEXITCODE -ne 0) {throw 'Windows home and Fitness Club regression failed.'}
         } else {
             node tool/verify_menti_alive_chrome.cjs
             if ($LASTEXITCODE -ne 0) {throw 'Windows native video regression failed.'}

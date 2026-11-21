@@ -36,12 +36,14 @@ flutter test integration_test/menti_beta_device_test.dart -d emulator-5554 --no-
 SAMPLER=$!
 python3 tool/build_menti_alive_preview.py --studio --platform apk --device emulator-5554 --output build/unused-device-output || { kill "$SAMPLER"; exit 1; }
 kill "$SAMPLER"
+python3 tool/build_menti_alive_preview.py --home --platform apk --device emulator-5554 --output build/unused-home-device-output
+adb install -r build/menti-home-review-apk/app-debug.apk
 adb shell dumpsys -l > "$OUT/dumpsys-services.txt"
 adb shell dumpsys media.resource_manager > "$OUT/codec-after-tests.txt"
 adb shell run-as com.example.mennyiment cat shared_prefs/FlutterSharedPreferences.xml | sha256sum > "$OUT/normal-pre-update.sha256"
 # Return to the exact delivered APKs; same signing key and data-preserving update.
 adb install -r artifacts/normal/app-debug.apk
-adb install -r artifacts/review/app-debug.apk
+adb install -r build/menti-home-review-apk/app-debug.apk
 adb shell run-as com.example.mennyiment cat shared_prefs/FlutterSharedPreferences.xml | sha256sum > "$OUT/normal-post-update.sha256"
 cmp "$OUT/normal-pre-update.sha256" "$OUT/normal-post-update.sha256"
 adb shell wm size 720x1600

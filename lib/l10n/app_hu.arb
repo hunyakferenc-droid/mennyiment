@@ -1702,5 +1702,77 @@
   "studioPosterHint": "Gyengébb készüléken kapcsold ki a videóelőnézetet: az eredeti PNG marad, videódekóder nem indul.",
   "studioReadyCount": "Jóváhagyott",
   "studioReviewCount": "Jóváhagyásra vár",
-  "studioMissingCount": "Hiányzik"
+  "studioMissingCount": "Hiányzik",
+  "homeWelcomeReply": "Szia! Jó újra látni.",
+  "homeWinkReply": "Egy kacsintás neked!",
+  "homeSavedReply": "A bejegyzésed mentve. Köszönöm, hogy vezeted a naplód.",
+  "homeXpReply": "Az önreflexiós haladásod mentve.",
+  "homeLevelReply": "Új szintre értél az önreflexióval.",
+  "homeEncourageReply": "Itt vagyok. Haladj a saját tempódban.",
+  "homeReviewHint": "Koppints Mentire egy kacsintásért. A videók még ellenőrzés alatt állnak.",
+  "homeReviewVideo": "Saját karaktervideó • REVIEW",
+  "homeReviewStill": "Saját állókép • ehhez a helyzethez most nem fut videó",
+  "fitnessTitle": "Menti Fitneszklub",
+  "rhythmTitle": "Menti Ritmus",
+  "rhythmInstructions": "Figyeld meg a sorozatot, majd nyomd meg ugyanabban a sorrendben a három művelet gombjait. Három művelettel indulunk; minden sikeres kör után eggyel hosszabb a sorozat. Öt kör a cél. A bemutatót te lépteted, nincs időnyomás.",
+  "fitnessPrivacy": "A mozdulatokat nem figyeljük: csak a gombnyomások számítanak. A fizikai mozgás opcionális. Az eredmény csak ebben a játékban látszik; nem jár érte XP vagy feloldás, és a naplót sem módosítja.",
+  "rhythmPlay": "Játék indítása",
+  "rhythmStretch": "1 · Nyújtózás",
+  "rhythmLeft": "2 · Lépés balra",
+  "rhythmRight": "3 · Lépés jobbra",
+  "rhythmKeyboard": "Billentyűzet: 1/2/3 vagy ↑/←/→. Bemutató léptetése: Szóköz vagy Enter.",
+  "rhythmNext": "Következő lépés / Kezdheted",
+  "rhythmMistake": "Ez most másik lépés volt. Próbáld újra ugyanazt a sort, nyugodtan!",
+  "rhythmRetry": "Újrapróbálás",
+  "rhythmNew": "Új játék",
+  "rhythmBack": "Vissza a klubba",
+  "rhythmRound": "{round}. kör / 5",
+  "@rhythmRound": {
+    "placeholders": {
+      "round": {
+        "type": "int"
+      }
+    }
+  },
+  "rhythmResult": "Teljesített körök: {count} / 5",
+  "@rhythmResult": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rhythmWatch": "Figyelj: {step}/{total} – {action}",
+  "@rhythmWatch": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "rhythmYourTurn": "Te jössz! Helyes lépések: {count}/{total}",
+  "@rhythmYourTurn": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "rhythmShowing": "Menti mutatja: {action}",
+  "@rhythmShowing": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  }
 }

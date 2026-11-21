@@ -6289,6 +6289,174 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'Hiányzik'**
   String get studioMissingCount;
+
+  /// No description provided for @homeWelcomeReply.
+  ///
+  /// In hu, this message translates to:
+  /// **'Szia! Jó újra látni.'**
+  String get homeWelcomeReply;
+
+  /// No description provided for @homeWinkReply.
+  ///
+  /// In hu, this message translates to:
+  /// **'Egy kacsintás neked!'**
+  String get homeWinkReply;
+
+  /// No description provided for @homeSavedReply.
+  ///
+  /// In hu, this message translates to:
+  /// **'A bejegyzésed mentve. Köszönöm, hogy vezeted a naplód.'**
+  String get homeSavedReply;
+
+  /// No description provided for @homeXpReply.
+  ///
+  /// In hu, this message translates to:
+  /// **'Az önreflexiós haladásod mentve.'**
+  String get homeXpReply;
+
+  /// No description provided for @homeLevelReply.
+  ///
+  /// In hu, this message translates to:
+  /// **'Új szintre értél az önreflexióval.'**
+  String get homeLevelReply;
+
+  /// No description provided for @homeEncourageReply.
+  ///
+  /// In hu, this message translates to:
+  /// **'Itt vagyok. Haladj a saját tempódban.'**
+  String get homeEncourageReply;
+
+  /// No description provided for @homeReviewHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Koppints Mentire egy kacsintásért. A videók még ellenőrzés alatt állnak.'**
+  String get homeReviewHint;
+
+  /// No description provided for @homeReviewVideo.
+  ///
+  /// In hu, this message translates to:
+  /// **'Saját karaktervideó • REVIEW'**
+  String get homeReviewVideo;
+
+  /// No description provided for @homeReviewStill.
+  ///
+  /// In hu, this message translates to:
+  /// **'Saját állókép • ehhez a helyzethez most nem fut videó'**
+  String get homeReviewStill;
+
+  /// No description provided for @fitnessTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti Fitneszklub'**
+  String get fitnessTitle;
+
+  /// No description provided for @rhythmTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti Ritmus'**
+  String get rhythmTitle;
+
+  /// No description provided for @rhythmInstructions.
+  ///
+  /// In hu, this message translates to:
+  /// **'Figyeld meg a sorozatot, majd nyomd meg ugyanabban a sorrendben a három művelet gombjait. Három művelettel indulunk; minden sikeres kör után eggyel hosszabb a sorozat. Öt kör a cél. A bemutatót te lépteted, nincs időnyomás.'**
+  String get rhythmInstructions;
+
+  /// No description provided for @fitnessPrivacy.
+  ///
+  /// In hu, this message translates to:
+  /// **'A mozdulatokat nem figyeljük: csak a gombnyomások számítanak. A fizikai mozgás opcionális. Az eredmény csak ebben a játékban látszik; nem jár érte XP vagy feloldás, és a naplót sem módosítja.'**
+  String get fitnessPrivacy;
+
+  /// No description provided for @rhythmPlay.
+  ///
+  /// In hu, this message translates to:
+  /// **'Játék indítása'**
+  String get rhythmPlay;
+
+  /// No description provided for @rhythmStretch.
+  ///
+  /// In hu, this message translates to:
+  /// **'1 · Nyújtózás'**
+  String get rhythmStretch;
+
+  /// No description provided for @rhythmLeft.
+  ///
+  /// In hu, this message translates to:
+  /// **'2 · Lépés balra'**
+  String get rhythmLeft;
+
+  /// No description provided for @rhythmRight.
+  ///
+  /// In hu, this message translates to:
+  /// **'3 · Lépés jobbra'**
+  String get rhythmRight;
+
+  /// No description provided for @rhythmKeyboard.
+  ///
+  /// In hu, this message translates to:
+  /// **'Billentyűzet: 1/2/3 vagy ↑/←/→. Bemutató léptetése: Szóköz vagy Enter.'**
+  String get rhythmKeyboard;
+
+  /// No description provided for @rhythmNext.
+  ///
+  /// In hu, this message translates to:
+  /// **'Következő lépés / Kezdheted'**
+  String get rhythmNext;
+
+  /// No description provided for @rhythmMistake.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ez most másik lépés volt. Próbáld újra ugyanazt a sort, nyugodtan!'**
+  String get rhythmMistake;
+
+  /// No description provided for @rhythmRetry.
+  ///
+  /// In hu, this message translates to:
+  /// **'Újrapróbálás'**
+  String get rhythmRetry;
+
+  /// No description provided for @rhythmNew.
+  ///
+  /// In hu, this message translates to:
+  /// **'Új játék'**
+  String get rhythmNew;
+
+  /// No description provided for @rhythmBack.
+  ///
+  /// In hu, this message translates to:
+  /// **'Vissza a klubba'**
+  String get rhythmBack;
+
+  /// No description provided for @rhythmRound.
+  ///
+  /// In hu, this message translates to:
+  /// **'{round}. kör / 5'**
+  String rhythmRound(int round);
+
+  /// No description provided for @rhythmResult.
+  ///
+  /// In hu, this message translates to:
+  /// **'Teljesített körök: {count} / 5'**
+  String rhythmResult(int count);
+
+  /// No description provided for @rhythmWatch.
+  ///
+  /// In hu, this message translates to:
+  /// **'Figyelj: {step}/{total} – {action}'**
+  String rhythmWatch(int step, int total, String action);
+
+  /// No description provided for @rhythmYourTurn.
+  ///
+  /// In hu, this message translates to:
+  /// **'Te jössz! Helyes lépések: {count}/{total}'**
+  String rhythmYourTurn(int count, int total);
+
+  /// No description provided for @rhythmShowing.
+  ///
+  /// In hu, this message translates to:
+  /// **'Menti mutatja: {action}'**
+  String rhythmShowing(String action);
 }
 
 class _AppLocalizationsDelegate

@@ -34,6 +34,10 @@ import 'menti_experience_settings.dart';
 import 'menti_complete_looks.dart';
 import 'menti_animation_player.dart';
 import 'menti_life_events.dart';
+import 'menti_home_reactions.dart';
+import 'menti_animation_catalog.dart';
+import 'menti_home_review_widgets.dart';
+import 'menti_fitness.dart';
 import 'menti_intro.dart';
 import 'menti_access.dart';
 import 'menti_onboarding.dart';
@@ -54,13 +58,16 @@ void main() {
 }
 
 class MennyiMentApp extends StatefulWidget {
-  const MennyiMentApp({super.key});
+  const MennyiMentApp({super.key, this.reviewHome = false, this.animationCatalog});
+  final bool reviewHome;
+  final Future<MentiAnimationCatalog> Function()? animationCatalog;
 
   @override
   State<MennyiMentApp> createState() => _MennyiMentAppState();
 }
 
 class _MennyiMentAppState extends State<MennyiMentApp> {
+  final homeReactions = MentiHomeReactions();
   late final AppLanguage language;
   final access = MentiAccessSettings();
   late Future<bool> _recovery;
@@ -92,7 +99,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
   @override
   void initState() { super.initState(); language = AppLanguage(); _recovery = _recoverBeforeApp(); }
   @override
-  void dispose() { language.dispose(); access.dispose(); super.dispose(); }
+  void dispose() { homeReactions.dispose(); language.dispose(); access.dispose(); super.dispose(); }
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(future: _recovery, builder: (context, snapshot) {
@@ -111,7 +118,7 @@ class _MennyiMentAppState extends State<MennyiMentApp> {
       }
     return ListenableBuilder(listenable: language, builder: (context, _) => AppLanguageScope(language: language, child: MaterialApp(
       key: ValueKey(_epoch),
-      builder: (context, child) => MentiAccessScope(settings: access, child: MentiIdentityScope(child: MentiExperienceScope(child: MentiMotionScope(child: CompleteLookScope(child: MentiAnimationScope(child: child!)))))),
+      builder: (context, child) => MentiAccessScope(settings: access, child: MentiIdentityScope(child: MentiExperienceScope(child: MentiMotionScope(child: CompleteLookScope(child: MentiAnimationScope(homeReactions: widget.reviewHome ? homeReactions : null, catalogLoader: widget.animationCatalog, child: child!)))))),
       locale: language.locale,
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -1050,6 +1057,7 @@ void updateMentiMessage(MentiMood mood) {
                           )],
                         ),
                         child: MentiEvolution(
+                          onTap: MentiAnimationScope.of(context)?.home == null ? null : () => MentiAnimationScope.of(context)?.home?.requestWink(),
                           assetPath: _characterAsset,
                           reaction: mentiReaction,
                           visualReaction: mentiReaction == 0 ? null :
@@ -1083,6 +1091,12 @@ void updateMentiMessage(MentiMood mood) {
                   TextButton(onPressed: _loadReflections,
                     child: Text(strings.homeRetryProgress)),
                 ]))),
+              if (MentiAnimationScope.of(context)?.home != null) ...[
+                const MentiHomeReviewFeedback(),
+                OutlinedButton.icon(key: const ValueKey('home-fitness'),
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const MentiFitnessClub())),
+                  icon: const Icon(Icons.fitness_center), label: Text(strings.fitnessTitle)),
+              ],
               const SizedBox(height: 12),
               if (adult) FilledButton.icon(
                 key: const ValueKey('home-primary-log'),
