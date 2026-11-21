@@ -156,6 +156,11 @@ void main() {
             final restart = find.byKey(
               ValueKey('alive-restart-${reaction.name}'),
             );
+            // Play deliberately scrolls back to the preview. Restart is no
+            // longer at its previous screen coordinates: reach the real control.
+            await reach(t, restart);
+            expect(restart.hitTestable(), findsOneWidget);
+            expect(t.widget<OutlinedButton>(restart).onPressed, isNotNull);
             await t.tap(restart);
             final restarted = await studioFrame(
               t,

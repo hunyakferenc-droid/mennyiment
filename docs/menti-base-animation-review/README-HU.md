@@ -38,3 +38,7 @@ Csak a külön REVIEW-csomagba kerülnek. A forrás beégetett lila/fehér/feket
 A meglévő Studio/lejátszó/katalógus marad. A nyolcklipes csomagolást pontos név/hash/forrásazonosító védi; a normál app nem kap videót. HU/EN natív próba mind az öt saját alapklipre: Play → valódi képkocka → új dekóderes Restart → Stop/PNG → új Play → váltás a másik családra lejátszás közben. Mind a 14 slot elérhetősége pontosan ellenőrzött; hiánynál nincs idegen videó. A régi hat fiú-lejátszási állítás megmarad.
 
 A friss eredményt kizárólag az új forráscommit CI-je után szabad sikeresnek nevezni. A korábbi 1214 teszt és 62 Windows-ellenőrzés történeti alap. Fizikai telefon, gyenge eszköz, OEM-fájlválasztó és korábbi telefonos APK-ról frissítés külön kézi próba. A debug CI-kulcs változhat: ütközésnél őrizd meg a telepítést/adatot, használd a webes REVIEW-t. Nincs main merge vagy publikálás.
+
+## Natív kapu pontosítása
+
+A `8aa5d41` köztes futásban az új lány welcome ténylegesen dekódolt, de a teszt az Újraindítást képernyőn kívüli helyen próbálta koppintani: a Lejátszás szándékosan visszagörget az előnézethez. Az új natív teszt minden Restart előtt újra eléri a valódi gombot, hitTestable és engedélyezettségi állítással. A valódi új dekóder/képkocka, Stop/PNG, karakterváltás és adatmegőrzés elvárása megmarad; nincs közvetlen controller-hívással kiváltott UI-próba vagy tesztkihagyás. A köztes futás nem végső sikerállítás.
