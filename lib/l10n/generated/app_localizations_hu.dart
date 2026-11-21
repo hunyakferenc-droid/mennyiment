@@ -3520,4 +3520,105 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get studioMissingCount => 'Hiányzik';
+
+  @override
+  String get homeWelcomeReply => 'Szia! Jó újra látni.';
+
+  @override
+  String get homeWinkReply => 'Egy kacsintás neked!';
+
+  @override
+  String get homeSavedReply =>
+      'A bejegyzésed mentve. Köszönöm, hogy vezeted a naplód.';
+
+  @override
+  String get homeXpReply => 'Az önreflexiós haladásod mentve.';
+
+  @override
+  String get homeLevelReply => 'Új szintre értél az önreflexióval.';
+
+  @override
+  String get homeEncourageReply => 'Itt vagyok. Haladj a saját tempódban.';
+
+  @override
+  String get homeReviewHint =>
+      'Koppints Mentire egy kacsintásért. A videók még ellenőrzés alatt állnak.';
+
+  @override
+  String get homeReviewVideo => 'Saját karaktervideó • REVIEW';
+
+  @override
+  String get homeReviewStill =>
+      'Saját állókép • ehhez a helyzethez most nem fut videó';
+
+  @override
+  String get fitnessTitle => 'Menti Fitneszklub';
+
+  @override
+  String get rhythmTitle => 'Menti Ritmus';
+
+  @override
+  String get rhythmInstructions =>
+      'Figyeld meg a sorozatot, majd nyomd meg ugyanabban a sorrendben a három művelet gombjait. Három művelettel indulunk; minden sikeres kör után eggyel hosszabb a sorozat. Öt kör a cél. A bemutatót te lépteted, nincs időnyomás.';
+
+  @override
+  String get fitnessPrivacy =>
+      'A mozdulatokat nem figyeljük: csak a gombnyomások számítanak. A fizikai mozgás opcionális. Az eredmény csak ebben a játékban látszik; nem jár érte XP vagy feloldás, és a naplót sem módosítja.';
+
+  @override
+  String get rhythmPlay => 'Játék indítása';
+
+  @override
+  String get rhythmStretch => '1 · Nyújtózás';
+
+  @override
+  String get rhythmLeft => '2 · Lépés balra';
+
+  @override
+  String get rhythmRight => '3 · Lépés jobbra';
+
+  @override
+  String get rhythmKeyboard =>
+      'Billentyűzet: 1/2/3 vagy ↑/←/→. Bemutató léptetése: Szóköz vagy Enter.';
+
+  @override
+  String get rhythmNext => 'Következő lépés / Kezdheted';
+
+  @override
+  String get rhythmMistake =>
+      'Ez most másik lépés volt. Próbáld újra ugyanazt a sort, nyugodtan!';
+
+  @override
+  String get rhythmRetry => 'Újrapróbálás';
+
+  @override
+  String get rhythmNew => 'Új játék';
+
+  @override
+  String get rhythmBack => 'Vissza a klubba';
+
+  @override
+  String rhythmRound(int round) {
+    return '$round. kör / 5';
+  }
+
+  @override
+  String rhythmResult(int count) {
+    return 'Teljesített körök: $count / 5';
+  }
+
+  @override
+  String rhythmWatch(int step, int total, String action) {
+    return 'Figyelj: $step/$total – $action';
+  }
+
+  @override
+  String rhythmYourTurn(int count, int total) {
+    return 'Te jössz! Helyes lépések: $count/$total';
+  }
+
+  @override
+  String rhythmShowing(String action) {
+    return 'Menti mutatja: $action';
+  }
 }

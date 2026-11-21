@@ -3532,4 +3532,105 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get studioMissingCount => 'Missing';
+
+  @override
+  String get homeWelcomeReply => 'Hi! Good to see you again.';
+
+  @override
+  String get homeWinkReply => 'A wink for you!';
+
+  @override
+  String get homeSavedReply =>
+      'Your entry is saved. Thank you for keeping your journal.';
+
+  @override
+  String get homeXpReply => 'Your reflection progress is saved.';
+
+  @override
+  String get homeLevelReply => 'You reached a new reflection level.';
+
+  @override
+  String get homeEncourageReply => 'I am here. Go at your own pace.';
+
+  @override
+  String get homeReviewHint =>
+      'Tap Menti for a wink. Videos are still under review.';
+
+  @override
+  String get homeReviewVideo => 'Own-character video • REVIEW';
+
+  @override
+  String get homeReviewStill =>
+      'Own still image • no video is playing for this situation';
+
+  @override
+  String get fitnessTitle => 'Menti Fitness Club';
+
+  @override
+  String get rhythmTitle => 'Menti Rhythm';
+
+  @override
+  String get rhythmInstructions =>
+      'Watch the sequence, then press the three action buttons in the same order. Start with three actions; each successful round adds one action. Complete five rounds. Advance the demonstration yourself; there is no time pressure.';
+
+  @override
+  String get fitnessPrivacy =>
+      'Movements are not tracked: only button presses count. Physical movement is optional. The score only appears in this game; it gives no XP or unlocks and does not change your journal.';
+
+  @override
+  String get rhythmPlay => 'Start game';
+
+  @override
+  String get rhythmStretch => '1 · Stretch';
+
+  @override
+  String get rhythmLeft => '2 · Step left';
+
+  @override
+  String get rhythmRight => '3 · Step right';
+
+  @override
+  String get rhythmKeyboard =>
+      'Keyboard: 1/2/3 or ↑/←/→. Advance demonstration: Space or Enter.';
+
+  @override
+  String get rhythmNext => 'Next step / Your turn';
+
+  @override
+  String get rhythmMistake =>
+      'That was a different step. Try the same sequence again at your own pace!';
+
+  @override
+  String get rhythmRetry => 'Try again';
+
+  @override
+  String get rhythmNew => 'New game';
+
+  @override
+  String get rhythmBack => 'Back to club';
+
+  @override
+  String rhythmRound(int round) {
+    return 'Round $round / 5';
+  }
+
+  @override
+  String rhythmResult(int count) {
+    return 'Completed rounds: $count / 5';
+  }
+
+  @override
+  String rhythmWatch(int step, int total, String action) {
+    return 'Watch: $step/$total – $action';
+  }
+
+  @override
+  String rhythmYourTurn(int count, int total) {
+    return 'Your turn! Correct steps: $count/$total';
+  }
+
+  @override
+  String rhythmShowing(String action) {
+    return 'Menti shows: $action';
+  }
 }

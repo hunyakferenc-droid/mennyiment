@@ -1,0 +1,151 @@
+// Native plugins and real MP4 decode on a disposable emulator. No clear-data.
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mennyiment/main.dart';
+import 'package:mennyiment/app_language.dart';
+import 'package:mennyiment/menti_animation_player.dart';
+import 'package:mennyiment/menti_collection_store.dart';
+import 'package:mennyiment/menti_collection_widgets.dart';
+import 'package:mennyiment/menti_fitness.dart';
+import 'package:mennyiment/menti_rhythm.dart';
+import 'package:mennyiment/menti_motion.dart';
+import 'package:mennyiment/menti_xp_store.dart';
+
+import '../tool/menti_home_review.dart' as review;
+import 'menti_beta_device_test.dart' show tap, reach, until;
+
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  testWidgets(
+    'Native home REVIEW HU/EN video, own fallback, save, club five rounds, same data',
+    (t) async {
+      final p = await SharedPreferences.getInstance();
+      // The preceding Studio test verified it wrote no preferences.
+      expect(p.getString('mennyiment_drinks_v1'), isNull);
+      await review.main();
+      await t.pumpAndSettle();
+      await tap(t, 'start-language-hu');
+      await tap(t, 'start-next');
+      await tap(t, 'start-adult');
+      await tap(t, 'start-next');
+      await tap(t, 'start-family-girl');
+      await tap(t, 'start-look-girl-base-v1');
+      await tap(t, 'start-next');
+      await tap(t, 'start-next');
+      await until(t, find.byType(HomePage));
+      final ctx = t.element(find.byType(HomePage));
+      final session = MentiAnimationScope.of(ctx)!;
+      Future<void> waitVideo(String look, String reaction) async {
+        final deadline = DateTime.now().add(const Duration(seconds: 20));
+        while ((session.controller.handle?.frameVisible != true ||
+                session.controller.active?.lookId != look ||
+                session.controller.active?.reaction.name != reaction) &&
+            DateTime.now().isBefore(deadline)) {
+          await t.pump(const Duration(milliseconds: 80));
+        }
+        expect(session.controller.active?.lookId, look);
+        expect(session.controller.active?.reaction.name, reaction);
+        expect(session.controller.handle?.frameVisible, true);
+        debugPrint('HOME_NATIVE actual video $look $reaction');
+      }
+
+      await waitVideo('girl-base-v1', 'welcome');
+      expect(session.home!.presentations, 1);
+      await tap(t, 'home-wink');
+      await waitVideo('girl-base-v1', 'wink');
+      await tap(t, 'home-stop');
+      expect(session.controller.handle, isNull);
+      final store = CompleteLookStore();
+      await store.load();
+      expect(
+        await store.save(
+          store.selection.copyWith(active: true, lookId: 'neutral-base-v1'),
+        ),
+        true,
+      );
+      await CompleteLookScope.of(ctx)!.load();
+      await t.pumpAndSettle();
+      await tap(t, 'home-wink');
+      await waitVideo('neutral-base-v1', 'wink');
+      expect(session.home!.presentations, 3); // No second welcome on switch.
+      await tap(t, 'home-stop');
+      await AppLanguageScope.of(ctx)!.select('en');
+      await t.pumpAndSettle();
+      await reach(t, find.byKey(const ValueKey('home-primary-log')));
+      await tap(t, 'home-primary-log');
+      await t.tap(
+        find
+            .descendant(
+              of: find.byType(BottomSheet),
+              matching: find.byType(ListTile),
+            )
+            .first,
+      );
+      await t.pumpAndSettle();
+      final s = appStrings(t.element(find.byType(HomePage)));
+      await reach(t, find.text(s.journalSave));
+      await t.tap(find.text(s.journalSave));
+      await t.pumpAndSettle();
+      await p.reload();
+      expect(
+        (jsonDecode(p.getString('mennyiment_drinks_v1')!) as List).length,
+        1,
+      );
+      expect(session.home!.event?.name, 'journalSaved');
+      expect(session.controller.active, isNull);
+      final before = {for (final k in p.getKeys()) k: p.get(k)};
+      await tap(t, 'home-fitness');
+      expect(find.byType(MentiFitnessClub), findsOneWidget);
+      expect(session.controller.handle, isNull);
+      await tap(t, 'fitness-play');
+      final page = t.widget<MentiRhythmPage>(find.byType(MentiRhythmPage));
+      // Read the exact sequence shown by the production page, never replace game logic.
+      final dynamic state = t.state(find.byType(MentiRhythmPage));
+      final MentiRhythm game = state.game;
+      expect(page.game, isNull);
+      for (var round = 0; round < 5; round++) {
+        while (game.phase == RhythmPhase.demonstration) {
+          await tap(t, 'rhythm-next');
+        }
+        if (round == 0) {
+          final wrong = RhythmAction.values.firstWhere(
+            (a) => a != game.sequence.first,
+          );
+          await tap(t, 'rhythm-${wrong.name}');
+          expect(game.phase, RhythmPhase.mistake);
+          await tap(t, 'rhythm-retry');
+          while (game.phase == RhythmPhase.demonstration) {
+            await tap(t, 'rhythm-next');
+          }
+        }
+        for (final a in game.sequence) {
+          await tap(t, 'rhythm-${a.name}');
+        }
+      }
+      expect(game.completed, 5);
+      await tap(t, 'rhythm-new');
+      expect(game.completed, 0);
+      await t.tap(find.byType(BackButton));
+      await t.pumpAndSettle();
+      expect(find.byType(MentiFitnessClub), findsOneWidget);
+      await t.tap(find.byType(BackButton));
+      await t.pumpAndSettle();
+      expect(find.byType(HomePage), findsOneWidget);
+      await p.reload();
+      expect({for (final k in p.getKeys()) k: p.get(k)}, before);
+      await MentiMotionScope.settingsOf(ctx)!.setReduced(true);
+      await t.pumpAndSettle();
+      await tap(t, 'home-wink');
+      expect(session.controller.handle, isNull);
+      expect(session.home!.wink, true);
+      expect((await MentiXpStore.load()).xp, 0);
+      debugPrint(
+        'HOME_NATIVE passed: HU welcome/wink, neutral switch, EN save PNG, retry/five rounds/new/home, no game writes, reduced motion',
+      );
+    },
+  );
+}

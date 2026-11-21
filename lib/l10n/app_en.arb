@@ -1702,5 +1702,77 @@
   "studioPosterHint": "On a slower device, turn video preview off: the original PNG remains and no video decoder starts.",
   "studioReadyCount": "Approved",
   "studioReviewCount": "Awaiting approval",
-  "studioMissingCount": "Missing"
+  "studioMissingCount": "Missing",
+  "homeWelcomeReply": "Hi! Good to see you again.",
+  "homeWinkReply": "A wink for you!",
+  "homeSavedReply": "Your entry is saved. Thank you for keeping your journal.",
+  "homeXpReply": "Your reflection progress is saved.",
+  "homeLevelReply": "You reached a new reflection level.",
+  "homeEncourageReply": "I am here. Go at your own pace.",
+  "homeReviewHint": "Tap Menti for a wink. Videos are still under review.",
+  "homeReviewVideo": "Own-character video • REVIEW",
+  "homeReviewStill": "Own still image • no video is playing for this situation",
+  "fitnessTitle": "Menti Fitness Club",
+  "rhythmTitle": "Menti Rhythm",
+  "rhythmInstructions": "Watch the sequence, then press the three action buttons in the same order. Start with three actions; each successful round adds one action. Complete five rounds. Advance the demonstration yourself; there is no time pressure.",
+  "fitnessPrivacy": "Movements are not tracked: only button presses count. Physical movement is optional. The score only appears in this game; it gives no XP or unlocks and does not change your journal.",
+  "rhythmPlay": "Start game",
+  "rhythmStretch": "1 · Stretch",
+  "rhythmLeft": "2 · Step left",
+  "rhythmRight": "3 · Step right",
+  "rhythmKeyboard": "Keyboard: 1/2/3 or ↑/←/→. Advance demonstration: Space or Enter.",
+  "rhythmNext": "Next step / Your turn",
+  "rhythmMistake": "That was a different step. Try the same sequence again at your own pace!",
+  "rhythmRetry": "Try again",
+  "rhythmNew": "New game",
+  "rhythmBack": "Back to club",
+  "rhythmRound": "Round {round} / 5",
+  "@rhythmRound": {
+    "placeholders": {
+      "round": {
+        "type": "int"
+      }
+    }
+  },
+  "rhythmResult": "Completed rounds: {count} / 5",
+  "@rhythmResult": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rhythmWatch": "Watch: {step}/{total} – {action}",
+  "@rhythmWatch": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "rhythmYourTurn": "Your turn! Correct steps: {count}/{total}",
+  "@rhythmYourTurn": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "rhythmShowing": "Menti shows: {action}",
+  "@rhythmShowing": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -12,6 +12,7 @@ import 'menti_collection_widgets.dart';
 import 'menti_experience_settings.dart';
 import 'menti_life_events.dart';
 import 'menti_motion.dart';
+import 'menti_home_reactions.dart';
 
 class MentiAnimationScope extends StatefulWidget {
   const MentiAnimationScope({
@@ -19,7 +20,11 @@ class MentiAnimationScope extends StatefulWidget {
     required this.child,
     this.controller,
     this.settings,
+    this.catalogLoader,
+    this.homeReactions,
   });
+  final Future<MentiAnimationCatalog> Function()? catalogLoader;
+  final MentiHomeReactions? homeReactions;
   final Widget child;
   final MentiAnimationController? controller;
   final MentiAnimationSettings? settings;
@@ -30,7 +35,8 @@ class MentiAnimationScope extends StatefulWidget {
 }
 
 class MentiAnimationSession {
-  MentiAnimationSession(this.controller, this.settings);
+  MentiAnimationSession(this.controller, this.settings, this.home);
+  final MentiHomeReactions? home;
   final MentiAnimationController controller;
   final MentiAnimationSettings settings;
 }
@@ -39,7 +45,11 @@ class _MentiAnimationScopeState extends State<MentiAnimationScope>
     with WidgetsBindingObserver {
   late final controller = widget.controller ?? MentiAnimationController();
   late final settings = widget.settings ?? MentiAnimationSettings();
-  late final session = MentiAnimationSession(controller, settings);
+  late final session = MentiAnimationSession(
+    controller,
+    settings,
+    widget.homeReactions,
+  );
   bool _opened = false, _scheduled = false, _catalogReady = false;
   @override
   void initState() {
@@ -48,6 +58,7 @@ class _MentiAnimationScopeState extends State<MentiAnimationScope>
     settings.addListener(_refresh);
     controller.addListener(_controllerChanged);
     MentiLifeEvents.instance.addListener(_event);
+    widget.homeReactions?.attach(controller, ready: false);
     settings.load();
     _catalogReady = widget.controller != null;
     if (!_catalogReady) _catalog();
@@ -55,9 +66,11 @@ class _MentiAnimationScopeState extends State<MentiAnimationScope>
 
   Future<void> _catalog() async {
     try {
-      final catalog = MentiAnimationCatalog.decode(
-        await rootBundle.loadString('assets/menti_life/catalog.json'),
-      );
+      final catalog = widget.catalogLoader != null
+          ? await widget.catalogLoader!()
+          : MentiAnimationCatalog.decode(
+              await rootBundle.loadString('assets/menti_life/catalog.json'),
+            );
       if (mounted) {
         _catalogReady = true;
         controller.replaceCatalog(catalog);
@@ -73,12 +86,18 @@ class _MentiAnimationScopeState extends State<MentiAnimationScope>
   }
 
   void _controllerChanged() {
-    if (!_opened) _refresh();
+    if (!_opened || widget.homeReactions != null) _refresh();
   }
 
   void _event() {
     final signal = MentiLifeEvents.instance.last;
-    if (signal != null) controller.react(signal);
+    if (signal != null) {
+      if (widget.homeReactions != null) {
+        widget.homeReactions!.receive(signal);
+      } else {
+        controller.react(signal);
+      }
+    }
   }
 
   void _refresh() {
@@ -100,6 +119,11 @@ class _MentiAnimationScopeState extends State<MentiAnimationScope>
             MentiExperienceScope.reactionsOf(context),
         frequency: prefs.value.frequency,
       );
+      if (_catalogReady && widget.homeReactions != null) {
+        widget.homeReactions!.ready(prefs.ready && complete?.ready == true);
+        widget.homeReactions!.refresh();
+        return;
+      }
       if (_catalogReady &&
           !_opened &&
           controller.lookId != null &&
@@ -131,6 +155,7 @@ class _MentiAnimationScopeState extends State<MentiAnimationScope>
 
   @override
   void dispose() {
+    widget.homeReactions?.detach();
     WidgetsBinding.instance.removeObserver(this);
     MentiLifeEvents.instance.removeListener(_event);
     settings.removeListener(_refresh);
