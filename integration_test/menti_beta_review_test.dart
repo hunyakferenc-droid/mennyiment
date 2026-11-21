@@ -124,6 +124,7 @@ void main() {
           for (final reaction in available) {
             final chip = find.byKey(ValueKey('studio-family-$family'));
             await t.ensureVisible(chip);
+            await t.pump();
             await t.tap(chip);
             await t.pumpAndSettle();
             for (final slot in MentiLifeReaction.values) {
@@ -143,6 +144,7 @@ void main() {
             }
             final play = find.byKey(ValueKey('alive-play-${reaction.name}'));
             await t.ensureVisible(play);
+            await t.pump();
             await t.tap(play);
             final actual = await studioFrame(t, '$family-base-v1', reaction);
             final dynamic owner = t.state(find.byType(MentiAlivePreviewPage));
@@ -164,6 +166,7 @@ void main() {
             expect(identical(actual, restarted), false);
             final stop = find.byKey(const ValueKey('alive-stop'));
             await t.ensureVisible(stop);
+            await t.pump();
             await t.tap(stop);
             await engine.settled;
             await t.pumpAndSettle();
@@ -171,6 +174,7 @@ void main() {
             expect(engine.active, isNull);
             // Start from the real Play control, then change family while it plays.
             await t.ensureVisible(play);
+            await t.pump();
             await t.tap(play);
             await studioFrame(t, '$family-base-v1', reaction);
             final other = find.byKey(
@@ -179,6 +183,7 @@ void main() {
               ),
             );
             await t.ensureVisible(other);
+            await t.pump();
             expect(engine.active?.lookId, '$family-base-v1');
             await t.tap(other);
             await engine.settled;

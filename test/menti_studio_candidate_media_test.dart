@@ -4,6 +4,12 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mennyiment/menti_alive_preview.dart';
+import 'package:mennyiment/menti_animation_player.dart';
+import 'package:mennyiment/menti_motion.dart';
+import 'package:mennyiment/l10n/generated/app_localizations.dart';
 import 'package:mennyiment/menti_alive_review_catalog.dart';
 import 'package:mennyiment/menti_animation_catalog.dart';
 import 'package:mennyiment/menti_animation_controller.dart';
@@ -216,5 +222,97 @@ void main() {
         },
       );
     }
+  }
+  for (final lang in ['hu', 'en']) {
+    testWidgets(
+      '$lang actual five-clip controls restart, stop, switch and preserve stored data',
+      (t) async {
+        SharedPreferences.setMockInitialValues({
+          'mennyiment_drinks_v1': 'unknown journal',
+          'mennyiment_identity_v22': 'future identity',
+        });
+        final prefs = await SharedPreferences.getInstance();
+        final before = {for (final k in prefs.getKeys()) k: prefs.get(k)};
+        final c = MentiAnimationController(
+          verify: (_) async {},
+          factory: (_) => FakeMentiVideo(),
+        );
+        await t.binding.setSurfaceSize(const Size(390, 844));
+        addTearDown(() => t.binding.setSurfaceSize(null));
+        await t.pumpWidget(
+          MaterialApp(
+            locale: Locale(lang),
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            home: MentiMotionScope(
+              child: MentiAlivePreviewPage(
+                studioMode: true,
+                developerPreview: true,
+                readPreferences: false,
+                reviewCatalog: studio(),
+                controller: c,
+              ),
+            ),
+          ),
+        );
+        await t.pumpAndSettle();
+        Future<void> tap(Key key) async {
+          final f = find.byKey(key);
+          await t.ensureVisible(f);
+          await t.pump();
+          expect(f.hitTestable(), findsOneWidget);
+          await t.tap(f);
+          await t.pumpAndSettle();
+        }
+
+        for (final clip in studio().clips.where(
+          (x) => x.lookId != 'boy-festival-v1',
+        )) {
+          final family = clip.lookId.split('-').first;
+          await tap(ValueKey('studio-family-$family'));
+          final play = ValueKey('alive-play-${clip.reaction.name}');
+          await tap(play);
+          expect(c.active?.id, clip.id);
+          final first = c.handle! as FakeMentiVideo;
+          expect(first.playing, true);
+          await tap(ValueKey('alive-restart-${clip.reaction.name}'));
+          expect(first.closed, true);
+          expect(identical(first, c.handle), false);
+          expect(c.active?.id, clip.id);
+          await tap(const ValueKey('alive-stop'));
+          expect(c.active, isNull);
+          expect(c.handle, isNull);
+          expect(
+            t
+                .widget<MentiAnimationPlayer>(find.byType(MentiAnimationPlayer))
+                .look
+                .id,
+            clip.lookId,
+          );
+          await tap(play);
+          expect(c.active?.id, clip.id);
+          final old = c.handle! as FakeMentiVideo;
+          await tap(
+            ValueKey('studio-family-${family == 'girl' ? 'neutral' : 'girl'}'),
+          );
+          expect(old.closed, true);
+          expect(c.active, isNull);
+          expect(c.handle, isNull);
+          expect(
+            t
+                .widget<MentiAnimationPlayer>(find.byType(MentiAnimationPlayer))
+                .look
+                .family,
+            family == 'girl' ? 'neutral' : 'girl',
+          );
+        }
+        expect({for (final k in prefs.getKeys()) k: prefs.get(k)}, before);
+        expect(t.takeException(), isNull);
+        await t.pumpWidget(const SizedBox.shrink());
+        await t.pumpAndSettle();
+        c.dispose();
+        await t.runAsync(() => c.settled);
+      },
+    );
   }
 }
