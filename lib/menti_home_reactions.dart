@@ -100,9 +100,17 @@ class MentiHomeReactions extends ChangeNotifier {
     event = signal.event;
     wink = false;
     presentations++;
-    // Stop any previous reaction even when the new exact slot has no media.
-    _controller!.stop();
-    _controller!.react(signal);
+    final c = _controller!;
+    // Missing exact media must reveal the own PNG immediately. Available media
+    // stays with the existing planner: a higher-priority level reaction can
+    // preempt a welcome without losing its urgent cooldown exemption.
+    final look = c.lookId;
+    if (look == null ||
+        c.catalog.find(look, MentiReactionEngine.plan(signal.event).reaction) ==
+            null) {
+      c.stop();
+    }
+    c.react(signal);
     _notify();
   }
 

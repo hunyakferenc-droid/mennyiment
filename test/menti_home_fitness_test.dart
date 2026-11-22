@@ -83,6 +83,48 @@ void main() {
     },
   );
   testWidgets(
+    'Level event preempts the welcome with its own clip without duplicate save reactions',
+    (t) async {
+      final clips = [
+        fixture(id: 'welcome', look: 'boy-festival-v1'),
+        fixture(
+          id: 'level',
+          look: 'boy-festival-v1',
+          reaction: 'congratulation',
+        ),
+      ];
+      final c = MentiAnimationController(
+        catalog: MentiAnimationCatalog(clips),
+        clock: () => DateTime(2026),
+        verify: (_) async {},
+        factory: (_) => FakeMentiVideo(),
+      );
+      c.configure(
+        look: 'boy-festival-v1',
+        allowed: true,
+        frequency: MentiAnimationFrequency.normal,
+      );
+      c.host(Object(), look: 'boy-festival-v1', size: 140, visible: true);
+      final h = MentiHomeReactions()..attach(c);
+      h.refresh();
+      await t.pump();
+      expect(c.active!.reaction, MentiLifeReaction.welcome);
+      h.receive(
+        const MentiLifeSignal(MentiLifeEvent.xpMilestone, 'saved-level-7'),
+      );
+      h.receive(
+        const MentiLifeSignal(MentiLifeEvent.xpMilestone, 'saved-level-7'),
+      );
+      await t.pump(const Duration(milliseconds: 150));
+      expect(h.presentations, 2);
+      expect(c.active?.reaction, MentiLifeReaction.congratulation);
+      expect(c.active?.lookId, 'boy-festival-v1');
+      h.dispose();
+      c.dispose();
+      await t.pump();
+    },
+  );
+  testWidgets(
     'Save signals coalesce on route return; reduced motion keeps text; old-character event discarded',
     (t) async {
       final c = MentiAnimationController();
