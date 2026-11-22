@@ -43,6 +43,13 @@ void main() {
       final host = Object();
       c.host(host, look: 'girl-base-v1', size: 140, visible: true);
       h.refresh();
+      expect(
+        h.presentations,
+        0,
+        reason:
+            "An onboarding or Studio host must not consume the home greeting",
+      );
+      h.visibility(true);
       await t.pump();
       expect(h.presentations, 1);
       expect(c.active!.lookId, 'girl-base-v1');
@@ -77,6 +84,78 @@ void main() {
       expect(c.lookId, 'neutral-base-v1');
       expect(c.active, isNull);
       expect(c.status, MentiPlaybackStatus.noClip);
+      h.dispose();
+      c.dispose();
+      await t.pump();
+    },
+  );
+  testWidgets(
+    'Level event preempts the welcome with its own clip without duplicate save reactions',
+    (t) async {
+      final clips = [
+        fixture(id: 'welcome', look: 'boy-festival-v1'),
+        fixture(
+          id: 'level',
+          look: 'boy-festival-v1',
+          reaction: 'congratulation',
+        ),
+      ];
+      final c = MentiAnimationController(
+        catalog: MentiAnimationCatalog(clips),
+        clock: () => DateTime(2026),
+        verify: (_) async {},
+        factory: (_) => FakeMentiVideo(),
+      );
+      c.configure(
+        look: 'boy-festival-v1',
+        allowed: true,
+        frequency: MentiAnimationFrequency.normal,
+      );
+      c.host(Object(), look: 'boy-festival-v1', size: 140, visible: true);
+      final h = MentiHomeReactions()..attach(c);
+      h.visibility(true);
+      h.refresh();
+      await t.pump();
+      expect(c.active!.reaction, MentiLifeReaction.welcome);
+      h.receive(
+        const MentiLifeSignal(MentiLifeEvent.xpMilestone, 'saved-level-7'),
+      );
+      h.receive(
+        const MentiLifeSignal(MentiLifeEvent.xpMilestone, 'saved-level-7'),
+      );
+      await t.pump(const Duration(milliseconds: 150));
+      expect(h.presentations, 2);
+      expect(c.active?.reaction, MentiLifeReaction.congratulation);
+      expect(c.active?.lookId, 'boy-festival-v1');
+      h.dispose();
+      c.dispose();
+      await t.pump();
+    },
+  );
+  testWidgets(
+    'Home welcome waits for the actual home media host instead of being consumed during loading',
+    (t) async {
+      final c = MentiAnimationController(
+        catalog: MentiAnimationCatalog([fixture(look: 'girl-base-v1')]),
+        verify: (_) async {},
+        factory: (_) => FakeMentiVideo(),
+      );
+      c.configure(
+        look: 'girl-base-v1',
+        allowed: true,
+        frequency: MentiAnimationFrequency.normal,
+      );
+      final h = MentiHomeReactions()..attach(c);
+      h.visibility(true);
+      h.refresh();
+      await t.pump();
+      expect(h.presentations, 0);
+      expect(c.active, isNull);
+      c.host(Object(), look: 'girl-base-v1', size: 140, visible: true);
+      h.refresh();
+      await t.pump();
+      expect(h.presentations, 1);
+      expect(c.active?.reaction, MentiLifeReaction.welcome);
       h.dispose();
       c.dispose();
       await t.pump();
@@ -119,6 +198,36 @@ void main() {
       await t.pump(const Duration(milliseconds: 150));
       expect(h.event, isNull);
       expect(h.presentations, 2);
+      h.dispose();
+      c.dispose();
+      await t.pump();
+    },
+  );
+  testWidgets(
+    'No welcome before catalog readiness; background signals wait until resume',
+    (t) async {
+      final c = MentiAnimationController();
+      c.configure(
+        look: 'girl-base-v1',
+        allowed: false,
+        frequency: MentiAnimationFrequency.normal,
+      );
+      final h = MentiHomeReactions()..attach(c, ready: false);
+      h.visibility(true);
+      expect(h.presentations, 0);
+      h.ready(true);
+      h.refresh();
+      expect(h.presentations, 1);
+      h.foreground(false);
+      h.receive(
+        const MentiLifeSignal(MentiLifeEvent.journalSaved, 'background-save'),
+      );
+      await t.pump(const Duration(milliseconds: 200));
+      expect(h.presentations, 1);
+      h.foreground(true);
+      await t.pump(const Duration(milliseconds: 150));
+      expect(h.presentations, 2);
+      expect(h.event, MentiLifeEvent.journalSaved);
       h.dispose();
       c.dispose();
       await t.pump();
@@ -226,7 +335,23 @@ void main() {
           await click('rhythm-retry');
           for (var i = 0; i < 5; i++) {
             while (game.phase == RhythmPhase.demonstration) {
-              await click('rhythm-next');
+              if (i == 0 && game.shown == game.sequence.length - 1) {
+                final next = find.byKey(const ValueKey('rhythm-next'));
+                await t.ensureVisible(next);
+                await t.pumpAndSettle();
+                Focus.of(
+                  t.element(
+                    find
+                        .descendant(of: next, matching: find.byType(Text))
+                        .first,
+                  ),
+                ).requestFocus();
+                await t.pump();
+                await t.sendKeyEvent(LogicalKeyboardKey.enter);
+                await t.pumpAndSettle();
+              } else {
+                await click('rhythm-next');
+              }
             }
             for (final a in game.sequence) {
               if (i == 0) {

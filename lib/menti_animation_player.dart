@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
@@ -150,6 +151,7 @@ class _MentiAnimationScopeState extends State<MentiAnimationScope>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     controller.foreground(state == AppLifecycleState.resumed);
+    widget.homeReactions?.foreground(state == AppLifecycleState.resumed);
     if (state == AppLifecycleState.resumed) settings.load();
   }
 
@@ -186,9 +188,11 @@ class MentiAnimationPlayer extends StatefulWidget {
   const MentiAnimationPlayer({
     super.key,
     required this.look,
+    this.onTap,
     this.size = 260,
     this.controller,
   });
+  final VoidCallback? onTap;
   final CompleteLook look;
   final double size;
   final MentiAnimationController? controller;
@@ -289,6 +293,27 @@ class _MentiAnimationPlayerState extends State<MentiAnimationPlayer> {
             children: [
               ExcludeSemantics(child: ClipRect(child: media.view)),
               if (!media.frameVisible) poster,
+              // The HTML interceptor sits below a real Flutter tap target.
+              // This prevents the video platform view from taking the gesture.
+              // Only the explicit home callback creates this input surface.
+              if (kIsWeb && widget.onTap != null)
+                Positioned.fill(
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      HtmlElementView.fromTagName(
+                        tagName: 'div',
+                        isVisible: false,
+                      ),
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        excludeFromSemantics: true,
+                        onTap: widget.onTap,
+                        child: const SizedBox.expand(),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         );

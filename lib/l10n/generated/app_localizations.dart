@@ -6457,6 +6457,228 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'Menti mutatja: {action}'**
   String rhythmShowing(String action);
+
+  /// No description provided for @clubChallengeTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hétnapos kihívás'**
+  String get clubChallengeTitle;
+
+  /// No description provided for @clubChallengeHint.
+  ///
+  /// In hu, this message translates to:
+  /// **'Gyűjts hét külön napon egy teljesítést. Nem kell egymást követő napokon játszanod: a kihagyás nem törli az eredményt. Egy naphoz egy jelölés jár.'**
+  String get clubChallengeHint;
+
+  /// No description provided for @clubBest.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ritmus-rekord: {count} / 5 kör'**
+  String clubBest(int count);
+
+  /// No description provided for @clubProgress.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kihívás: {count} / 7 nap'**
+  String clubProgress(int count);
+
+  /// No description provided for @clubNoCompletion.
+  ///
+  /// In hu, this message translates to:
+  /// **'Még nincs befejezett nap.'**
+  String get clubNoCompletion;
+
+  /// No description provided for @clubLast.
+  ///
+  /// In hu, this message translates to:
+  /// **'Utolsó teljesítés: {date}'**
+  String clubLast(String date);
+
+  /// No description provided for @clubDayDate.
+  ///
+  /// In hu, this message translates to:
+  /// **'{day}. nap · {date}'**
+  String clubDayDate(int day, String date);
+
+  /// No description provided for @clubDayPending.
+  ///
+  /// In hu, this message translates to:
+  /// **'{day}. nap · még vár rád'**
+  String clubDayPending(int day);
+
+  /// No description provided for @clubNewChallenge.
+  ///
+  /// In hu, this message translates to:
+  /// **'Új hétnapos kihívás'**
+  String get clubNewChallenge;
+
+  /// No description provided for @clubLocalOnly.
+  ///
+  /// In hu, this message translates to:
+  /// **'A klub saját helyi mentésben őrzi a rekordot és a napokat; nincs felhőszinkron. A részben teljesített Ritmus legjobb körszáma megmarad, de csak mind az öt kör vagy egy befejezett kártyamenet jelöl napot. Nincs XP, feloldás vagy naplóváltozás. A fizikai mozgás opcionális.'**
+  String get clubLocalOnly;
+
+  /// No description provided for @clubLoadError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A klubmentés nem olvasható vagy ismeretlen formátumú. Megőriztük, nem írjuk felül. Újratöltéssel próbálkozhatsz; a külön próbamód továbbra is elérhető.'**
+  String get clubLoadError;
+
+  /// No description provided for @clubSaveError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A kluberedmény mentése nem igazolt. Nem jelzünk sikeres teljesítést. Töltsd újra a klubadatokat és próbáld újra a mentést.'**
+  String get clubSaveError;
+
+  /// No description provided for @clubSaving.
+  ///
+  /// In hu, this message translates to:
+  /// **'Klubadatok betöltése / mentése…'**
+  String get clubSaving;
+
+  /// No description provided for @clubAlreadyToday.
+  ///
+  /// In hu, this message translates to:
+  /// **'A mai nap már teljesült. A rekord frissülhet, de új napi jelölés nem jár.'**
+  String get clubAlreadyToday;
+
+  /// No description provided for @clubDaySaved.
+  ///
+  /// In hu, this message translates to:
+  /// **'A teljesítés mentve a mai helyi naphoz.'**
+  String get clubDaySaved;
+
+  /// No description provided for @clubFull.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mind a hét nap teljesült. A klubban indíthatsz új kihívást.'**
+  String get clubFull;
+
+  /// No description provided for @clubTestMode.
+  ///
+  /// In hu, this message translates to:
+  /// **'Hét nap kipróbálása külön próbaadatokkal'**
+  String get clubTestMode;
+
+  /// No description provided for @clubTestNotice.
+  ///
+  /// In hu, this message translates to:
+  /// **'PRÓBAMÓD – külön mentés. A saját rekordod és kihívásod változatlan. A próbanap csak ebben a nézetben léptethető; nem állítja át a készülék óráját.'**
+  String get clubTestNotice;
+
+  /// No description provided for @clubTestDate.
+  ///
+  /// In hu, this message translates to:
+  /// **'Próbanap: {date}'**
+  String clubTestDate(String date);
+
+  /// No description provided for @clubNextDay.
+  ///
+  /// In hu, this message translates to:
+  /// **'Következő próbanap'**
+  String get clubNextDay;
+
+  /// No description provided for @cardsTitle.
+  ///
+  /// In hu, this message translates to:
+  /// **'Mozgáskártyák'**
+  String get cardsTitle;
+
+  /// No description provided for @cardsIntro.
+  ///
+  /// In hu, this message translates to:
+  /// **'Három rövid, saját tempóban követhető kártya. Válassz ülő vagy álló változatot. Csak kényelmes mozdulatot végezz; bármelyik kártyát átugorhatod vagy kiléphetsz. Nincs mozgásmérés, a jelölés a saját visszajelzésed alapján történik.'**
+  String get cardsIntro;
+
+  /// No description provided for @cardsSeated.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ülő változat'**
+  String get cardsSeated;
+
+  /// No description provided for @cardsStanding.
+  ///
+  /// In hu, this message translates to:
+  /// **'Álló változat'**
+  String get cardsStanding;
+
+  /// No description provided for @cardsSeated1.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ülj kényelmesen. Ha jólesik, nyújtózz finoman felfelé, majd engedd le a karod.'**
+  String get cardsSeated1;
+
+  /// No description provided for @cardsSeated2.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ülve lazítsd el a vállad. Finoman gördítsd hátra, majd térj vissza kényelmes tartásba.'**
+  String get cardsSeated2;
+
+  /// No description provided for @cardsSeated3.
+  ///
+  /// In hu, this message translates to:
+  /// **'Ülve mozgasd át finoman a bokáidat. Tedd le újra mindkét talpad kényelmesen.'**
+  String get cardsSeated3;
+
+  /// No description provided for @cardsStanding1.
+  ///
+  /// In hu, this message translates to:
+  /// **'Állj stabilan. Ha kényelmes, nyújtózz finoman felfelé, majd lazítsd el a karod.'**
+  String get cardsStanding1;
+
+  /// No description provided for @cardsStanding2.
+  ///
+  /// In hu, this message translates to:
+  /// **'Tegyél egy kis lépést balra, majd térj vissza középre. Maradj a kényelmes mozgástartományban.'**
+  String get cardsStanding2;
+
+  /// No description provided for @cardsStanding3.
+  ///
+  /// In hu, this message translates to:
+  /// **'Tegyél egy kis lépést jobbra, majd térj vissza középre. Most meg is állhatsz.'**
+  String get cardsStanding3;
+
+  /// No description provided for @cardsStep.
+  ///
+  /// In hu, this message translates to:
+  /// **'{step}. kártya / 3'**
+  String cardsStep(int step);
+
+  /// No description provided for @cardsDone.
+  ///
+  /// In hu, this message translates to:
+  /// **'Elvégeztem · Tovább'**
+  String get cardsDone;
+
+  /// No description provided for @cardsSkip.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kártya átugrása'**
+  String get cardsSkip;
+
+  /// No description provided for @cardsKeyboard.
+  ///
+  /// In hu, this message translates to:
+  /// **'Billentyűzet: N = elvégeztem, S = átugrás. A Vissza gombbal bármikor kiléphetsz.'**
+  String get cardsKeyboard;
+
+  /// No description provided for @cardsResult.
+  ///
+  /// In hu, this message translates to:
+  /// **'Visszajelzett kártyák: {count} / 3'**
+  String cardsResult(int count);
+
+  /// No description provided for @cardsAllSkipped.
+  ///
+  /// In hu, this message translates to:
+  /// **'Minden kártyát átugrottál. Nincs napi jelölés; később bármikor visszatérhetsz.'**
+  String get cardsAllSkipped;
+
+  /// No description provided for @cardsExit.
+  ///
+  /// In hu, this message translates to:
+  /// **'Kilépés a klubba'**
+  String get cardsExit;
 }
 
 class _AppLocalizationsDelegate

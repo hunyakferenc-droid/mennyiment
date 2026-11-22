@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import 'app_language.dart';
+import 'menti_animation_player.dart';
 import 'menti_access.dart';
 import 'menti_ui.dart';
 
@@ -95,6 +96,11 @@ class DataSafetyPage extends StatelessWidget {
       title: s.infoDataTitle,
       children: [
         Text(s.infoDataIntro),
+        if (MentiAnimationScope.of(context)?.home != null)
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Text(s.clubLocalOnly),
+          ),
         const SizedBox(height: 16),
         _BackupLink(
           key: const ValueKey('data-open-backup'),

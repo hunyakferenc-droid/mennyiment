@@ -141,6 +141,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+  MentiHomeReactions? _reviewHomeSession;
   final _journalRevision = ValueNotifier<int>(0);
   void Function()? _stopJournalWatch;
   bool _checkingJournal = false;
@@ -150,6 +151,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   @override
   void dispose() {
+    _reviewHomeSession?.visibility(false);
     WidgetsBinding.instance.removeObserver(this);
     _stopJournalWatch?.call();
     _journalRevision.dispose();
@@ -614,7 +616,9 @@ void updateMentiMessage(MentiMood mood) {
             return false;
           }
           final next=List<Drink>.of(drinks); next[index]=replacement;
-          return _persistDrinks(next);
+          final saved = await _persistDrinks(next);
+          if (saved) MentiLifeEvents.instance.emit(MentiLifeEvent.journalSaved);
+          return saved;
         }))) == true;
     } finally { _editingEntry=false; }
   }
@@ -1000,6 +1004,16 @@ void updateMentiMessage(MentiMood mood) {
         .toSet().length;
     final todayUnknown = today.where((d) => d.priceFt == null).length;
     final width = MediaQuery.sizeOf(context).width;
+    final homeSession = MentiAnimationScope.of(context)?.home;
+    _reviewHomeSession = homeSession;
+    final homeRoute = ModalRoute.of(context);
+    if (homeSession != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && identical(_reviewHomeSession, homeSession)) {
+          homeSession.visibility(homeRoute?.isCurrent ?? true);
+        }
+      });
+    }
     return Scaffold(
       appBar: AppBar(
         title: const FittedBox(fit:BoxFit.scaleDown,child:Text('MennyiMent?',
@@ -1057,6 +1071,7 @@ void updateMentiMessage(MentiMood mood) {
                           )],
                         ),
                         child: MentiEvolution(
+                          key: const ValueKey('home-menti'),
                           onTap: MentiAnimationScope.of(context)?.home == null ? null : () => MentiAnimationScope.of(context)?.home?.requestWink(),
                           assetPath: _characterAsset,
                           reaction: mentiReaction,

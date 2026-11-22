@@ -23,11 +23,13 @@ class MentiAvatarRenderer extends StatelessWidget {
   const MentiAvatarRenderer({
     super.key,
     required this.profile,
+    this.onTap,
     this.size = 260,
     this.reaction,
     this.showBackground = true,
     this.animate = false,
   });
+  final VoidCallback? onTap;
   final MentiIdentityProfile profile;
   final double size;
   final String? reaction;
@@ -88,6 +90,7 @@ class MentiAvatarRenderer extends StatelessWidget {
     final complete = CompleteLookScope.of(context);
     if (complete?.ready == true && complete!.selection.active) {
       return MentiAnimationPlayer(
+        onTap: onTap,
         look: CompleteLook.find(complete.selection.lookId)!,
         size: size,
       );
@@ -459,10 +462,12 @@ class MentiCurrentAvatar extends StatelessWidget {
   const MentiCurrentAvatar({
     super.key,
     required this.legacyChild,
+    this.onTap,
     this.size = 160,
     this.reaction,
     this.outfit,
   });
+  final VoidCallback? onTap;
   final Widget legacyChild;
   final double size;
   final String? reaction;
@@ -489,6 +494,7 @@ class MentiCurrentAvatar extends StatelessWidget {
       );
     }
     return MentiAvatarRenderer(
+      onTap: onTap,
       profile: profile,
       size: size,
       animate: true,

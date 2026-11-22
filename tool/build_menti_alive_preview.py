@@ -38,7 +38,7 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
  subprocess.run([a.flutter,'pub','get'],cwd=work,check=True)
  if a.device:
   if a.platform!='apk': raise SystemExit('Device integration requires apk platform')
-  subprocess.run([a.flutter,'test',('integration_test/menti_home_review_test.dart' if a.home else 'integration_test/menti_beta_review_test.dart'),'-d',a.device,'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub','--no-uninstall'],cwd=work,check=True)
+  subprocess.run([a.flutter,'test',('integration_test/menti_home_review_test.dart' if a.home else 'integration_test/menti_beta_review_test.dart'),'-d',a.device,'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub','--no-uninstall','--reporter','expanded'],cwd=work,check=True)
   raise SystemExit(0)
  command=[a.flutter,'build',a.platform,'--target',('tool/menti_home_review.dart' if a.home else 'tool/menti_animation_studio.dart' if a.studio else 'tool/menti_alive_preview.dart'),'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub']
  command+=['--no-web-resources-cdn','--no-wasm-dry-run']if a.platform=='web'else['--debug']
@@ -51,6 +51,6 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
  else:
   shutil.copyfile(built/'app-debug.apk',a.output/'app-debug.apk')
   (a.output/'app-debug.apk.sha256').write_text(hashlib.sha256((a.output/'app-debug.apk').read_bytes()).hexdigest()+'  app-debug.apk\n')
- shutil.copyfile(work/('docs/menti-home-fitness/kiprobalas-hu.md' if a.home else 'docs/menti-animation-studio/kiprobalas-hu.md' if a.studio else 'docs/menti-beta/kiprobalas-hu.md'),a.output/'OLVASDEL-REVIEW.txt')
- (a.output/'build-info.txt').write_text(f'source_commit={source}\nversion=3.1.0+44\nvariant={"home-review" if a.home else "developer-preview"}\napplication_id=com.example.mennyiment.review\napproved_media=0\nreview_media={len(catalog["clips"])}\nurl=http://127.0.0.1:7357\n')
+ shutil.copyfile(work/('docs/menti-home-fitness/3.2-kiprobalas-hu.md' if a.home else 'docs/menti-animation-studio/kiprobalas-hu.md' if a.studio else 'docs/menti-beta/kiprobalas-hu.md'),a.output/'OLVASDEL-REVIEW.txt')
+ (a.output/'build-info.txt').write_text(f'source_commit={source}\nversion=3.2.0+45\nvariant={"home-review" if a.home else "developer-preview"}\napplication_id=com.example.mennyiment.review\napproved_media=0\nreview_media={len(catalog["clips"])}\nurl=http://127.0.0.1:7357\n')
 print('Isolated developer preview built:',a.output)

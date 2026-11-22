@@ -90,6 +90,7 @@ class _MentiEvolutionState extends State<MentiEvolution>
           '${appStrings(context).avatarPreview('Menti')}, ${appStrings(context).evolutionLevel(widget.level)}',
       button: _animate || widget.onTap != null,
       child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: () {
           if (_animate && MentiExperienceScope.reactionsOf(context)) {
             _celebrate.forward(from: 0);
@@ -148,6 +149,7 @@ class _MentiEvolutionState extends State<MentiEvolution>
                   );
                 },
                 child: MentiCurrentAvatar(
+                  onTap: widget.onTap,
                   size: widget.size,
                   reaction:
                       widget.visualReaction ??
