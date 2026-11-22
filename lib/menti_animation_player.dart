@@ -188,9 +188,11 @@ class MentiAnimationPlayer extends StatefulWidget {
   const MentiAnimationPlayer({
     super.key,
     required this.look,
+    this.onTap,
     this.size = 260,
     this.controller,
   });
+  final VoidCallback? onTap;
   final CompleteLook look;
   final double size;
   final MentiAnimationController? controller;
@@ -291,15 +293,25 @@ class _MentiAnimationPlayerState extends State<MentiAnimationPlayer> {
             children: [
               ExcludeSemantics(child: ClipRect(child: media.view)),
               if (!media.frameVisible) poster,
-              // An invisible HTML input surface keeps the native <video> from
-              // swallowing taps intended for the surrounding Menti gesture.
-              // No second video, decoder or runtime dependency is introduced.
-              if (kIsWeb)
+              // The HTML interceptor sits below a real Flutter tap target.
+              // This prevents the video platform view from taking the gesture.
+              // Only the explicit home callback creates this input surface.
+              if (kIsWeb && widget.onTap != null)
                 Positioned.fill(
-                  child: HtmlElementView.fromTagName(
-                    tagName: 'div',
-                    isVisible: false,
-                    hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      HtmlElementView.fromTagName(
+                        tagName: 'div',
+                        isVisible: false,
+                      ),
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        excludeFromSemantics: true,
+                        onTap: widget.onTap,
+                        child: const SizedBox.expand(),
+                      ),
+                    ],
                   ),
                 ),
             ],

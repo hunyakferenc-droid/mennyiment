@@ -149,6 +149,7 @@ class _MentiEvolutionState extends State<MentiEvolution>
                   );
                 },
                 child: MentiCurrentAvatar(
+                  onTap: widget.onTap,
                   size: widget.size,
                   reaction:
                       widget.visualReaction ??
