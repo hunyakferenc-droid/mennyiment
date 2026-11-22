@@ -256,7 +256,23 @@ void main() {
           await click('rhythm-retry');
           for (var i = 0; i < 5; i++) {
             while (game.phase == RhythmPhase.demonstration) {
-              await click('rhythm-next');
+              if (i == 0 && game.shown == game.sequence.length - 1) {
+                final next = find.byKey(const ValueKey('rhythm-next'));
+                await t.ensureVisible(next);
+                await t.pumpAndSettle();
+                Focus.of(
+                  t.element(
+                    find
+                        .descendant(of: next, matching: find.byType(Text))
+                        .first,
+                  ),
+                ).requestFocus();
+                await t.pump();
+                await t.sendKeyEvent(LogicalKeyboardKey.enter);
+                await t.pumpAndSettle();
+              } else {
+                await click('rhythm-next');
+              }
             }
             for (final a in game.sequence) {
               if (i == 0) {

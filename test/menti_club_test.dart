@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui' show CheckedState;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -370,7 +371,21 @@ void main() {
           for (final seated in [true, false]) {
             await open();
             await tapKey(seated ? 'cards-seated' : 'cards-standing');
-            await tapKey('cards-start');
+            if (seated) {
+              final start = find.byKey(const ValueKey('cards-start'));
+              await t.ensureVisible(start);
+              await t.pumpAndSettle();
+              Focus.of(
+                t.element(
+                  find.descendant(of: start, matching: find.byType(Text)).first,
+                ),
+              ).requestFocus();
+              await t.pump();
+              await t.sendKeyEvent(LogicalKeyboardKey.enter);
+              await t.pumpAndSettle();
+            } else {
+              await tapKey('cards-start');
+            }
             if (seated) {
               for (final key in [
                 LogicalKeyboardKey.keyN,
@@ -429,23 +444,37 @@ void main() {
             ),
           );
           await t.pumpAndSettle();
-          final first = find.byKey(const ValueKey('club-day-0'));
-          await t.scrollUntilVisible(first, 200, maxScrolls: 40);
-          await t.pumpAndSettle();
-          for (var i = 0; i < 7; i++) {
-            expect(find.byKey(ValueKey('club-day-$i')), findsOneWidget);
+          final semantics = t.ensureSemantics();
+
+          try {
+            final first = find.byKey(const ValueKey('club-day-0'));
+            await t.scrollUntilVisible(first, 200, maxScrolls: 40);
+            await t.pumpAndSettle();
+            for (var i = 0; i < 7; i++) {
+              expect(find.byKey(ValueKey('club-day-$i')), findsOneWidget);
+              expect(
+                t
+                    .getSemantics(find.byKey(ValueKey('club-day-$i')))
+                    .getSemanticsData()
+                    .flagsCollection
+                    .isChecked,
+                CheckedState.isTrue,
+              );
+            }
+            final f = find.byKey(const ValueKey('club-new-challenge'));
+            await t.scrollUntilVisible(f, 200, maxScrolls: 40);
+            await t.ensureVisible(f);
+            await t.pumpAndSettle();
+            await t.tap(f);
+            await t.pumpAndSettle();
+            expect(store.record.days, isEmpty);
+            expect(store.record.best, 5);
+            expect(store.record.last, '2030-01-07');
+            expect(t.takeException(), isNull);
+          } finally {
+            semantics.dispose();
+            store.dispose();
           }
-          final f = find.byKey(const ValueKey('club-new-challenge'));
-          await t.scrollUntilVisible(f, 200, maxScrolls: 40);
-          await t.ensureVisible(f);
-          await t.pumpAndSettle();
-          await t.tap(f);
-          await t.pumpAndSettle();
-          expect(store.record.days, isEmpty);
-          expect(store.record.best, 5);
-          expect(store.record.last, '2030-01-07');
-          expect(t.takeException(), isNull);
-          store.dispose();
         },
       );
     }

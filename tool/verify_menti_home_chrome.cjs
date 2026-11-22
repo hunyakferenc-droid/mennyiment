@@ -7,7 +7,7 @@ const checks=[],errors=[];const url='http://127.0.0.1:7357';
 const enc=x=>JSON.stringify(JSON.stringify(x));
 const button=(p,name)=>p.getByRole('button',{name,exact:true});
 async function top(p){await p.mouse.move(250,240);await p.mouse.wheel(0,-30000);await p.waitForTimeout(180);}
-async function action(p,l){await semantics(p);await reach(p,l);await l.evaluate(e=>e.click());await p.waitForTimeout(180);await semantics(p);}
+async function action(p,l){await top(p);await semantics(p);await reach(p,l);await l.evaluate(e=>e.click());await p.waitForTimeout(180);await semantics(p);}
 (async()=>{const b=await chromium.launch({executablePath:process.env.CHROME_BIN||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});let active;
 try {
  for(const lang of ['hu','en']) for(const family of ['girl','neutral']) {
@@ -32,13 +32,13 @@ try {
   const s=strings[lang];await action(p,button(p,s.lifeWink));assert.equal(await p.locator('video').count(),0);
   checks.push(`${lang}/${family}: reduced motion respects PNG fallback`);
   if(family==='girl') {
-   // Same real app, accessible narrow viewport. Browser font-scale is covered
-   // by Android system 200% and widget matrix, never claimed as a web setting.
-   await p.setViewportSize({width:320,height:1000});await top(p);
+   // Flutter web derives its text scale from the root computed font size.
+   // 32px / the engine baseline 16px gives the real 200% browser font setting.
+   await p.setViewportSize({width:320,height:1000});await p.evaluate(()=>document.documentElement.style.fontSize='32px');await p.waitForTimeout(300);assert.equal(await p.evaluate(()=>getComputedStyle(document.documentElement).fontSize),'32px');await top(p);
    await action(p,button(p,s.fitnessTitle));await action(p,button(p,s.rhythmPlay));
    await p.getByRole('heading',{name:s.rhythmTitle,exact:true}).waitFor();
    const beforeGame=await snapshot(p);
-   async function sequence(){const result=[];for(let n=0;n<10;n++) {
+   async function sequence(){await top(p);await semantics(p);const result=[];for(let n=0;n<10;n++) {
     const tree=await p.locator('body').ariaSnapshot();const cue=tree.split('\n').find(l=>l.includes(lang==='hu'?'Figyelj:':'Watch:'));
     if(!cue)break;const a=cue.includes(s.rhythmStretch)?0:cue.includes(s.rhythmLeft)?1:cue.includes(s.rhythmRight)?2:-1;assert(a>=0,cue);result.push(a);
     await action(p,button(p,s.rhythmNext));
@@ -55,16 +55,16 @@ try {
    const gameSaved=await snapshot(p),clubKey='flutter.mennyiment_fitness_club_v1';
    const record=JSON.parse(JSON.parse(gameSaved[clubKey]));assert.equal(record.best,5);assert.equal(record.days.length,1);
    const gameProtected={...gameSaved};delete gameProtected[clubKey];assert.deepEqual(gameProtected,beforeGame);
-   await action(p,button(p,lang==='hu'?'Vissza':'Back'));await top(p);
+   await button(p,lang==='hu'?'Vissza':'Back').evaluate(e=>e.click());await p.waitForTimeout(250);await semantics(p);await p.getByRole('heading',{name:'MennyiMent?',exact:true}).waitFor();await top(p);
    assert.deepEqual(await snapshot(p),gameSaved);
    await p.screenshot({path:path.join(out,`home-return-${lang}-320.png`)});
-   checks.push(`${lang}: 320px keyboard wrong/retry, lengths 3..7, five rounds, result/back club/home, no XP/journal/profile writes`);
+   checks.push(`${lang}: 320px / 200% browser font keyboard wrong/retry, lengths 3..7, five rounds, result/back club/home, no XP/journal/profile writes`);
    await action(p,button(p,s.visualAdd));
    const drinkName=lang==='hu'?'Sör (általános)':s.catalogBeer;
-   await action(p,p.getByText(drinkName,{exact:true}).first());
+   await action(p,p.getByRole('button',{name:drinkName,exact:false}).first());
    await action(p,button(p,s.journalSave));
    await p.waitForTimeout(300);await semantics(p);
-   await reach(p,p.getByText(s.homeSavedReply,{exact:true}));
+   await top(p);await semantics(p);await reach(p,p.getByRole('group',{name:s.homeSavedReply,exact:false}));
    assert.equal(await p.locator('video').count(),0);
    const saved=await snapshot(p),journal='flutter.mennyiment_drinks_v1';
    assert.equal(JSON.parse(JSON.parse(saved[journal])).length,2);
@@ -72,10 +72,10 @@ try {
    assert.deepEqual(protectedAfter,protectedBefore);
    checks.push(`${lang}: actual home journal save -> exactly one saved record, own PNG feedback, no XP or unlock change`);
    await p.reload({waitUntil:'networkidle'});await semantics(p);assert.deepEqual(await snapshot(p),saved);
-   checks.push(`${lang}: reload preserves all saved data; game remains ephemeral`);
+   checks.push(`${lang}: reload preserves all saved data; club record persists and game sequence restarts`);
   }
   await context.close();active=null;
  }
  assert.deepEqual(errors,[]);
- fs.writeFileSync(path.join(out,'home-chrome-verification.json'),JSON.stringify({sourceCommit:source,version:'3.2.0+45',realWindows:process.platform==='win32',browser:b.version(),checks,runtimeErrors:errors},null,2)+'\n');console.log(checks.length+' home REVIEW checks passed');
+ fs.writeFileSync(path.join(out,'home-chrome-verification.json'),JSON.stringify({sourceCommit:source,version:'3.2.0+45',realWindows:process.platform==='win32',browser:b.version(),mobileBrowserFontPx:32,mobileTextScale:2,checks,runtimeErrors:errors},null,2)+'\n');console.log(checks.length+' home REVIEW checks passed');
 } catch(e) { if(active&&!active.isClosed()){await active.screenshot({path:path.join(out,'home-failure.png')}).catch(()=>{});fs.writeFileSync(path.join(out,'home-failure-dom.txt'),await active.locator('body').ariaSnapshot().catch(()=>''));}throw e; } finally {await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

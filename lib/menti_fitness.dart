@@ -166,20 +166,32 @@ class _ClubState extends State<MentiFitnessClub> with WidgetsBindingObserver {
                       runSpacing: 8,
                       children: [
                         for (var i = 0; i < 7; i++)
-                          Chip(
+                          Semantics(
                             key: ValueKey('club-day-$i'),
-                            avatar: Icon(
-                              i < store.record.days.length
-                                  ? Icons.check_circle
-                                  : Icons.radio_button_unchecked,
-                            ),
-                            label: Text(
-                              i < store.record.days.length
-                                  ? s.clubDayDate(
-                                      i + 1,
-                                      date(store.record.days[i]),
-                                    )
-                                  : s.clubDayPending(i + 1),
+                            checked: i < store.record.days.length,
+                            readOnly: true,
+                            label: i < store.record.days.length
+                                ? s.clubDayDate(
+                                    i + 1,
+                                    date(store.record.days[i]),
+                                  )
+                                : s.clubDayPending(i + 1),
+                            child: ExcludeSemantics(
+                              child: Chip(
+                                avatar: Icon(
+                                  i < store.record.days.length
+                                      ? Icons.check_circle
+                                      : Icons.radio_button_unchecked,
+                                ),
+                                label: Text(
+                                  i < store.record.days.length
+                                      ? s.clubDayDate(
+                                          i + 1,
+                                          date(store.record.days[i]),
+                                        )
+                                      : s.clubDayPending(i + 1),
+                                ),
+                              ),
                             ),
                           ),
                       ],
