@@ -299,7 +299,7 @@ class _MentiAnimationPlayerState extends State<MentiAnimationPlayer> {
                   child: HtmlElementView.fromTagName(
                     tagName: 'div',
                     isVisible: false,
-                    hitTestBehavior: PlatformViewHitTestBehavior.transparent,
+                    hitTestBehavior: PlatformViewHitTestBehavior.opaque,
                   ),
                 ),
             ],

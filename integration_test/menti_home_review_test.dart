@@ -19,6 +19,22 @@ import 'package:mennyiment/menti_club_store.dart';
 import '../tool/menti_home_review.dart' as review;
 import 'menti_beta_device_test.dart' show tap, reach, until;
 
+Future<void> clubTap(WidgetTester t, String key) async {
+  final scroll = find.byType(Scrollable);
+  if (scroll.evaluate().isNotEmpty) {
+    await t.drag(scroll.first, const Offset(0, 4000));
+    await t.pumpAndSettle();
+  }
+  await tap(t, key);
+}
+
+Future<void> tapOwnMenti(WidgetTester t) async {
+  final own = find.byKey(const ValueKey('home-menti'));
+  await reach(t, own);
+  await t.tap(own);
+  await t.pump();
+}
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   testWidgets(
@@ -56,7 +72,7 @@ void main() {
 
       await waitVideo('girl-base-v1', 'welcome');
       expect(session.home!.presentations, 1);
-      await tap(t, 'home-wink');
+      await tapOwnMenti(t);
       await waitVideo('girl-base-v1', 'wink');
       await tap(t, 'home-stop');
       expect(session.controller.handle, isNull);
@@ -70,7 +86,7 @@ void main() {
       );
       await CompleteLookScope.of(ctx)!.load();
       await t.pumpAndSettle();
-      await tap(t, 'home-wink');
+      await tapOwnMenti(t);
       await waitVideo('neutral-base-v1', 'wink');
       expect(session.home!.presentations, 3); // No second welcome on switch.
       await tap(t, 'home-stop');
@@ -147,7 +163,7 @@ void main() {
       expect(after, before);
       await MentiMotionScope.settingsOf(ctx)!.setReduced(true);
       await t.pumpAndSettle();
-      await tap(t, 'home-wink');
+      await tapOwnMenti(t);
       expect(session.controller.handle, isNull);
       expect(session.home!.wink, true);
       expect((await MentiXpStore.load()).xp, 0);
@@ -166,20 +182,20 @@ void main() {
       await review.main();
       await t.pumpAndSettle();
       await until(t, find.byType(HomePage));
-      await tap(t, 'home-fitness');
-      await tap(t, 'club-test-mode');
+      await clubTap(t, 'home-fitness');
+      await clubTap(t, 'club-test-mode');
       Future<void> cards({bool skip = false, bool partial = false}) async {
-        await tap(t, 'fitness-cards');
-        await tap(t, 'cards-start');
+        await clubTap(t, 'fitness-cards');
+        await clubTap(t, 'cards-start');
         if (partial) {
-          await tap(t, 'cards-next');
-          await tap(t, 'cards-exit');
+          await clubTap(t, 'cards-next');
+          await clubTap(t, 'cards-exit');
           return;
         }
         for (var n = 0; n < 3; n++) {
-          await tap(t, skip ? 'cards-skip' : 'cards-next');
+          await clubTap(t, skip ? 'cards-skip' : 'cards-next');
         }
-        await tap(t, 'cards-club');
+        await clubTap(t, 'cards-club');
       }
 
       await cards(partial: true);
@@ -204,8 +220,8 @@ void main() {
           );
         }
         if (i < 6) {
-          await tap(t, 'club-next-day');
-          if (i == 1) await tap(t, 'club-next-day');
+          await clubTap(t, 'club-next-day');
+          if (i == 1) await clubTap(t, 'club-next-day');
         }
       }
       await p.reload();
@@ -218,14 +234,14 @@ void main() {
         '2030-01-07',
         '2030-01-08',
       ]);
-      await tap(t, 'club-new-challenge');
+      await clubTap(t, 'club-new-challenge');
       await cards();
       await p.reload();
       expect(
         MentiClubRecord.decode(p.get(MentiClubStore.testKey)).days,
         isEmpty,
       );
-      await tap(t, 'club-next-day');
+      await clubTap(t, 'club-next-day');
       await cards();
       await p.reload();
       expect(MentiClubRecord.decode(p.get(MentiClubStore.testKey)).days, [

@@ -1059,6 +1059,7 @@ void updateMentiMessage(MentiMood mood) {
                           )],
                         ),
                         child: MentiEvolution(
+                          key: const ValueKey('home-menti'),
                           onTap: MentiAnimationScope.of(context)?.home == null ? null : () => MentiAnimationScope.of(context)?.home?.requestWink(),
                           assetPath: _characterAsset,
                           reaction: mentiReaction,

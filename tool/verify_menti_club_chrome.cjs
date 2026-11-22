@@ -6,7 +6,7 @@ const normal='flutter.mennyiment_fitness_club_v1',test='flutter.mennyiment_fitne
 const decode=x=>JSON.parse(JSON.parse(x)),encode=x=>JSON.stringify(JSON.stringify(x));
 const button=(p,name)=>p.getByRole('button',{name,exact:true});
 async function top(p){await p.mouse.move(230,240);await p.mouse.wheel(0,-30000);await p.waitForTimeout(150);}
-async function action(p,l){await semantics(p);await reach(p,l);await l.evaluate(e=>e.click());await p.waitForTimeout(180);await semantics(p);}
+async function action(p,l){await top(p);await semantics(p);await reach(p,l);await l.evaluate(e=>e.click());await p.waitForTimeout(180);await semantics(p);}
 (async()=>{const b=await chromium.launch({executablePath:process.env.CHROME_BIN||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});let active;
 try{for(const lang of ['hu','en']){
  const values={...seed(lang),'flutter.mennyiment_complete_look_v1':encode({version:2,active:true,look:'girl-base-v1',acquired:[],announced:[]})};
@@ -15,7 +15,7 @@ try{for(const lang of ['hu','en']){
  await action(p,button(p,s.fitnessTitle));
  const before=await snapshot(p);assert.equal(before[normal],undefined);
  async function cards(mode='complete',standing=false){
-  await action(p,button(p,s.cardsTitle));if(standing)await action(p,p.getByRole('button',{name:s.cardsStanding,exact:true}));
+  await action(p,button(p,s.cardsTitle));if(standing)await action(p,p.getByRole('checkbox',{name:s.cardsStanding,exact:true}));
   await action(p,button(p,s.rhythmPlay));
   if(mode==='partial'){await action(p,button(p,s.cardsDone));await action(p,button(p,s.cardsExit));return;}
   for(let i=0;i<3;i++)await action(p,button(p,mode==='skip'?s.cardsSkip:s.cardsDone));
