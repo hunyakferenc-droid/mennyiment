@@ -1870,5 +1870,7 @@
     }
   },
   "cardsAllSkipped": "Minden kártyát átugrottál. Nincs napi jelölés; később bármikor visszatérhetsz.",
-  "cardsExit": "Kilépés a klubba"
+  "cardsExit": "Kilépés a klubba",
+  "journalFavoritesWriteError": "A kedvencek mentése nem sikerült. Nyisd meg újra az italválasztót az adatok újratöltéséhez.",
+  "journalFavoritesUnavailable": "A kedvencek nem tölthetők be biztonságosan. Az italnapló továbbra is használható; az italválasztó újranyitásával újrapróbálhatod."
 }

@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -6,7 +7,14 @@ import 'menti_club_store.dart';
 import 'menti_fitness.dart';
 
 class MentiMovementCards extends StatefulWidget {
-  const MentiMovementCards({super.key, required this.store});
+  const MentiMovementCards({
+    super.key,
+    required this.store,
+    this.nextTestDay,
+    this.testClock,
+  });
+  final VoidCallback? nextTestDay;
+  final DateTime Function()? testClock;
   final MentiClubStore store;
   @override
   State<MentiMovementCards> createState() => _CardsState();
@@ -85,6 +93,27 @@ class _CardsState extends State<MentiMovementCards> {
                 children: [
                   const Center(child: MentiFitnessArtwork()),
                   Text(s.cardsIntro),
+                  if (widget.store.key == MentiClubStore.testKey &&
+                      widget.nextTestDay != null &&
+                      widget.testClock != null) ...[
+                    Text(s.clubTestNotice),
+                    Text(
+                      s.clubTestDate(
+                        DateFormat.yMMMd(s.localeName)
+                            .format(widget.testClock!()),
+                      ),
+                    ),
+                    OutlinedButton(
+                      key: const ValueKey('cards-next-test-day'),
+                      onPressed: busy
+                          ? null
+                          : () {
+                              widget.nextTestDay!();
+                              setState(() {});
+                            },
+                      child: Text(s.clubNextDay),
+                    ),
+                  ],
                   const SizedBox(height: 12),
                   if (!started) ...[
                     Wrap(

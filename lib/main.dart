@@ -1,3 +1,4 @@
+import 'menti_favorites_store.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'drink_journal.dart';
@@ -224,7 +225,6 @@ void updateMentiMessage(MentiMood mood) {
 }
   static const storageKey = 'mennyiment_drinks_v1';
   static const customDrinksKey = 'mennyiment_custom_drinks_v1';
-  static const favoritesKey = 'mennyiment_favorites_v1';
   // 5.4: pontok kizárólag önellenőrzésre, soha nem alkoholfogyasztásra.
   final Set<String> _reflectionDays = {};
   bool _reflectionBusy = false;
@@ -278,7 +278,8 @@ void updateMentiMessage(MentiMood mood) {
 
   final List<Drink> drinks = [];
   final List<CatalogDrink> customDrinks = [];
-  final Set<String> favoriteDrinks = {};
+  final _favorites = MentiFavoritesStore();
+  Set<String> get favoriteDrinks => _favorites.values;
   bool isLoading = true;
   bool _journalReady = false;
   bool _journalSaving = false;
@@ -391,28 +392,9 @@ void updateMentiMessage(MentiMood mood) {
     }
   }
 
-  Future<void> saveFavorites() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setStringList(favoritesKey, favoriteDrinks.toList());
-    } catch (error) {
-      debugPrint('Kedvencek mentési hibája: $error');
-    }
-  }
-
   Future<void> loadFavorites() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      final saved = prefs.getStringList(favoritesKey) ?? [];
-      if (!mounted) return;
-      setState(() {
-        favoriteDrinks
-          ..clear()
-          ..addAll(saved);
-      });
-    } catch (error) {
-      debugPrint('Kedvencek betöltési hibája: $error');
-    }
+    await _favorites.load();
+    if (mounted) setState(() {});
   }
 
   Future<bool> saveCustomDrinks(List<CatalogDrink> next) async {
@@ -863,9 +845,11 @@ void updateMentiMessage(MentiMood mood) {
 
   Future<void> _openDrinkPicker() async {
     if (!MentiAccessScope.adultOf(context)) return;
-    if (!_canWriteJournal || _pickerOpen || _recording) return;
+    if (!_canWriteJournal || _pickerOpen || _recording || _favorites.saving) return;
     _pickerOpen = true;
     try {
+    await loadFavorites();
+    if (!mounted) return;
     await showModalBottomSheet<void>(
       context: context, isScrollControlled: true, showDragHandle: true,
       backgroundColor: _panel,
@@ -879,6 +863,7 @@ void updateMentiMessage(MentiMood mood) {
               child: Align(alignment: Alignment.centerLeft,
                 child: Text(appStrings(context).journalAddTitle, style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold)))),
             Expanded(child: ListView(children: [
+              if (!_favorites.ready) Padding(padding: const EdgeInsets.all(16), child: Text(appStrings(context).journalFavoritesUnavailable)),
               if (favorites.isNotEmpty) Padding(padding: const EdgeInsets.fromLTRB(20, 6, 20, 8),
                 child: Text(appStrings(context).journalFavorites, style: TextStyle(color: _mint, fontWeight: FontWeight.bold))),
               ...catalog.map((drink) => ListTile(
@@ -887,13 +872,20 @@ void updateMentiMessage(MentiMood mood) {
                 subtitle: Text('${drink.ml} ml  •  ${drink.percent}%'),
                 trailing: IconButton(
                   tooltip: appStrings(context).journalFavorite,
+                  isSelected: favoriteDrinks.contains(favoriteId(drink)),
                   icon: Icon(favoriteDrinks.contains(favoriteId(drink)) ? Icons.star : Icons.star_border,
                     color: Colors.amber),
-                  onPressed: () {
-                    final id = favoriteId(drink);
-                    setState(() { if (!favoriteDrinks.add(id)) favoriteDrinks.remove(id); });
-                    saveFavorites();
+                  key: ValueKey('journal-favorite-${favoriteId(drink)}'),
+                  onPressed: !_favorites.ready || _favorites.saving ? null : () async {
+                    if (_favorites.saving) return;
+                    final operation = _favorites.toggle(favoriteId(drink));
                     refresh(() {});
+                    final saved = await operation;
+                    if (!mounted) return;
+                    setState(() {});
+                    if (sheetContext.mounted) refresh(() {});
+                    if (!saved) { ScaffoldMessenger.of(this.context).showSnackBar(
+                      SnackBar(content: Text(appStrings(this.context).journalFavoritesWriteError))); }
                   },
                 ),
                 onTap: !_canWriteJournal ? null : () {
@@ -1109,7 +1101,7 @@ void updateMentiMessage(MentiMood mood) {
               if (MentiAnimationScope.of(context)?.home != null) ...[
                 const MentiHomeReviewFeedback(),
                 OutlinedButton.icon(key: const ValueKey('home-fitness'),
-                  onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const MentiFitnessClub())),
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const MentiFitnessClub(allowTestMode: true))),
                   icon: const Icon(Icons.fitness_center), label: Text(strings.fitnessTitle)),
               ],
               const SizedBox(height: 12),

@@ -77,5 +77,5 @@ try {
   await context.close();active=null;
  }
  assert.deepEqual(errors,[]);
- fs.writeFileSync(path.join(out,'home-chrome-verification.json'),JSON.stringify({sourceCommit:source,version:'3.2.0+45',realWindows:process.platform==='win32',browser:b.version(),mobileBrowserFontPx:32,mobileTextScale:2,checks,runtimeErrors:errors},null,2)+'\n');console.log(checks.length+' home REVIEW checks passed');
+ fs.writeFileSync(path.join(out,'home-chrome-verification.json'),JSON.stringify({sourceCommit:source,version:'3.3.0+46',realWindows:process.platform==='win32',browser:b.version(),mobileBrowserFontPx:32,mobileTextScale:2,checks,runtimeErrors:errors},null,2)+'\n');console.log(checks.length+' home REVIEW checks passed');
 } catch(e) { if(active&&!active.isClosed()){await active.screenshot({path:path.join(out,'home-failure.png')}).catch(()=>{});fs.writeFileSync(path.join(out,'home-failure-dom.txt'),await active.locator('body').ariaSnapshot().catch(()=>''));}throw e; } finally {await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

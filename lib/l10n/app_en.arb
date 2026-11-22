@@ -1870,5 +1870,7 @@
     }
   },
   "cardsAllSkipped": "You skipped every card. No day is marked; come back whenever you like.",
-  "cardsExit": "Leave for club"
+  "cardsExit": "Leave for club",
+  "journalFavoritesWriteError": "Favorites could not be saved. Reopen the drink picker to reload the saved data.",
+  "journalFavoritesUnavailable": "Favorites cannot be loaded safely. You can still use the journal; reopen the drink picker to retry."
 }

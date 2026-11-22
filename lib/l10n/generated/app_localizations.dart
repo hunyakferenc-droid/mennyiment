@@ -6679,6 +6679,18 @@ abstract class AppLocalizations {
   /// In hu, this message translates to:
   /// **'Kilépés a klubba'**
   String get cardsExit;
+
+  /// No description provided for @journalFavoritesWriteError.
+  ///
+  /// In hu, this message translates to:
+  /// **'A kedvencek mentése nem sikerült. Nyisd meg újra az italválasztót az adatok újratöltéséhez.'**
+  String get journalFavoritesWriteError;
+
+  /// No description provided for @journalFavoritesUnavailable.
+  ///
+  /// In hu, this message translates to:
+  /// **'A kedvencek nem tölthetők be biztonságosan. Az italnapló továbbra is használható; az italválasztó újranyitásával újrapróbálhatod.'**
+  String get journalFavoritesUnavailable;
 }
 
 class _AppLocalizationsDelegate

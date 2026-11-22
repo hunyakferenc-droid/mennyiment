@@ -3776,4 +3776,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cardsExit => 'Leave for club';
+
+  @override
+  String get journalFavoritesWriteError =>
+      'Favorites could not be saved. Reopen the drink picker to reload the saved data.';
+
+  @override
+  String get journalFavoritesUnavailable =>
+      'Favorites cannot be loaded safely. You can still use the journal; reopen the drink picker to retry.';
 }

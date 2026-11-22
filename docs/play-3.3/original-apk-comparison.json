@@ -1,0 +1,22 @@
+{
+  "installed": {
+    "applicationId": "com.example.mennyiment.review",
+    "versionCode": 43,
+    "certificateSha256": "51eeabfb52e48db66c6b0e65be0ed6edec065e638c2bf0ed39dd93b4bb4f637f",
+    "sha256": "0631aa8fdee5ea19aef3672daa25b2ca46cfe1885df7602c06d32d27a6f35a24"
+  },
+  "incoming": {
+    "applicationId": "com.example.mennyiment.review",
+    "versionCode": 45,
+    "certificateSha256": "b70cfaeaf903b3e7f05355ece465c9353dacd287f27244f3308280d9d0cd89ef",
+    "sha256": "391bff5a1c1abfce60d021e8da960667b99f7efa7d76fb557e3e625c0bc8cacc"
+  },
+  "status": "blocked-signature",
+  "guidance": "Signing certificates differ. Preserve the installed app/data; rebuild with its original key or use a separate test device.",
+  "readOnly": true,
+  "actualInstallAttempted": false,
+  "measuredDate": "2026-11-22",
+  "baseline48Source": "ede0c07f4489601913d9b641f17857032f4a074c",
+  "incoming50Source": "e75e1ed6e2b852600e9833453931dd2d23ed45e4",
+  "originalApkBytesInspected": true
+}

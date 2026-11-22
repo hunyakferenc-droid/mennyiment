@@ -9,7 +9,8 @@ from menti_beta_android import prepare_review_android, ensure_committed_source
 from menti_review_media import prepare_review_media
 
 root=Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('--platform',choices=['web','apk'],required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--studio',action='store_true',help='Build the 18-look Animation Studio');p.add_argument('--home',action='store_true',help='Build actual home reactions and Fitness Club');p.add_argument('--device', help='Run native REVIEW integration tests instead of producing a distributable');p.add_argument('--flutter',default='flutter');a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--platform',choices=['web','apk'],required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--studio',action='store_true',help='Build the 18-look Animation Studio');p.add_argument('--home',action='store_true',help='Build actual home reactions and Fitness Club');p.add_argument('--device', help='Run native REVIEW integration tests instead of producing a distributable');p.add_argument('--flutter',default='flutter');p.add_argument('--integration-test',choices=['integration_test/android_upgrade_read_test.dart']);a=p.parse_args()
+if a.integration_test and (not a.device or not a.home):raise SystemExit('Custom native read verification requires --home and --device.')
 try:ensure_committed_source(root)
 except ValueError as error:raise SystemExit(str(error))
 resolved_flutter=shutil.which(a.flutter)
@@ -34,11 +35,11 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
   review_assets=[line.strip()[2:] for line in text.split('  assets:\n',1)[1].splitlines() if line.strip().startswith('- assets/')] + additions
  text=text.split('  assets:\n',1)[0]+'  assets:\n'+''.join('    - '+x+'\n'for x in review_assets)
  pubspec.write_text(text,encoding='utf-8')
- prepare_review_android(work, studio=a.studio or a.home)
+ prepare_review_android(work, studio=a.studio or a.home, home=a.home)
  subprocess.run([a.flutter,'pub','get'],cwd=work,check=True)
  if a.device:
   if a.platform!='apk': raise SystemExit('Device integration requires apk platform')
-  subprocess.run([a.flutter,'test',('integration_test/menti_home_review_test.dart' if a.home else 'integration_test/menti_beta_review_test.dart'),'-d',a.device,'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub','--no-uninstall','--reporter','expanded'],cwd=work,check=True)
+  subprocess.run([a.flutter,'test',(a.integration_test or ('integration_test/menti_home_review_test.dart' if a.home else 'integration_test/menti_beta_review_test.dart')),'-d',a.device,'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub','--no-uninstall','--reporter','expanded'],cwd=work,check=True)
   raise SystemExit(0)
  command=[a.flutter,'build',a.platform,'--target',('tool/menti_home_review.dart' if a.home else 'tool/menti_animation_studio.dart' if a.studio else 'tool/menti_alive_preview.dart'),'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub']
  command+=['--no-web-resources-cdn','--no-wasm-dry-run']if a.platform=='web'else['--debug']
@@ -51,6 +52,6 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
  else:
   shutil.copyfile(built/'app-debug.apk',a.output/'app-debug.apk')
   (a.output/'app-debug.apk.sha256').write_text(hashlib.sha256((a.output/'app-debug.apk').read_bytes()).hexdigest()+'  app-debug.apk\n')
- shutil.copyfile(work/('docs/menti-home-fitness/3.2-kiprobalas-hu.md' if a.home else 'docs/menti-animation-studio/kiprobalas-hu.md' if a.studio else 'docs/menti-beta/kiprobalas-hu.md'),a.output/'OLVASDEL-REVIEW.txt')
- (a.output/'build-info.txt').write_text(f'source_commit={source}\nversion=3.2.0+45\nvariant={"home-review" if a.home else "developer-preview"}\napplication_id=com.example.mennyiment.review\napproved_media=0\nreview_media={len(catalog["clips"])}\nurl=http://127.0.0.1:7357\n')
+ shutil.copyfile(work/('docs/play-3.3/kiprobalas-hu.md' if a.home else 'docs/menti-animation-studio/kiprobalas-hu.md' if a.studio else 'docs/menti-beta/kiprobalas-hu.md'),a.output/'OLVASDEL-REVIEW.txt')
+ (a.output/'build-info.txt').write_text(f'source_commit={source}\nversion=3.3.0+46\nvariant={"home-review" if a.home else "developer-preview"}\napplication_id=com.example.mennyiment.review\napproved_media=0\nreview_media={len(catalog["clips"])}\nurl=http://127.0.0.1:7357\n')
 print('Isolated developer preview built:',a.output)

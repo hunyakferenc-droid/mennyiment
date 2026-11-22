@@ -3764,4 +3764,12 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get cardsExit => 'Kilépés a klubba';
+
+  @override
+  String get journalFavoritesWriteError =>
+      'A kedvencek mentése nem sikerült. Nyisd meg újra az italválasztót az adatok újratöltéséhez.';
+
+  @override
+  String get journalFavoritesUnavailable =>
+      'A kedvencek nem tölthetők be biztonságosan. Az italnapló továbbra is használható; az italválasztó újranyitásával újrapróbálhatod.';
 }

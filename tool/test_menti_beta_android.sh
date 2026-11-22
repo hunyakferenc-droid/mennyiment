@@ -9,6 +9,10 @@ exec > >(tee "$OUT/device.log") 2>&1
 trap 'adb exec-out screencap -p > "$OUT/last-screen.png" || true; adb logcat -d > "$OUT/logcat.txt" || true; adb shell dumpsys meminfo com.example.mennyiment.review > "$OUT/final-memory.txt" || true' EXIT
 adb wait-for-device
 [[ "$(adb shell getprop ro.kernel.qemu | tr -d '\r')" == "1" ]] || { echo "Refusing a non-emulator device."; exit 1; }
+adb shell cmd connectivity airplane-mode enable
+adb shell svc wifi disable
+adb shell svc data disable
+adb shell dumpsys connectivity > "$OUT/offline-connectivity.txt"
 adb shell getprop ro.build.version.release > "$OUT/android-version.txt"
 adb install -r artifacts/normal/app-debug.apk
 adb install -r artifacts/review/app-debug.apk
@@ -60,6 +64,14 @@ adb shell dumpsys meminfo com.example.mennyiment.review > "$OUT/review-idle-memo
 adb shell input keyevent KEYCODE_BACK
 adb shell am start -W -n com.example.mennyiment/com.example.mennyiment.MainActivity
 adb shell dumpsys activity activities > "$OUT/activities.txt"
+# Genuine normal-app HU store candidates, separate from REVIEW QA images.
+python3 - <<'STORE_SCREENS'
+import json
+from pathlib import Path
+from tool.android33_device_ui import store_screens
+result=store_screens('build/android-beta/store-candidates',locale='hu')
+Path('build/android-beta/store-candidates/metadata.json').write_text(json.dumps(result,indent=2)+'\n')
+STORE_SCREENS
 python3 - <<'PY'
 import json,os
 from pathlib import Path
