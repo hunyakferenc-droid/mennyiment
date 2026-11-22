@@ -22,7 +22,9 @@ class MentiHomeReactions extends ChangeNotifier {
   }
 
   void visibility(bool value) {
+    final changed = _homeVisible != value;
     _homeVisible = value;
+    if (changed && !value) _controller?.stop();
     refresh();
   }
 
@@ -55,10 +57,14 @@ class MentiHomeReactions extends ChangeNotifier {
       wink = false;
       _notify();
     }
-    if (!c.hasVisibleHost && !(_homeVisible && c.lookId != null)) return;
+    if (!_homeVisible || c.lookId == null) return;
     if (_pending != null) {
       _schedule();
     } else if (!_welcomed) {
+      // An available welcome must not be consumed before the actual home hero
+      // has mounted. Disabled motion and missing media still get PNG + text.
+      final welcome = c.catalog.find(c.lookId!, MentiLifeReaction.welcome);
+      if (welcome != null && c.animationAllowed && !c.hasVisibleHost) return;
       _welcomed = true;
       _show(const MentiLifeSignal(MentiLifeEvent.appOpened, 'home-welcome'));
     }
@@ -85,7 +91,9 @@ class MentiHomeReactions extends ChangeNotifier {
       final c = _controller;
       if (c == null ||
           !_foreground ||
-          (!c.hasVisibleHost && !_homeVisible) ||
+          !_ready ||
+          !_homeVisible ||
+          c.lookId == null ||
           _pending == null) {
         return;
       }
@@ -116,7 +124,7 @@ class MentiHomeReactions extends ChangeNotifier {
 
   void requestWink({DateTime? now}) {
     final c = _controller;
-    if (c == null) return;
+    if (c == null || !_homeVisible || !_foreground) return;
     final at = now ?? DateTime.now();
     if (_lastTap != null &&
         at.difference(_lastTap!) < const Duration(milliseconds: 600)) {

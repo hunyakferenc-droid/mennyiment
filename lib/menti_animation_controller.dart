@@ -140,6 +140,7 @@ class MentiAnimationController extends ChangeNotifier {
   Timer? _deadline;
   final List<Map<String, Object>> measurements = [];
   bool _notificationPending = false;
+  bool get animationAllowed => _allowed && _foreground;
   bool get hasVisibleHost => _host != null && _allowed && _foreground;
   void _notify() {
     if (_disposed) return;

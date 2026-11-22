@@ -43,6 +43,13 @@ void main() {
       final host = Object();
       c.host(host, look: 'girl-base-v1', size: 140, visible: true);
       h.refresh();
+      expect(
+        h.presentations,
+        0,
+        reason:
+            "An onboarding or Studio host must not consume the home greeting",
+      );
+      h.visibility(true);
       await t.pump();
       expect(h.presentations, 1);
       expect(c.active!.lookId, 'girl-base-v1');
@@ -106,6 +113,7 @@ void main() {
       );
       c.host(Object(), look: 'boy-festival-v1', size: 140, visible: true);
       final h = MentiHomeReactions()..attach(c);
+      h.visibility(true);
       h.refresh();
       await t.pump();
       expect(c.active!.reaction, MentiLifeReaction.welcome);
@@ -119,6 +127,35 @@ void main() {
       expect(h.presentations, 2);
       expect(c.active?.reaction, MentiLifeReaction.congratulation);
       expect(c.active?.lookId, 'boy-festival-v1');
+      h.dispose();
+      c.dispose();
+      await t.pump();
+    },
+  );
+  testWidgets(
+    'Home welcome waits for the actual home media host instead of being consumed during loading',
+    (t) async {
+      final c = MentiAnimationController(
+        catalog: MentiAnimationCatalog([fixture(look: 'girl-base-v1')]),
+        verify: (_) async {},
+        factory: (_) => FakeMentiVideo(),
+      );
+      c.configure(
+        look: 'girl-base-v1',
+        allowed: true,
+        frequency: MentiAnimationFrequency.normal,
+      );
+      final h = MentiHomeReactions()..attach(c);
+      h.visibility(true);
+      h.refresh();
+      await t.pump();
+      expect(h.presentations, 0);
+      expect(c.active, isNull);
+      c.host(Object(), look: 'girl-base-v1', size: 140, visible: true);
+      h.refresh();
+      await t.pump();
+      expect(h.presentations, 1);
+      expect(c.active?.reaction, MentiLifeReaction.welcome);
       h.dispose();
       c.dispose();
       await t.pump();

@@ -6,28 +6,8 @@ import 'menti_life_events.dart';
 import 'menti_alive_preview.dart';
 
 /// REVIEW controls are placed in normal document flow, never over journal UI.
-class MentiHomeReviewFeedback extends StatefulWidget {
+class MentiHomeReviewFeedback extends StatelessWidget {
   const MentiHomeReviewFeedback({super.key});
-  @override
-  State<MentiHomeReviewFeedback> createState() => _FeedbackState();
-}
-
-class _FeedbackState extends State<MentiHomeReviewFeedback> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final home = MentiAnimationScope.of(context)?.home;
-    final visible = ModalRoute.of(context)?.isCurrent ?? true;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) home?.visibility(visible);
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final session = MentiAnimationScope.of(context)!;

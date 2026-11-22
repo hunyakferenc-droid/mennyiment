@@ -77,6 +77,8 @@ void main() {
               'look': session.controller.lookId,
               'status': session.controller.status.name,
               'host': session.controller.hasVisibleHost,
+              'allowed': session.controller.animationAllowed,
+              'homeCurrent': ModalRoute.of(ctx)?.isCurrent,
               'catalog': session.controller.catalog.clips.length,
               'presentations': session.home!.presentations,
               'event': session.home!.event?.name,
