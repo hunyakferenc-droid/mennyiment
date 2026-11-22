@@ -38,7 +38,7 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
  subprocess.run([a.flutter,'pub','get'],cwd=work,check=True)
  if a.device:
   if a.platform!='apk': raise SystemExit('Device integration requires apk platform')
-  subprocess.run([a.flutter,'test',('integration_test/menti_home_review_test.dart' if a.home else 'integration_test/menti_beta_review_test.dart'),'-d',a.device,'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub','--no-uninstall'],cwd=work,check=True)
+  subprocess.run([a.flutter,'test',('integration_test/menti_home_review_test.dart' if a.home else 'integration_test/menti_beta_review_test.dart'),'-d',a.device,'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub','--no-uninstall','--reporter','expanded'],cwd=work,check=True)
   raise SystemExit(0)
  command=[a.flutter,'build',a.platform,'--target',('tool/menti_home_review.dart' if a.home else 'tool/menti_animation_studio.dart' if a.studio else 'tool/menti_alive_preview.dart'),'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub']
  command+=['--no-web-resources-cdn','--no-wasm-dry-run']if a.platform=='web'else['--debug']
