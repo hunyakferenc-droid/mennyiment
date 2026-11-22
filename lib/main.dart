@@ -614,7 +614,9 @@ void updateMentiMessage(MentiMood mood) {
             return false;
           }
           final next=List<Drink>.of(drinks); next[index]=replacement;
-          return _persistDrinks(next);
+          final saved = await _persistDrinks(next);
+          if (saved) MentiLifeEvents.instance.emit(MentiLifeEvent.journalSaved);
+          return saved;
         }))) == true;
     } finally { _editingEntry=false; }
   }

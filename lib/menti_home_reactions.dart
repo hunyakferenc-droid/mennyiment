@@ -11,7 +11,12 @@ import 'menti_reaction_engine.dart';
 /// priority signal is presented once on return. Old-character events are dropped.
 class MentiHomeReactions extends ChangeNotifier {
   MentiAnimationController? _controller;
-  bool _homeVisible = false, _ready = true;
+  bool _homeVisible = false, _ready = true, _foreground = true;
+  void foreground(bool value) {
+    _foreground = value;
+    if (value) refresh();
+  }
+
   void ready(bool value) {
     _ready = value;
   }
@@ -42,7 +47,7 @@ class MentiHomeReactions extends ChangeNotifier {
 
   void refresh() {
     final c = _controller;
-    if (c == null || !_ready) return;
+    if (c == null || !_ready || !_foreground) return;
     if (_look != c.lookId) {
       _look = c.lookId;
       _pending = null;
@@ -79,6 +84,7 @@ class MentiHomeReactions extends ChangeNotifier {
     _batch = Timer(const Duration(milliseconds: 100), () {
       final c = _controller;
       if (c == null ||
+          !_foreground ||
           (!c.hasVisibleHost && !_homeVisible) ||
           _pending == null) {
         return;

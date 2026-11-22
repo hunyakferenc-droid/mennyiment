@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
@@ -150,6 +151,7 @@ class _MentiAnimationScopeState extends State<MentiAnimationScope>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     controller.foreground(state == AppLifecycleState.resumed);
+    widget.homeReactions?.foreground(state == AppLifecycleState.resumed);
     if (state == AppLifecycleState.resumed) settings.load();
   }
 
@@ -289,6 +291,17 @@ class _MentiAnimationPlayerState extends State<MentiAnimationPlayer> {
             children: [
               ExcludeSemantics(child: ClipRect(child: media.view)),
               if (!media.frameVisible) poster,
+              // An invisible HTML input surface keeps the native <video> from
+              // swallowing taps intended for the surrounding Menti gesture.
+              // No second video, decoder or runtime dependency is introduced.
+              if (kIsWeb)
+                Positioned.fill(
+                  child: HtmlElementView.fromTagName(
+                    tagName: 'div',
+                    isVisible: false,
+                    hitTestBehavior: PlatformViewHitTestBehavior.transparent,
+                  ),
+                ),
             ],
           ),
         );

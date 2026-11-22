@@ -3621,4 +3621,147 @@ class AppLocalizationsHu extends AppLocalizations {
   String rhythmShowing(String action) {
     return 'Menti mutatja: $action';
   }
+
+  @override
+  String get clubChallengeTitle => 'Hétnapos kihívás';
+
+  @override
+  String get clubChallengeHint =>
+      'Gyűjts hét külön napon egy teljesítést. Nem kell egymást követő napokon játszanod: a kihagyás nem törli az eredményt. Egy naphoz egy jelölés jár.';
+
+  @override
+  String clubBest(int count) {
+    return 'Ritmus-rekord: $count / 5 kör';
+  }
+
+  @override
+  String clubProgress(int count) {
+    return 'Kihívás: $count / 7 nap';
+  }
+
+  @override
+  String get clubNoCompletion => 'Még nincs befejezett nap.';
+
+  @override
+  String clubLast(String date) {
+    return 'Utolsó teljesítés: $date';
+  }
+
+  @override
+  String clubDayDate(int day, String date) {
+    return '$day. nap · $date';
+  }
+
+  @override
+  String clubDayPending(int day) {
+    return '$day. nap · még vár rád';
+  }
+
+  @override
+  String get clubNewChallenge => 'Új hétnapos kihívás';
+
+  @override
+  String get clubLocalOnly =>
+      'A klub saját helyi mentésben őrzi a rekordot és a napokat; nincs felhőszinkron. A részben teljesített Ritmus legjobb körszáma megmarad, de csak mind az öt kör vagy egy befejezett kártyamenet jelöl napot. Nincs XP, feloldás vagy naplóváltozás. A fizikai mozgás opcionális.';
+
+  @override
+  String get clubLoadError =>
+      'A klubmentés nem olvasható vagy ismeretlen formátumú. Megőriztük, nem írjuk felül. Újratöltéssel próbálkozhatsz; a külön próbamód továbbra is elérhető.';
+
+  @override
+  String get clubSaveError =>
+      'A kluberedmény mentése nem igazolt. Nem jelzünk sikeres teljesítést. Töltsd újra a klubadatokat és próbáld újra a mentést.';
+
+  @override
+  String get clubSaving => 'Klubadatok betöltése / mentése…';
+
+  @override
+  String get clubAlreadyToday =>
+      'A mai nap már teljesült. A rekord frissülhet, de új napi jelölés nem jár.';
+
+  @override
+  String get clubDaySaved => 'A teljesítés mentve a mai helyi naphoz.';
+
+  @override
+  String get clubFull =>
+      'Mind a hét nap teljesült. A klubban indíthatsz új kihívást.';
+
+  @override
+  String get clubTestMode => 'Hét nap kipróbálása külön próbaadatokkal';
+
+  @override
+  String get clubTestNotice =>
+      'PRÓBAMÓD – külön mentés. A saját rekordod és kihívásod változatlan. A próbanap csak ebben a nézetben léptethető; nem állítja át a készülék óráját.';
+
+  @override
+  String clubTestDate(String date) {
+    return 'Próbanap: $date';
+  }
+
+  @override
+  String get clubNextDay => 'Következő próbanap';
+
+  @override
+  String get cardsTitle => 'Mozgáskártyák';
+
+  @override
+  String get cardsIntro =>
+      'Három rövid, saját tempóban követhető kártya. Válassz ülő vagy álló változatot. Csak kényelmes mozdulatot végezz; bármelyik kártyát átugorhatod vagy kiléphetsz. Nincs mozgásmérés, a jelölés a saját visszajelzésed alapján történik.';
+
+  @override
+  String get cardsSeated => 'Ülő változat';
+
+  @override
+  String get cardsStanding => 'Álló változat';
+
+  @override
+  String get cardsSeated1 =>
+      'Ülj kényelmesen. Ha jólesik, nyújtózz finoman felfelé, majd engedd le a karod.';
+
+  @override
+  String get cardsSeated2 =>
+      'Ülve lazítsd el a vállad. Finoman gördítsd hátra, majd térj vissza kényelmes tartásba.';
+
+  @override
+  String get cardsSeated3 =>
+      'Ülve mozgasd át finoman a bokáidat. Tedd le újra mindkét talpad kényelmesen.';
+
+  @override
+  String get cardsStanding1 =>
+      'Állj stabilan. Ha kényelmes, nyújtózz finoman felfelé, majd lazítsd el a karod.';
+
+  @override
+  String get cardsStanding2 =>
+      'Tegyél egy kis lépést balra, majd térj vissza középre. Maradj a kényelmes mozgástartományban.';
+
+  @override
+  String get cardsStanding3 =>
+      'Tegyél egy kis lépést jobbra, majd térj vissza középre. Most meg is állhatsz.';
+
+  @override
+  String cardsStep(int step) {
+    return '$step. kártya / 3';
+  }
+
+  @override
+  String get cardsDone => 'Elvégeztem · Tovább';
+
+  @override
+  String get cardsSkip => 'Kártya átugrása';
+
+  @override
+  String get cardsKeyboard =>
+      'Billentyűzet: N = elvégeztem, S = átugrás. A Vissza gombbal bármikor kiléphetsz.';
+
+  @override
+  String cardsResult(int count) {
+    return 'Visszajelzett kártyák: $count / 3';
+  }
+
+  @override
+  String get cardsAllSkipped =>
+      'Minden kártyát átugrottál. Nincs napi jelölés; később bármikor visszatérhetsz.';
+
+  @override
+  String get cardsExit => 'Kilépés a klubba';
 }

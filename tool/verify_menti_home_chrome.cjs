@@ -17,7 +17,7 @@ try {
   const p=await context.newPage();active=p;p.on('pageerror',e=>errors.push(e.message));p.setDefaultTimeout(30000);
   await p.goto(url,{waitUntil:'domcontentloaded'});
   assert((await(await p.request.get(url+'/build-info.txt')).text()).includes(source));
-  async function video(reaction){await p.waitForFunction(({family,reaction})=>[...document.querySelectorAll('video')].some(v=>v.currentSrc.includes('alive-review-'+family+'-'+reaction+'-v1.mp4')&&!v.paused&&v.currentTime>.15),{family,reaction},{timeout:60000});
+  async function video(reaction){await p.waitForFunction(({family,reaction})=>[...document.querySelectorAll('video')].some(v=>v.currentSrc.includes('alive-review-'+family+'-base-'+reaction+'-v1.mp4')&&!v.paused&&v.currentTime>.15),{family,reaction},{timeout:60000});
    const playing=await p.locator('video').evaluateAll(vs=>vs.filter(v=>!v.paused).map(v=>({src:v.currentSrc,w:v.videoWidth,h:v.videoHeight,muted:v.muted,time:v.currentTime})));
    assert.equal(playing.length,1);assert.equal(playing[0].w,540);assert.equal(playing[0].h,720);assert(playing[0].muted);return playing[0];}
   await video('welcome');const before=await snapshot(p);await p.screenshot({path:path.join(out,`home-${family}-${lang}-welcome-430.png`)});
@@ -52,16 +52,30 @@ try {
     await semantics(p);
    }
    await action(p,button(p,s.rhythmBack));await p.getByRole('heading',{name:s.fitnessTitle,exact:true}).waitFor();
-   assert.deepEqual(await snapshot(p),beforeGame);
+   const gameSaved=await snapshot(p),clubKey='flutter.mennyiment_fitness_club_v1';
+   const record=JSON.parse(JSON.parse(gameSaved[clubKey]));assert.equal(record.best,5);assert.equal(record.days.length,1);
+   const gameProtected={...gameSaved};delete gameProtected[clubKey];assert.deepEqual(gameProtected,beforeGame);
    await action(p,button(p,lang==='hu'?'Vissza':'Back'));await top(p);
-   assert.deepEqual(await snapshot(p),beforeGame);
+   assert.deepEqual(await snapshot(p),gameSaved);
    await p.screenshot({path:path.join(out,`home-return-${lang}-320.png`)});
    checks.push(`${lang}: 320px keyboard wrong/retry, lengths 3..7, five rounds, result/back club/home, no XP/journal/profile writes`);
-   await p.reload({waitUntil:'networkidle'});await semantics(p);assert.deepEqual(await snapshot(p),beforeGame);
+   await action(p,button(p,s.visualAdd));
+   const drinkName=lang==='hu'?'Sör (általános)':s.catalogBeer;
+   await action(p,p.getByText(drinkName,{exact:true}).first());
+   await action(p,button(p,s.journalSave));
+   await p.waitForTimeout(300);await semantics(p);
+   await reach(p,p.getByText(s.homeSavedReply,{exact:true}));
+   assert.equal(await p.locator('video').count(),0);
+   const saved=await snapshot(p),journal='flutter.mennyiment_drinks_v1';
+   assert.equal(JSON.parse(JSON.parse(saved[journal])).length,2);
+   const protectedBefore={...gameSaved},protectedAfter={...saved};delete protectedBefore[journal];delete protectedAfter[journal];
+   assert.deepEqual(protectedAfter,protectedBefore);
+   checks.push(`${lang}: actual home journal save -> exactly one saved record, own PNG feedback, no XP or unlock change`);
+   await p.reload({waitUntil:'networkidle'});await semantics(p);assert.deepEqual(await snapshot(p),saved);
    checks.push(`${lang}: reload preserves all saved data; game remains ephemeral`);
   }
   await context.close();active=null;
  }
  assert.deepEqual(errors,[]);
- fs.writeFileSync(path.join(out,'home-chrome-verification.json'),JSON.stringify({sourceCommit:source,version:'3.1.0+44',realWindows:process.platform==='win32',browser:b.version(),checks,runtimeErrors:errors},null,2)+'\n');console.log(checks.length+' home REVIEW checks passed');
+ fs.writeFileSync(path.join(out,'home-chrome-verification.json'),JSON.stringify({sourceCommit:source,version:'3.2.0+45',realWindows:process.platform==='win32',browser:b.version(),checks,runtimeErrors:errors},null,2)+'\n');console.log(checks.length+' home REVIEW checks passed');
 } catch(e) { if(active&&!active.isClosed()){await active.screenshot({path:path.join(out,'home-failure.png')}).catch(()=>{});fs.writeFileSync(path.join(out,'home-failure-dom.txt'),await active.locator('body').ariaSnapshot().catch(()=>''));}throw e; } finally {await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

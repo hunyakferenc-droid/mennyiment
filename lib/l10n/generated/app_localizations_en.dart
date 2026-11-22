@@ -3633,4 +3633,147 @@ class AppLocalizationsEn extends AppLocalizations {
   String rhythmShowing(String action) {
     return 'Menti shows: $action';
   }
+
+  @override
+  String get clubChallengeTitle => 'Seven-day challenge';
+
+  @override
+  String get clubChallengeHint =>
+      'Collect a completion on seven different days. They do not need to be consecutive: a skipped day keeps your progress. One mark per day.';
+
+  @override
+  String clubBest(int count) {
+    return 'Rhythm best: $count / 5 rounds';
+  }
+
+  @override
+  String clubProgress(int count) {
+    return 'Challenge: $count / 7 days';
+  }
+
+  @override
+  String get clubNoCompletion => 'No completed day yet.';
+
+  @override
+  String clubLast(String date) {
+    return 'Last completion: $date';
+  }
+
+  @override
+  String clubDayDate(int day, String date) {
+    return 'Day $day · $date';
+  }
+
+  @override
+  String clubDayPending(int day) {
+    return 'Day $day · still ahead';
+  }
+
+  @override
+  String get clubNewChallenge => 'New seven-day challenge';
+
+  @override
+  String get clubLocalOnly =>
+      'The club keeps records and days in its own local storage; there is no cloud sync. Your best completed Rhythm rounds are kept even in a partial game, but only all five rounds or a finished card session marks a day. No XP, unlocks or journal changes. Physical movement is optional.';
+
+  @override
+  String get clubLoadError =>
+      'Club data cannot be read or uses an unknown format. It is preserved and will not be overwritten. You can retry loading; the separate test mode is still available.';
+
+  @override
+  String get clubSaveError =>
+      'Club result storage was not confirmed. No successful completion is claimed. Reload club data and retry saving.';
+
+  @override
+  String get clubSaving => 'Loading / saving club data…';
+
+  @override
+  String get clubAlreadyToday =>
+      'Today is already complete. Your record can improve, but no extra day mark is added.';
+
+  @override
+  String get clubDaySaved => 'Completion saved for today’s local date.';
+
+  @override
+  String get clubFull =>
+      'All seven days are complete. Start a new challenge in the club.';
+
+  @override
+  String get clubTestMode => 'Try seven days with separate test data';
+
+  @override
+  String get clubTestNotice =>
+      'TEST MODE – separate storage. Your own record and challenge stay unchanged. Advance the virtual day only here; your device clock is not changed.';
+
+  @override
+  String clubTestDate(String date) {
+    return 'Virtual day: $date';
+  }
+
+  @override
+  String get clubNextDay => 'Next virtual day';
+
+  @override
+  String get cardsTitle => 'Movement Cards';
+
+  @override
+  String get cardsIntro =>
+      'Three short cards at your own pace. Choose seated or standing. Move only as feels comfortable; skip any card or leave at any time. Movement is not measured; completion uses your own confirmation.';
+
+  @override
+  String get cardsSeated => 'Seated';
+
+  @override
+  String get cardsStanding => 'Standing';
+
+  @override
+  String get cardsSeated1 =>
+      'Sit comfortably. If it feels good, gently stretch upwards, then lower your arms.';
+
+  @override
+  String get cardsSeated2 =>
+      'While seated, relax your shoulders. Gently roll them backwards, then return to a comfortable position.';
+
+  @override
+  String get cardsSeated3 =>
+      'While seated, gently move your ankles. Rest both feet comfortably again.';
+
+  @override
+  String get cardsStanding1 =>
+      'Stand steadily. If comfortable, gently stretch upwards, then relax your arms.';
+
+  @override
+  String get cardsStanding2 =>
+      'Take a small step left, then return to the centre. Keep within a comfortable range.';
+
+  @override
+  String get cardsStanding3 =>
+      'Take a small step right, then return to the centre. You can stop here.';
+
+  @override
+  String cardsStep(int step) {
+    return 'Card $step / 3';
+  }
+
+  @override
+  String get cardsDone => 'Done · Next';
+
+  @override
+  String get cardsSkip => 'Skip card';
+
+  @override
+  String get cardsKeyboard =>
+      'Keyboard: N = done, S = skip. Use Back to leave at any time.';
+
+  @override
+  String cardsResult(int count) {
+    return 'Confirmed cards: $count / 3';
+  }
+
+  @override
+  String get cardsAllSkipped =>
+      'You skipped every card. No day is marked; come back whenever you like.';
+
+  @override
+  String get cardsExit => 'Leave for club';
 }

@@ -6,7 +6,7 @@ $Evidence=[IO.Path]::GetFullPath($Evidence)
 $chrome=Join-Path $env:ProgramFiles 'Google/Chrome/Application/chrome.exe'
 if (-not (Test-Path $chrome)) { throw 'Real Google Chrome was not found.' }
 $env:CHROME_BIN=$chrome
-$env:MENTI_APP_VERSION='3.1.0+44'
+$env:MENTI_APP_VERSION='3.2.0+45'
 $results=@()
 foreach ($variant in @('normal','review','home')) {
     $download=if ($variant -eq 'normal') {$Normal} elseif ($variant -eq 'home') {$Home} else {$Review}
@@ -36,6 +36,8 @@ foreach ($variant in @('normal','review','home')) {
         } elseif ($variant -eq 'home') {
             node tool/verify_menti_home_chrome.cjs
             if ($LASTEXITCODE -ne 0) {throw 'Windows home and Fitness Club regression failed.'}
+            node tool/verify_menti_club_chrome.cjs
+            if ($LASTEXITCODE -ne 0) {throw 'Windows seven-day challenge regression failed.'}
         } else {
             node tool/verify_menti_alive_chrome.cjs
             if ($LASTEXITCODE -ne 0) {throw 'Windows native video regression failed.'}

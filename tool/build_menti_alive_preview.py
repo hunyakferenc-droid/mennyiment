@@ -51,6 +51,6 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
  else:
   shutil.copyfile(built/'app-debug.apk',a.output/'app-debug.apk')
   (a.output/'app-debug.apk.sha256').write_text(hashlib.sha256((a.output/'app-debug.apk').read_bytes()).hexdigest()+'  app-debug.apk\n')
- shutil.copyfile(work/('docs/menti-home-fitness/kiprobalas-hu.md' if a.home else 'docs/menti-animation-studio/kiprobalas-hu.md' if a.studio else 'docs/menti-beta/kiprobalas-hu.md'),a.output/'OLVASDEL-REVIEW.txt')
- (a.output/'build-info.txt').write_text(f'source_commit={source}\nversion=3.1.0+44\nvariant={"home-review" if a.home else "developer-preview"}\napplication_id=com.example.mennyiment.review\napproved_media=0\nreview_media={len(catalog["clips"])}\nurl=http://127.0.0.1:7357\n')
+ shutil.copyfile(work/('docs/menti-home-fitness/3.2-kiprobalas-hu.md' if a.home else 'docs/menti-animation-studio/kiprobalas-hu.md' if a.studio else 'docs/menti-beta/kiprobalas-hu.md'),a.output/'OLVASDEL-REVIEW.txt')
+ (a.output/'build-info.txt').write_text(f'source_commit={source}\nversion=3.2.0+45\nvariant={"home-review" if a.home else "developer-preview"}\napplication_id=com.example.mennyiment.review\napproved_media=0\nreview_media={len(catalog["clips"])}\nurl=http://127.0.0.1:7357\n')
 print('Isolated developer preview built:',a.output)

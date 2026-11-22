@@ -14,6 +14,7 @@ import 'package:mennyiment/menti_fitness.dart';
 import 'package:mennyiment/menti_rhythm.dart';
 import 'package:mennyiment/menti_motion.dart';
 import 'package:mennyiment/menti_xp_store.dart';
+import 'package:mennyiment/menti_club_store.dart';
 
 import '../tool/menti_home_review.dart' as review;
 import 'menti_beta_device_test.dart' show tap, reach, until;
@@ -136,7 +137,14 @@ void main() {
       await t.pumpAndSettle();
       expect(find.byType(HomePage), findsOneWidget);
       await p.reload();
-      expect({for (final k in p.getKeys()) k: p.get(k)}, before);
+      final after = {for (final k in p.getKeys()) k: p.get(k)};
+      final club = MentiClubRecord.decode(
+        after.remove(MentiClubStore.normalKey),
+      );
+      expect(club.best, 5);
+      expect(club.days.length, 1);
+      expect(club.last, clubDay(DateTime.now()));
+      expect(after, before);
       await MentiMotionScope.settingsOf(ctx)!.setReduced(true);
       await t.pumpAndSettle();
       await tap(t, 'home-wink');
@@ -144,7 +152,93 @@ void main() {
       expect(session.home!.wink, true);
       expect((await MentiXpStore.load()).xp, 0);
       debugPrint(
-        'HOME_NATIVE passed: HU welcome/wink, neutral switch, EN save PNG, retry/five rounds/new/home, no game writes, reduced motion',
+        'HOME_NATIVE passed: HU welcome/wink, neutral switch, EN save PNG, retry/five rounds/new/home, only separate club record written; no journal/XP writes, reduced motion',
+      );
+    },
+  );
+  testWidgets(
+    'Native isolated seven virtual days, skip, repeat, new challenge and durable own record',
+    (t) async {
+      final p = await SharedPreferences.getInstance();
+      await p.reload();
+      final actual = p.getString(MentiClubStore.normalKey);
+      expect(MentiClubRecord.decode(actual).best, 5);
+      await review.main();
+      await t.pumpAndSettle();
+      await until(t, find.byType(HomePage));
+      await tap(t, 'home-fitness');
+      await tap(t, 'club-test-mode');
+      Future<void> cards({bool skip = false, bool partial = false}) async {
+        await tap(t, 'fitness-cards');
+        await tap(t, 'cards-start');
+        if (partial) {
+          await tap(t, 'cards-next');
+          await tap(t, 'cards-exit');
+          return;
+        }
+        for (var n = 0; n < 3; n++) {
+          await tap(t, skip ? 'cards-skip' : 'cards-next');
+        }
+        await tap(t, 'cards-club');
+      }
+
+      await cards(partial: true);
+      await p.reload();
+      expect(p.getString(MentiClubStore.testKey), isNull);
+      await cards(skip: true);
+      await p.reload();
+      expect(p.getString(MentiClubStore.testKey), isNull);
+      for (var i = 0; i < 7; i++) {
+        await cards();
+        await p.reload();
+        expect(
+          MentiClubRecord.decode(p.get(MentiClubStore.testKey)).days.length,
+          i + 1,
+        );
+        if (i == 0) {
+          await cards();
+          await p.reload();
+          expect(
+            MentiClubRecord.decode(p.get(MentiClubStore.testKey)).days.length,
+            1,
+          );
+        }
+        if (i < 6) {
+          await tap(t, 'club-next-day');
+          if (i == 1) await tap(t, 'club-next-day');
+        }
+      }
+      await p.reload();
+      expect(MentiClubRecord.decode(p.get(MentiClubStore.testKey)).days, [
+        '2030-01-01',
+        '2030-01-02',
+        '2030-01-04',
+        '2030-01-05',
+        '2030-01-06',
+        '2030-01-07',
+        '2030-01-08',
+      ]);
+      await tap(t, 'club-new-challenge');
+      await cards();
+      await p.reload();
+      expect(
+        MentiClubRecord.decode(p.get(MentiClubStore.testKey)).days,
+        isEmpty,
+      );
+      await tap(t, 'club-next-day');
+      await cards();
+      await p.reload();
+      expect(MentiClubRecord.decode(p.get(MentiClubStore.testKey)).days, [
+        '2030-01-09',
+      ]);
+      expect(p.getString(MentiClubStore.normalKey), actual);
+      await t.tap(find.byType(BackButton));
+      await t.pumpAndSettle();
+      await t.tap(find.byType(BackButton));
+      await t.pumpAndSettle();
+      expect(find.byType(HomePage), findsOneWidget);
+      debugPrint(
+        'CLUB_NATIVE passed: partial/all-skip, seven days with gap, repeat, reset, isolated storage, unchanged own best and days',
       );
     },
   );

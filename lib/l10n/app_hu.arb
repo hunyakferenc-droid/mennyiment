@@ -1774,5 +1774,101 @@
         "type": "String"
       }
     }
-  }
+  },
+  "clubChallengeTitle": "Hétnapos kihívás",
+  "clubChallengeHint": "Gyűjts hét külön napon egy teljesítést. Nem kell egymást követő napokon játszanod: a kihagyás nem törli az eredményt. Egy naphoz egy jelölés jár.",
+  "clubBest": "Ritmus-rekord: {count} / 5 kör",
+  "@clubBest": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "clubProgress": "Kihívás: {count} / 7 nap",
+  "@clubProgress": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "clubNoCompletion": "Még nincs befejezett nap.",
+  "clubLast": "Utolsó teljesítés: {date}",
+  "@clubLast": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "clubDayDate": "{day}. nap · {date}",
+  "@clubDayDate": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "clubDayPending": "{day}. nap · még vár rád",
+  "@clubDayPending": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "clubNewChallenge": "Új hétnapos kihívás",
+  "clubLocalOnly": "A klub saját helyi mentésben őrzi a rekordot és a napokat; nincs felhőszinkron. A részben teljesített Ritmus legjobb körszáma megmarad, de csak mind az öt kör vagy egy befejezett kártyamenet jelöl napot. Nincs XP, feloldás vagy naplóváltozás. A fizikai mozgás opcionális.",
+  "clubLoadError": "A klubmentés nem olvasható vagy ismeretlen formátumú. Megőriztük, nem írjuk felül. Újratöltéssel próbálkozhatsz; a külön próbamód továbbra is elérhető.",
+  "clubSaveError": "A kluberedmény mentése nem igazolt. Nem jelzünk sikeres teljesítést. Töltsd újra a klubadatokat és próbáld újra a mentést.",
+  "clubSaving": "Klubadatok betöltése / mentése…",
+  "clubAlreadyToday": "A mai nap már teljesült. A rekord frissülhet, de új napi jelölés nem jár.",
+  "clubDaySaved": "A teljesítés mentve a mai helyi naphoz.",
+  "clubFull": "Mind a hét nap teljesült. A klubban indíthatsz új kihívást.",
+  "clubTestMode": "Hét nap kipróbálása külön próbaadatokkal",
+  "clubTestNotice": "PRÓBAMÓD – külön mentés. A saját rekordod és kihívásod változatlan. A próbanap csak ebben a nézetben léptethető; nem állítja át a készülék óráját.",
+  "clubTestDate": "Próbanap: {date}",
+  "@clubTestDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "clubNextDay": "Következő próbanap",
+  "cardsTitle": "Mozgáskártyák",
+  "cardsIntro": "Három rövid, saját tempóban követhető kártya. Válassz ülő vagy álló változatot. Csak kényelmes mozdulatot végezz; bármelyik kártyát átugorhatod vagy kiléphetsz. Nincs mozgásmérés, a jelölés a saját visszajelzésed alapján történik.",
+  "cardsSeated": "Ülő változat",
+  "cardsStanding": "Álló változat",
+  "cardsSeated1": "Ülj kényelmesen. Ha jólesik, nyújtózz finoman felfelé, majd engedd le a karod.",
+  "cardsSeated2": "Ülve lazítsd el a vállad. Finoman gördítsd hátra, majd térj vissza kényelmes tartásba.",
+  "cardsSeated3": "Ülve mozgasd át finoman a bokáidat. Tedd le újra mindkét talpad kényelmesen.",
+  "cardsStanding1": "Állj stabilan. Ha kényelmes, nyújtózz finoman felfelé, majd lazítsd el a karod.",
+  "cardsStanding2": "Tegyél egy kis lépést balra, majd térj vissza középre. Maradj a kényelmes mozgástartományban.",
+  "cardsStanding3": "Tegyél egy kis lépést jobbra, majd térj vissza középre. Most meg is állhatsz.",
+  "cardsStep": "{step}. kártya / 3",
+  "@cardsStep": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "cardsDone": "Elvégeztem · Tovább",
+  "cardsSkip": "Kártya átugrása",
+  "cardsKeyboard": "Billentyűzet: N = elvégeztem, S = átugrás. A Vissza gombbal bármikor kiléphetsz.",
+  "cardsResult": "Visszajelzett kártyák: {count} / 3",
+  "@cardsResult": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cardsAllSkipped": "Minden kártyát átugrottál. Nincs napi jelölés; később bármikor visszatérhetsz.",
+  "cardsExit": "Kilépés a klubba"
 }

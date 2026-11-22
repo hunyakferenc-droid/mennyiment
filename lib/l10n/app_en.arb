@@ -1774,5 +1774,101 @@
         "type": "String"
       }
     }
-  }
+  },
+  "clubChallengeTitle": "Seven-day challenge",
+  "clubChallengeHint": "Collect a completion on seven different days. They do not need to be consecutive: a skipped day keeps your progress. One mark per day.",
+  "clubBest": "Rhythm best: {count} / 5 rounds",
+  "@clubBest": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "clubProgress": "Challenge: {count} / 7 days",
+  "@clubProgress": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "clubNoCompletion": "No completed day yet.",
+  "clubLast": "Last completion: {date}",
+  "@clubLast": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "clubDayDate": "Day {day} · {date}",
+  "@clubDayDate": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "clubDayPending": "Day {day} · still ahead",
+  "@clubDayPending": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "clubNewChallenge": "New seven-day challenge",
+  "clubLocalOnly": "The club keeps records and days in its own local storage; there is no cloud sync. Your best completed Rhythm rounds are kept even in a partial game, but only all five rounds or a finished card session marks a day. No XP, unlocks or journal changes. Physical movement is optional.",
+  "clubLoadError": "Club data cannot be read or uses an unknown format. It is preserved and will not be overwritten. You can retry loading; the separate test mode is still available.",
+  "clubSaveError": "Club result storage was not confirmed. No successful completion is claimed. Reload club data and retry saving.",
+  "clubSaving": "Loading / saving club data…",
+  "clubAlreadyToday": "Today is already complete. Your record can improve, but no extra day mark is added.",
+  "clubDaySaved": "Completion saved for today’s local date.",
+  "clubFull": "All seven days are complete. Start a new challenge in the club.",
+  "clubTestMode": "Try seven days with separate test data",
+  "clubTestNotice": "TEST MODE – separate storage. Your own record and challenge stay unchanged. Advance the virtual day only here; your device clock is not changed.",
+  "clubTestDate": "Virtual day: {date}",
+  "@clubTestDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "clubNextDay": "Next virtual day",
+  "cardsTitle": "Movement Cards",
+  "cardsIntro": "Three short cards at your own pace. Choose seated or standing. Move only as feels comfortable; skip any card or leave at any time. Movement is not measured; completion uses your own confirmation.",
+  "cardsSeated": "Seated",
+  "cardsStanding": "Standing",
+  "cardsSeated1": "Sit comfortably. If it feels good, gently stretch upwards, then lower your arms.",
+  "cardsSeated2": "While seated, relax your shoulders. Gently roll them backwards, then return to a comfortable position.",
+  "cardsSeated3": "While seated, gently move your ankles. Rest both feet comfortably again.",
+  "cardsStanding1": "Stand steadily. If comfortable, gently stretch upwards, then relax your arms.",
+  "cardsStanding2": "Take a small step left, then return to the centre. Keep within a comfortable range.",
+  "cardsStanding3": "Take a small step right, then return to the centre. You can stop here.",
+  "cardsStep": "Card {step} / 3",
+  "@cardsStep": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "cardsDone": "Done · Next",
+  "cardsSkip": "Skip card",
+  "cardsKeyboard": "Keyboard: N = done, S = skip. Use Back to leave at any time.",
+  "cardsResult": "Confirmed cards: {count} / 3",
+  "@cardsResult": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "cardsAllSkipped": "You skipped every card. No day is marked; come back whenever you like.",
+  "cardsExit": "Leave for club"
 }

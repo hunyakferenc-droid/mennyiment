@@ -124,6 +124,36 @@ void main() {
       await t.pump();
     },
   );
+  testWidgets(
+    'No welcome before catalog readiness; background signals wait until resume',
+    (t) async {
+      final c = MentiAnimationController();
+      c.configure(
+        look: 'girl-base-v1',
+        allowed: false,
+        frequency: MentiAnimationFrequency.normal,
+      );
+      final h = MentiHomeReactions()..attach(c, ready: false);
+      h.visibility(true);
+      expect(h.presentations, 0);
+      h.ready(true);
+      h.refresh();
+      expect(h.presentations, 1);
+      h.foreground(false);
+      h.receive(
+        const MentiLifeSignal(MentiLifeEvent.journalSaved, 'background-save'),
+      );
+      await t.pump(const Duration(milliseconds: 200));
+      expect(h.presentations, 1);
+      h.foreground(true);
+      await t.pump(const Duration(milliseconds: 150));
+      expect(h.presentations, 2);
+      expect(h.event, MentiLifeEvent.journalSaved);
+      h.dispose();
+      c.dispose();
+      await t.pump();
+    },
+  );
   test('Rhythm ignores input during demonstration, retries same sequence and finishes exactly five rounds without persistence', () async {
     SharedPreferences.setMockInitialValues({'sentinel': 'preserve'});
     final p = await SharedPreferences.getInstance();
