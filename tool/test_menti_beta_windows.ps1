@@ -1,4 +1,4 @@
-param([Parameter(Mandatory=$true)][string]$Normal, [Parameter(Mandatory=$true)][string]$Review, [string]$Home, [Parameter(Mandatory=$true)][string]$Evidence)
+param([Parameter(Mandatory=$true)][string]$Normal, [Parameter(Mandatory=$true)][string]$Review, [string]$HomeReview, [Parameter(Mandatory=$true)][string]$Evidence)
 $ErrorActionPreference='Stop'
 if ($env:OS -ne 'Windows_NT') { throw 'This gate requires real Windows, not Linux PowerShell.' }
 New-Item -ItemType Directory -Force $Evidence | Out-Null
@@ -9,7 +9,7 @@ $env:CHROME_BIN=$chrome
 $env:MENTI_APP_VERSION='3.2.0+45'
 $results=@()
 foreach ($variant in @('normal','review','home')) {
-    $download=if ($variant -eq 'normal') {$Normal} elseif ($variant -eq 'home') {$Home} else {$Review}
+    $download=if ($variant -eq 'normal') {$Normal} elseif ($variant -eq 'home') {$HomeReview} else {$Review}
     $zip=Join-Path $Evidence "$variant-web.zip"
     Compress-Archive -Path (Join-Path $download '*') -DestinationPath $zip
     $web=Join-Path $Evidence "$variant-unpacked"

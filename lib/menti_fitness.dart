@@ -177,19 +177,53 @@ class _ClubState extends State<MentiFitnessClub> with WidgetsBindingObserver {
                                   )
                                 : s.clubDayPending(i + 1),
                             child: ExcludeSemantics(
-                              child: Chip(
-                                avatar: Icon(
-                                  i < store.record.days.length
-                                      ? Icons.check_circle
-                                      : Icons.radio_button_unchecked,
+                              child: Container(
+                                width: double.infinity,
+                                constraints: const BoxConstraints(
+                                  minHeight: 48,
                                 ),
-                                label: Text(
-                                  i < store.record.days.length
-                                      ? s.clubDayDate(
-                                          i + 1,
-                                          date(store.record.days[i]),
-                                        )
-                                      : s.clubDayPending(i + 1),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .surfaceContainerHigh,
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: Theme.of(context).colorScheme.primary
+                                        .withValues(alpha: .35),
+                                  ),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      i < store.record.days.length
+                                          ? Icons.check_circle
+                                          : Icons.radio_button_unchecked,
+                                      size: 20,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        i < store.record.days.length
+                                            ? s.clubDayDate(
+                                                i + 1,
+                                                date(store.record.days[i]),
+                                              )
+                                            : s.clubDayPending(i + 1),
+                                        softWrap: true,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

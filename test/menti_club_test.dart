@@ -4,6 +4,7 @@ import 'dart:ui' show CheckedState;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/rendering.dart';
 import 'package:mennyiment/menti_fitness.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -452,6 +453,40 @@ void main() {
             await t.pumpAndSettle();
             for (var i = 0; i < 7; i++) {
               expect(find.byKey(ValueKey('club-day-$i')), findsOneWidget);
+              final label = find
+                  .descendant(
+                    of: find.byKey(ValueKey('club-day-$i')),
+                    matching: find.byType(Text),
+                  )
+                  .first;
+              expect(
+                t.renderObject<RenderParagraph>(label).didExceedMaxLines,
+                false,
+                reason: 'Full completion date must remain visible at 200%',
+              );
+              final paragraph = t.renderObject<RenderParagraph>(label);
+              final value = t.widget<Text>(label).data!;
+              // Selection boxes may include hanging line-end whitespace;
+              // inspect the visible date glyphs rather than that empty space.
+              for (var index = 0; index < value.length; index++) {
+                if (value[index].trim().isEmpty) continue;
+                for (final box in paragraph.getBoxesForSelection(
+                  TextSelection(baseOffset: index, extentOffset: index + 1),
+                )) {
+                  expect(
+                    box.right,
+                    lessThanOrEqualTo(paragraph.size.width + .5),
+                    reason:
+                        'Date $value glyph ${value[index]} must not be clipped horizontally',
+                  );
+                  expect(
+                    box.bottom,
+                    lessThanOrEqualTo(paragraph.size.height + .5),
+                    reason: 'No date line may be clipped vertically',
+                  );
+                }
+              }
+
               expect(
                 t
                     .getSemantics(find.byKey(ValueKey('club-day-$i')))

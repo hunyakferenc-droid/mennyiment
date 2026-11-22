@@ -52,7 +52,12 @@ void main() {
       await tap(t, 'start-family-girl');
       await tap(t, 'start-look-girl-base-v1');
       await tap(t, 'start-next');
-      await tap(t, 'start-next');
+      // Observe the first actual frame; settling all home animations here can
+      // outlive the one-shot welcome we are explicitly testing.
+      final finish = find.byKey(const ValueKey('start-next'));
+      await reach(t, finish);
+      await t.tap(finish);
+      await t.pump();
       await until(t, find.byType(HomePage));
       final ctx = t.element(find.byType(HomePage));
       final session = MentiAnimationScope.of(ctx)!;
@@ -63,6 +68,22 @@ void main() {
                 session.controller.active?.reaction.name != reaction) &&
             DateTime.now().isBefore(deadline)) {
           await t.pump(const Duration(milliseconds: 80));
+        }
+        if (session.controller.active?.lookId != look ||
+            session.controller.handle?.frameVisible != true) {
+          debugPrint(
+            jsonEncode({
+              'diagnostic': 'HOME_NATIVE',
+              'look': session.controller.lookId,
+              'status': session.controller.status.name,
+              'host': session.controller.hasVisibleHost,
+              'catalog': session.controller.catalog.clips.length,
+              'presentations': session.home!.presentations,
+              'event': session.home!.event?.name,
+              'motionReduced': MentiMotionScope.reducedOf(ctx),
+              'measurements': session.controller.measurements,
+            }),
+          );
         }
         expect(session.controller.active?.lookId, look);
         expect(session.controller.active?.reaction.name, reaction);

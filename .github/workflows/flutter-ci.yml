@@ -336,7 +336,7 @@ jobs:
           "PLAYWRIGHT_MODULE_PATH=$env:RUNNER_TEMP/menti-playwright/node_modules/playwright" >> $env:GITHUB_ENV
       - name: Extract ZIP, launch CMD, real Windows Chrome HU/EN and persisted data
         shell: powershell
-        run: ./tool/test_menti_beta_windows.ps1 -Normal artifacts/normal -Review artifacts/review -Home artifacts/home -Evidence build/windows-beta
+        run: ./tool/test_menti_beta_windows.ps1 -Normal artifacts/normal -Review artifacts/review -HomeReview artifacts/home -Evidence build/windows-beta
       - name: Upload actual Windows evidence including failures
         if: always()
         uses: actions/upload-artifact@v4
