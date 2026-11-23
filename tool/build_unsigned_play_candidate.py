@@ -24,6 +24,16 @@ def prepare_unsigned(work):
     s = s.replace(guard, '// EXPLICIT UNSIGNED PREPARATION ONLY: no signing task.')
     p.write_text(s)
 
+def remove_integration_test_dependency(work):
+    pubspec = work / 'pubspec.yaml'
+    contents = pubspec.read_text()
+    contents, count = re.subn(
+        r'^  integration_test:\n    sdk: flutter\n', '', contents, flags=re.M,
+    )
+    if count != 1:
+        raise ValueError('Unexpected integration_test dependency declaration.')
+    pubspec.write_text(contents)
+
 def elf_alignments(data):
     if data[:4] != b'\x7fELF' or len(data) < 64 or data[4] not in [1, 2] or data[5] not in [1, 2]:
         raise ValueError('Invalid ELF library')
@@ -93,6 +103,8 @@ def main():
         with tarfile.open(fileobj=process.stdout,mode='r|') as archive:archive.extractall(work,filter='data')
         if process.wait()!=0: raise SystemExit('Source archive failed')
         prepare_unsigned(work)
+        # Flutter pub get otherwise registers this native test-only plugin.
+        remove_integration_test_dependency(work)
         env={k:v for k,v in os.environ.items() if not k.startswith('MENNYIMENT_')}
         env['MENNYIMENT_RELEASE_PROPERTIES']=str(work/'no-signing-properties')
         for args in [['pub','get'],['build','appbundle','--release','--no-pub']]:

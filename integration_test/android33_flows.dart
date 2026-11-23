@@ -39,8 +39,10 @@ Future<void> firstUse33(WidgetTester t, {required bool isReview}) async {
   await tap(t, 'start-next');
   await tap(t, 'start-adult');
   await tap(t, 'start-next');
-  // Android's pop route must return to age selection without finishing setup.
-  await t.binding.handlePopRoute();
+  final family = find.byKey(const ValueKey('start-family-girl'));
+  await until(t, family);
+  // Exercise the enclosing route's PopScope directly from the onboarding UI.
+  expect(await Navigator.of(t.element(family)).maybePop(), isTrue);
   await t.pumpAndSettle();
   expect(find.byKey(const ValueKey('start-adult')), findsOneWidget);
   await tap(t, 'start-next');

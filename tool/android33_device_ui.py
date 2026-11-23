@@ -108,6 +108,6 @@ def store_screens(out,locale="en"):
   adb('shell','settings','put','global',setting,'0')
  adb('shell','wm','size','1080x1920');adb('shell','wm','density','480');adb('shell','settings','put','system','font_scale','1.0')
  ui.stop(NORMAL);ui.start(NORMAL);ui.top();ui.screen(f'store-{locale}-home-1080x1920')
- ui.click(labels['journal'],top=False);ui.visible(labels['journalSearch']);ui.screen(f'store-{locale}-journal-1080x1920');ui.back()
+ ui.click(labels['allEntries'],top=False);ui.visible(labels['visualFilters']);ui.screen(f'store-{locale}-journal-1080x1920');ui.back()
  ui.click(labels['homeMore']);ui.click(labels['statisticsNav']);ui.top();ui.visible(labels['statistics']);ui.screen(f'store-{locale}-statistics-1080x1920');ui.back()
  return {'sourceCommit':os.environ['SOURCE_SHA'],'variant':'normal','emulator':True,'physicalAndroid':False,'locale':locale,'width':1080,'height':1920,'systemFontScale':1,'syntheticData':True}
