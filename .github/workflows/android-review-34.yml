@@ -1,23 +1,22 @@
 name: Android 3.4 REVIEW
 on:
-  pull_request:
-    branches: [feature/menti-android-3-3-preparation]
+  push:
+    branches: [feature/menti-android-3-4-review]
 
 permissions:
   contents: read
 
 concurrency:
-  group: android-review-34-${{ github.event.pull_request.number }}
+  group: android-review-34-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
   review:
     name: Build and verify REVIEW on Android API 35
-    if: github.head_ref == 'feature/menti-android-3-4-review'
     runs-on: ubuntu-24.04
     timeout-minutes: 65
     env:
-      SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+      SOURCE_SHA: ${{ github.sha }}
       ANDROID_SERIAL: emulator-5554
       FLUTTER_SUPPRESS_ANALYTICS: 'true'
     steps:
@@ -97,13 +96,12 @@ jobs:
           if-no-files-found: ignore
   aab:
     name: Build and inspect unsigned AAB
-    if: github.head_ref == 'feature/menti-android-3-4-review'
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ github.sha }}
           persist-credentials: false
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
         with:
@@ -121,7 +119,7 @@ jobs:
           bash tool/retry_android_dependency_download.sh python3 tool/build_unsigned_play_candidate.py --unsigned --bundletool "$RUNNER_TEMP/bundletool.jar" --output build/play-unsigned
       - uses: actions/upload-artifact@v4
         with:
-          name: MennyiMent-3.4.0-47-unsigned-AAB-${{ github.event.pull_request.head.sha }}
+          name: MennyiMent-3.4.0-47-unsigned-AAB-${{ github.sha }}
           path: build/play-unsigned/
           if-no-files-found: error
           retention-days: 30
