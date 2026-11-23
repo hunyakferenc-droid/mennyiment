@@ -40,11 +40,11 @@ Future<void> firstUse33(WidgetTester t, {required bool isReview}) async {
   await tap(t, 'start-adult');
   await tap(t, 'start-next');
   final family = find.byKey(const ValueKey('start-family-girl'));
-  await until(t, family);
+  await reach(t, family);
   // Exercise the enclosing route's PopScope directly from the onboarding UI.
   expect(await Navigator.of(t.element(family)).maybePop(), isTrue);
   await t.pumpAndSettle();
-  expect(find.byKey(const ValueKey('start-adult')), findsOneWidget);
+  await reach(t, find.byKey(const ValueKey('start-adult')));
   await tap(t, 'start-next');
   await tap(t, 'start-family-girl');
   await tap(t, 'start-look-girl-base-v1');
