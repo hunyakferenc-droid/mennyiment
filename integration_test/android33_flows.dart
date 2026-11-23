@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/main.dart' as app;
-import 'package:mennyiment/statistics.dart';
+import 'package:mennyiment/drink_journal_page.dart';
 import 'package:mennyiment/app_language.dart';
 import 'package:mennyiment/menti_fitness.dart';
 import 'package:mennyiment/menti_rhythm.dart';
@@ -116,18 +116,10 @@ Future<void> firstUse33(WidgetTester t, {required bool isReview, String locale =
   expect((await MentiXpStore.load()).xp, 10);
   await t.tap(find.byType(BackButton));
   await t.pumpAndSettle();
-  final statisticsTab = find.descendant(
-    of: find.byType(NavigationBar),
-    matching: find.byType(NavigationDestination),
-  ).at(2);
-  expect(statisticsTab.hitTestable(), findsOneWidget);
-  await t.tap(statisticsTab);
-  await t.pumpAndSettle();
-  expect(find.byType(StatisticsPage), findsOneWidget);
-  expect(
-    t.widget<StatisticsPage>(find.byType(StatisticsPage)).drinks,
-    hasLength(1),
-  );
+  await tap(t, 'nav-journal');
+  final journal = find.byType(DrinkJournalPage);
+  await until(t, journal);
+  expect(t.widget<DrinkJournalPage>(journal).drinks, hasLength(1));
   await t.tap(find.byType(BackButton));
   await t.pumpAndSettle();
   if (isReview) {
