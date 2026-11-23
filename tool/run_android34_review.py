@@ -64,7 +64,7 @@ def backup_round_trip(ui, before):
     documents_ui(ui)
     ui.click('Show roots', top=False)
     ui.click('Downloads', top=False)
-    ui.click('Save', top=False)
+    ui.click('SAVE', top=False)
     ui.visible(STRINGS['backupSaved'])
     listed = adb('shell', 'find', DOWNLOAD, '-maxdepth', '1', '-name',
                  'mennyiment-backup-*.json').decode().splitlines()
@@ -187,17 +187,24 @@ prepare_review_android(work, studio=True)
     ui.stop(REVIEW)
     ui.start(REVIEW)
     assert prefs(REVIEW) == before
-    backup_round_trip(ui, before)
-    (OUT / 'verification.json').write_text(json.dumps({
+    verification = {
         'sourceCommit': os.environ['SOURCE_SHA'], 'rebuiltBaselineSource': BASE,
         'review': new, 'rebuiltBaseline': old, 'emulatorApi': 35,
         'exactPreferencesAfterBaselineRestart': True,
         'exactPreferencesAfterUpgradeAndRestart': True,
-        'exactPreferencesAfterExportAndRestore': True,
-        'systemPickerExportCancellationImportCancellationInvalidAndLegacy': True,
         'historicallyDistributedApkVerified': False,
         'physicalAndroidTested': False,
-    }, indent=2) + '\n', encoding='utf-8')
+    }
+    (ui.out / 'upgrade-verification.json').write_text(
+        json.dumps(verification, indent=2) + '\n', encoding='utf-8')
+    print('REVIEW_UPGRADE_VERIFIED', json.dumps(verification), flush=True)
+    backup_round_trip(ui, before)
+    verification.update({
+        'exactPreferencesAfterExportAndRestore': True,
+        'systemPickerExportCancellationImportCancellationInvalidAndLegacy': True,
+    })
+    (OUT / 'verification.json').write_text(
+        json.dumps(verification, indent=2) + '\n', encoding='utf-8')
 
 
 if __name__ == '__main__':

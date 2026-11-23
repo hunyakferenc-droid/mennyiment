@@ -171,6 +171,6 @@ Future<void> firstUse33(WidgetTester t, {required bool isReview, String locale =
   expect((await MentiXpStore.load()).xp, 10);
   // ignore: avoid_print
   print(
-    'ANDROID33_FIRST_USE passed: clean $locale, onboarding route back, own girl, favorite, zero-price journal, statistics, legitimate 10 XP; REVIEW=$isReview',
+    'ANDROID33_FIRST_USE passed: clean $locale, onboarding route back, own girl, favorite, zero-price journal, legitimate 10 XP; REVIEW=$isReview',
   );
 }
