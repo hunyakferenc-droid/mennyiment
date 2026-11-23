@@ -1,4 +1,5 @@
 """Exercise real Android APK replacement and DocumentsUI on a fresh CI AVD."""
+import argparse
 import json
 import os
 from pathlib import Path
@@ -111,10 +112,7 @@ def backup_round_trip(ui, before):
     assert prefs(REVIEW) == before
 
 
-def main():
-    require_emulator()
-    OUT.mkdir(parents=True, exist_ok=True)
-    ui = DeviceUI(OUT / 'device')
+def configure_device():
     adb('shell', 'wm', 'size', '640x1280')
     adb('shell', 'wm', 'density', '320')
     adb('shell', 'settings', 'put', 'system', 'font_scale', '2.0')
@@ -123,6 +121,22 @@ def main():
     adb('shell', 'svc', 'wifi', 'disable')
     adb('shell', 'svc', 'data', 'disable')
     time.sleep(2)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--english-first-use', action='store_true')
+    args = parser.parse_args()
+    require_emulator()
+    configure_device()
+    if args.english_first_use:
+        run(['flutter', 'test', 'integration_test/android_first_use_en_test.dart',
+             '-d', 'emulator-5554', '--no-pub', '--no-uninstall', '--reporter', 'expanded'])
+        assert prefs(NORMAL)['flutter.mennyiment_locale_v1'][2] == 'en'
+        return
+
+    OUT.mkdir(parents=True, exist_ok=True)
+    ui = DeviceUI(OUT / 'device')
     run(['flutter', 'test', 'integration_test/android_first_use_hu_test.dart',
          '-d', 'emulator-5554', '--no-pub', '--no-uninstall', '--reporter', 'expanded'])
     assert prefs(NORMAL)['flutter.mennyiment_locale_v1'][2] == 'hu'

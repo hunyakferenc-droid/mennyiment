@@ -48,7 +48,7 @@ jobs:
           python3 tool/test_android_update.py
           python3 tool/test_unsigned_play_candidate.py
       - name: Build the phone APK
-        run: python3 tool/build_menti_alive_preview.py --home --platform apk --output build/android34/review
+        run: bash tool/retry_android_dependency_download.sh python3 tool/build_menti_alive_preview.py --home --platform apk --output build/android34/review
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -64,6 +64,19 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none -no-snapshot
           script: python3 tool/run_android34_review.py
+      - name: Stop Gradle before starting the fresh English emulator
+        run: ./android/gradlew --stop
+      - name: Fresh current-source English onboarding on a separate emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: menti-34-english
+          disable-animations: false
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none -no-snapshot
+          script: python3 tool/run_android34_review.py --english-first-use
       - name: Upload verified REVIEW APK and matching test baseline
         uses: actions/upload-artifact@v4
         with:
@@ -105,7 +118,7 @@ jobs:
       - name: Prepare unsigned candidate
         run: |
           curl --fail --location --retry 3 https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar --output "$RUNNER_TEMP/bundletool.jar"
-          python3 tool/build_unsigned_play_candidate.py --unsigned --bundletool "$RUNNER_TEMP/bundletool.jar" --output build/play-unsigned
+          bash tool/retry_android_dependency_download.sh python3 tool/build_unsigned_play_candidate.py --unsigned --bundletool "$RUNNER_TEMP/bundletool.jar" --output build/play-unsigned
       - uses: actions/upload-artifact@v4
         with:
           name: MennyiMent-3.4.0-47-unsigned-AAB-${{ github.event.pull_request.head.sha }}
