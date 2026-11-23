@@ -64,11 +64,12 @@ def apply_backup(ui):
 
 
 def backup_round_trip(ui, before):
-    adb('shell', 'wm', 'size', 'reset')
-    adb('shell', 'wm', 'density', 'reset')
     adb('shell', 'settings', 'put', 'system', 'font_scale', '1.0')
     ui.stop(REVIEW)
     ui.start(REVIEW)
+    if ui.nodes("Pixel Launcher isn't responding"):
+        ui.click('Close app', top=False)
+        ui.start(REVIEW)
     open_backup(ui)
     ui.click(STRINGS['backupPrepare'])
     ui.click(STRINGS['backupSave'])

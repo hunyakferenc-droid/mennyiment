@@ -63,6 +63,18 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none -no-snapshot
           script: python3 tool/run_android34_review.py
+      - name: Upload upgrade-verified APK pair and signing report
+        if: ${{ !cancelled() && hashFiles('build/android34/device/upgrade-verification.json') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: MennyiMent-3.4.0-47-upgrade-verified-${{ env.SOURCE_SHA }}
+          path: |
+            build/android34/review/
+            build/android34/baseline/app-debug.apk
+            build/android34/device/upgrade-verification.json
+            docs/android-review/3.4-telefonos-proba.md
+          if-no-files-found: error
+          retention-days: 30
       - name: Stop Gradle before starting the fresh English emulator
         run: ./android/gradlew --stop
       - name: Fresh current-source English onboarding on a separate emulator
