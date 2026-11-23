@@ -116,8 +116,13 @@ Future<void> firstUse33(WidgetTester t, {required bool isReview}) async {
   expect((await MentiXpStore.load()).xp, 10);
   await t.tap(find.byType(BackButton));
   await t.pumpAndSettle();
-  await clubTap(t, 'home-more-features');
-  await textTap(t, find.text(s.statisticsNav).first);
+  final statisticsTab = find.descendant(
+    of: find.byType(NavigationBar),
+    matching: find.byType(NavigationDestination),
+  ).at(2);
+  expect(statisticsTab.hitTestable(), findsOneWidget);
+  await t.tap(statisticsTab);
+  await t.pumpAndSettle();
   expect(find.byType(StatisticsPage), findsOneWidget);
   expect(
     t.widget<StatisticsPage>(find.byType(StatisticsPage)).drinks,
