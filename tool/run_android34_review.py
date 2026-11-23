@@ -16,11 +16,29 @@ DRINKS = 'mennyiment_drinks_v1'
 DOWNLOAD = '/sdcard/Download'
 
 
-def documents_ui(ui):
-    tree = ui.dump()
-    assert any('documentsui' in n.get('package', '').lower() for n in tree.iter('node')), (
-        'Android system DocumentsUI did not open'
-    )
+def documents_ui(ui, timeout=15):
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        tree = ui.dump()
+        if any('documentsui' in node.get('package', '').lower()
+               for node in tree.iter('node')):
+            return True
+    return False
+
+
+def open_restore_picker(ui):
+    # Bring the button well clear of Android's bottom gesture area.
+    ui.swipe()
+    ui.swipe()
+    ui.click(STRINGS['restorePick'], top=False)
+    if documents_ui(ui):
+        return
+    # A transition or a partially clipped hit can leave the app foregrounded.
+    # Retry only when the original control is still on the app screen.
+    assert ui.nodes(STRINGS['restorePick']), 'Restore control left the screen without DocumentsUI'
+    ui.swipe()
+    ui.click(STRINGS['restorePick'], top=False)
+    assert documents_ui(ui), 'Android system DocumentsUI did not open'
 
 
 def open_backup(ui):
@@ -29,8 +47,7 @@ def open_backup(ui):
 
 
 def choose_download(ui, filename):
-    ui.click(STRINGS['restorePick'])
-    documents_ui(ui)
+    open_restore_picker(ui)
     # Navigate explicitly to Downloads, independent of the picker's remembered root.
     ui.click('Show roots', top=False)
     ui.click('Downloads', top=False)
@@ -55,13 +72,13 @@ def backup_round_trip(ui, before):
     open_backup(ui)
     ui.click(STRINGS['backupPrepare'])
     ui.click(STRINGS['backupSave'])
-    documents_ui(ui)
+    assert documents_ui(ui), 'Android system DocumentsUI did not open'
     ui.back()
     ui.visible(STRINGS['backupCancelled'])
     assert prefs(REVIEW) == before
 
     ui.click(STRINGS['backupSave'])
-    documents_ui(ui)
+    assert documents_ui(ui), 'Android system DocumentsUI did not open'
     ui.click('Show roots', top=False)
     ui.click('Downloads', top=False)
     ui.click('SAVE', top=False)
@@ -74,8 +91,7 @@ def backup_round_trip(ui, before):
     assert exported['format'] == 'mennyiment.local-backup' and exported['version'] == 1
     assert exported['entries'][DRINKS]['value'] == before['flutter.' + DRINKS][2]
 
-    ui.click(STRINGS['restorePick'])
-    documents_ui(ui)
+    open_restore_picker(ui)
     ui.back()
     ui.visible(STRINGS['restorePick'])
     assert prefs(REVIEW) == before
