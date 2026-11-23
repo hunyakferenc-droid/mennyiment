@@ -1,0 +1,114 @@
+name: Android 3.4 REVIEW
+on:
+  pull_request:
+    branches: [feature/menti-android-3-3-preparation]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-review-34-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    name: Build and verify REVIEW on Android API 35
+    if: github.head_ref == 'feature/menti-android-3-4-review'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 65
+    env:
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+      ANDROID_SERIAL: emulator-5554
+      FLUTTER_SUPPRESS_ANALYTICS: 'true'
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          fetch-depth: 32
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        with:
+          channel: stable
+          flutter-version: '3.47.7'
+          cache: true
+          pub-cache: true
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Verify source and run backup regressions
+        run: |
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          git diff --check HEAD^ HEAD
+          flutter pub get
+          flutter gen-l10n
+          git diff --exit-code -- pubspec.lock lib/l10n/generated
+          flutter analyze --no-pub
+          flutter test --no-pub test/data_backup_test.dart test/data_restore_test.dart
+          python3 tool/test_android_update.py
+          python3 tool/test_unsigned_play_candidate.py
+      - name: Build the phone APK
+        run: python3 tool/build_menti_alive_preview.py --home --platform apk --output build/android34/review
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Real data upgrade and system file picker
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          disable-animations: false
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none -no-snapshot
+          script: python3 tool/run_android34_review.py
+      - name: Upload verified REVIEW APK and matching test baseline
+        uses: actions/upload-artifact@v4
+        with:
+          name: MennyiMent-3.4.0-47-Android-REVIEW-${{ env.SOURCE_SHA }}
+          path: |
+            build/android34/review/
+            build/android34/baseline/app-debug.apk
+            build/android34/verification.json
+            docs/android-review/3.4-telefonos-proba.md
+          if-no-files-found: error
+          retention-days: 30
+      - name: Upload device diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Android-3.4-device-evidence-${{ env.SOURCE_SHA }}
+          path: build/android34/device/
+          if-no-files-found: ignore
+  aab:
+    name: Build and inspect unsigned AAB
+    if: github.head_ref == 'feature/menti-android-3-4-review'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        with:
+          channel: stable
+          flutter-version: '3.47.7'
+          cache: true
+          pub-cache: true
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Prepare unsigned candidate
+        run: |
+          curl --fail --location --retry 3 https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar --output "$RUNNER_TEMP/bundletool.jar"
+          python3 tool/build_unsigned_play_candidate.py --unsigned --bundletool "$RUNNER_TEMP/bundletool.jar" --output build/play-unsigned
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MennyiMent-3.4.0-47-unsigned-AAB-${{ github.event.pull_request.head.sha }}
+          path: build/play-unsigned/
+          if-no-files-found: error
+          retention-days: 30
