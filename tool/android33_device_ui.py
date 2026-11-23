@@ -37,20 +37,20 @@ class DeviceUI:
   w,h=self.size();adb('shell','input','swipe',w//2,int(h*(.32 if down else .72)),w//2,int(h*(.80 if down else .27)),300);time.sleep(.25)
  def top(self):
   for _ in range(5):self.swipe(down=True)
- def nodes(self,label):
+ def nodes(self,label,allow_state=False):
   w,h=self.size();found=[]
   for n in self.dump().iter('node'):
    names=[n.get('text',''),n.get('content-desc','')]
-   if not any(x==label or x.split('\n')[0]==label for x in names):continue
+   if not any(x==label or x.split('\n')[0]==label or (allow_state and x.startswith(label+', ')) for x in names):continue
    b=re.findall(r'-?\d+',n.get('bounds',''))
    if len(b)!=4:continue
    x1,y1,x2,y2=map(int,b);x,y=(x1+x2)//2,(y1+y2)//2
    if 0<x<w and 40<y<h-50 and x2>x1 and y2>y1 and n.get('enabled')=='true':found.append(((x2-x1)*(y2-y1),x,y))
   return sorted(found)
- def click(self,label,top=True):
+ def click(self,label,top=True,allow_state=False):
   if top:self.top()
   for _ in range(35):
-   targets=self.nodes(label)
+   targets=self.nodes(label,allow_state)
    if targets:
     _,x,y=targets[0];adb('shell','input','tap',x,y);time.sleep(.9);return
    self.swipe()
@@ -109,5 +109,5 @@ def store_screens(out,locale="en"):
  adb('shell','wm','size','1080x1920');adb('shell','wm','density','480');adb('shell','settings','put','system','font_scale','1.0')
  ui.stop(NORMAL);ui.start(NORMAL);ui.top();ui.screen(f'store-{locale}-home-1080x1920')
  ui.click(labels['allEntries'],top=False);ui.visible(labels['visualFilters']);ui.screen(f'store-{locale}-journal-1080x1920');ui.back()
- ui.click(labels['homeMore']);ui.click(labels['statisticsNav']);ui.top();ui.visible(labels['statistics']);ui.screen(f'store-{locale}-statistics-1080x1920');ui.back()
+ ui.click(labels['homeMore'],allow_state=True);ui.click(labels['statisticsNav']);ui.top();ui.visible(labels['statistics']);ui.screen(f'store-{locale}-statistics-1080x1920');ui.back()
  return {'sourceCommit':os.environ['SOURCE_SHA'],'variant':'normal','emulator':True,'physicalAndroid':False,'locale':locale,'width':1080,'height':1920,'systemFontScale':1,'syntheticData':True}
