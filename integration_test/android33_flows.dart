@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/main.dart' as app;
 import 'package:mennyiment/drink_journal_page.dart';
-import 'package:mennyiment/statistics.dart';
+import 'package:mennyiment/lifestyle_insights.dart';
 import 'package:mennyiment/app_language.dart';
 import 'package:mennyiment/menti_fitness.dart';
 import 'package:mennyiment/menti_rhythm.dart';
@@ -208,19 +208,16 @@ Future<void> firstUse33(
 
 Future<void> verifyJournalEdits(WidgetTester t, SharedPreferences p) async {
   final s = appStrings(t.element(find.byType(app.HomePage)));
-  final statistics = find.byType(StatisticsPage);
-  var expanded = false;
-  Future<void> checkStatistics(int? ml) async {
-    if (!expanded) {
-      await clubTap(t, 'home-more-features');
-      expanded = true;
-    }
-    await tap(t, 'home-statistics');
+  final statistics = find.byType(LifestyleInsightsPage);
+  Future<void> checkStatistics(double? grams) async {
+    await tap(t, 'nav-insights');
     await until(t, statistics);
-    expect(
-      t.widget<StatisticsPage>(statistics).drinks.map((entry) => entry.ml),
-      ml == null ? isEmpty : [ml],
-    );
+    final drinks = t.widget<LifestyleInsightsPage>(statistics).drinks;
+    if (grams == null) {
+      expect(drinks, isEmpty);
+    } else {
+      expect(drinks.single.grams, closeTo(grams, 0.00001));
+    }
     await t.tap(find.byType(BackButton));
     await t.pumpAndSettle();
   }
@@ -234,10 +231,11 @@ Future<void> verifyJournalEdits(WidgetTester t, SharedPreferences p) async {
   await tap(t, 'entry-save');
   final journal = find.byType(DrinkJournalPage);
   await until(t, journal);
-  expect(t.widget<DrinkJournalPage>(journal).drinks.single.ml, 275);
+  final edited = t.widget<DrinkJournalPage>(journal).drinks.single;
+  expect(edited.ml, 275);
   await t.tap(find.byType(BackButton));
   await t.pumpAndSettle();
-  await checkStatistics(275);
+  await checkStatistics(edited.alcoholGrams);
 
   await textTap(t, find.byTooltip(s.homeRecordActions));
   await t.tap(find.text(s.homeDeleteEntry));

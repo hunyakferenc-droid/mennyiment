@@ -1204,7 +1204,7 @@ void updateMentiMessage(MentiMood mood) {
                   icon: Icons.auto_awesome_outlined, onTap: _openMentiProgress),
                 if (adult) HomeActionCard(title: strings.goals, subtitle: strings.goalsHint,
                   icon: Icons.flag_outlined, onTap: _journalReady ? _openDashboard : null),
-                if (adult) HomeActionCard(key: const ValueKey('home-statistics'), title: strings.statisticsNav, subtitle: strings.statisticsHint,
+                if (adult) HomeActionCard(title: strings.statisticsNav, subtitle: strings.statisticsHint,
                   icon: Icons.bar_chart_rounded, onTap: _journalReady ? _openStatistics : null),
               ]),
               const SizedBox(height: 14),
