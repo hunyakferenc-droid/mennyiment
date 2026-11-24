@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mennyiment/main.dart' as app;
 import 'package:mennyiment/drink_journal_page.dart';
+import 'package:mennyiment/statistics.dart';
 import 'package:mennyiment/app_language.dart';
 import 'package:mennyiment/menti_fitness.dart';
 import 'package:mennyiment/menti_rhythm.dart';
@@ -25,7 +26,12 @@ Future<void> textTap(WidgetTester t, Finder f) async {
   await t.pumpAndSettle();
 }
 
-Future<void> firstUse33(WidgetTester t, {required bool isReview, String locale = 'en'}) async {
+Future<void> firstUse33(
+  WidgetTester t, {
+  required bool isReview,
+  String locale = 'en',
+  bool verifyJournalMutations = false,
+}) async {
   final p = await SharedPreferences.getInstance();
   await p.reload();
   expect(p.getKeys().where((k) => k.startsWith('mennyiment_')), isEmpty);
@@ -60,6 +66,12 @@ Future<void> firstUse33(WidgetTester t, {required bool isReview, String locale =
   await t.pumpAndSettle();
   await tap(t, 'start-next');
   await until(t, find.byType(app.HomePage));
+  if (verifyJournalMutations) {
+    expect(
+      find.byKey(const ValueKey('home-primary-log')).hitTestable(),
+      findsOneWidget,
+    );
+  }
   await clubTap(t, 'home-primary-log');
   final favorite = find.byIcon(Icons.star_border).first;
   await reach(t, favorite);
@@ -94,7 +106,24 @@ Future<void> firstUse33(WidgetTester t, {required bool isReview, String locale =
     'ANDROID33_PRICE_IME inset=${MediaQuery.viewInsetsOf(t.element(price)).bottom}; save hit-testable',
   );
   await t.tap(save);
+  if (verifyJournalMutations) await t.tap(save, warnIfMissed: false);
   await t.pumpAndSettle();
+  if (verifyJournalMutations) {
+    final feedback = find.byType(SnackBar);
+    await until(t, feedback);
+    final journalAction = find.descendant(
+      of: feedback,
+      matching: find.byType(SnackBarAction),
+    );
+    expect(journalAction, findsOneWidget);
+    await t.tap(journalAction);
+    await t.pumpAndSettle();
+    final journal = find.byType(DrinkJournalPage);
+    await until(t, journal);
+    expect(t.widget<DrinkJournalPage>(journal).drinks, hasLength(1));
+    await t.tap(find.byType(BackButton));
+    await t.pumpAndSettle();
+  }
   await p.reload();
   expect(
     (jsonDecode(
@@ -122,6 +151,7 @@ Future<void> firstUse33(WidgetTester t, {required bool isReview, String locale =
   expect(t.widget<DrinkJournalPage>(journal).drinks, hasLength(1));
   await t.tap(find.byType(BackButton));
   await t.pumpAndSettle();
+  if (verifyJournalMutations) await verifyJournalEdits(t, p);
   if (isReview) {
     await clubTap(t, 'home-fitness');
     await clubTap(t, 'fitness-play');
@@ -173,4 +203,55 @@ Future<void> firstUse33(WidgetTester t, {required bool isReview, String locale =
   print(
     'ANDROID33_FIRST_USE passed: clean $locale, onboarding route back, own girl, favorite, zero-price journal, legitimate 10 XP; REVIEW=$isReview',
   );
+}
+
+
+Future<void> verifyJournalEdits(WidgetTester t, SharedPreferences p) async {
+  final s = appStrings(t.element(find.byType(app.HomePage)));
+  final statistics = find.byType(StatisticsPage);
+  var expanded = false;
+  Future<void> checkStatistics(int? ml) async {
+    if (!expanded) {
+      await clubTap(t, 'home-more-features');
+      expanded = true;
+    }
+    await tap(t, 'home-statistics');
+    await until(t, statistics);
+    expect(
+      t.widget<StatisticsPage>(statistics).drinks.map((entry) => entry.ml),
+      ml == null ? isEmpty : [ml],
+    );
+    await t.tap(find.byType(BackButton));
+    await t.pumpAndSettle();
+  }
+
+  await tap(t, 'nav-journal');
+  await tap(t, 'journal-edit-0');
+  final volume = find.byKey(const ValueKey('entry-field-1'));
+  await reach(t, volume);
+  await t.enterText(volume, '275');
+  await t.pumpAndSettle();
+  await tap(t, 'entry-save');
+  final journal = find.byType(DrinkJournalPage);
+  await until(t, journal);
+  expect(t.widget<DrinkJournalPage>(journal).drinks.single.ml, 275);
+  await t.tap(find.byType(BackButton));
+  await t.pumpAndSettle();
+  await checkStatistics(275);
+
+  await textTap(t, find.byTooltip(s.homeRecordActions));
+  await t.tap(find.text(s.homeDeleteEntry));
+  await t.pumpAndSettle();
+  await t.tap(find.text(s.journalDelete));
+  await t.pumpAndSettle();
+  await tap(t, 'nav-journal');
+  await until(t, journal);
+  expect(t.widget<DrinkJournalPage>(journal).drinks, isEmpty);
+  expect(find.text(s.experienceEmptyJournal), findsOneWidget);
+  await t.tap(find.byType(BackButton));
+  await t.pumpAndSettle();
+  await checkStatistics(null);
+  await p.reload();
+  expect(jsonDecode(p.getString('mennyiment_drinks_v1')!), isEmpty);
+  expect(p.getStringList('mennyiment_favorites_v1'), hasLength(1));
 }

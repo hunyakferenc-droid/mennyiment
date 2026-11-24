@@ -9,7 +9,9 @@ import time
 
 from android33_device_ui import DeviceUI, NORMAL, REVIEW, STRINGS, adb, prefs, require_emulator
 from check_android_update import decision, inspect
-from run_android33_upgrade import BASE, ROOT, run
+from run_android33_upgrade import ROOT, run
+
+BASE = 'c927e42d712f164e2e41b62f3f67088ce4eacb94'
 
 OUT = ROOT / 'build/android34'
 DRINKS = 'mennyiment_drinks_v1'
@@ -41,6 +43,13 @@ def open_restore_picker(ui):
     assert documents_ui(ui), 'Android system DocumentsUI did not open'
 
 
+def start_review(ui):
+    ui.start(REVIEW)
+    if ui.nodes("Pixel Launcher isn't responding"):
+        ui.click('Close app', top=False)
+        ui.start(REVIEW)
+
+
 def open_backup(ui):
     ui.click(STRINGS['avatarMore'], top=False)
     ui.click(STRINGS['backupTitle'], top=False)
@@ -66,10 +75,7 @@ def apply_backup(ui):
 def backup_round_trip(ui, before):
     adb('shell', 'settings', 'put', 'system', 'font_scale', '1.0')
     ui.stop(REVIEW)
-    ui.start(REVIEW)
-    if ui.nodes("Pixel Launcher isn't responding"):
-        ui.click('Close app', top=False)
-        ui.start(REVIEW)
+    start_review(ui)
     open_backup(ui)
     ui.click(STRINGS['backupPrepare'])
     ui.click(STRINGS['backupSave'])
@@ -164,7 +170,7 @@ def main():
         try:
             run(['python3', 'tool/build_menti_alive_preview.py', '--home',
                  '--platform', 'apk', '--output', OUT / 'baseline'], cwd=work)
-            # Only test sources are overlaid. The existing #50 app remains the baseline.
+            # Only test sources are overlaid. The existing #53 app remains the baseline.
             for filename in ['android33_flows.dart', 'android_upgrade_seed_test.dart']:
                 (work / 'integration_test' / filename).write_bytes(
                     (ROOT / 'integration_test' / filename).read_bytes()
@@ -191,18 +197,27 @@ prepare_review_android(work, studio=True)
     sdk_tools = max(Path(os.environ['ANDROID_HOME']).glob('build-tools/*/apksigner'),
                     key=lambda p: tuple(map(int, p.parent.name.split('.')))).parent
     old, new = inspect(baseline, sdk_tools), inspect(candidate, sdk_tools)
-    assert old['versionCode'] == 45 and new['versionCode'] == 47
+    assert old['versionCode'] == 47 and new['versionCode'] == 48
     assert decision(old, new)[0] == 'compatible-signature'
     before = prefs(REVIEW)
     adb('install', '-r', baseline)
     ui.start(REVIEW)
     ui.stop(REVIEW)
-    ui.start(REVIEW)
+    start_review(ui)
     assert prefs(REVIEW) == before
+    ui.visible(STRINGS['avatarMore'])
+    ui.screen('home-before-320dp-200pct')
     adb('install', '-r', candidate)
     ui.start(REVIEW)
     ui.stop(REVIEW)
-    ui.start(REVIEW)
+    start_review(ui)
+    assert prefs(REVIEW) == before
+    ui.visible(STRINGS['avatarMore'])
+    ui.screen('home-after-320dp-200pct')
+    ui.click(STRINGS['fitnessTitle'], top=False)
+    ui.visible(STRINGS['rhythmTitle'])
+    ui.back()
+    ui.visible(STRINGS['avatarMore'])
     assert prefs(REVIEW) == before
     verification = {
         'sourceCommit': os.environ['SOURCE_SHA'], 'rebuiltBaselineSource': BASE,
