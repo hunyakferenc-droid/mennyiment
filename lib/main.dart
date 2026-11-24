@@ -838,7 +838,16 @@ void updateMentiMessage(MentiMood mood) {
     updateMentiMessage(result.percent == 0
         ? MentiMood.alcoholFreeEntry : MentiMood.drinkAdded);
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(appStrings(context).journalSaved(catalogDrinkLabel(result.name, appStrings(context))))),
+      SnackBar(
+        content: Text(appStrings(context).journalSaved(
+          catalogDrinkLabel(result.name, appStrings(context)),
+        )),
+        action: SnackBarAction(
+          label: appStrings(context).journal,
+          onPressed: _openJournal,
+        ),
+        actionOverflowThreshold: 0.20,
+      ),
     );
     } finally { _recording = false; }
   }
@@ -1048,6 +1057,18 @@ void updateMentiMessage(MentiMood mood) {
                   style: TextStyle(color: _mint, fontSize: 11,
                       fontWeight: FontWeight.w700, letterSpacing: 1.1)),
               const SizedBox(height: 12),
+              if (adult) FilledButton.icon(
+                key: const ValueKey('home-primary-log'),
+                onPressed: _canWriteJournal ? _openDrinkPicker : null,
+                icon: const Icon(Icons.add_circle_outline),
+                label: Text(strings.visualAdd,
+                    style: TextStyle(fontWeight: FontWeight.w800)),
+                style: FilledButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: const Color(0xFF150D1C),
+                    minimumSize: const Size(double.infinity, 54)),
+              ),
+              const SizedBox(height: 12),
               if (_progressReady) HomeMentiCard(
                 character: Stack(alignment: Alignment.topRight, children: [
                       Container(
@@ -1104,18 +1125,6 @@ void updateMentiMessage(MentiMood mood) {
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const MentiFitnessClub(allowTestMode: true))),
                   icon: const Icon(Icons.fitness_center), label: Text(strings.fitnessTitle)),
               ],
-              const SizedBox(height: 12),
-              if (adult) FilledButton.icon(
-                key: const ValueKey('home-primary-log'),
-                onPressed: _canWriteJournal ? _openDrinkPicker : null,
-                icon: const Icon(Icons.add_circle_outline),
-                label: Text(strings.visualAdd,
-                    style: TextStyle(fontWeight: FontWeight.w800)),
-                style: FilledButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    foregroundColor: const Color(0xFF150D1C),
-                    minimumSize: const Size(double.infinity, 54)),
-              ),
               const SizedBox(height: 12),
               if (adult && _journalReady && _journalSnapshot != null) ...[
                 MentiStatusBadge(label: strings.visualTodayEntries(today.length), icon: Icons.calendar_today_outlined),
@@ -1416,6 +1425,7 @@ class _DrinkDetailsSheetState extends State<_DrinkDetailsSheet> {
                   decoration: InputDecoration(
                     labelText: appStrings(context).journalOptionalPrice,
                     helperText: appStrings(context).journalPriceHint,
+                    helperMaxLines: 4,
                     prefixIcon: Icon(Icons.payments_outlined)),
                   validator: (value) {
                     if ((value ?? '').trim().isEmpty) return null;

@@ -6,6 +6,6 @@ import 'android33_flows.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   testWidgets('Fresh offline Hungarian onboarding and first journal entry', (t) {
-    return firstUse33(t, isReview: false, locale: 'hu');
+    return firstUse33(t, isReview: false, verifyJournalMutations: true, locale: 'hu');
   });
 }

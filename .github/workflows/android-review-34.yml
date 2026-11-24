@@ -1,7 +1,7 @@
-name: Android 3.4 REVIEW
+name: Android beta polish
 on:
   push:
-    branches: [feature/menti-android-3-4-review]
+    branches: [feature/android-beta-polish]
 
 permissions:
   contents: read
@@ -43,7 +43,7 @@ jobs:
           flutter gen-l10n
           git diff --exit-code -- pubspec.lock lib/l10n/generated
           flutter analyze --no-pub
-          flutter test --no-pub test/data_backup_test.dart test/data_restore_test.dart
+          flutter test --no-pub test/data_backup_test.dart test/data_restore_test.dart test/data_restore_page_test.dart
           python3 tool/test_android_update.py
           python3 tool/test_unsigned_play_candidate.py
       - name: Build the phone APK
@@ -67,7 +67,7 @@ jobs:
         if: ${{ !cancelled() && hashFiles('build/android34/device/upgrade-verification.json') != '' }}
         uses: actions/upload-artifact@v4
         with:
-          name: MennyiMent-3.4.0-47-upgrade-verified-${{ env.SOURCE_SHA }}
+          name: MennyiMent-3.4.1-48-upgrade-verified-${{ env.SOURCE_SHA }}
           path: |
             build/android34/review/
             build/android34/baseline/app-debug.apk
@@ -91,7 +91,7 @@ jobs:
       - name: Upload verified REVIEW APK and matching test baseline
         uses: actions/upload-artifact@v4
         with:
-          name: MennyiMent-3.4.0-47-Android-REVIEW-${{ env.SOURCE_SHA }}
+          name: MennyiMent-3.4.1-48-Android-REVIEW-${{ env.SOURCE_SHA }}
           path: |
             build/android34/review/
             build/android34/baseline/app-debug.apk
@@ -131,7 +131,7 @@ jobs:
           bash tool/retry_android_dependency_download.sh python3 tool/build_unsigned_play_candidate.py --unsigned --bundletool "$RUNNER_TEMP/bundletool.jar" --output build/play-unsigned
       - uses: actions/upload-artifact@v4
         with:
-          name: MennyiMent-3.4.0-47-unsigned-AAB-${{ github.sha }}
+          name: MennyiMent-3.4.1-48-unsigned-AAB-${{ github.sha }}
           path: build/play-unsigned/
           if-no-files-found: error
           retention-days: 30
