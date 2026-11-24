@@ -45,5 +45,5 @@ try{for(const lang of ['hu','en']){
  checks.push(`${lang}: seven virtual days with a skipped calendar day, same-day repeat, complete week/new challenge, same-day cross-challenge limit, reload; test storage isolated from actual club and all profile/journal/XP data`);
  await context.close();active=null;
 }
-assert.deepEqual(errors,[]);fs.writeFileSync(path.join(out,'club-chrome-verification.json'),JSON.stringify({sourceCommit:source,version:'3.2.0+45',realWindows:process.platform==='win32',browserFontPx:32,textScale:2,checks,runtimeErrors:errors},null,2));console.log(checks.length+' club Chrome checks passed');
+assert.deepEqual(errors,[]);fs.writeFileSync(path.join(out,'club-chrome-verification.json'),JSON.stringify({sourceCommit:source,version:'3.3.0+46',realWindows:process.platform==='win32',browserFontPx:32,textScale:2,checks,runtimeErrors:errors},null,2));console.log(checks.length+' club Chrome checks passed');
 }catch(e){if(active&&!active.isClosed()){await active.screenshot({path:path.join(out,'club-failure.png')}).catch(()=>{});fs.writeFileSync(path.join(out,'club-failure-dom.txt'),await active.locator('body').ariaSnapshot().catch(()=>''));}throw e;}finally{await b.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

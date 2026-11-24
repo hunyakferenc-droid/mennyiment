@@ -1,0 +1,16 @@
+{
+  "scope": "normal Android / Play candidate; experimental REVIEW features are not advertised",
+  "ownerApproved": false,
+  "hu": {
+    "title": "MennyiMent?",
+    "short": "Italnapló és költéskövetés saját Mentivel, magyar és angol felülettel.",
+    "full": "Mennyi ment el? A MennyiMent? saját Mentivel segít átlátni a rögzített italokat, költéseket és önbevalláson alapuló napi szokásokat.\n\nÍrd be az ital nevét, mennyiségét, alkoholfokát, opcionális árát és időpontját. A bejegyzések később szerkeszthetők, kereshetők és szűrhetők. A hiányzó ár nem nulla: a valóban 0 Ft-os tétel ismert ár, az ismeretlen költség pedig külön jelzést kap.\n\nNézd át a napló és a pénzügyi nézet összesítéseit, válassz célokat és tölts ki opcionális napi önellenőrzést. A Menti megjelenése és a feloldások a meglévő fejlődésedet követik. Az alkalmazás az önreflexiót támogatja; nem az elfogyasztott alkohol mennyiségét jutalmazza.\n\nMagyar és angol felület, helyi adattárolás, fájlos mentés és visszaállítás. A napló és a helyi számítások internet nélkül használhatók. Nincs alkalmazásbeli fiók vagy megvalósított felhőszinkron. A választott fájlszolgáltató és az Android rendszermentése külön szolgáltatás lehet.\n\nFelnőtteknek szóló önbevallásos napló. A hiányzó bejegyzés nem igazol alkoholmentes napot. Nem orvosi tanács, nem vezetési alkalmassági vizsgálat és nem biztonságos alkoholadag-ajánlás.",
+    "releaseNotes": "Megbízhatóbb kedvencmentés. Magyar–angol felület és Android-megjelenés ellenőrzése."
+  },
+  "en": {
+    "title": "MennyiMent?",
+    "short": "Your drink journal and spending with Menti. English and Hungarian.",
+    "full": "How much did it add up to? MennyiMent? helps you review your recorded drinks, spending and self-reported daily habits with your own Menti.\n\nRecord a drink name, quantity, alcohol percentage, optional HUF price and time. Edit entries later, search your journal and filter results. Missing prices are not zero: a genuinely free entry has a known zero price, while unknown costs remain clearly marked.\n\nExplore journal and spending summaries, choose personal goals and complete optional daily reflections. Your Menti appearance and unlocks follow existing progress. Reflection is supported; consuming more alcohol does not earn rewards.\n\nHungarian and English interfaces, local storage, file backup and restore. Journal entries and local calculations work offline. There is no in-app account or implemented cloud synchronization. Your chosen file provider and Android system backup may be separate services.\n\nA self-reported journal aimed at adults. No entry does not prove an alcohol-free day. The app does not provide medical advice, a fitness-to-drive assessment or safe alcohol-dose recommendations.",
+    "releaseNotes": "More reliable favorite saving. Hungarian/English interface and Android layout checks."
+  }
+}

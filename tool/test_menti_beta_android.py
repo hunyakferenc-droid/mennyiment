@@ -48,6 +48,14 @@ class ReviewIsolationTest(unittest.TestCase):
    self.assertEqual(layers[0].get(width),'48dp')
    self.assertEqual(layers[1].get(width),'20dp')
    self.assertNotIn('menti_review_launcher',(ROOT/'android/app/src/main/AndroidManifest.xml').read_text())
+ def test_home_review_name_id_and_icon_are_distinct_without_touching_normal(self):
+  with tempfile.TemporaryDirectory() as d:
+   w=Path(d);shutil.copytree(ROOT/'android/app',w/'android/app',ignore=shutil.ignore_patterns('build'))
+   original=(ROOT/'android/app/src/main/AndroidManifest.xml').read_bytes()
+   prepare_review_android(w,studio=True,home=True)
+   self.assertIn('android:label="MennyiMent? REVIEW"',(w/'android/app/src/main/AndroidManifest.xml').read_text())
+   self.assertEqual((ROOT/'android/app/src/main/AndroidManifest.xml').read_bytes(),original)
+   self.assertIn('applicationId = "com.example.mennyiment.review"',(w/'android/app/build.gradle.kts').read_text())
  def test_dirty_tracked_source_is_preserved_and_refused(self):
   with tempfile.TemporaryDirectory() as d:
    w=Path(d)

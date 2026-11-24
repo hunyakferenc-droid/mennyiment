@@ -41,7 +41,13 @@ class MentiFitnessArtwork extends StatelessWidget {
 }
 
 class MentiFitnessClub extends StatefulWidget {
-  const MentiFitnessClub({super.key, this.store, this.testMode = false});
+  const MentiFitnessClub({
+    super.key,
+    this.store,
+    this.testMode = false,
+    this.allowTestMode = false,
+  });
+  final bool allowTestMode;
   final MentiClubStore? store;
   final bool testMode;
   @override
@@ -49,14 +55,13 @@ class MentiFitnessClub extends StatefulWidget {
 }
 
 class _ClubState extends State<MentiFitnessClub> with WidgetsBindingObserver {
+  bool get isTestMode => widget.testMode && widget.allowTestMode;
   DateTime _testDay = DateTime(2030, 1, 1);
   late final store =
       widget.store ??
       MentiClubStore(
-        key: widget.testMode
-            ? MentiClubStore.testKey
-            : MentiClubStore.normalKey,
-        clock: widget.testMode ? () => _testDay : null,
+        key: isTestMode ? MentiClubStore.testKey : MentiClubStore.normalKey,
+        clock: isTestMode ? () => _testDay : null,
       );
   @override
   void initState() {
@@ -65,9 +70,17 @@ class _ClubState extends State<MentiFitnessClub> with WidgetsBindingObserver {
     _load();
   }
 
+  void _nextTestDay() {
+    if (!isTestMode || store.saving) return;
+    setState(
+      () =>
+          _testDay = DateTime(_testDay.year, _testDay.month, _testDay.day + 1),
+    );
+  }
+
   Future<void> _load() async {
     await store.load();
-    if (widget.testMode && store.record.last != null) {
+    if (isTestMode && store.record.last != null) {
       final last = parseClubDay(store.record.last!);
       if (last.isAfter(_testDay)) _testDay = last;
     }
@@ -102,7 +115,7 @@ class _ClubState extends State<MentiFitnessClub> with WidgetsBindingObserver {
               builder: (context, _) => ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
-                  if (widget.testMode)
+                  if (isTestMode)
                     Card(
                       child: Padding(
                         padding: const EdgeInsets.all(12),
@@ -116,15 +129,7 @@ class _ClubState extends State<MentiFitnessClub> with WidgetsBindingObserver {
                             ),
                             OutlinedButton(
                               key: const ValueKey('club-next-day'),
-                              onPressed: store.saving
-                                  ? null
-                                  : () => setState(
-                                      () => _testDay = DateTime(
-                                        _testDay.year,
-                                        _testDay.month,
-                                        _testDay.day + 1,
-                                      ),
-                                    ),
+                              onPressed: store.saving ? null : _nextTestDay,
                               child: Text(s.clubNextDay),
                             ),
                           ],
@@ -273,8 +278,15 @@ class _ClubState extends State<MentiFitnessClub> with WidgetsBindingObserver {
                           : () async {
                               await Navigator.of(context).push(
                                 MaterialPageRoute<void>(
-                                  builder: (_) =>
-                                      MentiMovementCards(store: store),
+                                  builder: (_) => MentiMovementCards(
+                                    store: store,
+                                    nextTestDay: isTestMode
+                                        ? _nextTestDay
+                                        : null,
+                                    testClock: isTestMode
+                                        ? () => _testDay
+                                        : null,
+                                  ),
                                 ),
                               );
                               await _load();
@@ -282,13 +294,15 @@ class _ClubState extends State<MentiFitnessClub> with WidgetsBindingObserver {
                     ),
                     Text(s.clubLocalOnly),
                   ],
-                  if (!widget.testMode)
+                  if (!isTestMode && widget.allowTestMode)
                     TextButton(
                       key: const ValueKey('club-test-mode'),
                       onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute<void>(
-                          builder: (_) =>
-                              const MentiFitnessClub(testMode: true),
+                          builder: (_) => const MentiFitnessClub(
+                            testMode: true,
+                            allowTestMode: true,
+                          ),
                         ),
                       ),
                       child: Text(s.clubTestMode),

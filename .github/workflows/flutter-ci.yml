@@ -2,7 +2,7 @@ name: Flutter CI
 
 on:
   pull_request:
-    branches: [main, feature/menti-home-fitness-review, feature/menti-base-animation-review, feature/menti-beta, feature/menti-animation-studio, feature/menti-alive, feature/menti-life, feature/menti-collection, experiment/menti-complete-looks, fix/menti-character-quality, feature/mennyiment-2-4-visual-ux, feature/mennyiment-2-3-1-play-preparation, feature/mennyiment-2-3-adventures, feature/mennyiment-2-2-6-naturalization, feature/mennyiment-2-2-5-customization-rebuild, feature/mennyiment-2-2-4-premium-polish, feature/mennyiment-2-2-1-visual-ux, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families, feature/mennyiment-2-2-concept-redesign, feature/mennyiment-2-2-final-playable]
+    branches: [main, feature/menti-fitness-challenge-review, feature/menti-home-fitness-review, feature/menti-base-animation-review, feature/menti-beta, feature/menti-animation-studio, feature/menti-alive, feature/menti-life, feature/menti-collection, experiment/menti-complete-looks, fix/menti-character-quality, feature/mennyiment-2-4-visual-ux, feature/mennyiment-2-3-1-play-preparation, feature/mennyiment-2-3-adventures, feature/mennyiment-2-2-6-naturalization, feature/mennyiment-2-2-5-customization-rebuild, feature/mennyiment-2-2-4-premium-polish, feature/mennyiment-2-2-1-visual-ux, feature/mennyiment-2-goal-reactions, feature/mennyiment-2-personal-hub, feature/mennyiment-2-2-avatar-system, feature/mennyiment-2-2-studio, feature/mennyiment-2-2-integration, feature/mennyiment-2-2-brand-visual-rework, feature/mennyiment-2-2-distinct-families, feature/mennyiment-2-2-concept-redesign, feature/mennyiment-2-2-final-playable]
   push:
     branches: [main]
 
@@ -30,7 +30,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
-          fetch-depth: 2
+          fetch-depth: 32
 
       - name: Set up Flutter 3.47.7 (Dart 3.13.5)
         uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
@@ -69,7 +69,9 @@ jobs:
           python3 tool/check_menti_animation_studio_media.py
           python3 tool/test_menti_beta_android.py
           python3 tool/test_android_update.py
+          python3 tool/test_unsigned_play_candidate.py
           python3 tool/check_play_dossier.py
+          python3 tool/check_play_33_dossier.py
 
       - name: Whitespace check
         run: git diff --check HEAD^ HEAD
@@ -104,7 +106,7 @@ jobs:
           target = Path('build/web')
           for name in ['INDITAS.cmd', 'INDITAS.ps1']:
               shutil.copyfile(Path('tool/windows') / name, target / name)
-          shutil.copyfile('docs/menti-beta/kiprobalas-hu.md', target / 'OLVASDEL-WINDOWS.txt')
+          shutil.copyfile('docs/play-3.3/kiprobalas-hu.md', target / 'OLVASDEL-WINDOWS.txt')
           metadata = json.loads((target / 'version.json').read_text())
           (target / 'build-info.txt').write_text(
               f"source_commit={os.environ['SOURCE_SHA']}\n"
@@ -116,7 +118,7 @@ jobs:
         if: ${{ !cancelled() && steps.web.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-3.2.0-web-${{ env.SOURCE_SHA }}
+          name: mennyiment-3.3.0-web-${{ env.SOURCE_SHA }}
           path: build/web/
           if-no-files-found: error
           retention-days: 14
@@ -142,15 +144,15 @@ jobs:
             "$APK_SIGNER" verify --verbose --print-certs build/app/outputs/flutter-apk/app-debug.apk
             "$APK_AAPT" dump badging build/app/outputs/flutter-apk/app-debug.apk
           } > build/app/outputs/flutter-apk/build-info.txt
-          cp docs/menti-beta/kiprobalas-hu.md build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
+          cp docs/play-3.3/kiprobalas-hu.md build/app/outputs/flutter-apk/OLVASDEL-ANDROID.md
           cat build/app/outputs/flutter-apk/build-info.txt
-          python3 tool/check_apk_layout.py build/app/outputs/flutter-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 3.2.0 --build 45 --output build/app/outputs/flutter-apk/apk-layout.json
+          python3 tool/check_apk_layout.py build/app/outputs/flutter-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 3.3.0 --build 46 --expected-label "MennyiMent?" --expected-icon menti_launcher --output build/app/outputs/flutter-apk/apk-layout.json
 
       - name: Upload installable debug APK
         if: ${{ !cancelled() && steps.apk.outcome == 'success' && steps.verify_apk.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-3.2.0-debug-apk-${{ env.SOURCE_SHA }}
+          name: mennyiment-3.3.0-debug-apk-${{ env.SOURCE_SHA }}
           path: |
             build/app/outputs/flutter-apk/app-debug.apk
             build/app/outputs/flutter-apk/app-debug.apk.sha256
@@ -169,7 +171,7 @@ jobs:
         if: ${{ !cancelled() && steps.release_guard.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-3.2.0-release-guard-${{ env.SOURCE_SHA }}
+          name: mennyiment-3.3.0-release-guard-${{ env.SOURCE_SHA }}
           path: build/verification/release-signing.json
           if-no-files-found: error
           retention-days: 14
@@ -183,7 +185,7 @@ jobs:
         if: ${{ !cancelled() && steps.review_web.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-3.2.0-REVIEW-web-${{ env.SOURCE_SHA }}
+          name: mennyiment-3.3.0-REVIEW-web-${{ env.SOURCE_SHA }}
           path: build/menti-alive-review-web/
           if-no-files-found: error
           retention-days: 14
@@ -194,13 +196,13 @@ jobs:
         run: |
           python3 tool/build_menti_alive_preview.py --studio --platform apk --output build/menti-alive-review-apk
           APK_SIGNER="$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)"
-          python3 tool/check_apk_layout.py build/menti-alive-review-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 3.2.0 --build 45 --application-id com.example.mennyiment.review --output build/menti-alive-review-apk/apk-layout.json
+          python3 tool/check_apk_layout.py build/menti-alive-review-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 3.3.0 --build 46 --application-id com.example.mennyiment.review --expected-label "Menti Studio REVIEW" --expected-icon menti_review_launcher --output build/menti-alive-review-apk/apk-layout.json
 
       - name: Upload developer REVIEW debug APK
         if: ${{ !cancelled() && steps.review_apk.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-3.2.0-REVIEW-debug-apk-${{ env.SOURCE_SHA }}
+          name: mennyiment-3.3.0-REVIEW-debug-apk-${{ env.SOURCE_SHA }}
           path: build/menti-alive-review-apk/
           if-no-files-found: error
           retention-days: 14
@@ -212,13 +214,13 @@ jobs:
           python3 tool/build_menti_alive_preview.py --home --platform web --output build/menti-home-review-web
           python3 tool/build_menti_alive_preview.py --home --platform apk --output build/menti-home-review-apk
           APK_SIGNER="$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)"
-          python3 tool/check_apk_layout.py build/menti-home-review-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 3.2.0 --build 45 --application-id com.example.mennyiment.review --output build/menti-home-review-apk/apk-layout.json
+          python3 tool/check_apk_layout.py build/menti-home-review-apk/app-debug.apk --build-tools "$(dirname "$APK_SIGNER")" --source "$SOURCE_SHA" --version 3.3.0 --build 46 --application-id com.example.mennyiment.review --expected-label "MennyiMent? REVIEW" --expected-icon menti_review_launcher --output build/menti-home-review-apk/apk-layout.json
 
       - name: Upload home REVIEW web
         if: ${{ !cancelled() && steps.home_review.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-3.2.0-HOME-REVIEW-web-${{ env.SOURCE_SHA }}
+          name: mennyiment-3.3.0-HOME-REVIEW-web-${{ env.SOURCE_SHA }}
           path: build/menti-home-review-web/
           if-no-files-found: error
           retention-days: 14
@@ -227,13 +229,13 @@ jobs:
         if: ${{ !cancelled() && steps.home_review.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-3.2.0-HOME-REVIEW-apk-${{ env.SOURCE_SHA }}
+          name: mennyiment-3.3.0-HOME-REVIEW-apk-${{ env.SOURCE_SHA }}
           path: build/menti-home-review-apk/
           if-no-files-found: error
           retention-days: 14
 
       - name: Prepare real KVM emulator and same-key APK integration
-        if: (github.head_ref == 'feature/menti-animation-studio' || github.head_ref == 'feature/menti-base-animation-review' || github.head_ref == 'feature/menti-home-fitness-review' || github.head_ref == 'feature/menti-fitness-challenge-review')
+        if: (github.head_ref == 'feature/menti-animation-studio' || github.head_ref == 'feature/menti-base-animation-review' || github.head_ref == 'feature/menti-home-fitness-review' || github.head_ref == 'feature/menti-fitness-challenge-review' || github.head_ref == 'feature/menti-android-3-3-preparation')
         run: |
           mkdir -p build/android-beta
           test -e /dev/kvm || { echo 'Android emulator blocked: /dev/kvm is absent'; exit 1; }
@@ -244,7 +246,7 @@ jobs:
           cp build/menti-alive-review-apk/app-debug.apk artifacts/review/app-debug.apk
           flutter pub get
       - name: Real Android API 35 x86_64 device flows
-        if: (github.head_ref == 'feature/menti-animation-studio' || github.head_ref == 'feature/menti-base-animation-review' || github.head_ref == 'feature/menti-home-fitness-review' || github.head_ref == 'feature/menti-fitness-challenge-review')
+        if: (github.head_ref == 'feature/menti-animation-studio' || github.head_ref == 'feature/menti-base-animation-review' || github.head_ref == 'feature/menti-home-fitness-review' || github.head_ref == 'feature/menti-fitness-challenge-review' || github.head_ref == 'feature/menti-android-3-3-preparation')
         env:
           MENTI_SOURCE_COMMIT: ${{ env.SOURCE_SHA }}
         uses: reactivecircus/android-emulator-runner@v2
@@ -259,11 +261,83 @@ jobs:
           emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none -no-snapshot
           script: bash tool/test_menti_beta_android.sh
       - name: Upload actual Android evidence including failures
-        if: always() && (github.head_ref == 'feature/menti-animation-studio' || github.head_ref == 'feature/menti-base-animation-review' || github.head_ref == 'feature/menti-home-fitness-review' || github.head_ref == 'feature/menti-fitness-challenge-review')
+        if: always() && (github.head_ref == 'feature/menti-animation-studio' || github.head_ref == 'feature/menti-base-animation-review' || github.head_ref == 'feature/menti-home-fitness-review' || github.head_ref == 'feature/menti-fitness-challenge-review' || github.head_ref == 'feature/menti-android-3-3-preparation')
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-3.2.0-Android-evidence-${{ env.SOURCE_SHA }}
+          name: mennyiment-3.3.0-Android-evidence-${{ env.SOURCE_SHA }}
           path: build/android-beta/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Prepare explicit unsigned release AAB
+        id: unsigned_aab
+        if: ${{ !cancelled() && steps.apk.outcome == 'success' }}
+        run: |
+          curl --fail --location --retry 3 https://github.com/google/bundletool/releases/download/1.18.3/bundletool-all-1.18.3.jar --output "$RUNNER_TEMP/bundletool-all-1.18.3.jar"
+          echo "a099cfa1543f55593bc2ed16a70a7c67fe54b1747bb7301f37fdfd6d91028e29  $RUNNER_TEMP/bundletool-all-1.18.3.jar" | sha256sum --check -
+          python3 tool/build_unsigned_play_candidate.py --unsigned --bundletool "$RUNNER_TEMP/bundletool-all-1.18.3.jar" --output build/play-unsigned
+      - name: Upload unsigned AAB and actual release manifest
+        if: ${{ !cancelled() && steps.unsigned_aab.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-3.3.0-UNSIGNED-release-AAB-${{ env.SOURCE_SHA }}
+          path: build/play-unsigned/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Release idle Gradle memory before the second emulator
+        if: ${{ !cancelled() && steps.home_review.outcome == 'success' && github.head_ref == 'feature/menti-android-3-3-preparation' }}
+        run: ./android/gradlew --stop
+      - name: Actual 3.3 fresh EN and rebuilt 3.2 same-key upgrade on separate emulator
+        if: ${{ !cancelled() && steps.home_review.outcome == 'success' && github.head_ref == 'feature/menti-android-3-3-preparation' }}
+        env:
+          ANDROID_SERIAL: emulator-5554
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_4
+          avd-name: menti-upgrade-33
+          disable-animations: false
+          emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none -no-snapshot
+          script: python3 tool/run_android33_upgrade.py
+      - name: Upload real same-key upgrade and lifecycle evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-3.3.0-Upgrade-evidence-${{ env.SOURCE_SHA }}
+          path: |
+            build/android33-upgrade/**/*.json
+            build/android33-upgrade/**/*.xml
+            build/android33-upgrade/**/*.png
+            build/android33-upgrade/**/*.txt
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Upload compatible rebuilt baseline for independent phone testing
+        if: ${{ !cancelled() && steps.home_review.outcome == 'success' && github.head_ref == 'feature/menti-android-3-3-preparation' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-3.2.0-REBUILT-baseline-APK-for-3.3-${{ env.SOURCE_SHA }}
+          path: |
+            build/android33-upgrade/baseline50-rebuilt-review.apk
+            build/android33-upgrade/compatible-rebuilt-route.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Verify genuine Android store screenshot formats without changing pixels
+        if: ${{ !cancelled() && steps.home_review.outcome == 'success' && github.head_ref == 'feature/menti-android-3-3-preparation' }}
+        run: python3 tool/check_store_screenshots_33.py
+      - name: Upload actual Android store screenshot candidates
+        if: always() && github.head_ref == 'feature/menti-android-3-3-preparation'
+        uses: actions/upload-artifact@v4
+        with:
+          name: mennyiment-3.3.0-Android-store-candidates-${{ env.SOURCE_SHA }}
+          path: |
+            build/android-beta/store-candidates/
+            build/android33-upgrade/store-candidates/
+            build/play-store-images/
+            docs/play-3.3/
+            build/play-dossier/
           if-no-files-found: warn
           retention-days: 14
 
@@ -305,7 +379,7 @@ jobs:
   windows_beta:
     name: Real Windows CMD and Chrome beta gate
     # Continue the independent Windows gate even if native emulator testing fails.
-    if: always() && (github.head_ref == 'feature/menti-animation-studio' || github.head_ref == 'feature/menti-base-animation-review' || github.head_ref == 'feature/menti-home-fitness-review' || github.head_ref == 'feature/menti-fitness-challenge-review') && needs.flutter.result != 'cancelled'
+    if: always() && (github.head_ref == 'feature/menti-animation-studio' || github.head_ref == 'feature/menti-base-animation-review' || github.head_ref == 'feature/menti-home-fitness-review' || github.head_ref == 'feature/menti-fitness-challenge-review' || github.head_ref == 'feature/menti-android-3-3-preparation') && needs.flutter.result != 'cancelled'
     needs: flutter
     runs-on: windows-2025
     timeout-minutes: 30
@@ -318,15 +392,15 @@ jobs:
           persist-credentials: false
       - uses: actions/download-artifact@v4
         with:
-          name: mennyiment-3.2.0-web-${{ env.MENTI_SOURCE_COMMIT }}
+          name: mennyiment-3.3.0-web-${{ env.MENTI_SOURCE_COMMIT }}
           path: artifacts/normal
       - uses: actions/download-artifact@v4
         with:
-          name: mennyiment-3.2.0-REVIEW-web-${{ env.MENTI_SOURCE_COMMIT }}
+          name: mennyiment-3.3.0-REVIEW-web-${{ env.MENTI_SOURCE_COMMIT }}
           path: artifacts/review
       - uses: actions/download-artifact@v4
         with:
-          name: mennyiment-3.2.0-HOME-REVIEW-web-${{ env.MENTI_SOURCE_COMMIT }}
+          name: mennyiment-3.3.0-HOME-REVIEW-web-${{ env.MENTI_SOURCE_COMMIT }}
           path: artifacts/home
       - name: Install browser automation only for this CI test
         shell: pwsh
@@ -341,7 +415,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mennyiment-3.2.0-Windows-evidence-${{ env.MENTI_SOURCE_COMMIT }}
+          name: mennyiment-3.3.0-Windows-evidence-${{ env.MENTI_SOURCE_COMMIT }}
           path: |
             build/windows-beta/*.log
             build/windows-beta/*.json

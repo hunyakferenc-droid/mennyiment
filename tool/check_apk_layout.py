@@ -19,6 +19,8 @@ p.add_argument('--version', required=True)
 p.add_argument('--build', required=True)
 p.add_argument('--application-id', default='com.example.mennyiment')
 p.add_argument('--output', type=Path, required=True)
+p.add_argument('--expected-label')
+p.add_argument('--expected-icon')
 a = p.parse_args()
 assert re.fullmatch(r'[0-9a-f]{40}', a.source)
 assert f'source_commit={a.source}' in (a.apk.parent / 'build-info.txt').read_text(encoding='utf-8')
@@ -43,6 +45,10 @@ assert f"name='{a.application_id}'" in badging.splitlines()[0]
 assert f"versionName='{a.version}'" in badging.splitlines()[0]
 assert f"versionCode='{a.build}'" in badging.splitlines()[0]
 assert "targetSdkVersion:'36'" in badging
+if a.expected_label:
+    assert f"application-label:'{a.expected_label}'" in badging
+if a.expected_icon:
+    assert any(a.expected_icon in line for line in badging.splitlines() if line.startswith('application:')), 'Unexpected launcher icon'
 assert 'Number of signers: 1' in signature
 cert = re.search(r'(?:Signer #1|V\d+(?:\.\d+)? Signer:) certificate SHA-256 digest: ([0-9a-f]{64})', signature).group(1)
 rows = []
@@ -76,7 +82,7 @@ assert any('/arm64-v8a/' in r['file'] for r in rows)
 a.output.parent.mkdir(parents=True, exist_ok=True)
 a.output.write_text(json.dumps({'sourceCommit': a.source, 'apkSha256': digest,
     'applicationId': a.application_id, 'apkBytes': len(raw), 'certificateSha256': cert, 'signatureVerification': signature,
-    'badging': badging.splitlines()[:6], 'permissions': permissions.splitlines(),
+    'badging': badging.splitlines()[:6], 'launcherMetadata': [line for line in badging.splitlines() if line.startswith(('application:', 'application-label:', 'launchable-activity:'))], 'permissions': permissions.splitlines(),
     'zipAlignment16Kb': True, 'nativeLibraries': rows, 'runtime16KbTested': False,
     'physicalAndroid': False, 'emulator': False, 'signedReleaseAabBuilt': False}, indent=2) + '\n', encoding='utf-8')
 print(f'APK verified: {a.version}+{a.build}; certificate {cert}; static ZIP/64-bit ELF 16 KB checks passed. Runtime untested.')
