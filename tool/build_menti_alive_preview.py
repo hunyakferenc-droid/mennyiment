@@ -26,6 +26,7 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
  if process.wait()!=0:raise SystemExit('Could not archive source')
  catalog,additions=prepare_review_media(work,studio=a.studio or a.home)
  pubspec=work/'pubspec.yaml';text=pubspec.read_text(encoding='utf-8')
+ version=next(line.removeprefix('version: ').strip() for line in text.splitlines() if line.startswith('version: '))
  # Only full-look posters and existing offline font licenses are needed here.
  # The normal application's full asset manifest remains untouched.
  review_assets=['assets/menti_life/catalog.json','assets/images/menti_complete/',
@@ -53,5 +54,5 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
   shutil.copyfile(built/'app-debug.apk',a.output/'app-debug.apk')
   (a.output/'app-debug.apk.sha256').write_text(hashlib.sha256((a.output/'app-debug.apk').read_bytes()).hexdigest()+'  app-debug.apk\n')
  shutil.copyfile(work/('docs/play-3.3/kiprobalas-hu.md' if a.home else 'docs/menti-animation-studio/kiprobalas-hu.md' if a.studio else 'docs/menti-beta/kiprobalas-hu.md'),a.output/'OLVASDEL-REVIEW.txt')
- (a.output/'build-info.txt').write_text(f'source_commit={source}\nversion=3.3.0+46\nvariant={"home-review" if a.home else "developer-preview"}\napplication_id=com.example.mennyiment.review\napproved_media=0\nreview_media={len(catalog["clips"])}\nurl=http://127.0.0.1:7357\n')
+ (a.output/'build-info.txt').write_text(f'source_commit={source}\nversion={version}\nvariant={"home-review" if a.home else "developer-preview"}\napplication_id=com.example.mennyiment.review\napproved_media=0\nreview_media={len(catalog["clips"])}\nurl=http://127.0.0.1:7357\n')
 print('Isolated developer preview built:',a.output)

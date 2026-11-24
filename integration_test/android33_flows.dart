@@ -25,7 +25,7 @@ Future<void> textTap(WidgetTester t, Finder f) async {
   await t.pumpAndSettle();
 }
 
-Future<void> firstUse33(WidgetTester t, {required bool isReview}) async {
+Future<void> firstUse33(WidgetTester t, {required bool isReview, String locale = 'en'}) async {
   final p = await SharedPreferences.getInstance();
   await p.reload();
   expect(p.getKeys().where((k) => k.startsWith('mennyiment_')), isEmpty);
@@ -35,7 +35,7 @@ Future<void> firstUse33(WidgetTester t, {required bool isReview}) async {
     app.main();
   }
   await t.pumpAndSettle();
-  await tap(t, 'start-language-en');
+  await tap(t, 'start-language-$locale');
   await tap(t, 'start-next');
   await tap(t, 'start-adult');
   await tap(t, 'start-next');
@@ -171,6 +171,6 @@ Future<void> firstUse33(WidgetTester t, {required bool isReview}) async {
   expect((await MentiXpStore.load()).xp, 10);
   // ignore: avoid_print
   print(
-    'ANDROID33_FIRST_USE passed: clean EN, Android back, own girl, favorite, zero-price journal, statistics, legitimate 10 XP; REVIEW=$isReview',
+    'ANDROID33_FIRST_USE passed: clean $locale, onboarding route back, own girl, favorite, zero-price journal, legitimate 10 XP; REVIEW=$isReview',
   );
 }
