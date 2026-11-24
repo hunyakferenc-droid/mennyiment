@@ -62,7 +62,35 @@ class DeviceUI:
   self.screen('FAILURE');raise AssertionError('Native label absent: '+label)
  def back(self):adb('shell','input','keyevent','KEYCODE_BACK');time.sleep(.8)
  def start(self,package):
-  adb('shell','am','start','-W','-a','android.intent.action.MAIN','-c','android.intent.category.LAUNCHER','-f','0x10200000','-n',package+'/com.example.mennyiment.MainActivity');time.sleep(3)
+  def launch():
+   adb('shell','am','start','-W','-a','android.intent.action.MAIN','-c','android.intent.category.LAUNCHER','-f','0x10200000','-n',package+'/com.example.mennyiment.MainActivity')
+   time.sleep(3)
+  launch()
+  dismiss=self.launcher_anr_close_button(self.dump())
+  if dismiss is None:
+   return
+  self.screen('pixel-launcher-anr')
+  print('Recovering from a Pixel Launcher ANR on the disposable emulator',flush=True)
+  adb('shell','input','tap',*dismiss)
+  launch()
+  if self.launcher_anr_close_button(self.dump()) is not None:
+   self.screen('pixel-launcher-anr-after-retry')
+   raise AssertionError('Pixel Launcher ANR persisted after one recovery attempt')
+
+ @staticmethod
+ def launcher_anr_close_button(tree):
+  system_nodes=[node for node in tree.iter('node') if node.get('package')=='android']
+  if not any(node.get('text') in ("Pixel Launcher isn't responding","Pixel Launcher isn’t responding")
+             for node in system_nodes):
+   return None
+  for node in system_nodes:
+   if node.get('text')=='Close app' and node.get('enabled')=='true':
+    bounds=re.fullmatch(r'\[(\d+),(\d+)\]\[(\d+),(\d+)\]',node.get('bounds',''))
+    if bounds:
+     x1,y1,x2,y2=map(int,bounds.groups())
+     if x1<x2 and y1<y2:
+      return ((x1+x2)//2,(y1+y2)//2)
+  raise AssertionError('Pixel Launcher ANR is visible but its Close app action is unavailable')
  def stop(self,package):adb('shell','am','force-stop',package);time.sleep(.5)
 
 def lifecycle(out):
