@@ -121,7 +121,12 @@ class _MentiAnimationScopeState extends State<MentiAnimationScope>
         frequency: prefs.value.frequency,
       );
       if (_catalogReady && widget.homeReactions != null) {
-        widget.homeReactions!.ready(prefs.ready && complete?.ready == true);
+        widget.homeReactions!.ready(
+          prefs.ready &&
+          complete?.ready == true &&
+          (MentiMotionScope.settingsOf(context)?.ready ?? true) &&
+          (MentiExperienceScope.of(context)?.ready ?? true),
+        );
         widget.homeReactions!.refresh();
         return;
       }

@@ -82,15 +82,14 @@ async function main() {
       });
       await p.goto(host, { waitUntil: 'networkidle' });
       assert((await (await p.request.get(host + '/build-info.txt')).text()).includes(source));
+      if (!reduced) {
+          await finishClip(p, family === 'boy'
+            ? 'alive-review-welcome' : 'girl-base-welcome');
+      }
       await semantics(p);
       await accessibleText(p, hu ? 'Mai Menti' : 'Today with Menti');
       await p.screenshot({ path: path.join(output, family + '-arrival.png') });
-      if (reduced) {
-        assert.equal(await p.locator('video').count(), 0);
-      } else {
-        await finishClip(p, family === 'boy'
-          ? 'alive-review-welcome' : 'girl-base-welcome');
-      }
+      if (reduced) assert.equal(await p.locator('video').count(), 0);
       await click(p, button(p, s.clubTestMode));
       const mood = p.getByRole('checkbox', { name: String(rating), exact: true })
         .or(p.getByRole('button', { name: String(rating), exact: true }));
