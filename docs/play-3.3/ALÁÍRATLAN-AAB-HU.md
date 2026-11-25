@@ -27,3 +27,22 @@ tanúsítványának egyeztetése, biztonságos külső konfigurációban. Ezutá
 meglévő szigorú release útvonalán újra kell építeni és ténylegesen ellenőrizni az
 aláírt AAB-t. Részletek: ../play-2.3.1/android-release-hu.md.
 Nem szükséges és nem javasolt magánkulcsot vagy jelszót chatbe, repóba vagy naplóba tenni.
+
+## A bevizsgált jelölt aláírt példányának ellenőrzése
+
+Ha az upload kulccsal közvetlenül a bevizsgált aláíratlan AAB külön példányát
+írtad alá, a JDK 21-gyel futtatható ellenőrző ugyanazt a csomagtartalmat és
+minden csomagbejegyzés tényleges aláírását ellenőrzi:
+
+    java tool/VerifyPlayAab.java app-release-UNSIGNED.aab app-release-SIGNED.aab JELÖLT_SHA256 FELTÖLTÉSI_TANÚSÍTVÁNY_SHA256
+
+A jelölt SHA-256 értékét a bevizsgált csomag ellenőrzési jelentéséből
+(`aab-verification.json`, `aabSha256`) vedd. A tanúsítvány SHA-256 értékét
+a Play Console **feltöltési kulcsának tanúsítványából** másold ki. Az ellenőrző
+elfogadja a kettőspontokkal tagolt ujjlenyomatot is. Siker esetén az aláírt
+AAB SHA-256 értékét is kiírja. A bemeneti fájlokat nem módosítja.
+
+Az összehasonlítás feltétele az egyező csomagtartalom. Külön újrafordított
+AAB esetén a két build fájljai eltérhetnek. Az egyezés a feltöltési
+tanúsítványt és az AAB tartalmát igazolja. A Console elfogadása és a készülékes
+próba külön ellenőrzés.
