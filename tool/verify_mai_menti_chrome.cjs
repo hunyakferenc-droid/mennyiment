@@ -89,7 +89,11 @@ async function main() {
       await p.screenshot({ path: path.join(output, family + '-result.png') });
       await click(p, button(p, hu ? 'Heti áttekintés' : 'Weekly overview'));
       await accessibleText(p, hu ? 'Az elmúlt hét' : 'The last seven days');
-      await click(p, button(p, hu ? 'Vissza' : 'Back'));
+      const back = button(p, hu ? 'Vissza' : 'Back');
+      const backBox = await back.boundingBox();
+      assert(backBox, 'Weekly overview back action is visible');
+      await p.mouse.click(backBox.x + backBox.width / 2, backBox.y + backBox.height / 2);
+      await accessibleText(p, hu ? 'Mai Menti' : 'Today with Menti');
       await click(p, button(p, s.clubNextDay));
       await p.reload({ waitUntil: 'networkidle' });
       await semantics(p);
