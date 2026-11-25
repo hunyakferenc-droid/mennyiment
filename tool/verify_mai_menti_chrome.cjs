@@ -19,6 +19,15 @@ async function click(page, control) {
   await page.waitForTimeout(240);
 }
 
+async function accessibleText(page, text) {
+  for (let attempt = 0; attempt < 70; attempt++) {
+    await semantics(page);
+    if ((await page.locator('body').ariaSnapshot()).includes(text)) return;
+    await page.waitForTimeout(125);
+  }
+  throw new Error('Missing accessible text: ' + text);
+}
+
 async function main() {
   fs.mkdirSync(output, { recursive: true });
   assert.equal(process.platform, 'win32');
@@ -46,38 +55,40 @@ async function main() {
         localStorage.setItem('mai_fixture', '1');
       }, fixture);
       const p = await context.newPage();
+      try {
       p.setDefaultTimeout(20000);
       const errors = [];
       p.on('pageerror', error => errors.push(error.message));
       await p.goto(host, { waitUntil: 'networkidle' });
       assert((await (await p.request.get(host + '/build-info.txt')).text()).includes(source));
       await semantics(p);
-      await p.getByText(hu ? 'Mai Menti' : 'Today with Menti', { exact: true }).waitFor();
+      await accessibleText(p, hu ? 'Mai Menti' : 'Today with Menti');
       await p.screenshot({ path: path.join(output, family + '-arrival.png') });
       if (family !== 'girl') assert.equal(await p.locator('video').count(), 0);
       await click(p, button(p, s.clubTestMode));
-      const mood = p.getByRole('checkbox', { name: '4', exact: true });
+      const mood = p.getByRole('checkbox', { name: '4', exact: true })
+        .or(p.getByRole('button', { name: '4', exact: true }));
       await click(p, mood);
       const expectedReaction = hu ? 'Köszönöm, hogy bejelentkeztél.' : 'Thanks for checking in.';
-      await p.getByText(expectedReaction, { exact: true }).waitFor();
+      await accessibleText(p, expectedReaction);
       await click(p, button(p, s.rhythmPlay).first());
 
       const labels = [s.rhythmStretch, s.rhythmLeft, s.rhythmRight];
       for (let size = 1; size <= 3; size++) {
         const moves = [];
         for (let index = 1; index <= size; index++) {
-          const cue = await p.getByText(new RegExp('^' + index + '\\. ')).first().innerText();
-          const label = labels.find(item => cue.endsWith(item));
-          assert(label, cue);
+          const tree = await p.locator('body').ariaSnapshot();
+          const label = labels.find(item => tree.includes(index + '. ' + item));
+          assert(label, tree);
           moves.push(label);
         }
         await click(p, button(p, hu ? 'Mehet' : 'Ready'));
         for (const move of moves) await click(p, button(p, move));
       }
-      await p.getByText(hu ? 'Eredmény: 3 / 3' : 'Result: 3 / 3', { exact: true }).waitFor();
+      await accessibleText(p, hu ? 'Eredmény: 3 / 3' : 'Result: 3 / 3');
       await p.screenshot({ path: path.join(output, family + '-result.png') });
       await click(p, button(p, hu ? 'Heti áttekintés' : 'Weekly overview'));
-      await p.getByText(hu ? 'Az elmúlt hét' : 'The last seven days', { exact: true }).waitFor();
+      await accessibleText(p, hu ? 'Az elmúlt hét' : 'The last seven days');
       await click(p, button(p, hu ? 'Vissza' : 'Back'));
       await click(p, button(p, s.clubNextDay));
       await p.reload({ waitUntil: 'networkidle' });
@@ -99,6 +110,12 @@ async function main() {
       assert.equal(data.journal, fixture[key('drinks_v1')]);
       assert.equal(data.xp, fixture[key('menti_xp_v2')]);
       assert.deepEqual(errors, []);
+      } catch (error) {
+        await p.screenshot({ path: path.join(output, family + '-failure.png') }).catch(() => {});
+        const tree = await p.locator('body').ariaSnapshot().catch(() => '');
+        fs.writeFileSync(path.join(output, family + '-failure.txt'), tree);
+        throw error;
+      }
       const recording = p.video();
       await context.close();
       if (recording) await recording.saveAs(path.join(output, 'Mai-Menti-napi-kor.webm'));
