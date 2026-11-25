@@ -74,6 +74,12 @@ class MentiClubRecord {
     );
   }
 
+  int? scoreOn(String day) {
+    final scores = extras['dailyScores'];
+    final score = scores is Map ? scores[day] : null;
+    return score is int && score >= 0 && score <= 3 ? score : null;
+  }
+
   String encode() => jsonEncode({
     ...extras,
     'version': 1,
@@ -130,12 +136,21 @@ class MentiClubStore extends ChangeNotifier {
 
   Future<ClubSave> rhythm(int rounds) =>
       _save(rounds: rounds, complete: rounds == 5);
+  Future<ClubSave> dailyRhythm(int rounds, DateTime date) {
+    if ((key != dailyRhythmKey && key != dailyRhythmTestKey) ||
+        rounds < 0 || rounds > 3) {
+      return Future.value(ClubSave.failed);
+    }
+    return _save(rounds: rounds, scoreDay: clubDay(date));
+  }
+
   Future<ClubSave> cards() => _save(complete: true);
   Future<ClubSave> newChallenge() => _save(reset: true);
   Future<ClubSave> _save({
     int? rounds,
     bool complete = false,
     bool reset = false,
+    String? scoreDay,
   }) async {
     if (!ready ||
         saving ||
@@ -177,11 +192,26 @@ class MentiClubStore extends ChangeNotifier {
           last = today;
         }
       }
+      var extras = record.extras;
+      if (scoreDay != null) {
+        final oldScores = extras['dailyScores'];
+        final scores = <String, dynamic>{
+          if (oldScores is Map<String, dynamic>) ...oldScores,
+        };
+        if (scores[scoreDay] is! int || rounds! > (scores[scoreDay] as int)) {
+          scores[scoreDay] = rounds;
+        }
+        final dates = scores.keys.toList()..sort();
+        for (final expired in dates.take(dates.length > 31 ? dates.length - 31 : 0)) {
+          scores.remove(expired);
+        }
+        extras = {...extras, 'dailyScores': scores};
+      }
       final next = MentiClubRecord(
         best: rounds != null && rounds > record.best ? rounds : record.best,
         days: List.unmodifiable(days),
         last: last,
-        extras: record.extras,
+        extras: extras,
       );
       final encoded = next.encode();
       if (encoded != _snapshot) {

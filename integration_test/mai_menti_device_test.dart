@@ -9,7 +9,7 @@ import 'package:mennyiment/menti_club_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../tool/menti_home_review.dart' as review;
-import 'menti_beta_device_test.dart' show tap;
+import 'menti_beta_device_test.dart' show reach, tap;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +52,9 @@ void main() {
       await t.tap(find.byType(BackButton));
       await t.pumpAndSettle();
       await tap(t, 'mai-next-day');
+      final recap = find.byKey(const ValueKey('mai-yesterday'));
+      await reach(t, recap);
+      expect(t.widget<Text>(recap).data, contains('3 / 3'));
       await tap(t, 'mai-next-day');
       final selected = find.byWidgetPredicate((w) =>
           w is ChoiceChip && w.key == const ValueKey('mai-mood-4') && w.selected);
@@ -61,6 +64,7 @@ void main() {
       await preferences.reload();
       final record = MentiClubRecord.decode(preferences.get(MentiClubStore.dailyRhythmTestKey));
       expect(record.best, 3);
+      expect(record.scoreOn(locale == 'hu' ? '2030-03-04' : '2030-03-11'), 3);
       expect(preferences.get('mennyiment_drinks_v1'), journal);
       expect(preferences.get('mennyiment_identity_v22'), profile);
       expect(preferences.get(MentiClubStore.dailyRhythmKey), realRhythm);

@@ -284,19 +284,25 @@ class _MentiAnimationPlayerState extends State<MentiAnimationPlayer> {
       listenable: c,
       builder: (context, _) {
         final media = c.owns(_host) && _visible ? c.handle : null;
-        if (media == null) return poster;
         return SizedBox(
           width: widget.size,
           height: widget.size * 4 / 3,
           child: Stack(
             fit: StackFit.expand,
             children: [
-              ExcludeSemantics(child: ClipRect(child: media.view)),
-              if (!media.frameVisible) poster,
+              poster,
+              if (media != null)
+                ExcludeSemantics(
+                  child: AnimatedOpacity(
+                    opacity: media.frameVisible ? 1 : 0,
+                    duration: const Duration(milliseconds: 90),
+                    child: ClipRect(child: media.view),
+                  ),
+                ),
               // The HTML interceptor sits below a real Flutter tap target.
               // This prevents the video platform view from taking the gesture.
               // Only the explicit home callback creates this input surface.
-              if (kIsWeb && widget.onTap != null)
+              if (media != null && kIsWeb && widget.onTap != null)
                 Positioned.fill(
                   child: Stack(
                     fit: StackFit.expand,
