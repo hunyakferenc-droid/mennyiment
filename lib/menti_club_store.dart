@@ -103,7 +103,9 @@ class MentiClubStore extends ChangeNotifier {
   static const normalKey = 'mennyiment_fitness_club_v1',
       testKey = 'mennyiment_fitness_club_test_v1',
       dailyRhythmKey = 'mennyiment_mai_menti_rhythm_v1',
-      dailyRhythmTestKey = 'mennyiment_mai_menti_test_rhythm_v1';
+      dailyRhythmTestKey = 'mennyiment_mai_menti_test_rhythm_v1',
+      adventureWeekKey = 'mennyiment_adventure_week_v1',
+      adventureWeekTestKey = 'mennyiment_adventure_week_test_v1';
   static final Set<String> _writing = {};
   final String key;
   final DateTime Function() clock;
@@ -144,6 +146,14 @@ class MentiClubStore extends ChangeNotifier {
     return _save(rounds: rounds, scoreDay: clubDay(date));
   }
 
+  Future<ClubSave> completeAdventure(DateTime day, {int? rhythmScore}) {
+    if ((key != adventureWeekKey && key != adventureWeekTestKey) ||
+        (rhythmScore != null && (rhythmScore < 0 || rhythmScore > 3))) {
+      return Future.value(ClubSave.failed);
+    }
+    return _save(complete: true, rounds: rhythmScore, completionDay: clubDay(day));
+  }
+
   Future<ClubSave> cards() => _save(complete: true);
   Future<ClubSave> newChallenge() => _save(reset: true);
   Future<ClubSave> _save({
@@ -151,6 +161,7 @@ class MentiClubStore extends ChangeNotifier {
     bool complete = false,
     bool reset = false,
     String? scoreDay,
+    String? completionDay,
   }) async {
     if (!ready ||
         saving ||
@@ -172,7 +183,7 @@ class MentiClubStore extends ChangeNotifier {
         ready = false;
         throw StateError('Stale club snapshot');
       }
-      final today = clubDay(clock());
+      final today = completionDay ?? clubDay(clock());
       if (complete &&
           record.last != null &&
           today.compareTo(record.last!) < 0) {
@@ -192,6 +203,7 @@ class MentiClubStore extends ChangeNotifier {
           last = today;
         }
       }
+      if (completionDay != null && result != ClubSave.saved) return result;
       var extras = record.extras;
       if (scoreDay != null) {
         final oldScores = extras['dailyScores'];

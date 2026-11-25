@@ -19,7 +19,9 @@ void main() {
     final journal = preferences.get('mennyiment_drinks_v1');
     final profile = preferences.get('mennyiment_identity_v22');
     final realRhythm = preferences.get(MentiClubStore.dailyRhythmKey);
+    final realWeek = preferences.get(MentiClubStore.adventureWeekKey);
     for (final locale in ['hu', 'en']) {
+      await preferences.remove(MentiClubStore.adventureWeekTestKey);
       await preferences.setString('mennyiment_locale_v1', locale);
       await preferences.setBool('mennyiment_reduce_motion_v1', true);
       await preferences.setString('mennyiment_mai_menti_test_date_v1',
@@ -37,16 +39,7 @@ void main() {
         'left': strings.rhythmLeft,
         'right': strings.rhythmRight,
       };
-      for (var length = 1; length <= 3; length++) {
-        final moves = [
-          for (var i = 0; i < length; i++)
-            t.widget<Text>(find.byKey(ValueKey('mai-cue-$i'))).data!,
-        ];
-        await tap(t, 'mai-ready');
-        for (final move in moves) {
-          await tap(t, 'mai-hit-${labels.entries.singleWhere((e) => move.endsWith(e.value)).key}');
-        }
-      }
+      await _playRhythm(t, labels);
       await tap(t, 'mai-end-week');
       expect(find.text(locale == 'hu' ? 'Az elmúlt hét' : 'The last seven days'), findsOneWidget);
       await t.tap(find.byType(BackButton));
@@ -59,6 +52,37 @@ void main() {
       final selected = find.byWidgetPredicate((w) =>
           w is ChoiceChip && w.key == const ValueKey('mai-mood-4') && w.selected);
       expect(selected, findsNothing);
+      for (var stage = 0; stage < 7; stage++) {
+        await tap(t, 'adventure-start');
+        if (stage == 1 || stage == 5) {
+          await _playRhythm(t, labels);
+          await tap(t, 'mai-end-week');
+        } else if (stage == 2 || stage == 4) {
+          await tap(t, 'cards-start');
+          for (var move = 0; move < 3; move++) {
+            await tap(t, 'cards-next');
+          }
+          await tap(t, 'cards-club');
+        } else {
+          await tap(t, 'adventure-mood-4');
+        }
+        await preferences.reload();
+        final trial = MentiClubRecord.decode(
+          preferences.get(MentiClubStore.adventureWeekTestKey),
+        );
+        expect(trial.days.length, stage + 1);
+        if (stage < 6) {
+          final start = find.byKey(const ValueKey('adventure-start'));
+          await reach(t, start);
+          expect(t.widget<FilledButton>(start).onPressed, isNull);
+          await tap(t, 'mai-next-day');
+          if (stage == 2) await tap(t, 'mai-next-day');
+        } else {
+          final finished = find.byKey(const ValueKey('adventure-week-finished'));
+          await reach(t, finished);
+          expect(trial.best, 3);
+        }
+      }
       await t.pumpWidget(const SizedBox.shrink());
       await t.pumpAndSettle();
       await preferences.reload();
@@ -68,7 +92,21 @@ void main() {
       expect(preferences.get('mennyiment_drinks_v1'), journal);
       expect(preferences.get('mennyiment_identity_v22'), profile);
       expect(preferences.get(MentiClubStore.dailyRhythmKey), realRhythm);
+      expect(preferences.get(MentiClubStore.adventureWeekKey), realWeek);
       expect(jsonEncode(record.days), '[]');
     }
   });
+}
+
+Future<void> _playRhythm(WidgetTester t, Map<String, String> labels) async {
+  for (var length = 1; length <= 3; length++) {
+        final moves = [
+          for (var i = 0; i < length; i++)
+            t.widget<Text>(find.byKey(ValueKey('mai-cue-$i'))).data!,
+        ];
+        await tap(t, 'mai-ready');
+        for (final move in moves) {
+          await tap(t, 'mai-hit-${labels.entries.singleWhere((e) => move.endsWith(e.value)).key}');
+        }
+      }
 }

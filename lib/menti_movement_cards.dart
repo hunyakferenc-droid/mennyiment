@@ -12,10 +12,12 @@ class MentiMovementCards extends StatefulWidget {
     required this.store,
     this.nextTestDay,
     this.testClock,
+    this.onComplete,
   });
   final VoidCallback? nextTestDay;
   final DateTime Function()? testClock;
   final MentiClubStore store;
+  final Future<ClubSave> Function()? onComplete;
   @override
   State<MentiMovementCards> createState() => _CardsState();
 }
@@ -34,7 +36,7 @@ class _CardsState extends State<MentiMovementCards> {
   Future<void> save() async {
     if (busy) return;
     setState(() => busy = true);
-    final next = await widget.store.cards();
+    final next = await (widget.onComplete ?? widget.store.cards)();
     if (mounted) {
       setState(() {
         result = next;

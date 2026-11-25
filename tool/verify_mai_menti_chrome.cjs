@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const os = require('node:os');
 const assert = require('node:assert/strict');
 const { chromium, semantics, reach, seed, strings } = require('./verify_stabilization_226_chrome.cjs');
 
@@ -34,6 +35,110 @@ async function finishClip(page, fragment) {
     || window.maiClips.some(clip => clip.source.includes(value) && clip.time > 0.12),
     fragment, { timeout: 12000 });
   await page.waitForFunction(() => !document.querySelector('video'), null, { timeout: 12000 });
+}
+
+async function playTrialWeek(lang) {
+  const hu = lang === 'hu';
+  const s = strings[lang];
+  const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'menti-trial-week-'));
+  const fixture = {
+    ...seed(lang, hu ? 'girl' : 'boy'),
+    [key('mai_menti_test_date_v1')]: JSON.stringify('2030-01-01'),
+  };
+  let context;
+  let page;
+  async function launch() {
+    context = await chromium.launchPersistentContext(profile, {
+      executablePath: process.env.CHROME_BIN,
+      headless: true,
+      viewport: { width: 420, height: 850 },
+      reducedMotion: 'reduce',
+      ...(hu ? { recordVideo: { dir: output, size: { width: 420, height: 850 } } } : {}),
+    });
+    await context.addInitScript(values => {
+      if (localStorage.getItem('trial_week_fixture')) return;
+      for (const [name, value] of Object.entries(values)) localStorage.setItem(name, value);
+      localStorage.setItem('trial_week_fixture', '1');
+    }, fixture);
+    page = context.pages()[0] || await context.newPage();
+    page.setDefaultTimeout(20000);
+    await page.goto(host, { waitUntil: 'networkidle' });
+    await semantics(page);
+  }
+  async function close(filmName) {
+    const recording = page.video();
+    await context.close();
+    context = null;
+    if (recording && filmName) {
+      await recording.saveAs(path.join(output, filmName));
+      await recording.delete();
+    }
+  }
+  async function advance() {
+    await click(page, button(page, s.clubNextDay));
+  }
+  function count(n) {
+    return hu ? `Teljesített kalandok: ${n} / 7` : `Adventures completed: ${n} / 7`;
+  }
+  try {
+    await launch();
+    const labels = [s.rhythmStretch, s.rhythmLeft, s.rhythmRight];
+    for (let stage = 0; stage < 7; stage++) {
+      await accessibleText(page, count(stage));
+      await click(page, button(page, hu ? 'Mai kaland' : 'Today’s adventure'));
+      if (stage === 1 || stage === 5) {
+        for (let size = 1; size <= 3; size++) {
+          const tree = await page.locator('body').ariaSnapshot();
+          const moves = Array.from({ length: size }, (_, index) =>
+            labels.find(label => tree.includes((index + 1) + '. ' + label)));
+          assert(moves.every(Boolean), tree);
+          await click(page, button(page, hu ? 'Mehet' : 'Ready'));
+          for (const move of moves) await click(page, button(page, move));
+        }
+        await click(page, button(page, hu ? 'Vissza a kalandhoz' : 'Back to the adventure'));
+      } else if (stage === 2 || stage === 4) {
+        await click(page, button(page, s.rhythmPlay));
+        for (let n = 0; n < 3; n++) await click(page, button(page, s.cardsDone));
+        await click(page, button(page, s.rhythmBack));
+      } else {
+        await click(page, button(page, '4'));
+      }
+      await accessibleText(page, count(stage + 1));
+      if (stage < 6) {
+        await advance();
+        if (stage === 2) await advance();
+      }
+      if (stage === 0) {
+        await close('Probahet-elso-kaland.webm');
+        await launch();
+        await accessibleText(page, count(1));
+      }
+    }
+    await accessibleText(page, hu ? 'Végigjártad a hetet!' : 'You finished the week!');
+    await page.screenshot({ path: path.join(output, 'trial-week-' + lang + '.png') });
+    const snapshot = await page.evaluate(() => Object.fromEntries(Object.entries(localStorage)));
+    const trial = JSON.parse(JSON.parse(snapshot[key('adventure_week_test_v1')]));
+    assert.deepEqual(trial.days, ['2030-01-01', '2030-01-02', '2030-01-03',
+      '2030-01-05', '2030-01-06', '2030-01-07', '2030-01-08']);
+    assert.equal(trial.best, 3);
+    assert.equal(snapshot[key('adventure_week_v1')], undefined);
+    assert.equal(snapshot[key('mai_menti_rhythm_v1')], undefined);
+    assert.equal(snapshot[key('fitness_club_v1')], undefined);
+    assert.equal(snapshot[key('drinks_v1')], fixture[key('drinks_v1')]);
+    assert.equal(snapshot[key('menti_xp_v2')], fixture[key('menti_xp_v2')]);
+    await close('Probahet-zaras.webm');
+    return { lang, stages: trial.days, best: 3, restartedChrome: true };
+  } catch (error) {
+    if (page && !page.isClosed()) {
+      await page.screenshot({ path: path.join(output, 'trial-week-failure-' + lang + '.png') }).catch(() => {});
+      const tree = await page.locator('body').ariaSnapshot().catch(() => '');
+      fs.writeFileSync(path.join(output, 'trial-week-failure-' + lang + '.txt'), tree);
+    }
+    throw error;
+  } finally {
+    if (context) await context.close();
+    fs.rmSync(profile, { recursive: true, force: true, maxRetries: 5 });
+  }
 }
 
 async function main() {
@@ -174,8 +279,9 @@ async function main() {
       if (recording) await recording.saveAs(path.join(output, 'Mai-Menti-napi-kor.webm'));
       checks.push({ lang, family, reducedMotion: reduced, input: 'mouse' });
     }
+    const trialWeeks = [await playTrialWeek('hu'), await playTrialWeek('en')];
     fs.writeFileSync(path.join(output, 'verification.json'), JSON.stringify({
-      source, browser: browser.version(), windows: true, checks,
+      source, browser: browser.version(), windows: true, checks, trialWeeks,
     }, null, 2));
   } finally {
     await browser.close();

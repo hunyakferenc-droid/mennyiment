@@ -230,6 +230,7 @@ void validateRestoreValue(String key, Object value) {
   if (const {
     MentiClubStore.normalKey, MentiClubStore.testKey,
     MentiClubStore.dailyRhythmKey, MentiClubStore.dailyRhythmTestKey,
+    MentiClubStore.adventureWeekKey, MentiClubStore.adventureWeekTestKey,
   }.contains(key)) { MentiClubRecord.decode(value); return; }
   if (key == MentiAnimationSettings.key) { MentiAnimationPreference.decode(value); return; }
   if (key == CompleteLookStore.key) { CompleteLookSelection.decode(value); return; }
