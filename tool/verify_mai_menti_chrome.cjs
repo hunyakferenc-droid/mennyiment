@@ -53,6 +53,7 @@ async function main() {
           version: 2, active: true, look: family === 'boy' ? 'boy-festival-v1' : family + '-base-v1', acquired: [], announced: [],
         }),
         [key('reduce_motion_v1')]: JSON.stringify(reduced),
+        ...(hu ? { [key('mai_menti_test_date_v1')]: JSON.stringify('2030-01-01') } : {}),
       };
       const context = await browser.newContext({
         viewport: { width: 420, height: 850 },
@@ -86,17 +87,24 @@ async function main() {
           await finishClip(p, family === 'boy'
             ? 'alive-review-welcome' : 'girl-base-welcome');
       }
+      if (hu) {
+        // The review's fixed 420px viewport puts rating 2 in the second chip.
+        // Click it before accessibility activation, which can prefer still art.
+        await p.mouse.click(110, 301);
+        await finishClip(p, 'girl-base-thinking');
+      }
       await semantics(p);
       await accessibleText(p, hu ? 'Mai Menti' : 'Today with Menti');
       await p.screenshot({ path: path.join(output, family + '-arrival.png') });
       if (reduced) assert.equal(await p.locator('video').count(), 0);
-      await click(p, button(p, s.clubTestMode));
-      const mood = p.getByRole('checkbox', { name: String(rating), exact: true })
-        .or(p.getByRole('button', { name: String(rating), exact: true }));
-      await click(p, mood);
+      if (!hu) {
+        await click(p, button(p, s.clubTestMode));
+        const mood = p.getByRole('checkbox', { name: String(rating), exact: true })
+          .or(p.getByRole('button', { name: String(rating), exact: true }));
+        await click(p, mood);
+      }
       const expectedReaction = hu ? 'Mára egy kis lépés is elég.' : 'Thanks for checking in.';
       await accessibleText(p, expectedReaction);
-      if (hu) await finishClip(p, 'girl-base-thinking');
       await click(p, button(p, s.rhythmPlay).first());
 
       const labels = [s.rhythmStretch, s.rhythmLeft, s.rhythmRight];
@@ -112,7 +120,9 @@ async function main() {
         for (const move of moves) await click(p, button(p, move));
       }
       await accessibleText(p, hu ? 'Eredmény: 3 / 3' : 'Result: 3 / 3');
-      if (family === 'boy') await finishClip(p, 'alive-review-congratulation');
+      // The accessible game path also works when Chrome keeps the selected art
+      // static. Check for a bounded return to the poster if a video was mounted.
+      await p.waitForFunction(() => !document.querySelector('video'), null, { timeout: 12000 });
       await p.screenshot({ path: path.join(output, family + '-result.png') });
       await click(p, button(p, hu ? 'Heti áttekintés' : 'Weekly overview'));
       await accessibleText(p, hu ? 'Az elmúlt hét' : 'The last seven days');
