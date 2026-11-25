@@ -292,13 +292,10 @@ class _MentiAnimationPlayerState extends State<MentiAnimationPlayer> {
             children: [
               poster,
               if (media != null)
-                ExcludeSemantics(
-                  child: AnimatedOpacity(
-                    opacity: media.frameVisible ? 1 : 0,
-                    duration: const Duration(milliseconds: 90),
-                    child: ClipRect(child: media.view),
-                  ),
-                ),
+                ExcludeSemantics(child: ClipRect(child: media.view)),
+              // A zero-opacity platform view may not mount on Chrome. The
+              // decoded layer is mounted immediately with its own poster cover.
+              if (media != null && !media.frameVisible) poster,
               // The HTML interceptor sits below a real Flutter tap target.
               // This prevents the video platform view from taking the gesture.
               // Only the explicit home callback creates this input surface.

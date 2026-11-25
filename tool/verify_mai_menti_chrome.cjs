@@ -30,7 +30,8 @@ async function accessibleText(page, text) {
 
 async function finishClip(page, fragment) {
   await page.waitForFunction(value => [...document.querySelectorAll('video')]
-    .some(video => video.currentSrc.includes(value) && video.currentTime > 0.12 && !video.paused),
+    .some(video => video.currentSrc.includes(value) && video.currentTime > 0.12 && !video.paused)
+    || window.maiClips.some(clip => clip.source.includes(value) && clip.time > 0.12),
     fragment, { timeout: 12000 });
   await page.waitForFunction(() => !document.querySelector('video'), null, { timeout: 12000 });
 }
@@ -68,6 +69,17 @@ async function main() {
       p.setDefaultTimeout(20000);
       const errors = [];
       p.on('pageerror', error => errors.push(error.message));
+      await p.addInitScript(() => {
+        window.maiClips = [];
+        for (const event of ['playing', 'timeupdate', 'ended', 'error']) {
+          document.addEventListener(event, e => {
+            const video = e.target;
+            if (video instanceof HTMLVideoElement && window.maiClips.length < 600) {
+              window.maiClips.push({event, source: video.currentSrc, time: video.currentTime});
+            }
+          }, true);
+        }
+      });
       await p.goto(host, { waitUntil: 'networkidle' });
       assert((await (await p.request.get(host + '/build-info.txt')).text()).includes(source));
       await semantics(p);
@@ -144,6 +156,8 @@ async function main() {
         await p.screenshot({ path: path.join(output, family + '-failure.png') }).catch(() => {});
         const tree = await p.locator('body').ariaSnapshot().catch(() => '');
         fs.writeFileSync(path.join(output, family + '-failure.txt'), tree);
+        const clips = await p.evaluate(() => window.maiClips || []).catch(() => []);
+        fs.writeFileSync(path.join(output, family + '-clips.json'), JSON.stringify(clips));
         throw error;
       }
       const recording = p.video();

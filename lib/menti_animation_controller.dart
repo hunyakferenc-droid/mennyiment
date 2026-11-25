@@ -263,7 +263,7 @@ class MentiAnimationController extends ChangeNotifier {
       return false;
     }
     final watch = Stopwatch()..start();
-    const startBudget = Duration(milliseconds: 2500);
+    const startBudget = Duration(milliseconds: 3500);
     Duration remaining() {
       final duration = startBudget - watch.elapsed;
       if (duration <= Duration.zero) {
