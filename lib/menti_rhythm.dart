@@ -6,10 +6,14 @@ enum RhythmPhase { demonstration, input, mistake, finished }
 
 /// One ephemeral game, five rounds of length 3..7. No persistence or rewards.
 class MentiRhythm {
-  MentiRhythm({Random? random}) : _random = random ?? Random() {
+  MentiRhythm({Random? random, this.initialLength = 3, this.roundLimit = 5})
+    : assert(initialLength > 0), assert(roundLimit > 0),
+      _random = random ?? Random() {
     restart();
   }
   final Random _random;
+  final int initialLength;
+  final int roundLimit;
   final List<RhythmAction> _sequence = [];
   List<RhythmAction> get sequence => List.unmodifiable(_sequence);
   RhythmPhase phase = RhythmPhase.demonstration;
@@ -19,7 +23,7 @@ class MentiRhythm {
   void restart() {
     completed = shown = entered = 0;
     _sequence.clear();
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < initialLength; i++) {
       _append();
     }
     phase = RhythmPhase.demonstration;
@@ -45,7 +49,7 @@ class MentiRhythm {
     entered++;
     if (entered < _sequence.length) return;
     completed++;
-    if (completed == 5) {
+    if (completed == roundLimit) {
       phase = RhythmPhase.finished;
       return;
     }

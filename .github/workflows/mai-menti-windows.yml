@@ -1,0 +1,86 @@
+name: Mai Menti Windows REVIEW
+on:
+  push:
+    branches: [feature/mai-menti]
+permissions:
+  contents: read
+concurrency:
+  group: mai-menti-windows-${{ github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  web:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2
+        with:
+          channel: stable
+          flutter-version: '3.47.7'
+          cache: true
+          pub-cache: true
+      - run: |
+          git diff --check HEAD^ HEAD
+          python3 tool/build_menti_alive_preview.py --home --daily --platform web --output build/mai-web
+          (cd build/mai-web && zip -qr ../Mai-Menti-Windows-REVIEW.zip .)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Mai-Menti-unverified-web-build
+          path: build/Mai-Menti-Windows-REVIEW.zip
+          if-no-files-found: error
+  windows:
+    needs: web
+    runs-on: windows-2025
+    env:
+      MENTI_SOURCE_COMMIT: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: Mai-Menti-unverified-web-build
+          path: build/download
+      - name: Extract ZIP and start the PowerShell launcher
+        shell: powershell
+        run: |
+          $root = (Get-Location).Path
+          Expand-Archive -LiteralPath 'build/download/Mai-Menti-Windows-REVIEW.zip' -DestinationPath 'build/extracted'
+          $env:CHROME_BIN = Join-Path $env:ProgramFiles 'Google/Chrome/Application/chrome.exe'
+          if (!(Test-Path $env:CHROME_BIN)) { throw 'Google Chrome missing' }
+          npm install --prefix "$env:RUNNER_TEMP/mai-playwright" playwright@1.58.2
+          if ($LASTEXITCODE -ne 0) { throw 'Playwright install failed' }
+          $env:PLAYWRIGHT_MODULE_PATH = "$env:RUNNER_TEMP/mai-playwright/node_modules/playwright"
+          node "$env:PLAYWRIGHT_MODULE_PATH/cli.js" install ffmpeg
+          if ($LASTEXITCODE -ne 0) { throw 'Video recorder install failed' }
+          $env:MENTI_EVIDENCE_DIR = Join-Path $root 'build/windows-evidence'
+          $server = Start-Process -FilePath 'cmd.exe' -ArgumentList '/d','/c','INDITAS.cmd' -WorkingDirectory (Join-Path $root 'build/extracted') -PassThru
+          try {
+            $ready = $false
+            for ($i=0; $i -lt 120; $i++) {
+              try {
+                $response = Invoke-WebRequest -UseBasicParsing 'http://127.0.0.1:7357/build-info.txt'
+                if ($response.Content.Contains($env:MENTI_SOURCE_COMMIT)) { $ready = $true; break }
+              } catch {}
+              Start-Sleep -Milliseconds 500
+            }
+            if (!$ready) { throw 'The extracted ZIP did not start from INDITAS.cmd' }
+            node tool/verify_mai_menti_chrome.cjs
+            if ($LASTEXITCODE -ne 0) { throw 'Mai Menti Chrome verification failed' }
+          } finally {
+            & taskkill.exe /PID $server.Id /T /F | Out-Null
+          }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Mai-Menti-Windows-REVIEW
+          path: build/download/Mai-Menti-Windows-REVIEW.zip
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Mai-Menti-Windows-Chrome-evidence
+          path: build/windows-evidence/
+          if-no-files-found: ignore

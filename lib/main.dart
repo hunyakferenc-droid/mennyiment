@@ -9,6 +9,7 @@ export 'drink_journal.dart';
 import 'menti_progress.dart';
 import 'menti_xp_store.dart';
 import 'daily_menti.dart';
+import 'mai_menti.dart';
 import 'menti_adventures.dart';
 import 'finance_center.dart';
 import 'wellbeing_journal.dart';
@@ -1008,6 +1009,7 @@ void updateMentiMessage(MentiMood mood) {
     final homeSession = MentiAnimationScope.of(context)?.home;
     _reviewHomeSession = homeSession;
     final homeRoute = ModalRoute.of(context);
+    final showMaiMenti = maiMentiEnabled && homeSession != null;
     if (homeSession != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted && identical(_reviewHomeSession, homeSession)) {
@@ -1053,7 +1055,7 @@ void updateMentiMessage(MentiMood mood) {
             padding: EdgeInsets.symmetric(horizontal: width < 380 ? 14 : 20,
                 vertical: 16),
             children: [
-              Text(strings.homeEyebrow,
+              if (!showMaiMenti) Text(strings.homeEyebrow,
                   style: TextStyle(color: _mint, fontSize: 11,
                       fontWeight: FontWeight.w700, letterSpacing: 1.1)),
               const SizedBox(height: 12),
@@ -1069,7 +1071,18 @@ void updateMentiMessage(MentiMood mood) {
                     minimumSize: const Size(double.infinity, 54)),
               ),
               const SizedBox(height: 12),
-              if (_progressReady) HomeMentiCard(
+              if (showMaiMenti)
+                MaiMenti(
+                  name: MentiIdentityScope.of(context)?.profile.name ?? _characterName,
+                  character: MentiEvolution(
+                    key: const ValueKey('home-menti'),
+                    assetPath: _characterAsset,
+                    reaction: mentiReaction,
+                    level: _mentiLevel,
+                    size: 68,
+                  ),
+                )
+              else if (_progressReady) HomeMentiCard(
                 character: Stack(alignment: Alignment.topRight, children: [
                       Container(
                         decoration: BoxDecoration(
@@ -1120,7 +1133,7 @@ void updateMentiMessage(MentiMood mood) {
                     child: Text(strings.homeRetryProgress)),
                 ]))),
               if (MentiAnimationScope.of(context)?.home != null) ...[
-                const MentiHomeReviewFeedback(),
+                if (!showMaiMenti) const MentiHomeReviewFeedback(),
                 OutlinedButton.icon(key: const ValueKey('home-fitness'),
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const MentiFitnessClub(allowTestMode: true))),
                   icon: const Icon(Icons.fitness_center), label: Text(strings.fitnessTitle)),
@@ -1148,7 +1161,7 @@ void updateMentiMessage(MentiMood mood) {
                     child: Text(strings.experienceIntroOpen)),
                 ])),
               const SizedBox(height: 12),
-              DailyMentiMiniCard(
+              if (!showMaiMenti) DailyMentiMiniCard(
                 key: const ValueKey('daily-menti-mini-card'), refreshToken: _dailyRevision,
                 onOpenDaily: _saveDailyReflection, onOpenHub: _openPersonalHub),
               if (adult) ...[
