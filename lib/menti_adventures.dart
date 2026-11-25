@@ -373,39 +373,11 @@ class _MentiAdventuresPageState extends State<MentiAdventuresPage>
           for (var j = 0; j < adventureTargets.length; j++)
             if (j != current) j,
         ])
-          MentiPanel(
-            highlighted: i == current,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  i < current
-                      ? Icons.check_circle
-                      : i == current
-                      ? Icons.explore
-                      : Icons.lock_outline,
-                  color: i <= current ? const Color(0xFFF6C36B) : null,
-                ),
-                Semantics(
-                  header: true,
-                  child: Text(
-                    '${i + 1}. ${titles[i]}',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-                MentiStatusBadge(
-                  icon: i < current
-                      ? Icons.check_circle_outline
-                      : i == current
-                      ? Icons.near_me_outlined
-                      : Icons.lock_outline,
-                  highlight: i == current,
-                  label: i < current
-                      ? s.adventureStationDone
-                      : i == current
-                      ? s.adventureStationCurrent
-                      : s.adventureStationFuture,
-                ),
+          MentiAdventureStation(
+            title: '${i + 1}. ${titles[i]}',
+            done: i < current,
+            current: i == current,
+            details: [
                 Text(s.adventureStationRule(adventureTargets[i])),
                 if (i == current) ...[
                   const SizedBox(height: 8),
@@ -437,8 +409,7 @@ class _MentiAdventuresPageState extends State<MentiAdventuresPage>
                   ),
                   Center(child: Text(name)),
                 ],
-              ],
-            ),
+            ],
           ),
       ],
     );

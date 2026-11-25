@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'app_language.dart';
+
 import 'menti_identity/menti_identity_controller.dart';
 import 'menti_identity/menti_avatar_renderer.dart';
 
@@ -147,4 +149,50 @@ class MentiStatusBadge extends StatelessWidget {
       ],
     ),
   );
+}
+
+
+/// Shared station presentation for the Menti-kalandok maps.
+class MentiAdventureStation extends StatelessWidget {
+  const MentiAdventureStation({
+    super.key,
+    required this.title,
+    required this.done,
+    required this.current,
+    this.details = const [],
+  });
+
+  final String title;
+  final bool done;
+  final bool current;
+  final List<Widget> details;
+
+  @override
+  Widget build(BuildContext context) {
+    final s = appStrings(context);
+    return MentiPanel(
+      highlighted: current,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(
+            done ? Icons.check_circle : current ? Icons.explore : Icons.lock_outline,
+            color: done || current ? const Color(0xFFF6C36B) : null,
+          ),
+          Semantics(
+            header: true,
+            child: Text(title, style: Theme.of(context).textTheme.titleLarge),
+          ),
+          MentiStatusBadge(
+            icon: done ? Icons.check_circle_outline
+                : current ? Icons.near_me_outlined : Icons.lock_outline,
+            highlight: current,
+            label: done ? s.adventureStationDone
+                : current ? s.adventureStationCurrent : s.adventureStationFuture,
+          ),
+          ...details,
+        ],
+      ),
+    );
+  }
 }

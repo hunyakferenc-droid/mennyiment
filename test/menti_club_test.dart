@@ -41,6 +41,34 @@ void main() {
       'xp-sentinel': 73,
     }),
   );
+  test('Trial Week credits once per date, survives a gap and restores independently', () async {
+    final real = MentiClubStore(key: MentiClubStore.adventureWeekKey);
+    final trial = MentiClubStore(key: MentiClubStore.adventureWeekTestKey);
+    await real.load();
+    await trial.load();
+    final first = DateTime(2030, 1, 1);
+    expect(await trial.completeAdventure(first, rhythmScore: 1), ClubSave.saved);
+    expect(await trial.completeAdventure(first, rhythmScore: 3), ClubSave.alreadyToday);
+    expect(trial.record.best, 1);
+    expect(await trial.completeAdventure(DateTime(2030, 1, 3), rhythmScore: 3),
+      ClubSave.saved);
+    expect(trial.record.days, ['2030-01-01', '2030-01-03']);
+    expect(trial.record.best, 3);
+    expect(real.record.days, isEmpty);
+
+    final backup = await BackupExporter().capture();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(MentiClubStore.adventureWeekTestKey);
+    final restorer = BackupRestorer();
+    await restorer.restore(await restorer.prepare(backup.json), confirmed: true);
+    await trial.load();
+    expect(trial.record.days, ['2030-01-01', '2030-01-03']);
+    expect(trial.record.best, 3);
+    expect(prefs.containsKey(MentiClubStore.adventureWeekKey), isFalse);
+    real.dispose();
+    trial.dispose();
+  });
+
   test('Missing club load is read-only; partial rhythm keeps best but marks no day; real restart reloads', () async {
     final p = await SharedPreferences.getInstance(),
         s = MentiClubStore(clock: () => DateTime(2026, 11, 22));

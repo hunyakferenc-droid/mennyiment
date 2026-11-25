@@ -12,16 +12,21 @@ class MentiMovementCards extends StatefulWidget {
     required this.store,
     this.nextTestDay,
     this.testClock,
+    this.onComplete,
+    this.initiallySeated = true,
   });
   final VoidCallback? nextTestDay;
   final DateTime Function()? testClock;
   final MentiClubStore store;
+  final Future<ClubSave> Function()? onComplete;
+  final bool initiallySeated;
   @override
   State<MentiMovementCards> createState() => _CardsState();
 }
 
 class _CardsState extends State<MentiMovementCards> {
-  bool seated = true, started = false, busy = false, finished = false;
+  late bool seated = widget.initiallySeated;
+  bool started = false, busy = false, finished = false;
   int card = 0, performed = 0;
   ClubSave? result;
   final focus = FocusNode();
@@ -34,7 +39,7 @@ class _CardsState extends State<MentiMovementCards> {
   Future<void> save() async {
     if (busy) return;
     setState(() => busy = true);
-    final next = await widget.store.cards();
+    final next = await (widget.onComplete ?? widget.store.cards)();
     if (mounted) {
       setState(() {
         result = next;
