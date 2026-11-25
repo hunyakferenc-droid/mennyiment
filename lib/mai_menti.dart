@@ -239,7 +239,7 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
           final mood = await showDialog<int>(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text(appStrings(context).dailyMood),
+              title: Text(_adventureQuestion(adventure, context)),
               content: Wrap(
                 spacing: 4,
                 children: [
@@ -274,6 +274,7 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
           await Navigator.of(context).push<void>(MaterialPageRoute(
             builder: (_) => MentiMovementCards(
               store: week,
+              initiallySeated: adventure == _Adventure.seated,
               onComplete: () => week.completeAdventure(day),
             ),
           ));
@@ -287,6 +288,18 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
     } finally {
       if (mounted) setState(() => _adventureOpen = false);
     }
+  }
+
+  String _adventureQuestion(_Adventure adventure, BuildContext context) {
+    final s = appStrings(context);
+    final hu = s.localeName == 'hu';
+    return switch (adventure) {
+      _Adventure.checkIn => hu ? 'Hogy vagy a hét közepén?'
+          : 'How are you feeling halfway through?',
+      _Adventure.finish => hu ? 'Milyen érzéssel zárod a hetet?'
+          : 'How do you feel at the end of this week?',
+      _ => s.dailyMood,
+    };
   }
 
   String _adventureProgress(bool hu, int completed, int best) => hu

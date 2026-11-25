@@ -67,12 +67,11 @@ async function playTrialWeek(lang) {
   }
   async function close(filmName) {
     const recording = page.video();
+    const recordingPath = recording && filmName ? await recording.path() : null;
     await context.close();
     context = null;
-    if (recording && filmName) {
-      await recording.saveAs(path.join(output, filmName));
-      await recording.delete();
-    }
+    if (recordingPath) fs.renameSync(recordingPath, path.join(output, filmName));
+
   }
   async function advance() {
     await click(page, button(page, s.clubNextDay));
