@@ -121,7 +121,12 @@ class _MentiAnimationScopeState extends State<MentiAnimationScope>
         frequency: prefs.value.frequency,
       );
       if (_catalogReady && widget.homeReactions != null) {
-        widget.homeReactions!.ready(prefs.ready && complete?.ready == true);
+        widget.homeReactions!.ready(
+          prefs.ready &&
+          complete?.ready == true &&
+          (MentiMotionScope.settingsOf(context)?.ready ?? true) &&
+          (MentiExperienceScope.of(context)?.ready ?? true),
+        );
         widget.homeReactions!.refresh();
         return;
       }
@@ -284,19 +289,22 @@ class _MentiAnimationPlayerState extends State<MentiAnimationPlayer> {
       listenable: c,
       builder: (context, _) {
         final media = c.owns(_host) && _visible ? c.handle : null;
-        if (media == null) return poster;
         return SizedBox(
           width: widget.size,
           height: widget.size * 4 / 3,
           child: Stack(
             fit: StackFit.expand,
             children: [
-              ExcludeSemantics(child: ClipRect(child: media.view)),
-              if (!media.frameVisible) poster,
+              poster,
+              if (media != null)
+                ExcludeSemantics(child: ClipRect(child: media.view)),
+              // A zero-opacity platform view may not mount on Chrome. The
+              // decoded layer is mounted immediately with its own poster cover.
+              if (media != null && !media.frameVisible) poster,
               // The HTML interceptor sits below a real Flutter tap target.
               // This prevents the video platform view from taking the gesture.
               // Only the explicit home callback creates this input surface.
-              if (kIsWeb && widget.onTap != null)
+              if (media != null && kIsWeb && widget.onTap != null)
                 Positioned.fill(
                   child: Stack(
                     fit: StackFit.expand,

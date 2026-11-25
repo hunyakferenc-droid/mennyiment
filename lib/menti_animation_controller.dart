@@ -262,6 +262,15 @@ class MentiAnimationController extends ChangeNotifier {
     )) {
       return false;
     }
+    final watch = Stopwatch()..start();
+    const startBudget = Duration(milliseconds: 3500);
+    Duration remaining() {
+      final duration = startBudget - watch.elapsed;
+      if (duration <= Duration.zero) {
+        throw TimeoutException('Menti reaction missed its cue');
+      }
+      return duration;
+    }
     _generation++;
     final generation = _generation;
     _deadline?.cancel();
@@ -279,13 +288,12 @@ class MentiAnimationController extends ChangeNotifier {
       await _closeHandle();
       if (!_valid(generation)) return;
       _decoderOwner = this;
-      final watch = Stopwatch()..start();
       try {
-        await verify(clip).timeout(const Duration(seconds: 4));
+        await verify(clip).timeout(remaining());
         if (!_valid(generation)) return;
         final media = factory(clip);
         handle = media;
-        await media.initialize().timeout(const Duration(seconds: 4));
+        await media.initialize().timeout(remaining());
         if (!_valid(generation)) {
           await _closeHandle();
           return;
@@ -304,7 +312,7 @@ class MentiAnimationController extends ChangeNotifier {
         }
 
         media.addListener(changed);
-        await media.playMuted().timeout(const Duration(seconds: 2));
+        await media.playMuted().timeout(remaining());
         if (!_valid(generation)) {
           await _closeHandle();
           return;

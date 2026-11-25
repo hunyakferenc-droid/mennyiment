@@ -1,7 +1,7 @@
 name: Mai Menti Windows REVIEW
 on:
   push:
-    branches: [feature/mai-menti]
+    branches: [feature/mai-menti, feature/mai-menti-followup]
 permissions:
   contents: read
 concurrency:

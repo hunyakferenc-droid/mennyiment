@@ -8,6 +8,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'app_language.dart';
 import 'daily_menti_store.dart';
 import 'menti_club_store.dart';
+import 'menti_animation_player.dart';
+import 'menti_reaction_engine.dart';
+import 'menti_collection_model.dart';
+import 'menti_collection_widgets.dart';
 import 'menti_fitness.dart';
 import 'menti_life_events.dart';
 import 'menti_motion.dart';
@@ -153,9 +157,19 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
         evening: answer['evening'] as String? ?? '',
       );
     }
-    MentiLifeEvents.instance.emit(
-      mood <= 2 ? MentiLifeEvent.difficultDay : MentiLifeEvent.checkInSaved,
-    );
+    if (!mounted) return;
+    final controller = MentiAnimationScope.of(context)?.controller;
+    // Thinking is the only existing exact-look clip suited to this moment.
+    final shown = mood <= 2 && controller?.request(
+      MentiLifeReaction.thinking,
+      token: 'mai-mood-${clubDay(day)}-$mood',
+      manual: true,
+    ) == true;
+    if (!shown) {
+      MentiLifeEvents.instance.emit(
+        mood <= 2 ? MentiLifeEvent.difficultDay : MentiLifeEvent.checkInSaved,
+      );
+    }
   });
 
   Future<void> _setTrialDay(DateTime? date) => _write(() async {
@@ -168,7 +182,7 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
 
   Future<void> _play() async {
     final played = await Navigator.of(context).push<bool>(
-      MaterialPageRoute(builder: (_) => _MaiRhythm(record: _activeRecord)),
+      MaterialPageRoute(builder: (_) => _MaiRhythm(record: _activeRecord, day: _now)),
     );
     if (!mounted) return;
     await _load();
@@ -211,6 +225,11 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
     final hu = s.localeName == 'hu';
     final mood = _moods[clubDay(_day)];
     final date = DateFormat.MMMd(s.localeName).format(_day);
+    final yesterday = clubDay(DateTime(_day.year, _day.month, _day.day - 1));
+    final yesterdayMood = _moods[yesterday];
+    final yesterdayScore = _activeRecord.record.scoreOn(yesterday);
+    final earlier = _moods.entries.where((entry) =>
+        entry.key.compareTo(yesterday) < 0).firstOrNull;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -256,6 +275,17 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
                 icon: const Icon(Icons.play_arrow),
                 label: Text(s.rhythmPlay),
               ),
+              if (yesterdayMood != null || yesterdayScore != null)
+                Text(
+                  hu
+                    ? 'Tegnap · Közérzet: ${yesterdayMood ?? '–'} / 5 · Ritmus: ${yesterdayScore ?? '–'} / 3'
+                    : 'Yesterday · Mood: ${yesterdayMood ?? '–'} / 5 · Rhythm: ${yesterdayScore ?? '–'} / 3',
+                  key: const ValueKey('mai-yesterday'),
+                ),
+              if (yesterdayMood == null && yesterdayScore == null && earlier != null)
+                Text(hu
+                    ? 'Utolsó közérzetjelzés: ${earlier.value} / 5'
+                    : 'Last mood check-in: ${earlier.value} / 5'),
               TextButton(
                 key: const ValueKey('mai-week'),
                 onPressed: _busy ? null : _openWeek,
@@ -288,7 +318,8 @@ String _best(bool hu, int score) =>
     hu ? 'Ritmusrekord: $score / 3' : 'Rhythm best: $score / 3';
 
 class _MaiRhythm extends StatefulWidget {
-  const _MaiRhythm({required this.record});
+  const _MaiRhythm({required this.record, required this.day});
+  final DateTime day;
   final MentiClubStore record;
 
   @override
@@ -308,7 +339,7 @@ class _MaiRhythmState extends State<_MaiRhythm> {
   Future<void> _save() async {
     if (_saving) return;
     setState(() { _saving = true; _failed = false; });
-    final result = await widget.record.rhythm(game.completed);
+    final result = await widget.record.dailyRhythm(game.completed, widget.day);
     if (!mounted) return;
     setState(() { _saving = false; _failed = result == ClubSave.failed; });
   }
@@ -331,20 +362,18 @@ class _MaiRhythmState extends State<_MaiRhythm> {
           padding: const EdgeInsets.all(16),
           children: [
             if (_ended)
-              Center(child: TweenAnimationBuilder<double>(
+              Center(child: _RhythmResultMenti(
                 key: ValueKey(game.phase),
-                tween: Tween(begin: 0.92, end: 1),
-                duration: MentiMotionScope.animateOf(context)
-                    ? const Duration(milliseconds: 260) : Duration.zero,
-                curve: Curves.easeOut,
-                builder: (_, scale, child) => Transform.scale(scale: scale, child: child),
-                child: const MentiFitnessArtwork(),
+                completed: game.phase == RhythmPhase.finished,
               )),
             Semantics(liveRegion: true, child: Text(_ended
                 ? (hu ? 'Eredmény: ${game.completed} / 3' : 'Result: ${game.completed} / 3')
                 : s.rhythmRound(game.round))),
             if (demo) ...[
-              Text(hu ? 'Jegyezd meg a sorrendet' : 'Remember the order'),
+              Text(game.round == 1
+                  ? (hu ? 'Nézd meg a mozdulatot. A Mehet után válaszd ugyanezt.'
+                        : 'Look at the move. After Ready, tap the matching button.')
+                  : (hu ? 'Jegyezd meg a sorrendet' : 'Remember the order')),
               for (final (index, action) in game.sequence.indexed)
                 Text('${index + 1}. ${label(action)}', key: ValueKey('mai-cue-$index')),
               FilledButton(
@@ -357,7 +386,11 @@ class _MaiRhythmState extends State<_MaiRhythm> {
               ),
             ],
             if (!demo && !_ended) ...[
-              Text(s.rhythmYourTurn(game.entered, game.sequence.length)),
+              Text(s.rhythmYourTurn(game.entered, game.sequence.length),
+                style: Theme.of(context).textTheme.titleMedium),
+              if (game.round == 1)
+                Text(hu ? 'Most koppints az előbb látott mozdulatra.'
+                    : 'Now tap the move you just saw.'),
               for (final action in RhythmAction.values)
                 OutlinedButton(
                   key: ValueKey('mai-hit-${action.name}'),
@@ -374,7 +407,12 @@ class _MaiRhythmState extends State<_MaiRhythm> {
                 ),
             ],
             if (_feedback != null)
-              Semantics(liveRegion: true, child: Text(_feedback!)),
+              Semantics(liveRegion: true, child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Icon(game.phase == RhythmPhase.mistake
+                    ? Icons.error_outline : Icons.check_circle_outline),
+                title: Text(_feedback!),
+              )),
             if (_ended) ...[
               Text(_best(hu, widget.record.record.best)),
               if (!_saving && !_failed)
@@ -412,5 +450,50 @@ class _MaiRhythmState extends State<_MaiRhythm> {
         ),
       ),
     );
+  }
+}
+
+
+/// The selected character stays mounted through the result, including when a
+/// matching own clip is absent or motion is disabled.
+class _RhythmResultMenti extends StatefulWidget {
+  const _RhythmResultMenti({super.key, required this.completed});
+  final bool completed;
+
+  @override
+  State<_RhythmResultMenti> createState() => _RhythmResultMentiState();
+}
+
+class _RhythmResultMentiState extends State<_RhythmResultMenti> {
+  bool _requested = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final complete = CompleteLookScope.of(context);
+    final look = complete?.selection.active == true
+        ? CompleteLook.find(complete!.selection.lookId)
+        : null;
+    final controller = MentiAnimationScope.of(context)?.controller;
+    if (look != null && controller != null && !_requested &&
+        MentiMotionScope.animateOf(context)) {
+      _requested = true;
+      // The player registers its visible host first. Never queue a reaction
+      // for a result that the player has already dismissed.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!mounted || ModalRoute.of(context)?.isCurrent != true) return;
+          controller.request(
+            widget.completed ? MentiLifeReaction.congratulation
+                             : MentiLifeReaction.thinking,
+            token: 'mai-result-${identityHashCode(this)}',
+            manual: true,
+          );
+        });
+        WidgetsBinding.instance.ensureVisualUpdate();
+      });
+    }
+    return look == null
+        ? const MentiFitnessArtwork()
+        : MentiAnimationPlayer(look: look, size: 120);
   }
 }
