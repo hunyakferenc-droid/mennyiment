@@ -227,7 +227,10 @@ void validateRestoreValue(String key, Object value) {
   void require(bool condition) {
     if (!condition) { throw FormatException('Invalid restore value: $key'); }
   }
-  if (key == MentiClubStore.normalKey || key == MentiClubStore.testKey) { MentiClubRecord.decode(value); return; }
+  if (const {
+    MentiClubStore.normalKey, MentiClubStore.testKey,
+    MentiClubStore.dailyRhythmKey, MentiClubStore.dailyRhythmTestKey,
+  }.contains(key)) { MentiClubRecord.decode(value); return; }
   if (key == MentiAnimationSettings.key) { MentiAnimationPreference.decode(value); return; }
   if (key == CompleteLookStore.key) { CompleteLookSelection.decode(value); return; }
   if (key == AdventureStore.key) { AdventureDocument.decode(value); return; }

@@ -11,7 +11,7 @@ from android33_device_ui import DeviceUI, NORMAL, REVIEW, STRINGS, adb, prefs, r
 from check_android_update import decision, inspect
 from run_android33_upgrade import ROOT, run
 
-BASE = 'c927e42d712f164e2e41b62f3f67088ce4eacb94'
+BASE = os.environ.get('MENNYIMENT_UPGRADE_BASE', 'c927e42d712f164e2e41b62f3f67088ce4eacb94')
 
 OUT = ROOT / 'build/android34'
 DRINKS = 'mennyiment_drinks_v1'
@@ -170,7 +170,7 @@ def main():
         try:
             run(['python3', 'tool/build_menti_alive_preview.py', '--home',
                  '--platform', 'apk', '--output', OUT / 'baseline'], cwd=work)
-            # Only test sources are overlaid. The existing #53 app remains the baseline.
+            # Only test sources are overlaid. The existing #54 app remains the baseline.
             for filename in ['android33_flows.dart', 'android_upgrade_seed_test.dart']:
                 (work / 'integration_test' / filename).write_bytes(
                     (ROOT / 'integration_test' / filename).read_bytes()
@@ -197,7 +197,7 @@ prepare_review_android(work, studio=True)
     sdk_tools = max(Path(os.environ['ANDROID_HOME']).glob('build-tools/*/apksigner'),
                     key=lambda p: tuple(map(int, p.parent.name.split('.')))).parent
     old, new = inspect(baseline, sdk_tools), inspect(candidate, sdk_tools)
-    assert old['versionCode'] == 47 and new['versionCode'] == 48
+    assert new['versionCode'] == old['versionCode'] + 1
     assert decision(old, new)[0] == 'compatible-signature'
     before = prefs(REVIEW)
     adb('install', '-r', baseline)

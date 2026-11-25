@@ -7,6 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 String clubDay(DateTime date) =>
     '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+DateTime nextClubTrialDay(DateTime day) =>
+    DateTime(day.year, day.month, day.day + 1);
+
 DateTime parseClubDay(String raw) {
   if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(raw)) {
     throw const FormatException('Invalid club date');
@@ -92,7 +95,9 @@ class MentiClubStore extends ChangeNotifier {
   }) : clock = clock ?? DateTime.now,
        open = open ?? SharedPreferences.getInstance;
   static const normalKey = 'mennyiment_fitness_club_v1',
-      testKey = 'mennyiment_fitness_club_test_v1';
+      testKey = 'mennyiment_fitness_club_test_v1',
+      dailyRhythmKey = 'mennyiment_mai_menti_rhythm_v1',
+      dailyRhythmTestKey = 'mennyiment_mai_menti_test_rhythm_v1';
   static final Set<String> _writing = {};
   final String key;
   final DateTime Function() clock;

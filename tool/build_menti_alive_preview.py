@@ -9,7 +9,8 @@ from menti_beta_android import prepare_review_android, ensure_committed_source
 from menti_review_media import prepare_review_media
 
 root=Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('--platform',choices=['web','apk'],required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--studio',action='store_true',help='Build the 18-look Animation Studio');p.add_argument('--home',action='store_true',help='Build actual home reactions and Fitness Club');p.add_argument('--device', help='Run native REVIEW integration tests instead of producing a distributable');p.add_argument('--flutter',default='flutter');p.add_argument('--integration-test',choices=['integration_test/android_upgrade_read_test.dart']);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--platform',choices=['web','apk'],required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--studio',action='store_true',help='Build the 18-look Animation Studio');p.add_argument('--daily',action='store_true',help='Enable Mai Menti in the home REVIEW');p.add_argument('--home',action='store_true',help='Build actual home reactions and Fitness Club');p.add_argument('--device', help='Run native REVIEW integration tests instead of producing a distributable');p.add_argument('--flutter',default='flutter');p.add_argument('--integration-test',choices=['integration_test/android_upgrade_read_test.dart','integration_test/mai_menti_device_test.dart']);a=p.parse_args()
+if a.daily and not a.home:raise SystemExit('Mai Menti requires --home.')
 if a.integration_test and (not a.device or not a.home):raise SystemExit('Custom native read verification requires --home and --device.')
 try:ensure_committed_source(root)
 except ValueError as error:raise SystemExit(str(error))
@@ -40,9 +41,11 @@ with tempfile.TemporaryDirectory(prefix='mennyiment-alive-review-')as directory:
  subprocess.run([a.flutter,'pub','get'],cwd=work,check=True)
  if a.device:
   if a.platform!='apk': raise SystemExit('Device integration requires apk platform')
-  subprocess.run([a.flutter,'test',(a.integration_test or ('integration_test/menti_home_review_test.dart' if a.home else 'integration_test/menti_beta_review_test.dart')),'-d',a.device,'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub','--no-uninstall','--reporter','expanded'],cwd=work,check=True)
+  defines=['--dart-define=MENTI_DAILY_REVIEW=true'] if a.daily else []
+  subprocess.run([a.flutter,'test',(a.integration_test or ('integration_test/menti_home_review_test.dart' if a.home else 'integration_test/menti_beta_review_test.dart')),'-d',a.device,'--dart-define=MENTI_ALIVE_REVIEW=true',*defines,'--no-pub','--no-uninstall','--reporter','expanded'],cwd=work,check=True)
   raise SystemExit(0)
  command=[a.flutter,'build',a.platform,'--target',('tool/menti_home_review.dart' if a.home else 'tool/menti_animation_studio.dart' if a.studio else 'tool/menti_alive_preview.dart'),'--dart-define=MENTI_ALIVE_REVIEW=true','--no-pub']
+ if a.daily: command.append('--dart-define=MENTI_DAILY_REVIEW=true')
  command+=['--no-web-resources-cdn','--no-wasm-dry-run']if a.platform=='web'else['--debug']
  subprocess.run(command,cwd=work,check=True)
  a.output.mkdir(parents=True,exist_ok=True)

@@ -74,7 +74,7 @@ class _ClubState extends State<MentiFitnessClub> with WidgetsBindingObserver {
     if (!isTestMode || store.saving) return;
     setState(
       () =>
-          _testDay = DateTime(_testDay.year, _testDay.month, _testDay.day + 1),
+          _testDay = nextClubTrialDay(_testDay),
     );
   }
 
