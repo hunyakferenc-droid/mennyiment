@@ -840,6 +840,7 @@ void updateMentiMessage(MentiMood mood) {
         ? MentiMood.alcoholFreeEntry : MentiMood.drinkAdded);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        behavior: SnackBarBehavior.floating,
         content: Text(appStrings(context).journalSaved(
           catalogDrinkLabel(result.name, appStrings(context)),
         )),

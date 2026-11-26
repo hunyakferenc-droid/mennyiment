@@ -21,7 +21,7 @@ async function click(page, control) {
 }
 
 async function accessibleText(page, text) {
-  for (let attempt = 0; attempt < 70; attempt++) {
+  for (let attempt = 0; attempt < 110; attempt++) {
     await semantics(page);
     if ((await page.locator('body').ariaSnapshot()).includes(text)) return;
     await page.waitForTimeout(125);
@@ -35,6 +35,43 @@ async function finishClip(page, fragment) {
     || window.maiClips.some(clip => clip.source.includes(value) && clip.time > 0.12),
     fragment, { timeout: 12000 });
   await page.waitForFunction(() => !document.querySelector('video'), null, { timeout: 12000 });
+}
+
+async function recordComparison(browser, name) {
+  const s = strings.hu;
+  const context = await browser.newContext({
+    viewport: { width: 1280, height: 800 },
+    reducedMotion: 'reduce',
+    recordVideo: { dir: output, size: { width: 960, height: 600 } },
+  });
+  const fixture = { ...seed('hu', 'girl'), [key('reduce_motion_v1')]: JSON.stringify(true) };
+  await context.addInitScript(values => {
+    for (const [key, value] of Object.entries(values)) localStorage.setItem(key, value);
+  }, fixture);
+  const page = await context.newPage();
+  const recording = await page.video().path();
+  try {
+    await page.goto(host, { waitUntil: 'networkidle' });
+    await accessibleText(page, 'Mai Menti');
+    await page.screenshot({ path: path.join(output, name + '-kezdolap.png') });
+    await page.waitForTimeout(600);
+    await click(page, button(page, s.rhythmPlay).first());
+    const moves = [s.rhythmStretch, s.rhythmLeft, s.rhythmRight];
+    for (let length = 1; length <= 3; length++) {
+      const tree = await page.locator('body').ariaSnapshot();
+      const pattern = Array.from({ length }, (_, index) =>
+        moves.find(move => tree.includes((index + 1) + '. ' + move)));
+      assert(pattern.every(Boolean), tree);
+      await click(page, button(page, 'Mehet'));
+      for (const move of pattern) await click(page, button(page, move));
+    }
+    await accessibleText(page, 'Eredmény: 3 / 3');
+    await page.screenshot({ path: path.join(output, name + '-ritmus.png') });
+    await page.waitForTimeout(750);
+  } finally {
+    await context.close();
+  }
+  fs.renameSync(recording, path.join(output, name + '.webm'));
 }
 
 async function playTrialWeek(lang) {
@@ -51,7 +88,7 @@ async function playTrialWeek(lang) {
     context = await chromium.launchPersistentContext(profile, {
       executablePath: process.env.CHROME_BIN,
       headless: true,
-      viewport: { width: 420, height: 850 },
+      viewport: { width: hu ? 420 : 320, height: 850 },
       reducedMotion: 'reduce',
       ...(hu ? { recordVideo: { dir: output, size: { width: 420, height: 850 } } } : {}),
     });
@@ -146,6 +183,13 @@ async function main() {
   const browser = await chromium.launch({ executablePath: process.env.CHROME_BIN, headless: true });
   const checks = [];
   try {
+    if (process.env.MENTI_RECORD_BASELINE === 'true') {
+      assert((await (await (await browser.newPage()).request
+        .get(host + '/build-info.txt')).text()).includes('583e9ec360f75f1ce621e06d3f257ffbbffab14b'));
+      await recordComparison(browser, '01-Elotte');
+      return;
+    }
+    await recordComparison(browser, '02-Utana');
     for (const [lang, family] of [['hu', 'girl'], ['en', 'boy'], ['en', 'neutral']]) {
       const hu = lang === 'hu';
       const s = strings[lang];
@@ -212,6 +256,11 @@ async function main() {
       await click(p, button(p, s.rhythmPlay).first());
 
       const labels = [s.rhythmStretch, s.rhythmLeft, s.rhythmRight];
+      await p.keyboard.press('1');
+      await accessibleText(p, hu ? 'Korai koppintás' : 'Too soon');
+      await click(p, button(p, hu ? 'Mehet' : 'Ready'));
+      await accessibleText(p, hu ? 'Késői koppintás' : 'Too late. Time ran out.');
+      await click(p, button(p, hu ? 'Új játék' : 'New game'));
       for (let size = 1; size <= 3; size++) {
         const moves = [];
         for (let index = 1; index <= size; index++) {
@@ -221,7 +270,14 @@ async function main() {
           moves.push(label);
         }
         await click(p, button(p, hu ? 'Mehet' : 'Ready'));
-        for (const move of moves) await click(p, button(p, move));
+        for (const move of moves) {
+          if (family === 'boy') {
+            await p.keyboard.press(String(labels.indexOf(move) + 1));
+            await p.waitForTimeout(240);
+          } else {
+            await click(p, button(p, move));
+          }
+        }
       }
       await accessibleText(p, hu ? 'Eredmény: 3 / 3' : 'Result: 3 / 3');
       // The accessible game path also works when Chrome keeps the selected art
@@ -276,7 +332,7 @@ async function main() {
       const recording = p.video();
       await context.close();
       if (recording) await recording.saveAs(path.join(output, 'Mai-Menti-napi-kor.webm'));
-      checks.push({ lang, family, reducedMotion: reduced, input: 'mouse' });
+      checks.push({ lang, family, reducedMotion: reduced, input: family === 'boy' ? 'keyboard and mouse' : 'mouse' });
     }
     const trialWeeks = [await playTrialWeek('hu'), await playTrialWeek('en')];
     fs.writeFileSync(path.join(output, 'verification.json'), JSON.stringify({
