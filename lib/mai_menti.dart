@@ -143,8 +143,9 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
       final record = trial ? _trialRecord : _record;
       final week = trial ? _trialAdventures : _adventures;
       await Future.wait([record.load(), week.load()]);
-      if (!record.ready || !week.ready)
+      if (!record.ready || !week.ready) {
         throw StateError('Rhythm record unavailable');
+      }
       if (!mounted) return;
       setState(() {
         _trial = trial;
