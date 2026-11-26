@@ -114,15 +114,18 @@ async function playTrialWeek(lang) {
     await click(page, button(page, s.clubNextDay));
   }
   function count(n) {
-    return hu ? `Teljesített kalandok: ${n} / 7` : `Adventures completed: ${n} / 7`;
+    return hu ? `Teljesített kalandok: ${n} / 28` : `Adventures completed: ${n} / 28`;
   }
   try {
     await launch();
     const labels = [s.rhythmStretch, s.rhythmLeft, s.rhythmRight];
-    for (let stage = 0; stage < 7; stage++) {
+    const rhythmStages = [1, 5, 10, 16, 19, 22, 25];
+    const movementStages = [2, 4, 8, 12, 14, 17, 24];
+    const memoryStages = [7, 11, 15, 23, 26];
+    for (let stage = 0; stage < 28; stage++) {
       await accessibleText(page, count(stage));
       await click(page, button(page, hu ? 'Mai kaland' : 'Today’s adventure'));
-      if (stage === 1 || stage === 5) {
+      if (rhythmStages.includes(stage)) {
         for (let size = 1; size <= 3; size++) {
           const tree = await page.locator('body').ariaSnapshot();
           const moves = Array.from({ length: size }, (_, index) =>
@@ -132,38 +135,91 @@ async function playTrialWeek(lang) {
           for (const move of moves) await click(page, button(page, move));
         }
         await click(page, button(page, hu ? 'Vissza a kalandhoz' : 'Back to the adventure'));
-      } else if (stage === 2 || stage === 4) {
+      } else if (movementStages.includes(stage)) {
         await click(page, button(page, s.rhythmPlay));
         for (let n = 0; n < 3; n++) await click(page, button(page, s.cardsDone));
         await click(page, button(page, s.rhythmBack));
+      } else if (memoryStages.includes(stage)) {
+        const symbols = hu ? ['Kör', 'Háromszög', 'Négyzet'] : ['Circle', 'Triangle', 'Square'];
+        await click(page, button(page, '1. ' + symbols[0]));
+        const level = stage === 26 ? 3 : stage === 11 ? 2 : 1;
+        const size = level + 2;
+        if (level > 1) {
+          const label = hu ? level + '. szint · ' + size + ' jel' : 'Level ' + level + ' · ' + size + ' symbols';
+          await click(page, page.getByRole('checkbox', { name: label, exact: true })
+            .or(button(page, label)).or(page.getByRole('radio', { name: label, exact: true })));
+        }
+        await click(page, button(page, hu ? 'Minta indítása' : 'Start pattern'));
+        const pattern = [];
+        for (let i = 1; i <= size; i++) {
+          const deadline = Date.now() + 4000;
+          while (Date.now() < deadline) {
+            const tree = await page.locator('body').ariaSnapshot();
+            const cue = symbols.find(symbol => tree.includes(symbol));
+            if (cue && tree.includes(i + ' / ' + size)) {
+              pattern.push(cue);
+              break;
+            }
+            await page.waitForTimeout(35);
+          }
+        }
+        assert.equal(pattern.length, size);
+        await accessibleText(page, hu ? 'Te jössz' : 'Your turn');
+        for (const cue of pattern) {
+          const n = symbols.indexOf(cue) + 1;
+          if (stage === 11 && !hu) {
+            await page.keyboard.press(String(n));
+            await page.waitForTimeout(150);
+          } else {
+            await click(page, button(page, n + '. ' + cue));
+          }
+        }
+        await accessibleText(page, hu ? 'Megvan a minta!' : 'Pattern matched!');
+        await click(page, button(page, hu ? 'Vissza Mentihez' : 'Back to Menti'));
       } else {
         await click(page, button(page, '4'));
       }
       await accessibleText(page, count(stage + 1));
-      if (stage < 6) {
+      if ((stage + 1) % 7 === 0) {
+        if (stage < 27) {
+          await accessibleText(page, hu ? 'Végigjártad a hetet!' : 'You finished the week!');
+          const back = button(page, hu ? 'Vissza' : 'Back');
+          const box = await back.boundingBox();
+          assert(box);
+          await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+        }
+        await page.screenshot({ path: path.join(output, 'chapter-' + (stage + 1) + '-' + lang + '.png') });
+      }
+      if (stage < 27) {
         await advance();
         if (stage === 2) await advance();
       }
-      if (stage === 0) {
-        await close('Probahet-elso-kaland.webm');
+      if (stage === 0 || stage === 7 || stage === 25) {
+        await close(stage === 0 ? 'Probahet-elso-kaland.webm' : stage === 7 ? 'Menti-Emlekminta.webm' : 'Menti-utja-kozben.webm');
         await launch();
-        await accessibleText(page, count(1));
+        await accessibleText(page, count(stage + 1));
       }
     }
-    await accessibleText(page, hu ? 'Végigjártad a hetet!' : 'You finished the week!');
+    await accessibleText(page, hu ? 'Végigjártad Menti útját!' : 'You finished Menti’s Journey!');
     await page.screenshot({ path: path.join(output, 'trial-week-' + lang + '.png') });
     const snapshot = await page.evaluate(() => Object.fromEntries(Object.entries(localStorage)));
     const trial = JSON.parse(JSON.parse(snapshot[key('adventure_week_test_v1')]));
     assert.deepEqual(trial.days, ['2030-01-01', '2030-01-02', '2030-01-03',
       '2030-01-05', '2030-01-06', '2030-01-07', '2030-01-08']);
+    const journey = JSON.parse(JSON.parse(snapshot[key('menti_journey_test_v1')]));
+    assert.equal(journey.days.length, 21);
+    assert(journey.days[0] > trial.days[6]);
     assert.equal(trial.best, 3);
+    assert.equal(JSON.parse(JSON.parse(snapshot[key('menti_memory_test_v1')])).best, 3);
+    assert.equal(snapshot[key('menti_journey_v1')], undefined);
+    assert.equal(snapshot[key('menti_memory_v1')], undefined);
     assert.equal(snapshot[key('adventure_week_v1')], undefined);
     assert.equal(snapshot[key('mai_menti_rhythm_v1')], undefined);
     assert.equal(snapshot[key('fitness_club_v1')], undefined);
     assert.equal(snapshot[key('drinks_v1')], fixture[key('drinks_v1')]);
     assert.equal(snapshot[key('menti_xp_v2')], fixture[key('menti_xp_v2')]);
     await close('Probahet-zaras.webm');
-    return { lang, stages: trial.days, best: 3, restartedChrome: true };
+    return { lang, stages: [...trial.days, ...journey.days], best: 3, restartedChrome: true };
   } catch (error) {
     if (page && !page.isClosed()) {
       await page.screenshot({ path: path.join(output, 'trial-week-failure-' + lang + '.png') }).catch(() => {});
@@ -185,15 +241,14 @@ async function main() {
   try {
     if (process.env.MENTI_RECORD_BASELINE === 'true') {
       assert((await (await (await browser.newPage()).request
-        .get(host + '/build-info.txt')).text()).includes('583e9ec360f75f1ce621e06d3f257ffbbffab14b'));
+        .get(host + '/build-info.txt')).text()).includes('2f7c0c672bcd13bc82a4cd0df2ff72f38e292107'));
       await recordComparison(browser, '01-Elotte');
       return;
     }
     await recordComparison(browser, '02-Utana');
-    for (const [lang, family] of [['hu', 'girl'], ['en', 'boy'], ['en', 'neutral']]) {
+    for (const [lang, family, reduced = false] of [['hu', 'girl'], ['en', 'boy'], ['en', 'neutral', false], ['en', 'neutral', true]]) {
       const hu = lang === 'hu';
       const s = strings[lang];
-      const reduced = family === 'neutral';
       const rating = hu ? 2 : 4;
       const fixture = {
         ...seed(lang, family),
@@ -233,7 +288,7 @@ async function main() {
       assert((await (await p.request.get(host + '/build-info.txt')).text()).includes(source));
       if (!reduced) {
           await finishClip(p, family === 'boy'
-            ? 'alive-review-welcome' : 'girl-base-welcome');
+            ? 'alive-review-welcome' : family + '-base-welcome');
       }
       if (hu) {
         // The review's fixed 420px viewport puts rating 2 in the second chip.
@@ -243,7 +298,7 @@ async function main() {
       }
       await semantics(p);
       await accessibleText(p, hu ? 'Mai Menti' : 'Today with Menti');
-      await p.screenshot({ path: path.join(output, family + '-arrival.png') });
+      await p.screenshot({ path: path.join(output, family + (reduced ? '-reduced' : '') + '-arrival.png') });
       if (reduced) assert.equal(await p.locator('video').count(), 0);
       if (!hu) {
         await click(p, button(p, s.clubTestMode));
@@ -283,7 +338,7 @@ async function main() {
       // The accessible game path also works when Chrome keeps the selected art
       // static. Check for a bounded return to the poster if a video was mounted.
       await p.waitForFunction(() => !document.querySelector('video'), null, { timeout: 12000 });
-      await p.screenshot({ path: path.join(output, family + '-result.png') });
+      await p.screenshot({ path: path.join(output, family + (reduced ? '-reduced' : '') + '-result.png') });
       await click(p, button(p, hu ? 'Heti áttekintés' : 'Weekly overview'));
       await accessibleText(p, hu ? 'Az elmúlt hét' : 'The last seven days');
       const back = button(p, hu ? 'Vissza' : 'Back');

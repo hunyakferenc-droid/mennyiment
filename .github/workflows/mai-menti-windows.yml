@@ -1,7 +1,7 @@
 name: Mai Menti Windows REVIEW
 on:
   push:
-    branches: [feature/menti-review-polish]
+    branches: [feature/menti-utja]
 permissions:
   contents: read
   actions: read
@@ -83,7 +83,7 @@ jobs:
           MENTI_RECORD_BASELINE: 'true'
         run: |
           $root = (Get-Location).Path
-          gh run download 45704513507 --name Mai-Menti-Windows-REVIEW --dir build/baseline-download
+          gh run download 45771711625 --name Mai-Menti-Windows-REVIEW --dir build/baseline-download
           if ($LASTEXITCODE -ne 0) { throw 'Could not download the verified #57 ZIP' }
           Expand-Archive -LiteralPath 'build/baseline-download/Mai-Menti-Windows-REVIEW.zip' -DestinationPath 'build/baseline'
           $env:CHROME_BIN = Join-Path $env:ProgramFiles 'Google/Chrome/Application/chrome.exe'
@@ -95,7 +95,7 @@ jobs:
             for ($i=0; $i -lt 120; $i++) {
               try {
                 $response = Invoke-WebRequest -UseBasicParsing 'http://127.0.0.1:7357/build-info.txt'
-                if ($response.Content.Contains('583e9ec360f75f1ce621e06d3f257ffbbffab14b')) { $ready = $true; break }
+                if ($response.Content.Contains('2f7c0c672bcd13bc82a4cd0df2ff72f38e292107')) { $ready = $true; break }
               } catch {}
               Start-Sleep -Milliseconds 500
             }

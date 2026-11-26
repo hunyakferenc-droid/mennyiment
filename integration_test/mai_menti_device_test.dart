@@ -25,11 +25,13 @@ void main() {
     for (final locale in ['hu', 'en']) {
       debugPrint('REVIEW adventure: starting $locale');
       await preferences.remove(MentiClubStore.adventureWeekTestKey);
+      await preferences.remove(MentiClubStore.journeyTestKey);
+      await preferences.remove(MentiClubStore.memoryTestKey);
       await preferences.setString('mennyiment_locale_v1', locale);
       await preferences.setBool('mennyiment_reduce_motion_v1', true);
       await preferences.setString(
         'mennyiment_mai_menti_test_date_v1',
-        locale == 'hu' ? '2030-03-04' : '2030-04-01',
+        locale == 'hu' ? '2030-03-04' : '2030-06-01',
       );
       await review.main();
       await t.pumpAndSettle();
@@ -93,18 +95,46 @@ void main() {
             w.selected,
       );
       expect(selected, findsNothing);
-      for (var stage = 0; stage < 7; stage++) {
+      for (var stage = 0; stage < 28; stage++) {
         debugPrint('REVIEW adventure: $locale stage ${stage + 1}');
         await _tap(t, 'adventure-start');
-        if (stage == 1 || stage == 5) {
+        if (const [1, 5, 10, 16, 19, 22, 25].contains(stage)) {
           await _playRhythm(t, labels);
           await _tap(t, 'mai-end-week');
-        } else if (stage == 2 || stage == 4) {
+        } else if (const [2, 4, 8, 12, 14, 17, 24].contains(stage)) {
           await _tap(t, 'cards-start');
           for (var move = 0; move < 3; move++) {
             await _tap(t, 'cards-next');
           }
           await _tap(t, 'cards-club');
+        } else if (const [7, 11, 15, 23, 26].contains(stage)) {
+          await _tap(t, 'memory-symbol-0');
+          final level = stage == 26
+              ? 3
+              : stage == 11
+              ? 2
+              : 1;
+          if (level > 1) await _tap(t, 'memory-level-$level');
+          final start = find.byKey(const ValueKey('memory-start'));
+          await _reach(t, start);
+          await t.tap(start);
+          await t.pump();
+          final labels = locale == 'hu'
+              ? ['Kör', 'Háromszög', 'Négyzet']
+              : ['Circle', 'Triangle', 'Square'];
+          final moves = <int>[];
+          for (var i = 0; i < level + 2; i++) {
+            final cue = find.byKey(const ValueKey('memory-cue'));
+            expect(cue, findsOneWidget);
+            moves.add(labels.indexOf(t.widget<Text>(cue).data!));
+            await t.pump(const Duration(milliseconds: 950));
+          }
+          for (final move in moves) {
+            await _tap(t, 'memory-symbol-$move');
+          }
+          await _reach(t, find.byKey(const ValueKey('memory-result')));
+          await t.tap(find.byType(BackButton));
+          await t.pumpAndSettle();
         } else {
           await _tap(t, 'adventure-mood-4');
         }
@@ -112,29 +142,41 @@ void main() {
         final trial = MentiClubRecord.decode(
           preferences.get(MentiClubStore.adventureWeekTestKey),
         );
-        expect(trial.days.length, stage + 1);
-        if (stage < 6) {
-          final start = find.byKey(const ValueKey('adventure-start'));
-          await _reach(t, start);
-          expect(t.widget<FilledButton>(start).onPressed, isNull);
-          await _tap(t, 'mai-next-day');
-          if (stage == 2) await _tap(t, 'mai-next-day');
-        } else {
+        final journey = MentiClubStore.decodeForKey(
+          MentiClubStore.journeyTestKey,
+          preferences.get(MentiClubStore.journeyTestKey),
+        );
+        expect(trial.days.length + journey.days.length, stage + 1);
+        if ((stage + 1) % 7 == 0) {
           final finished = find.byKey(
             const ValueKey('adventure-week-finished'),
           );
           await _reach(t, finished);
           expect(trial.best, 3);
+          await t.tap(find.byType(BackButton));
+          await t.pumpAndSettle();
+        }
+        if (stage < 27) {
+          final start = find.byKey(const ValueKey('adventure-start'));
+          await _reach(t, start);
+          expect(t.widget<FilledButton>(start).onPressed, isNull);
+          await _tap(t, 'mai-next-day');
+          if (stage == 2) await _tap(t, 'mai-next-day');
         }
       }
       await t.pumpWidget(const SizedBox.shrink());
       await t.pumpAndSettle();
       await preferences.reload();
+      final memory = MentiClubStore.decodeForKey(
+        MentiClubStore.memoryTestKey,
+        preferences.get(MentiClubStore.memoryTestKey),
+      );
+      expect(memory.best, 3);
       final record = MentiClubRecord.decode(
         preferences.get(MentiClubStore.dailyRhythmTestKey),
       );
       expect(record.best, 3);
-      expect(record.scoreOn(locale == 'hu' ? '2030-03-04' : '2030-04-01'), 3);
+      expect(record.scoreOn(locale == 'hu' ? '2030-03-04' : '2030-06-01'), 3);
       expect(preferences.get('mennyiment_drinks_v1'), journal);
       expect(preferences.get('mennyiment_identity_v22'), profile);
       expect(preferences.get(MentiClubStore.dailyRhythmKey), realRhythm);

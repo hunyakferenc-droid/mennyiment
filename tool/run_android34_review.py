@@ -170,7 +170,7 @@ def main():
         try:
             run(['python3', 'tool/build_menti_alive_preview.py', '--home',
                  '--platform', 'apk', '--output', OUT / 'baseline'], cwd=work)
-            # Only test sources are overlaid. The existing #54 app remains the baseline.
+            # Only test sources are overlaid. The pinned app remains the baseline.
             for filename in ['android33_flows.dart', 'android_upgrade_seed_test.dart']:
                 (work / 'integration_test' / filename).write_bytes(
                     (ROOT / 'integration_test' / filename).read_bytes()
@@ -188,7 +188,9 @@ prepare_review_android(work, studio=True)
             run(['flutter', 'pub', 'get'], cwd=work)
             run(['flutter', 'test', 'integration_test/android_upgrade_seed_test.dart',
                  '-d', 'emulator-5554', '--no-pub', '--no-uninstall', '--reporter',
-                 'expanded', '--dart-define=MENTI_ALIVE_REVIEW=true'], cwd=work)
+                 'expanded', '--dart-define=MENTI_ALIVE_REVIEW=true',
+                 *(['--dart-define=MENTI_JOURNEY_UPGRADE_SEED=true']
+                   if BASE == '2f7c0c672bcd13bc82a4cd0df2ff72f38e292107' else [])], cwd=work)
         finally:
             run(['git', 'worktree', 'remove', '--force', work])
 

@@ -69,6 +69,37 @@ void main() {
     trial.dispose();
   });
 
+  test('Journey capacity, isolated record and export round-trip', () async {
+    final journey = MentiClubStore(key: MentiClubStore.journeyTestKey);
+    final memory = MentiClubStore(key: MentiClubStore.memoryTestKey);
+    addTearDown(journey.dispose);
+    addTearDown(memory.dispose);
+    await journey.load();
+    await memory.load();
+    for (var day = 1; day <= 21; day++) {
+      final date = DateTime(2030, 1, day + (day > 3 ? 1 : 0));
+      expect(await journey.completeAdventure(date), ClubSave.saved);
+      expect(await journey.completeAdventure(date), ClubSave.alreadyToday);
+    }
+    expect(await journey.completeAdventure(DateTime(2030, 2)), ClubSave.full);
+    expect(await memory.memory(3), ClubSave.saved);
+    expect(await memory.memory(1), ClubSave.saved);
+    final exporter = BackupExporter();
+    final document = await exporter.capture();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(MentiClubStore.journeyTestKey);
+    await prefs.remove(MentiClubStore.memoryTestKey);
+    final restorer = BackupRestorer();
+    await restorer.restore(await restorer.prepare(document.json), confirmed: true);
+    await journey.load();
+    await memory.load();
+    expect(journey.record.days.length, 21);
+    expect(journey.record.days[3], '2030-01-05');
+    expect(memory.record.best, 3);
+    expect(prefs.containsKey(MentiClubStore.journeyKey), isFalse);
+    expect(prefs.containsKey(MentiClubStore.memoryKey), isFalse);
+  });
+
   test('Missing club load is read-only; partial rhythm keeps best but marks no day; real restart reloads', () async {
     final p = await SharedPreferences.getInstance(),
         s = MentiClubStore(clock: () => DateTime(2026, 11, 22));
