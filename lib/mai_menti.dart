@@ -90,9 +90,15 @@ String _chapterName(int index, bool hu) => (hu
     : ['Trial Week', 'Discovery Week', 'Momentum Week', 'Coming Home'])[index];
 
 class MaiMenti extends StatefulWidget {
-  const MaiMenti({super.key, required this.character, required this.name});
+  const MaiMenti({
+    super.key,
+    required this.character,
+    required this.name,
+    this.clock = DateTime.now,
+  });
   final Widget character;
   final String name;
+  final DateTime Function() clock;
 
   @override
   State<MaiMenti> createState() => _MaiMentiState();
@@ -112,7 +118,7 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
   int _goalCount = 0;
   int _goalTarget = 4;
 
-  DateTime get _now => _trial ? _day : DateTime.now();
+  DateTime get _now => _trial ? _day : widget.clock();
   final _record = MentiClubStore(key: MentiClubStore.dailyRhythmKey);
   final _trialRecord = MentiClubStore(key: MentiClubStore.dailyRhythmTestKey);
   final _adventures = MentiClubStore(key: MentiClubStore.adventureWeekKey);
@@ -130,9 +136,14 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
   MentiClubStore get _week =>
       _firstWeek.record.days.length < 7 ? _firstWeek : _laterWeeks;
   int get _chapter => math.min(_completed ~/ 7, 3);
-  bool get _doneToday =>
-      _firstWeek.record.last == clubDay(_day) ||
-      _laterWeeks.record.last == clubDay(_day);
+  bool _canCompleteOn(DateTime day) {
+    final date = clubDay(day);
+    return [
+      _firstWeek.record.last,
+      _laterWeeks.record.last,
+    ].whereType<String>().every((last) => date.compareTo(last) > 0);
+  }
+
   int get _rhythmBest =>
       math.max(_firstWeek.record.best, _laterWeeks.record.best);
   bool _adventureOpen = false;
@@ -144,7 +155,7 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
       !_adventureOpen &&
       _week.ready &&
       _completed < 28 &&
-      !_doneToday;
+      _canCompleteOn(_day);
 
   MentiClubStore get _activeRecord => _trial ? _trialRecord : _record;
 
@@ -152,7 +163,7 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _day = DateTime.now();
+    _day = widget.clock();
     _load();
     _timer = Timer.periodic(const Duration(minutes: 1), (_) {
       if (!_trial && clubDay(_now) != clubDay(_day)) _load();
@@ -193,7 +204,7 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
       await prefs.reload();
       final trialDay = prefs.getString(_testDateKey);
       final trial = trialDay != null;
-      final day = trialDay == null ? DateTime.now() : parseClubDay(trialDay);
+      final day = trialDay == null ? widget.clock() : parseClubDay(trialDay);
       final moods = <String, int>{};
       final monday = DateTime(day.year, day.month, day.day - day.weekday + 1);
       final goal = PersonalGoalStore();
@@ -352,7 +363,8 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
       if (replay != null) return ClubSave.alreadyToday;
       if (clubDay(_now) != clubDay(day)) return ClubSave.failed;
       await week.load();
-      if (!week.ready) return ClubSave.failed;
+      if (!week.ready || clubDay(_now) != clubDay(day)) return ClubSave.failed;
+      if (!_canCompleteOn(day)) return ClubSave.alreadyToday;
       final expected = before < 7 ? before : before - 7;
       if (week.record.days.length != expected) return ClubSave.alreadyToday;
       return week.completeAdventure(day, rhythmScore: score);
@@ -456,7 +468,7 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
     final hu = s.localeName == 'hu';
     final completed = _completed;
     final chapter = _chapter;
-    final available = completed < 28 && !_doneToday;
+    final available = completed < 28 && _canCompleteOn(_day);
     final dates = [..._firstWeek.record.days, ..._laterWeeks.record.days];
     Navigator.of(context).push(
       MaterialPageRoute<void>(
@@ -1090,8 +1102,18 @@ class _RhythmResultMentiState extends State<_RhythmResultMenti> {
         WidgetsBinding.instance.ensureVisualUpdate();
       });
     }
-    return look == null
-        ? const MentiFitnessArtwork()
-        : MentiAnimationPlayer(look: look, size: 120);
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: MentiMotionScope.animateOf(context)
+          ? const Duration(milliseconds: 520)
+          : Duration.zero,
+      child: look == null
+          ? const MentiFitnessArtwork()
+          : MentiAnimationPlayer(look: look, size: 120),
+      builder: (_, progress, child) => Transform.translate(
+        offset: Offset(0, -4 * math.sin(progress * math.pi)),
+        child: child,
+      ),
+    );
   }
 }

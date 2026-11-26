@@ -230,10 +230,9 @@ async function main() {
       return;
     }
     await recordComparison(browser, '02-Utana');
-    for (const [lang, family] of [['hu', 'girl'], ['en', 'boy'], ['en', 'neutral']]) {
+    for (const [lang, family, reduced = false] of [['hu', 'girl'], ['en', 'boy'], ['en', 'neutral', false], ['en', 'neutral', true]]) {
       const hu = lang === 'hu';
       const s = strings[lang];
-      const reduced = family === 'neutral';
       const rating = hu ? 2 : 4;
       const fixture = {
         ...seed(lang, family),
@@ -273,7 +272,7 @@ async function main() {
       assert((await (await p.request.get(host + '/build-info.txt')).text()).includes(source));
       if (!reduced) {
           await finishClip(p, family === 'boy'
-            ? 'alive-review-welcome' : 'girl-base-welcome');
+            ? 'alive-review-welcome' : family + '-base-welcome');
       }
       if (hu) {
         // The review's fixed 420px viewport puts rating 2 in the second chip.
@@ -283,7 +282,7 @@ async function main() {
       }
       await semantics(p);
       await accessibleText(p, hu ? 'Mai Menti' : 'Today with Menti');
-      await p.screenshot({ path: path.join(output, family + '-arrival.png') });
+      await p.screenshot({ path: path.join(output, family + (reduced ? '-reduced' : '') + '-arrival.png') });
       if (reduced) assert.equal(await p.locator('video').count(), 0);
       if (!hu) {
         await click(p, button(p, s.clubTestMode));
@@ -323,7 +322,7 @@ async function main() {
       // The accessible game path also works when Chrome keeps the selected art
       // static. Check for a bounded return to the poster if a video was mounted.
       await p.waitForFunction(() => !document.querySelector('video'), null, { timeout: 12000 });
-      await p.screenshot({ path: path.join(output, family + '-result.png') });
+      await p.screenshot({ path: path.join(output, family + (reduced ? '-reduced' : '') + '-result.png') });
       await click(p, button(p, hu ? 'Heti áttekintés' : 'Weekly overview'));
       await accessibleText(p, hu ? 'Az elmúlt hét' : 'The last seven days');
       const back = button(p, hu ? 'Vissza' : 'Back');

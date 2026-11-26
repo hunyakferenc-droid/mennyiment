@@ -44,7 +44,7 @@ jobs:
           flutter gen-l10n
           git diff --exit-code -- pubspec.lock lib/l10n/generated
           flutter analyze --no-pub
-          flutter test --no-pub test/data_backup_test.dart test/data_restore_test.dart test/data_restore_page_test.dart test/menti_club_test.dart
+          flutter test --no-pub test/data_backup_test.dart test/data_restore_test.dart test/data_restore_page_test.dart test/menti_club_test.dart test/menti_journey_test.dart
           python3 tool/test_android_update.py
           python3 tool/test_unsigned_play_candidate.py
       - name: Build the phone APK
