@@ -63,11 +63,12 @@ jobs:
           profile: pixel_4
           disable-animations: false
           emulator-options: -no-window -no-audio -no-boot-anim -gpu swiftshader_indirect -camera-back none -camera-front none -no-snapshot
-          script: >-
-            python3 tool/run_android34_review.py &&
-            python3 tool/build_menti_alive_preview.py --home --daily --platform apk
-            --output build/android34/daily-device --device emulator-5554
-            --integration-test integration_test/mai_menti_device_test.dart
+          script: |
+            python3 tool/run_android34_review.py || exit 1
+            if ! python3 tool/build_menti_alive_preview.py --home --daily --platform apk --output build/android34/daily-device --device emulator-5554 --integration-test integration_test/mai_menti_device_test.dart; then
+              adb exec-out screencap -p > build/android34/device/mai-menti-test-failure.png
+              exit 1
+            fi
       - name: Upload upgrade-verified APK pair and signing report
         if: ${{ !cancelled() && hashFiles('build/android34/device/upgrade-verification.json') != '' }}
         uses: actions/upload-artifact@v4
