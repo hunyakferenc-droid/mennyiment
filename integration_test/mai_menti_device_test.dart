@@ -31,7 +31,7 @@ void main() {
       await preferences.setBool('mennyiment_reduce_motion_v1', true);
       await preferences.setString(
         'mennyiment_mai_menti_test_date_v1',
-        locale == 'hu' ? '2030-03-04' : '2030-04-01',
+        locale == 'hu' ? '2030-03-04' : '2030-06-01',
       );
       await review.main();
       await t.pumpAndSettle();
@@ -176,7 +176,7 @@ void main() {
         preferences.get(MentiClubStore.dailyRhythmTestKey),
       );
       expect(record.best, 3);
-      expect(record.scoreOn(locale == 'hu' ? '2030-03-04' : '2030-04-01'), 3);
+      expect(record.scoreOn(locale == 'hu' ? '2030-03-04' : '2030-06-01'), 3);
       expect(preferences.get('mennyiment_drinks_v1'), journal);
       expect(preferences.get('mennyiment_identity_v22'), profile);
       expect(preferences.get(MentiClubStore.dailyRhythmKey), realRhythm);
