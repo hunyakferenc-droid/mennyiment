@@ -109,6 +109,12 @@ void main() {
           await _tap(t, 'cards-club');
         } else if (const [7, 11, 15, 23, 26].contains(stage)) {
           await _tap(t, 'memory-symbol-0');
+          final level = stage == 26
+              ? 3
+              : stage == 11
+              ? 2
+              : 1;
+          if (level > 1) await _tap(t, 'memory-level-$level');
           final start = find.byKey(const ValueKey('memory-start'));
           await _reach(t, start);
           await t.tap(start);
@@ -117,7 +123,7 @@ void main() {
               ? ['Kör', 'Háromszög', 'Négyzet']
               : ['Circle', 'Triangle', 'Square'];
           final moves = <int>[];
-          for (var i = 0; i < 3; i++) {
+          for (var i = 0; i < level + 2; i++) {
             final cue = find.byKey(const ValueKey('memory-cue'));
             expect(cue, findsOneWidget);
             moves.add(labels.indexOf(t.widget<Text>(cue).data!));
@@ -161,6 +167,11 @@ void main() {
       await t.pumpWidget(const SizedBox.shrink());
       await t.pumpAndSettle();
       await preferences.reload();
+      final memory = MentiClubStore.decodeForKey(
+        MentiClubStore.memoryTestKey,
+        preferences.get(MentiClubStore.memoryTestKey),
+      );
+      expect(memory.best, 3);
       final record = MentiClubRecord.decode(
         preferences.get(MentiClubStore.dailyRhythmTestKey),
       );

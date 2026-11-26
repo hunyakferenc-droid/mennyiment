@@ -209,6 +209,7 @@ class _MentiMemoryState extends State<MentiMemory> with WidgetsBindingObserver {
                   ),
                   for (var n = 1; n <= 3; n++)
                     ChoiceChip(
+                      key: ValueKey('memory-level-$n'),
                       selected: _level == n,
                       onSelected: (_) => setState(() => _level = n),
                       label: Text(

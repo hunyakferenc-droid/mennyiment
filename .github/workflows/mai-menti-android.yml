@@ -8,7 +8,7 @@ permissions:
 
 concurrency:
   group: mai-menti-android-${{ github.ref_name }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   review:

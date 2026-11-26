@@ -142,22 +142,38 @@ async function playTrialWeek(lang) {
       } else if (memoryStages.includes(stage)) {
         const symbols = hu ? ['Kör', 'Háromszög', 'Négyzet'] : ['Circle', 'Triangle', 'Square'];
         await click(page, button(page, '1. ' + symbols[0]));
+        const level = stage === 26 ? 3 : stage === 11 ? 2 : 1;
+        const size = level + 2;
+        if (level > 1) {
+          const label = hu ? level + '. szint · ' + size + ' jel' : 'Level ' + level + ' · ' + size + ' symbols';
+          await click(page, page.getByRole('checkbox', { name: label, exact: true })
+            .or(button(page, label)).or(page.getByRole('radio', { name: label, exact: true })));
+        }
         await click(page, button(page, hu ? 'Minta indítása' : 'Start pattern'));
         const pattern = [];
-        for (let i = 1; i <= 3; i++) {
-          for (let attempt = 0; attempt < 22; attempt++) {
+        for (let i = 1; i <= size; i++) {
+          const deadline = Date.now() + 4000;
+          while (Date.now() < deadline) {
             const tree = await page.locator('body').ariaSnapshot();
             const cue = symbols.find(symbol => tree.includes(symbol));
-            if (cue && tree.includes(i + ' / 3')) {
+            if (cue && tree.includes(i + ' / ' + size)) {
               pattern.push(cue);
               break;
             }
             await page.waitForTimeout(35);
           }
         }
-        assert.equal(pattern.length, 3);
+        assert.equal(pattern.length, size);
         await accessibleText(page, hu ? 'Te jössz' : 'Your turn');
-        for (const cue of pattern) await click(page, button(page, (symbols.indexOf(cue) + 1) + '. ' + cue));
+        for (const cue of pattern) {
+          const n = symbols.indexOf(cue) + 1;
+          if (stage === 11 && !hu) {
+            await page.keyboard.press(String(n));
+            await page.waitForTimeout(150);
+          } else {
+            await click(page, button(page, n + '. ' + cue));
+          }
+        }
         await accessibleText(page, hu ? 'Megvan a minta!' : 'Pattern matched!');
         await click(page, button(page, hu ? 'Vissza Mentihez' : 'Back to Menti'));
       } else {
@@ -194,7 +210,7 @@ async function playTrialWeek(lang) {
     assert.equal(journey.days.length, 21);
     assert(journey.days[0] > trial.days[6]);
     assert.equal(trial.best, 3);
-    assert.equal(JSON.parse(JSON.parse(snapshot[key('menti_memory_test_v1')])).best, 1);
+    assert.equal(JSON.parse(JSON.parse(snapshot[key('menti_memory_test_v1')])).best, 3);
     assert.equal(snapshot[key('menti_journey_v1')], undefined);
     assert.equal(snapshot[key('menti_memory_v1')], undefined);
     assert.equal(snapshot[key('adventure_week_v1')], undefined);

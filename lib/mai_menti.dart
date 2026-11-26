@@ -148,8 +148,11 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
       math.max(_firstWeek.record.best, _laterWeeks.record.best);
   bool _adventureOpen = false;
   int _moodPulse = 0;
-  int get _completed =>
-      _firstWeek.record.days.length + _laterWeeks.record.days.length;
+  int get _completed {
+    final first = _firstWeek.record.days.length;
+    return first < 7 ? first : first + _laterWeeks.record.days.length;
+  }
+
   bool get _adventureAvailable =>
       !_busy &&
       !_adventureOpen &&
@@ -463,6 +466,25 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
       ? 'Teljesített kalandok: $completed / 28 · Legjobb Ritmus: $best / 3'
       : 'Adventures completed: $completed / 28 · Best Rhythm: $best / 3';
 
+  String _chapterSummary(int index, bool hu) {
+    final chapter = _chapters[index];
+    final games = chapter
+        .where(
+          (a) =>
+              a == _Adventure.memory ||
+              a == _Adventure.rhythm ||
+              a == _Adventure.replay,
+        )
+        .length;
+    final moves = chapter
+        .where((a) => a == _Adventure.seated || a == _Adventure.active)
+        .length;
+    final checkIns = chapter.length - games - moves;
+    return hu
+        ? '${widget.name} · $checkIns közérzetjelzés, $moves mozgás, $games játék'
+        : '${widget.name} · $checkIns check-ins, $moves movement sessions, $games games';
+  }
+
   void _openAdventureMap({int? summary}) {
     final s = appStrings(context);
     final hu = s.localeName == 'hu';
@@ -510,11 +532,7 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
                     if (completed >= (weekIndex + 1) * 7)
                       Padding(
                         padding: const EdgeInsets.all(12),
-                        child: Text(
-                          hu
-                              ? '${widget.name} · 7 állomás · ${stations.where((a) => a == _Adventure.memory || a == _Adventure.rhythm || a == _Adventure.replay).length} játék'
-                              : '${widget.name} · 7 stations · ${stations.where((a) => a == _Adventure.memory || a == _Adventure.rhythm || a == _Adventure.replay).length} games',
-                        ),
+                        child: Text(_chapterSummary(weekIndex, hu)),
                       ),
                     for (final (index, adventure) in stations.indexed)
                       MentiAdventureStation(
@@ -522,7 +540,7 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
                         done: weekIndex * 7 + index < completed,
                         current: weekIndex * 7 + index == completed,
                         details: [
-                          if (weekIndex * 7 + index < dates.length)
+                          if (weekIndex * 7 + index < completed)
                             Text(
                               DateFormat.MMMd(s.localeName).format(
                                 parseClubDay(dates[weekIndex * 7 + index]),
