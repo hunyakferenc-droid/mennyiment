@@ -13,7 +13,9 @@ import 'menti_beta_device_test.dart' show reach, tap;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  testWidgets('Mai Menti completes, reloads and moves to tomorrow offline', (t) async {
+  testWidgets('Mai Menti completes, reloads and moves to tomorrow offline', (
+    t,
+  ) async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.reload();
     final journal = preferences.get('mennyiment_drinks_v1');
@@ -24,14 +26,27 @@ void main() {
       await preferences.remove(MentiClubStore.adventureWeekTestKey);
       await preferences.setString('mennyiment_locale_v1', locale);
       await preferences.setBool('mennyiment_reduce_motion_v1', true);
-      await preferences.setString('mennyiment_mai_menti_test_date_v1',
-        locale == 'hu' ? '2030-03-04' : '2030-04-01');
+      await preferences.setString(
+        'mennyiment_mai_menti_test_date_v1',
+        locale == 'hu' ? '2030-03-04' : '2030-04-01',
+      );
       await review.main();
       await t.pumpAndSettle();
       final home = find.byType(HomePage);
       expect(home, findsOneWidget);
       final strings = appStrings(t.element(home));
       expect(strings.localeName, locale);
+      if (locale == 'en') {
+        final dispatcher = t.platformDispatcher;
+        dispatcher.textScaleFactorTestValue = 2;
+        await t.pumpAndSettle();
+        await reach(t, find.byKey(const ValueKey('home-primary-log')));
+        await reach(t, find.byKey(const ValueKey('nav-journal')));
+        await reach(t, find.byKey(const ValueKey('adventure-start')));
+        expect(t.takeException(), isNull);
+        dispatcher.clearTextScaleFactorTestValue();
+        await t.pumpAndSettle();
+      }
       await tap(t, 'mai-mood-4');
       await tap(t, 'mai-play');
       final labels = {
@@ -39,9 +54,24 @@ void main() {
         'left': strings.rhythmLeft,
         'right': strings.rhythmRight,
       };
+      await tap(t, 'mai-hit-stretch');
+      final early = find.textContaining(
+        locale == 'hu' ? 'Korai koppintás' : 'Too soon',
+      );
+      await reach(t, early);
+      await tap(t, 'mai-ready');
+      await t.pump(const Duration(seconds: 10));
+      final late = find.textContaining(
+        locale == 'hu' ? 'Késői koppintás' : 'Too late',
+      );
+      await reach(t, late);
+      await tap(t, 'mai-replay');
       await _playRhythm(t, labels);
       await tap(t, 'mai-end-week');
-      expect(find.text(locale == 'hu' ? 'Az elmúlt hét' : 'The last seven days'), findsOneWidget);
+      expect(
+        find.text(locale == 'hu' ? 'Az elmúlt hét' : 'The last seven days'),
+        findsOneWidget,
+      );
       await t.tap(find.byType(BackButton));
       await t.pumpAndSettle();
       await tap(t, 'mai-next-day');
@@ -49,8 +79,12 @@ void main() {
       await reach(t, recap);
       expect(t.widget<Text>(recap).data, contains('3 / 3'));
       await tap(t, 'mai-next-day');
-      final selected = find.byWidgetPredicate((w) =>
-          w is ChoiceChip && w.key == const ValueKey('mai-mood-4') && w.selected);
+      final selected = find.byWidgetPredicate(
+        (w) =>
+            w is ChoiceChip &&
+            w.key == const ValueKey('mai-mood-4') &&
+            w.selected,
+      );
       expect(selected, findsNothing);
       for (var stage = 0; stage < 7; stage++) {
         await tap(t, 'adventure-start');
@@ -78,7 +112,9 @@ void main() {
           await tap(t, 'mai-next-day');
           if (stage == 2) await tap(t, 'mai-next-day');
         } else {
-          final finished = find.byKey(const ValueKey('adventure-week-finished'));
+          final finished = find.byKey(
+            const ValueKey('adventure-week-finished'),
+          );
           await reach(t, finished);
           expect(trial.best, 3);
         }
@@ -86,7 +122,9 @@ void main() {
       await t.pumpWidget(const SizedBox.shrink());
       await t.pumpAndSettle();
       await preferences.reload();
-      final record = MentiClubRecord.decode(preferences.get(MentiClubStore.dailyRhythmTestKey));
+      final record = MentiClubRecord.decode(
+        preferences.get(MentiClubStore.dailyRhythmTestKey),
+      );
       expect(record.best, 3);
       expect(record.scoreOn(locale == 'hu' ? '2030-03-04' : '2030-04-01'), 3);
       expect(preferences.get('mennyiment_drinks_v1'), journal);
@@ -100,13 +138,16 @@ void main() {
 
 Future<void> _playRhythm(WidgetTester t, Map<String, String> labels) async {
   for (var length = 1; length <= 3; length++) {
-        final moves = [
-          for (var i = 0; i < length; i++)
-            t.widget<Text>(find.byKey(ValueKey('mai-cue-$i'))).data!,
-        ];
-        await tap(t, 'mai-ready');
-        for (final move in moves) {
-          await tap(t, 'mai-hit-${labels.entries.singleWhere((e) => move.endsWith(e.value)).key}');
-        }
-      }
+    final moves = [
+      for (var i = 0; i < length; i++)
+        t.widget<Text>(find.byKey(ValueKey('mai-cue-$i'))).data!,
+    ];
+    await tap(t, 'mai-ready');
+    for (final move in moves) {
+      await tap(
+        t,
+        'mai-hit-${labels.entries.singleWhere((e) => move.endsWith(e.value)).key}',
+      );
+    }
+  }
 }
