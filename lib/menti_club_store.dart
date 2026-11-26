@@ -33,7 +33,7 @@ class MentiClubRecord {
   final List<String> days;
   final String? last;
   final Map<String, dynamic> extras;
-  static MentiClubRecord decode(Object? raw) {
+  static MentiClubRecord decode(Object? raw, {int maxDays = 7}) {
     if (raw == null) return const MentiClubRecord();
     if (raw is! String) throw const FormatException('Invalid club storage');
     final j = decodeBackupJson(raw);
@@ -43,7 +43,7 @@ class MentiClubRecord {
         j['best'] < 0 ||
         j['best'] > 5 ||
         j['days'] is! List ||
-        j['days'].length > 7 ||
+        j['days'].length > maxDays ||
         (j['last'] != null && j['last'] is! String)) {
       throw const FormatException('Unknown club storage');
     }
@@ -105,7 +105,15 @@ class MentiClubStore extends ChangeNotifier {
       dailyRhythmKey = 'mennyiment_mai_menti_rhythm_v1',
       dailyRhythmTestKey = 'mennyiment_mai_menti_test_rhythm_v1',
       adventureWeekKey = 'mennyiment_adventure_week_v1',
-      adventureWeekTestKey = 'mennyiment_adventure_week_test_v1';
+      adventureWeekTestKey = 'mennyiment_adventure_week_test_v1',
+      journeyKey = 'mennyiment_menti_journey_v1',
+      journeyTestKey = 'mennyiment_menti_journey_test_v1',
+      memoryKey = 'mennyiment_menti_memory_v1',
+      memoryTestKey = 'mennyiment_menti_memory_test_v1';
+
+  static bool isJourney(String key) => key == journeyKey || key == journeyTestKey;
+  static MentiClubRecord decodeForKey(String key, Object? value) =>
+      MentiClubRecord.decode(value, maxDays: isJourney(key) ? 21 : 7);
   static final Set<String> _writing = {};
   final String key;
   final DateTime Function() clock;
@@ -124,7 +132,7 @@ class MentiClubStore extends ChangeNotifier {
       final p = await open();
       await p.reload();
       final raw = p.get(key);
-      final next = MentiClubRecord.decode(raw);
+      final next = decodeForKey(key, raw);
       _snapshot = raw;
       record = next;
       ready = true;
@@ -147,11 +155,18 @@ class MentiClubStore extends ChangeNotifier {
   }
 
   Future<ClubSave> completeAdventure(DateTime day, {int? rhythmScore}) {
-    if ((key != adventureWeekKey && key != adventureWeekTestKey) ||
+    if ((key != adventureWeekKey && key != adventureWeekTestKey && !isJourney(key)) ||
         (rhythmScore != null && (rhythmScore < 0 || rhythmScore > 3))) {
       return Future.value(ClubSave.failed);
     }
     return _save(complete: true, rounds: rhythmScore, completionDay: clubDay(day));
+  }
+
+  Future<ClubSave> memory(int level) {
+    if ((key != memoryKey && key != memoryTestKey) || level < 1 || level > 3) {
+      return Future.value(ClubSave.failed);
+    }
+    return _save(rounds: level);
   }
 
   Future<ClubSave> cards() => _save(complete: true);
@@ -196,7 +211,7 @@ class MentiClubStore extends ChangeNotifier {
       } else if (complete) {
         if (last == today) {
           result = ClubSave.alreadyToday;
-        } else if (days.length == 7) {
+        } else if (days.length >= (isJourney(key) ? 21 : 7)) {
           result = ClubSave.full;
         } else {
           days.add(today);

@@ -231,7 +231,9 @@ void validateRestoreValue(String key, Object value) {
     MentiClubStore.normalKey, MentiClubStore.testKey,
     MentiClubStore.dailyRhythmKey, MentiClubStore.dailyRhythmTestKey,
     MentiClubStore.adventureWeekKey, MentiClubStore.adventureWeekTestKey,
-  }.contains(key)) { MentiClubRecord.decode(value); return; }
+    MentiClubStore.journeyKey, MentiClubStore.journeyTestKey,
+    MentiClubStore.memoryKey, MentiClubStore.memoryTestKey,
+  }.contains(key)) { MentiClubStore.decodeForKey(key, value); return; }
   if (key == MentiAnimationSettings.key) { MentiAnimationPreference.decode(value); return; }
   if (key == CompleteLookStore.key) { CompleteLookSelection.decode(value); return; }
   if (key == AdventureStore.key) { AdventureDocument.decode(value); return; }

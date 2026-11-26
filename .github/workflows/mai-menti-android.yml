@@ -1,7 +1,7 @@
 name: Mai Menti Android
 on:
   push:
-    branches: [feature/menti-review-polish]
+    branches: [feature/menti-utja]
 
 permissions:
   contents: read
@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 65
     env:
-      MENNYIMENT_UPGRADE_BASE: '583e9ec360f75f1ce621e06d3f257ffbbffab14b'
+      MENNYIMENT_UPGRADE_BASE: '2f7c0c672bcd13bc82a4cd0df2ff72f38e292107'
       SOURCE_SHA: ${{ github.sha }}
       ANDROID_SERIAL: emulator-5554
       FLUTTER_SUPPRESS_ANALYTICS: 'true'
@@ -73,7 +73,7 @@ jobs:
         if: ${{ !cancelled() && hashFiles('build/android34/device/upgrade-verification.json') != '' }}
         uses: actions/upload-artifact@v4
         with:
-          name: MennyiMent-3.7.0-52-upgrade-verified-${{ env.SOURCE_SHA }}
+          name: MennyiMent-3.8.0-53-upgrade-verified-${{ env.SOURCE_SHA }}
           path: |
             build/android34/review/
             build/android34/baseline/app-debug.apk
@@ -97,7 +97,7 @@ jobs:
       - name: Upload verified REVIEW APK and matching test baseline
         uses: actions/upload-artifact@v4
         with:
-          name: MennyiMent-3.7.0-52-Android-REVIEW-${{ env.SOURCE_SHA }}
+          name: MennyiMent-3.8.0-53-Android-REVIEW-${{ env.SOURCE_SHA }}
           path: |
             build/android34/review/
             build/android34/baseline/app-debug.apk

@@ -114,15 +114,18 @@ async function playTrialWeek(lang) {
     await click(page, button(page, s.clubNextDay));
   }
   function count(n) {
-    return hu ? `Teljesített kalandok: ${n} / 7` : `Adventures completed: ${n} / 7`;
+    return hu ? `Teljesített kalandok: ${n} / 28` : `Adventures completed: ${n} / 28`;
   }
   try {
     await launch();
     const labels = [s.rhythmStretch, s.rhythmLeft, s.rhythmRight];
-    for (let stage = 0; stage < 7; stage++) {
+    const rhythmStages = [1, 5, 10, 16, 19, 22, 25];
+    const movementStages = [2, 4, 8, 12, 14, 17, 24];
+    const memoryStages = [7, 11, 15, 23, 26];
+    for (let stage = 0; stage < 28; stage++) {
       await accessibleText(page, count(stage));
       await click(page, button(page, hu ? 'Mai kaland' : 'Today’s adventure'));
-      if (stage === 1 || stage === 5) {
+      if (rhythmStages.includes(stage)) {
         for (let size = 1; size <= 3; size++) {
           const tree = await page.locator('body').ariaSnapshot();
           const moves = Array.from({ length: size }, (_, index) =>
@@ -132,38 +135,75 @@ async function playTrialWeek(lang) {
           for (const move of moves) await click(page, button(page, move));
         }
         await click(page, button(page, hu ? 'Vissza a kalandhoz' : 'Back to the adventure'));
-      } else if (stage === 2 || stage === 4) {
+      } else if (movementStages.includes(stage)) {
         await click(page, button(page, s.rhythmPlay));
         for (let n = 0; n < 3; n++) await click(page, button(page, s.cardsDone));
         await click(page, button(page, s.rhythmBack));
+      } else if (memoryStages.includes(stage)) {
+        const symbols = hu ? ['Kör', 'Háromszög', 'Négyzet'] : ['Circle', 'Triangle', 'Square'];
+        await click(page, button(page, '1. ' + symbols[0]));
+        await click(page, button(page, hu ? 'Minta indítása' : 'Start pattern'));
+        const pattern = [];
+        for (let i = 1; i <= 3; i++) {
+          for (let attempt = 0; attempt < 22; attempt++) {
+            const tree = await page.locator('body').ariaSnapshot();
+            const cue = symbols.find(symbol => tree.includes(symbol));
+            if (cue && tree.includes(i + ' / 3')) {
+              pattern.push(cue);
+              break;
+            }
+            await page.waitForTimeout(35);
+          }
+        }
+        assert.equal(pattern.length, 3);
+        await accessibleText(page, hu ? 'Te jössz' : 'Your turn');
+        for (const cue of pattern) await click(page, button(page, (symbols.indexOf(cue) + 1) + '. ' + cue));
+        await accessibleText(page, hu ? 'Megvan a minta!' : 'Pattern matched!');
+        await click(page, button(page, hu ? 'Vissza Mentihez' : 'Back to Menti'));
       } else {
         await click(page, button(page, '4'));
       }
       await accessibleText(page, count(stage + 1));
-      if (stage < 6) {
+      if ((stage + 1) % 7 === 0) {
+        if (stage < 27) {
+          await accessibleText(page, hu ? 'Végigjártad a hetet!' : 'You finished the week!');
+          const back = button(page, hu ? 'Vissza' : 'Back');
+          const box = await back.boundingBox();
+          assert(box);
+          await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+        }
+        await page.screenshot({ path: path.join(output, 'chapter-' + (stage + 1) + '-' + lang + '.png') });
+      }
+      if (stage < 27) {
         await advance();
         if (stage === 2) await advance();
       }
-      if (stage === 0) {
-        await close('Probahet-elso-kaland.webm');
+      if (stage === 0 || stage === 7 || stage === 25) {
+        await close(stage === 0 ? 'Probahet-elso-kaland.webm' : stage === 7 ? 'Menti-Emlekminta.webm' : 'Menti-utja-kozben.webm');
         await launch();
-        await accessibleText(page, count(1));
+        await accessibleText(page, count(stage + 1));
       }
     }
-    await accessibleText(page, hu ? 'Végigjártad a hetet!' : 'You finished the week!');
+    await accessibleText(page, hu ? 'Végigjártad Menti útját!' : 'You finished Menti’s Journey!');
     await page.screenshot({ path: path.join(output, 'trial-week-' + lang + '.png') });
     const snapshot = await page.evaluate(() => Object.fromEntries(Object.entries(localStorage)));
     const trial = JSON.parse(JSON.parse(snapshot[key('adventure_week_test_v1')]));
     assert.deepEqual(trial.days, ['2030-01-01', '2030-01-02', '2030-01-03',
       '2030-01-05', '2030-01-06', '2030-01-07', '2030-01-08']);
+    const journey = JSON.parse(JSON.parse(snapshot[key('menti_journey_test_v1')]));
+    assert.equal(journey.days.length, 21);
+    assert(journey.days[0] > trial.days[6]);
     assert.equal(trial.best, 3);
+    assert.equal(JSON.parse(JSON.parse(snapshot[key('menti_memory_test_v1')])).best, 1);
+    assert.equal(snapshot[key('menti_journey_v1')], undefined);
+    assert.equal(snapshot[key('menti_memory_v1')], undefined);
     assert.equal(snapshot[key('adventure_week_v1')], undefined);
     assert.equal(snapshot[key('mai_menti_rhythm_v1')], undefined);
     assert.equal(snapshot[key('fitness_club_v1')], undefined);
     assert.equal(snapshot[key('drinks_v1')], fixture[key('drinks_v1')]);
     assert.equal(snapshot[key('menti_xp_v2')], fixture[key('menti_xp_v2')]);
     await close('Probahet-zaras.webm');
-    return { lang, stages: trial.days, best: 3, restartedChrome: true };
+    return { lang, stages: [...trial.days, ...journey.days], best: 3, restartedChrome: true };
   } catch (error) {
     if (page && !page.isClosed()) {
       await page.screenshot({ path: path.join(output, 'trial-week-failure-' + lang + '.png') }).catch(() => {});
@@ -185,7 +225,7 @@ async function main() {
   try {
     if (process.env.MENTI_RECORD_BASELINE === 'true') {
       assert((await (await (await browser.newPage()).request
-        .get(host + '/build-info.txt')).text()).includes('583e9ec360f75f1ce621e06d3f257ffbbffab14b'));
+        .get(host + '/build-info.txt')).text()).includes('2f7c0c672bcd13bc82a4cd0df2ff72f38e292107'));
       await recordComparison(browser, '01-Elotte');
       return;
     }

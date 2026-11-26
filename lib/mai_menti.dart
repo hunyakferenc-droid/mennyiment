@@ -16,6 +16,7 @@ import 'menti_collection_widgets.dart';
 import 'menti_fitness.dart';
 import 'menti_life_events.dart';
 import 'menti_motion.dart';
+import 'menti_memory.dart';
 import 'menti_movement_cards.dart';
 import 'menti_ui.dart';
 import 'menti_rhythm.dart';
@@ -30,9 +31,11 @@ enum _Adventure {
   checkIn,
   active,
   replay,
-  finish;
+  finish,
+  memory;
 
   String title(bool hu) => switch (this) {
+    memory => hu ? 'Menti Emlékminta' : 'Menti Memory Pattern',
     arrival => hu ? 'Megérkezés Mentihez' : 'Arrive with Menti',
     rhythm => hu ? 'Ritmusösvény' : 'Rhythm trail',
     seated => hu ? 'Kényelmes mozdulatok' : 'Gentle moves',
@@ -42,6 +45,49 @@ enum _Adventure {
     finish => hu ? 'Heti visszatekintés' : 'Look back on the week',
   };
 }
+
+const _chapters = [
+  [
+    _Adventure.arrival,
+    _Adventure.rhythm,
+    _Adventure.seated,
+    _Adventure.checkIn,
+    _Adventure.active,
+    _Adventure.replay,
+    _Adventure.finish,
+  ],
+  [
+    _Adventure.memory,
+    _Adventure.seated,
+    _Adventure.checkIn,
+    _Adventure.rhythm,
+    _Adventure.memory,
+    _Adventure.active,
+    _Adventure.finish,
+  ],
+  [
+    _Adventure.active,
+    _Adventure.memory,
+    _Adventure.replay,
+    _Adventure.seated,
+    _Adventure.checkIn,
+    _Adventure.rhythm,
+    _Adventure.finish,
+  ],
+  [
+    _Adventure.checkIn,
+    _Adventure.replay,
+    _Adventure.memory,
+    _Adventure.active,
+    _Adventure.rhythm,
+    _Adventure.memory,
+    _Adventure.finish,
+  ],
+];
+
+String _chapterName(int index, bool hu) => (hu
+    ? ['Próbahét', 'A felfedezés hete', 'A lendület hete', 'Hazatérés']
+    : ['Trial Week', 'Discovery Week', 'Momentum Week', 'Coming Home'])[index];
 
 class MaiMenti extends StatefulWidget {
   const MaiMenti({super.key, required this.character, required this.name});
@@ -73,16 +119,32 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
   final _trialAdventures = MentiClubStore(
     key: MentiClubStore.adventureWeekTestKey,
   );
-  MentiClubStore get _week => _trial ? _trialAdventures : _adventures;
+  final _journey = MentiClubStore(key: MentiClubStore.journeyKey);
+  final _trialJourney = MentiClubStore(key: MentiClubStore.journeyTestKey);
+  final _memory = MentiClubStore(key: MentiClubStore.memoryKey);
+  final _trialMemory = MentiClubStore(key: MentiClubStore.memoryTestKey);
+
+  MentiClubStore get _firstWeek => _trial ? _trialAdventures : _adventures;
+  MentiClubStore get _laterWeeks => _trial ? _trialJourney : _journey;
+  MentiClubStore get _memoryRecord => _trial ? _trialMemory : _memory;
+  MentiClubStore get _week =>
+      _firstWeek.record.days.length < 7 ? _firstWeek : _laterWeeks;
+  int get _chapter => math.min(_completed ~/ 7, 3);
+  bool get _doneToday =>
+      _firstWeek.record.last == clubDay(_day) ||
+      _laterWeeks.record.last == clubDay(_day);
+  int get _rhythmBest =>
+      math.max(_firstWeek.record.best, _laterWeeks.record.best);
   bool _adventureOpen = false;
   int _moodPulse = 0;
-  int get _completed => _week.record.days.length;
+  int get _completed =>
+      _firstWeek.record.days.length + _laterWeeks.record.days.length;
   bool get _adventureAvailable =>
       !_busy &&
       !_adventureOpen &&
       _week.ready &&
-      _completed < _Adventure.values.length &&
-      _week.record.last != clubDay(_day);
+      _completed < 28 &&
+      !_doneToday;
 
   MentiClubStore get _activeRecord => _trial ? _trialRecord : _record;
 
@@ -110,6 +172,10 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
     _trialRecord.dispose();
     _adventures.dispose();
     _trialAdventures.dispose();
+    _journey.dispose();
+    _trialJourney.dispose();
+    _memory.dispose();
+    _trialMemory.dispose();
     super.dispose();
   }
 
@@ -142,8 +208,15 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
       }
       final record = trial ? _trialRecord : _record;
       final week = trial ? _trialAdventures : _adventures;
-      await Future.wait([record.load(), week.load()]);
-      if (!record.ready || !week.ready) {
+      final journey = trial ? _trialJourney : _journey;
+      final memory = trial ? _trialMemory : _memory;
+      await Future.wait([
+        record.load(),
+        week.load(),
+        journey.load(),
+        memory.load(),
+      ]);
+      if (!record.ready || !week.ready || !journey.ready || !memory.ready) {
         throw StateError('Rhythm record unavailable');
       }
       if (!mounted) return;
@@ -191,47 +264,48 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
     }
   }
 
-  Future<void> _answer(int mood, {MentiClubStore? adventure}) => _write(
-    () async {
-      final day = _now;
-      // Reject a tap on yesterday's card while a clock rollover is pending.
-      if (clubDay(day) != clubDay(_day)) return;
-      if (_trial) {
-        final prefs = await SharedPreferences.getInstance();
-        if (!await prefs.setInt(_moodKey(day), mood)) throw StateError('Mood');
-      } else {
-        final answer = await DailyMentiStore.load(day);
-        await DailyMentiStore.save(
-          date: day,
-          mood: mood,
-          energy: answer['energy'] as int?,
-          goal: answer['goal'] as String? ?? '',
-          evening: answer['evening'] as String? ?? '',
-        );
-      }
-      if (adventure != null) {
-        final result = await adventure.completeAdventure(day);
-        if (result == ClubSave.failed) throw StateError('Adventure completion');
-      }
-      if (!mounted) return;
-      final controller = MentiAnimationScope.of(context)?.controller;
-      // Thinking is the only existing exact-look clip suited to this moment.
-      final shown =
-          mood <= 2 &&
-          controller?.request(
-                MentiLifeReaction.thinking,
-                token: 'mai-mood-${clubDay(day)}-$mood',
-                manual: true,
-              ) ==
-              true;
-      if (!shown) {
-        setState(() => _moodPulse++);
-        MentiLifeEvents.instance.emit(
-          mood <= 2 ? MentiLifeEvent.difficultDay : MentiLifeEvent.checkInSaved,
-        );
-      }
-    },
-  );
+  Future<void> _answer(
+    int mood, {
+    Future<ClubSave> Function()? completeAdventure,
+  }) => _write(() async {
+    final day = _now;
+    // Reject a tap on yesterday's card while a clock rollover is pending.
+    if (clubDay(day) != clubDay(_day)) return;
+    if (_trial) {
+      final prefs = await SharedPreferences.getInstance();
+      if (!await prefs.setInt(_moodKey(day), mood)) throw StateError('Mood');
+    } else {
+      final answer = await DailyMentiStore.load(day);
+      await DailyMentiStore.save(
+        date: day,
+        mood: mood,
+        energy: answer['energy'] as int?,
+        goal: answer['goal'] as String? ?? '',
+        evening: answer['evening'] as String? ?? '',
+      );
+    }
+    if (completeAdventure != null) {
+      final result = await completeAdventure();
+      if (result == ClubSave.failed) throw StateError('Adventure completion');
+    }
+    if (!mounted) return;
+    final controller = MentiAnimationScope.of(context)?.controller;
+    // Thinking is the only existing exact-look clip suited to this moment.
+    final shown =
+        mood <= 2 &&
+        controller?.request(
+              MentiLifeReaction.thinking,
+              token: 'mai-mood-${clubDay(day)}-$mood',
+              manual: true,
+            ) ==
+            true;
+    if (!shown) {
+      setState(() => _moodPulse++);
+      MentiLifeEvents.instance.emit(
+        mood <= 2 ? MentiLifeEvent.difficultDay : MentiLifeEvent.checkInSaved,
+      );
+    }
+  });
 
   Future<void> _setTrialDay(DateTime? date) => _write(() async {
     final prefs = await SharedPreferences.getInstance();
@@ -252,15 +326,38 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
     if (played == true && mounted && !_failed) _openWeek();
   }
 
-  Future<void> _startAdventure() async {
-    if (!_adventureAvailable) return;
+  Future<void> _openMemory({Future<ClubSave> Function()? onComplete}) =>
+      Navigator.of(context).push<void>(
+        MaterialPageRoute(
+          builder: (_) => MentiMemory(
+            store: _memoryRecord,
+            onComplete: onComplete,
+            resultCharacter: (passed) => _RhythmResultMenti(completed: passed),
+          ),
+        ),
+      );
+
+  Future<void> _startAdventure({_Adventure? replay}) async {
+    if (replay == null && !_adventureAvailable) return;
+    if (replay != null && (_completed != 28 || _adventureOpen)) return;
     if (clubDay(_now) != clubDay(_day)) {
       await _load();
       return;
     }
     final week = _week;
-    final adventure = _Adventure.values[_completed];
+    final before = _completed;
+    final adventure = replay ?? _chapters[_chapter][_completed % 7];
     final day = _day;
+    Future<ClubSave> complete({int? score}) async {
+      if (replay != null) return ClubSave.alreadyToday;
+      if (clubDay(_now) != clubDay(day)) return ClubSave.failed;
+      await week.load();
+      if (!week.ready) return ClubSave.failed;
+      final expected = before < 7 ? before : before - 7;
+      if (week.record.days.length != expected) return ClubSave.alreadyToday;
+      return week.completeAdventure(day, rhythmScore: score);
+    }
+
     setState(() => _adventureOpen = true);
     try {
       switch (adventure) {
@@ -285,7 +382,10 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
             ),
           );
           if (mood != null && mounted && clubDay(_now) == clubDay(day)) {
-            await _answer(mood, adventure: week);
+            await _answer(
+              mood,
+              completeAdventure: replay == null ? complete : null,
+            );
           }
           break;
         case _Adventure.rhythm:
@@ -293,15 +393,20 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
           await Navigator.of(context).push<bool>(
             MaterialPageRoute(
               builder: (_) => _MaiRhythm(
-                record: week,
+                record: replay == null ? week : _activeRecord,
                 day: day,
                 quickPattern: adventure == _Adventure.replay,
-                adventureSave: (score) => score == 3
-                    ? week.completeAdventure(day, rhythmScore: score)
-                    : Future.value(ClubSave.alreadyToday),
+                adventureSave: replay != null
+                    ? null
+                    : (score) => score == 3
+                          ? complete(score: score)
+                          : Future.value(ClubSave.alreadyToday),
               ),
             ),
           );
+          break;
+        case _Adventure.memory:
+          await _openMemory(onComplete: replay == null ? complete : null);
           break;
         case _Adventure.seated:
         case _Adventure.active:
@@ -310,7 +415,7 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
               builder: (_) => MentiMovementCards(
                 store: week,
                 initiallySeated: adventure == _Adventure.seated,
-                onComplete: () => week.completeAdventure(day),
+                onComplete: complete,
               ),
             ),
           );
@@ -318,8 +423,8 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
       }
       if (!mounted) return;
       await _load();
-      if (mounted && !_failed && _completed == _Adventure.values.length) {
-        _openAdventureMap();
+      if (mounted && !_failed && _completed > before && _completed % 7 == 0) {
+        _openAdventureMap(summary: _completed ~/ 7 - 1);
       }
     } finally {
       if (mounted) setState(() => _adventureOpen = false);
@@ -343,56 +448,95 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
   }
 
   String _adventureProgress(bool hu, int completed, int best) => hu
-      ? 'Teljesített kalandok: $completed / 7 · Legjobb Ritmus: $best / 3'
-      : 'Adventures completed: $completed / 7 · Best Rhythm: $best / 3';
+      ? 'Teljesített kalandok: $completed / 28 · Legjobb Ritmus: $best / 3'
+      : 'Adventures completed: $completed / 28 · Best Rhythm: $best / 3';
 
-  void _openAdventureMap() {
+  void _openAdventureMap({int? summary}) {
     final s = appStrings(context);
     final hu = s.localeName == 'hu';
     final completed = _completed;
-    final best = _week.record.best;
-    final finished = completed == _Adventure.values.length;
-    final available = finished ? false : _week.record.last != clubDay(_day);
+    final chapter = _chapter;
+    final available = completed < 28 && !_doneToday;
+    final dates = [..._firstWeek.record.days, ..._laterWeeks.record.days];
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: Text(
-              hu
-                  ? 'Menti-kalandok – Próbahét'
-                  : 'Menti Adventures – Trial Week',
-            ),
-          ),
+          appBar: AppBar(title: Text(hu ? 'Menti útja' : 'Menti’s Journey')),
           body: MentiPageBody(
             children: [
-              LinearProgressIndicator(
-                value: completed / _Adventure.values.length,
-              ),
+              LinearProgressIndicator(value: completed / 28),
               Text(
-                _adventureProgress(hu, completed, best),
+                _adventureProgress(hu, completed, _rhythmBest),
                 key: const ValueKey('adventure-week-result'),
               ),
-              if (finished) ...[
+              if (summary != null) ...[
                 const Center(child: _RhythmResultMenti(completed: true)),
                 Text(
-                  hu ? 'Végigjártad a hetet!' : 'You finished the week!',
+                  completed == 28
+                      ? (hu
+                            ? 'Végigjártad Menti útját!'
+                            : 'You finished Menti’s Journey!')
+                      : (hu
+                            ? 'Végigjártad a hetet!'
+                            : 'You finished the week!'),
                   key: const ValueKey('adventure-week-finished'),
                 ),
-              ] else if (!available)
-                Text(s.adventureNoPenalty),
-              for (final (index, adventure) in _Adventure.values.indexed)
-                MentiAdventureStation(
-                  title: '${index + 1}. ${adventure.title(hu)}',
-                  done: index < completed,
-                  current: index == completed,
-                  details: [
-                    if (index == completed && available)
-                      FilledButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          unawaited(_startAdventure());
-                        },
-                        child: Text(hu ? 'Kaland indítása' : 'Start adventure'),
+              ],
+              if (completed < 28 && !available) Text(s.adventureNoPenalty),
+              for (final (weekIndex, stations) in _chapters.indexed)
+                ExpansionTile(
+                  initiallyExpanded: weekIndex == (summary ?? chapter),
+                  title: Text(
+                    '${weekIndex + 1}. ${_chapterName(weekIndex, hu)}',
+                  ),
+                  subtitle: Text(
+                    hu
+                        ? '${(completed - weekIndex * 7).clamp(0, 7)} / 7 teljesítve'
+                        : '${(completed - weekIndex * 7).clamp(0, 7)} / 7 completed',
+                  ),
+                  children: [
+                    if (completed >= (weekIndex + 1) * 7)
+                      Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          hu
+                              ? '${widget.name} · 7 állomás · ${stations.where((a) => a == _Adventure.memory || a == _Adventure.rhythm || a == _Adventure.replay).length} játék'
+                              : '${widget.name} · 7 stations · ${stations.where((a) => a == _Adventure.memory || a == _Adventure.rhythm || a == _Adventure.replay).length} games',
+                        ),
+                      ),
+                    for (final (index, adventure) in stations.indexed)
+                      MentiAdventureStation(
+                        title: '${index + 1}. ${adventure.title(hu)}',
+                        done: weekIndex * 7 + index < completed,
+                        current: weekIndex * 7 + index == completed,
+                        details: [
+                          if (weekIndex * 7 + index < dates.length)
+                            Text(
+                              DateFormat.MMMd(s.localeName).format(
+                                parseClubDay(dates[weekIndex * 7 + index]),
+                              ),
+                            ),
+                          if (weekIndex * 7 + index == completed && available)
+                            FilledButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                unawaited(_startAdventure());
+                              },
+                              child: Text(
+                                hu ? 'Kaland indítása' : 'Start adventure',
+                              ),
+                            ),
+                          if (completed == 28 && adventure != _Adventure.finish)
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                unawaited(_startAdventure(replay: adventure));
+                              },
+                              child: Text(
+                                hu ? 'Újrajátszás' : 'Replay station',
+                              ),
+                            ),
+                        ],
                       ),
                   ],
                 ),
@@ -522,17 +666,15 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
                 ),
               if (_week.ready) ...[
                 const SizedBox(height: 12),
-                LinearProgressIndicator(
-                  value: _completed / _Adventure.values.length,
-                ),
+                LinearProgressIndicator(value: _completed / 28),
                 const SizedBox(height: 6),
                 Text(
-                  _adventureProgress(hu, _completed, _week.record.best),
+                  _adventureProgress(hu, _completed, _rhythmBest),
                   key: const ValueKey('adventure-home-progress'),
                 ),
-                if (_completed < _Adventure.values.length) ...[
+                if (_completed < 28) ...[
                   Text(
-                    _Adventure.values[_completed].title(hu),
+                    _chapters[_chapter][_completed % 7].title(hu),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   FilledButton.icon(
@@ -551,7 +693,9 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
                 OutlinedButton(
                   key: const ValueKey('adventure-week-map'),
                   onPressed: _busy || _adventureOpen ? null : _openAdventureMap,
-                  child: Text(hu ? 'Próbahét térképe' : 'Trial week map'),
+                  child: Text(
+                    hu ? 'Menti útja – térkép' : 'Menti’s Journey map',
+                  ),
                 ),
               ],
               FilledButton.icon(
@@ -559,6 +703,12 @@ class _MaiMentiState extends State<MaiMenti> with WidgetsBindingObserver {
                 onPressed: _busy ? null : _play,
                 icon: const Icon(Icons.play_arrow),
                 label: Text(s.rhythmPlay),
+              ),
+              OutlinedButton.icon(
+                key: const ValueKey('mai-memory'),
+                onPressed: _busy ? null : _openMemory,
+                icon: const Icon(Icons.extension_outlined),
+                label: Text(hu ? 'Menti Emlékminta' : 'Menti Memory Pattern'),
               ),
               if (yesterdayMood != null || yesterdayScore != null)
                 Text(
